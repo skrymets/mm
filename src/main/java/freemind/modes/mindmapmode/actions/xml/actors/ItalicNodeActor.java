@@ -45,8 +45,8 @@ public class ItalicNodeActor extends NodeXmlActorAdapter {
 	public void act(XmlAction action) {
 		ItalicNodeAction italicact = (ItalicNodeAction) action;
 		NodeAdapter node = getNodeFromID(italicact.getNode());
-		if (node.isItalic() != italicact.getItalic()) {
-			node.setItalic(italicact.getItalic());
+		if (node.isItalic() != italicact.isItalic()) {
+			node.setItalic(italicact.isItalic());
 			mMapFeedback.nodeChanged(node);
 		}
 	}

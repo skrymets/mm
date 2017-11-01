@@ -184,21 +184,19 @@ public class AddHookActor extends XmlActorAdapter {
 			MindMapNode selected = getNodeFromID(
 					hookNodeAction.getNode());
 			Vector<MindMapNode> selecteds = new Vector<>();
-			for (Iterator<NodeListMember> i = hookNodeAction.getListNodeListMemberList().iterator(); i.hasNext();) {
-				NodeListMember node = (NodeListMember) i.next();
-				selecteds.add(getNodeFromID(node.getNode()));
-			}
+            for (NodeListMember node : hookNodeAction.getNodeListMemberList()) {
+                selecteds.add(getNodeFromID(node.getNode()));
+            }
 			// reconstruct child-xml:
 			XMLElement xmlParent = new XMLElement();
 			xmlParent.setName(hookNodeAction.getHookName());
 			XMLElement child = new XMLElement();
 			xmlParent.addChild(child);
 			child.setName(PermanentNodeHookAdapter.PARAMETERS);
-			for (Iterator<NodeChildParameter> it = hookNodeAction.getListNodeChildParameterList().iterator(); it.hasNext();) {
-				NodeChildParameter childParameter = it.next();
-				child.setAttribute(childParameter.getKey(),
-						childParameter.getValue());
-			}
+            for (NodeChildParameter childParameter : hookNodeAction.getNodeChildParameterList()) {
+                child.setAttribute(childParameter.getKey(),
+                        childParameter.getValue());
+            }
 			invoke(selected, selecteds, hookNodeAction.getHookName(), xmlParent);
 		}
 	}

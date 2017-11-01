@@ -1,4 +1,4 @@
-ArrayList/*FreeMind - A Program for creating and viewing Mindmaps
+/*FreeMind - A Program for creating and viewing Mindmaps
  *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin and others.
  *See COPYING for Details
  *
@@ -289,13 +289,12 @@ public class MindMapController extends ControllerAdapter implements
             } else {
                 MindMapNode sel = (MindMapNode) selecteds.get(0);
                 long amountOfChildren = 0;
-                ArrayList<MindMapNode> allDescendants = Tools.getArrayListWithSingleElement(sel);
+                List<MindMapNode> allDescendants = Collections.singletonList(sel);
                 while (!allDescendants.isEmpty()) {
                     if (mIsInterrupted) {
                         return;
                     }
-                    MindMapNode child = (MindMapNode) allDescendants
-                            .firstElement();
+                    MindMapNode child = (MindMapNode) allDescendants.get(0);
                     amountOfChildren += child.getChildCount();
                     allDescendants.addAll(child.getChildren());
                     allDescendants.remove(0);
@@ -885,7 +884,7 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     private void createIconActions() {
-        ArrayList<String> iconNames = MindIcon.getAllIconNames();
+        List<String> iconNames = MindIcon.getAllIconNames();
         File iconDir = new File(Resources.getInstance().getFreemindDirectory(), "icons");
         if (iconDir.exists()) {
             String[] userIconArray = iconDir.list(new FilenameFilter() {
@@ -1251,7 +1250,7 @@ public class MindMapController extends ControllerAdapter implements
             HashSet<MindMapNode> NodeAlreadyVisited = new HashSet<>();
             NodeAlreadyVisited.add(link.getSource());
             NodeAlreadyVisited.add(link.getTarget());
-            ArrayList<MindMapLink> links = getMindMapMapModel().getLinkRegistry().getAllLinks(link.getSource());
+            List<MindMapLink> links = getMindMapMapModel().getLinkRegistry().getAllLinks(link.getSource());
             links.addAll(getMindMapMapModel().getLinkRegistry().getAllLinks(
                     link.getTarget()));
             for (int i = 0; i < links.size(); ++i) {
@@ -1750,7 +1749,7 @@ public class MindMapController extends ControllerAdapter implements
                     .getLinkRegistry(), saveInvisible, true);
         } catch (IOException e) {
         }
-        ArrayList<String> nodeList = Tools.getArrayListWithSingleElement(getNodeID(node));
+        List<String> nodeList = Collections.singletonList(getNodeID(node));
         return new MindMapNodesSelection(stringWriter.toString(), null, null,
                 null, null, null, null, nodeList);
     }

@@ -95,7 +95,7 @@ public class PasteActor extends XmlActorAdapter {
 		PasteNodeAction pasteAction = (PasteNodeAction) action;
 		_paste(getTransferable(pasteAction.getTransferableContent()),
 				getNodeFromID(pasteAction.getNode()),
-				pasteAction.getAsSibling(), pasteAction.getIsLeft());
+				pasteAction.isAsSibling(), pasteAction.isIsLeft());
 	}
 
 	/*
@@ -902,10 +902,9 @@ public class PasteActor extends XmlActorAdapter {
 		// create Transferable:
 		// Add file list to this selection.
 		Vector<File> fileList = new Vector<>();
-		for (Iterator<TransferableFile> iter = trans.getListTransferableFileList().iterator(); iter.hasNext();) {
-			TransferableFile tFile = iter.next();
-			fileList.add(new File(tFile.getFileName()));
-		}
+        for (TransferableFile tFile : trans.getTransferableFileList()) {
+            fileList.add(new File(tFile.getFileName()));
+        }
 		Transferable copy = new MindMapNodesSelection(trans.getTransferable(),
 				trans.getTransferableAsImage(),
 				trans.getTransferableAsPlainText(),

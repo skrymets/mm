@@ -19,55 +19,52 @@
  *
  * Created on 09.05.2004
  */
-
-
 package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.util.List;
 
 /**
  * @author foltin
- * 
+ *
  */
 public class CompoundActor extends XmlActorAdapter {
 
-	/**
-	 * @param pMapFeedback
-	 */
-	public CompoundActor(ExtendedMapFeedback pMapFeedback) {
-		super(pMapFeedback);
-	}
+    /**
+     * @param pMapFeedback
+     */
+    public CompoundActor(ExtendedMapFeedback pMapFeedback) {
+        super(pMapFeedback);
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.controller.actions.ActorXml#act(freemind.controller.actions.
 	 * generated.instance.XmlAction)
-	 */
-	public void act(XmlAction action) {
-		CompoundAction compound = (CompoundAction) action;
-		Object[] actions = compound.getListChoiceList().toArray();
-		for (int i = 0; i < actions.length; i++) {
-			Object obj = actions[i];
-			if (obj instanceof XmlAction) {
-				XmlAction xmlAction = (XmlAction) obj;
-				ActorXml actor = getExMapFeedback().getActionRegistry().getActor(xmlAction);
-				actor.act(xmlAction);
-			}
-		}
-	}
+     */
+    public void act(XmlAction action) {
+        CompoundAction compound = (CompoundAction) action;
+        List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compound);
 
-	/*
+        for (XmlAction xmlAction : xmlActions) {
+            ActorXml actor = getExMapFeedback().getActionRegistry().getActor(xmlAction);
+            actor.act(xmlAction);
+        }
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.controller.actions.ActorXml#getDoActionClass()
-	 */
-	public Class<CompoundAction> getDoActionClass() {
-		return CompoundAction.class;
-	}
+     */
+    public Class<CompoundAction> getDoActionClass() {
+        return CompoundAction.class;
+    }
 
 }

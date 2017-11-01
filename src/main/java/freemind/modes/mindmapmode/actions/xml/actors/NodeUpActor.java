@@ -153,10 +153,9 @@ public class NodeUpActor extends XmlActorAdapter {
 			MindMapNode selected = getNodeFromID(moveAction
 					.getNode());
 			Vector<MindMapNode> selecteds = new Vector<>();
-			for (Iterator<NodeListMember> i = moveAction.getListNodeListMemberList().iterator(); i.hasNext();) {
-				NodeListMember node = i.next();
-				selecteds.add(getNodeFromID(node.getNode()));
-			}
+            for (NodeListMember node : moveAction.getNodeListMemberList()) {
+                selecteds.add(getNodeFromID(node.getNode()));
+            }
 			_moveNodes(selected, selecteds, moveAction.getDirection());
 		}
 	}

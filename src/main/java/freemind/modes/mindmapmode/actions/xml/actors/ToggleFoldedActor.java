@@ -67,14 +67,10 @@ public class ToggleFoldedActor extends XmlActorAdapter {
 			FoldAction foldAction = createSingleFoldAction(fold, node, undo);
 			if (foldAction != null) {
 				if (!undo) {
-					comp
-
-					.addChoice(foldAction);
+					comp.addChoice(foldAction);
 				} else {
 					// reverse the order:
-					comp
-
-					.addAtChoice(0, foldAction);
+					comp.addAtChoice(0, foldAction);
 				}
 			}
 		}
@@ -108,7 +104,7 @@ public class ToggleFoldedActor extends XmlActorAdapter {
 			FoldAction foldAction = (FoldAction) action;
 			MindMapNode node = getNodeFromID(foldAction
 					.getNode());
-			boolean folded = foldAction.getFolded();
+			boolean folded = foldAction.isFolded();
 			// no root folding, fc, 16.5.2004
 			if (node.isRoot() && folded) {
 				return;

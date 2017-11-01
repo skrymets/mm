@@ -44,8 +44,8 @@ public class UnderlineActor extends NodeXmlActorAdapter {
 	public void act(XmlAction action) {
 		UnderlinedNodeAction underlinedact = (UnderlinedNodeAction) action;
 		NodeAdapter node = getNodeFromID(underlinedact.getNode());
-		if (node.isUnderlined() != underlinedact.getUnderlined()) {
-			node.setUnderlined(underlinedact.getUnderlined());
+		if (node.isUnderlined() != underlinedact.isUnderlined()) {
+			node.setUnderlined(underlinedact.isUnderlined());
 			getExMapFeedback().nodeChanged(node);
 		}
 	}

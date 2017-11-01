@@ -1736,6 +1736,7 @@ public class Tools {
         return mode;
     }
 
+    @Deprecated
     public static <T> Vector<T> getVectorWithSingleElement(T obj) {
         Vector<T> nodes = new Vector<>();
         nodes.add(obj);
