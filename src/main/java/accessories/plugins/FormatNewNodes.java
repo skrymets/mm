@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.FormatNodeAction;
 import freemind.controller.actions.generated.instance.NewNodeAction;
+import freemind.controller.actions.generated.instance.NodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
@@ -115,7 +116,8 @@ public class FormatNewNodes implements ActionHandler, ActionFilter,
 				// deep copy:
 				NodeAction copiedFormatAction = (NodeAction) Tools.deepCopy(formatAction);
 				copiedFormatAction.setNode(newNodeAction.getNewId());
-				compound.addChoice(copiedFormatAction);
+                CompoundAction.Choice copiedFormatActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(copiedFormatAction);
+				compound.addChoice(copiedFormatActionChoice);
 			}
 			ActionPair newPair = new ActionPair(compound, pair.getUndoAction());
 			return newPair;

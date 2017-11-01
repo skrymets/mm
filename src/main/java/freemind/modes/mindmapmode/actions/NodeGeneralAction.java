@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 import javax.swing.Action;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
+import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
@@ -119,13 +120,15 @@ public class NodeGeneralAction extends AbstractXmlAction {
 			CompoundAction undo = new CompoundAction();
 			// sort selectedNodes list by depth, in order to guarantee that
 			// sons are deleted first:
-			for (ListIterator it = modeController.getSelecteds().listIterator(); it
-					.hasNext();) {
+			for (ListIterator it = modeController.getSelecteds().listIterator(); it.hasNext();) {
 				MindMapNodeModel selected = (MindMapNodeModel) it.next();
 				ActionPair pair = getActionPair(selected);
 				if (pair != null) {
-					doAction.addChoice(pair.getDoAction());
-					undo.addAtChoice(0, pair.getUndoAction());
+                    CompoundAction.Choice doActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(doAction);
+					doAction.addChoice(doActionChoice);
+					//doAction.addChoice(pair.getDoAction());
+                    CompoundAction.Choice undoActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(pair.getUndoAction());
+					undo.getChoiceList().add(0, undoActionChoice);
 				}
 			}
 			if (doAction.sizeChoiceList() == 0)

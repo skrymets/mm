@@ -377,7 +377,8 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 					int index = 0;
 					for (XmlAction subAction : choiceList) {
 						subAction = cloneAction(subAction);
-						compoundAction.setAtChoice(index, subAction);
+                        CompoundAction.Choice choice = JIBXGeneratedUtil.choiceFromXmlActions(subAction);
+						compoundAction.getChoiceList().add(index, choice);
 						index++;
 					}
 				}
@@ -391,8 +392,9 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 				return nodeAction;
 			}
 			// create new action:
+            CompoundAction.Choice choice = JIBXGeneratedUtil.choiceFromXmlActions(nodeAction);
 			CompoundAction compound = new CompoundAction();
-			compound.addChoice(nodeAction);
+			compound.addChoice(choice);
 			for (Tools.MindMapNodePair pair : correspondingNodes) {
 				getNewCompoundAction(nodeAction, pair, compound);
 			}
@@ -408,7 +410,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 			// special cases:
 			if (copiedNodeAction instanceof MoveNodesAction) {
 				MoveNodesAction moveAction = (MoveNodesAction) copiedNodeAction;
-				for (int i = 0; i < moveAction.getListNodeListMemberList()
+				for (int i = 0; i < moveAction.getNodeListMemberList()
 						.size(); i++) {
 					NodeListMember member = moveAction.getNodeListMember(i);
 					changeNodeListMember(correspondingNodePair, moveAction,
@@ -417,7 +419,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 			}
 			if (copiedNodeAction instanceof HookNodeAction) {
 				HookNodeAction hookAction = (HookNodeAction) copiedNodeAction;
-				for (int i = 0; i < hookAction.getListNodeListMemberList()
+				for (int i = 0; i < hookAction.getNodeListMemberList()
 						.size(); i++) {
 					NodeListMember member = hookAction.getNodeListMember(i);
 					changeNodeListMember(correspondingNodePair, hookAction,
@@ -429,9 +431,10 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 				String newId = mMap.getLinkRegistry().generateUniqueID(null);
 				newNodeAction.setNewId(newId);
 			}
-			copiedNodeAction.setNode(controller.getNodeID(correspondingNodePair
-					.getCorresponding()));
-			if (copiedNodeAction instanceof PasteNodeAction) {
+			copiedNodeAction.setNode(controller.getNodeID(correspondingNodePair.getCorresponding()));
+			
+            CompoundAction.Choice copiedNodeActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(copiedNodeAction);
+            if (copiedNodeAction instanceof PasteNodeAction) {
 				/*
 				 * difficult thing here: if something is pasted, the paste
 				 * action itself contains the node ids of the paste. The first
@@ -439,9 +442,9 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 				 * corresponding node itself. This presumably corrects a bug
 				 * that the selection on move actions is changing.
 				 */
-				compound.addChoice(copiedNodeAction);
+				compound.addChoice(copiedNodeActionChoice);
 			} else {
-				compound.addAtChoice(0, copiedNodeAction);
+				compound.getChoiceList().add(0, copiedNodeActionChoice);
 			}
 		}
 
@@ -489,7 +492,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 						startWithParent = true;
 					} else if (nodeAction instanceof PasteNodeAction) {
 						PasteNodeAction pna = (PasteNodeAction) nodeAction;
-						if (pna.getAsSibling()) {
+						if (pna.isAsSibling()) {
 							// sibling means, that the paste goes below the
 							// clone.
 							// skip.
@@ -501,7 +504,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 						}
 					} else if (nodeAction instanceof UndoPasteNodeAction) {
 						UndoPasteNodeAction pna = (UndoPasteNodeAction) nodeAction;
-						if (pna.getAsSibling()) {
+						if (pna.isAsSibling()) {
 							// sibling means, that the paste goes below the
 							// clone.
 							// skip.
@@ -523,7 +526,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 						// subject to cloning.
 					} else if (nodeAction instanceof PasteNodeAction) {
 						PasteNodeAction pna = (PasteNodeAction) nodeAction;
-						if (pna.getAsSibling()) {
+						if (pna.isAsSibling()) {
 							// sibling means, that the paste goes below the
 							// clone.
 							// skip.
@@ -535,7 +538,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 						}
 					} else if (nodeAction instanceof UndoPasteNodeAction) {
 						UndoPasteNodeAction pna = (UndoPasteNodeAction) nodeAction;
-						if (pna.getAsSibling()) {
+						if (pna.isAsSibling()) {
 							// sibling means, that the paste goes below the
 							// clone.
 							// skip.

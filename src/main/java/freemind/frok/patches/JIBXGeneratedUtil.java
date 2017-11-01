@@ -17,10 +17,7 @@
  */
 package freemind.frok.patches;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.Plugin;
-import freemind.controller.actions.generated.instance.PluginAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.generated.instance.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,6 +74,99 @@ public class JIBXGeneratedUtil {
                     return ret;
                 }).collect(Collectors.toList());
         return pluginActions;
+    }
+
+    public static CompoundAction.Choice choiceFromXmlActions(XmlAction action) {
+
+        CompoundAction.Choice choice = new CompoundAction.Choice();
+        if (action instanceof CompoundAction) {
+            choice.setCompoundAction((CompoundAction) action);
+        } else if (action instanceof SelectNodeAction) {
+            choice.setSelectNodeAction((SelectNodeAction) action);
+        } else if (action instanceof CutNodeAction) {
+            choice.setCutNodeAction((CutNodeAction) action);
+        } else if (action instanceof PasteNodeAction) {
+            choice.setPasteNodeAction((PasteNodeAction) action);
+        } else if (action instanceof UndoPasteNodeAction) {
+            choice.setUndoPasteNodeAction((UndoPasteNodeAction) action);
+        } else if (action instanceof RevertXmlAction) {
+            choice.setRevertXmlAction((RevertXmlAction) action);
+        } else if (action instanceof BoldNodeAction) {
+            choice.setBoldNodeAction((BoldNodeAction) action);
+        } else if (action instanceof StrikethroughNodeAction) {
+            choice.setStrikethroughNodeAction((StrikethroughNodeAction) action);
+        } else if (action instanceof ItalicNodeAction) {
+            choice.setItalicNodeAction((ItalicNodeAction) action);
+        } else if (action instanceof UnderlinedNodeAction) {
+            choice.setUnderlinedNodeAction((UnderlinedNodeAction) action);
+        } else if (action instanceof FontSizeNodeAction) {
+            choice.setFontSizeNodeAction((FontSizeNodeAction) action);
+        } else if (action instanceof FontNodeAction) {
+            choice.setFontNodeAction((FontNodeAction) action);
+        } else if (action instanceof NodeColorFormatAction) {
+            choice.setNodeColorFormatAction((NodeColorFormatAction) action);
+        } else if (action instanceof NodeBackgroundColorFormatAction) {
+            choice.setNodeBackgroundColorFormatAction((NodeBackgroundColorFormatAction) action);
+        } else if (action instanceof NodeStyleFormatAction) {
+            choice.setNodeStyleFormatAction((NodeStyleFormatAction) action);
+        } else if (action instanceof EdgeColorFormatAction) {
+            choice.setEdgeColorFormatAction((EdgeColorFormatAction) action);
+        } else if (action instanceof EdgeWidthFormatAction) {
+            choice.setEdgeWidthFormatAction((EdgeWidthFormatAction) action);
+        } else if (action instanceof EdgeStyleFormatAction) {
+            choice.setEdgeStyleFormatAction((EdgeStyleFormatAction) action);
+        } else if (action instanceof DeleteNodeAction) {
+            choice.setDeleteNodeAction((DeleteNodeAction) action);
+        } else if (action instanceof EditNodeAction) {
+            choice.setEditNodeAction((EditNodeAction) action);
+        } else if (action instanceof NewNodeAction) {
+            choice.setNewNodeAction((NewNodeAction) action);
+        } else if (action instanceof FoldAction) {
+            choice.setFoldAction((FoldAction) action);
+        } else if (action instanceof MoveNodesAction) {
+            choice.setMoveNodesAction((MoveNodesAction) action);
+        } else if (action instanceof HookNodeAction) {
+            choice.setHookNodeAction((HookNodeAction) action);
+        } else if (action instanceof AddIconAction) {
+            choice.setAddIconAction((AddIconAction) action);
+        } else if (action instanceof RemoveIconXmlAction) {
+            choice.setRemoveIconXmlAction((RemoveIconXmlAction) action);
+        } else if (action instanceof RemoveAllIconsXmlAction) {
+            choice.setRemoveAllIconsXmlAction((RemoveAllIconsXmlAction) action);
+        } else if (action instanceof MoveNodeXmlAction) {
+            choice.setMoveNodeXmlAction((MoveNodeXmlAction) action);
+        } else if (action instanceof AddCloudXmlAction) {
+            choice.setAddCloudXmlAction((AddCloudXmlAction) action);
+        } else if (action instanceof CloudColorXmlAction) {
+            choice.setCloudColorXmlAction((CloudColorXmlAction) action);
+        } else if (action instanceof AddArrowLinkXmlAction) {
+            choice.setAddArrowLinkXmlAction((AddArrowLinkXmlAction) action);
+        } else if (action instanceof AddLinkXmlAction) {
+            choice.setAddLinkXmlAction((AddLinkXmlAction) action);
+        } else if (action instanceof RemoveArrowLinkXmlAction) {
+            choice.setRemoveArrowLinkXmlAction((RemoveArrowLinkXmlAction) action);
+        } else if (action instanceof ArrowLinkColorXmlAction) {
+            choice.setArrowLinkColorXmlAction((ArrowLinkColorXmlAction) action);
+        } else if (action instanceof ArrowLinkArrowXmlAction) {
+            choice.setArrowLinkArrowXmlAction((ArrowLinkArrowXmlAction) action);
+        } else if (action instanceof ArrowLinkPointXmlAction) {
+            choice.setArrowLinkPointXmlAction((ArrowLinkPointXmlAction) action);
+        } else if (action instanceof SetAttributeAction) {
+            choice.setSetAttributeAction((SetAttributeAction) action);
+        } else if (action instanceof InsertAttributeAction) {
+            choice.setInsertAttributeAction((InsertAttributeAction) action);
+        } else if (action instanceof AddAttributeAction) {
+            choice.setAddAttributeAction((AddAttributeAction) action);
+        } else if (action instanceof RemoveAttributeAction) {
+            choice.setRemoveAttributeAction((RemoveAttributeAction) action);
+        } else if (action instanceof EditNoteToNodeAction) {
+            choice.setEditNoteToNodeAction((EditNoteToNodeAction) action);
+        } else if (action instanceof PlaceNodeXmlAction) {
+            choice.setPlaceNodeXmlAction((PlaceNodeXmlAction) action);
+        } 
+
+        return choice;
+
     }
 
     public static List<XmlAction> listXmlActions(CompoundAction pAction) {
