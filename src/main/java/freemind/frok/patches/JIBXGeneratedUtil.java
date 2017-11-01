@@ -18,6 +18,7 @@
 package freemind.frok.patches;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
+import freemind.controller.actions.generated.instance.Plugin;
 import freemind.controller.actions.generated.instance.PluginAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import java.util.List;
@@ -28,6 +29,33 @@ import java.util.stream.Collectors;
  * @author skrymets
  */
 public class JIBXGeneratedUtil {
+
+    public static List<Object> listPluginChoice(Plugin plugin) {
+
+        List<Object> pluginChoice = plugin
+                .getChoiceList()
+                .stream()
+                .map((Plugin.Choice choice) -> {
+                    Object ret = null;
+                    switch (choice.stateChoiceListSelect()) {
+                        case Plugin.Choice.PLUGIN_CLASSPATH_CHOICE:
+                            ret = choice.getPluginClasspath();
+                            break;
+                        case Plugin.Choice.PLUGIN_REGISTRATION_CHOICE:
+                            ret = choice.getPluginRegistration();
+                            break;
+                        case Plugin.Choice.PLUGIN_STRINGS_CHOICE:
+                            ret = choice.ifPluginStrings();
+                            break;
+                        case Plugin.Choice.PLUGIN_ACTION_CHOICE:
+                            ret = choice.getPluginAction();
+                            break;
+                    }
+                    return ret;
+                }).collect(Collectors.toList());
+        return pluginChoice;
+
+    }
 
     public static List<Object> listPluginActions(PluginAction action) {
         List<Object> pluginActions = action

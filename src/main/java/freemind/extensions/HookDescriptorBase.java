@@ -32,6 +32,7 @@ import java.util.Vector;
 
 import freemind.controller.actions.generated.instance.Plugin;
 import freemind.controller.actions.generated.instance.PluginClasspath;
+import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.main.Tools;
 
@@ -101,7 +102,8 @@ public class HookDescriptorBase {
 
 	public List<PluginClasspath> getPluginClasspath() {
 		Vector<PluginClasspath> returnValue = new Vector<>();
-		for (Object obj : pluginBase.getListChoiceList()) {
+        List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(pluginBase);
+		for (Object obj : pluginChoice) {
 			if (obj instanceof PluginClasspath) {
 				PluginClasspath pluginClasspath = (PluginClasspath) obj;
 				returnValue.add(pluginClasspath);

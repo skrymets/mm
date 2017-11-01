@@ -49,6 +49,7 @@ import freemind.extensions.MindMapHook;
 import freemind.extensions.MindMapHook.PluginBaseClassSearcher;
 import freemind.extensions.ModeControllerHook;
 import freemind.extensions.NodeHook;
+import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.modes.mindmapmode.MindMapController;
 
@@ -172,8 +173,10 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 						freemind.main.Resources.getInstance().logException(e);
 						continue;
 					}
-					// plugin is loaded.
-					for (Object obj : plugin.getListChoiceList()) {
+                    // plugin is loaded.
+                    
+                    List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(plugin);
+					for (Object obj : pluginChoice) {
 						if (obj instanceof PluginAction) {
 							PluginAction action = (PluginAction) obj;
 							pluginInfo.put(action.getLabel(), new HookDescriptorPluginAction(xmlPluginFile, plugin, action));
@@ -181,8 +184,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 
 						} else if (obj instanceof PluginRegistration) {
 							PluginRegistration registration = (PluginRegistration) obj;
-							allRegistrations
-									.add(new HookDescriptorRegistration(xmlPluginFile, plugin, registration));
+							allRegistrations.add(new HookDescriptorRegistration(xmlPluginFile, plugin, registration));
 							// logger.info("Added registration " +
 							// registration.getClassName() +
 							// " to allRegistrations=" + allRegistrations);
