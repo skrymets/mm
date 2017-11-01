@@ -101,8 +101,7 @@ public class AddHookActor extends XmlActorAdapter {
 	private XmlAction createHookNodeUndoAction(MindMapNode focussed,
 			List<MindMapNode> selecteds, String hookName) {
 		CompoundAction undoAction = new CompoundAction();
-		HookNodeAction hookNodeAction = createHookNodeAction(focussed,
-				selecteds, hookName, null);
+		HookNodeAction hookNodeAction = createHookNodeAction(focussed, selecteds, hookName, null);
 		undoAction.addChoice(hookNodeAction);
 		HookInstanciationMethod instMethod = getInstanciationMethod(hookName);
 		// get destination nodes

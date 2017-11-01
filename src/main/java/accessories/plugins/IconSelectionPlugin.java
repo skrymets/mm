@@ -17,7 +17,7 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
+ /*
  * Created on 06.03.2004
  *
  * To change the template for this generated file go to
@@ -40,55 +40,55 @@ import freemind.modes.mindmapmode.actions.IconAction;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+import java.util.List;
 
 /**
  * @author adapted to the plugin mechanism by ganzer
- * 
+ *
  */
 public class IconSelectionPlugin extends MindMapNodeHookAdapter {
 
-	/**
-	 */
-	public IconSelectionPlugin() {
-		super();
-	}
+    /**
+     */
+    public IconSelectionPlugin() {
+        super();
+    }
 
-	public void invoke(MindMapNode rootNode) {
-		// we dont need node.
-		NodeView focussed = getController().getSelectedView();
-		Vector<IconInformation> actions = new Vector<>();
-		MindMapController controller = getMindMapController();
-		Vector<IconAction> iconActions = controller.iconActions;
-		actions.addAll(iconActions);
-		actions.add(controller.removeLastIconAction);
-		actions.add(controller.removeAllIconsAction);
+    public void invoke(MindMapNode rootNode) {
+        // we dont need node.
+        NodeView focussed = getController().getSelectedView();
+        Vector<IconInformation> actions = new Vector<>();
+        MindMapController controller = getMindMapController();
+        List<IconAction> iconActions = controller.iconActions;
+        actions.addAll(iconActions);
+        actions.add(controller.removeLastIconAction);
+        actions.add(controller.removeAllIconsAction);
 
-		FreeMind frame = (FreeMind) getController().getFrame();
-		IconSelectionPopupDialog selectionDialog = new IconSelectionPopupDialog(
-				frame.getJFrame(), actions, frame);
+        FreeMind frame = (FreeMind) getController().getFrame();
+        IconSelectionPopupDialog selectionDialog = new IconSelectionPopupDialog(
+                frame.getJFrame(), actions, frame);
 
-		final MapView mapView = controller.getView();
-		mapView.scrollNodeToVisible(focussed, 0);
-		selectionDialog.pack();
-		Tools.setDialogLocationRelativeTo(selectionDialog, focussed);
-		selectionDialog.setModal(true);
-		selectionDialog.setVisible(true);
-		// process result:
-		int result = selectionDialog.getResult();
-		if (result >= 0) {
-			Action action = (Action) actions.get(result);
-			action.actionPerformed(new ActionEvent(action, 0, "icon",
-					selectionDialog.getModifiers()));
-		}
-	}
+        final MapView mapView = controller.getView();
+        mapView.scrollNodeToVisible(focussed, 0);
+        selectionDialog.pack();
+        Tools.setDialogLocationRelativeTo(selectionDialog, focussed);
+        selectionDialog.setModal(true);
+        selectionDialog.setVisible(true);
+        // process result:
+        int result = selectionDialog.getResult();
+        if (result >= 0) {
+            Action action = (Action) actions.get(result);
+            action.actionPerformed(new ActionEvent(action, 0, "icon",
+                    selectionDialog.getModifiers()));
+        }
+    }
 
-	// /* (non-Javadoc)
-	// * @see freemind.extensions.NodeHook#invoke()
-	// */
-	// public void invoke(MindMapNode node) {
-	// setNode(node);
-	// node.addIcon(icon);
-	// nodeChanged(node);
-	// }
-
+    // /* (non-Javadoc)
+    // * @see freemind.extensions.NodeHook#invoke()
+    // */
+    // public void invoke(MindMapNode node) {
+    // setNode(node);
+    // node.addIcon(icon);
+    // nodeChanged(node);
+    // }
 }

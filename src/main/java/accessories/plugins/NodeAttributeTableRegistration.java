@@ -428,12 +428,10 @@ public class NodeAttributeTableRegistration implements HookRegistration,
 		AttributeTableProperties props = (AttributeTableProperties) XmlBindingTools
 				.getInstance().unMarshall(marshalled);
 		Vector<SortKey> keys = new Vector<RowSorter.SortKey>();
-		for (Iterator<TableColumnOrder> it = props.getListTableColumnOrderList().iterator(); it
-				.hasNext();) {
-			TableColumnOrder setting = it.next();
-			keys.add(new SortKey(setting.getColumnIndex(), SortOrder
-					.valueOf(setting.getColumnSorting())));
-		}
+        for (TableColumnOrder setting : props.getTableColumnOrderList()) {
+            keys.add(new SortKey(setting.getColumnIndex(), SortOrder
+                    .valueOf(setting.getColumnSorting())));
+        }
 		Enumeration<TableColumn> columns = mAttributeTable.getColumnModel().getColumns();
 		while(columns.hasMoreElements()){
 			columns.nextElement().setCellEditor(cellEditor);
