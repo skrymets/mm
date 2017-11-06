@@ -64,7 +64,7 @@ public class AddArrowLinkAction extends MindmapAction {
 			} else {
 				// give an error afterwards?
 				identicalError = true;
-				logger.warning("Can't create a link from the node '"+selected+"' to itself. Skipped.");
+				logger.warn("Can't create a link from the node '"+selected+"' to itself. Skipped.");
 			}
 		}
 		if(identicalError) {

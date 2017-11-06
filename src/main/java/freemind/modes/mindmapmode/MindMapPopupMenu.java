@@ -23,7 +23,7 @@
 
 package freemind.modes.mindmapmode;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import freemind.controller.FreeMindPopupMenu;
 import freemind.controller.StructuredMenuHolder;

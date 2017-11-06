@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.filechooser.FileFilter;
 
@@ -152,7 +152,7 @@ public class Resources implements TextTranslator {
     }
 
     /* To obtain a logging element, ask here. */
-    public java.util.logging.Logger getLogger(String forClass) {
+    public org.slf4j.Logger getLogger(String forClass) {
         return main.getLogger(forClass);
     }
 
@@ -161,7 +161,7 @@ public class Resources implements TextTranslator {
     }
 
     public void logException(Throwable e, String comment) {
-        logger.log(Level.SEVERE, "An exception occured: " + comment, e);
+        logger.info("An exception occured: " + comment, e);
     }
 
     public String format(String resourceKey, Object[] messageArguments) {

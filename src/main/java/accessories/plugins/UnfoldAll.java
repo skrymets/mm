@@ -47,7 +47,7 @@ public class UnfoldAll extends MindMapNodeHookAdapter {
 
 		private final MindMapController controller;
 		private final MindMap mMap;
-		private final java.util.logging.Logger logger;
+		private final org.slf4j.Logger logger;
 		private UnfoldAll hookInstance;
 
 		public Registration(ModeController controller, MindMap map) {

@@ -36,7 +36,7 @@ import freemind.modes.mindmapmode.MindMapController;
 @SuppressWarnings("serial")
 public class CutAction extends AbstractAction {
 	private final MindMapController mMindMapController;
-	private static java.util.logging.Logger logger = null;
+	private static org.slf4j.Logger logger = null;
 
 	public CutAction(MindMapController c) {
 		super(c.getText("cut"), freemind.view.ImageFactory.getInstance().createIcon(

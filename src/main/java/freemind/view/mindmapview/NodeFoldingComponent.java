@@ -57,7 +57,7 @@ public class NodeFoldingComponent extends JButton {
 	private static final int TIMER_DELAY = 50;
 	private static final int COLOR_COUNTER_MAX = 15;
 	private static final int SIZE_FACTOR_ON_MOUSE_OVER = 4;
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	private boolean mIsEntered;
 	private int mColorCounter = 0;
 	private NodeView nodeView;

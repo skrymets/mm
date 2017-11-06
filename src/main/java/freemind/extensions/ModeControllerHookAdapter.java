@@ -35,7 +35,7 @@ public class ModeControllerHookAdapter extends HookAdapter implements
 		ModeControllerHook {
 
 	// Logging:
-	// private static java.util.logging.Logger logger;
+	// private static org.slf4j.Logger logger;
 
 	/**
 	 */

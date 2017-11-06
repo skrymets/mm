@@ -48,7 +48,7 @@ import freemind.view.mindmapview.ViewFeedback;
 public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 
 	private HashMap<String, Font> fontMap = new HashMap<String, Font>();
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	/**
 	 * 
@@ -366,7 +366,7 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 
 	public void sortNodesByDepth(List<MindMapNode> inPlaceList) {
 		Collections.sort(inPlaceList, new NodesDepthComparator());
-		logger.finest("Sort result: " + inPlaceList);
+		logger.trace("Sort result: " + inPlaceList);
 	}
 
 	@Override

@@ -105,7 +105,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator,
 
 	private MindMapNode mDemoNode;
 
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	private MindMapNode mNode;
 

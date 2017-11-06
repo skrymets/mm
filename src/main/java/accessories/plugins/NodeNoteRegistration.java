@@ -118,12 +118,12 @@ public class NodeNoteRegistration implements HookRegistration,
 				// now test, if different:
 				String documentText = normalizeString(getDocumentText());
 				String noteText = normalizeString(mNode.getNoteText());
-				logger.fine("Old doc =\n'" + noteText
+				logger.trace("Old doc =\n'" + noteText
 						+ "', Current document: \n'" + documentText
 						+ "'. Comparison: '"
 						+ Tools.compareText(noteText, documentText) + "'.");
 				if (!Tools.safeEquals(noteText, documentText)) {
-					logger.finest("Making map dirty.");
+					logger.trace("Making map dirty.");
 					// make map dirty in order to enable automatic save on note
 					// change.
 					getMindMapController().setSaved(false);
@@ -272,7 +272,7 @@ public class NodeNoteRegistration implements HookRegistration,
 
 	protected SHTMLPanel noteViewerComponent;
 
-	private final java.util.logging.Logger logger;
+	private final org.slf4j.Logger logger;
 
 	private NotesManager mNotesManager;
 

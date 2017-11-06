@@ -44,7 +44,7 @@ public class TimeManagementOrganizer implements HookRegistration,
 		MenuItemEnabledListener {
 
 	private final ModeController controller;
-	private final java.util.logging.Logger logger;
+	private final org.slf4j.Logger logger;
 
 	public TimeManagementOrganizer(ModeController controller, MindMap map) {
 		this.controller = controller;

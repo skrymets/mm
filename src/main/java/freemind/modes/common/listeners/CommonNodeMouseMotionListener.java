@@ -44,7 +44,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 	private final ModeController c;
 
 	// Logging:
-	private static java.util.logging.Logger logger;
+	private static org.slf4j.Logger logger;
 
 	/** time in ms, overwritten by property time_for_delayed_selection */
 	private static Tools.IntHolder timeForDelayedSelection;
@@ -96,7 +96,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		logger.finest("Event: mouseMoved");
+		logger.trace("Event: mouseMoved");
 		// Invoked when the mouse button has been moved on a component (with no
 		// buttons down).
 		MainView node = ((MainView) e.getComponent());
@@ -118,7 +118,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 
 	/** Invoked when a mouse button is pressed on a component and then dragged. */
 	public void mouseDragged(MouseEvent e) {
-		logger.fine("Event: mouseDragged");
+		logger.trace("Event: mouseDragged");
 		// first stop the timer and select the node:
 		stopTimerForDelayedSelection();
 		NodeView nodeV = ((MainView) e.getComponent()).getNodeView();
@@ -132,7 +132,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 	}
 
 	public void mouseEntered(MouseEvent e) {
-		logger.finest("Event: mouseEntered");
+		logger.trace("Event: mouseEntered");
 		if (!JOptionPane.getFrameForComponent(e.getComponent()).isFocused())
 			return;
 		createTimer(e);
@@ -140,13 +140,13 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		logger.fine("Event: mousePressed");
+		logger.trace("Event: mousePressed");
 		// for Linux/Mac
 		mMousePressedEvent = e;
 	}
 
 	public void mouseExited(MouseEvent e) {
-		logger.finest("Event: mouseExited");
+		logger.trace("Event: mouseExited");
 		stopTimerForDelayedSelection();
 	}
 
@@ -157,7 +157,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 		// is not triggered.
 		// The behavior is not tested on Linux.
 		
-		logger.fine("Event: mouseReleased");
+		logger.trace("Event: mouseReleased");
 		MouseEvent ev = e;
 		/* 
 		 * For Mac see 
@@ -187,12 +187,12 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 	protected void handlePopupMenu(MouseEvent e) {
 		// first stop the timer and select the node:
 		stopTimerForDelayedSelection();
-		logger.fine("Extending selection for " +e);
+		logger.trace("Extending selection for " +e);
 		c.extendSelection(e);
 		// Right mouse <i>press</i> is <i>not</i> a popup trigger for Windows.
 		// Only Right mouse release is a popup trigger!
 		// OK, but Right mouse <i>press</i> <i>is</i> a popup trigger on Linux.
-		logger.fine("Looking for popup for " +e);
+		logger.trace("Looking for popup for " +e);
 		c.showPopupMenu(e);
 	}
 

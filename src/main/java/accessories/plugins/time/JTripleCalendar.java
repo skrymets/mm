@@ -345,5 +345,5 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
 	}
 }
 
-// private static java.util.logging.Logger logger =
+// private static org.slf4j.Logger logger =
 // freemind.main.Resources.getInstance().getLogger(JTripleCalendar.class.getName());

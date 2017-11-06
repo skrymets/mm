@@ -60,7 +60,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 	private static String MARKINGS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><calendar_markings><calendar_marking name=\"bla\" color=\"#cc0099\" start_date=\"1443650400000\" end_date=\"1447801200000\" repeat_type=\"yearly\" repeat_each_n_occurence=\"1\" first_occurence=\"2\"/></calendar_markings>";
 	private JTextArea mTextArea;
 	private boolean mStarted = false;
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	/**
 	 * @param args
@@ -244,7 +244,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 		marking.setRepeatEachNOccurence(mRepeatEachNOccurenceModel.getNumber().intValue());
 		int selectedIndex = repetitionType.getSelectedIndex();
 		if(selectedIndex < 0 || selectedIndex >= mRepetitionTypesList.size()){
-			logger.severe("Selected combo box index out of range: " + selectedIndex);
+			logger.error("Selected combo box index out of range: " + selectedIndex);
 		} else {	
 			marking.setRepeatType(CalendarMarking.RepeatType.convert(mRepetitionTypesList.get(selectedIndex)));
 		}
@@ -265,7 +265,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 		if(mRepetitionTypesList.contains(repeatTypeString)){
 			repetitionType.setSelectedIndex(mRepetitionTypesList.indexOf(repeatTypeString));
 		} else {
-			logger.severe("Repetition type " + repeatTypeString + " not found.");
+			logger.error("Repetition type " + repeatTypeString + " not found.");
 			repetitionType.setSelectedIndex(0);
 		}
 	}

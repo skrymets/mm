@@ -35,7 +35,7 @@ import freemind.modes.MindMapNode;
  */
 abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
 	protected final int LISTENER_VIEW_WIDTH = 10;
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	protected Point location = new Point();
 	private static Dimension minDimension;
 	private NodeView view;

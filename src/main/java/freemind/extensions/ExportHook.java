@@ -185,10 +185,10 @@ public class ExportHook extends ModeControllerHookAdapter {
 		// Copies src file to dst file.
 		// If the dst file does not exist, it is created
 		try {
-			logger.finest("searching for " + prefix + fileName);
+			logger.trace("searching for " + prefix + fileName);
 			URL resource = getResource(prefix + fileName);
 			if (resource == null) {
-				logger.severe("Cannot find resource: " + prefix + fileName);
+				logger.error("Cannot find resource: " + prefix + fileName);
 				return;
 			}
 			InputStream in = resource.openStream();
@@ -198,7 +198,7 @@ public class ExportHook extends ModeControllerHookAdapter {
 			// Transfer bytes from in to out
 			Tools.copyStream(in, out, true);
 		} catch (Exception e) {
-			logger.severe("File not found or could not be copied. "
+			logger.error("File not found or could not be copied. "
 					+ "Was earching for " + prefix + fileName
 					+ " and should go to " + destinationDirectory);
 			freemind.main.Resources.getInstance().logException(e);
@@ -214,7 +214,7 @@ public class ExportHook extends ModeControllerHookAdapter {
 		// Copies src file to dst file.
 		// If the dst file does not exist, it is created
 		try {
-			logger.finest("searching for " + dir + fileName);
+			logger.trace("searching for " + dir + fileName);
 			File resource = new File(dir, fileName);
 			InputStream in = new FileInputStream(resource);
 			OutputStream out = new FileOutputStream(destinationDirectory + "/"
@@ -223,7 +223,7 @@ public class ExportHook extends ModeControllerHookAdapter {
 			// Transfer bytes from in to out
 			Tools.copyStream(in, out, true);
 		} catch (Exception e) {
-			logger.severe("File not found or could not be copied. "
+			logger.error("File not found or could not be copied. "
 					+ "Was earching for " + dir + fileName
 					+ " and should go to " + destinationDirectory);
 			freemind.main.Resources.getInstance().logException(e);

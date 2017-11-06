@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -115,7 +115,7 @@ public class BrowseController extends ViewControllerAdapter {
 							+ "&lat=" + barePositions[2] + "&lon="
 							+ barePositions[3] + "&zoom=" + barePositions[4]
 							+ "&layers=" + tileSources.get(barePositions[5]);
-					logger.fine("Try to open link " + link);
+					logger.trace("Try to open link " + link);
 					modeController.getFrame().openDocument(new URL(link));
 				} catch (MalformedURLException e1) {
 					freemind.main.Resources.getInstance().logException(e1);

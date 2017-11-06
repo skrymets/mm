@@ -64,7 +64,7 @@ public class OptionalDontShowMeAgainDialog {
 	private final int mMessageType;
 	private final Component mComponent;
 
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	
 	public interface DontShowPropertyHandler {
 		/**

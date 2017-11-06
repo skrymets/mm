@@ -94,7 +94,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
 				String xsltFileName = "accessories/mindmanager2mm.xsl";
 				URL xsltUrl = getResource(xsltFileName);
 				if (xsltUrl == null) {
-					logger.severe("Can't find " + xsltFileName
+					logger.error("Can't find " + xsltFileName
 							+ " as resource.");
 					throw new IllegalArgumentException("Can't find " + xsltFileName + " as resource.");
 				}

@@ -28,7 +28,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.text.MessageFormat;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -63,12 +63,12 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 			MessageFormat formatter = new MessageFormat(
 					frame.getResourceString(messageId));
 			final String progressString = formatter.format(pMessageParameters);
-			logger.fine(progressString);
+			logger.trace(progressString);
 			this.mActualValue = act;
 			long timeDifference = System.currentTimeMillis() - mActualTimeStamp;
 			mActualTimeStamp = System.currentTimeMillis();
 			mTotalTime += timeDifference;
-			logger.fine("Task: " + lastTaskId + " (" + act + ") last "
+			logger.trace("Task: " + lastTaskId + " (" + act + ") last "
 					+ (timeDifference) / 1000.0 + " seconds.\nTotal: "
 					+ mTotalTime / 1000.0 + "\n");
 			SwingUtilities.invokeLater(new Runnable() {
@@ -85,7 +85,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 					}
 				}
 			});
-			logger.fine("Beginnig task:" + messageId);
+			logger.trace("Beginnig task:" + messageId);
 			lastTaskId = messageId;
 			// this is not nice, as other windows are probably more important!
 //			// make it the top most window.

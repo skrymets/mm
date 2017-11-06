@@ -101,7 +101,7 @@ public class NewParentNode extends MindMapNodeHookAdapter {
 					}
 				}
 				if (!found) {
-					logger.warning("New node not found in list of all children. Strange...");
+					logger.warn("New node not found in list of all children. Strange...");
 					return;
 				}
 				// delete root node content:

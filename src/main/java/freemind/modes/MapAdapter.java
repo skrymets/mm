@@ -34,7 +34,7 @@ import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;

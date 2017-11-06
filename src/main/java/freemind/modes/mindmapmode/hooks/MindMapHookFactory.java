@@ -67,7 +67,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 	private final static String pluginPrefixRegEx = ".*(accessories(/|\\\\)|)plugins(/|\\\\)[^/\\\\]*";
 
 	// Logging:
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	private static HashMap<String, HookDescriptorPluginAction> pluginInfo = null;
 
@@ -114,7 +114,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 			HookDescriptorPluginAction descriptor = getHookDescriptor(label);
 			// Properties prop = descriptor.properties;
 			try {
-				logger.finest("Loading: " + label);
+				logger.trace("Loading: " + label);
 				if (baseClass.isAssignableFrom(Class.forName(descriptor.getBaseClass()))) {
 					// the plugin inherits from the baseClass, we carry on to
 					// look for the mode
@@ -127,7 +127,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 					}
 				}
 			} catch (ClassNotFoundException e) {
-				logger.severe("Class not found.");
+				logger.error("Class not found.");
 				freemind.main.Resources.getInstance().logException(e);
 			}
 		}
@@ -163,7 +163,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 					// unmarshal xml:
 					Plugin plugin = null;
 					try {
-						logger.finest("Reading: " + xmlPluginFile + " from "
+						logger.trace("Reading: " + xmlPluginFile + " from "
 								+ pluginURL);
 						InputStream in = pluginURL.openStream();
 						plugin = (Plugin) unmarshaller.unmarshalDocument(in,
@@ -228,7 +228,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 	 * instead.
 	 */
 	public NodeHook createNodeHook(String hookName) {
-		logger.finest("CreateNodeHook: " + hookName);
+		logger.trace("CreateNodeHook: " + hookName);
 		HookDescriptorPluginAction descriptor = getHookDescriptor(hookName);
 		return (NodeHook) createJavaHook(hookName, descriptor);
 	}
@@ -342,7 +342,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 	 * @return the base class if declared and successfully instanciated or NULL.
 	 */
 	public Object getPluginBaseClass(String hookName) {
-		logger.finest("getPluginBaseClass: " + hookName);
+		logger.trace("getPluginBaseClass: " + hookName);
 		HookDescriptorPluginAction descriptor = getHookDescriptor(hookName);
 		return getPluginBaseClass(descriptor);
 	}

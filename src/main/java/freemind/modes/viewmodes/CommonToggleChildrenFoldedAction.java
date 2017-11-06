@@ -23,7 +23,7 @@
 package freemind.modes.viewmodes;
 
 import java.awt.event.ActionEvent;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.AbstractAction;
 

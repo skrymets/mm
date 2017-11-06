@@ -52,7 +52,7 @@ import freemind.view.mindmapview.NodeView;
  */
 public class AddHookActor extends XmlActorAdapter {
 
-    protected static java.util.logging.Logger logger = null;
+    protected static org.slf4j.Logger logger = null;
 
     /**
      * @param pMapFeedback
@@ -138,10 +138,10 @@ public class AddHookActor extends XmlActorAdapter {
                                     }
 
                                 } else {
-                                    logger.warning("Unusual save mechanism, implement me.");
+                                    logger.warn("Unusual save mechanism, implement me.");
                                 }
                             } else {
-                                logger.warning("Unusual save mechanism, implement me.");
+                                logger.warn("Unusual save mechanism, implement me.");
                             }
                         }
                         /*
@@ -224,7 +224,7 @@ public class AddHookActor extends XmlActorAdapter {
 
     private void invoke(MindMapNode focussed, List<MindMapNode> selecteds, String hookName,
             XMLElement pXmlParent) {
-        logger.finest("invoke(selecteds) called.");
+        logger.trace("invoke(selecteds) called.");
         HookInstanciationMethod instMethod = getInstanciationMethod(hookName);
         // get destination nodes
         Collection<MindMapNode> destinationNodes = instMethod.getDestinationNodes(getExMapFeedback(), focussed, selecteds);
@@ -256,7 +256,7 @@ public class AddHookActor extends XmlActorAdapter {
             for (MindMapNode currentDestinationNode : destinationNodes) {
                 NodeHook hook = getExMapFeedback().createNodeHook(hookName,
                         currentDestinationNode);
-                logger.finest("created hook " + hookName);
+                logger.trace("created hook " + hookName);
                 // set parameters, if present
                 if (pXmlParent != null && hook instanceof PermanentNodeHook) {
                     ((PermanentNodeHook) hook).loadFrom(pXmlParent);
@@ -265,7 +265,7 @@ public class AddHookActor extends XmlActorAdapter {
                 currentDestinationNode.invokeHook(hook);
                 if (hook instanceof PermanentNodeHook) {
                     PermanentNodeHook permHook = (PermanentNodeHook) hook;
-                    logger.finest("This is a permanent hook " + hookName);
+                    logger.trace("This is a permanent hook " + hookName);
                     // the focused receives the focus:
                     if (currentDestinationNode == adaptedFocussedNode) {
                         permHook.onFocusNode(getNodeView(currentDestinationNode));

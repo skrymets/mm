@@ -37,7 +37,7 @@ public abstract class XmlActorAdapter implements ActorXml {
 
 	protected ExtendedMapFeedback mMapFeedback;
 
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	/**
 	 * 

@@ -46,7 +46,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 	private final MindMapController c;
 
 	// Logging:
-	private static java.util.logging.Logger logger;
+	private static org.slf4j.Logger logger;
 
 	public MindMapNodeMotionListener(MindMapController controller) {
 		c = controller;
@@ -64,7 +64,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 
 	/** Invoked when a mouse button is pressed on a component and then dragged. */
 	public void mouseDragged(MouseEvent e) {
-		logger.fine("Event: mouseDragged");
+		logger.trace("Event: mouseDragged");
 		if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) == (InputEvent.BUTTON1_DOWN_MASK)) {
 			final NodeMotionListenerView motionListenerView = (NodeMotionListenerView) e
 					.getSource();
@@ -175,7 +175,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 	}
 
 	public void mouseEntered(MouseEvent e) {
-		logger.fine("Event: mouseEntered");
+		logger.trace("Event: mouseEntered");
 		if (!JOptionPane.getFrameForComponent(e.getComponent()).isFocused())
 			return;
 		if (!isActive()) {
@@ -185,7 +185,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 	}
 
 	public void mouseExited(MouseEvent e) {
-		logger.fine("Event: mouseExited");
+		logger.trace("Event: mouseExited");
 		if (!isActive()) {
 			NodeMotionListenerView v = (NodeMotionListenerView) e.getSource();
 			v.setMouseExited();
@@ -197,7 +197,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		logger.fine("Event: mouseReleased");
+		logger.trace("Event: mouseReleased");
 		NodeMotionListenerView v = (NodeMotionListenerView) e.getSource();
 		if (!v.contains(e.getX(), e.getY()))
 			v.setMouseExited();

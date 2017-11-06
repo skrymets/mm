@@ -126,13 +126,13 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter
 	 * )
 	 */
 	public void onAddChildren(MindMapNode newChildNode) {
-		logger.finest("onAddChildren " + newChildNode);
+		logger.trace("onAddChildren " + newChildNode);
 		super.onAddChild(newChildNode);
 		setStyleRecursive(newChildNode);
 	}
 
 	public void onRemoveChildren(MindMapNode removedChild, MindMapNode oldDad) {
-		logger.finest("onRemoveChildren " + removedChild);
+		logger.trace("onRemoveChildren " + removedChild);
 		super.onRemoveChildren(removedChild, oldDad);
 		setStyleRecursive(oldDad);
 	}
@@ -203,7 +203,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter
 	/**
      */
 	private void setStyleRecursive(MindMapNode node) {
-		// logger.finest("setStyle " + node);
+		// logger.trace("setStyle " + node);
 		setStyle(node);
 		// recurse:
 		if (node.getParentNode() != null) {

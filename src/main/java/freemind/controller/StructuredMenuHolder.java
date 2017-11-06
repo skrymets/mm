@@ -63,7 +63,7 @@ public class StructuredMenuHolder {
 	private static final String SEPARATOR_TEXT = "000";
 	private static final String ORDER_NAME = "/order";
 	Map<String, Vector<String>> menuMap;
-	private static java.util.logging.Logger logger = null;
+	private static org.slf4j.Logger logger = null;
 
 	private int mIndent;
 	private static ImageIcon sSelectedIcon;
@@ -137,7 +137,7 @@ public class StructuredMenuHolder {
 			if (toolTipText != null) {
 				String toolTipTextWithoutTags = HtmlTools
 						.removeHtmlTagsFromString(toolTipText);
-				logger.finest("Old tool tip: " + toolTipText
+				logger.trace("Old tool tip: " + toolTipText
 						+ ", New tool tip: " + toolTipTextWithoutTags);
 				holder.getMenuItem().setToolTipText(toolTipTextWithoutTags);
 			}

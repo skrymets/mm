@@ -44,6 +44,7 @@ import javax.swing.UIManager;
 import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.view.mindmapview.MapView;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 public class FreeMindApplet extends JApplet implements FreeMindMain {
@@ -223,12 +224,12 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 		return resourceURL;
 	}
 
-	public java.util.logging.Logger getLogger(String forClass) {
+	public org.slf4j.Logger getLogger(String forClass) {
 		/*
 		 * Applet logging is anonymous due to security reasons. (Calling a named
 		 * logger is answered with a security exception).
 		 */
-		return java.util.logging.Logger.getAnonymousLogger();
+		return LoggerFactory.getLogger(forClass);
 	}
 
 	public void init() {

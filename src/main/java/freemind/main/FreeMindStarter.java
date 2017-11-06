@@ -19,7 +19,7 @@
  *
  * Created on 06.07.2006
  */
-/*$Id: FreeMindStarter.java,v 1.1.2.11 2009/03/29 19:37:23 christianfoltin Exp $*/
+ /*$Id: FreeMindStarter.java,v 1.1.2.11 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.main;
 
 import java.awt.Toolkit;
@@ -42,180 +42,186 @@ import javax.swing.JOptionPane;
  * java 1.1 compatibility. Currently, it is unclear, if this works as expected.
  * But in any case, almost no dependencies to other FreeMind sources should be
  * used here.
- * 
+ *
  * @author foltin
- * 
+ *
  */
 public class FreeMindStarter {
-	/** Doubled variable on purpose. See header of this class. */
-	static final String JAVA_VERSION = System.getProperty("java.version");
 
-	public static void main(String[] args) {
-		FreeMindStarter starter = new FreeMindStarter();
-		// First check version of Java
-		starter.checkJavaVersion();
-        
-		Properties defaultPreferences = starter.readDefaultPreferences();
+    /**
+     * Doubled variable on purpose. See header of this class.
+     */
+    static final String JAVA_VERSION = System.getProperty("java.version");
+
+    public static void main(String[] args) {
+        FreeMindStarter starter = new FreeMindStarter();
+        // First check version of Java
+        starter.checkJavaVersion();
+
+        Properties defaultPreferences = starter.readDefaultPreferences();
         Properties userPreferences = starter.readUsersPreferences(defaultPreferences);
-        
-		starter.createUserDirectory(defaultPreferences);
-		starter.setDefaultLocale(userPreferences);
 
-		// Christopher Robin Elmersson: set
-		Toolkit xToolkit = Toolkit.getDefaultToolkit();
+        starter.createUserDirectory(defaultPreferences);
+        starter.setDefaultLocale(userPreferences);
 
-		// workaround for java bug http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7075600
-		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
-		
-		try {
-			java.lang.reflect.Field awtAppClassNameField =
-					xToolkit.getClass().getDeclaredField("awtAppClassName");
-			awtAppClassNameField.setAccessible(true);
-			try {
-				awtAppClassNameField.set(xToolkit, "FreeMind");
-			} catch (java.lang.IllegalAccessException ex) {
-				System.err.println("Could not set window name");
-			}
-		} catch (NoSuchFieldException ex) {
-			// System.err.println("Could not get awtAppClassName");
-		}
+        // Christopher Robin Elmersson: set
+        Toolkit xToolkit = Toolkit.getDefaultToolkit();
 
-		// use reflection to call :
-		// FreeMind.main(args, defaultPreferences, userPreferences,
-		// starter.getUserPreferencesFile(defaultPreferences));
-		try {
-			Class mainClass = Class.forName("freemind.main.FreeMind");
-			Method mainMethod = mainClass.getMethod("main", new Class[] {
-					String[].class, Properties.class, Properties.class,
-					File.class });
-			mainMethod.invoke(null, new Object[] {
-									args,
-									defaultPreferences,
-									userPreferences,
-									starter.getUserPreferencesFile(defaultPreferences) });
+        // workaround for java bug http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7075600
+        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null,
-					"freemind.main.FreeMind can't be started: " + e.getLocalizedMessage()+"\n" + Tools.getStacktrace(e),
-					"Startup problem", JOptionPane.ERROR_MESSAGE);
-			System.exit(1);
-		}
-	}
+        try {
+            java.lang.reflect.Field awtAppClassNameField
+                    = xToolkit.getClass().getDeclaredField("awtAppClassName");
+            awtAppClassNameField.setAccessible(true);
+            try {
+                awtAppClassNameField.set(xToolkit, "FreeMind");
+            } catch (java.lang.IllegalAccessException ex) {
+                System.err.println("Could not set window name");
+            }
+        } catch (NoSuchFieldException ex) {
+            // System.err.println("Could not get awtAppClassName");
+        }
 
-	private void checkJavaVersion() {
-		System.out.println("Checking Java Version...");
-		if (JAVA_VERSION.compareTo("1.6.0") < 0) {
-			String message = "Warning: FreeMind requires version Java 1.6.0 or higher (your version: "
-					+ JAVA_VERSION
-					+ ", installed in "
-					+ System.getProperty("java.home") + ").";
-			System.err.println(message);
-			JOptionPane.showMessageDialog(null, message, "FreeMind",
-					JOptionPane.WARNING_MESSAGE);
-			System.exit(1);
-		}
-		System.out.println("Checking Java Version done.");
-	}
+        // use reflection to call :
+        // FreeMind.main(args, defaultPreferences, userPreferences,
+        // starter.getUserPreferencesFile(defaultPreferences));
+        try {
+//			Class mainClass = Class.forName("freemind.main.FreeMind");
+//			Method mainMethod = mainClass.getMethod("main", new Class[] {
+//					String[].class, Properties.class, Properties.class,
+//					File.class });
+//			mainMethod.invoke(null, new Object[] {
+//									args,
+//									defaultPreferences,
+//									userPreferences,
+//									starter.getUserPreferencesFile(defaultPreferences) }
+//            );
+            FreeMind fm = new FreeMind(defaultPreferences, userPreferences, starter.getUserPreferencesFile(defaultPreferences));
+            fm.go(args);
 
-	private void createUserDirectory(Properties pDefaultProperties) {
-		File userPropertiesFolder = new File(getFreeMindDirectory(pDefaultProperties));
-		try {
-			// create user directory:
-			if (!userPropertiesFolder.exists()) {
-				userPropertiesFolder.mkdir();
-			}
-		} catch (Exception e) {
-			// exception is logged to console as we don't have a logger
-			e.printStackTrace();
-			System.err.println("Cannot create folder for user properties and logging: '"
-							+ userPropertiesFolder.getAbsolutePath() + "'");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                    "freemind.main.FreeMind can't be started: " + e.getLocalizedMessage() + "\n" + Tools.getStacktrace(e),
+                    "Startup problem", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
+    }
 
-		}
-	}
+    private void checkJavaVersion() {
+        System.out.println("Checking Java Version...");
+        if (JAVA_VERSION.compareTo("1.6.0") < 0) {
+            String message = "Warning: FreeMind requires version Java 1.6.0 or higher (your version: "
+                    + JAVA_VERSION
+                    + ", installed in "
+                    + System.getProperty("java.home") + ").";
+            System.err.println(message);
+            JOptionPane.showMessageDialog(null, message, "FreeMind",
+                    JOptionPane.WARNING_MESSAGE);
+            System.exit(1);
+        }
+        System.out.println("Checking Java Version done.");
+    }
 
-	/**
-	 * @param pProperties
-	 */
-	private void setDefaultLocale(Properties pProperties) {
-		String lang = pProperties.getProperty(FreeMindCommon.RESOURCE_LANGUAGE);
-		if (lang == null) {
-			return;
-		}
-		Locale localeDef = null;
-		switch (lang.length()) {
-		case 2:
-			localeDef = new Locale(lang);
-			break;
-		case 5:
-			localeDef = new Locale(lang.substring(0, 1), lang.substring(3, 4));
-			break;
-		default:
-			return;
-		}
-		Locale.setDefault(localeDef);
-	}
+    private void createUserDirectory(Properties pDefaultProperties) {
+        File userPropertiesFolder = new File(getFreeMindDirectory(pDefaultProperties));
+        try {
+            // create user directory:
+            if (!userPropertiesFolder.exists()) {
+                userPropertiesFolder.mkdir();
+            }
+        } catch (Exception e) {
+            // exception is logged to console as we don't have a logger
+            e.printStackTrace();
+            System.err.println("Cannot create folder for user properties and logging: '"
+                    + userPropertiesFolder.getAbsolutePath() + "'");
 
-	private Properties readUsersPreferences(Properties defaultPreferences) {
-		Properties auto = null;
-		auto = new Properties(defaultPreferences);
-		try {
-			InputStream in = null;
-			File autoPropertiesFile = getUserPreferencesFile(defaultPreferences);
-			in = new FileInputStream(autoPropertiesFile);
-			auto.load(in);
-			in.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println("Panic! Error while loading default properties.");
-		}
-		return auto;
-	}
+        }
+    }
 
-	private File getUserPreferencesFile(Properties defaultPreferences) {
-		if (defaultPreferences == null) {
-			System.err.println("Panic! Error while loading default properties.");
-			System.exit(1);
-		}
-		String freemindDirectory = getFreeMindDirectory(defaultPreferences);
-		File userPropertiesFolder = new File(freemindDirectory);
-		File autoPropertiesFile = new File(userPropertiesFolder,
-				defaultPreferences.getProperty("autoproperties"));
-		return autoPropertiesFile;
-	}
+    /**
+     * @param pProperties
+     */
+    private void setDefaultLocale(Properties pProperties) {
+        String lang = pProperties.getProperty(FreeMindCommon.RESOURCE_LANGUAGE);
+        if (lang == null) {
+            return;
+        }
+        Locale localeDef = null;
+        switch (lang.length()) {
+            case 2:
+                localeDef = new Locale(lang);
+                break;
+            case 5:
+                localeDef = new Locale(lang.substring(0, 1), lang.substring(3, 4));
+                break;
+            default:
+                return;
+        }
+        Locale.setDefault(localeDef);
+    }
 
-	private String getFreeMindDirectory(Properties defaultPreferences) {
-		return System.getProperty("user.home") + File.separator
-				+ defaultPreferences.getProperty("properties_folder");
-	}
+    private Properties readUsersPreferences(Properties defaultPreferences) {
+        Properties auto = null;
+        auto = new Properties(defaultPreferences);
+        try {
+            InputStream in = null;
+            File autoPropertiesFile = getUserPreferencesFile(defaultPreferences);
+            in = new FileInputStream(autoPropertiesFile);
+            auto.load(in);
+            in.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.err.println("Panic! Error while loading default properties.");
+        }
+        return auto;
+    }
 
-	public Properties readDefaultPreferences() {
-		String propsLoc = "freemind.properties";
-		URL defaultPropsURL =
-				this.getClass().getClassLoader().getResource(propsLoc);
-		Properties props = new Properties();
-		try {
-			InputStream in = defaultPropsURL.openStream();
-			props.load(in);
-			in.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println("Panic! Error while loading default properties.");
-		}
-		return props;
-	}
-	
-	public static class ProxyAuthenticator extends Authenticator {
+    private File getUserPreferencesFile(Properties defaultPreferences) {
+        if (defaultPreferences == null) {
+            System.err.println("Panic! Error while loading default properties.");
+            System.exit(1);
+        }
+        String freemindDirectory = getFreeMindDirectory(defaultPreferences);
+        File userPropertiesFolder = new File(freemindDirectory);
+        File autoPropertiesFile = new File(userPropertiesFolder,
+                defaultPreferences.getProperty("autoproperties"));
+        return autoPropertiesFile;
+    }
 
-	    private String user, password;
+    private String getFreeMindDirectory(Properties defaultPreferences) {
+        return System.getProperty("user.home") + File.separator
+                + defaultPreferences.getProperty("properties_folder");
+    }
 
-	    public ProxyAuthenticator(String user, String password) {
-	        this.user = user;
-	        this.password = password;
-	    }
+    public Properties readDefaultPreferences() {
+        String propsLoc = "freemind.properties";
+        URL defaultPropsURL
+                = this.getClass().getClassLoader().getResource(propsLoc);
+        Properties props = new Properties();
+        try {
+            InputStream in = defaultPropsURL.openStream();
+            props.load(in);
+            in.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.err.println("Panic! Error while loading default properties.");
+        }
+        return props;
+    }
 
-	    protected PasswordAuthentication getPasswordAuthentication() {
-	        return new PasswordAuthentication(user, password.toCharArray());
-	    }
-	}
+    public static class ProxyAuthenticator extends Authenticator {
+
+        private String user, password;
+
+        public ProxyAuthenticator(String user, String password) {
+            this.user = user;
+            this.password = password;
+        }
+
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(user, password.toCharArray());
+        }
+    }
 }

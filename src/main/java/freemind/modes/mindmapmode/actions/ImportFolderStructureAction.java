@@ -34,7 +34,7 @@ import freemind.modes.mindmapmode.MindMapController;
 @SuppressWarnings("serial")
 public class ImportFolderStructureAction extends MindmapAction {
 	// Logging:
-	private static java.util.logging.Logger logger;
+	private static org.slf4j.Logger logger;
 	private final MindMapController controller;
 
 	public ImportFolderStructureAction(MindMapController controller) {
@@ -80,7 +80,7 @@ public class ImportFolderStructureAction extends MindmapAction {
 
 	public void importFolderStructure(File folder, MindMapNode target,
 			boolean redisplay) throws MalformedURLException {
-		logger.fine("Entering folder: " + folder);
+		logger.trace("Entering folder: " + folder);
 
 		if (folder.isDirectory()) {
 			getFrame().out(folder.getName());

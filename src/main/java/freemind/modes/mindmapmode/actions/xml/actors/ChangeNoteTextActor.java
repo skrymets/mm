@@ -77,8 +77,8 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
 			// they are equal.
 			return;
 		}
-		logger.fine("Old Note Text:'" + oldNoteText + ", new:'" + text + "'.");
-		logger.fine(Tools.compareText(oldNoteText, text));
+		logger.trace("Old Note Text:'" + oldNoteText + ", new:'" + text + "'.");
+		logger.trace(Tools.compareText(oldNoteText, text));
 		EditNoteToNodeAction doAction = createEditNoteToNodeAction(node, text);
 		EditNoteToNodeAction undoAction = createEditNoteToNodeAction(node,
 				oldNoteText);

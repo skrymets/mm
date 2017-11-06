@@ -66,7 +66,7 @@ import javax.swing.SwingUtilities;
  * @version $Id: EditServer.java 19384 2011-02-23 16:50:37Z k_satoda $
  */
 public class EditServer extends Thread {
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	private final FreeMindMain mFrame;
 
 	// {{{ EditServer constructor

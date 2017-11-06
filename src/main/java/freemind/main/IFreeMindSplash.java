@@ -33,5 +33,5 @@ public interface IFreeMindSplash {
 	public abstract ImageIcon getWindowIcon();
 
 }
-// private static java.util.logging.Logger logger =
+// private static org.slf4j.Logger logger =
 // freemind.main.Resources.getInstance().getLogger(IFreeMindSplash.class.getName());

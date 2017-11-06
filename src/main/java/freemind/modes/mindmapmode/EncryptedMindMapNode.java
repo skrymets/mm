@@ -154,7 +154,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 
 		if (password != null) {
 			if (!equals(givenPassword, password)) {
-				logger.warning("Wrong password supplied (cached!=given).");
+				logger.warn("Wrong password supplied (cached!=given).");
 				return false;
 			}
 			return true;
@@ -163,14 +163,14 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 		String decryptedNode = decryptXml(encryptedContent, givenPassword);
 		// FIXME: Better test needed.
 		if (decryptedNode == null) {
-			logger.warning("Wrong password supplied (deciphered text is null).");
+			logger.warn("Wrong password supplied (deciphered text is null).");
 			return false;
 		}
 		if (!decryptedNode.startsWith("<node ")) {
 			// not an encrpyted node in the old format
 			// (node,separator,node,...), we test for xml:
 			if (!HtmlTools.getInstance().isWellformedXml(decryptedNode)) {
-				logger.warning("Wrong password supplied (malformed deciphered text).");
+				logger.warn("Wrong password supplied (malformed deciphered text).");
 				return false;
 			}
 		}
@@ -365,7 +365,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 
 		// fc, only in case, it is needed, we can activate this code.
 		// if (decrypted == null || decrypted.isEmpty()) {
-		// logger.warning("Perhaps wrong algorithm used (due to a Java bug, in FreeMind 0.8.0 and Java4-5 DES whereas with Java6 Triple DES was used. Trying Triple DES...");
+		// logger.warn("Perhaps wrong algorithm used (due to a Java bug, in FreeMind 0.8.0 and Java4-5 DES whereas with Java6 Triple DES was used. Trying Triple DES...");
 		// decrypted = new
 		// Tools.TripleDesEncrypter(pwd).decrypt(encryptedString);
 		// }

@@ -72,7 +72,7 @@ public class NodeUpActor extends XmlActorAdapter {
 			TreeSet<Integer> range = new TreeSet<Integer>(comparator);
 			for (MindMapNode node : selecteds) {
 				if (node.getParent() != parent) {
-					logger.warning("Not all selected nodes (here: "
+					logger.warn("Not all selected nodes (here: "
 							+ node.getText() + ") have the same parent "
 							+ parent.getText() + ".");
 					return;
@@ -83,7 +83,7 @@ public class NodeUpActor extends XmlActorAdapter {
 			Integer last = (Integer) range.iterator().next();
 			for (Integer newInt : range) {
 				if (Math.abs(newInt.intValue() - last.intValue()) > 1) {
-					logger.warning("Not adjacent nodes. Skipped. ");
+					logger.warn("Not adjacent nodes. Skipped. ");
 					return;
 				}
 				last = newInt;
@@ -143,7 +143,7 @@ public class NodeUpActor extends XmlActorAdapter {
 				return b1 - b2;
 			}
 		});
-		// logger.finest("Sorted nodes "+ nodes);
+		// logger.trace("Sorted nodes "+ nodes);
 		return nodes;
 	}
 

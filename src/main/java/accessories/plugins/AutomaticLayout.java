@@ -372,11 +372,11 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 	}
 
 	private void setStyle(MindMapNode node) {
-		logger.finest("updating node id="
+		logger.trace("updating node id="
 				+ node.getObjectId(getMindMapController()) + " and text:"
 				+ node);
 		int depth = depth(node);
-		logger.finest("COLOR, depth=" + (depth));
+		logger.trace("COLOR, depth=" + (depth));
 		reloadPatterns();
 		int myIndex = patterns.sizePatternList()- 1;
 		if (depth < patterns.sizePatternList())
@@ -399,7 +399,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 	 * )
 	 */
 	public void onAddChildren(MindMapNode newChildNode) {
-		logger.finest("onAddChildren " + newChildNode);
+		logger.trace("onAddChildren " + newChildNode);
 		super.onAddChild(newChildNode);
 		setStyleRecursive(newChildNode);
 	}
@@ -448,7 +448,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 	/**
      */
 	private void setStyleRecursive(MindMapNode node) {
-		logger.finest("setStyle " + node);
+		logger.trace("setStyle " + node);
 		setStyle(node);
 		// recurse:
 		for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext();) {

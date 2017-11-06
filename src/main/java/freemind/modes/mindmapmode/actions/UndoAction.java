@@ -26,7 +26,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.Icon;
 

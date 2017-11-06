@@ -31,7 +31,7 @@ import javax.swing.JButton;
  * @see http://stackoverflow.com/questions/8183949/swing-scale-a-text-font-of-component 
  */
 public class ScalableJButton extends JButton implements ComponentListener {
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 //	int mCurrentSize = 0;
 //	Font mInitialFont = null;
 //	int mInitialHeight;

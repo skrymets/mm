@@ -99,7 +99,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		}
 
 		public void componentResized(ComponentEvent pE) {
-			logger.fine("Component resized " + pE + " old size " + mSize
+			logger.trace("Component resized " + pE + " old size " + mSize
 					+ " new size " + getSize());
 			// int deltaWidth = mSize.width - getWidth();
 			// int deltaHeight = mSize.height - getHeight();
@@ -125,10 +125,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			// if (keys != null) {
 			// for (int i = 0; i < keys.length; i++) {
 			// KeyStroke stroke = keys[i];
-			// logger.fine("Stroke: " + stroke);
+			// logger.trace("Stroke: " + stroke);
 			// }
 			// } else {
-			// logger.fine("No keys in input map");
+			// logger.trace("No keys in input map");
 			// }
 		}
 
@@ -170,7 +170,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			for (NodeView view : selectedCopy) {
 				changeSelection(view, false);
 			}
-			logger.finest("Cleared selected.");
+			logger.trace("Cleared selected.");
 		}
 
 		/**
@@ -193,7 +193,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			}
 			mySelected.remove(node);
 			changeSelection(node, false);
-			logger.finest("Removed focused " + node);
+			logger.trace("Removed focused " + node);
 		}
 
 		public void add(NodeView node) {
@@ -203,7 +203,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			mySelected.add(0, node);
 			addFocusForHooks(node);
 			changeSelection(node, true);
-			logger.finest("Added focused " + node + "\nAll=" + mySelected);
+			logger.trace("Added focused " + node + "\nAll=" + mySelected);
 		}
 
 		private void removeFocusForHooks(NodeView node) {
@@ -240,13 +240,13 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 				add(newSelected);
 			}
 			addFocusForHooks(newSelected);
-			logger.finest("MovedToFront selected " + newSelected + "\nAll="
+			logger.trace("MovedToFront selected " + newSelected + "\nAll="
 					+ mySelected);
 		}
 	}
 
 	// Logging:
-	private static java.util.logging.Logger logger;
+	private static org.slf4j.Logger logger;
 
 	private MindMap model;
 	private NodeView rootView = null;
@@ -393,7 +393,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
 			public Component getDefaultComponent(Container pAContainer) {
 				Component defaultComponent = getSelected();
-				logger.fine("Focus traversal to: " + defaultComponent);
+				logger.trace("Focus traversal to: " + defaultComponent);
 				return defaultComponent;
 			}
 
@@ -570,7 +570,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		JComponent content = node.getContent();
 		Rectangle rect = new Rectangle(content.getWidth() / 2 - d.width / 2,
 				content.getHeight() / 2 - d.height / 2, d.width, d.height);
-		logger.fine("Scroll to " + rect + ", " + this.getPreferredSize());
+		logger.trace("Scroll to " + rect + ", " + this.getPreferredSize());
 
 		// One call of scrollRectToVisible suffices
 		// after patching the FreeMind.java
@@ -710,7 +710,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
 	private NodeView getVisibleNeighbour(int directionCode) {
 		NodeView oldSelected = getSelected();
-		logger.fine("Old selected: " + oldSelected);
+		logger.trace("Old selected: " + oldSelected);
 		NodeView newSelected = null;
 
 		switch (directionCode) {
@@ -749,7 +749,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
 	public void move(KeyEvent e) {
 		NodeView newSelected = getVisibleNeighbour(e.getKeyCode());
-		logger.fine("New selected: " + newSelected);
+		logger.trace("New selected: " + newSelected);
 		if (newSelected != null) {
 			if (!(newSelected == getSelected())) {
 				extendSelectionWithKeyMove(newSelected, e);
@@ -850,7 +850,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	
 	public void select(NodeView node) {
 		if (node == null) {
-			logger.warning("Select with null NodeView called!");
+			logger.warn("Select with null NodeView called!");
 			return;
 		}
 		scrollNodeToVisible(node);
@@ -864,7 +864,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	 * Select the node, resulting in only that one being selected.
 	 */
 	public void selectAsTheOnlyOneSelected(NodeView newSelected) {
-		logger.finest("selectAsTheOnlyOneSelected");
+		logger.trace("selectAsTheOnlyOneSelected");
 		LinkedList<NodeView> oldSelecteds = getSelecteds();
 		// select new node
 		this.selected.clear();
@@ -890,7 +890,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	 * otherwise.
 	 */
 	public void toggleSelected(NodeView newSelected) {
-		logger.finest("toggleSelected");
+		logger.trace("toggleSelected");
 		NodeView oldSelected = getSelected();
 		if (isSelected(newSelected)) {
 			if (selected.size() > 1) {
@@ -911,7 +911,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	 */
 
 	public void makeTheSelected(NodeView newSelected) {
-		logger.finest("makeTheSelected");
+		logger.trace("makeTheSelected");
 		if (isSelected(newSelected)) {
 			selected.moveToFirst(newSelected);
 		} else {
@@ -1137,10 +1137,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			selectedNodes.add( (MindMapNode) it.next().getSecond());
 		}
 
-		// logger.fine("Cutting #" + selectedNodes.size());
+		// logger.trace("Cutting #" + selectedNodes.size());
 		// for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
 		// MindMapNode node = (MindMapNode) it.next();
-		// logger.fine("Cutting " + node);
+		// logger.trace("Cutting " + node);
 		// }
 		return selectedNodes;
 	}
@@ -1276,7 +1276,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		long localTime = System.currentTimeMillis() - startMilli;
 		mPaintingAmount++;
 		mPaintingTime += localTime;
-		logger.fine("End paint of " + getModel().getRestorable() + " in "
+		logger.trace("End paint of " + getModel().getRestorable() + " in "
 				+ localTime + ". Mean time:"
 				+ (mPaintingTime / mPaintingAmount));
 	}
@@ -1347,7 +1347,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		if (LinkAlreadyVisited == null)
 			LinkAlreadyVisited = new HashSet<>();
 		// references first
-		// logger.fine("Searching for links of " +
+		// logger.trace("Searching for links of " +
 		// source.getModel().toString());
 		// paint own labels:
 		Vector<MindMapLink> vec = getModel().getLinkRegistry()
@@ -1413,7 +1413,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			boundingRectangle = getInnerBounds();
 			fitToPage = Resources.getInstance().getBoolProperty("fit_to_page");
 		} else {
-			logger.warning("Called preparePrinting although isPrinting is true.");
+			logger.warn("Called preparePrinting although isPrinting is true.");
 		}
 	}
 
@@ -1444,7 +1444,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 				repaintSelecteds();
 			}
 		} else {
-			logger.warning("Called endPrinting although isPrinting is false.");
+			logger.warn("Called endPrinting although isPrinting is false.");
 		}
 	}
 
@@ -1650,7 +1650,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		}
 		selectedsValid = true;
 		// Keep selected nodes
-		logger.finest("validateSelecteds");
+		logger.trace("validateSelecteds");
 		ArrayList<NodeView> selectedNodes = new ArrayList<>();
 		for (NodeView nodeView : getSelecteds()) {
 			if (nodeView != null) {

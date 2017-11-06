@@ -58,12 +58,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -91,6 +85,8 @@ import freemind.modes.ModeController;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
@@ -152,8 +148,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     public static final String RESOURCES_DELETE_NODES_WITHOUT_QUESTION = "delete_nodes_without_question";
 
     public static final String RESOURCES_RELOAD_FILES_WITHOUT_QUESTION = "reload_files_without_question";
-
-    private Logger logger = null;
 
     protected static final VersionInformation VERSION = new VersionInformation("1.1.0 Beta 2");
 
@@ -262,7 +256,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private FreeMindCommon mFreeMindCommon;
 
-    private static FileHandler mFileHandler;
     private static boolean mFileHandlerError = false;
 
     /**
@@ -287,6 +280,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     private Vector<Logger> mLoggerList = new Vector<>();
 
     private static LogFileLogHandler sLogFileHandler;
+
+    private Logger logger;
 
     public FreeMind(Properties pDefaultPreferences,
             Properties pUserPreferences, File pAutoPropertiesFile) {
@@ -595,7 +590,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                 URI uri = new URI(url.toString().replaceAll("^file:////", "file://"));
                 desktop.browse(uri);
             } catch (Exception e) {
-                logger.severe("Caught: " + e);
+                logger.error("Caught: " + e);
             }
         }
     }
@@ -628,66 +623,12 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     public Logger getLogger(String forClass) {
-        Logger loggerForClass = java.util.logging.Logger.getLogger(forClass);
-        mLoggerList.add(loggerForClass);
-        if (mFileHandler == null && !mFileHandlerError) {
-            // initialize handlers using an old System.err:
-            final Logger parentLogger = loggerForClass.getParent();
-            final Handler[] handlers = parentLogger.getHandlers();
-            for (int i = 0; i < handlers.length; i++) {
-                final Handler handler = handlers[i];
-                if (handler instanceof ConsoleHandler) {
-                    parentLogger.removeHandler(handler);
-                }
-            }
-
-            try {
-                mFileHandler = new FileHandler(getFreemindDirectory()
-                        + File.separator + LOG_FILE_NAME, 1400000, 5, false);
-                mFileHandler.setFormatter(new StdFormatter());
-                mFileHandler.setLevel(Level.INFO);
-                parentLogger.addHandler(mFileHandler);
-
-                final ConsoleHandler stdConsoleHandler = new ConsoleHandler();
-                stdConsoleHandler.setFormatter(new StdFormatter());
-                stdConsoleHandler.setLevel(Level.WARNING);
-                parentLogger.addHandler(stdConsoleHandler);
-
-                sLogFileHandler = new LogFileLogHandler();
-                sLogFileHandler.setFormatter(new SimpleFormatter());
-                sLogFileHandler.setLevel(Level.INFO);
-
-                LoggingOutputStream los;
-                Logger logger = Logger.getLogger(StdFormatter.STDOUT.getName());
-                los = new LoggingOutputStream(logger, StdFormatter.STDOUT);
-                System.setOut(new PrintStream(los, true));
-
-                logger = Logger.getLogger(StdFormatter.STDERR.getName());
-                los = new LoggingOutputStream(logger, StdFormatter.STDERR);
-                System.setErr(new PrintStream(los, true));
-
-            } catch (Exception e) {
-                System.err.println("Error creating logging File Handler");
-                e.printStackTrace();
-                mFileHandlerError = true;
-                // to avoid infinite recursion.
-                // freemind.main.Resources.getInstance().logExecption(e);
-            }
-        }
-        if (sLogFileHandler != null) {
-            loggerForClass.addHandler(sLogFileHandler);
-        }
-        return loggerForClass;
+        return LoggerFactory.getLogger(forClass);
     }
 
-    public static void main(final String[] args,
-            Properties pDefaultPreferences, Properties pUserPreferences,
-            File pAutoPropertiesFile) {
+    public void go(String[] args) {
         try {
-
-            final FreeMind frame = new FreeMind(pDefaultPreferences,
-                    pUserPreferences, pAutoPropertiesFile);
-            int scale = frame.getIntProperty(SCALING_FACTOR_PROPERTY, 100);
+            int scale = this.getIntProperty(SCALING_FACTOR_PROPERTY, 100);
             if (scale != 100) {
                 Tools.scaleAllFonts(scale / 100f);
                 Font SEGOE_UI_PLAIN_12 = new Font("Segoe UI", Font.PLAIN,
@@ -700,42 +641,42 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                         SEGOE_UI_PLAIN_12);
             }
             IFreeMindSplash splash = null;
-            frame.checkForAnotherInstance(args);
-            frame.initServer();
+            this.checkForAnotherInstance(args);
+            this.initServer();
             final FeedBack feedBack;
-            splash = new FreeMindSplashModern(frame);
+            splash = new FreeMindSplashModern(this);
             splash.setVisible(true);
             feedBack = splash.getFeedBack();
-            frame.mWindowIcon = splash.getWindowIcon();
+            this.mWindowIcon = splash.getWindowIcon();
 
-            feedBack.setMaximumValue(10 + frame.getMaximumNumberOfMapsToLoad(args));
-            frame.init(feedBack);
+            feedBack.setMaximumValue(10 + this.getMaximumNumberOfMapsToLoad(args));
+            this.init(feedBack);
 
             feedBack.increase("FreeMind.progress.startCreateController", null);
-            final ModeController ctrl = frame.createModeController(args);
+            final ModeController ctrl = this.createModeController(args);
 
             feedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS, null);
 
-            frame.loadMaps(args, ctrl, feedBack);
+            this.loadMaps(args, ctrl, feedBack);
 
             Tools.waitForEventQueue();
             feedBack.increase("FreeMind.progress.endStartup", null);
             // focus fix after startup.
-            frame.addWindowFocusListener(new WindowFocusListener() {
+            this.addWindowFocusListener(new WindowFocusListener() {
 
                 public void windowLostFocus(WindowEvent e) {
                 }
 
                 public void windowGainedFocus(WindowEvent e) {
-                    frame.getController().obtainFocusForSelected();
-                    frame.removeWindowFocusListener(this);
+                    FreeMind.this.getController().obtainFocusForSelected();
+                    FreeMind.this.removeWindowFocusListener(this);
                 }
             });
-            frame.setVisible(true);
+            this.setVisible(true);
             if (splash != null) {
                 splash.setVisible(false);
             }
-            frame.fireStartupDone();
+            this.fireStartupDone();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,
@@ -743,6 +684,13 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     "Startup problem", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
+
+    }
+
+    public static void main(final String[] args, Properties pDefaultPreferences, Properties pUserPreferences, File pAutoPropertiesFile) {
+
+        final FreeMind frame = new FreeMind(pDefaultPreferences, pUserPreferences, pAutoPropertiesFile);
+        frame.go(args);
     }
 
     private void setupSpellChecking() {
@@ -1127,9 +1075,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     private boolean processLoadEventFromStartupPhase(String propertyKey) {
         String filename = getProperty(propertyKey);
         try {
-            if (logger.isLoggable(Level.INFO)) {
-                logger.info("Loading " + filename);
-            }
             controller.getModeController().load(
                     Tools.fileToUrl(new File(filename)));
             // remove temporary property because we do not want to store in a
@@ -1177,7 +1122,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         } else if (Tools.safeEquals(splitProperty, VERTICAL_SPLIT_BELOW)) {
             // default
         } else {
-            logger.warning("Split type not known: " + splitProperty);
+            logger.warn("Split type not known: " + splitProperty);
         }
         mSplitPane = new JSplitPane(splitType, mScrollPane, pMindMapComponent);
         mSplitPane.setContinuousLayout(true);

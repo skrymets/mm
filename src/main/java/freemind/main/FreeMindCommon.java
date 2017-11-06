@@ -34,7 +34,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 /**
  * @author foltin
@@ -82,7 +82,7 @@ public class FreeMindCommon {
 				defaultResources = getLanguageResources(DEFAULT_LANGUAGE);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
-				logger.severe("Error loading Resources");
+				logger.error("Error loading Resources");
 			}
 			// printResourceTable();
 		}
@@ -133,7 +133,7 @@ public class FreeMindCommon {
 					// private string, only translate on demand
 					return key;
 				} else {
-					logger.severe("Warning - resource string not found:\n" + key);
+					logger.error("Warning - resource string not found:\n" + key);
 					return defaultResources.getString(key) + POSTFIX_TRANSLATE_ME;
 				}
 			}

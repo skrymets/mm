@@ -134,7 +134,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	private static final boolean ALLOWSCHILDREN = true;
 	private HistoryInformation historyInformation = null;
 	// Logging:
-	static protected java.util.logging.Logger logger;
+	static protected org.slf4j.Logger logger;
 	private MindMap map = null;
 	private String noteText;
 	private String xmlNoteText;
@@ -794,7 +794,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	// other)?
 
 	public void insert(MutableTreeNode child, int index) {
-		logger.finest("Insert at " + index + " the node " + child);
+		logger.trace("Insert at " + index + " the node " + child);
 		final MindMapNode childNode = (MindMapNode) child;
 		if (index < 0) { // add to the end (used in xml load) (PN)
 			index = getChildCount();
@@ -1012,7 +1012,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		hooks.remove(hook);
 		if (hooks.size() == 0)
 			hooks = null;
-		logger.fine("Removed hook " + name + " at " + hook + ".");
+		logger.trace("Removed hook " + name + " at " + hook + ".");
 	}
 
 	public void removeAllHooks() {

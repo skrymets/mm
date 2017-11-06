@@ -24,7 +24,7 @@ package freemind.modes.mindmapmode.actions;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

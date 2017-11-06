@@ -182,7 +182,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	private void nodeRefresh(MindMapNode node, boolean isUpdate) {
-		logger.finest("nodeChanged called for node " + node + " parent="
+		logger.trace("nodeChanged called for node " + node + " parent="
 				+ node.getParentNode());
 		if (isUpdate) {
 			// update modification times:
@@ -238,7 +238,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				hook.onLostFocusNode(node);
 			}
 		} catch (RuntimeException e) {
-			logger.log(Level.SEVERE, "Error in node selection listeners", e);
+			logger.info("Error in node selection listeners", e);
 		}
 
 	}
@@ -256,7 +256,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				hook.onFocusNode(node);
 			}
 		} catch (RuntimeException e) {
-			logger.log(Level.SEVERE, "Error in node selection listeners", e);
+			logger.info("Error in node selection listeners", e);
 		}
 
 	}
@@ -268,7 +268,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				listener.onSelectionChange(pNode, pIsSelected);
 			}
 		} catch (RuntimeException e) {
-			logger.log(Level.SEVERE, "Error in node selection listeners", e);
+			logger.info("Error in node selection listeners", e);
 		}
 
 	}
@@ -500,7 +500,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				absolute = Tools.fileToUrl(new File(relative));
 			} else if (relative.startsWith("#")) {
 				// inner map link, fc, 12.10.2004
-				logger.finest("found relative link to " + relative);
+				logger.trace("found relative link to " + relative);
 				String target = relative.substring(1);
 				try {
 					centerNode(getNodeFromID(target));
@@ -672,7 +672,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 					file.getName());
 			getController().errorMessage(message);
 		} catch (Exception e) {
-			logger.severe("Error in MindMapMapModel.save(): ");
+			logger.error("Error in MindMapMapModel.save(): ");
 			freemind.main.Resources.getInstance().logException(e);
 		} finally {
 			setWaitingCursor(false);
@@ -701,7 +701,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		JMenuItem item = holder.addAction(action, category);
 		if (keystroke != null) {
 			String keyProperty = getFrame().getAdjustableProperty(keystroke);
-			logger.finest("Found key stroke: " + keyProperty);
+			logger.trace("Found key stroke: " + keyProperty);
 			item.setAccelerator(KeyStroke.getKeyStroke(keyProperty));
 		}
 		return item;

@@ -21,7 +21,7 @@
 package freemind.controller;
 
 import java.awt.Insets;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 @SuppressWarnings("serial")
 public class MainToolBar extends FreeMindToolBar {

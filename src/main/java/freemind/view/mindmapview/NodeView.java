@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;

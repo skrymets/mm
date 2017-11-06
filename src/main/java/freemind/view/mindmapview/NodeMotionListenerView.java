@@ -40,7 +40,7 @@ import freemind.main.Tools;
  */
 @SuppressWarnings("serial")
 public class NodeMotionListenerView extends JComponent {
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	public NodeMotionListenerView(NodeView view) {
 		super();
 		if (logger == null) {

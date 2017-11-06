@@ -54,7 +54,7 @@ public class CreationModificationPlugin extends PermanentMindMapNodeHookAdapter 
 		MessageFormat formatter = new MessageFormat(tooltipFormat);
 		String message = formatter.format(messageArguments);
 		setToolTip(node, getName(), message);
-		logger.finest(this + "Tooltip for " + node + " with parent "
+		logger.trace(this + "Tooltip for " + node + " with parent "
 				+ node.getParentNode() + " is " + message);
 	}
 
@@ -117,7 +117,7 @@ public class CreationModificationPlugin extends PermanentMindMapNodeHookAdapter 
 	/**
 	 */
 	private void setStyleRecursive(MindMapNode node) {
-		logger.finest("setStyle " + node);
+		logger.trace("setStyle " + node);
 		setStyle(node);
 		// recurse:
 		for (Iterator<MindMapNode> i = node.childrenFolded(); i.hasNext();) {

@@ -50,7 +50,7 @@ public class ImportWizard {
 	public final String lookFor = ".xml";
 	/** Stores the list of all classes in the classpath */
 	public Vector<String> CLASS_LIST = new Vector<>(500);
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	public ImportWizard() {
 		if (logger == null) {
@@ -86,7 +86,7 @@ public class ImportWizard {
 				String key = classPathFile.getCanonicalPath();
 				if (foundPlugins.contains(key))
 					continue;
-				logger.fine("looking for plugins in " + key);
+				logger.trace("looking for plugins in " + key);
 				foundPlugins.add(key);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -95,13 +95,13 @@ public class ImportWizard {
 			if (classPathFile.exists()) {
 				String lowerCaseFileName = classPathEntry.toLowerCase();
 				if (lowerCaseFileName.endsWith(".jar")) {
-					logger.fine("searching for plugins in: " + classPathEntry);
+					logger.trace("searching for plugins in: " + classPathEntry);
 					addClassesFromZip(CLASS_LIST, classPathFile);
 				} else if (lowerCaseFileName.endsWith(".zip")) {
-					logger.fine("searching for plugins in: " + classPathEntry);
+					logger.trace("searching for plugins in: " + classPathEntry);
 					addClassesFromZip(CLASS_LIST, classPathFile);
 				} else if (classPathFile.isDirectory()) {
-					logger.fine("searching for plugins in: " + classPathEntry);
+					logger.trace("searching for plugins in: " + classPathEntry);
 					addClassesFromDir(CLASS_LIST, classPathFile, classPathFile,
 							0);
 				}
@@ -171,12 +171,12 @@ public class ImportWizard {
 		if (files != null) {
 			for (int i = 0; i < files.length; i++) {
 				String current = files[i];
-				logger.fine("looking at: " + current);
+				logger.trace("looking at: " + current);
 				if (isInteresting(current)) {
 					String rootPath = rootDir.getPath();
 					String currentPath = currentDir.getPath();
 					if (!currentPath.startsWith(rootPath)) {
-						logger.severe("currentPath doesn't start with rootPath!\n"
+						logger.error("currentPath doesn't start with rootPath!\n"
 								+ "rootPath: "
 								+ rootPath
 								+ "\n"

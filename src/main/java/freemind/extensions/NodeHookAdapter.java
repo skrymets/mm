@@ -47,7 +47,7 @@ public abstract class NodeHookAdapter extends HookAdapter implements NodeHook {
 	 * @see freemind.modes.NodeHook#invoke()
 	 */
 	public void invoke(MindMapNode node) {
-		logger.finest("invoke(node) called.");
+		logger.trace("invoke(node) called.");
 	}
 
 	/**

@@ -52,7 +52,7 @@ import freemind.main.Tools;
  * 
  */
 public class ExportToOoWriter extends ExportHook {
-	private static java.util.logging.Logger logger = null;
+	private static org.slf4j.Logger logger = null;
 
 	/**
 	 * 
@@ -107,7 +107,7 @@ public class ExportToOoWriter extends ExportHook {
 			Result result) throws IOException {
 		URL xsltUrl = getResource(xsltFileName);
 		if (xsltUrl == null) {
-			logger.severe("Can't find " + xsltFileName + " as resource.");
+			logger.error("Can't find " + xsltFileName + " as resource.");
 			throw new IllegalArgumentException("Can't find " + xsltFileName
 					+ " as resource.");
 		}
@@ -175,17 +175,17 @@ public class ExportToOoWriter extends ExportHook {
 		// Copies src file to dst file.
 		// If the dst file does not exist, it is created
 		try {
-			logger.finest("searching for " + fileName);
+			logger.trace("searching for " + fileName);
 			URL resource = getResource(fileName);
 			if (resource == null) {
-				logger.severe("Cannot find resource: " + fileName);
+				logger.error("Cannot find resource: " + fileName);
 				return false;
 			}
 			InputStream in = resource.openStream();
 			Tools.copyStream(in, out, false);
 			return true;
 		} catch (Exception e) {
-			logger.severe("File not found or could not be copied. "
+			logger.error("File not found or could not be copied. "
 					+ "Was earching for " + fileName + " and should go to "
 					+ out);
 			freemind.main.Resources.getInstance().logException(e);

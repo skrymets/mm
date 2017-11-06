@@ -370,7 +370,7 @@ public class NodeAttributeTableRegistration implements HookRegistration,
 	
 	private final MindMapController controller;
 
-	private final java.util.logging.Logger logger;
+	private final org.slf4j.Logger logger;
 
 	private boolean mSplitPaneVisible = false;
 
@@ -462,13 +462,13 @@ public class NodeAttributeTableRegistration implements HookRegistration,
         {
             public void mousePressed(MouseEvent e)
             {
-            	logger.fine("pressed");
+            	logger.trace("pressed");
             	showPopup(e);
             }
 
             public void mouseReleased(MouseEvent e)
             {
-            	logger.fine("released");
+            	logger.trace("released");
                 showPopup(e);
             }
 

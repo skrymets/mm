@@ -48,7 +48,7 @@ public class ActionRegistry {
 	/** HashMap of Action class -> actor instance. */
 	private HashMap<Class<?>, ActorXml> registeredActors;
 	private UndoActionHandler undoActionHandler;
-	private static java.util.logging.Logger logger = null;
+	private static org.slf4j.Logger logger = null;
 
 	/**
 	 *

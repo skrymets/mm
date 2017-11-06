@@ -164,5 +164,5 @@ public class ExportBranchAction extends MindmapAction {
 
 }
 
-// private static java.util.logging.Logger logger =
+// private static org.slf4j.Logger logger =
 // freemind.main.Resources.getInstance().getLogger(ExportBranchAction.class.getName());

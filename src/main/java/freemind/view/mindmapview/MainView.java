@@ -44,7 +44,7 @@ public abstract class MainView extends JLabel {
 	static Dimension minimumSize = new Dimension(0, 0);
 	static Dimension maximumSize = new Dimension(Integer.MAX_VALUE,
 			Integer.MAX_VALUE);
-	private static java.util.logging.Logger logger = null;
+	private static org.slf4j.Logger logger = null;
 	private static final int MIN_HOR_NODE_SIZE = 10;
 
 	int getZoomedFoldingSymbolHalfWidth() {

@@ -28,7 +28,6 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -39,6 +38,7 @@ import javax.swing.JSplitPane;
 import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.view.mindmapview.MapView;
+import org.slf4j.Logger;
 
 public interface FreeMindMain {
 	public interface StartupDoneListener {
@@ -230,7 +230,7 @@ public interface FreeMindMain {
 	public VersionInformation getFreemindVersion();
 
 	/** To obtain a logging element, ask here. */
-	public java.util.logging.Logger getLogger(String forClass);
+	public Logger getLogger(String forClass);
 
 	/**
 	 * Inserts a (south) component into the split pane. If the screen isn't

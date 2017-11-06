@@ -35,7 +35,7 @@ public class PrintActionHandler implements ActionHandler {
 	private MindMapController c;
 
 	// Logging:
-	private static java.util.logging.Logger logger;
+	private static org.slf4j.Logger logger;
 
 	/**
 	 *

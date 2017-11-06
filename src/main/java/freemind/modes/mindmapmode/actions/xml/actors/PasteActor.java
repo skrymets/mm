@@ -71,7 +71,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
  */
 public class PasteActor extends XmlActorAdapter {
 
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	/**
 	 * @param pMapFeedback
@@ -127,9 +127,9 @@ public class PasteActor extends XmlActorAdapter {
 			pUndoAction.setNode(targetId);
 			pUndoAction.setAsSibling(coord.asSibling);
 			pUndoAction.setIsLeft(coord.isLeft);
-			if(logger.isLoggable(Level.FINE)) {
+			if(logger.isTraceEnabled()) {
 				String s = Tools.marshall(pUndoAction);
-				logger.fine("Undo action: " + s);
+				logger.trace("Undo action: " + s);
 			}
 		}
 		return pasteAction;
@@ -195,7 +195,7 @@ public class PasteActor extends XmlActorAdapter {
 				return (MindMapNode) parentNode.getChildAt(parentNode
 						.getChildPosition(target) - 1);
 			} else {
-				logger.finest("getChildCount = " + target.getChildCount()
+				logger.trace("getChildCount = " + target.getChildCount()
 						+ ", target = " + target);
 				return (MindMapNode) target
 						.getChildAt(target.getChildCount() - 1);
@@ -358,7 +358,7 @@ public class PasteActor extends XmlActorAdapter {
 			// why.
 			// { Alternative pasting of HTML
 			setWaitingCursor(true);
-			logger.finer("directHtmlFlavor (original): " + textFromClipboard);
+			logger.trace("directHtmlFlavor (original): " + textFromClipboard);
 			textFromClipboard = textFromClipboard
 					.replaceAll("(?i)(?s)<meta[^>]*>", "")
 					.replaceAll("(?i)(?s)<head>.*?</head>", "")
@@ -380,7 +380,7 @@ public class PasteActor extends XmlActorAdapter {
 					// <o> tag.
 					replaceAll("(?i)(?s)</?o[^>]*>", "");
 			textFromClipboard = "<html><body>"+textFromClipboard + "</body></html>"; 
-			logger.finer("directHtmlFlavor: " + textFromClipboard);
+			logger.trace("directHtmlFlavor: " + textFromClipboard);
 			if (Resources.getInstance().getBoolProperty(
 					FreeMind.RESOUCES_PASTE_HTML_STRUCTURE)) {
 				HtmlTools.getInstance().insertHtmlIntoNodes(textFromClipboard,
@@ -534,7 +534,7 @@ public class PasteActor extends XmlActorAdapter {
 			MindMapNode target, boolean asSibling, boolean changeSide,
 			boolean isLeft, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException {
 		// Call nodeStructureChanged(target) after this function.
-		logger.fine("Pasting " + pasted + " to " + target);
+		logger.trace("Pasting " + pasted + " to " + target);
 		try {
 			MindMapNodeModel node = (MindMapNodeModel) getExMapFeedback().getMap()
 					.createNodeTreeFromXml(new StringReader(pasted), pIDToTarget);

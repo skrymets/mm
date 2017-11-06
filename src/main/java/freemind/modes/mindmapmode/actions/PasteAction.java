@@ -33,7 +33,7 @@ import freemind.modes.mindmapmode.MindMapController;
 @SuppressWarnings("serial")
 public class PasteAction extends AbstractAction {
 
-	private static java.util.logging.Logger logger;
+	private static org.slf4j.Logger logger;
 	private final MindMapController mMindMapController;
 
 	public PasteAction(MindMapController pMindMapController) {

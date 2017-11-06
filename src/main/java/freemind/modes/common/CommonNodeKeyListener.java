@@ -22,7 +22,7 @@ package freemind.modes.common;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.KeyStroke;
 
@@ -91,7 +91,7 @@ public class CommonNodeKeyListener implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		logger.finest("Key pressend " + e.getKeyChar() + " alias " + e.getKeyCode());
+		logger.trace("Key pressend " + e.getKeyChar() + " alias " + e.getKeyCode());
 		// add to check meta keydown by koh 2004.04.16
 		if (e.isAltDown() || e.isControlDown() || e.isMetaDown()) {
 			return;
@@ -135,7 +135,7 @@ public class CommonNodeKeyListener implements KeyListener {
 		// printable key creates new node in edit mode (PN)
 		if (!disabledKeyType) {
 			if (!e.isActionKey() && e.getKeyChar() != KeyEvent.CHAR_UNDEFINED) {
-				logger.finest("Starting edit mode with: " + e.getKeyChar());
+				logger.trace("Starting edit mode with: " + e.getKeyChar());
 				editHandler.edit(e, keyTypeAddsNew, false);
 				return; // do not process the (sdfe) navigation
 			}

@@ -54,7 +54,7 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
 	private boolean isDecrypted = false;
 
 	// Logging:
-	static protected java.util.logging.Logger logger;
+	static protected org.slf4j.Logger logger;
 
 	private final MapFeedback mMapFeedback;
 
@@ -114,7 +114,7 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
 		// and now? paste it:
 		for (int i = childs.length - 1; i >= 0; i--) {
 			String string = childs[i];
-			logger.finest("Decrypted '" + string + "'.");
+			logger.trace("Decrypted '" + string + "'.");
 			// if the encrypted node is empty, we skip the insert.
 			if (string.length() == 0)
 				continue;

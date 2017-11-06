@@ -43,7 +43,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements
 		FreeMindFileDialog {
 
 	private static final String APPLE_AWT_FILE_DIALOG_FOR_DIRECTORIES = "apple.awt.fileDialogForDirectories";
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	private final static class NullFilter extends FileFilter {
 

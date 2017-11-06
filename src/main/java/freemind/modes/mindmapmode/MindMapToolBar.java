@@ -79,7 +79,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	private JColorCombo colorCombo;
 	private int userDefinedCounter = 1;
 
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	
 	public MindMapToolBar(MindMapController controller) {
 		super();
@@ -273,7 +273,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	 * @see freemind.controller.ZoomListener#setZoom(float)
 	 */
 	public void setZoom(float f) {
-		logger.fine("setZoomComboBox is called with " + f + ".");
+		logger.trace("setZoomComboBox is called with " + f + ".");
 		String toBeFound = getItemForZoom(f);
 		for (int i = 0; i < zoom.getItemCount(); ++i) {
 			if (toBeFound.equals((String) zoom.getItemAt(i))) {

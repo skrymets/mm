@@ -36,7 +36,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;

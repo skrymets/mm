@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -43,6 +43,7 @@ import freemind.main.FreeMindStarter;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.view.mindmapview.MapView;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -182,7 +183,7 @@ public class FreeMindMainMock implements FreeMindMain {
     }
 
     public Logger getLogger(String forClass) {
-        return java.util.logging.Logger.getLogger(forClass);
+        return LoggerFactory.getLogger(forClass);
     }
 
     public ClassLoader getFreeMindClassLoader() {

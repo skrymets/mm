@@ -42,6 +42,7 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
+import org.slf4j.Logger;
 
 /**
  * Changes the root node to another one What happens with clouds? This is ok, as
@@ -82,7 +83,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
 
 		private final MindMap mMap;
 
-		private final java.util.logging.Logger logger;
+		private final Logger logger;
 
 		public Registration(ModeController controller, MindMap map) {
 			this.controller = (MindMapController) controller;
@@ -151,7 +152,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
 				MapView view = controller.getView();
 				while (!nodes.isEmpty()) {
 					MindMapNode child = (MindMapNode) nodes.firstElement();
-					logger.fine("Removing viewers for " + child);
+					logger.trace("Removing viewers for " + child);
 					nodes.remove(0);
 					nodes.addAll(child.getChildren());
 					Collection<NodeView> viewers = new Vector<>(view.getViewers(child));
@@ -172,7 +173,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
 				mapView.add(mapView.getRoot());
 				mapView.doLayout();
 				controller.nodeChanged(focussed);
-				logger.fine("layout done.");
+				logger.trace("layout done.");
 				controller.select(focussed,
 						Tools.getVectorWithSingleElement(focussed));
 				controller.centerNode(focussed);

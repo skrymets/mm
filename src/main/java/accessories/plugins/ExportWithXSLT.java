@@ -297,7 +297,7 @@ public class ExportWithXSLT extends ExportHook {
 		// search for xslt file:
 		URL xsltUrl = getResource(xsltFileName);
 		if (xsltUrl == null) {
-			logger.severe("Can't find " + xsltFileName + " as resource.");
+			logger.error("Can't find " + xsltFileName + " as resource.");
 			throw new IllegalArgumentException("Can't find " + xsltFileName
 					+ " as resource.");
 		}

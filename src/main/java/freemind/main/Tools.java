@@ -132,7 +132,7 @@ public class Tools {
      */
     public static final String FREEMIND_LIB_FREEMIND_JAR = "lib/freemind.jar";
 
-    private static java.util.logging.Logger logger = null;
+    private static org.slf4j.Logger logger = null;
 
     static {
         logger = freemind.main.Resources.getInstance().getLogger("Tools");
@@ -1025,7 +1025,7 @@ public class Tools {
     public static Reader getUpdateReader(Reader pReader, String xsltScript) throws IOException {
         StringWriter writer = null;
         InputStream inputStream = null;
-        final java.util.logging.Logger logger = Resources.getInstance().getLogger(Tools.class
+        final org.slf4j.Logger logger = Resources.getInstance().getLogger(Tools.class
                 .getName());
         logger.info("Updating the reader " + pReader
                 + " to the current version.");
@@ -1618,7 +1618,7 @@ public class Tools {
             }  
                 );
 			} else {
-				logger.warning("Can't wait for event queue, if I'm inside this queue!");
+				logger.warn("Can't wait for event queue, if I'm inside this queue!");
             }
         } catch (Exception e) {
             freemind.main.Resources.getInstance().logException(e);
@@ -1968,7 +1968,7 @@ public class Tools {
             StringTokenizer tokenizer = new StringTokenizer(
                     pPageFormatProperty, ";");
             if (tokenizer.countTokens() != 6) {
-                logger.warning("Page format property has not the correct format:"
+                logger.warn("Page format property has not the correct format:"
                         + pPageFormatProperty);
                 return;
             }
@@ -2093,16 +2093,14 @@ public class Tools {
         String decodedPath = URLDecoder.decode(path, "UTF-8");
         logger.info("Path: " + decodedPath);
         if (decodedPath.endsWith(CONTENTS_JAVA_FREEMIND_JAR)) {
-            decodedPath = decodedPath.substring(0, decodedPath.length()
-                    - CONTENTS_JAVA_FREEMIND_JAR.length());
+            decodedPath = decodedPath.substring(0, decodedPath.length() - CONTENTS_JAVA_FREEMIND_JAR.length());
             decodedPath = decodedPath + FREE_MIND_APP_CONTENTS_RESOURCES_JAVA;
             logger.info("macPath: " + decodedPath);
         } else if (decodedPath.endsWith(FREEMIND_LIB_FREEMIND_JAR)) {
-            decodedPath = decodedPath.substring(0, decodedPath.length()
-                    - FREEMIND_LIB_FREEMIND_JAR.length());
+            decodedPath = decodedPath.substring(0, decodedPath.length() - FREEMIND_LIB_FREEMIND_JAR.length());
             logger.info("reducded Path: " + decodedPath);
         }
-        return decodedPath;
+        return decodedPath + "dictionaries/";
     }
 
     public static Properties copyChangedProperties(Properties props2,

@@ -113,9 +113,9 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements
 		values.put(XML_STORAGE_CLONE_ID, mCloneId);
 		String cloneItselfValue = getCloneItselfValue();
 		values.put(XML_STORAGE_CLONE_ITSELF, cloneItselfValue);
-		logger.finest("Saved mCloneItself to " + cloneItselfValue);
+		logger.trace("Saved mCloneItself to " + cloneItselfValue);
 		saveNameValuePairs(values, xml);
-		logger.fine("Saved clone plugin");
+		logger.trace("Saved clone plugin");
 	}
 
 	protected String getCloneItselfValue() {
@@ -153,11 +153,11 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements
 		} else {
 			mCloneItself = Boolean.FALSE;
 		}
-		logger.finest("Loaded mCloneItself to " + mCloneItself);
+		logger.trace("Loaded mCloneItself to " + mCloneItself);
 	}
 
 	public void shutdownMapHook() {
-		logger.fine("Shutdown of clones");
+		logger.trace("Shutdown of clones");
 		deregisterPlugin();
 		super.shutdownMapHook();
 	}
@@ -172,7 +172,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements
 		 */
 		MindMapNode originalNode = getNode();
 		HashSet<MindMapNode> cloneNodes = getCloneNodes();
-		logger.fine("Invoke shadow class with orig: "
+		logger.trace("Invoke shadow class with orig: "
 				+ printNodeId(originalNode) + " and clones "
 				+ printNodeIds(cloneNodes));
 		// check for error case that clones are descendant of one another.

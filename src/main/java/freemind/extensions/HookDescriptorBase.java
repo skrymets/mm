@@ -44,7 +44,7 @@ public class HookDescriptorBase {
 	public static final String FREEMIND_BASE_DIR_STRING = "${freemind.base.dir}";
 
 	// Logging:
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	protected final Plugin pluginBase;
 

@@ -25,7 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import freemind.controller.Controller;
 import freemind.main.XMLParseException;
@@ -52,9 +52,9 @@ public class MindMapMode extends Mode {
 	}
 
 	public ModeController createModeController() {
-		logger.finest("Creating new MindMapController...");
+		logger.trace("Creating new MindMapController...");
 		MindMapController mindMapController = new MindMapController(this);
-		logger.finest("Creating new MindMapController. Done:"
+		logger.trace("Creating new MindMapController. Done:"
 				+ mindMapController);
 		return mindMapController;
 	}

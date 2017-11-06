@@ -121,7 +121,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 
 		private final MindMapController controller;
 
-		private final java.util.logging.Logger logger;
+		private final org.slf4j.Logger logger;
 
 		public Registration(ModeController controller, MindMap map) {
 			this.controller = (MindMapController) controller;
@@ -244,7 +244,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 		}
 		final boolean fChangeModule = changeModule;
 		final MapModule fNewModule = newModule;
-		logger.finest("Selecting " + toBeSelected + " at pos "
+		logger.trace("Selecting " + toBeSelected + " at pos "
 				+ sCurrentPosition);
 		sPreventRegistration = true;
 		/***********************************************************************
@@ -258,7 +258,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 					boolean res = mainController.getMapModuleManager()
 							.changeToMapModule(fNewModule.toString());
 					if (!res) {
-						logger.warning("Can't change to map module "
+						logger.warn("Can't change to map module "
 								+ fNewModule);
 						sPreventRegistration = false;
 						return;

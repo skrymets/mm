@@ -24,7 +24,7 @@ package accessories.plugins;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.FormatNodeAction;

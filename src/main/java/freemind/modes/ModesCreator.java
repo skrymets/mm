@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import freemind.controller.Controller;
 
@@ -94,7 +94,7 @@ public class ModesCreator {
 				logger.info("Done: Initializing mode " + modeAlias);
 				mCreatedModes.put(modeName, mode);
 			} catch (Exception ex) {
-				logger.severe("Mode " + modeName + " could not be loaded.");
+				logger.error("Mode " + modeName + " could not be loaded.");
 				freemind.main.Resources.getInstance().logException(ex);
 			}
 		}

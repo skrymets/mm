@@ -27,7 +27,7 @@ package freemind.modes.mindmapmode.actions;
 
 import java.awt.event.ActionEvent;
 import java.util.ListIterator;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.Action;
 
@@ -62,7 +62,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 				modeController.getResource(iconPath)) : null, modeController);
 		this.modeController = modeController;
 		if (textID != null) {
-			setName(modeController.getText(textID));
+ 			this.setName(modeController.getText(textID));
 		}
 
 		this.singleNodeOperation = null;

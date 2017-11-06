@@ -24,7 +24,7 @@ package freemind.modes.mindmapmode.actions;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.Action;
 import javax.swing.Icon;

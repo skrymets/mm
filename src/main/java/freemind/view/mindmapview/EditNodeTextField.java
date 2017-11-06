@@ -78,7 +78,7 @@ public class EditNodeTextField extends EditNodeBase {
 	protected JTextField textfield;
 	protected JComponent mParent;
 	private final JComponent mFocusListener;
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	private Tools.IntHolder mEventSource;
 	private UndoManager mUndoManager;
 

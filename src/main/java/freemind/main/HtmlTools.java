@@ -26,7 +26,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,7 +85,7 @@ public class HtmlTools {
 		if (!isHtmlNode(htmlText)) {
 			return null;
 		}
-		logger.fine("Enter toXhtml with " + htmlText);
+		logger.trace("Enter toXhtml with " + htmlText);
 		StringReader reader = new StringReader(htmlText);
 		StringWriter writer = new StringWriter();
 		try {
@@ -93,7 +93,7 @@ public class HtmlTools {
 			String resultXml = writer.toString();
 			// for safety:
 			if (isWellformedXml(resultXml)) {
-				logger.fine("Leave toXhtml with " + resultXml);
+				logger.trace("Leave toXhtml with " + resultXml);
 				return resultXml;
 			}
 		} catch (IOException e) {
@@ -103,7 +103,7 @@ public class HtmlTools {
 		}
 		// fallback:
 		String fallbackText = removeAllTagsFromString(htmlText);
-		logger.fine("Leave toXhtml with fallback " + fallbackText);
+		logger.trace("Leave toXhtml with fallback " + fallbackText);
 		return fallbackText;
 	}
 
@@ -576,12 +576,11 @@ public class HtmlTools {
 					new DefaultHandler());
 			return true;
 		} catch (SAXParseException e) {
-			logger.log(
-					Level.SEVERE,
+			logger.info(
 					"XmlParseError on line " + e.getLineNumber() + " of " + xml,
 					e);
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "XmlParseError", e);
+			logger.info("XmlParseError", e);
 		}
 		return false;
 	}

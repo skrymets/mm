@@ -42,7 +42,7 @@ import java.util.ArrayList;
 public class LastStateStorageManagement {
 	public static final int LIST_AMOUNT_LIMIT = 50;
 	private MindmapLastStateMapStorage mLastStatesMap = null;
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	public LastStateStorageManagement(String pXml) {
 		if (logger == null) {
@@ -61,7 +61,7 @@ public class LastStateStorageManagement {
 			freemind.main.Resources.getInstance().logException(e);
 		}
 		if (mLastStatesMap == null) {
-			logger.warning("Creating a new last state map storage as there was no old one or it was corrupt.");
+			logger.warn("Creating a new last state map storage as there was no old one or it was corrupt.");
 			mLastStatesMap = new MindmapLastStateMapStorage();
 		}
 	}

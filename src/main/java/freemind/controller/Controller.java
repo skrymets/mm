@@ -59,7 +59,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -287,7 +287,7 @@ public class Controller implements MapModuleChangeObserver {
 				String prop = e.getPropertyName();
 				if ("focusOwner".equals(prop)) {
 					Component comp = (Component) e.getNewValue();
-					logger.fine("Focus change for " + comp);
+					logger.trace("Focus change for " + comp);
 					if (comp instanceof FreeMindMain) {
 						obtainFocusForSelected();
 					}
@@ -301,7 +301,7 @@ public class Controller implements MapModuleChangeObserver {
 		mapModuleManager = new MapModuleManager(this);
 		mapModuleManager.addListener(this);
 		if (!Tools.isAvailableFontFamily(getProperty("defaultfont"))) {
-			logger.warning("Warning: the font you have set as standard - "
+			logger.warn("Warning: the font you have set as standard - "
 					+ getProperty("defaultfont") + " - is not available.");
 			frame.setProperty("defaultfont", "SansSerif");
 		}
@@ -799,9 +799,9 @@ public class Controller implements MapModuleChangeObserver {
 	public void obtainFocusForSelected() {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager()
 				.clearGlobalFocusOwner();
-		// logger.finest("obtainFocusForSelected");
+		// logger.trace("obtainFocusForSelected");
 		if (getView() != null) { // is null if the last map was closed.
-			logger.fine("Requesting Focus for " + getView() + " in model "
+			logger.trace("Requesting Focus for " + getView() + " in model "
 					+ getView().getModel());
 			getView().requestFocusInWindow();
 		} else {
@@ -1850,7 +1850,7 @@ public class Controller implements MapModuleChangeObserver {
 			public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
 				for (int i = 0; i < mTabbedPaneMapModules.size(); ++i) {
 					if (mTabbedPaneMapModules.get(i) == pOldMapModule) {
-						logger.fine("Remove tab:" + i + " with title:"
+						logger.trace("Remove tab:" + i + " with title:"
 								+ mTabbedPane.getTitleAt(i));
 						mTabbedPaneSelectionUpdate = false;
 						mTabbedPane.removeTabAt(i);
@@ -1891,7 +1891,7 @@ public class Controller implements MapModuleChangeObserver {
 			return;
 		}
 		MapModule module = (MapModule) mTabbedPaneMapModules.get(selectedIndex);
-		logger.fine("Selected index of tab is now: " + selectedIndex
+		logger.trace("Selected index of tab is now: " + selectedIndex
 				+ " with title:" + module.toString());
 		if (module != getMapModule()) {
 			// we have to change the active map actively:

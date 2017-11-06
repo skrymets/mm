@@ -60,13 +60,13 @@ public class AddLocalLinkAction extends MindmapAction {
 		boolean first = true;
 		for (MindMapNode destination : nodesFromClipboard) {
 			if(!first) {
-				logger.warning("Can't link the node '"+source+"' to more than one destination. Only the last is used.");
+				logger.warn("Can't link the node '"+source+"' to more than one destination. Only the last is used.");
 			}
 			if(source != destination) {
 				modeController.setLink(source, "#" + modeController.getNodeID(destination));
 			} else {
 				// hmm, give an error?
-				logger.warning("Can't link the node '"+source+"' onto itself. Skipped.");
+				logger.warn("Can't link the node '"+source+"' onto itself. Skipped.");
 			}
 			first = false;
 		}

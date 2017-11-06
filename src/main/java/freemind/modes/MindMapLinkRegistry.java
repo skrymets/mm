@@ -100,7 +100,7 @@ public class MindMapLinkRegistry {
 	/** id */
 	protected HashSet<String> mLocallyLinkedIds;
 
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	// //////////////////////////////////////////////////////////////////////////////////////
 	// // Methods /////
@@ -166,7 +166,7 @@ public class MindMapLinkRegistry {
 		mTargetToId.put(target, newId);
 		mIdToTarget.put(newId, target);
 
-		// logger.fine("Register target node:"+target+", with ID="+newID);
+		// logger.trace("Register target node:"+target+", with ID="+newID);
 		/*
 		 * This is to allocate the link target in the IDToLinks map!.
 		 */
@@ -206,7 +206,7 @@ public class MindMapLinkRegistry {
 		}
 
 		// Dimitry : logger is a performance killer here
-		// //logger.fine("getAssignedLinksVector "+vec);
+		// //logger.trace("getAssignedLinksVector "+vec);
 		return vec;
 	}
 
@@ -226,7 +226,7 @@ public class MindMapLinkRegistry {
 		}
 		String id = getState(target);
 		if (id != null) {
-			// logger.fine("Deregister target node:"+target);
+			// logger.trace("Deregister target node:"+target);
 			mTargetToId.remove(target);
 			mIdToTarget.remove(id);
 			mIdToLinks.remove(id);
@@ -246,7 +246,7 @@ public class MindMapLinkRegistry {
 					"Illegal link specification." + link);
 		MindMapNode source = link.getSource();
 		MindMapNode target = link.getTarget();
-		logger.fine("Register link (" + link + ") from source node:" + source
+		logger.trace("Register link (" + link + ") from source node:" + source
 				+ " to target " + target);
 		String id = _registerLinkTarget(target);
 		Vector<MindMapLink> vec = getAssignedLinksVector(id);
@@ -263,7 +263,7 @@ public class MindMapLinkRegistry {
 		}
 		if (mIdToLink.containsKey(uniqueId)) {
 			if (mIdToLink.get(uniqueId) != link) {
-				logger.warning("link with duplicated unique id found:" + link);
+				logger.warn("link with duplicated unique id found:" + link);
 				// new id:
 				((LinkAdapter) link)
 						.setUniqueId(generateUniqueLinkId(uniqueId));
@@ -277,7 +277,7 @@ public class MindMapLinkRegistry {
 		String id = _registerLinkTarget(target);
 		Vector<MindMapLink> vec = getAssignedLinksVector(id);
 		for (int i = vec.size() - 1; i >= 0; --i) {
-			// logger.fine("Test for equal node:"+source+" to vector(i) " +
+			// logger.trace("Test for equal node:"+source+" to vector(i) " +
 			// vec.get(i));
 			if (vec.get(i) == link) {
 				vec.removeElementAt(i);
@@ -322,7 +322,7 @@ public class MindMapLinkRegistry {
 		returnValue.addAll(getAllLinksIntoMe(node));
 		returnValue.addAll(getAllLinksFromMe(node));
 		// Dimitry : logger is a performance killer here
-		// //logger.fine("All links  ("+returnValue+") from  node:"+node);
+		// //logger.trace("All links  ("+returnValue+") from  node:"+node);
 		return returnValue;
 	}
 

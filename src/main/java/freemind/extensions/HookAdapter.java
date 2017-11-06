@@ -43,7 +43,7 @@ public class HookAdapter implements MindMapHook {
 	private ModeController controller;
 
 	// Logging:
-	protected java.util.logging.Logger logger;
+	protected org.slf4j.Logger logger;
 	/**
 	 * Stores the plugin base class as declared by the
 	 * plugin_registration/isBaseClass attribute.
@@ -130,7 +130,7 @@ public class HookAdapter implements MindMapHook {
 			result = getController().getText(property);
 		}
 		if (result == null) {
-			logger.warning("The following property was not found:" + property);
+			logger.warn("The following property was not found:" + property);
 		}
 		return result;
 	}

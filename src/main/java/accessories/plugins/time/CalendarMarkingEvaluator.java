@@ -277,7 +277,7 @@ public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {
 	
 	
 	private static HashMap<String, RepetitionHandler> sHandlerMap;
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 
 	public CalendarMarkingEvaluator(CalendarMarkings pCalendarMarkings) {
 		mCalendarMarkings = pCalendarMarkings;
@@ -315,7 +315,7 @@ public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {
 			firstDay.setTimeInMillis(marking.getStartDate());
 			String repeatType = marking.getRepeatType().xmlValue();
 			if(!sHandlerMap.containsKey(repeatType)){
-				logger.severe("Repeat type " + repeatType + " unknown.");
+				logger.error("Repeat type " + repeatType + " unknown.");
 				continue;
 			}
 			RepetitionHandler handler = sHandlerMap

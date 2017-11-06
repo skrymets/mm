@@ -138,7 +138,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
 	public String getImageHtml() {
 		String imageTag = "<img src=\"file:./" + mTooltipLocation + "\"/>";
 		String imageHtml = "<html><body>" + imageTag + "</body></html>";
-		logger.fine("Tooltip at " + imageTag);
+		logger.trace("Tooltip at " + imageTag);
 		return imageHtml;
 	}
 

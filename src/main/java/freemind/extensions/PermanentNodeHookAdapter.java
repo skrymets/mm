@@ -46,7 +46,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 		PermanentNodeHook {
 
 	// Logging:
-	// private static java.util.logging.Logger logger;
+	// private static org.slf4j.Logger logger;
 
 	/**
 	 */
@@ -63,7 +63,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * @see freemind.modes.NodeHook#shutdownMapHook()
 	 */
 	public void shutdownMapHook() {
-		logger.finest("shutdownMapHook");
+		logger.trace("shutdownMapHook");
 		setNode(null);
 		setMap(null);
 		super.shutdownMapHook();
@@ -75,7 +75,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * @see freemind.modes.NodeHook#onUpdateNodeHook()
 	 */
 	public void onUpdateNodeHook() {
-		logger.finest("onUpdateNodeHook");
+		logger.trace("onUpdateNodeHook");
 	}
 
 	/*
@@ -84,7 +84,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * @see freemind.modes.NodeHook#onUpdateChildrenHook()
 	 */
 	public void onUpdateChildrenHook(MindMapNode updatedNode) {
-		logger.finest("onUpdateChildrenHook");
+		logger.trace("onUpdateChildrenHook");
 	}
 
 	/*
@@ -93,11 +93,11 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * @see freemind.modes.NodeHook#onAddChild(freemind.modes.MindMapNode)
 	 */
 	public void onAddChild(MindMapNode newChildNode) {
-		logger.finest("onAddChild");
+		logger.trace("onAddChild");
 	}
 
 	public void onNewChild(MindMapNode newChildNode) {
-		logger.finest("onNewChild");
+		logger.trace("onNewChild");
 	}
 
 	/*
@@ -107,7 +107,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * MindMapNode)
 	 */
 	public void onRemoveChild(MindMapNode oldChildNode) {
-		logger.finest("onRemoveChild");
+		logger.trace("onRemoveChild");
 	}
 
 	/*
@@ -136,7 +136,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * @see freemind.modes.NodeHook#onSelectHook()
 	 */
 	public void onFocusNode(NodeView nodeView) {
-		logger.finest("onSelectHook");
+		logger.trace("onSelectHook");
 
 	}
 
@@ -146,7 +146,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * @see freemind.extensions.PermanentNodeHook#onDeselectHook()
 	 */
 	public void onLostFocusNode(NodeView nodeView) {
-		logger.finest("onDeselectHook");
+		logger.trace("onDeselectHook");
 	}
 
 	/*
@@ -156,7 +156,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	 * MindMapNode)
 	 */
 	public void onAddChildren(MindMapNode addedChild) {
-		logger.finest("onAddChildren");
+		logger.trace("onAddChildren");
 	}
 
 	public static final String PARAMETERS = "Parameters";
@@ -193,7 +193,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	}
 
 	public void onRemoveChildren(MindMapNode oldChildNode, MindMapNode oldDad) {
-		logger.finest("onRemoveChildren");
+		logger.trace("onRemoveChildren");
 	}
 
 	public void onViewCreatedHook(NodeView nodeView) {

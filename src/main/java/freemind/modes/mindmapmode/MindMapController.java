@@ -224,7 +224,7 @@ public class MindMapController extends ControllerAdapter implements
      * @author foltin
      * @date 19.11.2013
      */
-    private final class NodeInformationTimerAction implements ActionListener {
+    private class NodeInformationTimerAction implements ActionListener {
 
         private boolean mIsInterrupted = false;
         private boolean mIsDone = true;
@@ -817,7 +817,7 @@ public class MindMapController extends ControllerAdapter implements
         getToolBar().startup();
         HookFactory hookFactory = getHookFactory();
         List<RegistrationContainer> pluginRegistrations = hookFactory.getRegistrations();
-        logger.fine("mScheduledActions are executed: " + pluginRegistrations.size());
+        logger.trace("mScheduledActions are executed: " + pluginRegistrations.size());
         for (RegistrationContainer container : pluginRegistrations) {
             // call constructor:
             try {
@@ -1292,7 +1292,7 @@ public class MindMapController extends ControllerAdapter implements
      * open or not.
      */
     protected void setAllActions(boolean enabled) {
-        logger.fine("setAllActions:" + enabled);
+        logger.trace("setAllActions:" + enabled);
         super.setAllActions(enabled);
         // own actions
         increaseNodeFont.setEnabled(enabled);
@@ -2262,7 +2262,7 @@ public class MindMapController extends ControllerAdapter implements
                 getController().getFrame().out(link);
             }
         }
-        logger.fine("MouseEvent: extend:" + extend + ", range:" + range
+        logger.trace("MouseEvent: extend:" + extend + ", range:" + range
                 + ", branch:" + branch + ", event:" + e + ", retValue:"
                 + retValue);
         obtainFocusForSelected();
@@ -2270,12 +2270,12 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     public void registerMouseWheelEventHandler(MouseWheelEventHandler handler) {
-        logger.fine("Registered   MouseWheelEventHandler " + handler);
+        logger.trace("Registered   MouseWheelEventHandler " + handler);
         mRegisteredMouseWheelEventHandler.add(handler);
     }
 
     public void deRegisterMouseWheelEventHandler(MouseWheelEventHandler handler) {
-        logger.fine("Deregistered MouseWheelEventHandler " + handler);
+        logger.trace("Deregistered MouseWheelEventHandler " + handler);
         mRegisteredMouseWheelEventHandler.remove(handler);
     }
 

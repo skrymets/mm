@@ -52,7 +52,7 @@ public class ScriptEditorProperty extends PropertyBean implements
 
 	private final MindMapController mMindMapController;
 
-	private static java.util.logging.Logger logger = null;
+	private static org.slf4j.Logger logger = null;
 
 	/**
 	 */
@@ -115,7 +115,7 @@ public class ScriptEditorProperty extends PropertyBean implements
 		}
 		script = HtmlTools.toXMLUnescapedText(HtmlTools
 				.unescapeHTMLUnicodeEntity(result));
-		logger.fine("Setting script to " + script);
+		logger.trace("Setting script to " + script);
 		mButton.setText(script);
 	}
 

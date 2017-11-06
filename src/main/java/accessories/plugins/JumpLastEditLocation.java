@@ -23,7 +23,7 @@ package accessories.plugins;
 
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.Action;
 import javax.swing.JMenuItem;
@@ -67,7 +67,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
             if (node == null) {
                 return;
             }
-            this.logger.fine("Selecting " + node + " as last edit location.");
+            this.logger.trace("Selecting " + node + " as last edit location.");
             getMindMapController().select(node,
                     Tools.getVectorWithSingleElement(node));
         } catch (Exception e) {
@@ -170,11 +170,11 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                     mLastEditLocations.remove(0);
                 }
                 try {
-                    logger.fine("New last edit location: " + lastLocation
+                    logger.trace("New last edit location: " + lastLocation
                             + " from " + controller.marshall(doAction));
                 } catch (Exception e) {
                     freemind.main.Resources.getInstance().logException(e);
-                    logger.warning("Not able to marshall the action "
+                    logger.warn("Not able to marshall the action "
                             + doAction.getClass() + " as " + doAction);
                 }
             }

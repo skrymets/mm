@@ -25,7 +25,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import javax.swing.AbstractAction;
 
@@ -85,7 +85,7 @@ public class PasteAsPlainTextAction extends AbstractAction {
 			}
 		} else {
 			// not supported message.
-			logger.warning("String flavor not supported for transferable "
+			logger.warn("String flavor not supported for transferable "
 					+ clipboardContents);
 		}
 	}

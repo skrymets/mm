@@ -37,7 +37,7 @@ import freemind.controller.MenuItemEnabledListener;
 public abstract class FreemindAction extends AbstractAction implements MenuItemEnabledListener{
 
 	private final ControllerAdapter pControllerAdapter;
-	protected static java.util.logging.Logger logger = null;
+	protected static org.slf4j.Logger logger = null;
 	/**
 	 * @param title
 	 *            is a fixed title (no translation is done via resources)
@@ -84,7 +84,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
 	 */
 	public boolean isEnabled(JMenuItem pItem, Action pAction) {
 		boolean result = pControllerAdapter != null && pControllerAdapter.getMap() != null;
-		logger.finest("isEnabled " + pAction.getValue(AbstractAction.NAME) + "=" + result + " from " + pControllerAdapter);
+		logger.trace("isEnabled " + pAction.getValue(AbstractAction.NAME) + "=" + result + " from " + pControllerAdapter);
 		return result;
 	}
 
