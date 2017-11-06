@@ -1,2 +1,4 @@
 nb-configuration.xml
 target/
+flowagent.log
+flowagent.log.1
