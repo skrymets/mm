@@ -19,18 +19,17 @@
  *
  * Created on 25.02.2006
  */
-/*$Id: SeparatorProperty.java,v 1.1.2.2 2006/03/14 21:56:27 christianfoltin Exp $*/
-package freemind.common;
+/*$Id: NextLineProperty.java,v 1.1.2.2 2006/03/14 21:56:27 christianfoltin Exp $*/
+package freemind.common.properties;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
-public class SeparatorProperty implements PropertyControl {
+public class NextLineProperty implements PropertyControl {
 
-	String label;
-
-	public SeparatorProperty(String label) {
+	public NextLineProperty() {
 		super();
-		this.label = label;
 	}
 
 	public String getDescription() {
@@ -38,11 +37,11 @@ public class SeparatorProperty implements PropertyControl {
 	}
 
 	public String getLabel() {
-		return label;
+		return null;
 	}
 
 	public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
-		builder.appendSeparator(pTranslator.getText("separator." + getLabel()));
+		builder.nextLine();
 	}
 
 	public void setEnabled(boolean pEnabled) {

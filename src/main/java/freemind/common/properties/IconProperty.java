@@ -20,7 +20,7 @@
  * Created on 25.02.2006
  */
 /*$Id: IconProperty.java,v 1.1.2.1.2.4 2007/08/05 22:15:21 dpolivaev Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +30,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 import freemind.main.FreeMindMain;
 import freemind.modes.IconInformation;

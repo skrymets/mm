@@ -20,7 +20,7 @@
  * Created on 25.02.2006
  */
 /*$Id: StringProperty.java,v 1.1.2.4.2.2 2009/02/04 19:31:21 christianfoltin Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -29,6 +29,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 public class StringProperty extends PropertyBean implements PropertyControl {
 	String description;

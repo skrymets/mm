@@ -20,7 +20,7 @@
  * Created on 25.02.2006
  */
 /*$Id: FontProperty.java,v 1.1.2.4.2.2 2007/06/27 07:03:57 dpolivaev Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -32,6 +32,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 public class FontProperty extends PropertyBean implements PropertyControl {
 	String description;

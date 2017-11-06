@@ -21,7 +21,9 @@
  * Created on 25.02.2006
  */
 
-package freemind.common;
+package freemind.common.properties;
+
+import freemind.common.properties.BooleanProperty;
 
 public class DontShowNotificationProperty extends BooleanProperty {
 	public DontShowNotificationProperty(String description, String label) {

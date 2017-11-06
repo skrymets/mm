@@ -43,9 +43,9 @@ import accessories.plugins.dialogs.ChooseFormatPopupDialog;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 
-import freemind.common.PropertyBean;
+import freemind.common.properties.PropertyBean;
 import freemind.common.PropertyControl;
-import freemind.common.SeparatorProperty;
+import freemind.common.properties.SeparatorProperty;
 import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
 import freemind.controller.Controller;

@@ -21,7 +21,7 @@
  * Created on 25.02.2006
  */
 
-package freemind.common;
+package freemind.common.properties;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -30,6 +30,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 public class BooleanProperty extends PropertyBean implements PropertyControl {
 	static public final String FALSE_VALUE = "false";

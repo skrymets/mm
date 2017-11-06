@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.dialogs;
 
 import java.util.Vector;
 
-import freemind.common.ComboProperty;
+import freemind.common.properties.ComboProperty;
 
 /**
  * Adjusts string values of integers to the nearest integer as string.

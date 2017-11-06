@@ -20,7 +20,7 @@
  * Created on 25.02.2006
  */
 /*$Id: ColorProperty.java,v 1.1.2.4.2.2 2008/07/24 03:10:36 christianfoltin Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -34,6 +34,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 import freemind.controller.Controller;
 import freemind.main.Tools;

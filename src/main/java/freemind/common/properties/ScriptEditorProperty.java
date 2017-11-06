@@ -20,8 +20,9 @@
  * Created on 25.02.2006
  */
 /*$Id: ScriptEditorProperty.java,v 1.1.2.6 2008/07/04 20:44:02 christianfoltin Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
+import freemind.common.properties.PropertyBean;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -29,6 +30,8 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 import freemind.main.HtmlTools;
 import freemind.modes.mindmapmode.MindMapController;

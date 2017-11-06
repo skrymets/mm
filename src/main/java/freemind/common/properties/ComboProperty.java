@@ -20,7 +20,7 @@
  * Created on 25.02.2006
  */
 /*$Id: ComboProperty.java,v 1.1.2.5.2.2 2006/07/25 20:28:19 christianfoltin Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +33,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 public class ComboProperty extends PropertyBean implements PropertyControl {
 	String description;

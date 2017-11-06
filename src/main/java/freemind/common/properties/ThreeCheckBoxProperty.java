@@ -21,8 +21,9 @@
  * Created on 25.02.2006
  */
 
-package freemind.common;
+package freemind.common.properties;
 
+import freemind.common.properties.PropertyBean;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -32,6 +33,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 import freemind.controller.BlindIcon;
 import freemind.main.Resources;

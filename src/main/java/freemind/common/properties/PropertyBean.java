@@ -20,7 +20,7 @@
  * Created on 25.02.2006
  */
 /*$Id: PropertyBean.java,v 1.1.2.2 2006/02/28 18:56:50 christianfoltin Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

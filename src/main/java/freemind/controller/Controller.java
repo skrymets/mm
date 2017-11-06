@@ -82,7 +82,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import freemind.common.BooleanProperty;
+import freemind.common.properties.BooleanProperty;
 import freemind.common.JOptionalSplitPane;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;

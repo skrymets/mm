@@ -21,7 +21,10 @@
  */
 /*$Id: RemindValueProperty.java,v 1.1.2.2 2007/12/16 22:05:13 dpolivaev Exp $*/
 
-package freemind.common;
+package freemind.common.properties;
+
+import freemind.common.TextTranslator;
+import freemind.common.properties.ThreeCheckBoxProperty;
 
 
 /**

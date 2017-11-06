@@ -20,7 +20,7 @@
  * Created on 25.02.2006
  */
 /*$Id: NumberProperty.java,v 1.1.2.3.2.5 2009/01/14 21:18:36 christianfoltin Exp $*/
-package freemind.common;
+package freemind.common.properties;
 
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
@@ -29,6 +29,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.common.PropertyControl;
+import freemind.common.TextTranslator;
 
 public class NumberProperty extends PropertyBean implements PropertyControl {
 	String description;
