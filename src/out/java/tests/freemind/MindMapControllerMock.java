@@ -19,7 +19,7 @@
  *
  * Created on 10.10.2006
  */
-/*$Id: MindMapControllerMock.java,v 1.1.2.12 2008/12/09 21:09:43 christianfoltin Exp $*/
+ /*$Id: MindMapControllerMock.java,v 1.1.2.12 2008/12/09 21:09:43 christianfoltin Exp $*/
 package tests.freemind;
 
 import freemind.frok.patches.FreeMindMainMock;
@@ -58,693 +58,691 @@ import freemind.view.mindmapview.NodeView;
 
 /**
  * @author foltin
- * 
+ *
  */
-public class MindMapControllerMock extends MapFeedbackAdapter implements
-		ModeController {
+public class MindMapControllerMock extends MapFeedbackAdapter implements ModeController {
 
-	private final FreeMindMainMock freeMindMain;
-	private MindMapMock mindMapMock;
+    private final FreeMindMainMock freeMindMain;
+    private final MindMapMock mindMapMock;
 
-	public MindMapControllerMock(FreeMindMainMock freeMindMain,
-			String pMapXmlString) {
-		this.freeMindMain = freeMindMain;
+    public MindMapControllerMock(FreeMindMainMock freeMindMain, String pMapXmlString) {
+        this.freeMindMain = freeMindMain;
 
-		mindMapMock = new MindMapMock(pMapXmlString);
-	}
+        mindMapMock = new MindMapMock(pMapXmlString);
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getFrame()
-	 */
-	@Override
-	public FreeMindMain getFrame() {
-		return freeMindMain;
-	}
+     */
+    @Override
+    public FreeMindMain getFrame() {
+        return freeMindMain;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getMap()
-	 */
-	@Override
-	public MindMap getMap() {
-		return mindMapMock;
-	}
+     */
+    @Override
+    public MindMap getMap() {
+        return mindMapMock;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#load(java.net.URL)
-	 */
-	@Override
-	public ModeController load(URL pFile) throws FileNotFoundException,
-			IOException, XMLParseException, URISyntaxException {
+     */
+    @Override
+    public ModeController load(URL pFile) throws FileNotFoundException,
+            IOException, XMLParseException, URISyntaxException {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#load(java.io.File)
-	 */
-	@Override
-	public ModeController load(File pFile) throws FileNotFoundException,
-			IOException {
+     */
+    @Override
+    public ModeController load(File pFile) throws FileNotFoundException,
+            IOException {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#loadURL(java.lang.String)
-	 */
-	@Override
-	public void loadURL(String pRelative) {
+     */
+    @Override
+    public void loadURL(String pRelative) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#save(java.io.File)
-	 */
-	@Override
-	public boolean save(File pFile) {
+     */
+    @Override
+    public boolean save(File pFile) {
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#newMap()
-	 */
-	@Override
-	public ModeController newMap() {
+     */
+    @Override
+    public ModeController newMap() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#save()
-	 */
-	@Override
-	public boolean save() {
+     */
+    @Override
+    public boolean save() {
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#saveAs()
-	 */
-	@Override
-	public boolean saveAs() {
+     */
+    @Override
+    public boolean saveAs() {
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#open()
-	 */
-	@Override
-	public void open() {
+     */
+    @Override
+    public void open() {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#close(boolean,
 	 * freemind.controller.MapModuleManager)
-	 */
-	@Override
-	public boolean close(boolean pForce, MapModuleManager pMapModuleManager) {
+     */
+    @Override
+    public boolean close(boolean pForce, MapModuleManager pMapModuleManager) {
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#startupController()
-	 */
-	@Override
-	public void startupController() {
+     */
+    @Override
+    public void startupController() {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#shutdownController()
-	 */
-	@Override
-	public void shutdownController() {
+     */
+    @Override
+    public void shutdownController() {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#doubleClick(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void doubleClick(MouseEvent pE) {
+     */
+    @Override
+    public void doubleClick(MouseEvent pE) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#plainClick(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void plainClick(MouseEvent pE) {
+     */
+    @Override
+    public void plainClick(MouseEvent pE) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#setVisible(boolean)
-	 */
-	@Override
-	public void setVisible(boolean pVisible) {
+     */
+    @Override
+    public void setVisible(boolean pVisible) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#isBlocked()
-	 */
-	@Override
-	public boolean isBlocked() {
+     */
+    @Override
+    public boolean isBlocked() {
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getNodeFromID(java.lang.String)
-	 */
-	@Override
-	public NodeAdapter getNodeFromID(String pNodeID) {
+     */
+    @Override
+    public NodeAdapter getNodeFromID(String pNodeID) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getNodeID(freemind.modes.MindMapNode)
-	 */
-	@Override
-	public String getNodeID(MindMapNode pSelected) {
+     */
+    @Override
+    public String getNodeID(MindMapNode pSelected) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#select(freemind.view.mindmapview.NodeView)
-	 */
-	@Override
-	public void select(NodeView pNode) {
+     */
+    @Override
+    public void select(NodeView pNode) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#select(freemind.modes.MindMapNode,
 	 * java.util.List)
-	 */
-	@Override
-	public void select(MindMapNode pFocused, List<MindMapNode> pSelecteds) {
+     */
+    @Override
+    public void select(MindMapNode pFocused, List<MindMapNode> pSelecteds) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#selectBranch(freemind.view.mindmapview.
 	 * NodeView, boolean)
-	 */
-	@Override
-	public void selectBranch(NodeView pSelected, boolean pExtend) {
+     */
+    @Override
+    public void selectBranch(NodeView pSelected, boolean pExtend) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getSelected()
-	 */
-	@Override
-	public MindMapNode getSelected() {
+     */
+    @Override
+    public MindMapNode getSelected() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getSelectedView()
-	 */
-	@Override
-	public NodeView getSelectedView() {
+     */
+    @Override
+    public NodeView getSelectedView() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getSelecteds()
-	 */
-	@Override
-	public List<MindMapNode> getSelecteds() {
+     */
+    @Override
+    public List<MindMapNode> getSelecteds() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getSelectedsByDepth()
-	 */
-	@Override
-	public List<MindMapNode> getSelectedsByDepth() {
+     */
+    @Override
+    public List<MindMapNode> getSelectedsByDepth() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#sortNodesByDepth(java.util.List)
-	 */
-	@Override
-	public void sortNodesByDepth(List<MindMapNode> pInPlaceList) {
+     */
+    @Override
+    public void sortNodesByDepth(List<MindMapNode> pInPlaceList) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#extendSelection(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public boolean extendSelection(MouseEvent pE) {
+     */
+    @Override
+    public boolean extendSelection(MouseEvent pE) {
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#setSaved(boolean)
-	 */
-	@Override
-	public void setSaved(boolean pIsClean) {
+     */
+    @Override
+    public void setSaved(boolean pIsClean) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#registerNodeSelectionListener(freemind.
 	 * modes.ModeController.NodeSelectionListener, boolean)
-	 */
-	@Override
-	public void registerNodeSelectionListener(NodeSelectionListener pListener,
-			boolean pCallWithCurrentSelection) {
+     */
+    @Override
+    public void registerNodeSelectionListener(NodeSelectionListener pListener,
+            boolean pCallWithCurrentSelection) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#deregisterNodeSelectionListener(freemind
 	 * .modes.ModeController.NodeSelectionListener)
-	 */
-	@Override
-	public void deregisterNodeSelectionListener(NodeSelectionListener pListener) {
+     */
+    @Override
+    public void deregisterNodeSelectionListener(NodeSelectionListener pListener) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#registerNodeLifetimeListener(freemind.modes
 	 * .ModeController.NodeLifetimeListener, boolean)
-	 */
-	@Override
-	public void registerNodeLifetimeListener(NodeLifetimeListener pListener,
-			boolean pFireCreateEvent) {
+     */
+    @Override
+    public void registerNodeLifetimeListener(NodeLifetimeListener pListener,
+            boolean pFireCreateEvent) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#deregisterNodeLifetimeListener(freemind
 	 * .modes.ModeController.NodeLifetimeListener)
-	 */
-	@Override
-	public void deregisterNodeLifetimeListener(NodeLifetimeListener pListener) {
+     */
+    @Override
+    public void deregisterNodeLifetimeListener(NodeLifetimeListener pListener) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#displayNode(freemind.modes.MindMapNode)
-	 */
-	@Override
-	public void displayNode(MindMapNode pNode) {
+     */
+    @Override
+    public void displayNode(MindMapNode pNode) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#centerNode(freemind.modes.MindMapNode)
-	 */
-	@Override
-	public void centerNode(MindMapNode pNode) {
+     */
+    @Override
+    public void centerNode(MindMapNode pNode) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#getLinkShortText(freemind.modes.MindMapNode
 	 * )
-	 */
-	@Override
-	public String getLinkShortText(MindMapNode pNode) {
+     */
+    @Override
+    public String getLinkShortText(MindMapNode pNode) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getModeToolBar()
-	 */
-	@Override
-	public JToolBar getModeToolBar() {
+     */
+    @Override
+    public JToolBar getModeToolBar() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getLeftToolBar()
-	 */
-	@Override
-	public Component getLeftToolBar() {
+     */
+    @Override
+    public Component getLeftToolBar() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#updateMenus(freemind.controller.
 	 * StructuredMenuHolder)
-	 */
-	@Override
-	public void updateMenus(StructuredMenuHolder pHolder) {
+     */
+    @Override
+    public void updateMenus(StructuredMenuHolder pHolder) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#updatePopupMenu(freemind.controller.
 	 * StructuredMenuHolder)
-	 */
-	@Override
-	public void updatePopupMenu(StructuredMenuHolder pHolder) {
+     */
+    @Override
+    public void updatePopupMenu(StructuredMenuHolder pHolder) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getPopupMenu()
-	 */
-	@Override
-	public JPopupMenu getPopupMenu() {
+     */
+    @Override
+    public JPopupMenu getPopupMenu() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#showPopupMenu(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void showPopupMenu(MouseEvent pE) {
+     */
+    @Override
+    public void showPopupMenu(MouseEvent pE) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getPopupForModel(java.lang.Object)
-	 */
-	@Override
-	public JPopupMenu getPopupForModel(Object pObj) {
+     */
+    @Override
+    public JPopupMenu getPopupForModel(Object pObj) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getView()
-	 */
-	@Override
-	public MapView getView() {
+     */
+    @Override
+    public MapView getView() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#setModel(freemind.modes.MapAdapter)
-	 */
-	@Override
-	public void setModel(MapAdapter pModel) {
+     */
+    @Override
+    public void setModel(MapAdapter pModel) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getMode()
-	 */
-	@Override
-	public Mode getMode() {
+     */
+    @Override
+    public Mode getMode() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getMapModule()
-	 */
-	@Override
-	public MapModule getMapModule() {
+     */
+    @Override
+    public MapModule getMapModule() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getController()
-	 */
-	@Override
-	public Controller getController() {
+     */
+    @Override
+    public Controller getController() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getHookFactory()
-	 */
-	@Override
-	public HookFactory getHookFactory() {
+     */
+    @Override
+    public HookFactory getHookFactory() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getSelectionColor()
-	 */
-	@Override
-	public Color getSelectionColor() {
+     */
+    @Override
+    public Color getSelectionColor() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getText(java.lang.String)
-	 */
-	@Override
-	public String getText(String pTextId) {
+     */
+    @Override
+    public String getText(String pTextId) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#getResource(java.lang.String)
-	 */
-	@Override
-	public URL getResource(String pPath) {
+     */
+    @Override
+    public URL getResource(String pPath) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#getNodeView(freemind.modes.MindMapNode)
-	 */
-	@Override
-	public NodeView getNodeView(MindMapNode pNode) {
+     */
+    @Override
+    public NodeView getNodeView(MindMapNode pNode) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#refreshMap()
-	 */
-	@Override
-	public void refreshMap() {
+     */
+    @Override
+    public void refreshMap() {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#copy(freemind.modes.MindMapNode,
 	 * boolean)
-	 */
-	@Override
-	public Transferable copy(MindMapNode pNode, boolean pSaveInvisible) {
+     */
+    @Override
+    public Transferable copy(MindMapNode pNode, boolean pSaveInvisible) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#copy()
-	 */
-	@Override
-	public Transferable copy() {
+     */
+    @Override
+    public Transferable copy() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#copySingle()
-	 */
-	@Override
-	public Transferable copySingle() {
+     */
+    @Override
+    public Transferable copySingle() {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#copy(java.util.List, boolean)
-	 */
-	@Override
-	public Transferable copy(List<MindMapNode> pSelectedNodes, boolean pCopyInvisible) {
+     */
+    @Override
+    public Transferable copy(List<MindMapNode> pSelectedNodes, boolean pCopyInvisible) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#getFileChooser(javax.swing.filechooser.
 	 * FileFilter)
-	 */
-	@Override
-	public FreeMindFileDialog getFileChooser(FileFilter pFilter) {
+     */
+    @Override
+    public FreeMindFileDialog getFileChooser(FileFilter pFilter) {
 
-		return null;
-	}
+        return null;
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * freemind.modes.ModeController#setView(freemind.view.mindmapview.MapView)
-	 */
-	@Override
-	public void setView(MapView pView) {
+     */
+    @Override
+    public void setView(MapView pView) {
 
-	}
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see freemind.modes.ModeController#setToolTip(freemind.modes.MindMapNode,
 	 * java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void setToolTip(MindMapNode pNode, String pKey, String pValue) {
+     */
+    @Override
+    public void setToolTip(MindMapNode pNode, String pKey, String pValue) {
 
-	}
+    }
 
 }

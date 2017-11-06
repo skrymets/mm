@@ -127,7 +127,7 @@ public class CollaborationTests extends FreeMindTestBase {
 
 		public void reactOnOffers(final CollaborationOffers collOffers) {
 			// now, we have a bundle of different maps to offer to the user
-			for (Iterator<CollaborationMapOffer> it = collOffers.getListCollaborationMapOfferList().iterator(); it.hasNext();) {
+			for (Iterator<CollaborationMapOffer> it = collOffers.getCollaborationMapOfferList().iterator(); it.hasNext();) {
 				CollaborationMapOffer offer = it.next();
 				System.out.println("Map: " + offer.getMap());
 			}
@@ -167,8 +167,7 @@ public class CollaborationTests extends FreeMindTestBase {
 		writer.println(INITIAL_MAP);
 		writer.close();
 
-		mMaster = new StandaloneMindMapMaster(
-				getFrame(), new File(PATHNAME), PASSWORD, PORT);
+		mMaster = new StandaloneMindMapMaster(getFrame(), new File(PATHNAME), PASSWORD, PORT);
 
 		Socket socket = new Socket("localhost", PORT);
 		socket.setSoTimeout(MindMapMaster.SOCKET_TIMEOUT_IN_MILLIES);
