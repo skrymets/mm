@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import freemind.controller.actions.generated.instance.MoveNodesAction;
-import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.MoveNodesAction;
+import freemind.controller.actions.instance.NodeListMember;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;

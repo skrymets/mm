@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Vector;
 
-import freemind.controller.actions.generated.instance.Pattern;
+import freemind.controller.actions.generated.instance.instance.Pattern;
 import freemind.main.FreeMind;
 import freemind.main.Tools;
 import freemind.modes.EdgeAdapter;

@@ -35,11 +35,11 @@ import javax.swing.KeyStroke;
 import org.jibx.runtime.IUnmarshallingContext;
 
 import freemind.common.XmlBindingTools;
-import freemind.controller.actions.generated.instance.Plugin;
-import freemind.controller.actions.generated.instance.PluginAction;
-import freemind.controller.actions.generated.instance.PluginClasspath;
-import freemind.controller.actions.generated.instance.PluginMode;
-import freemind.controller.actions.generated.instance.PluginRegistration;
+import freemind.controller.actions.instance.Plugin;
+import freemind.controller.actions.instance.PluginAction;
+import freemind.controller.actions.instance.PluginClasspath;
+import freemind.controller.actions.instance.PluginMode;
+import freemind.controller.actions.instance.PluginRegistration;
 import freemind.extensions.HookDescriptorPluginAction;
 import freemind.extensions.HookDescriptorRegistration;
 import freemind.extensions.HookFactoryAdapter;

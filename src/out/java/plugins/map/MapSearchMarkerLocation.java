@@ -26,7 +26,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
 
-import freemind.controller.actions.generated.instance.Place;
+import freemind.controller.actions.generated.instance.instance.Place;
 
 @SuppressWarnings("serial")
 public class MapSearchMarkerLocation extends MapMarkerBase {

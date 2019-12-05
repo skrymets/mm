@@ -26,14 +26,13 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.Vector;
 
-import freemind.controller.actions.generated.instance.Plugin;
-import freemind.controller.actions.generated.instance.PluginAction;
-import freemind.controller.actions.generated.instance.PluginMenu;
-import freemind.controller.actions.generated.instance.PluginMode;
-import freemind.controller.actions.generated.instance.PluginProperty;
+import freemind.controller.actions.instance.Plugin;
+import freemind.controller.actions.instance.PluginAction;
+import freemind.controller.actions.instance.PluginMenu;
+import freemind.controller.actions.instance.PluginMode;
+import freemind.controller.actions.instance.PluginProperty;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * This is an information class that holds all outer properties of a hook, i.e.

@@ -25,8 +25,8 @@ package accessories.plugins;
 
 import java.awt.Color;
 
-import freemind.controller.actions.generated.instance.EditNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.EditNodeAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;

@@ -46,7 +46,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class CompileXsdStart extends DefaultHandler {
 
-    public static final String FREEMIND_PACKAGE = "freemind.controller.actions.generated.instance";
+    public static final String FREEMIND_PACKAGE = "freemind.controller.actions.generated.instance.instance";
     private static final String DESTINATION_DIR = "binding/src/" + FREEMIND_PACKAGE.replace('.', File.separatorChar);
 
     private static final String FREEMIND_ACTIONS_XSD = "freemind_actions.xsd";
@@ -174,7 +174,7 @@ public class CompileXsdStart extends DefaultHandler {
 
         // write binding to disk
         try (
-                FileOutputStream fs = new FileOutputStream(DESTINATION_DIR + "/binding.xml")) {
+                FileOutputStream fs = new FileOutputStream(DESTINATION_DIR + "/freemind/controller/actions/instance/binding.xml")) {
             fs.write(mBindingXml.toString().getBytes());
         }
     }

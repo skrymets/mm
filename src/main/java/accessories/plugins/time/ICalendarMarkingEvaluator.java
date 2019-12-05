@@ -22,8 +22,8 @@ package accessories.plugins.time;
 
 import java.util.Calendar;
 
-import freemind.controller.actions.generated.instance.CalendarMarking;
-import freemind.controller.actions.generated.instance.CalendarMarkings;
+import freemind.controller.actions.instance.CalendarMarking;
+import freemind.controller.actions.instance.CalendarMarkings;
 
 public interface ICalendarMarkingEvaluator {
 

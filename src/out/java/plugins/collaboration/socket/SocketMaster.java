@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 
-import freemind.controller.actions.generated.instance.CollaborationUserInformation;
+import freemind.controller.actions.generated.instance.instance.CollaborationUserInformation;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.ExtendedMapFeedbackImpl;

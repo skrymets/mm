@@ -24,14 +24,13 @@ package freemind.modes.mindmapmode.actions;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.util.Iterator;
 import java.util.Vector;
 import org.slf4j.Logger;
 
 import javax.swing.Icon;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.CompoundAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;

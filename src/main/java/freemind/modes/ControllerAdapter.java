@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 import java.util.Vector;
-import java.util.logging.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -79,8 +78,8 @@ import freemind.controller.NodeKeyListener;
 import freemind.controller.NodeMotionListener;
 import freemind.controller.NodeMouseMotionListener;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
-import freemind.controller.actions.generated.instance.NodeListMember;
+import freemind.controller.actions.instance.MindmapLastStateStorage;
+import freemind.controller.actions.instance.NodeListMember;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;

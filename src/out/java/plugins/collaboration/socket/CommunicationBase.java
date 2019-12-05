@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-import freemind.controller.actions.generated.instance.CollaborationActionBase;
-import freemind.controller.actions.generated.instance.CollaborationTransaction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.generated.instance.instance.CollaborationActionBase;
+import freemind.controller.actions.generated.instance.instance.CollaborationTransaction;
+import freemind.controller.actions.generated.instance.instance.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.MindMapController;

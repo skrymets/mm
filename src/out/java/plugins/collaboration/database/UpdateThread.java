@@ -40,7 +40,7 @@ import java.util.Vector;
 import javax.swing.SwingUtilities;
 
 import plugins.collaboration.database.DatabaseBasics.ResultHandler;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.generated.instance.instance.XmlAction;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.Tools;
 import freemind.modes.MapAdapter;

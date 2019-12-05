@@ -20,8 +20,8 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.EdgeStyleFormatAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.EdgeStyleFormatAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.ExtendedMapFeedback;

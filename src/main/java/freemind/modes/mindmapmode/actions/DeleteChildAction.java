@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import freemind.common.OptionalDontShowMeAgainDialog;
-import freemind.controller.actions.generated.instance.DeleteNodeAction;
+import freemind.controller.actions.instance.DeleteNodeAction;
 import freemind.main.FreeMind;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

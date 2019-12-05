@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
 
-import freemind.controller.actions.generated.instance.Pattern;
+import freemind.controller.actions.instance.Pattern;
 import freemind.extensions.HookFactory;
 import freemind.main.XMLParseException;
 import freemind.modes.attributes.Attribute;

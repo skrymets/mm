@@ -30,7 +30,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -57,8 +56,8 @@ import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
 import freemind.controller.Controller.SplitComponentType;
 import freemind.controller.MenuItemSelectedListener;
-import freemind.controller.actions.generated.instance.AttributeTableProperties;
-import freemind.controller.actions.generated.instance.TableColumnOrder;
+import freemind.controller.actions.instance.AttributeTableProperties;
+import freemind.controller.actions.instance.TableColumnOrder;
 import freemind.extensions.HookRegistration;
 import freemind.main.FreeMind;
 import freemind.main.Resources;

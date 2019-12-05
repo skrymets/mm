@@ -23,7 +23,7 @@
 package tests.freemind;
 
 import freemind.frok.patches.FreeMindMainMock;
-import freemind.controller.actions.generated.instance.ScriptEditorWindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.instance.ScriptEditorWindowConfigurationStorage;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 

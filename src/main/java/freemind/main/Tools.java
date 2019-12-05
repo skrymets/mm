@@ -111,15 +111,14 @@ import javax.xml.transform.stream.StreamSource;
 import freemind.common.UnicodeReader;
 import freemind.common.XmlBindingTools;
 import freemind.controller.MindMapNodesSelection;
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.CompoundAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
-import java.util.stream.Collectors;
 
 /**
  * @author foltin

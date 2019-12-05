@@ -29,7 +29,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import plugins.collaboration.jabber.view.MapSharingWizardView;
-import freemind.controller.actions.generated.instance.RevertXmlAction;
+import freemind.controller.actions.generated.instance.instance.RevertXmlAction;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 

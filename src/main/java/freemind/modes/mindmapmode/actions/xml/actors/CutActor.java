@@ -23,10 +23,10 @@ import java.awt.datatransfer.Transferable;
 import java.util.Iterator;
 import java.util.List;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.CutNodeAction;
-import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.CompoundAction;
+import freemind.controller.actions.instance.CutNodeAction;
+import freemind.controller.actions.instance.UndoPasteNodeAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapNode;

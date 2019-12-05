@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 
-import freemind.controller.actions.generated.instance.CalendarMarking;
-import freemind.controller.actions.generated.instance.CalendarMarkings;
+import freemind.controller.actions.instance.CalendarMarking;
+import freemind.controller.actions.instance.CalendarMarkings;
 
 /**
  * @author foltin

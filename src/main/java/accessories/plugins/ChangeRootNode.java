@@ -28,8 +28,8 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 import freemind.controller.MenuItemEnabledListener;
-import freemind.controller.actions.generated.instance.ChangeRootNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.ChangeRootNodeAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.extensions.HookRegistration;
 import freemind.main.Tools;
 import freemind.modes.MindMap;

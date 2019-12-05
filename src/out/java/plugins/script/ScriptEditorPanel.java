@@ -63,7 +63,7 @@ import plugins.script.ScriptingEngine.ErrorHandler;
 import freemind.controller.BlindIcon;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.generated.instance.ScriptEditorWindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.instance.ScriptEditorWindowConfigurationStorage;
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;

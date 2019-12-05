@@ -29,7 +29,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 import freemind.controller.MenuItemSelectedListener;
-import freemind.controller.actions.generated.instance.BoldNodeAction;
+import freemind.controller.actions.instance.BoldNodeAction;
 import freemind.modes.mindmapmode.MindMapController;
 
 @SuppressWarnings("serial")

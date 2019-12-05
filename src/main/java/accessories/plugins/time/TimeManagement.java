@@ -54,9 +54,9 @@ import javax.swing.WindowConstants;
 import freemind.common.XmlBindingTools;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.generated.instance.CalendarMarking;
-import freemind.controller.actions.generated.instance.CalendarMarkings;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
+import freemind.controller.actions.instance.CalendarMarking;
+import freemind.controller.actions.instance.CalendarMarkings;
+import freemind.controller.actions.instance.WindowConfigurationStorage;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
 import freemind.main.Tools;
@@ -66,7 +66,6 @@ import freemind.modes.common.plugins.ReminderHookBase;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapHookAdapter;
 import freemind.view.MapModule;
-import java.util.Collections;
 
 //FIXME: Reminder: more than once. (later)
 

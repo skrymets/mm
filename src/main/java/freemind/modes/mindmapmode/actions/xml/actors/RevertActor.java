@@ -26,8 +26,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import freemind.controller.actions.generated.instance.RevertXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.RevertXmlAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.main.Resources;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMap;

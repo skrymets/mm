@@ -22,9 +22,9 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import java.util.List;
 
-import freemind.controller.actions.generated.instance.AddIconAction;
-import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.AddIconAction;
+import freemind.controller.actions.instance.RemoveIconXmlAction;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
@@ -75,8 +75,8 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
     */
 
 	public void act(XmlAction action) {
-		if (action instanceof freemind.controller.actions.generated.instance.RemoveIconXmlAction) {
-			freemind.controller.actions.generated.instance.RemoveIconXmlAction removeAction = (freemind.controller.actions.generated.instance.RemoveIconXmlAction) action;
+		if (action instanceof RemoveIconXmlAction) {
+			RemoveIconXmlAction removeAction = (RemoveIconXmlAction) action;
 			MindMapNode node = getNodeFromID(removeAction
 					.getNode());
 			int position = removeAction.getIconPosition();

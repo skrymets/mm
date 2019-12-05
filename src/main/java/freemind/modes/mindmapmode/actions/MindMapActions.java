@@ -27,7 +27,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Properties;
 
-import freemind.controller.actions.generated.instance.Pattern;
+import freemind.controller.actions.instance.Pattern;
 import freemind.extensions.NodeHook;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;

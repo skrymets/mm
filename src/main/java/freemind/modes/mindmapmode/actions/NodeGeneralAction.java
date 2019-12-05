@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 
 import javax.swing.Action;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
+import freemind.controller.actions.instance.CompoundAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;

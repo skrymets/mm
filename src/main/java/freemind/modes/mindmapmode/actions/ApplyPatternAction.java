@@ -27,7 +27,7 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.Pattern;
+import freemind.controller.actions.instance.Pattern;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMapNode;
 import freemind.modes.StylePatternFactory;

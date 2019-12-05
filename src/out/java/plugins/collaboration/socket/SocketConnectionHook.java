@@ -26,7 +26,7 @@ package plugins.collaboration.socket;
 import java.io.IOException;
 import java.io.Writer;
 
-import freemind.controller.actions.generated.instance.CollaborationUserInformation;
+import freemind.controller.actions.generated.instance.instance.CollaborationUserInformation;
 import freemind.extensions.DontSaveMarker;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.XMLElement;

@@ -28,7 +28,7 @@ import java.util.Vector;
 import plugins.script.ScriptEditorPanel.ScriptHolder;
 import plugins.script.ScriptEditorPanel.ScriptModel;
 import plugins.script.ScriptingEngine.ErrorHandler;
-import freemind.controller.actions.generated.instance.ScriptEditorWindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.instance.ScriptEditorWindowConfigurationStorage;
 import freemind.main.Tools.BooleanHolder;
 import freemind.modes.MindMapNode;
 import freemind.modes.attributes.Attribute;

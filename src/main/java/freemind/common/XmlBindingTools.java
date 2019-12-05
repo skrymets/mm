@@ -40,8 +40,8 @@ import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
 
 import freemind.controller.Controller;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.instance.WindowConfigurationStorage;
+import freemind.controller.actions.instance.XmlAction;
 import freemind.main.Resources;
 
 /**

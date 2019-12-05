@@ -29,9 +29,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import accessories.plugins.time.JTripleCalendar.JSwitchableCalendar;
-import freemind.controller.actions.generated.instance.CalendarMarking;
-import freemind.controller.actions.generated.instance.CalendarMarkings;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
+import freemind.controller.actions.instance.CalendarMarking;
+import freemind.controller.actions.instance.CalendarMarkings;
+import freemind.controller.actions.instance.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 

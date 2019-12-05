@@ -6,8 +6,8 @@ import java.util.Set;
 
 import accessories.plugins.time.CalendarMarkingEvaluator;
 import freemind.common.XmlBindingTools;
-import freemind.controller.actions.generated.instance.CalendarMarking;
-import freemind.controller.actions.generated.instance.CalendarMarkings;
+import freemind.controller.actions.generated.instance.instance.CalendarMarking;
+import freemind.controller.actions.generated.instance.instance.CalendarMarkings;
 
 public class CalendarMarkingTests extends FreeMindTestBase {
 	public void testCalendarMarkingEmpty() throws Exception {

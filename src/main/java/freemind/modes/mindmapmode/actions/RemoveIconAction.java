@@ -27,7 +27,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
+import freemind.controller.actions.instance.RemoveIconXmlAction;
 import freemind.main.Tools;
 import freemind.modes.IconInformation;
 import freemind.modes.mindmapmode.MindMapController;
