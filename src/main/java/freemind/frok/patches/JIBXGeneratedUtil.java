@@ -17,7 +17,7 @@
  */
 package freemind.frok.patches;
 
-import freemind.controller.actions.instance.*;
+import freemind.controller.actions.generated.instance.*;
 
 import java.util.List;
 import java.util.stream.Collectors;

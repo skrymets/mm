@@ -42,11 +42,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import freemind.controller.MindMapNodesSelection;
-import freemind.controller.actions.instance.PasteNodeAction;
-import freemind.controller.actions.instance.TransferableContent;
-import freemind.controller.actions.instance.TransferableFile;
-import freemind.controller.actions.instance.UndoPasteNodeAction;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.PasteNodeAction;
+import freemind.controller.actions.generated.instance.TransferableContent;
+import freemind.controller.actions.generated.instance.TransferableFile;
+import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;

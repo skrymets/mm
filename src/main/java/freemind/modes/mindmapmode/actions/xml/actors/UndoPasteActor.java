@@ -20,8 +20,8 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.instance.UndoPasteNodeAction;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.actors.PasteActor.NodeCoordinate;

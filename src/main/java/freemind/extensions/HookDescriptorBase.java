@@ -30,8 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import freemind.controller.actions.instance.Plugin;
-import freemind.controller.actions.instance.PluginClasspath;
+import freemind.controller.actions.generated.instance.Plugin;
+import freemind.controller.actions.generated.instance.PluginClasspath;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.main.Tools;

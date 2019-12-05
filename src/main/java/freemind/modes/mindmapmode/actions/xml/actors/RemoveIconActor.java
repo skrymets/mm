@@ -22,9 +22,9 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import java.util.List;
 
-import freemind.controller.actions.instance.AddIconAction;
-import freemind.controller.actions.instance.RemoveIconXmlAction;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.AddIconAction;
+import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;

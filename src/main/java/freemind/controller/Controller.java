@@ -85,7 +85,7 @@ import javax.swing.event.ChangeListener;
 import freemind.common.BooleanProperty;
 import freemind.common.JOptionalSplitPane;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
-import freemind.controller.actions.instance.MindmapLastStateStorage;
+import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.controller.filter.FilterController;
 import freemind.controller.printpreview.PreviewDialog;
 import freemind.main.FreeMind;

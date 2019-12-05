@@ -22,8 +22,8 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import java.awt.Font;
 
-import freemind.controller.actions.instance.FontNodeAction;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.FontNodeAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapNode;

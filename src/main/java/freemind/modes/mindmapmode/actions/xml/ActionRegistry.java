@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
 

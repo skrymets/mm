@@ -78,7 +78,7 @@ import com.inet.jortho.SpellChecker;
 import freemind.controller.Controller;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
-import freemind.controller.actions.instance.MindmapLastStateStorage;
+import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.main.FreeMindStarter.ProxyAuthenticator;
 import freemind.modes.ModeController;
 import freemind.preferences.FreemindPropertyListener;

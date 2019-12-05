@@ -29,7 +29,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import freemind.controller.actions.instance.AddIconAction;
+import freemind.controller.actions.generated.instance.AddIconAction;
 import freemind.main.Tools;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;

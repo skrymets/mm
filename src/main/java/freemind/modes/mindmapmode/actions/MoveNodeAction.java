@@ -23,7 +23,7 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.instance.MoveNodeXmlAction;
+import freemind.controller.actions.generated.instance.MoveNodeXmlAction;
 import freemind.modes.mindmapmode.MindMapController;
 
 @SuppressWarnings("serial")

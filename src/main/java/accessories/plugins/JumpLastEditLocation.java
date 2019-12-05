@@ -28,12 +28,12 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 import freemind.controller.MenuItemEnabledListener;
-import freemind.controller.actions.instance.CompoundAction;
-import freemind.controller.actions.instance.FoldAction;
-import freemind.controller.actions.instance.HookNodeAction;
-import freemind.controller.actions.instance.NewNodeAction;
-import freemind.controller.actions.instance.NodeAction;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.CompoundAction;
+import freemind.controller.actions.generated.instance.FoldAction;
+import freemind.controller.actions.generated.instance.HookNodeAction;
+import freemind.controller.actions.generated.instance.NewNodeAction;
+import freemind.controller.actions.generated.instance.NodeAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;

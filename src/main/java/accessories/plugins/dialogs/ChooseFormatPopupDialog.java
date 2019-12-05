@@ -41,8 +41,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import freemind.common.TextTranslator;
-import freemind.controller.actions.instance.Pattern;
-import freemind.controller.actions.instance.WindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.Pattern;
+import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.modes.ExtendedMapFeedbackAdapter;

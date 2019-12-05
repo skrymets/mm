@@ -20,8 +20,8 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.instance.AddIconAction;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.AddIconAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;

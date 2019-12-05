@@ -27,10 +27,10 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import freemind.controller.actions.instance.MindmapLastStateMapStorage;
-import freemind.controller.actions.instance.MindmapLastStateStorage;
-import freemind.controller.actions.instance.NodeListMember;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.MindmapLastStateMapStorage;
+import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
+import freemind.controller.actions.generated.instance.NodeListMember;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
 import java.util.ArrayList;
 

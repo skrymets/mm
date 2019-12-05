@@ -24,9 +24,9 @@ package freemind.extensions;
 
 import java.util.List;
 
-import freemind.controller.actions.instance.Plugin;
-import freemind.controller.actions.instance.PluginMode;
-import freemind.controller.actions.instance.PluginRegistration;
+import freemind.controller.actions.generated.instance.Plugin;
+import freemind.controller.actions.generated.instance.PluginMode;
+import freemind.controller.actions.generated.instance.PluginRegistration;
 
 /**
  * @author foltin

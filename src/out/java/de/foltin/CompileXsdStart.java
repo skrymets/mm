@@ -174,7 +174,7 @@ public class CompileXsdStart extends DefaultHandler {
 
         // write binding to disk
         try (
-                FileOutputStream fs = new FileOutputStream(DESTINATION_DIR + "/freemind/controller/actions/instance/binding.xml")) {
+                FileOutputStream fs = new FileOutputStream(DESTINATION_DIR + "/freemind/controller/actions/generated/instance/binding.xml")) {
             fs.write(mBindingXml.toString().getBytes());
         }
     }

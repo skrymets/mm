@@ -26,11 +26,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
-import freemind.controller.actions.instance.CompoundAction;
-import freemind.controller.actions.instance.HookNodeAction;
-import freemind.controller.actions.instance.NodeChildParameter;
-import freemind.controller.actions.instance.NodeListMember;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.CompoundAction;
+import freemind.controller.actions.generated.instance.HookNodeAction;
+import freemind.controller.actions.generated.instance.NodeChildParameter;
+import freemind.controller.actions.generated.instance.NodeListMember;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.DontSaveMarker;
 import freemind.extensions.HookFactory;
 import freemind.extensions.HookInstanciationMethod;

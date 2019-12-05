@@ -26,11 +26,11 @@ import java.util.HashMap;
 
 import org.slf4j.Logger;
 
-import freemind.controller.actions.instance.CompoundAction;
-import freemind.controller.actions.instance.FormatNodeAction;
-import freemind.controller.actions.instance.NewNodeAction;
-import freemind.controller.actions.instance.NodeAction;
-import freemind.controller.actions.instance.XmlAction;
+import freemind.controller.actions.generated.instance.CompoundAction;
+import freemind.controller.actions.generated.instance.FormatNodeAction;
+import freemind.controller.actions.generated.instance.NewNodeAction;
+import freemind.controller.actions.generated.instance.NodeAction;
+import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;

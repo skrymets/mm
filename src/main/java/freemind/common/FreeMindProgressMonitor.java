@@ -34,7 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import freemind.frok.patches.FreeMindMainMock;
-import freemind.controller.actions.instance.WindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.main.Resources;
 import freemind.main.Tools;
 

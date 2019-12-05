@@ -61,8 +61,8 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 
 import freemind.common.TextTranslator;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.instance.ManageStyleEditorWindowConfigurationStorage;
-import freemind.controller.actions.instance.Pattern;
+import freemind.controller.actions.generated.instance.ManageStyleEditorWindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.Pattern;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.StylePatternFactory;

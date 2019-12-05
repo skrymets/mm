@@ -27,7 +27,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 import freemind.controller.MenuItemSelectedListener;
-import freemind.controller.actions.instance.UnderlinedNodeAction;
+import freemind.controller.actions.generated.instance.UnderlinedNodeAction;
 import freemind.modes.mindmapmode.MindMapController;
 
 @SuppressWarnings("serial")
