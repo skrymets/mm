@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>freemind.view.mindmapview.NodeView</OriginalElement>
+  <nodes>
+    <node x="575.3020833333333" y="651.0">freemind.modes.MapAdapter</node>
+    <node x="190.92708333333331" y="651.0">freemind.modes.ControllerAdapter</node>
+    <node x="579.3020833333333" y="487.0">javax.swing.tree.TreeModel</node>
+    <node x="888.3020833333337" y="487.0">freemind.modes.MindMapNode</node>
+    <node x="745.0" y="974.0">freemind.extensions.PermanentNodeHook</node>
+    <node x="540.0" y="974.0">freemind.controller.actions.generated.instance.CompoundAction</node>
+    <node x="695.0" y="82.0">freemind.modes.LineAdapter</node>
+    <node x="0.0" y="974.0">freemind.controller.actions.generated.instance.DeleteNodeAction</node>
+    <node x="629.0" y="328.0">freemind.modes.ArrowLinkTarget</node>
+    <node x="0.0" y="1133.0">freemind.modes.mindmapmode.actions.NodeActorXml</node>
+    <node x="485.0" y="82.0">freemind.modes.MindMapLink</node>
+    <node x="631.3020833333333" y="569.0">javax.swing.tree.DefaultTreeModel</node>
+    <node x="521.4545454545455" y="246.0">freemind.modes.ArrowLinkAdapter</node>
+    <node x="695.0" y="0.0">freemind.modes.MindMapLine</node>
+    <node x="294.0" y="892.0">freemind.controller.actions.generated.instance.NodeAction</node>
+    <node x="118.30208333333331" y="487.0">freemind.modes.MapFeedback</node>
+    <node x="377.0" y="1133.0">freemind.view.mindmapview.NodeView</node>
+    <node x="852.3020833333333" y="733.0">freemind.modes.mindmapmode.EncryptedMindMapNode</node>
+    <node x="164.0" y="1133.0">freemind.modes.mindmapmode.actions.xml.actors.XmlActorAdapter</node>
+    <node x="60.0" y="1215.0">freemind.modes.mindmapmode.actions.xml.actors.NodeXmlActorAdapter</node>
+    <node x="941.0" y="892.0">freemind.extensions.ModeControllerHook</node>
+    <node x="0.0" y="733.0">freemind.modes.mindmapmode.MindMapController</node>
+    <node x="797.0" y="246.0">freemind.modes.mindmapmode.MindMapEdgeModel</node>
+    <node x="90.30208333333331" y="569.0">freemind.modes.MapFeedbackAdapter</node>
+    <node x="116.0" y="246.0">freemind.modes.mindmapmode.actions.xml.AbstractXmlAction</node>
+    <node x="144.0" y="328.0">freemind.modes.mindmapmode.actions.UndoAction</node>
+    <node x="555.3020833333333" y="733.0">freemind.modes.mindmapmode.MindMapMapModel</node>
+    <node x="252.0" y="0.0">javax.swing.Action</node>
+    <node x="888.3020833333335" y="569.0">freemind.modes.NodeAdapter</node>
+    <node x="431.0" y="164.0">freemind.modes.MindMapArrowLink</node>
+    <node x="1017.5" y="974.0">freemind.extensions.NodeHookAdapter</node>
+    <node x="809.0" y="892.0">freemind.extensions.NodeHook</node>
+    <node x="509.0" y="1133.0">freemind.view.mindmapview.MapView</node>
+    <node x="393.0" y="328.0">freemind.modes.mindmapmode.MindMapArrowLinkModel</node>
+    <node x="851.0" y="82.0">freemind.modes.MindMapEdge</node>
+    <node x="969.0" y="810.0">freemind.extensions.MindMapHook</node>
+    <node x="0.0" y="0.0">freemind.controller.MenuItemEnabledListener</node>
+    <node x="104.0" y="1051.0">freemind.modes.mindmapmode.actions.xml.ActorXml</node>
+    <node x="433.0" y="1051.0">javax.swing.JComponent</node>
+    <node x="298.0" y="810.0">freemind.controller.actions.generated.instance.XmlAction</node>
+    <node x="627.0" y="164.0">freemind.modes.LinkAdapter</node>
+    <node x="132.0" y="164.0">freemind.modes.mindmapmode.actions.MindmapAction</node>
+    <node x="868.3020833333335" y="651.0">freemind.modes.mindmapmode.MindMapNodeModel</node>
+    <node x="507.30208333333326" y="569.0">freemind.modes.MindMap</node>
+    <node x="817.0" y="164.0">freemind.modes.EdgeAdapter</node>
+    <node x="128.0" y="82.0">freemind.modes.FreemindAction</node>
+    <node x="220.92708333333334" y="733.0">freemind.modes.viewmodes.ViewControllerAdapter</node>
+    <node x="144.0" y="410.0">freemind.modes.mindmapmode.actions.RedoAction</node>
+    <node x="196.0" y="974.0">freemind.controller.actions.generated.instance.NewNodeAction</node>
+    <node x="658.0" y="1051.0">freemind.modes.mindmapmode.actions.xml.ActionPair</node>
+    <node x="368.0" y="974.0">freemind.controller.actions.generated.instance.CutNodeAction</node>
+    <node x="302.3020833333333" y="569.0">freemind.modes.ModeController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="freemind.modes.mindmapmode.MindMapNodeModel" target="freemind.modes.NodeAdapter">
+      <point x="1.1368683772161603E-13" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.LinkAdapter" target="freemind.modes.MindMapLink">
+      <point x="-34.0" y="-16.0" />
+      <point x="661.0" y="139.0" />
+      <point x="587.0" y="139.0" />
+      <point x="34.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.ControllerAdapter" target="freemind.modes.MapFeedbackAdapter">
+      <point x="-46.0" y="-16.0" />
+      <point x="236.92708333333331" y="626.0" />
+      <point x="186.30208333333331" y="626.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.extensions.NodeHookAdapter" target="freemind.extensions.MindMapHook">
+      <point x="42.0" y="-16.0" />
+      <point x="1143.5" y="867.0" />
+      <point x="1082.3333333333333" y="867.0" />
+      <point x="45.33333333333326" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.ControllerAdapter" target="freemind.modes.ModeController">
+      <point x="46.0" y="-16.0" />
+      <point x="328.9270833333333" y="626.0" />
+      <point x="382.3020833333333" y="626.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.extensions.NodeHookAdapter" target="freemind.extensions.NodeHook">
+      <point x="-42.0" y="-16.0" />
+      <point x="1059.5" y="949.0" />
+      <point x="893.0" y="949.0" />
+      <point x="28.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.MindMapArrowLink" target="freemind.modes.MindMapLink">
+      <point x="0.0" y="-16.0" />
+      <point x="-34.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.FreemindAction" target="javax.swing.Action">
+      <point x="40.0" y="-16.0" />
+      <point x="248.0" y="57.0" />
+      <point x="300.0" y="57.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.controller.actions.generated.instance.DeleteNodeAction" target="freemind.controller.actions.generated.instance.NodeAction">
+      <point x="0.0" y="-16.0" />
+      <point x="88.0" y="944.0" />
+      <point x="310.0" y="944.0" />
+      <point x="-48.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.EdgeAdapter" target="freemind.modes.LineAdapter">
+      <point x="-34.0" y="-16.0" />
+      <point x="851.0" y="139.0" />
+      <point x="797.0" y="139.0" />
+      <point x="34.0" y="16.0" />
+    </edge>
+    <edge source="freemind.extensions.PermanentNodeHook" target="freemind.extensions.NodeHook">
+      <point x="0.0" y="-16.0" />
+      <point x="-28.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.RedoAction" target="freemind.modes.mindmapmode.actions.UndoAction">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.MindMapController" target="freemind.modes.MapFeedback">
+      <point x="-46.0" y="-16.0" />
+      <point x="46.0" y="544.0" />
+      <point x="140.96874999999997" y="544.0" />
+      <point x="-45.33333333333334" y="16.0" />
+    </edge>
+    <edge source="freemind.controller.actions.generated.instance.CutNodeAction" target="freemind.controller.actions.generated.instance.NodeAction">
+      <point x="0.0" y="-16.0" />
+      <point x="444.0" y="954.0" />
+      <point x="374.0" y="954.0" />
+      <point x="16.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.NodeAdapter" target="freemind.modes.MindMapNode">
+      <point x="1.1368683772161603E-13" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.MindMapLink" target="freemind.modes.MindMapLine">
+      <point x="0.0" y="-16.0" />
+      <point x="553.0" y="57.0" />
+      <point x="717.6666666666666" y="57.0" />
+      <point x="-45.33333333333337" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.EncryptedMindMapNode" target="freemind.modes.mindmapmode.MindMapNodeModel">
+      <point x="1.1368683772161603E-13" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.MindMapController" target="freemind.modes.ControllerAdapter">
+      <point x="46.0" y="-16.0" />
+      <point x="138.0" y="708.0" />
+      <point x="236.92708333333331" y="708.0" />
+      <point x="-46.0" y="16.0" />
+    </edge>
+    <edge source="freemind.controller.actions.generated.instance.CompoundAction" target="freemind.controller.actions.generated.instance.NodeAction">
+      <point x="0.0" y="-16.0" />
+      <point x="620.0" y="944.0" />
+      <point x="406.0" y="944.0" />
+      <point x="48.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.NodeActorXml" target="freemind.modes.mindmapmode.actions.xml.ActorXml">
+      <point x="0.0" y="-16.0" />
+      <point x="72.0" y="1108.0" />
+      <point x="132.0" y="1108.0" />
+      <point x="-28.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.MapAdapter" target="freemind.modes.MindMap">
+      <point x="-32.0" y="-16.0" />
+      <point x="607.3020833333333" y="626.0" />
+      <point x="559.3020833333333" y="626.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.EdgeAdapter" target="freemind.modes.MindMapEdge">
+      <point x="34.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.xml.actors.NodeXmlActorAdapter" target="freemind.modes.mindmapmode.actions.xml.actors.XmlActorAdapter">
+      <point x="50.0" y="-16.0" />
+      <point x="210.0" y="1190.0" />
+      <point x="248.0" y="1190.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.ModeController" target="freemind.modes.MapFeedback">
+      <point x="0.0" y="-16.0" />
+      <point x="382.3020833333333" y="544.0" />
+      <point x="231.63541666666669" y="544.0" />
+      <point x="45.33333333333337" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.MapFeedbackAdapter" target="freemind.modes.MapFeedback">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.LinkAdapter" target="freemind.modes.LineAdapter">
+      <point x="34.0" y="-16.0" />
+      <point x="-34.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.ArrowLinkTarget" target="freemind.modes.ArrowLinkAdapter">
+      <point x="0.0" y="-16.0" />
+      <point x="713.0" y="303.0" />
+      <point x="653.4545454545455" y="303.0" />
+      <point x="44.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.MindMap" target="javax.swing.tree.TreeModel">
+      <point x="0.0" y="-16.0" />
+      <point x="559.3020833333333" y="544.0" />
+      <point x="609.3020833333333" y="544.0" />
+      <point x="-30.0" y="16.0" />
+    </edge>
+    <edge source="javax.swing.tree.DefaultTreeModel" target="javax.swing.tree.TreeModel">
+      <point x="0.0" y="-16.0" />
+      <point x="719.3020833333333" y="544.0" />
+      <point x="669.3020833333333" y="544.0" />
+      <point x="30.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.xml.actors.XmlActorAdapter" target="freemind.modes.mindmapmode.actions.xml.ActorXml">
+      <point x="0.0" y="-16.0" />
+      <point x="248.0" y="1108.0" />
+      <point x="188.0" y="1108.0" />
+      <point x="28.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.MindmapAction" target="freemind.modes.FreemindAction">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.view.mindmapview.NodeView" target="javax.swing.JComponent">
+      <point x="0.0" y="-16.0" />
+      <point x="433.0" y="1108.0" />
+      <point x="465.0" y="1108.0" />
+      <point x="-32.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.UndoAction" target="freemind.modes.mindmapmode.actions.xml.AbstractXmlAction">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.extensions.ModeControllerHook" target="freemind.extensions.MindMapHook">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.ArrowLinkAdapter" target="freemind.modes.MindMapArrowLink">
+      <point x="-44.0" y="-16.0" />
+      <point x="565.4545454545455" y="221.0" />
+      <point x="519.0" y="221.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.LineAdapter" target="freemind.modes.MindMapLine">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.view.mindmapview.MapView" target="javax.swing.JComponent">
+      <point x="0.0" y="-16.0" />
+      <point x="561.0" y="1108.0" />
+      <point x="529.0" y="1108.0" />
+      <point x="32.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.xml.actors.NodeXmlActorAdapter" target="freemind.modes.mindmapmode.actions.NodeActorXml">
+      <point x="-50.0" y="-16.0" />
+      <point x="110.0" y="1190.0" />
+      <point x="72.0" y="1190.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.controller.actions.generated.instance.NodeAction" target="freemind.controller.actions.generated.instance.XmlAction">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.extensions.NodeHook" target="freemind.extensions.MindMapHook">
+      <point x="0.0" y="-16.0" />
+      <point x="865.0" y="867.0" />
+      <point x="991.6666666666666" y="867.0" />
+      <point x="-45.33333333333337" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.MindMapArrowLinkModel" target="freemind.modes.ArrowLinkAdapter">
+      <point x="0.0" y="-16.0" />
+      <point x="501.0" y="303.0" />
+      <point x="565.4545454545455" y="303.0" />
+      <point x="-44.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.actions.xml.AbstractXmlAction" target="freemind.modes.mindmapmode.actions.MindmapAction">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.MindMapEdge" target="freemind.modes.MindMapLine">
+      <point x="0.0" y="-16.0" />
+      <point x="919.0" y="57.0" />
+      <point x="808.3333333333334" y="57.0" />
+      <point x="45.33333333333337" y="16.0" />
+    </edge>
+    <edge source="freemind.controller.actions.generated.instance.NewNodeAction" target="freemind.controller.actions.generated.instance.NodeAction">
+      <point x="0.0" y="-16.0" />
+      <point x="272.0" y="954.0" />
+      <point x="342.0" y="954.0" />
+      <point x="-16.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.MapAdapter" target="javax.swing.tree.DefaultTreeModel">
+      <point x="32.0" y="-16.0" />
+      <point x="671.3020833333333" y="626.0" />
+      <point x="719.3020833333333" y="626.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.viewmodes.ViewControllerAdapter" target="freemind.modes.ControllerAdapter">
+      <point x="0.0" y="-16.0" />
+      <point x="46.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.MindMapMapModel" target="freemind.modes.MapAdapter">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.ArrowLinkAdapter" target="freemind.modes.LinkAdapter">
+      <point x="44.0" y="-16.0" />
+      <point x="653.4545454545455" y="221.0" />
+      <point x="695.0" y="221.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.FreemindAction" target="freemind.controller.MenuItemEnabledListener">
+      <point x="-40.0" y="-16.0" />
+      <point x="168.0" y="57.0" />
+      <point x="116.0" y="57.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="freemind.modes.mindmapmode.MindMapEdgeModel" target="freemind.modes.EdgeAdapter">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6965548504079783" x="729.6498763503839" y="808.3246127814655" />
+  <SelectedNodes>
+    <node>freemind.extensions.NodeHook</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
