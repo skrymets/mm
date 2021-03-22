@@ -169,6 +169,11 @@
             <artifactId>simplyhtml</artifactId>
             <version>0.16.5-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
         <!-- ************************************************************************* -->
         
     </dependencies>
