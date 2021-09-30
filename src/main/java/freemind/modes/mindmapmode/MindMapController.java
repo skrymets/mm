@@ -18,123 +18,19 @@
  */
 package freemind.modes.mindmapmode;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.Constructor;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Properties;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.Timer;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-
-import org.jibx.runtime.IUnmarshallingContext;
-import org.jibx.runtime.JiBXException;
-
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.common.XmlBindingTools;
 import freemind.controller.MenuBar;
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.generated.instance.MenuActionBase;
-import freemind.controller.actions.generated.instance.MenuCategoryBase;
-import freemind.controller.actions.generated.instance.MenuCheckedAction;
-import freemind.controller.actions.generated.instance.MenuRadioAction;
-import freemind.controller.actions.generated.instance.MenuSeparator;
-import freemind.controller.actions.generated.instance.MenuStructure;
-import freemind.controller.actions.generated.instance.MenuSubmenu;
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.controller.actions.generated.instance.PatternEdgeColor;
-import freemind.controller.actions.generated.instance.PatternEdgeStyle;
-import freemind.controller.actions.generated.instance.PatternEdgeWidth;
-import freemind.controller.actions.generated.instance.PatternIcon;
-import freemind.controller.actions.generated.instance.PatternNodeBackgroundColor;
-import freemind.controller.actions.generated.instance.PatternNodeColor;
-import freemind.controller.actions.generated.instance.PatternNodeFontBold;
-import freemind.controller.actions.generated.instance.PatternNodeFontItalic;
-import freemind.controller.actions.generated.instance.PatternNodeFontName;
-import freemind.controller.actions.generated.instance.PatternNodeFontSize;
-import freemind.controller.actions.generated.instance.PatternNodeStyle;
-import freemind.controller.actions.generated.instance.PatternNodeText;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
-import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.extensions.HookFactory;
+import freemind.controller.actions.generated.instance.*;
+import freemind.extensions.*;
 import freemind.extensions.HookFactory.RegistrationContainer;
-import freemind.extensions.HookRegistration;
-import freemind.extensions.ModeControllerHook;
-import freemind.extensions.NodeHook;
-import freemind.extensions.PermanentNodeHook;
-import freemind.extensions.UndoEventReceiver;
-import freemind.main.ExampleFileFilter;
-import freemind.main.FixedHTMLWriter;
-import freemind.main.FreeMind;
-import freemind.main.FreeMindCommon;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
-import freemind.modes.ControllerAdapter;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.FreeMindFileDialog;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
-import freemind.modes.MindMap.AskUserBeforeUpdateCallback;
-import freemind.modes.MindMap.MapSourceChangedObserver;
-import freemind.modes.MindMapArrowLink;
-import freemind.modes.MindMapLink;
-import freemind.modes.MindMapNode;
-import freemind.modes.Mode;
-import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
-import freemind.modes.NodeDownAction;
-import freemind.modes.StylePatternFactory;
+import freemind.main.*;
+import freemind.model.*;
+import freemind.model.MindMap.AskUserBeforeUpdateCallback;
+import freemind.model.MindMap.MapSourceChangedObserver;
+import freemind.modes.*;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.common.CommonNodeKeyListener;
 import freemind.modes.common.CommonNodeKeyListener.EditHandler;
@@ -143,62 +39,8 @@ import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
 import freemind.modes.common.actions.NewMapAction;
 import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
-import freemind.modes.mindmapmode.actions.AddArrowLinkAction;
-import freemind.modes.mindmapmode.actions.AddLocalLinkAction;
-import freemind.modes.mindmapmode.actions.ApplyPatternAction;
-import freemind.modes.mindmapmode.actions.BoldAction;
-import freemind.modes.mindmapmode.actions.ChangeArrowsInArrowLinkAction;
-import freemind.modes.mindmapmode.actions.CloudAction;
-import freemind.modes.mindmapmode.actions.ColorArrowLinkAction;
-import freemind.modes.mindmapmode.actions.CopyAction;
-import freemind.modes.mindmapmode.actions.CopySingleAction;
-import freemind.modes.mindmapmode.actions.CutAction;
-import freemind.modes.mindmapmode.actions.DeleteChildAction;
-import freemind.modes.mindmapmode.actions.EdgeColorAction;
-import freemind.modes.mindmapmode.actions.EdgeStyleAction;
-import freemind.modes.mindmapmode.actions.EdgeWidthAction;
-import freemind.modes.mindmapmode.actions.EditAction;
-import freemind.modes.mindmapmode.actions.ExportBranchAction;
-import freemind.modes.mindmapmode.actions.FontFamilyAction;
-import freemind.modes.mindmapmode.actions.FontSizeAction;
-import freemind.modes.mindmapmode.actions.HookAction;
-import freemind.modes.mindmapmode.actions.IconAction;
-import freemind.modes.mindmapmode.actions.ImportExplorerFavoritesAction;
-import freemind.modes.mindmapmode.actions.ImportFolderStructureAction;
-import freemind.modes.mindmapmode.actions.ItalicAction;
-import freemind.modes.mindmapmode.actions.JoinNodesAction;
-import freemind.modes.mindmapmode.actions.MindMapControllerHookAction;
-import freemind.modes.mindmapmode.actions.MindmapAction;
-import freemind.modes.mindmapmode.actions.MoveNodeAction;
-import freemind.modes.mindmapmode.actions.NewChildAction;
-import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
-import freemind.modes.mindmapmode.actions.NewSiblingAction;
-import freemind.modes.mindmapmode.actions.NodeBackgroundColorAction;
+import freemind.modes.mindmapmode.actions.*;
 import freemind.modes.mindmapmode.actions.NodeBackgroundColorAction.RemoveNodeBackgroundColorAction;
-import freemind.modes.mindmapmode.actions.NodeColorAction;
-import freemind.modes.mindmapmode.actions.NodeColorBlendAction;
-import freemind.modes.mindmapmode.actions.NodeGeneralAction;
-import freemind.modes.mindmapmode.actions.NodeHookAction;
-import freemind.modes.mindmapmode.actions.NodeStyleAction;
-import freemind.modes.mindmapmode.actions.NodeUpAction;
-import freemind.modes.mindmapmode.actions.PasteAction;
-import freemind.modes.mindmapmode.actions.PasteAsPlainTextAction;
-import freemind.modes.mindmapmode.actions.RedoAction;
-import freemind.modes.mindmapmode.actions.RemoveAllIconsAction;
-import freemind.modes.mindmapmode.actions.RemoveArrowLinkAction;
-import freemind.modes.mindmapmode.actions.RemoveIconAction;
-import freemind.modes.mindmapmode.actions.RevertAction;
-import freemind.modes.mindmapmode.actions.SelectAllAction;
-import freemind.modes.mindmapmode.actions.SelectBranchAction;
-import freemind.modes.mindmapmode.actions.SetLinkByTextFieldAction;
-import freemind.modes.mindmapmode.actions.SingleNodeOperation;
-import freemind.modes.mindmapmode.actions.StrikethroughAction;
-import freemind.modes.mindmapmode.actions.ToggleChildrenFoldedAction;
-import freemind.modes.mindmapmode.actions.ToggleFoldedAction;
-import freemind.modes.mindmapmode.actions.UnderlinedAction;
-import freemind.modes.mindmapmode.actions.UndoAction;
-import freemind.modes.mindmapmode.actions.UsePlainTextAction;
-import freemind.modes.mindmapmode.actions.UseRichFormattingAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
 import freemind.modes.mindmapmode.actions.xml.DefaultActionHandler;
@@ -212,6 +54,30 @@ import freemind.view.MapModule;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+import org.jibx.runtime.IUnmarshallingContext;
+import org.jibx.runtime.JiBXException;
+
+import javax.swing.Timer;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
@@ -1772,7 +1638,7 @@ public class MindMapController extends ControllerAdapter implements
 	 * 
 	 * @see
 	 * freemind.modes.mindmapmode.actions.MindMapActions#paste(java.awt.datatransfer
-	 * .Transferable, freemind.modes.MindMapNode, boolean, boolean)
+	 * .Transferable, freemind.model.MindMapNode, boolean, boolean)
      */
     public boolean paste(Transferable t, MindMapNode target, boolean asSibling,
             boolean isLeft) {
@@ -2315,7 +2181,7 @@ public class MindMapController extends ControllerAdapter implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.modes.MindMap#insertNodeInto(javax.swing.tree.MutableTreeNode,
+	 * freemind.model.MindMap#insertNodeInto(javax.swing.tree.MutableTreeNode,
 	 * javax.swing.tree.MutableTreeNode)
      */
     public void insertNodeInto(MindMapNode newChild, MindMapNode parent) {
@@ -2430,7 +2296,7 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     /* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.MindMapActions#setAttribute(freemind.modes.MindMapNode, int, freemind.modes.attributes.Attribute)
+	 * @see freemind.modes.mindmapmode.actions.MindMapActions#setAttribute(freemind.model.MindMapNode, int, freemind.modes.attributes.Attribute)
      */
     @Override
     public void setAttribute(MindMapNode pNode, int pPosition,
@@ -2439,7 +2305,7 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     /* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.MindMapActions#insertAttribute(freemind.modes.MindMapNode, int, freemind.modes.attributes.Attribute)
+	 * @see freemind.modes.mindmapmode.actions.MindMapActions#insertAttribute(freemind.model.MindMapNode, int, freemind.modes.attributes.Attribute)
      */
     @Override
     public void insertAttribute(MindMapNode pNode, int pPosition,
@@ -2448,7 +2314,7 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     /* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.MindMapActions#addAttribute(freemind.modes.MindMapNode, freemind.modes.attributes.Attribute)
+	 * @see freemind.modes.mindmapmode.actions.MindMapActions#addAttribute(freemind.model.MindMapNode, freemind.modes.attributes.Attribute)
      */
     @Override
     public int addAttribute(MindMapNode pNode, Attribute pAttribute) {
@@ -2456,7 +2322,7 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     /* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.MindMapActions#removeAttribute(freemind.modes.MindMapNode, int)
+	 * @see freemind.modes.mindmapmode.actions.MindMapActions#removeAttribute(freemind.model.MindMapNode, int)
      */
     @Override
     public void removeAttribute(MindMapNode pNode, int pPosition) {
@@ -2464,7 +2330,7 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     /* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#out(java.lang.String)
+	 * @see freemind.model.MindMap.MapFeedback#out(java.lang.String)
      */
     @Override
     public void out(String pFormat) {
@@ -2480,7 +2346,7 @@ public class MindMapController extends ControllerAdapter implements
     }
 
     /* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.MindMapActions#setNoteText(freemind.modes.MindMapNode, java.lang.String)
+	 * @see freemind.modes.mindmapmode.actions.MindMapActions#setNoteText(freemind.model.MindMapNode, java.lang.String)
      */
     @Override
     public void setNoteText(MindMapNode pSelected, String pNewText) {

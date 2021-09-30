@@ -19,19 +19,32 @@
 
 package freemind.modes;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Point;
+import freemind.controller.*;
+import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
+import freemind.controller.actions.generated.instance.NodeListMember;
+import freemind.extensions.PermanentNodeHook;
+import freemind.main.*;
+import freemind.model.MapAdapter;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
+import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
+import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
+import freemind.view.MapModule;
+import freemind.view.mindmapview.IndependantMapViewCreator;
+import freemind.view.mindmapview.MapView;
+import freemind.view.mindmapview.NodeView;
+import freemind.view.mindmapview.ViewFeedback;
+
+import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
+import java.awt.dnd.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -40,59 +53,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
-import java.util.Vector;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
-import javax.swing.filechooser.FileFilter;
-
-import freemind.controller.Controller;
-import freemind.controller.LastStateStorageManagement;
-import freemind.controller.MapModuleManager;
-import freemind.controller.MapMouseMotionListener;
-import freemind.controller.MapMouseWheelListener;
-import freemind.controller.MindMapNodesSelection;
-import freemind.controller.NodeDragListener;
-import freemind.controller.NodeDropListener;
-import freemind.controller.NodeKeyListener;
-import freemind.controller.NodeMotionListener;
-import freemind.controller.NodeMouseMotionListener;
-import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
-import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.extensions.PermanentNodeHook;
-import freemind.main.FreeMindCommon;
-import freemind.main.FreeMindMain;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
-import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
-import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
-import freemind.view.MapModule;
-import freemind.view.mindmapview.IndependantMapViewCreator;
-import freemind.view.mindmapview.MapView;
-import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.ViewFeedback;
+import java.util.*;
 
 /**
  * Derive from this class to implement the Controller for your mode. Overload
@@ -1094,7 +1056,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 	
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getResourceString(java.lang.String)
+	 * @see freemind.model.MindMap.MapFeedback#getResourceString(java.lang.String)
 	 */
 	@Override
 	public String getResourceString(String pTextId) {
@@ -1481,7 +1443,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getProperty(java.lang.String)
+	 * @see freemind.model.MindMap.MapFeedback#getProperty(java.lang.String)
 	 */
 	@Override
 	public String getProperty(String pResourceId) {
@@ -1489,7 +1451,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getDefaultFont()
+	 * @see freemind.model.MindMap.MapFeedback#getDefaultFont()
 	 */
 	@Override
 	public Font getDefaultFont() {
@@ -1497,7 +1459,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getFontThroughMap(java.awt.Font)
+	 * @see freemind.model.MindMap.MapFeedback#getFontThroughMap(java.awt.Font)
 	 */
 	@Override
 	public Font getFontThroughMap(Font pFont) {

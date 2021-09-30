@@ -22,12 +22,12 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import java.util.List;
+import freemind.model.MindMapNode;
+import freemind.modes.mindmapmode.MindMapController;
 import org.slf4j.Logger;
 
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.MindMapController;
+import java.awt.event.ActionEvent;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class NodeUpAction extends MindmapAction  {

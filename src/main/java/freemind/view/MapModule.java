@@ -20,7 +20,7 @@
 
 package freemind.view;
 
-import freemind.modes.MindMap;
+import freemind.model.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;

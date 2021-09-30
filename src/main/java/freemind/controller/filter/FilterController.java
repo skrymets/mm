@@ -23,15 +23,6 @@
  */
 package freemind.controller.filter;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.Vector;
-
-import javax.swing.DefaultComboBoxModel;
-
 import freemind.controller.Controller;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
 import freemind.controller.filter.condition.Condition;
@@ -40,11 +31,15 @@ import freemind.controller.filter.condition.ConditionRenderer;
 import freemind.controller.filter.condition.NoFilteringCondition;
 import freemind.main.Resources;
 import freemind.main.XMLElement;
+import freemind.model.MindMap;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.common.plugins.NodeNoteBase;
 import freemind.view.MapModule;
+
+import javax.swing.*;
+import java.io.*;
+import java.util.Vector;
 
 /**
  * @author dimitri

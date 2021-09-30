@@ -20,10 +20,10 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapLinkRegistry;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;

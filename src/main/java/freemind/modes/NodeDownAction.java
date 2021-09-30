@@ -22,11 +22,12 @@
 
 package freemind.modes;
 
-import java.awt.event.ActionEvent;
-import java.util.List;
-
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.MindmapAction;
+
+import java.awt.event.ActionEvent;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class NodeDownAction extends MindmapAction {

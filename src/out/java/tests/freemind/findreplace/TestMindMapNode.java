@@ -473,27 +473,27 @@ public final class TestMindMapNode implements MindMapNode {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMapNode#removeAllHooks()
+	 * @see freemind.model.MindMapNode#removeAllHooks()
 	 */
 	public void removeAllHooks() {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMapNode#sortedChildrenUnfolded()
+	 * @see freemind.model.MindMapNode#sortedChildrenUnfolded()
 	 */
 	public ListIterator sortedChildrenUnfolded() {
 		return null;
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMapNode#hasVisibleChilds()
+	 * @see freemind.model.MindMapNode#hasVisibleChilds()
 	 */
 	public boolean hasVisibleChilds() {
 		return false;
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMapNode#addAttribute(freemind.modes.attributes.Attribute)
+	 * @see freemind.model.MindMapNode#addAttribute(freemind.modes.attributes.Attribute)
 	 */
 	@Override
 	public int addAttribute(Attribute pAttribute) {
@@ -502,7 +502,7 @@ public final class TestMindMapNode implements MindMapNode {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMapNode#removeAttribute(int)
+	 * @see freemind.model.MindMapNode#removeAttribute(int)
 	 */
 	@Override
 	public void removeAttribute(int pPosition) {
@@ -511,7 +511,7 @@ public final class TestMindMapNode implements MindMapNode {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMapNode#insertAttribute(int, freemind.modes.attributes.Attribute)
+	 * @see freemind.model.MindMapNode#insertAttribute(int, freemind.modes.attributes.Attribute)
 	 */
 	@Override
 	public void insertAttribute(int pPosition, Attribute pAttribute) {
@@ -520,7 +520,7 @@ public final class TestMindMapNode implements MindMapNode {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMapNode#getMap()
+	 * @see freemind.model.MindMapNode#getMap()
 	 */
 	@Override
 	public MindMap getMap() {

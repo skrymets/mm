@@ -24,10 +24,10 @@ import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.RemoveAllIconsXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**

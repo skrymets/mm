@@ -20,13 +20,12 @@
 
 package accessories.plugins;
 
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import accessories.plugins.ClonePasteAction.Registration;
 import freemind.controller.MenuItemEnabledListener;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+
+import javax.swing.*;
 
 /**
  * @author foltin
@@ -38,7 +37,7 @@ public class DeactivateCloneAction extends MindMapNodeHookAdapter implements Men
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.extensions.NodeHookAdapter#invoke(freemind.modes.MindMapNode)
+	 * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode pNode) {
 		super.invoke(pNode);

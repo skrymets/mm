@@ -20,11 +20,13 @@
 
 package freemind.modes;
 
-import java.awt.Font;
-import java.util.List;
-
 import freemind.extensions.NodeHook;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.view.mindmapview.ViewFeedback;
+
+import java.awt.*;
+import java.util.List;
 
 /**
  * This interface describes the services, the {@link ModeController} provides to 

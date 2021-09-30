@@ -22,9 +22,9 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.SetAttributeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 

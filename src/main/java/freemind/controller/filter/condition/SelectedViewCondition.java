@@ -23,13 +23,13 @@
  */
 package freemind.controller.filter.condition;
 
-import javax.swing.JComponent;
-
 import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.XMLElement;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.view.mindmapview.NodeView;
+
+import javax.swing.*;
 
 public class SelectedViewCondition implements Condition {
 

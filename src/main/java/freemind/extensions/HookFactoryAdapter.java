@@ -22,9 +22,9 @@
 /*$Id: HookFactoryAdapter.java,v 1.1.2.1.2.2 2006/07/25 20:28:20 christianfoltin Exp $*/
 package freemind.extensions;
 
-import java.util.HashMap;
+import freemind.model.MindMapNode;
 
-import freemind.modes.MindMapNode;
+import java.util.HashMap;
 
 /**
  * @author foltin

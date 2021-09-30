@@ -19,42 +19,27 @@
 
 package accessories.plugins.dialogs;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.io.IOException;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import freemind.common.TextTranslator;
 import freemind.controller.actions.generated.instance.Pattern;
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
+import freemind.model.MapAdapter;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedbackAdapter;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame.StylePatternFrameType;
 import freemind.view.mindmapview.MapView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 
 /** */
 @SuppressWarnings("serial")

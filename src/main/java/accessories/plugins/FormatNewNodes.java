@@ -22,24 +22,19 @@
 
 package accessories.plugins;
 
-import java.util.HashMap;
-
-import org.slf4j.Logger;
-
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.FormatNodeAction;
-import freemind.controller.actions.generated.instance.NewNodeAction;
-import freemind.controller.actions.generated.instance.NodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.generated.instance.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
-import freemind.modes.MindMap;
+import freemind.model.MindMap;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import org.slf4j.Logger;
+
+import java.util.HashMap;
 import java.util.List;
 
 /**

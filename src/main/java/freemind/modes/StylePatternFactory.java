@@ -20,40 +20,21 @@
 
 package freemind.modes;
 
-import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
-
 import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.controller.actions.generated.instance.PatternChild;
-import freemind.controller.actions.generated.instance.PatternEdgeColor;
-import freemind.controller.actions.generated.instance.PatternEdgeStyle;
-import freemind.controller.actions.generated.instance.PatternEdgeWidth;
-import freemind.controller.actions.generated.instance.PatternIcon;
-import freemind.controller.actions.generated.instance.PatternNodeBackgroundColor;
-import freemind.controller.actions.generated.instance.PatternNodeColor;
-import freemind.controller.actions.generated.instance.PatternNodeFontBold;
-import freemind.controller.actions.generated.instance.PatternNodeFontItalic;
-import freemind.controller.actions.generated.instance.PatternNodeFontName;
-import freemind.controller.actions.generated.instance.PatternNodeFontSize;
-import freemind.controller.actions.generated.instance.PatternNodeFontStrikethrough;
-import freemind.controller.actions.generated.instance.PatternNodeStyle;
-import freemind.controller.actions.generated.instance.PatternPropertyBase;
-import freemind.controller.actions.generated.instance.Patterns;
+import freemind.controller.actions.generated.instance.*;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.model.EdgeAdapter;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
 import freemind.modes.mindmapmode.actions.ApplyPatternAction.ExternalPatternAction;
+
+import java.awt.Font;
+import java.io.*;
+import java.util.List;
+import java.util.*;
 
 /**
  * This class constructs patterns from files or from nodes and saves them back.

@@ -23,14 +23,14 @@
  */
 package accessories.plugins;
 
+import freemind.main.Tools;
+import freemind.model.MindMapNode;
+import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+
 import java.awt.datatransfer.Transferable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
-
-import freemind.main.Tools;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 
 /**
  * @author foltin
@@ -67,7 +67,7 @@ public class SortNodes extends MindMapNodeHookAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.modes.MindMapNode,
+	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode,
 	 * java.util.List)
 	 */
 	public void invoke(MindMapNode node) {

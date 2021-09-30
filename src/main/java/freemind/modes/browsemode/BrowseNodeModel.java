@@ -20,11 +20,11 @@
 
 package freemind.modes.browsemode;
 
-import java.util.LinkedList;
-
 import freemind.main.XMLElement;
-import freemind.modes.MindMap;
-import freemind.modes.NodeAdapter;
+import freemind.model.MindMap;
+import freemind.model.NodeAdapter;
+
+import java.util.LinkedList;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to

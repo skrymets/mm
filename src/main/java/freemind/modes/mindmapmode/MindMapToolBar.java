@@ -20,18 +20,6 @@
 
 package freemind.modes.mindmapmode;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JToolBar;
-
 import freemind.controller.Controller;
 import freemind.controller.FreeMindToolBar;
 import freemind.controller.StructuredMenuHolder;
@@ -41,9 +29,14 @@ import freemind.controller.color.JColorCombo;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.view.ImageFactory;
 import freemind.view.mindmapview.MapView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 @SuppressWarnings("serial")
 public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {

@@ -20,10 +20,11 @@
 
 package freemind.modes;
 
-import java.awt.Point;
-
 import freemind.main.XMLElement;
+import freemind.model.MindMapLink;
 import freemind.view.mindmapview.MapView;
+
+import java.awt.*;
 
 public interface MindMapArrowLink extends MindMapLink {
 

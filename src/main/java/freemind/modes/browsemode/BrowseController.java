@@ -20,6 +20,23 @@
 
 package freemind.modes.browsemode;
 
+import freemind.controller.MenuBar;
+import freemind.controller.MenuItemEnabledListener;
+import freemind.controller.StructuredMenuHolder;
+import freemind.extensions.HookFactory;
+import freemind.main.Tools;
+import freemind.main.XMLParseException;
+import freemind.model.*;
+import freemind.modes.Mode;
+import freemind.modes.ModeController;
+import freemind.modes.common.GotoLinkNodeAction;
+import freemind.modes.common.plugins.MapNodePositionHolderBase;
+import freemind.modes.common.plugins.NodeNoteBase;
+import freemind.modes.viewmodes.ViewControllerAdapter;
+import freemind.view.mindmapview.MainView;
+import org.slf4j.Logger;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -33,33 +50,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;
 import java.util.Vector;
-import org.slf4j.Logger;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-
-import freemind.controller.MenuBar;
-import freemind.controller.MenuItemEnabledListener;
-import freemind.controller.StructuredMenuHolder;
-import freemind.extensions.HookFactory;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapLink;
-import freemind.modes.MindMapNode;
-import freemind.modes.Mode;
-import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
-import freemind.modes.common.GotoLinkNodeAction;
-import freemind.modes.common.plugins.MapNodePositionHolderBase;
-import freemind.modes.common.plugins.NodeNoteBase;
-import freemind.modes.viewmodes.ViewControllerAdapter;
-import freemind.view.mindmapview.MainView;
 
 @SuppressWarnings("serial")
 public class BrowseController extends ViewControllerAdapter {
@@ -422,7 +412,7 @@ public class BrowseController extends ViewControllerAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.ControllerAdapter#loadInternally(java.net.URL, freemind.modes.MapAdapter)
+	 * @see freemind.modes.ControllerAdapter#loadInternally(java.net.URL, freemind.model.MapAdapter)
 	 */
 	@Override
 	protected void loadInternally(URL url, MapAdapter pModel)
@@ -471,7 +461,7 @@ public class BrowseController extends ViewControllerAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#out(java.lang.String)
+	 * @see freemind.model.MindMap.MapFeedback#out(java.lang.String)
 	 */
 	@Override
 	public void out(String pFormat) {

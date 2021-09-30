@@ -20,15 +20,15 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.awt.Font;
-
 import freemind.controller.actions.generated.instance.FontNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import java.awt.*;
 
 /**
  * @author foltin

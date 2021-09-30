@@ -20,14 +20,14 @@
 
 package accessories.plugins;
 
-import java.awt.EventQueue;
+import freemind.model.MindMapNode;
+import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
-
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 
 /**
  * @author foltin
@@ -37,7 +37,7 @@ public class ShowCloneNodes extends MindMapNodeHookAdapter{
 	
 	
 	/* (non-Javadoc)
-	 * @see freemind.extensions.NodeHookAdapter#invoke(freemind.modes.MindMapNode)
+	 * @see freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode pNode) {
 		super.invoke(pNode);

@@ -23,22 +23,21 @@
  */
 package accessories.plugins;
 
-import java.awt.EventQueue;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.List;
+import freemind.main.FixedHTMLWriter;
+import freemind.model.MindMapNode;
+import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+import freemind.view.mindmapview.MapView;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
-
-import freemind.main.FixedHTMLWriter;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
-import freemind.view.mindmapview.MapView;
+import java.awt.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.List;
 
 /**
  * @author Dimitri Polivaev
@@ -56,7 +55,7 @@ public class SplitNode extends MindMapNodeHookAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.modes.MindMapNode,
+	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode,
 	 * java.util.List)
 	 */
 	public void invoke(MindMapNode node) {

@@ -20,30 +20,27 @@
 
 package freemind.main;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.logging.Level;
-import org.slf4j.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.text.BadLocationException;
-import javax.xml.parsers.SAXParserFactory;
-
+import freemind.model.MindMapNode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.NodeTraversor;
 import org.jsoup.select.NodeVisitor;
+import org.slf4j.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import freemind.modes.MindMapNode;
+import javax.swing.text.BadLocationException;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** */
 public class HtmlTools {

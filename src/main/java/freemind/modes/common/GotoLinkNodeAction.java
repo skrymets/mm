@@ -23,13 +23,11 @@
 
 package freemind.modes.common;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /** Follow a graphical link (AKA connector) action. */
 @SuppressWarnings("serial")

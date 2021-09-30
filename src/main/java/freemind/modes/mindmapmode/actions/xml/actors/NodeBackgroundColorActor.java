@@ -20,14 +20,14 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.awt.Color;
-
 import freemind.controller.actions.generated.instance.NodeBackgroundColorFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import java.awt.*;
 
 /**
  * @author foltin

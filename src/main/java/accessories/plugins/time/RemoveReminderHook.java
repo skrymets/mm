@@ -22,12 +22,12 @@
 
 package accessories.plugins.time;
 
-import java.util.Arrays;
-import java.util.List;
-
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.common.plugins.ReminderHookBase;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author foltin

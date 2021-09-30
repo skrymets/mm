@@ -23,11 +23,11 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.MapView;
+
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class ToggleChildrenFoldedAction extends MindmapAction {

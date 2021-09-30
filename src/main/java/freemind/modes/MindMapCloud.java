@@ -20,9 +20,10 @@
 
 package freemind.modes;
 
-import java.awt.Color;
-
 import freemind.main.XMLElement;
+import freemind.model.MindMapLine;
+
+import java.awt.*;
 
 public interface MindMapCloud extends MindMapLine {
 

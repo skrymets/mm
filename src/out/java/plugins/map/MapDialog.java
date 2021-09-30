@@ -843,7 +843,7 @@ public class MapDialog extends MindMapHookAdapter implements
 	 * 
 	 * @see
 	 * freemind.modes.ModeController.NodeSelectionListener#onUpdateNodeHook(
-	 * freemind.modes.MindMapNode)
+	 * freemind.model.MindMapNode)
 	 */
 	public void onUpdateNodeHook(MindMapNode pNode) {
 		// update MapMarkerLocation if present:
@@ -907,7 +907,7 @@ public class MapDialog extends MindMapHookAdapter implements
 	 * 
 	 * @see
 	 * freemind.modes.ModeController.NodeSelectionListener#onSelectionChange
-	 * (freemind.modes.MindMapNode, boolean)
+	 * (freemind.model.MindMapNode, boolean)
 	 */
 	public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
 		selectMapPosition(pNode, pIsSelected);

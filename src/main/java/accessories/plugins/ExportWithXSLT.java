@@ -25,39 +25,29 @@
  */
 package accessories.plugins;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.net.URL;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import accessories.plugins.util.html.ClickableImageCreator;
+import accessories.plugins.util.xslt.ExportDialog;
+import freemind.extensions.ExportHook;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.modes.MindIcon;
+import freemind.modes.ModeController;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import accessories.plugins.util.html.ClickableImageCreator;
-import accessories.plugins.util.xslt.ExportDialog;
-import freemind.extensions.ExportHook;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  * @author foltin

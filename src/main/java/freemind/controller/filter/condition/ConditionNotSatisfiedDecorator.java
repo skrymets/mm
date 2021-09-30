@@ -23,17 +23,15 @@
  */
 package freemind.controller.filter.condition;
 
-import java.util.Vector;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-
 import freemind.controller.Controller;
 import freemind.controller.filter.FilterController;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
+
+import javax.swing.*;
+import java.util.Vector;
 
 /**
  * @author dimitri 08.05.2005

@@ -20,18 +20,14 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-
 import freemind.controller.actions.generated.instance.RevertXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
+import freemind.model.MindMap;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMap;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import java.io.*;
 
 /**
  * @author foltin

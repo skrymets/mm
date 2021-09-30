@@ -25,12 +25,13 @@
  */
 package accessories.plugins;
 
-import java.util.List;
 import accessories.plugins.dialogs.ChooseFormatPopupDialog;
 import freemind.controller.actions.generated.instance.Pattern;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+
+import java.util.List;
 
 /**
  * @author adapted to the plugin mechanism by ganzer

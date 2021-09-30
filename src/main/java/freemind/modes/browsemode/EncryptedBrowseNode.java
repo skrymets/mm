@@ -22,22 +22,21 @@
 
 package freemind.modes.browsemode;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-
-import javax.swing.ImageIcon;
-
 import freemind.common.TextTranslator;
 import freemind.main.Resources;
 import freemind.main.Tools.SingleDesEncrypter;
 import freemind.main.XMLParseException;
+import freemind.model.MindMap;
+import freemind.model.NodeAdapter;
 import freemind.modes.MapFeedback;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
 import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
 import freemind.modes.common.dialogs.EnterPasswordDialog;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
 
 /**
  * @author foltin

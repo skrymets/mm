@@ -24,9 +24,9 @@ import freemind.controller.actions.generated.instance.AddArrowLinkXmlAction;
 import freemind.controller.actions.generated.instance.RemoveArrowLinkXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
+import freemind.model.MindMapLink;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapArrowLink;
-import freemind.modes.MindMapLink;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**

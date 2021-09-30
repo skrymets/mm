@@ -24,16 +24,11 @@
  */
 package accessories.plugins;
 
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
 import freemind.controller.MenuItemEnabledListener;
 import freemind.extensions.HookRegistration;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MapAdapter;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.common.dialogs.EnterPasswordDialog;
 import freemind.modes.mindmapmode.EncryptedMindMapNode;
@@ -43,6 +38,8 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
+
+import javax.swing.*;
 
 /**
  * @author foltin

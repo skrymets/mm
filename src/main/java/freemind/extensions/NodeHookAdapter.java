@@ -19,8 +19,8 @@
 /*$Id: NodeHookAdapter.java,v 1.1.4.4.2.2 2007/04/21 15:11:20 dpolivaev Exp $*/
 package freemind.extensions;
 
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 
 /**
  * Straight forward implementation with some helpers.

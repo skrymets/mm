@@ -21,6 +21,7 @@
 package freemind.modes;
 
 import freemind.main.XMLElement;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapArrowLinkModel;
 import freemind.view.mindmapview.MapView;
 
@@ -40,7 +41,7 @@ public class ArrowLinkTarget extends ArrowLinkAdapter {
 	 * @param pMapFeedback
 	 */
 	public ArrowLinkTarget(MindMapNode pSource, MindMapNode pTarget,
-			MapFeedback pMapFeedback) {
+                           MapFeedback pMapFeedback) {
 		super(pSource, pTarget, pMapFeedback);
 	}
 

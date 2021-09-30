@@ -19,22 +19,15 @@
 
 package freemind.controller;
 
-import java.awt.Cursor;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
-import java.awt.dnd.DragSourceDragEvent;
-import java.awt.dnd.DragSourceDropEvent;
-import java.awt.dnd.DragSourceEvent;
-import java.awt.dnd.DragSourceListener;
-import java.awt.event.InputEvent;
-
 import freemind.main.Resources;
 import freemind.main.Tools;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.view.mindmapview.MainView;
+
+import java.awt.*;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.*;
+import java.awt.event.InputEvent;
 
 /**
  * The NodeDragListener which belongs to every NodeView

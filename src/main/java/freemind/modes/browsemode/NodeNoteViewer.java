@@ -19,20 +19,15 @@
 
 package freemind.modes.browsemode;
 
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-
 import freemind.controller.Controller.SplitComponentType;
+import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
-import freemind.modes.MindMapNode;
 import freemind.modes.ModeController.NodeSelectionListener;
 import freemind.modes.common.plugins.NodeNoteBase;
 import freemind.view.mindmapview.NodeView;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author foltin
@@ -96,7 +91,7 @@ public class NodeNoteViewer extends NodeNoteBase implements
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.ModeController.NodeSelectionListener#onSelectionChange(freemind.modes.MindMapNode, boolean)
+	 * @see freemind.modes.ModeController.NodeSelectionListener#onSelectionChange(freemind.model.MindMapNode, boolean)
 	 */
 	public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
 	}

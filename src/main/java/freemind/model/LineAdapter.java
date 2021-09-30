@@ -18,10 +18,12 @@
  */
 /*$Id: LineAdapter.java,v 1.2.18.2.4.4 2007/08/21 19:54:06 christianfoltin Exp $*/
 
-package freemind.modes;
+package freemind.model;
 
-import java.awt.Color;
 import freemind.main.Tools;
+import freemind.modes.MapFeedback;
+
+import java.awt.*;
 
 public abstract class LineAdapter implements MindMapLine {
 
@@ -154,9 +156,6 @@ public abstract class LineAdapter implements MindMapLine {
 	 */
 	protected abstract void setStandardColor(Color standardColor);
 
-	/**
-	 * See {@link LineAdapter.setStandardColor}
-	 */
 	protected abstract Color getStandardColor();
 
 	protected abstract void setStandardStyle(String standardStyle);

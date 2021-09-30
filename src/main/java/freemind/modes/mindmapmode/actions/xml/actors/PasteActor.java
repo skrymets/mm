@@ -20,49 +20,30 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
+import freemind.controller.MindMapNodesSelection;
+import freemind.controller.actions.generated.instance.*;
+import freemind.extensions.PermanentNodeHook;
+import freemind.main.*;
+import freemind.main.HtmlTools.NodeCreator;
+import freemind.model.MapAdapter;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
+import freemind.modes.ControllerAdapter;
+import freemind.modes.ExtendedMapFeedback;
+import freemind.modes.ModeController;
+import freemind.modes.mindmapmode.MindMapNodeModel;
+import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Vector;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-
-import freemind.controller.MindMapNodesSelection;
-import freemind.controller.actions.generated.instance.PasteNodeAction;
-import freemind.controller.actions.generated.instance.TransferableContent;
-import freemind.controller.actions.generated.instance.TransferableFile;
-import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.extensions.PermanentNodeHook;
-import freemind.main.FreeMind;
-import freemind.main.FreeMindCommon;
-import freemind.main.HtmlTools;
-import freemind.main.HtmlTools.NodeCreator;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
-import freemind.modes.ControllerAdapter;
-import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
-import freemind.modes.mindmapmode.MindMapNodeModel;
-import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin

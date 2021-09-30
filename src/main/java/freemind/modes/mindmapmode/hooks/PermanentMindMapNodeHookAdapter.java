@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.hooks;
 
 import freemind.extensions.PermanentNodeHook;
 import freemind.extensions.PermanentNodeHookAdapter;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 
 /**

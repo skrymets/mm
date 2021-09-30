@@ -23,9 +23,9 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 import freemind.controller.actions.generated.instance.NodeAction;
 import freemind.controller.actions.generated.instance.RemoveAttributeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 public class RemoveAttributeActor extends XmlActorAdapter {

@@ -23,15 +23,15 @@
  */
 package accessories.plugins;
 
+import freemind.main.Tools;
+import freemind.model.MindMapNode;
+import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+import freemind.view.mindmapview.MapView;
+
 import java.awt.datatransfer.Transferable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-import freemind.main.Tools;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
-import freemind.view.mindmapview.MapView;
 
 /**
  * @author foltin The original version was sent by Stephen Viles (sviles)
@@ -64,7 +64,7 @@ public class NewParentNode extends MindMapNodeHookAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.modes.MindMapNode,
+	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode,
 	 * java.util.List)
 	 */
 	public void invoke(MindMapNode rootNode) {

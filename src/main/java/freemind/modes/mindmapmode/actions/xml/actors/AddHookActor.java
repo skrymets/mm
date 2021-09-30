@@ -19,32 +19,19 @@
  */
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Vector;
-
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.HookNodeAction;
-import freemind.controller.actions.generated.instance.NodeChildParameter;
-import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.extensions.DontSaveMarker;
-import freemind.extensions.HookFactory;
-import freemind.extensions.HookInstanciationMethod;
-import freemind.extensions.NodeHook;
-import freemind.extensions.PermanentNodeHook;
-import freemind.extensions.PermanentNodeHookAdapter;
+import freemind.controller.actions.generated.instance.*;
+import freemind.extensions.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
 import freemind.modes.ViewAbstraction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.view.mindmapview.NodeView;
+
+import java.util.Map;
+import java.util.*;
 
 /**
  * @author foltin

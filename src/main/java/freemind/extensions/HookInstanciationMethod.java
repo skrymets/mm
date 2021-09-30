@@ -22,14 +22,10 @@
 /*$Id: HookInstanciationMethod.java,v 1.1.4.1.16.3 2007/06/05 20:53:30 dpolivaev Exp $*/
 package freemind.extensions;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
+import freemind.model.MindMapNode;
 import freemind.modes.MapFeedback;
-import freemind.modes.MindMapNode;
+
+import java.util.*;
 
 public class HookInstanciationMethod {
 	private static interface DestinationNodesGetter {

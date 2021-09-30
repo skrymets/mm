@@ -21,30 +21,23 @@
  */
 package accessories.plugins;
 
-import java.util.Vector;
-import org.slf4j.Logger;
-
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import freemind.controller.MenuItemEnabledListener;
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.FoldAction;
-import freemind.controller.actions.generated.instance.HookNodeAction;
-import freemind.controller.actions.generated.instance.NewNodeAction;
-import freemind.controller.actions.generated.instance.NodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.generated.instance.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+import org.slf4j.Logger;
+
+import javax.swing.*;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * This plugin stores the location of last edit taken place in order to jump to

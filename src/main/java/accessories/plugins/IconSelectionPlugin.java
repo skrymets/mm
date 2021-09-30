@@ -25,22 +25,21 @@
  */
 package accessories.plugins;
 
-import java.awt.event.ActionEvent;
-import java.util.Vector;
-
-import javax.swing.Action;
-
 import freemind.main.FreeMind;
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
 import freemind.modes.IconInformation;
-import freemind.modes.MindMapNode;
 import freemind.modes.common.dialogs.IconSelectionPopupDialog;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.IconAction;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * @author adapted to the plugin mechanism by ganzer

@@ -20,9 +20,9 @@
 
 package freemind.modes.mindmapmode;
 
-import freemind.modes.EdgeAdapter;
+import freemind.model.EdgeAdapter;
+import freemind.model.MindMapNode;
 import freemind.modes.MapFeedback;
-import freemind.modes.MindMapNode;
 
 public class MindMapEdgeModel extends EdgeAdapter {
 

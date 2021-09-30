@@ -19,19 +19,19 @@
  */
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.awt.datatransfer.Transferable;
-import java.util.Iterator;
-import java.util.List;
-
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.CutNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.actors.PasteActor.NodeCoordinate;
+
+import java.awt.datatransfer.Transferable;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author foltin

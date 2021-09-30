@@ -22,17 +22,16 @@
 
 package accessories.plugins.time;
 
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import freemind.controller.MenuItemEnabledListener;
 import freemind.extensions.HookRegistration;
 import freemind.extensions.PermanentNodeHook;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.common.plugins.ReminderHookBase;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
+
+import javax.swing.*;
 
 /**
  * Enables the encrypt/decrypt menu item only if the map/node is encrypted.

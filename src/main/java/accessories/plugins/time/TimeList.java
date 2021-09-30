@@ -22,53 +22,6 @@
 
 package accessories.plugins.time;
 
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.text.DateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.EventListener;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Vector;
-import java.util.regex.Pattern;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-
 import freemind.common.ScalableJTable;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
 import freemind.controller.MenuItemSelectedListener;
@@ -79,8 +32,8 @@ import freemind.controller.actions.generated.instance.WindowConfigurationStorage
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.common.plugins.ReminderHookBase;
@@ -88,6 +41,23 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapHookAdapter;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MultipleImage;
+
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.DateFormat;
+import java.util.Timer;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author foltin

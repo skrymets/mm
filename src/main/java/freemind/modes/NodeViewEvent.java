@@ -23,15 +23,17 @@
  */
 package freemind.modes;
 
+import freemind.model.MindMapNode;
+
 /**
  * @author Dimitri Polivaev 31.10.2005
  */
 public class NodeViewEvent {
-	MindMapNode node;
+    MindMapNode node;
 
-	public NodeViewEvent(MindMapNode node) {
-		super();
-		this.node = node;
-	}
+    public NodeViewEvent(MindMapNode node) {
+        super();
+        this.node = node;
+    }
 
 }

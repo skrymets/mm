@@ -22,58 +22,26 @@
 
 package freemind.modes.mindmapmode.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.HeadlessException;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+import freemind.common.*;
+import freemind.controller.actions.generated.instance.*;
+import freemind.main.FreeMind;
+import freemind.main.Tools;
+import freemind.model.EdgeAdapter;
+import freemind.model.MindMapNode;
+import freemind.modes.MindIcon;
+import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.actions.ApplyPatternAction;
+import freemind.modes.mindmapmode.actions.IconAction;
+
+import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
-
-import javax.swing.JPanel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
-import freemind.common.BooleanProperty;
-import freemind.common.ColorProperty;
-import freemind.common.ComboProperty;
-import freemind.common.FontProperty;
-import freemind.common.IconProperty;
-import freemind.common.NextLineProperty;
-import freemind.common.PropertyBean;
-import freemind.common.PropertyControl;
-import freemind.common.ScriptEditorProperty;
-import freemind.common.SeparatorProperty;
-import freemind.common.StringProperty;
-import freemind.common.TextTranslator;
-import freemind.common.ThreeCheckBoxProperty;
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.controller.actions.generated.instance.PatternChild;
-import freemind.controller.actions.generated.instance.PatternEdgeColor;
-import freemind.controller.actions.generated.instance.PatternEdgeStyle;
-import freemind.controller.actions.generated.instance.PatternEdgeWidth;
-import freemind.controller.actions.generated.instance.PatternIcon;
-import freemind.controller.actions.generated.instance.PatternNodeBackgroundColor;
-import freemind.controller.actions.generated.instance.PatternNodeColor;
-import freemind.controller.actions.generated.instance.PatternNodeFontBold;
-import freemind.controller.actions.generated.instance.PatternNodeFontItalic;
-import freemind.controller.actions.generated.instance.PatternNodeFontName;
-import freemind.controller.actions.generated.instance.PatternNodeFontSize;
-import freemind.controller.actions.generated.instance.PatternNodeFontStrikethrough;
-import freemind.controller.actions.generated.instance.PatternNodeStyle;
-import freemind.controller.actions.generated.instance.PatternNodeText;
-import freemind.controller.actions.generated.instance.PatternPropertyBase;
-import freemind.controller.actions.generated.instance.PatternScript;
-import freemind.main.FreeMind;
-import freemind.main.Tools;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.actions.ApplyPatternAction;
-import freemind.modes.mindmapmode.actions.IconAction;
 
 /**
  * @author foltin

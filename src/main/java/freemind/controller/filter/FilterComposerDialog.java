@@ -23,40 +23,6 @@
  */
 package freemind.controller.filter;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.HashSet;
-import java.util.Iterator;
-
-import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileFilter;
-
 import freemind.common.NamedObject;
 import freemind.controller.Controller;
 import freemind.controller.filter.condition.Condition;
@@ -68,11 +34,23 @@ import freemind.controller.filter.util.SortedComboBoxModel;
 import freemind.controller.filter.util.SortedListModel;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
 import freemind.modes.attributes.Attribute;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.util.Iterator;
 
 /**
  * @author dimitri

@@ -22,13 +22,10 @@
 
 package freemind.modes.viewmodes;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHookSubstituteUnknown;
+import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
-import freemind.modes.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.common.CommonNodeKeyListener;
 import freemind.modes.common.CommonNodeKeyListener.EditHandler;
@@ -39,6 +36,9 @@ import freemind.modes.common.listeners.CommonMouseMotionManager;
 import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 /**
  * @author foltin
@@ -171,14 +171,14 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#paste(freemind.modes.MindMapNode, freemind.modes.MindMapNode)
+	 * @see freemind.model.MindMap.MapFeedback#paste(freemind.model.MindMapNode, freemind.model.MindMapNode)
 	 */
 	@Override
 	public void paste(MindMapNode pNode, MindMapNode pParent) {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MapFeedback#createNodeHook(java.lang.String, freemind.modes.MindMapNode)
+	 * @see freemind.modes.MapFeedback#createNodeHook(java.lang.String, freemind.model.MindMapNode)
 	 */
 	@Override
 	public NodeHook createNodeHook(String pLoadName, MindMapNode pNode) {

@@ -22,7 +22,7 @@
 
 package freemind.modes.browsemode;
 
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.common.plugins.ReminderHookBase;
 
 /**

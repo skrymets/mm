@@ -19,8 +19,6 @@
  */
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.util.ListIterator;
-
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.FoldAction;
 import freemind.controller.actions.generated.instance.XmlAction;
@@ -28,10 +26,12 @@ import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
 import freemind.modes.common.CommonToggleFoldedAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import java.util.ListIterator;
 
 /**
  * @author foltin

@@ -23,11 +23,11 @@
  */
 package freemind.controller.filter.condition;
 
-import javax.swing.JComponent;
-
 import freemind.controller.Controller;
 import freemind.main.XMLElement;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
+
+import javax.swing.*;
 
 public interface Condition {
 	boolean checkNode(Controller c, MindMapNode node);

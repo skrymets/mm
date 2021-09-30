@@ -20,261 +20,259 @@
 
 package freemind.main;
 
-import java.awt.Container;
-import java.io.File;
-import java.net.URL;
-import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-
 import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.view.mindmapview.MapView;
 import org.slf4j.Logger;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+import java.util.*;
+
 public interface FreeMindMain {
-	public interface StartupDoneListener {
-		void startupDone();
-	}
 
-	public JFrame getJFrame();
+    interface StartupDoneListener {
+        void startupDone();
+    }
 
-	public boolean isApplet();
+    JFrame getJFrame();
 
-	public MapView getView();
+    boolean isApplet();
 
-	public void setView(MapView view);
+    MapView getView();
 
-	public Controller getController();
+    void setView(MapView view);
 
-	public void setWaitingCursor(boolean waiting);
+    Controller getController();
 
-	public File getPatternsFile();
+    void setWaitingCursor(boolean waiting);
 
-	public MenuBar getFreeMindMenuBar();
+    File getPatternsFile();
 
-	/** Returns the ResourceBundle with the current language */
-	public ResourceBundle getResources();
+    MenuBar getFreeMindMenuBar();
 
-	public String getResourceString(String key);
+    /**
+     * Returns the ResourceBundle with the current language
+     */
+    ResourceBundle getResources();
 
-	public String getResourceString(String key, String defaultResource);
+    String getResourceString(String key);
 
-	public Container getContentPane();
+    String getResourceString(String key, String defaultResource);
 
-	public void out(String msg);
+    Container getContentPane();
 
-	public void err(String msg);
+    void out(String msg);
 
-	/**
-	 * Open url in WWW browser. This method hides some differences between
-	 * operating systems.
-	 */
-	public void openDocument(URL location) throws Exception;
+    void err(String msg);
 
-	/** remove this! */
-	public void repaint();
+    /**
+     * Open url in WWW browser. This method hides some differences between
+     * operating systems.
+     */
+    void openDocument(URL location) throws Exception;
 
-	public URL getResource(String name);
+    /**
+     * remove this!
+     */
+    void repaint();
 
-	public int getIntProperty(String key, int defaultValue);
+    URL getResource(String name);
 
-	/** @return returns the list of all properties. */
-	public Properties getProperties();
+    int getIntProperty(String key, int defaultValue);
 
-	/**
-	 * Properties are stored in freemind.properties (internally) and
-	 * ~/.freemind/auto.properties for user changed values. This method returns
-	 * the user value (if changed) or the original.
-	 * 
-	 * @param key
-	 *            The property key as specified in freemind.properties
-	 * @return the value of the property or null, if not found.
-	 */
-	public String getProperty(String key);
+    /**
+     * @return returns the list of all properties.
+     */
+    Properties getProperties();
 
-	public void setProperty(String key, String value);
+    /**
+     * Properties are stored in freemind.properties (internally) and
+     * ~/.freemind/auto.properties for user changed values. This method returns
+     * the user value (if changed) or the original.
+     *
+     * @param key The property key as specified in freemind.properties
+     * @return the value of the property or null, if not found.
+     */
+    String getProperty(String key);
 
-	public void saveProperties(boolean pIsShutdown);
+    void setProperty(String key, String value);
 
-	/**
-	 * Returns the path to the directory the freemind auto properties are in, or
-	 * null, if not present.
-	 */
-	public String getFreemindDirectory();
+    void saveProperties(boolean pIsShutdown);
 
-	public JLayeredPane getLayeredPane();
+    /**
+     * Returns the path to the directory the freemind auto properties are in, or
+     * null, if not present.
+     */
+    String getFreemindDirectory();
 
-	public void setTitle(String title);
+    JLayeredPane getLayeredPane();
 
-	// to keep last win size (PN)
-	public int getWinHeight();
+    void setTitle(String title);
 
-	public int getWinWidth();
+    // to keep last win size (PN)
+    int getWinHeight();
 
-	public int getWinState();
+    int getWinWidth();
 
-	public int getWinX();
+    int getWinState();
 
-	public int getWinY();
+    int getWinX();
 
-	public static final int VERSION_TYPE_ALPHA = 0;
-	public static final int VERSION_TYPE_BETA = 1;
-	public static final int VERSION_TYPE_RC = 2;
-	public static final int VERSION_TYPE_RELEASE = 3;
-	public static final String ENABLE_NODE_MOVEMENT = "enable_node_movement";
+    int getWinY();
 
-	public static class VersionInformation {
-		public int mMaj = 0;
-		public int mMid = 9;
-		public int mMin = 0;
-		public int mType = VERSION_TYPE_BETA;
-		public int mNum = 17;
+    int VERSION_TYPE_ALPHA = 0;
+    int VERSION_TYPE_BETA = 1;
+    int VERSION_TYPE_RC = 2;
+    int VERSION_TYPE_RELEASE = 3;
+    String ENABLE_NODE_MOVEMENT = "enable_node_movement";
 
-		public VersionInformation(int pMaj, int pMid, int pMin, int pType,
-				int pNum) {
-			super();
-			mMaj = pMaj;
-			mMid = pMid;
-			mMin = pMin;
-			mType = pType;
-			mNum = pNum;
-		}
+    class VersionInformation {
+        public int mMaj = 0;
+        public int mMid = 9;
+        public int mMin = 0;
+        public int mType = VERSION_TYPE_BETA;
+        public int mNum = 17;
 
-		/**
-		 * Sets the version number from a string.
-		 * 
-		 * @param pString
-		 *            : The version number coding. Example "0.9.0 Beta 1"
-		 *            Keywords are "Alpha", "Beta", "RC". Separation by " " or
-		 *            by ".".
-		 */
-		public VersionInformation(String pString) {
-			StringTokenizer t = new StringTokenizer(pString, ". ", false);
-			String[] info = new String[t.countTokens()];
-			int i = 0;
-			while (t.hasMoreTokens()) {
-				info[i++] = t.nextToken();
-			}
-			if (info.length != 3 && info.length != 5)
-				throw new IllegalArgumentException(
-						"Wrong number of tokens for version information: "
-								+ pString);
-			mMaj = Integer.parseInt(info[0]);
-			mMid = Integer.parseInt(info[1]);
-			mMin = Integer.parseInt(info[2]);
-			if (info.length == 3) {
-				// release.
-				mType = VERSION_TYPE_RELEASE;
-				mNum = 0;
-				return;
-			}
-			// here,we have info.length == 5!
-			Vector<String> types = new Vector<>();
-			types.add("Alpha");
-			types.add("Beta");
-			types.add("RC");
-			int typeIndex = types.indexOf(info[3]);
-			if (typeIndex < 0) {
-				throw new IllegalArgumentException(
-						"Wrong version type for version information: "
-								+ info[4]);
-			}
-			mType = typeIndex;
-			mNum = Integer.parseInt(info[4]);
-		}
+        public VersionInformation(int pMaj, int pMid, int pMin, int pType, int pNum) {
+            super();
+            mMaj = pMaj;
+            mMid = pMid;
+            mMin = pMin;
+            mType = pType;
+            mNum = pNum;
+        }
 
-		public String toString() {
-			StringBuffer buf = new StringBuffer();
-			buf.append(mMaj);
-			buf.append('.');
-			buf.append(mMid);
-			buf.append('.');
-			buf.append(mMin);
-			switch (mType) {
-			case VERSION_TYPE_ALPHA:
-				buf.append(' ');
-				buf.append("Alpha");
-				break;
-			case VERSION_TYPE_BETA:
-				buf.append(' ');
-				buf.append("Beta");
-				break;
-			case VERSION_TYPE_RC:
-				buf.append(' ');
-				buf.append("RC");
-				break;
-			case VERSION_TYPE_RELEASE:
-				break;
-			default:
-				throw new IllegalArgumentException("Unknown version type "
-						+ mType);
-			}
-			if (mType != VERSION_TYPE_RELEASE) {
-				buf.append(' ');
-				buf.append(mNum);
-			}
-			return buf.toString();
-		}
-	}
+        /**
+         * Sets the version number from a string.
+         *
+         * @param pString : The version number coding. Example "0.9.0 Beta 1"
+         *                Keywords are "Alpha", "Beta", "RC". Separation by " " or
+         *                by ".".
+         */
+        public VersionInformation(String pString) {
+            StringTokenizer t = new StringTokenizer(pString, ". ", false);
+            String[] info = new String[t.countTokens()];
+            int i = 0;
+            while (t.hasMoreTokens()) {
+                info[i++] = t.nextToken();
+            }
+            if (info.length != 3 && info.length != 5)
+                throw new IllegalArgumentException("Wrong number of tokens for version information: " + pString);
+            mMaj = Integer.parseInt(info[0]);
+            mMid = Integer.parseInt(info[1]);
+            mMin = Integer.parseInt(info[2]);
+            if (info.length == 3) {
+                // release.
+                mType = VERSION_TYPE_RELEASE;
+                mNum = 0;
+                return;
+            }
+            // here,we have info.length == 5!
+            Vector<String> types = new Vector<>();
+            types.add("Alpha");
+            types.add("Beta");
+            types.add("RC");
+            int typeIndex = types.indexOf(info[3]);
+            if (typeIndex < 0) {
+                throw new IllegalArgumentException(
+                        "Wrong version type for version information: "
+                                + info[4]);
+            }
+            mType = typeIndex;
+            mNum = Integer.parseInt(info[4]);
+        }
 
-	/** version info: */
-	public VersionInformation getFreemindVersion();
+        public String toString() {
+            StringBuffer buf = new StringBuffer();
+            buf.append(mMaj);
+            buf.append('.');
+            buf.append(mMid);
+            buf.append('.');
+            buf.append(mMin);
+            switch (mType) {
+                case VERSION_TYPE_ALPHA:
+                    buf.append(' ');
+                    buf.append("Alpha");
+                    break;
+                case VERSION_TYPE_BETA:
+                    buf.append(' ');
+                    buf.append("Beta");
+                    break;
+                case VERSION_TYPE_RC:
+                    buf.append(' ');
+                    buf.append("RC");
+                    break;
+                case VERSION_TYPE_RELEASE:
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown version type "
+                            + mType);
+            }
+            if (mType != VERSION_TYPE_RELEASE) {
+                buf.append(' ');
+                buf.append(mNum);
+            }
+            return buf.toString();
+        }
+    }
 
-	/** To obtain a logging element, ask here. */
-	public Logger getLogger(String forClass);
+    /**
+     * version info:
+     */
+    VersionInformation getFreemindVersion();
 
-	/**
-	 * Inserts a (south) component into the split pane. If the screen isn't
-	 * split yet, a split pane should be created on the fly.
-	 * @param pMindMapComponent 
-	 * 
-	 * @return the split pane in order to move the dividers.
-	 */
-	public JSplitPane insertComponentIntoSplitPane(JComponent pMindMapComponent);
+    /**
+     * To obtain a logging element, ask here.
+     */
+    Logger getLogger(String forClass);
 
-	/**
-	 * Indicates that the south panel should be made invisible.
-	 */
-	public void removeSplitPane();
+    /**
+     * Inserts a (south) component into the split pane. If the screen isn't
+     * split yet, a split pane should be created on the fly.
+     *
+     * @param pMindMapComponent
+     * @return the split pane in order to move the dividers.
+     */
+    JSplitPane insertComponentIntoSplitPane(JComponent pMindMapComponent);
 
-	/**
-	 * @return a ClassLoader derived from the standard, with freeminds base dir
-	 *         included.
-	 */
-	public ClassLoader getFreeMindClassLoader();
+    /**
+     * Indicates that the south panel should be made invisible.
+     */
+    void removeSplitPane();
 
-	/**
-	 * @return default ".", but on different os this differs.
-	 */
-	String getFreemindBaseDir();
+    /**
+     * @return a ClassLoader derived from the standard, with freeminds base dir
+     * included.
+     */
+    ClassLoader getFreeMindClassLoader();
 
-	/**
-	 * Makes it possible to have a property different for different
-	 * localizations. Common example is to put keystrokes to different keys as
-	 * some are better reachable than others depending on the locale.
-	 */
-	public String getAdjustableProperty(String label);
+    /**
+     * @return default ".", but on different os this differs.
+     */
+    String getFreemindBaseDir();
 
-	public void setDefaultProperty(String key, String value);
+    /**
+     * Makes it possible to have a property different for different
+     * localizations. Common example is to put keystrokes to different keys as
+     * some are better reachable than others depending on the locale.
+     */
+    String getAdjustableProperty(String label);
 
-	public abstract JComponent getContentComponent();
+    void setDefaultProperty(String key, String value);
 
-	public abstract JScrollPane getScrollPane();
+    JComponent getContentComponent();
 
-	public abstract void registerStartupDoneListener(
-			StartupDoneListener pStartupDoneListener);
-	
-	/**
-	 * @return a list of all loggers. Used for example for the log file viewer.
-	 */
-	public List<Logger> getLoggerList();
+    JScrollPane getScrollPane();
+
+    void registerStartupDoneListener(
+            StartupDoneListener pStartupDoneListener);
+
+    /**
+     * @return a list of all loggers. Used for example for the log file viewer.
+     */
+    List<Logger> getLoggerList();
 }

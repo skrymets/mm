@@ -219,7 +219,7 @@ public class MindMapMock implements MindMap {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMap#changeRoot(freemind.modes.MindMapNode)
+	 * @see freemind.model.MindMap#changeRoot(freemind.model.MindMapNode)
 	 */
 	@Override
 	public void changeRoot(MindMapNode pNewRoot) {
@@ -228,7 +228,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#setReadOnly(boolean)
+	 * @see freemind.model.MindMap#setReadOnly(boolean)
 	 */
 	@Override
 	public void setReadOnly(boolean pIsReadOnly) {
@@ -236,7 +236,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#getMapFeedback()
+	 * @see freemind.model.MindMap#getMapFeedback()
 	 */
 	@Override
 	public MapFeedback getMapFeedback() {
@@ -251,7 +251,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#getIcons()
+	 * @see freemind.model.MindMap#getIcons()
 	 */
 	@Override
 	public SortedListModel getIcons() {
@@ -259,7 +259,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#loadTree(freemind.modes.ModeController.ReaderCreator, freemind.modes.MapAdapter.AskUserBeforeUpdateCallback)
+	 * @see freemind.model.MindMap#loadTree(freemind.modes.ModeController.ReaderCreator, freemind.model.MapAdapter.AskUserBeforeUpdateCallback)
 	 */
 	@Override
 	public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws XMLParseException,
@@ -268,7 +268,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createNodeTreeFromXml(java.io.Reader, java.util.HashMap)
+	 * @see freemind.model.MindMap#createNodeTreeFromXml(java.io.Reader, java.util.HashMap)
 	 */
 	@Override
 	public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget)
@@ -277,7 +277,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createNodeAdapter(freemind.modes.MindMap, java.lang.String)
+	 * @see freemind.model.MindMap#createNodeAdapter(freemind.model.MindMap, java.lang.String)
 	 */
 	@Override
 	public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
@@ -286,7 +286,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createEdgeAdapter(freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createEdgeAdapter(freemind.model.NodeAdapter)
 	 */
 	@Override
 	public EdgeAdapter createEdgeAdapter(NodeAdapter pNode) {
@@ -295,7 +295,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createCloudAdapter(freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createCloudAdapter(freemind.model.NodeAdapter)
 	 */
 	@Override
 	public CloudAdapter createCloudAdapter(NodeAdapter pNode) {
@@ -304,7 +304,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createArrowLinkAdapter(freemind.modes.NodeAdapter, freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createArrowLinkAdapter(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
 	 */
 	@Override
 	public ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter pSource,
@@ -314,7 +314,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createArrowLinkTarget(freemind.modes.NodeAdapter, freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createArrowLinkTarget(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
 	 */
 	@Override
 	public ArrowLinkTarget createArrowLinkTarget(NodeAdapter pSource,
@@ -324,7 +324,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createEncryptedNode(java.lang.String)
+	 * @see freemind.model.MindMap#createEncryptedNode(java.lang.String)
 	 */
 	@Override
 	public NodeAdapter createEncryptedNode(String pAdditionalInfo) {
@@ -333,7 +333,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#insertNodeInto(freemind.modes.MindMapNode, freemind.modes.MindMapNode, int)
+	 * @see freemind.model.MindMap#insertNodeInto(freemind.model.MindMapNode, freemind.model.MindMapNode, int)
 	 */
 	@Override
 	public void insertNodeInto(MindMapNode pNode, MindMapNode pParentNode,
@@ -342,7 +342,7 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#removeNodeFromParent(freemind.modes.MindMapNode)
+	 * @see freemind.model.MindMap#removeNodeFromParent(freemind.model.MindMapNode)
 	 */
 	@Override
 	public void removeNodeFromParent(MindMapNode pNode) {

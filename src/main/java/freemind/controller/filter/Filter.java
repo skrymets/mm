@@ -24,7 +24,7 @@
 package freemind.controller.filter;
 
 import freemind.controller.Controller;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 
 /**
  * @author dimitri 07.05.2005

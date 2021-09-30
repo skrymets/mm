@@ -23,11 +23,11 @@
  */
 package accessories.plugins;
 
+import freemind.model.MindMapNode;
+import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
+
 import java.text.MessageFormat;
 import java.util.Iterator;
-
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 
 /**
  * @author foltin
@@ -107,7 +107,7 @@ public class CreationModificationPlugin extends PermanentMindMapNodeHookAdapter 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.modes.MindMapNode)
+	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode node) {
 		super.invoke(node);
