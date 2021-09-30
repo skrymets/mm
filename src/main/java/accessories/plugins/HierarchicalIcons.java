@@ -20,15 +20,15 @@
 
 package accessories.plugins;
 
+import freemind.extensions.UndoEventReceiver;
+import freemind.model.MindMapNode;
+import freemind.modes.MindIcon;
+import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
+import freemind.view.mindmapview.MultipleImage;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeSet;
-
-import freemind.extensions.UndoEventReceiver;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
-import freemind.view.mindmapview.MultipleImage;
 
 /** */
 public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter
@@ -122,7 +122,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.extensions.PermanentNodeHook#onAddChild(freemind.modes.MindMapNode
+	 * freemind.extensions.PermanentNodeHook#onAddChild(freemind.model.MindMapNode
 	 * )
 	 */
 	public void onAddChildren(MindMapNode newChildNode) {
@@ -162,7 +162,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.modes.MindMapNode)
+	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode node) {
 		super.invoke(node);

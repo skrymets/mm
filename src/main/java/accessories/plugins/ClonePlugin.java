@@ -19,24 +19,18 @@
  */
 package accessories.plugins;
 
-import java.awt.EventQueue;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
 import accessories.plugins.ClonePasteAction.CloneProperties;
 import accessories.plugins.ClonePasteAction.ClonePropertiesObserver;
 import accessories.plugins.ClonePasteAction.Registration;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController.NodeLifetimeListener;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
+
+import java.awt.*;
+import java.util.*;
 
 public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements
 		NodeLifetimeListener, ClonePropertiesObserver {

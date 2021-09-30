@@ -27,7 +27,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-import freemind.controller.actions.generated.instance.CollaborationUserInformation;
+import freemind.controller.actions.generated.instance.instance.CollaborationUserInformation;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.modes.ExtendedMapFeedback;

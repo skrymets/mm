@@ -20,15 +20,15 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.awt.Color;
-
 import freemind.controller.actions.generated.instance.ArrowLinkColorXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
+import freemind.model.LineAdapter;
+import freemind.model.MindMapLink;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.LineAdapter;
-import freemind.modes.MindMapLink;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import java.awt.*;
 
 /**
  * @author foltin

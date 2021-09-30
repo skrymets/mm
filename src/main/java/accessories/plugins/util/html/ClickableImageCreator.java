@@ -19,19 +19,17 @@
 
 package accessories.plugins.util.html;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.text.MessageFormat;
-import java.util.Iterator;
-import java.util.Vector;
-
-import javax.swing.JComponent;
-
 import freemind.main.HtmlTools;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.text.MessageFormat;
+import java.util.Iterator;
+import java.util.Vector;
 
 /** */
 public class ClickableImageCreator {

@@ -20,19 +20,22 @@
 
 package freemind.modes;
 
+import freemind.extensions.HookFactory;
+import freemind.main.XMLParseException;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
+import freemind.modes.mindmapmode.actions.MindMapActions;
+import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
+import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
+
 import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-
-import freemind.extensions.HookFactory;
-import freemind.main.XMLParseException;
-import freemind.modes.mindmapmode.actions.MindMapActions;
-import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
-import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
 
 /**
  * MapFeedback extended by the xml based node change management.

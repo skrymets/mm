@@ -23,7 +23,17 @@
  */
 package freemind.controller.filter;
 
-import java.awt.Dimension;
+import freemind.controller.Controller;
+import freemind.controller.FreeMindToolBar;
+import freemind.controller.filter.condition.Condition;
+import freemind.controller.filter.condition.NoFilteringCondition;
+import freemind.controller.filter.condition.SelectedViewCondition;
+import freemind.main.Resources;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -31,24 +41,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Iterator;
-
-import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-
-import freemind.controller.Controller;
-import freemind.controller.FreeMindToolBar;
-import freemind.controller.filter.condition.Condition;
-import freemind.controller.filter.condition.NoFilteringCondition;
-import freemind.controller.filter.condition.SelectedViewCondition;
-import freemind.main.Resources;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
 
 @SuppressWarnings("serial")
 class FilterToolbar extends FreeMindToolBar {

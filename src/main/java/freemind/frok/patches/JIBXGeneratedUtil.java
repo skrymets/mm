@@ -18,11 +18,13 @@
 package freemind.frok.patches;
 
 import freemind.controller.actions.generated.instance.*;
+
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
+
+import static java.util.stream.Collectors.toList;
 
 /**
- *
  * @author skrymets
  */
 public class JIBXGeneratedUtil {
@@ -34,22 +36,17 @@ public class JIBXGeneratedUtil {
                 .stream()
                 .map((Plugin.Choice choice) -> {
                     Object ret = null;
-                    switch (choice.stateChoiceListSelect()) {
-                        case Plugin.Choice.PLUGIN_CLASSPATH_CHOICE:
-                            ret = choice.getPluginClasspath();
-                            break;
-                        case Plugin.Choice.PLUGIN_REGISTRATION_CHOICE:
-                            ret = choice.getPluginRegistration();
-                            break;
-                        case Plugin.Choice.PLUGIN_STRINGS_CHOICE:
-                            ret = choice.ifPluginStrings();
-                            break;
-                        case Plugin.Choice.PLUGIN_ACTION_CHOICE:
-                            ret = choice.getPluginAction();
-                            break;
+                    if (choice.ifPluginAction()) {
+                        ret = choice.getPluginAction();
+                    } else if (choice.ifPluginStrings()) {
+                        ret = choice.ifPluginStrings();
+                    } else if (choice.ifPluginClasspath()) {
+                        ret = choice.getPluginClasspath();
+                    } else if (choice.ifPluginRegistration()) {
+                        ret = choice.getPluginRegistration();
                     }
                     return ret;
-                }).collect(Collectors.toList());
+                }).collect(toList());
         return pluginChoice;
 
     }
@@ -60,19 +57,15 @@ public class JIBXGeneratedUtil {
                 .stream()
                 .map((PluginAction.Choice choice) -> {
                     Object ret = null;
-                    switch (choice.stateChoiceListSelect()) {
-                        case PluginAction.Choice.PLUGIN_MENU_CHOICE:
-                            ret = choice.getPluginMenu();
-                            break;
-                        case PluginAction.Choice.PLUGIN_MODE_CHOICE:
-                            ret = choice.getPluginMode();
-                            break;
-                        case PluginAction.Choice.PLUGIN_PROPERTY_CHOICE:
-                            ret = choice.getPluginProperty();
-                            break;
+                    if (choice.ifPluginMenu()) {
+                        ret = choice.getPluginMenu();
+                    } else if (choice.ifPluginMode()) {
+                        ret = choice.getPluginMode();
+                    } else if (choice.ifPluginProperty()) {
+                        ret = choice.getPluginProperty();
                     }
                     return ret;
-                }).collect(Collectors.toList());
+                }).collect(toList());
         return pluginActions;
     }
 
@@ -163,7 +156,7 @@ public class JIBXGeneratedUtil {
             choice.setEditNoteToNodeAction((EditNoteToNodeAction) action);
         } else if (action instanceof PlaceNodeXmlAction) {
             choice.setPlaceNodeXmlAction((PlaceNodeXmlAction) action);
-        } 
+        }
 
         return choice;
 
@@ -173,136 +166,136 @@ public class JIBXGeneratedUtil {
         List<XmlAction> xmlActions = pAction.getChoiceList()
                 .stream().
                 map((CompoundAction.Choice choice) -> {
-                    switch (choice.stateChoiceListSelect()) {
-                        case CompoundAction.Choice.COMPOUND_ACTION_CHOICE:
-                            return choice.getCompoundAction();
+                    if (choice.ifCompoundAction()) {
+                        return choice.getCompoundAction();
 
-                        case CompoundAction.Choice.SELECT_NODE_ACTION_CHOICE:
-                            return choice.getSelectNodeAction();
+                    } else if (choice.ifSelectNodeAction()) {
+                        return choice.getSelectNodeAction();
 
-                        case CompoundAction.Choice.CUT_NODE_ACTION_CHOICE:
-                            return choice.getCutNodeAction();
+                    } else if (choice.ifCutNodeAction()) {
+                        return choice.getCutNodeAction();
 
-                        case CompoundAction.Choice.PASTE_NODE_ACTION_CHOICE:
-                            return choice.getPasteNodeAction();
+                    } else if (choice.ifPasteNodeAction()) {
+                        return choice.getPasteNodeAction();
 
-                        case CompoundAction.Choice.UNDO_PASTE_NODE_ACTION_CHOICE:
-                            return choice.getUndoPasteNodeAction();
+                    } else if (choice.ifUndoPasteNodeAction()) {
+                        return choice.getUndoPasteNodeAction();
 
-                        case CompoundAction.Choice.REVERT_XML_ACTION_CHOICE:
-                            return choice.getRevertXmlAction();
+                    } else if (choice.ifRevertXmlAction()) {
+                        return choice.getRevertXmlAction();
 
-                        case CompoundAction.Choice.BOLD_NODE_ACTION_CHOICE:
-                            return choice.getBoldNodeAction();
+                    } else if (choice.ifBoldNodeAction()) {
+                        return choice.getBoldNodeAction();
 
-                        case CompoundAction.Choice.STRIKETHROUGH_NODE_ACTION_CHOICE:
-                            return choice.getStrikethroughNodeAction();
+                    } else if (choice.ifStrikethroughNodeAction()) {
+                        return choice.getStrikethroughNodeAction();
 
-                        case CompoundAction.Choice.ITALIC_NODE_ACTION_CHOICE:
-                            return choice.getItalicNodeAction();
+                    } else if (choice.ifItalicNodeAction()) {
+                        return choice.getItalicNodeAction();
 
-                        case CompoundAction.Choice.UNDERLINED_NODE_ACTION_CHOICE:
-                            return choice.getUnderlinedNodeAction();
+                    } else if (choice.ifUnderlinedNodeAction()) {
+                        return choice.getUnderlinedNodeAction();
 
-                        case CompoundAction.Choice.FONT_SIZE_NODE_ACTION_CHOICE:
-                            return choice.getFontSizeNodeAction();
+                    } else if (choice.ifFontSizeNodeAction()) {
+                        return choice.getFontSizeNodeAction();
 
-                        case CompoundAction.Choice.FONT_NODE_ACTION_CHOICE:
-                            return choice.getFontNodeAction();
+                    } else if (choice.ifFontNodeAction()) {
+                        return choice.getFontNodeAction();
 
-                        case CompoundAction.Choice.NODE_COLOR_FORMAT_ACTION_CHOICE:
-                            return choice.getNodeColorFormatAction();
+                    } else if (choice.ifNodeColorFormatAction()) {
+                        return choice.getNodeColorFormatAction();
 
-                        case CompoundAction.Choice.NODE_BACKGROUND_COLOR_FORMAT_ACTION_CHOICE:
-                            return choice.getNodeBackgroundColorFormatAction();
+                    } else if (choice.ifNodeBackgroundColorFormatAction()) {
+                        return choice.getNodeBackgroundColorFormatAction();
 
-                        case CompoundAction.Choice.NODE_STYLE_FORMAT_ACTION_CHOICE:
-                            return choice.getNodeStyleFormatAction();
+                    } else if (choice.ifNodeStyleFormatAction()) {
+                        return choice.getNodeStyleFormatAction();
 
-                        case CompoundAction.Choice.EDGE_COLOR_FORMAT_ACTION_CHOICE:
-                            return choice.getEdgeColorFormatAction();
+                    } else if (choice.ifEdgeColorFormatAction()) {
+                        return choice.getEdgeColorFormatAction();
 
-                        case CompoundAction.Choice.EDGE_WIDTH_FORMAT_ACTION_CHOICE:
-                            return choice.getEdgeWidthFormatAction();
+                    } else if (choice.ifEdgeWidthFormatAction()) {
+                        return choice.getEdgeWidthFormatAction();
 
-                        case CompoundAction.Choice.EDGE_STYLE_FORMAT_ACTION_CHOICE:
-                            return choice.getEdgeStyleFormatAction();
+                    } else if (choice.ifEdgeStyleFormatAction()) {
+                        return choice.getEdgeStyleFormatAction();
 
-                        case CompoundAction.Choice.DELETE_NODE_ACTION_CHOICE:
-                            return choice.getDeleteNodeAction();
+                    } else if (choice.ifDeleteNodeAction()) {
+                        return choice.getDeleteNodeAction();
 
-                        case CompoundAction.Choice.EDIT_NODE_ACTION_CHOICE:
-                            return choice.getEditNodeAction();
+                    } else if (choice.ifEditNodeAction()) {
+                        return choice.getEditNodeAction();
 
-                        case CompoundAction.Choice.NEW_NODE_ACTION_CHOICE:
-                            return choice.getNewNodeAction();
+                    } else if (choice.ifNewNodeAction()) {
+                        return choice.getNewNodeAction();
 
-                        case CompoundAction.Choice.FOLD_ACTION_CHOICE:
-                            return choice.getFoldAction();
+                    } else if (choice.ifFoldAction()) {
+                        return choice.getFoldAction();
 
-                        case CompoundAction.Choice.MOVE_NODES_ACTION_CHOICE:
-                            return choice.getMoveNodesAction();
+                    } else if (choice.ifMoveNodesAction()) {
+                        return choice.getMoveNodesAction();
 
-                        case CompoundAction.Choice.HOOK_NODE_ACTION_CHOICE:
-                            return choice.getHookNodeAction();
+                    } else if (choice.ifHookNodeAction()) {
+                        return choice.getHookNodeAction();
 
-                        case CompoundAction.Choice.ADD_ICON_ACTION_CHOICE:
-                            return choice.getAddIconAction();
+                    } else if (choice.ifAddIconAction()) {
+                        return choice.getAddIconAction();
 
-                        case CompoundAction.Choice.REMOVE_ICON_XML_ACTION_CHOICE:
-                            return choice.getRemoveIconXmlAction();
+                    } else if (choice.ifRemoveIconXmlAction()) {
+                        return choice.getRemoveIconXmlAction();
 
-                        case CompoundAction.Choice.REMOVE_ALL_ICONS_XML_ACTION_CHOICE:
-                            return choice.getRemoveAllIconsXmlAction();
+                    } else if (choice.ifRemoveAllIconsXmlAction()) {
+                        return choice.getRemoveAllIconsXmlAction();
 
-                        case CompoundAction.Choice.MOVE_NODE_XML_ACTION_CHOICE:
-                            return choice.getMoveNodeXmlAction();
+                    } else if (choice.ifMoveNodeXmlAction()) {
+                        return choice.getMoveNodeXmlAction();
 
-                        case CompoundAction.Choice.ADD_CLOUD_XML_ACTION_CHOICE:
-                            return choice.getAddCloudXmlAction();
+                    } else if (choice.ifAddCloudXmlAction()) {
+                        return choice.getAddCloudXmlAction();
 
-                        case CompoundAction.Choice.CLOUD_COLOR_XML_ACTION_CHOICE:
-                            return choice.getCloudColorXmlAction();
+                    } else if (choice.ifCloudColorXmlAction()) {
+                        return choice.getCloudColorXmlAction();
 
-                        case CompoundAction.Choice.ADD_ARROW_LINK_XML_ACTION_CHOICE:
-                            return choice.getAddArrowLinkXmlAction();
+                    } else if (choice.ifAddArrowLinkXmlAction()) {
+                        return choice.getAddArrowLinkXmlAction();
 
-                        case CompoundAction.Choice.ADD_LINK_XML_ACTION_CHOICE:
-                            return choice.getAddLinkXmlAction();
+                    } else if (choice.ifAddLinkXmlAction()) {
+                        return choice.getAddLinkXmlAction();
 
-                        case CompoundAction.Choice.REMOVE_ARROW_LINK_XML_ACTION_CHOICE:
-                            return choice.getRemoveArrowLinkXmlAction();
+                    } else if (choice.ifRemoveArrowLinkXmlAction()) {
+                        return choice.getRemoveArrowLinkXmlAction();
 
-                        case CompoundAction.Choice.ARROW_LINK_COLOR_XML_ACTION_CHOICE:
-                            return choice.getArrowLinkColorXmlAction();
+                    } else if (choice.ifArrowLinkColorXmlAction()) {
+                        return choice.getArrowLinkColorXmlAction();
 
-                        case CompoundAction.Choice.ARROW_LINK_ARROW_XML_ACTION_CHOICE:
-                            return choice.getArrowLinkArrowXmlAction();
+                    } else if (choice.ifArrowLinkArrowXmlAction()) {
+                        return choice.getArrowLinkArrowXmlAction();
 
-                        case CompoundAction.Choice.ARROW_LINK_POINT_XML_ACTION_CHOICE:
-                            return choice.getArrowLinkPointXmlAction();
+                    } else if (choice.ifArrowLinkPointXmlAction()) {
+                        return choice.getArrowLinkPointXmlAction();
 
-                        case CompoundAction.Choice.SET_ATTRIBUTE_ACTION_CHOICE:
-                            return choice.getSetAttributeAction();
+                    } else if (choice.ifSetAttributeAction()) {
+                        return choice.getSetAttributeAction();
 
-                        case CompoundAction.Choice.INSERT_ATTRIBUTE_ACTION_CHOICE:
-                            return choice.getInsertAttributeAction();
+                    } else if (choice.ifInsertAttributeAction()) {
+                        return choice.getInsertAttributeAction();
 
-                        case CompoundAction.Choice.ADD_ATTRIBUTE_ACTION_CHOICE:
-                            return choice.getAddAttributeAction();
+                    } else if (choice.ifAddAttributeAction()) {
+                        return choice.getAddAttributeAction();
 
-                        case CompoundAction.Choice.REMOVE_ATTRIBUTE_ACTION_CHOICE:
-                            return choice.getRemoveAttributeAction();
+                    } else if (choice.ifRemoveAttributeAction()) {
+                        return choice.getRemoveAttributeAction();
 
-                        case CompoundAction.Choice.EDIT_NOTE_TO_NODE_ACTION_CHOICE:
-                            return choice.getEditNoteToNodeAction();
-                        case CompoundAction.Choice.PLACE_NODE_XML_ACTION_CHOICE:
-                            return choice.getPlaceNodeXmlAction();
-                        default:
-                            throw new AssertionError();
+                    } else if (choice.ifEditNoteToNodeAction()) {
+                        return choice.getEditNoteToNodeAction();
+                    } else if (choice.ifPlaceNodeXmlAction()) {
+                        return choice.getPlaceNodeXmlAction();
+                    } else {
+                        return null;
                     }
                 })
-                .collect(Collectors.toList());
+                .filter(Objects::nonNull)
+                .collect(toList());
         return xmlActions;
     }
 

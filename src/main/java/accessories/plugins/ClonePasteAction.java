@@ -20,45 +20,20 @@
 
 package accessories.plugins;
 
-import java.awt.datatransfer.Transferable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-import java.util.Vector;
-
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.MenuItemEnabledListener;
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.CutNodeAction;
-import freemind.controller.actions.generated.instance.DeleteNodeAction;
-import freemind.controller.actions.generated.instance.HookNodeAction;
-import freemind.controller.actions.generated.instance.MoveNodeXmlAction;
-import freemind.controller.actions.generated.instance.MoveNodesAction;
-import freemind.controller.actions.generated.instance.NewNodeAction;
-import freemind.controller.actions.generated.instance.NodeAction;
-import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.controller.actions.generated.instance.PasteNodeAction;
-import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.generated.instance.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.Tools.MindMapNodePair;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
 import freemind.modes.ModeController;
 import freemind.modes.ModeController.NodeSelectionListener;
-import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter;
@@ -66,6 +41,10 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.NodeView;
 import org.slf4j.Logger;
+
+import javax.swing.*;
+import java.awt.datatransfer.Transferable;
+import java.util.*;
 
 /**
  * This is the "paste node as clone" action from the menu.
@@ -752,7 +731,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 		 * 
 		 * @see
 		 * freemind.modes.ModeController.NodeSelectionListener#onSelectionChange
-		 * (freemind.modes.MindMapNode, boolean)
+		 * (freemind.model.MindMapNode, boolean)
 		 */
 		public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
 		}

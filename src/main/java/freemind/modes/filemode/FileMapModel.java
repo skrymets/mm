@@ -20,21 +20,13 @@
 
 package freemind.modes.filemode;
 
+import freemind.main.FreeMindMain;
+import freemind.model.*;
+import freemind.modes.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-
-import freemind.main.FreeMindMain;
-import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.ArrowLinkTarget;
-import freemind.modes.CloudAdapter;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapLinkRegistry;
-import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
 
 @SuppressWarnings("serial")
 public class FileMapModel extends MapAdapter {
@@ -108,7 +100,7 @@ public class FileMapModel extends MapAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMap#setLinkInclinationChanged()
+	 * @see freemind.model.MindMap#setLinkInclinationChanged()
 	 */
 	public void setLinkInclinationChanged() {
 	}
@@ -116,7 +108,7 @@ public class FileMapModel extends MapAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMap#getXml(java.io.Writer)
+	 * @see freemind.model.MindMap#getXml(java.io.Writer)
 	 */
 	public void getXml(Writer fileout) throws IOException {
 		// nothing.
@@ -127,7 +119,7 @@ public class FileMapModel extends MapAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMap#getFilteredXml(java.io.Writer)
+	 * @see freemind.model.MindMap#getFilteredXml(java.io.Writer)
 	 */
 	public void getFilteredXml(Writer fileout) throws IOException {
 		// nothing.
@@ -136,7 +128,7 @@ public class FileMapModel extends MapAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createNodeAdapter(freemind.modes.MindMap, java.lang.String)
+	 * @see freemind.model.MindMap#createNodeAdapter(freemind.model.MindMap, java.lang.String)
 	 */
 	@Override
 	public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
@@ -145,7 +137,7 @@ public class FileMapModel extends MapAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createEdgeAdapter(freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createEdgeAdapter(freemind.model.NodeAdapter)
 	 */
 	@Override
 	public EdgeAdapter createEdgeAdapter(NodeAdapter pNode) {
@@ -154,7 +146,7 @@ public class FileMapModel extends MapAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createCloudAdapter(freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createCloudAdapter(freemind.model.NodeAdapter)
 	 */
 	@Override
 	public CloudAdapter createCloudAdapter(NodeAdapter pNode) {
@@ -163,7 +155,7 @@ public class FileMapModel extends MapAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createArrowLinkAdapter(freemind.modes.NodeAdapter, freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createArrowLinkAdapter(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
 	 */
 	@Override
 	public ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter pSource,
@@ -173,7 +165,7 @@ public class FileMapModel extends MapAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createArrowLinkTarget(freemind.modes.NodeAdapter, freemind.modes.NodeAdapter)
+	 * @see freemind.model.MindMap#createArrowLinkTarget(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
 	 */
 	@Override
 	public ArrowLinkTarget createArrowLinkTarget(NodeAdapter pSource,
@@ -183,7 +175,7 @@ public class FileMapModel extends MapAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createEncryptedNode(java.lang.String)
+	 * @see freemind.model.MindMap#createEncryptedNode(java.lang.String)
 	 */
 	@Override
 	public NodeAdapter createEncryptedNode(String pAdditionalInfo) {

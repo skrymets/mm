@@ -20,16 +20,16 @@
 
 package freemind.modes.common.plugins;
 
-import java.io.File;
-import java.util.HashMap;
-import javax.swing.ImageIcon;
-
 import freemind.extensions.PermanentNodeHook;
 import freemind.extensions.PermanentNodeHookAdapter;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
+
+import javax.swing.*;
+import java.io.File;
+import java.util.HashMap;
 
 /**
  * This base class is free of openstreetmap and similar classes.
@@ -100,7 +100,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.extensions.NodeHookAdapter#invoke(freemind.modes.MindMapNode)
+	 * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode pNode) {
 		super.invoke(pNode);

@@ -25,12 +25,12 @@
  */
 package freemind.extensions;
 
+import freemind.main.XMLElement;
+import freemind.model.MindMapNode;
+import freemind.view.mindmapview.NodeView;
+
 import java.io.IOException;
 import java.io.Writer;
-
-import freemind.main.XMLElement;
-import freemind.modes.MindMapNode;
-import freemind.view.mindmapview.NodeView;
 
 /**
  * Basic interface for all node hooks that are permanent. 

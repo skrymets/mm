@@ -54,10 +54,10 @@ import accessories.plugins.time.TableSorter;
 import freemind.common.ScalableJTable;
 import freemind.common.TextTranslator;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
-import freemind.controller.actions.generated.instance.MapLocationStorage;
-import freemind.controller.actions.generated.instance.MapWindowConfigurationStorage;
-import freemind.controller.actions.generated.instance.Place;
-import freemind.controller.actions.generated.instance.TableColumnSetting;
+import freemind.controller.actions.generated.instance.instance.MapLocationStorage;
+import freemind.controller.actions.generated.instance.instance.MapWindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.instance.Place;
+import freemind.controller.actions.generated.instance.instance.TableColumnSetting;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
@@ -843,7 +843,7 @@ public class MapDialog extends MindMapHookAdapter implements
 	 * 
 	 * @see
 	 * freemind.modes.ModeController.NodeSelectionListener#onUpdateNodeHook(
-	 * freemind.modes.MindMapNode)
+	 * freemind.model.MindMapNode)
 	 */
 	public void onUpdateNodeHook(MindMapNode pNode) {
 		// update MapMarkerLocation if present:
@@ -907,7 +907,7 @@ public class MapDialog extends MindMapHookAdapter implements
 	 * 
 	 * @see
 	 * freemind.modes.ModeController.NodeSelectionListener#onSelectionChange
-	 * (freemind.modes.MindMapNode, boolean)
+	 * (freemind.model.MindMapNode, boolean)
 	 */
 	public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
 		selectMapPosition(pNode, pIsSelected);

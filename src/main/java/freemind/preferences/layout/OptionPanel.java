@@ -21,65 +21,35 @@
  */
 package freemind.preferences.layout;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Set;
-import java.util.Vector;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-
-import freemind.common.BooleanProperty;
-import freemind.common.ColorProperty;
-import freemind.common.ComboProperty;
-import freemind.common.DontShowNotificationProperty;
-import freemind.common.NextLineProperty;
-import freemind.common.NumberProperty;
-import freemind.common.PasswordProperty;
-import freemind.common.PropertyBean;
-import freemind.common.PropertyControl;
-import freemind.common.RemindValueProperty;
-import freemind.common.SeparatorProperty;
-import freemind.common.StringProperty;
-import freemind.common.TextTranslator;
-import freemind.common.XmlBindingTools;
+import freemind.common.*;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.OptionPanelWindowConfigurationStorage;
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.IconAction;
 import freemind.preferences.FreemindPropertyContributor;
 import freemind.preferences.layout.GrabKeyDialog.KeyBinding;
+
+import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author foltin

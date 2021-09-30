@@ -25,16 +25,16 @@
  */
 package freemind.extensions;
 
+import freemind.main.XMLElement;
+import freemind.model.MindMapNode;
+import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import freemind.view.mindmapview.NodeView;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import freemind.main.XMLElement;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import freemind.view.mindmapview.NodeView;
 
 /**
  * Simple, straight forward implementation of PermanentNodeHook 
@@ -90,7 +90,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.NodeHook#onAddChild(freemind.modes.MindMapNode)
+	 * @see freemind.modes.NodeHook#onAddChild(freemind.model.MindMapNode)
 	 */
 	public void onAddChild(MindMapNode newChildNode) {
 		logger.trace("onAddChild");

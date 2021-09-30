@@ -23,14 +23,14 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
-
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.main.FreeMind;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class DeleteChildAction extends MindmapAction  {

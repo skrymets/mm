@@ -20,31 +20,26 @@
 
 package freemind.modes.filemode;
 
+import freemind.controller.MenuBar;
+import freemind.controller.StructuredMenuHolder;
+import freemind.extensions.HookFactory;
+import freemind.main.XMLParseException;
+import freemind.model.MapAdapter;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.modes.Mode;
+import freemind.modes.ModeController;
+import freemind.modes.common.actions.NewMapAction;
+import freemind.modes.viewmodes.ViewControllerAdapter;
+import freemind.view.mindmapview.MainView;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-
-import freemind.controller.MenuBar;
-import freemind.controller.StructuredMenuHolder;
-import freemind.extensions.HookFactory;
-import freemind.main.XMLParseException;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
-import freemind.modes.Mode;
-import freemind.modes.ModeController;
-import freemind.modes.common.actions.NewMapAction;
-import freemind.modes.viewmodes.ViewControllerAdapter;
-import freemind.view.mindmapview.MainView;
 
 @SuppressWarnings("serial")
 public class FileController extends ViewControllerAdapter {
@@ -161,7 +156,7 @@ public class FileController extends ViewControllerAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.ControllerAdapter#loadInternally(java.net.URL, freemind.modes.MapAdapter)
+	 * @see freemind.modes.ControllerAdapter#loadInternally(java.net.URL, freemind.model.MapAdapter)
 	 */
 	@Override
 	protected void loadInternally(URL pUrl, MapAdapter pModel)
@@ -170,7 +165,7 @@ public class FileController extends ViewControllerAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#out(java.lang.String)
+	 * @see freemind.model.MindMap.MapFeedback#out(java.lang.String)
 	 */
 	@Override
 	public void out(String pFormat) {

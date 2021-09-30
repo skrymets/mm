@@ -19,22 +19,13 @@
 
 package freemind.view.mindmapview;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.geom.AffineTransform;
-
-import javax.swing.Icon;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * Base class for all node views.

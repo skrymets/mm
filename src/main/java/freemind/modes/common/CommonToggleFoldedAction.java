@@ -22,16 +22,15 @@
 
 package freemind.modes.common;
 
+import freemind.main.Tools;
+import freemind.model.MindMapNode;
+import freemind.modes.ControllerAdapter;
+import org.slf4j.Logger;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.Iterator;
 import java.util.ListIterator;
-import org.slf4j.Logger;
-
-import javax.swing.AbstractAction;
-
-import freemind.main.Tools;
-import freemind.modes.ControllerAdapter;
-import freemind.modes.MindMapNode;
 
 /**
  * @author foltin

@@ -23,18 +23,16 @@
  */
 package freemind.controller.filter.condition;
 
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-
 import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.XMLElement;
+import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
+
+import javax.swing.*;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
 public class IconNotContainedCondition implements Condition {
 	static final String ICON = "icon";

@@ -23,8 +23,8 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 import freemind.controller.actions.generated.instance.FontSizeNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**

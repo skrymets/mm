@@ -1,68 +1,25 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006  Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-
 package freemind.view.mindmapview;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.TreeMap;
+import freemind.controller.Controller;
+import freemind.main.*;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
+import freemind.modes.MindIcon;
+import freemind.modes.MindMapCloud;
+import freemind.preferences.FreemindPropertyListener;
 import org.slf4j.Logger;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.SwingConstants;
-import javax.swing.ToolTipManager;
+import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
-
-import freemind.controller.Controller;
-import freemind.main.FreeMind;
-import freemind.main.FreeMindMain;
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMapCloud;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
-import freemind.preferences.FreemindPropertyListener;
+import java.awt.*;
+import java.awt.dnd.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.*;
 
 /**
  * This class represents a single Node of a MindMap (in analogy to
@@ -81,16 +38,16 @@ public class NodeView extends JComponent implements TreeModelListener {
 	protected MindMapNode model;
 	protected MapView mapView;
 	private MainView mainView;
-	protected final static Color dragColor = Color.lightGray; // the Color of
-																// appearing
-																// GradientBox
-																// on
-																// drag over
+
 	private boolean isLong = false;
+	// the Color of appearing GradientBox on drag over
+	protected final static Color dragColor = Color.lightGray;
+	private static boolean SHOW_ATTRIBUTE_ICON = Resources.getInstance().getBoolProperty("el__show_icon_for_attributes");
 
 	public final static int DRAGGED_OVER_NO = 0;
 	public final static int DRAGGED_OVER_SON = 1;
 	public final static int DRAGGED_OVER_SIBLING = 2;
+
 	/** For RootNodeView. */
 	public final static int DRAGGED_OVER_SON_LEFT = 3;
 
@@ -99,37 +56,33 @@ public class NodeView extends JComponent implements TreeModelListener {
 	final static int ALIGN_TOP = 1;
 
 	private static Logger logger;
+
 	private static FreemindPropertyListener sListener;
-    private static boolean SHOW_ATTRIBUTE_ICON = Resources.getInstance()
-            .getBoolProperty("el__show_icon_for_attributes");
 	private static ImageIcon sAttributeIcon;
 
 	private int maxToolTipWidth;
+
 	private NodeView preferredChild;
 	private JComponent contentPane;
+
 	protected NodeMotionListenerView motionListenerView;
 
 	static final int SPACE_AROUND = 50;
 
 	private NodeFoldingComponent mFoldingListener;
 
-	protected NodeView(MindMapNode model, int position, MapView map,
-			Container parent) {
+	protected NodeView(MindMapNode model, int position, MapView map, Container parent) {
 		if (logger == null) {
-			logger = Resources.getInstance()
-					.getLogger(this.getClass().getName());
+			logger = Resources.getInstance().getLogger(this.getClass().getName());
 		}
+
 		if(sListener == null){
 			sListener = new FreemindPropertyListener() {
 				
-				public void propertyChanged(String pPropertyName,
-						String pNewValue, String pOldValue) {
-					if (Tools.safeEquals(pPropertyName,
-							FreeMind.TOOLTIP_DISPLAY_TIME)) {
+				public void propertyChanged(String pPropertyName, String pNewValue, String pOldValue) {
+					if (Tools.safeEquals(pPropertyName, FreeMind.TOOLTIP_DISPLAY_TIME)) {
 						// control tooltip times:
-						ToolTipManager.sharedInstance().setDismissDelay(
-								Resources.getInstance().getIntProperty(
-										FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
+						ToolTipManager.sharedInstance().setDismissDelay(Resources.getInstance().getIntProperty(FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
 					}
 				}
 			};
@@ -192,7 +145,9 @@ public class NodeView extends JComponent implements TreeModelListener {
 		} else {
 			add(newMainView);
 		}
+
 		this.mainView = newMainView;
+
 		ToolTipManager.sharedInstance().registerComponent(mainView);
 		mainView.addMouseListener(this.mapView.getNodeMouseMotionListener());
 		mainView.addMouseMotionListener(this.mapView.getNodeMouseMotionListener());
@@ -791,8 +746,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	 */
 
 	NodeView insert(MindMapNode newNode, int position) {
-		NodeView newView = NodeViewFactory.getInstance().newNodeView(newNode,
-				position, getMap(), this);
+		NodeView newView = NodeViewFactory.getInstance().newNodeView(newNode, position, getMap(), this);
 		newView.insert();
 		return newView;
 	}
@@ -1539,8 +1493,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	public static int getFoldingSymbolWidth() {
 		if (FOLDING_SYMBOL_WIDTH == -1) {
-			FOLDING_SYMBOL_WIDTH = Resources.getInstance().getIntProperty(
-					"foldingsymbolwidth", 8);
+			FOLDING_SYMBOL_WIDTH = Resources.getInstance().getIntProperty("foldingsymbolwidth", 8);
 		}
 		return FOLDING_SYMBOL_WIDTH;
 	}

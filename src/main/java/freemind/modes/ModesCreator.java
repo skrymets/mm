@@ -20,14 +20,10 @@
 
 package freemind.modes;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
+import freemind.controller.Controller;
 import org.slf4j.Logger;
 
-import freemind.controller.Controller;
+import java.util.*;
 
 /**
  * This class creates all the modes that are available. To add your own mode,
@@ -35,6 +31,7 @@ import freemind.controller.Controller;
  * with MindMapMode). Thats all!
  */
 public class ModesCreator {
+
 	private Controller c;
 
 	/**

@@ -23,36 +23,6 @@
 
 package accessories.plugins;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Vector;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowSorter;
-import javax.swing.RowSorter.SortKey;
-import javax.swing.SortOrder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
 import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
 import freemind.controller.Controller.SplitComponentType;
@@ -63,14 +33,30 @@ import freemind.extensions.HookRegistration;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.ModeController.NodeLifetimeListener;
 import freemind.modes.ModeController.NodeSelectionListener;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
+
+import javax.swing.*;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Enumeration;
+import java.util.Vector;
 
 public class NodeAttributeTableRegistration implements HookRegistration,
 		MenuItemSelectedListener, DocumentListener {

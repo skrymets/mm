@@ -53,7 +53,7 @@ public class MapNodePositionHolder extends MapNodePositionHolderBase {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.extensions.NodeHookAdapter#invoke(freemind.modes.MindMapNode)
+	 * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode pNode) {
 		super.invoke(pNode);

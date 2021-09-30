@@ -20,9 +20,9 @@
 
 package freemind.modes.mindmapmode;
 
+import freemind.model.MindMapNode;
 import freemind.modes.CloudAdapter;
 import freemind.modes.MapFeedback;
-import freemind.modes.MindMapNode;
 
 public class MindMapCloudModel extends CloudAdapter {
 

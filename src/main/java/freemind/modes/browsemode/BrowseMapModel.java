@@ -20,21 +20,16 @@
 
 package freemind.modes.browsemode;
 
+import freemind.model.EdgeAdapter;
+import freemind.model.MapAdapter;
+import freemind.model.MindMap;
+import freemind.model.NodeAdapter;
+import freemind.modes.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.URL;
-
-import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.ArrowLinkTarget;
-import freemind.modes.CloudAdapter;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.MapAdapter;
-import freemind.modes.MapFeedback;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapLinkRegistry;
-import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
 
 @SuppressWarnings("serial")
 public class BrowseMapModel extends MapAdapter {
@@ -107,7 +102,7 @@ public class BrowseMapModel extends MapAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMap#setLinkInclinationChanged()
+	 * @see freemind.model.MindMap#setLinkInclinationChanged()
 	 */
 	public void setLinkInclinationChanged() {
 	}
@@ -115,7 +110,7 @@ public class BrowseMapModel extends MapAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMap#getXml(java.io.Writer)
+	 * @see freemind.model.MindMap#getXml(java.io.Writer)
 	 */
 	public void getXml(Writer fileout) throws IOException {
 		// nothing.
@@ -126,7 +121,7 @@ public class BrowseMapModel extends MapAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMap#getFilteredXml(java.io.Writer)
+	 * @see freemind.model.MindMap#getFilteredXml(java.io.Writer)
 	 */
 	public void getFilteredXml(Writer fileout) throws IOException {
 		// nothing.
@@ -168,7 +163,7 @@ public class BrowseMapModel extends MapAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.XMLElementAdapter#createNodeAdapter(freemind.modes.MindMap, java.lang.String)
+	 * @see freemind.modes.XMLElementAdapter#createNodeAdapter(freemind.model.MindMap, java.lang.String)
 	 */
 	@Override
 	public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {

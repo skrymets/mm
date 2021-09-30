@@ -23,11 +23,12 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
 import freemind.controller.Controller;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class EdgeColorAction extends MindmapAction {

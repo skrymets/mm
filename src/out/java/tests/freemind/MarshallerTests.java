@@ -25,12 +25,12 @@ package tests.freemind;
 
 import de.foltin.StringEncoder;
 import freemind.common.XmlBindingTools;
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.controller.actions.generated.instance.PatternChild;
-import freemind.controller.actions.generated.instance.Place;
-import freemind.controller.actions.generated.instance.ResultBase;
-import freemind.controller.actions.generated.instance.Reversegeocode;
-import freemind.controller.actions.generated.instance.Searchresults;
+import freemind.controller.actions.generated.instance.instance.Pattern;
+import freemind.controller.actions.generated.instance.instance.PatternChild;
+import freemind.controller.actions.generated.instance.instance.Place;
+import freemind.controller.actions.generated.instance.instance.ResultBase;
+import freemind.controller.actions.generated.instance.instance.Reversegeocode;
+import freemind.controller.actions.generated.instance.instance.Searchresults;
 
 /**
  * @author foltin

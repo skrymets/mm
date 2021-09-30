@@ -20,16 +20,16 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.util.List;
-
 import freemind.controller.actions.generated.instance.AddIconAction;
 import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import java.util.List;
 
 /**
  * @author foltin
@@ -75,8 +75,8 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
     */
 
 	public void act(XmlAction action) {
-		if (action instanceof freemind.controller.actions.generated.instance.RemoveIconXmlAction) {
-			freemind.controller.actions.generated.instance.RemoveIconXmlAction removeAction = (freemind.controller.actions.generated.instance.RemoveIconXmlAction) action;
+		if (action instanceof RemoveIconXmlAction) {
+			RemoveIconXmlAction removeAction = (RemoveIconXmlAction) action;
 			MindMapNode node = getNodeFromID(removeAction
 					.getNode());
 			int position = removeAction.getIconPosition();
@@ -86,7 +86,7 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.NodeActorXml#apply(freemind.modes.MindMap, freemind.modes.MindMapNode)
+	 * @see freemind.modes.mindmapmode.actions.NodeActorXml#apply(freemind.model.MindMap, freemind.model.MindMapNode)
 	 */
 	@Override
 	public ActionPair apply(MindMap pModel, MindMapNode pSelected) {

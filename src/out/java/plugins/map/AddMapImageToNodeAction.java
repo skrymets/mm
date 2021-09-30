@@ -34,7 +34,7 @@ public class AddMapImageToNodeAction extends MindMapNodeHookAdapter {
 	static final String NODE_CONTEXT_PLUGIN_NAME = "plugins/map/MapDialog_AddMapImageToNodeAction.properties";
 
 	/* (non-Javadoc)
-	 * @see freemind.extensions.NodeHookAdapter#invoke(freemind.modes.MindMapNode)
+	 * @see freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode pNode) {
 		super.invoke(pNode);

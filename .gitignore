@@ -1,4 +1,5 @@
-nb-configuration.xml
+.idea/
+freemind.iml
 target/
-flowagent.log
-flowagent.log.1
+plugins/jortho/target/
+plugins/SimplyHTML/target/

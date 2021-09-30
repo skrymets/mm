@@ -20,10 +20,12 @@
 
 package freemind.modes;
 
-import java.awt.Point;
-
 import freemind.main.Tools;
 import freemind.main.XMLElement;
+import freemind.model.LinkAdapter;
+import freemind.model.MindMapNode;
+
+import java.awt.*;
 
 public abstract class ArrowLinkAdapter extends LinkAdapter implements
 		MindMapArrowLink {

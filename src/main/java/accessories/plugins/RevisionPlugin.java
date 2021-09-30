@@ -23,14 +23,14 @@
  */
 package accessories.plugins;
 
-import java.awt.Color;
-
 import freemind.controller.actions.generated.instance.EditNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
+
+import java.awt.*;
 
 /**
  * @author foltin
@@ -53,7 +53,7 @@ public class RevisionPlugin extends PermanentMindMapNodeHookAdapter implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.modes.MindMapNode)
+	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode node) {
 		super.invoke(node);

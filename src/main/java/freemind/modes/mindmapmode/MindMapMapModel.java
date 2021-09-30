@@ -20,44 +20,20 @@
 
 package freemind.modes.mindmapmode;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.channels.FileLock;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Vector;
-
 import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.ArrowLinkTarget;
-import freemind.modes.CloudAdapter;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.MapAdapter;
-import freemind.modes.MapFeedback;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapLinkRegistry;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
+import freemind.model.*;
+import freemind.modes.*;
+
+import java.awt.*;
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.channels.FileLock;
+import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("serial")
 public class MindMapMapModel extends MapAdapter {

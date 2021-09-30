@@ -35,7 +35,7 @@ public class ShowMapToNodeAction extends MindMapNodeHookAdapter {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.extensions.NodeHookAdapter#invoke(freemind.modes.MindMapNode)
+	 * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode pNode) {
 		// is the map open? Ask base class.

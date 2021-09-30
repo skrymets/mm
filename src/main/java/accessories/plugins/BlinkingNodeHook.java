@@ -20,17 +20,16 @@
 /** this is only a test class */
 package accessories.plugins;
 
-import java.awt.Color;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Vector;
-
-import javax.swing.SwingUtilities;
-
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.NodeViewVisitor;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
 
 /**
  * @author christianfoltin

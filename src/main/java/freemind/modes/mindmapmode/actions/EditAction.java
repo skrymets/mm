@@ -25,26 +25,19 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
-import java.util.regex.Pattern;
-
-import javax.swing.JOptionPane;
-
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.view.mindmapview.EditNodeBase;
-import freemind.view.mindmapview.EditNodeDialog;
-import freemind.view.mindmapview.EditNodeExternalApplication;
-import freemind.view.mindmapview.EditNodeTextField;
-import freemind.view.mindmapview.EditNodeWYSIWYG;
-import freemind.view.mindmapview.MapView;
-import freemind.view.mindmapview.NodeView;
+import freemind.view.mindmapview.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 //
 //Node editing

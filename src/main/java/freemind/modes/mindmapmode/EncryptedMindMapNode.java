@@ -20,25 +20,24 @@
 
 package freemind.modes.mindmapmode;
 
+import freemind.main.HtmlTools;
+import freemind.main.Tools;
+import freemind.main.Tools.SingleDesEncrypter;
+import freemind.main.XMLElement;
+import freemind.model.MapAdapter;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.modes.MindIcon;
+import freemind.modes.MindMapLinkRegistry;
+import freemind.modes.ModeController;
+
+import javax.swing.*;
+import javax.swing.tree.MutableTreeNode;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ListIterator;
 import java.util.Vector;
-
-import javax.swing.ImageIcon;
-import javax.swing.tree.MutableTreeNode;
-
-import freemind.main.HtmlTools;
-import freemind.main.Tools;
-import freemind.main.Tools.SingleDesEncrypter;
-import freemind.main.XMLElement;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapLinkRegistry;
-import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
 
 public class EncryptedMindMapNode extends MindMapNodeModel {
 
@@ -236,7 +235,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.modes.MindMapNode#getIcons()
+	 * @see freemind.model.MindMapNode#getIcons()
 	 */
 	public void updateIcon() {
 		if (isAccessible()) {

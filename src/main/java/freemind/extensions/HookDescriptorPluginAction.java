@@ -33,7 +33,6 @@ import freemind.controller.actions.generated.instance.PluginMode;
 import freemind.controller.actions.generated.instance.PluginProperty;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * This is an information class that holds all outer properties of a hook, i.e.

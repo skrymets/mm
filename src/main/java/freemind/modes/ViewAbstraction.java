@@ -20,10 +20,11 @@
 
 package freemind.modes;
 
+import freemind.model.MindMapNode;
+import freemind.view.mindmapview.NodeView;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-import freemind.view.mindmapview.NodeView;
 
 /**
  * Abstraction for the MapView

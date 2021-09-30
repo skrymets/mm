@@ -35,9 +35,9 @@ import com.echomine.jabber.JabberMessageException;
 import com.echomine.jabber.JabberMessageListener;
 import com.echomine.jabber.JabberSession;
 
-import freemind.controller.actions.generated.instance.CollaborationAction;
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.generated.instance.instance.CollaborationAction;
+import freemind.controller.actions.generated.instance.instance.CompoundAction;
+import freemind.controller.actions.generated.instance.instance.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;

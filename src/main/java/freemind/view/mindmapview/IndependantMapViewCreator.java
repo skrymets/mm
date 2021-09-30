@@ -20,32 +20,26 @@
 
 package freemind.view.mindmapview;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
+import freemind.extensions.NodeHook;
+import freemind.extensions.PermanentNodeHookSubstituteUnknown;
+import freemind.frok.patches.FreeMindMainMock;
+import freemind.main.FreeMindMain;
+import freemind.main.Tools;
+import freemind.model.MapAdapter;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.modes.MapFeedbackAdapter;
+import freemind.modes.mindmapmode.MindMapMapModel;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import freemind.frok.patches.FreeMindMainMock;
-import freemind.extensions.NodeHook;
-import freemind.extensions.PermanentNodeHookSubstituteUnknown;
-import freemind.main.FreeMindMain;
-import freemind.main.Tools;
-import freemind.modes.MapAdapter;
-import freemind.modes.MapFeedbackAdapter;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.MindMapMapModel;
 
 /**
  * @author foltin
@@ -172,7 +166,7 @@ public class IndependantMapViewCreator extends MapFeedbackAdapter {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MapFeedback#createNodeHook(java.lang.String, freemind.modes.MindMapNode)
+	 * @see freemind.modes.MapFeedback#createNodeHook(java.lang.String, freemind.model.MindMapNode)
 	 */
 	@Override
 	public NodeHook createNodeHook(String pLoadName, MindMapNode pNode) {

@@ -19,17 +19,13 @@
 
 package freemind.view.mindmapview;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.util.Iterator;
-
 import freemind.main.Tools;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.MindMapEdge;
-import freemind.modes.MindMapNode;
+import freemind.model.EdgeAdapter;
+import freemind.model.MindMapEdge;
+import freemind.model.MindMapNode;
+
+import java.awt.*;
+import java.util.Iterator;
 
 @SuppressWarnings("serial")
 class ForkMainView extends MainView {

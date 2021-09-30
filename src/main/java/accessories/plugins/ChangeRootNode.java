@@ -20,20 +20,13 @@
 
 package accessories.plugins;
 
-import java.awt.Component;
-import java.util.Collection;
-import java.util.Vector;
-
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.actions.generated.instance.ChangeRootNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.HookRegistration;
 import freemind.main.Tools;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -43,6 +36,11 @@ import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
 import org.slf4j.Logger;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Collection;
+import java.util.Vector;
 
 /**
  * Changes the root node to another one What happens with clouds? This is ok, as

@@ -23,15 +23,15 @@
  */
 package freemind.controller.filter.condition;
 
-import java.util.Set;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
+import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
+
+import javax.swing.*;
+import java.util.Set;
 
 public class IconContainedCondition implements Condition {
 	static final String ICON = "icon";

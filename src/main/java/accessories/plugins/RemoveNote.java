@@ -23,19 +23,17 @@
 
 package accessories.plugins;
 
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.extensions.HookRegistration;
 import freemind.main.FreeMind;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+
+import javax.swing.*;
 
 /**
  * @author foltin

@@ -23,37 +23,15 @@
  */
 package accessories.plugins;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import accessories.plugins.dialogs.ChooseFormatPopupDialog;
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-
-import freemind.common.PropertyBean;
-import freemind.common.PropertyControl;
-import freemind.common.SeparatorProperty;
-import freemind.common.TextTranslator;
-import freemind.common.XmlBindingTools;
+import freemind.common.*;
 import freemind.controller.Controller;
 import freemind.controller.actions.generated.instance.Pattern;
 import freemind.controller.actions.generated.instance.Patterns;
 import freemind.extensions.HookRegistration;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.MindMapController;
@@ -61,6 +39,16 @@ import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import freemind.preferences.FreemindPropertyContributor;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * @author foltin
@@ -395,7 +383,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.extensions.PermanentNodeHook#onAddChild(freemind.modes.MindMapNode
+	 * freemind.extensions.PermanentNodeHook#onAddChild(freemind.model.MindMapNode
 	 * )
 	 */
 	public void onAddChildren(MindMapNode newChildNode) {
@@ -429,7 +417,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.modes.MindMapNode)
+	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode)
 	 */
 	public void invoke(MindMapNode node) {
 		super.invoke(node);

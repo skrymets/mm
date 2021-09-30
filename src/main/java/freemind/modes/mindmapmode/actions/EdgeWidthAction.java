@@ -24,14 +24,13 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import freemind.controller.MenuItemSelectedListener;
-import freemind.modes.EdgeAdapter;
+import freemind.model.EdgeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class EdgeWidthAction extends NodeGeneralAction implements MenuItemSelectedListener {

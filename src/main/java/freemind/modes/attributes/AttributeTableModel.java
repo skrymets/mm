@@ -23,9 +23,9 @@
  */
 package freemind.modes.attributes;
 
-import javax.swing.table.TableModel;
+import freemind.model.MindMapNode;
 
-import freemind.modes.MindMapNode;
+import javax.swing.table.TableModel;
 
 /**
  * @author Dimitri Polivaev 10.07.2005

@@ -20,9 +20,9 @@
 
 package freemind.modes.filemode;
 
-import freemind.modes.EdgeAdapter;
+import freemind.model.EdgeAdapter;
+import freemind.model.MindMapNode;
 import freemind.modes.MapFeedback;
-import freemind.modes.MindMapNode;
 
 public class FileEdgeModel extends EdgeAdapter {
 

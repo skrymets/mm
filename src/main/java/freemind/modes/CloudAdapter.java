@@ -20,15 +20,15 @@
 
 package freemind.modes;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Stroke;
-
 import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
+import freemind.model.LineAdapter;
+import freemind.model.MindMapNode;
 import freemind.preferences.FreemindPropertyListener;
+
+import java.awt.*;
 
 public abstract class CloudAdapter extends LineAdapter implements MindMapCloud {
 

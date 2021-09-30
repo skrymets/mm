@@ -28,8 +28,8 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.actions.generated.instance.Pattern;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.MindMapNode;
+import freemind.model.EdgeAdapter;
+import freemind.model.MindMapNode;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;

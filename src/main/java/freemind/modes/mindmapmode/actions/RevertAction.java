@@ -22,14 +22,13 @@
 
 package freemind.modes.mindmapmode.actions;
 
+import freemind.model.MindMap;
+import freemind.modes.mindmapmode.MindMapController;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.JOptionPane;
-
-import freemind.modes.MindMap;
-import freemind.modes.mindmapmode.MindMapController;
 
 /**
  * Reverts the map to the saved version. In Xml, the old map is stored as xml

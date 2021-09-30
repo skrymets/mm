@@ -20,21 +20,19 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.net.MalformedURLException;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
 import freemind.main.Tools;
+import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
-import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.net.MalformedURLException;
 
 /** */
 @SuppressWarnings("serial")

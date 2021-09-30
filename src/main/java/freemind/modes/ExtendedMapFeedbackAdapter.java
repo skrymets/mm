@@ -20,8 +20,22 @@
 
 package freemind.modes;
 
-import java.awt.Color;
-import java.awt.Point;
+import freemind.controller.actions.generated.instance.Pattern;
+import freemind.extensions.HookFactory;
+import freemind.main.XMLParseException;
+import freemind.model.MindMap;
+import freemind.model.MindMapLink;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
+import freemind.modes.attributes.Attribute;
+import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
+import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
+import freemind.modes.mindmapmode.actions.xml.DefaultActionHandler;
+import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
+import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
+
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -34,17 +48,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
-
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.extensions.HookFactory;
-import freemind.main.XMLParseException;
-import freemind.modes.attributes.Attribute;
-import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
-import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
-import freemind.modes.mindmapmode.actions.xml.DefaultActionHandler;
-import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
-import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
 
 /**
  * @author foltin

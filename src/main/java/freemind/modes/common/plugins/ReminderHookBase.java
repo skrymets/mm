@@ -22,19 +22,17 @@
 
 package freemind.modes.common.plugins;
 
+import freemind.extensions.PermanentNodeHookAdapter;
+import freemind.main.XMLElement;
+import freemind.model.MindMapNode;
+import freemind.modes.MindIcon;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
-
-import javax.swing.ImageIcon;
-import javax.swing.Timer;
-
-import freemind.extensions.PermanentNodeHookAdapter;
-import freemind.main.XMLElement;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
 
 /**
  * @author foltin

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-        choice-exposed="true" choice-handling="overset">
+<schema-set package="freemind.controller.actions.generated.instance"
+>
     <class-decorator class="org.jibx.schema.codegen.extend.CollectionMethodsDecorator"/>
-</schema>
+</schema-set>

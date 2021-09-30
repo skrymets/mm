@@ -22,10 +22,10 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.ArrowLinkArrowXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.model.MindMapLink;
 import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapArrowLink;
-import freemind.modes.MindMapLink;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**

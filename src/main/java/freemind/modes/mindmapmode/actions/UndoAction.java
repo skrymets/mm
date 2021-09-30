@@ -24,7 +24,6 @@ package freemind.modes.mindmapmode.actions;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.util.Iterator;
 import java.util.Vector;
 import org.slf4j.Logger;
 

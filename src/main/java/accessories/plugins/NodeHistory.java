@@ -23,18 +23,11 @@
  */
 package accessories.plugins;
 
-import java.awt.EventQueue;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import freemind.controller.Controller;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.extensions.HookRegistration;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.ModeController.NodeSelectionListener;
 import freemind.modes.mindmapmode.MindMapController;
@@ -42,6 +35,11 @@ import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.NodeView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * @author foltin
@@ -191,7 +189,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 		}
 
 		/* (non-Javadoc)
-		 * @see freemind.modes.ModeController.NodeSelectionListener#onSelectionChange(freemind.modes.MindMapNode, boolean)
+		 * @see freemind.modes.ModeController.NodeSelectionListener#onSelectionChange(freemind.model.MindMapNode, boolean)
 		 */
 		public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
 		}

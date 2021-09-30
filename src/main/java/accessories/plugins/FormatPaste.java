@@ -23,12 +23,12 @@
 
 package accessories.plugins;
 
-import javax.swing.JOptionPane;
-
 import freemind.controller.actions.generated.instance.Pattern;
-import freemind.modes.MindMapNode;
+import freemind.model.MindMapNode;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
+
+import javax.swing.*;
 
 /**
  * @author foltin

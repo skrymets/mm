@@ -20,17 +20,17 @@
 
 package freemind.modes.filemode;
 
-import java.awt.Color;
+import freemind.main.Tools;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
+import freemind.model.NodeAdapter;
+
+import java.awt.*;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.ListIterator;
-
-import freemind.main.Tools;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to

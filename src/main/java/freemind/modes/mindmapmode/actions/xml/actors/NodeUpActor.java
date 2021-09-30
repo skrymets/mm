@@ -20,20 +20,15 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.Vector;
-
 import freemind.controller.actions.generated.instance.MoveNodesAction;
 import freemind.controller.actions.generated.instance.NodeListMember;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+
+import java.util.*;
 
 /**
  * @author foltin

@@ -19,88 +19,81 @@
 /*$Id: NodeMotionListenerView.java,v 1.1.4.4.4.9 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.view.mindmapview;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-
-import javax.swing.JComponent;
-
 import freemind.main.Resources;
 import freemind.main.Tools;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
- * 
  * The oval appearing to move nodes to other positions.
- * 
+ *
  * @author Dimitri
- * 
  */
 @SuppressWarnings("serial")
 public class NodeMotionListenerView extends JComponent {
-	protected static org.slf4j.Logger logger = null;
-	public NodeMotionListenerView(NodeView view) {
-		super();
-		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
-		this.movedView = view;
-		MapView map = view.getMap();
-		addMouseListener(map.getNodeMotionListener());
-		addMouseMotionListener(map.getNodeMotionListener());
-		// fc, 16.6.2005: to emphasis the possible movement.
-		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-		final String helpMsg = Resources.getInstance().getResourceString(
-				"node_location_help");
-		this.setToolTipText(helpMsg);
-	}
+    protected static org.slf4j.Logger logger = null;
 
-	private NodeView movedView;
-	private boolean isMouseEntered;
+    public NodeMotionListenerView(NodeView view) {
+        super();
+        if (logger == null) {
+            logger = freemind.main.Resources.getInstance().getLogger(this.getClass().getName());
+        }
+        this.movedView = view;
 
-	public NodeView getMovedView() {
-		return movedView;
-	}
+        MapView map = view.getMap();
+        addMouseListener(map.getNodeMotionListener());
+        addMouseMotionListener(map.getNodeMotionListener());
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		if (isMouseEntered()) {
-			Graphics2D g2 = (Graphics2D) g;
-			// set antialiasing.
-			Object renderingHint = movedView.getMap().setEdgesRenderingHint(g2);
-			Color color = g2.getColor();
-			Stroke oldStroke = g2.getStroke();
-			g2.setStroke(new BasicStroke());
-			if (movedView.getModel().getHGap() <= 0) {
-				g2.setColor(Color.RED);
-				g.fillOval(0, 0, getWidth() - 1, getHeight() - 1);
-			} else {
-				g2.setColor(Color.BLACK);
-				g.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
-			}
-			g2.setStroke(oldStroke);
-			g2.setColor(color);
-			Tools.restoreAntialiasing(g2, renderingHint);
-		}
-	}
+        // fc, 16.6.2005: to emphasis the possible movement.
+        this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+        final String helpMsg = Resources.getInstance().getResourceString("node_location_help");
+        this.setToolTipText(helpMsg);
+    }
 
-	public boolean isMouseEntered() {
-		return isMouseEntered;
-	}
+    private NodeView movedView;
+    private boolean isMouseEntered;
 
-	public void setMouseEntered() {
-		this.isMouseEntered = true;
-		// fc, 13.3.2008: variable is not used:
-		// final FreeMindMain frame =
-		// movedView.getMap().getModel().getModeController().getFrame();
-		repaint();
-	}
+    public NodeView getMovedView() {
+        return movedView;
+    }
 
-	public void setMouseExited() {
-		this.isMouseEntered = false;
-		repaint();
-	}
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (isMouseEntered()) {
+            Graphics2D g2 = (Graphics2D) g;
+            // set antialiasing.
+            Object renderingHint = movedView.getMap().setEdgesRenderingHint(g2);
+            Color color = g2.getColor();
+            Stroke oldStroke = g2.getStroke();
+            g2.setStroke(new BasicStroke());
+            if (movedView.getModel().getHGap() <= 0) {
+                g2.setColor(Color.RED);
+                g.fillOval(0, 0, getWidth() - 1, getHeight() - 1);
+            } else {
+                g2.setColor(Color.BLACK);
+                g.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
+            }
+            g2.setStroke(oldStroke);
+            g2.setColor(color);
+            Tools.restoreAntialiasing(g2, renderingHint);
+        }
+    }
+
+    public boolean isMouseEntered() {
+        return isMouseEntered;
+    }
+
+    public void setMouseEntered() {
+        this.isMouseEntered = true;
+        // fc, 13.3.2008: variable is not used:
+        // final FreeMindMain frame =
+        // movedView.getMap().getModel().getModeController().getFrame();
+        repaint();
+    }
+
+    public void setMouseExited() {
+        this.isMouseEntered = false;
+        repaint();
+    }
 }

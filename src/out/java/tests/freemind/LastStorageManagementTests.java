@@ -3,7 +3,7 @@ package tests.freemind;
 import java.util.List;
 
 import freemind.controller.LastStateStorageManagement;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
+import freemind.controller.actions.generated.instance.instance.MindmapLastStateStorage;
 
 public class LastStorageManagementTests extends FreeMindTestBase {
 
