@@ -39,139 +39,139 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.MapModule;
 
 public abstract class DatabaseBasics extends MindMapNodeHookAdapter implements
-		MapTitleContributor {
+        MapTitleContributor {
 
-	public final static String SLAVE_HOOK_NAME = "plugins/collaboration/database/database_slave_plugin";
-	public final static String SLAVE_STARTER_NAME = "plugins/collaboration/database/database_slave_starter_plugin";
-	protected static final String ROW_PK = "PK";
-	protected static final String ROW_ACTION = "do_action";
-	protected static final String TABLE_XML_ACTIONS = "XmlActions";
-	protected static final String TABLE_USERS = "Users";
-	protected static final String ROW_UNDOACTION = "undo_action";
-	protected static final String ROW_MAP = "map";
-	protected static final String ROW_USER = "user";
-	protected static final Integer ROLE_MASTER = Integer.valueOf(0);
-	protected static final Integer ROLE_SLAVE = Integer.valueOf(1);
-	private static final String PORT_PROPERTY = "plugins.collaboration.database.port";
-	private static final String DATABASE_BASICS_CLASS = "plugins.collaboration.database.DatabaseBasics";
+    public final static String SLAVE_HOOK_NAME = "plugins/collaboration/database/database_slave_plugin";
+    public final static String SLAVE_STARTER_NAME = "plugins/collaboration/database/database_slave_starter_plugin";
+    protected static final String ROW_PK = "PK";
+    protected static final String ROW_ACTION = "do_action";
+    protected static final String TABLE_XML_ACTIONS = "XmlActions";
+    protected static final String TABLE_USERS = "Users";
+    protected static final String ROW_UNDOACTION = "undo_action";
+    protected static final String ROW_MAP = "map";
+    protected static final String ROW_USER = "user";
+    protected static final Integer ROLE_MASTER = Integer.valueOf(0);
+    protected static final Integer ROLE_SLAVE = Integer.valueOf(1);
+    private static final String PORT_PROPERTY = "plugins.collaboration.database.port";
+    private static final String DATABASE_BASICS_CLASS = "plugins.collaboration.database.DatabaseBasics";
 
-	protected static final String PASSWORD = DATABASE_BASICS_CLASS
-			+ ".password";
-	protected static final String PASSWORD_DESCRIPTION = DATABASE_BASICS_CLASS
-			+ ".password.description";
+    protected static final String PASSWORD = DATABASE_BASICS_CLASS
+            + ".password";
+    protected static final String PASSWORD_DESCRIPTION = DATABASE_BASICS_CLASS
+            + ".password.description";
 
-	protected static final String PASSWORD_VERIFICATION = DATABASE_BASICS_CLASS
-			+ ".password_verification";
-	protected static final String PASSWORD_VERIFICATION_DESCRIPTION = DATABASE_BASICS_CLASS
-			+ ".password_verification_description";
+    protected static final String PASSWORD_VERIFICATION = DATABASE_BASICS_CLASS
+            + ".password_verification";
+    protected static final String PASSWORD_VERIFICATION_DESCRIPTION = DATABASE_BASICS_CLASS
+            + ".password_verification_description";
 
-	protected static final String HOST = DATABASE_BASICS_CLASS + ".host";
-	protected static final String HOST_DESCRIPTION = DATABASE_BASICS_CLASS
-			+ ".host.description";
+    protected static final String HOST = DATABASE_BASICS_CLASS + ".host";
+    protected static final String HOST_DESCRIPTION = DATABASE_BASICS_CLASS
+            + ".host.description";
 
-	protected static final String PORT = DATABASE_BASICS_CLASS + ".port";
-	protected static final String PORT_DESCRIPTION = DATABASE_BASICS_CLASS
-			+ ".port.description";
+    protected static final String PORT = DATABASE_BASICS_CLASS + ".port";
+    protected static final String PORT_DESCRIPTION = DATABASE_BASICS_CLASS
+            + ".port.description";
 
-	protected static final String TITLE = DATABASE_BASICS_CLASS + ".title";
+    protected static final String TITLE = DATABASE_BASICS_CLASS + ".title";
 
-	protected static java.util.logging.Logger logger = null;
-	protected UpdateThread mUpdateThread = null;
+    protected static java.util.logging.Logger logger = null;
+    protected UpdateThread mUpdateThread = null;
 
-	public interface ResultHandler {
-		void processResults(ResultSet rs);
-	}
+    public interface ResultHandler {
+        void processResults(ResultSet rs);
+    }
 
-	public DatabaseBasics() {
-		super();
-	}
+    public DatabaseBasics() {
+        super();
+    }
 
-	/**
-	 * @return ROLE_MASTER OR ROLE_SLAVE
-	 */
-	public abstract Integer getRole();
+    /**
+     * @return ROLE_MASTER OR ROLE_SLAVE
+     */
+    public abstract Integer getRole();
 
-	public void startupMapHook() {
-		super.startupMapHook();
-		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
-		getMindMapController().getController()
-				.registerMapTitleContributor(this);
-	}
+    public void startupMapHook() {
+        super.startupMapHook();
+        if (logger == null) {
+            logger = freemind.main.Resources.getInstance().getLogger(
+                    this.getClass().getName());
+        }
+        getMindMapController().getController()
+                .registerMapTitleContributor(this);
+    }
 
-	public void shutdownMapHook() {
-		Controller controller = getMindMapController().getController();
-		controller.deregisterMapTitleContributor(this);
-		controller.setTitle();
-		super.shutdownMapHook();
-	}
+    public void shutdownMapHook() {
+        Controller controller = getMindMapController().getController();
+        controller.deregisterMapTitleContributor(this);
+        controller.setTitle();
+        super.shutdownMapHook();
+    }
 
-	protected static void togglePermanentHook(MindMapController controller) {
-		MindMapNode rootNode = controller.getRootNode();
-		List<MindMapNode> selecteds = Arrays.asList(new MindMapNode[] { rootNode });
-		controller.addHook(rootNode, selecteds, SLAVE_HOOK_NAME, null);
-	}
+    protected static void togglePermanentHook(MindMapController controller) {
+        MindMapNode rootNode = controller.getRootNode();
+        List<MindMapNode> selecteds = Arrays.asList(new MindMapNode[]{rootNode});
+        controller.addHook(rootNode, selecteds, SLAVE_HOOK_NAME, null);
+    }
 
-	protected void setPortProperty(final NumberProperty portProperty) {
-		getMindMapController().getFrame().setProperty(PORT_PROPERTY,
-				portProperty.getValue());
-	}
+    protected void setPortProperty(final NumberProperty portProperty) {
+        getMindMapController().getFrame().setProperty(PORT_PROPERTY,
+                portProperty.getValue());
+    }
 
-	protected NumberProperty getPortProperty() {
-		final NumberProperty portProperty = new NumberProperty(
-				PORT_DESCRIPTION, PORT, 1024, 32767, 1);
-		// fill values:
-		portProperty.setValue(""
-				+ getMindMapController().getFrame().getIntProperty(
-						PORT_PROPERTY, 9001));
-		return portProperty;
-	}
+    protected NumberProperty getPortProperty() {
+        final NumberProperty portProperty = new NumberProperty(
+                PORT_DESCRIPTION, PORT, 1024, 32767, 1);
+        // fill values:
+        portProperty.setValue(""
+                + getMindMapController().getFrame().getIntProperty(
+                PORT_PROPERTY, 9001));
+        return portProperty;
+    }
 
-	public void setUpdateThread(UpdateThread pUpdateThread) {
-		mUpdateThread = pUpdateThread;
-	}
+    public void setUpdateThread(UpdateThread pUpdateThread) {
+        mUpdateThread = pUpdateThread;
+    }
 
-	public UpdateThread getUpdateThread() {
-		return mUpdateThread;
-	}
+    public UpdateThread getUpdateThread() {
+        return mUpdateThread;
+    }
 
-	public String getMapTitle(String pOldTitle, MapModule pMapModule, MindMap pModel) {
-		if (pMapModule.getModeController() != getMindMapController()) {
-			return pOldTitle;
-		}
-		String userString = "";
-		if (mUpdateThread != null) {
-			try {
-				boolean first = true;
-				Vector<String> users = mUpdateThread.getUsers();
-				for (String user : users) {
-					if (first)
-						first = false;
-					else
-						userString += ", ";
-					userString += user;
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				freemind.main.Resources.getInstance().logException(e);
+    public String getMapTitle(String pOldTitle, MapModule pMapModule, MindMap pModel) {
+        if (pMapModule.getModeController() != getMindMapController()) {
+            return pOldTitle;
+        }
+        String userString = "";
+        if (mUpdateThread != null) {
+            try {
+                boolean first = true;
+                Vector<String> users = mUpdateThread.getUsers();
+                for (String user : users) {
+                    if (first)
+                        first = false;
+                    else
+                        userString += ", ";
+                    userString += user;
+                }
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                freemind.main.Resources.getInstance().logException(e);
 
-			}
-		}
-		return pOldTitle
-				+ Resources.getInstance().format(
-						TITLE,
-						new Object[] { this.getRole(), this.getHost(),
-								this.getPort(), userString });
-	}
+            }
+        }
+        return pOldTitle
+                + Resources.getInstance().format(
+                TITLE,
+                new Object[]{this.getRole(), this.getHost(),
+                        this.getPort(), userString});
+    }
 
-	public String getPort() {
-		return mUpdateThread.getPort();
-	}
+    public String getPort() {
+        return mUpdateThread.getPort();
+    }
 
-	public String getHost() {
-		return mUpdateThread.getHost();
-	}
+    public String getHost() {
+        return mUpdateThread.getHost();
+    }
 
 }

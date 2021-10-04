@@ -25,12 +25,6 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import java.util.ListIterator;
-import org.slf4j.Logger;
-
-import javax.swing.Action;
-
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
@@ -40,127 +34,127 @@ import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import lombok.extern.log4j.Log4j2;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.util.ListIterator;
 
 @SuppressWarnings("serial")
+@Log4j2
 public class NodeGeneralAction extends AbstractXmlAction {
-	protected final MindMapController modeController;
+    protected final MindMapController modeController;
 
-	SingleNodeOperation singleNodeOperation;
+    SingleNodeOperation singleNodeOperation;
 
-	private Class<?> mDoActionClass;
+    private Class<?> mDoActionClass;
 
-	protected static Logger logger;
+    /**
+     * null if you cannot provide a title that is present in the resources. Use
+     * the setName method to set your not translateble title after that. give a
+     * resource name for the icon.
+     */
+    protected NodeGeneralAction(MindMapController modeController,
+                                final String textID, String iconPath) {
+        super(null, iconPath != null ? freemind.view.ImageFactory.getInstance().createIcon(
+                modeController.getResource(iconPath)) : null, modeController);
+        this.modeController = modeController;
+        if (textID != null) {
+            this.setName(modeController.getText(textID));
+        }
 
-	/**
-	 * null if you cannot provide a title that is present in the resources. Use
-	 * the setName method to set your not translateble title after that. give a
-	 * resource name for the icon.
-	 */
-	protected NodeGeneralAction(MindMapController modeController,
-			final String textID, String iconPath) {
-		super(null, iconPath != null ? freemind.view.ImageFactory.getInstance().createIcon(
-				modeController.getResource(iconPath)) : null, modeController);
-		this.modeController = modeController;
-		if (textID != null) {
- 			this.setName(modeController.getText(textID));
-		}
+        this.singleNodeOperation = null;
+    }
 
-		this.singleNodeOperation = null;
-		if (logger == null) {
-			logger = modeController.getFrame().getLogger(
-					this.getClass().getName());
-		}
-	}
+    protected void setName(String name) {
+        if (name != null) {
+            putValue(Action.NAME, name);
+            putValue(Action.SHORT_DESCRIPTION, Tools.removeMnemonic(name));
+        }
 
-	protected void setName(String name) {
-		if (name != null) {
-			putValue(Action.NAME, name);
-			putValue(Action.SHORT_DESCRIPTION, Tools.removeMnemonic(name));
-		}
+    }
 
-	}
+    public NodeGeneralAction(MindMapController modeController, String textID,
+                             String iconPath, SingleNodeOperation singleNodeOperation) {
+        this(modeController, textID, iconPath);
+        this.singleNodeOperation = singleNodeOperation;
+    }
 
-	public NodeGeneralAction(MindMapController modeController, String textID,
-			String iconPath, SingleNodeOperation singleNodeOperation) {
-		this(modeController, textID, iconPath);
-		this.singleNodeOperation = singleNodeOperation;
-	}
+    public NodeGeneralAction(MindMapController modeController, String textID,
+                             String iconPath,
+                             freemind.modes.mindmapmode.actions.NodeActorXml actor) {
+        this(modeController, textID, iconPath);
+        addActor(actor);
+    }
 
-	public NodeGeneralAction(MindMapController modeController, String textID,
-			String iconPath,
-			freemind.modes.mindmapmode.actions.NodeActorXml actor) {
-		this(modeController, textID, iconPath);
-		addActor(actor);
-	}
+    /**
+     * The singleNodeOperation to set.
+     */
+    public void setSingleNodeOperation(SingleNodeOperation singleNodeOperation) {
+        this.singleNodeOperation = singleNodeOperation;
+    }
 
-	/**
-	 * The singleNodeOperation to set.
-	 */
-	public void setSingleNodeOperation(SingleNodeOperation singleNodeOperation) {
-		this.singleNodeOperation = singleNodeOperation;
-	}
-
-	/* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.xml.AbstractXmlAction#xmlActionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void xmlActionPerformed(ActionEvent e) {
-		if (singleNodeOperation != null) {
-			for (ListIterator it = modeController.getSelecteds().listIterator(); it
-					.hasNext();) {
-				MindMapNodeModel selected = (MindMapNodeModel) it.next();
-				singleNodeOperation.apply(
-						(MindMapMapModel) this.modeController.getMap(),
-						selected);
-			}
-		} else {
-			// xml action:
-			// Do-action
-			CompoundAction doAction = new CompoundAction();
-			// Undo-action
-			CompoundAction undo = new CompoundAction();
-			// sort selectedNodes list by depth, in order to guarantee that
-			// sons are deleted first:
-			for (ListIterator it = modeController.getSelecteds().listIterator(); it.hasNext();) {
-				MindMapNodeModel selected = (MindMapNodeModel) it.next();
-				ActionPair pair = getActionPair(selected);
-				if (pair != null) {
+    /* (non-Javadoc)
+     * @see freemind.modes.mindmapmode.actions.xml.AbstractXmlAction#xmlActionPerformed(java.awt.event.ActionEvent)
+     */
+    public void xmlActionPerformed(ActionEvent e) {
+        if (singleNodeOperation != null) {
+            for (ListIterator it = modeController.getSelecteds().listIterator(); it
+                    .hasNext(); ) {
+                MindMapNodeModel selected = (MindMapNodeModel) it.next();
+                singleNodeOperation.apply(
+                        (MindMapMapModel) this.modeController.getMap(),
+                        selected);
+            }
+        } else {
+            // xml action:
+            // Do-action
+            CompoundAction doAction = new CompoundAction();
+            // Undo-action
+            CompoundAction undo = new CompoundAction();
+            // sort selectedNodes list by depth, in order to guarantee that
+            // sons are deleted first:
+            for (ListIterator it = modeController.getSelecteds().listIterator(); it.hasNext(); ) {
+                MindMapNodeModel selected = (MindMapNodeModel) it.next();
+                ActionPair pair = getActionPair(selected);
+                if (pair != null) {
                     CompoundAction.Choice doActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(doAction);
-					doAction.addChoice(doActionChoice);
-					//doAction.addChoice(pair.getDoAction());
+                    doAction.addChoice(doActionChoice);
+                    //doAction.addChoice(pair.getDoAction());
                     CompoundAction.Choice undoActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(pair.getUndoAction());
-					undo.getChoiceList().add(0, undoActionChoice);
-				}
-			}
-			if (doAction.sizeChoiceList() == 0)
-				return;
-			modeController.doTransaction((String) getValue(NAME),
-					new ActionPair(doAction, undo));
-		}
+                    undo.getChoiceList().add(0, undoActionChoice);
+                }
+            }
+            if (doAction.sizeChoiceList() == 0)
+                return;
+            modeController.doTransaction((String) getValue(NAME),
+                    new ActionPair(doAction, undo));
+        }
 
-	}
+    }
 
-	/**
-	 * Override, if you have a different method to get to an actionpair (see EdgeStyleAction).
-	 */
-	protected ActionPair getActionPair(MindMapNodeModel selected) {
-		ActionPair pair = null;
-		if(mDoActionClass != null) {
-			ActorXml actorXml = getMindMapController().getActionRegistry().getActor(mDoActionClass);
-			if (actorXml instanceof NodeActorXml) {
-				NodeActorXml nodeActorXml = (NodeActorXml) actorXml;
-				pair = nodeActorXml.apply(this.modeController.getMap(),
-						selected);
-			} else {
-				throw new IllegalArgumentException("ActorXml " + actorXml + " is not a NodeActorXml.");
-			}
-		} else {
-			throw new IllegalArgumentException("doActionClass not defined.");
-		}
-		return pair;
-	}
+    /**
+     * Override, if you have a different method to get to an actionpair (see EdgeStyleAction).
+     */
+    protected ActionPair getActionPair(MindMapNodeModel selected) {
+        ActionPair pair = null;
+        if (mDoActionClass != null) {
+            ActorXml actorXml = getMindMapController().getActionRegistry().getActor(mDoActionClass);
+            if (actorXml instanceof NodeActorXml) {
+                NodeActorXml nodeActorXml = (NodeActorXml) actorXml;
+                pair = nodeActorXml.apply(this.modeController.getMap(),
+                        selected);
+            } else {
+                throw new IllegalArgumentException("ActorXml " + actorXml + " is not a NodeActorXml.");
+            }
+        } else {
+            throw new IllegalArgumentException("doActionClass not defined.");
+        }
+        return pair;
+    }
 
-	protected void setDoActionClass(Class<?> pDoActionClass) {
-		this.mDoActionClass = pDoActionClass;
-	}
+    protected void setDoActionClass(Class<?> pDoActionClass) {
+        this.mDoActionClass = pDoActionClass;
+    }
 
 }

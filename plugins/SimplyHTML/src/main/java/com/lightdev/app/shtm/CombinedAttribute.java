@@ -52,41 +52,55 @@ import javax.swing.text.html.CSS;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class CombinedAttribute {
-    /** index of top value */
+    /**
+     * index of top value
+     */
     public static final int ATTR_TOP = 0;
-    /** index of right value */
+    /**
+     * index of right value
+     */
     public static final int ATTR_RIGHT = 1;
-    /** index of bottom value */
+    /**
+     * index of bottom value
+     */
     public static final int ATTR_BOTTOM = 2;
-    /** index of left value */
+    /**
+     * index of left value
+     */
     public static final int ATTR_LEFT = 3;
-    /** the values of this <code>CombinedAttribute</code> */
+    /**
+     * the values of this <code>CombinedAttribute</code>
+     */
     private final String[] values = new String[4];
     /**
      * the attribute key the values of this
      * <code>CombinedAttribute</code> belong to
      */
     private final Object attributeKey;
-    /** indicates which sides were present in the attribute set */
+    /**
+     * indicates which sides were present in the attribute set
+     */
     private final boolean[] present = new boolean[4];
-    /** table with attribute names from the source attribute set */
+    /**
+     * table with attribute names from the source attribute set
+     */
     private final Vector aNames = new Vector();
-    /** indicates if attributes of parent elements shall be used */
+    /**
+     * indicates if attributes of parent elements shall be used
+     */
     private final boolean includeParents;
 
     /**
      * construct a <code>CombinedAttribute</code> for a certain
      * attribute out of a given set of attributes
      *
-     * @param key  the attribute key to get single attribute values from
-     * @param a  the set of attributes to get the attribute of type 'key'
+     * @param key the attribute key to get single attribute values from
+     * @param a   the set of attributes to get the attribute of type 'key'
      */
     public CombinedAttribute(final Object key, final AttributeSet a, final boolean includeParents) {
         attributeKey = key;
@@ -101,8 +115,7 @@ class CombinedAttribute {
         if (attr != null) {
             //System.out.println("  construct CombinedAttribute attr=" + attr);
             copyValues(Util.tokenize(attr.toString(), " "));
-        }
-        else {
+        } else {
             copyValues(key, a);
         }
     }
@@ -115,8 +128,8 @@ class CombinedAttribute {
      * <p>Used in cases where attributes are not found for a 'shorthand
      * property' such as PADDING or MARGIN.</p>
      *
-     * @param key  the 'shorthand property' to copy individual attributes for
-     * @param a  the set of attributes to copy from
+     * @param key the 'shorthand property' to copy individual attributes for
+     * @param a   the set of attributes to copy from
      */
     private void copyValues(final Object key, final AttributeSet a) {
         if (key.equals(CSS.Attribute.BORDER_WIDTH)) {
@@ -124,14 +137,12 @@ class CombinedAttribute {
             setValue(ATTR_RIGHT, CSS.Attribute.BORDER_RIGHT_WIDTH, a);
             setValue(ATTR_BOTTOM, CSS.Attribute.BORDER_BOTTOM_WIDTH, a);
             setValue(ATTR_LEFT, CSS.Attribute.BORDER_LEFT_WIDTH, a);
-        }
-        else if (key.equals(CSS.Attribute.PADDING)) {
+        } else if (key.equals(CSS.Attribute.PADDING)) {
             setValue(ATTR_TOP, CSS.Attribute.PADDING_TOP, a);
             setValue(ATTR_RIGHT, CSS.Attribute.PADDING_RIGHT, a);
             setValue(ATTR_BOTTOM, CSS.Attribute.PADDING_BOTTOM, a);
             setValue(ATTR_LEFT, CSS.Attribute.PADDING_LEFT, a);
-        }
-        else if (key.equals(CSS.Attribute.MARGIN)) {
+        } else if (key.equals(CSS.Attribute.MARGIN)) {
             setValue(ATTR_TOP, CSS.Attribute.MARGIN_TOP, a);
             setValue(ATTR_RIGHT, CSS.Attribute.MARGIN_RIGHT, a);
             setValue(ATTR_BOTTOM, CSS.Attribute.MARGIN_BOTTOM, a);
@@ -143,10 +154,10 @@ class CombinedAttribute {
      * set the value of a certain side from a given attribute key and
      * set of attributes.
      *
-     * @param side  the side to set the value for, one of ATTR_TOP,
-     *    ATTR_RIGHT, ATTR_BOTTOM and ATTR_LEFT
+     * @param side the side to set the value for, one of ATTR_TOP,
+     *             ATTR_RIGHT, ATTR_BOTTOM and ATTR_LEFT
      * @param key  the attribute key to get the value from
-     * @param a  the set of attributes to get the value from
+     * @param a    the set of attributes to get the value from
      */
     private void setValue(final int side, final Object key, final AttributeSet a) {
         if ((includeParents) || ((!includeParents) && (aNames.contains(key)))) { // filter out parent attributes
@@ -154,13 +165,11 @@ class CombinedAttribute {
             if (attr != null) {
                 values[side] = attr.toString();
                 present[side] = true;
-            }
-            else {
+            } else {
                 values[side] = defaultValue(attributeKey);
                 present[side] = true;
             }
-        }
-        else { // key not present, set default value
+        } else { // key not present, set default value
             values[side] = defaultValue(attributeKey);
             present[side] = false;
         }
@@ -190,8 +199,7 @@ class CombinedAttribute {
     /**
      * get the default value for a given key
      *
-     * @param key  the attribute key to get the default value for
-     *
+     * @param key the attribute key to get the default value for
      * @return the default value for the given key
      */
     private String defaultValue(final Object key) {
@@ -205,8 +213,7 @@ class CombinedAttribute {
     /**
      * get the side opposite of a given side
      *
-     * @param side  the side to get the opposite of
-     *
+     * @param side the side to get the opposite of
      * @return the opposite side of the given side
      */
     public int getOppositeSide(final int side) {
@@ -233,7 +240,7 @@ class CombinedAttribute {
      * as PADDING or MARGIN into the structure top, right, bottom, left of
      * this <code>CombinedAttribute</code>
      *
-     * @param v  the array of Strings holding the found values
+     * @param v the array of Strings holding the found values
      */
     private void copyValues(final String[] v) {
         switch (v.length) {
@@ -266,8 +273,8 @@ class CombinedAttribute {
      * set one attribute of this <code>CombinedAttribute</code>
      *
      * @param side  the side to set the attribute for, one of ATTR_TOP,
-     *   ATTR_RIGHT, ATTR_BOTTOM, ATTR_LEFT
-     * @param value  the attribute value to set
+     *              ATTR_RIGHT, ATTR_BOTTOM, ATTR_LEFT
+     * @param value the attribute value to set
      */
     public void setAttribute(final int side, final String value) {
         values[side] = value;
@@ -276,11 +283,10 @@ class CombinedAttribute {
     /**
      * get one attribute of this <code>CombinedAttribute</code>
      *
-     * @param side  the side to get the attribute for, one of ATTR_TOP,
-     *   ATTR_RIGHT, ATTR_BOTTOM, ATTR_LEFT
-     *
-     * @return  the attribute value for the specified side or null, if the
-     *    attribute key provided in the constructor was not found
+     * @param side the side to get the attribute for, one of ATTR_TOP,
+     *             ATTR_RIGHT, ATTR_BOTTOM, ATTR_LEFT
+     * @return the attribute value for the specified side or null, if the
+     * attribute key provided in the constructor was not found
      */
     public String getAttribute(final int side) {
         return values[side];
@@ -300,8 +306,8 @@ class CombinedAttribute {
      * as one attribute.
      *
      * @return a String having all values delimited by blanks
-     *     in the order top right, bottom, left or null if no
-     *     attributes were found
+     * in the order top right, bottom, left or null if no
+     * attributes were found
      */
     public String getAttribute() {
         String result = null;
@@ -329,8 +335,8 @@ class CombinedAttribute {
      * starting with ATTR_RIGHT and necessarily continuing
      * with ATTR_BOTTOM and ATTR_LEFT ( helper method to getAttribute() )
      *
-     * @param buf  the output buffer to append to
-     * @param count  the number of values to append
+     * @param buf   the output buffer to append to
+     * @param count the number of values to append
      */
     private void appendValues(final StringBuffer buf, final int count) {
         for (int i = 1; i < count + 1; i++) {

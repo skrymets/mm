@@ -23,14 +23,15 @@ package freemind.main;
 import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.view.mindmapview.MapView;
-import org.slf4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.net.URL;
-import java.util.List;
-import java.util.*;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 public interface FreeMindMain {
 
@@ -226,11 +227,6 @@ public interface FreeMindMain {
     VersionInformation getFreemindVersion();
 
     /**
-     * To obtain a logging element, ask here.
-     */
-    Logger getLogger(String forClass);
-
-    /**
      * Inserts a (south) component into the split pane. If the screen isn't
      * split yet, a split pane should be created on the fly.
      *
@@ -268,11 +264,6 @@ public interface FreeMindMain {
 
     JScrollPane getScrollPane();
 
-    void registerStartupDoneListener(
-            StartupDoneListener pStartupDoneListener);
+    void registerStartupDoneListener(StartupDoneListener pStartupDoneListener);
 
-    /**
-     * @return a list of all loggers. Used for example for the log file viewer.
-     */
-    List<Logger> getLoggerList();
 }

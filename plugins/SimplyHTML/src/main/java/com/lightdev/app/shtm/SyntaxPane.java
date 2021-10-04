@@ -67,12 +67,9 @@ import javax.swing.text.StyledEditorKit;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
- *
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class SyntaxPane extends JEditorPane implements CaretListener {
     /**
@@ -124,9 +121,9 @@ class SyntaxPane extends JEditorPane implements CaretListener {
      * apply syntax highlighting to all HTML tags found in the given
      * area of the given document
      *
-     * @param doc  the document to apply syntax highlighting to
-     * @param offset  the position inside the given document to start to apply syntax highlighting to
-     * @param len  the number of characters to apply syntax highlighting to
+     * @param doc    the document to apply syntax highlighting to
+     * @param offset the position inside the given document to start to apply syntax highlighting to
+     * @param len    the number of characters to apply syntax highlighting to
      */
     public void setMarks(final StyledDocument sDoc, final int offset, final int len) {
         SwingUtilities.invokeLater(new StyleUpdater(this, sDoc, offset, len));
@@ -165,8 +162,7 @@ class SyntaxPane extends JEditorPane implements CaretListener {
             if (!gp.isVisible()) {
                 gp.setCursor(waitCursor);
                 gp.setVisible(true);
-            }
-            else {
+            } else {
                 gp.setVisible(false);
             }
         }
@@ -180,10 +176,10 @@ class SyntaxPane extends JEditorPane implements CaretListener {
         /**
          * construct a <code>StyleUpdater</code>
          *
-         * @param sp  the SyntaxPane this StyleUpdater works on
-         * @param doc  the document to apply syntax highlighting to
-         * @param offset  the position inside the given document to start to apply syntax highlighting to
-         * @param len  the number of characters to apply syntax highlighting to
+         * @param sp     the SyntaxPane this StyleUpdater works on
+         * @param doc    the document to apply syntax highlighting to
+         * @param offset the position inside the given document to start to apply syntax highlighting to
+         * @param len    the number of characters to apply syntax highlighting to
          */
         public StyleUpdater(final SyntaxPane sp, final StyledDocument doc, final int offset, final int len) {
             sDoc = doc;
@@ -211,26 +207,33 @@ class SyntaxPane extends JEditorPane implements CaretListener {
                             m = style.getPattern().matcher(text);
                             while (m.find()) {
                                 sDoc.setCharacterAttributes(offset + m.start(), m.end() - m.start(), style.getStyle(),
-                                    true);
+                                        true);
                             }
                         }
                     }
                 }
-            }
-            catch (final Exception ex) {
+            } catch (final Exception ex) {
                 System.out.println("StyleUpdater ERROR: " + ex.getMessage());
             }
             sp.addCaretListener(sp);
             cursor();
         }
 
-        /** the document to apply syntax highlighting to */
+        /**
+         * the document to apply syntax highlighting to
+         */
         private final StyledDocument sDoc;
-        /** the position inside the given document to start to apply syntax highlighting to */
+        /**
+         * the position inside the given document to start to apply syntax highlighting to
+         */
         private final int offset;
-        /** the number of characters to apply syntax highlighting to */
+        /**
+         * the number of characters to apply syntax highlighting to
+         */
         private final int len;
-        /** the SyntaxPane this StyleUpdater works on */
+        /**
+         * the SyntaxPane this StyleUpdater works on
+         */
         private final SyntaxPane sp;
     }
 
@@ -252,8 +255,7 @@ class SyntaxPane extends JEditorPane implements CaretListener {
                 lineEnd = length;
             }
             setMarks(sDoc, lineStart, lineEnd - lineStart);
-        }
-        catch (final Exception ex) {
+        } catch (final Exception ex) {
         }
     }
 
@@ -278,8 +280,8 @@ class SyntaxPane extends JEditorPane implements CaretListener {
         /**
          * construct a <code>RegExStyle</code> instance
          *
-         * @param p  the <code>Pattern</code> to apply this style to
-         * @param a  the attributes making up this style
+         * @param p the <code>Pattern</code> to apply this style to
+         * @param a the attributes making up this style
          */
         public RegExStyle(final Pattern p, final AttributeSet a) {
             this.p = p;
@@ -307,7 +309,7 @@ class SyntaxPane extends JEditorPane implements CaretListener {
         /**
          * set the Pattern to apply a given set of attributes to
          *
-         * @param p  the Pattern
+         * @param p the Pattern
          */
         public void setPattern(final Pattern p) {
             this.p = p;
@@ -316,20 +318,28 @@ class SyntaxPane extends JEditorPane implements CaretListener {
         /**
          * set the set of attributes to apply to a given Pattern
          *
-         * @param a  the set of attributes to use
+         * @param a the set of attributes to use
          */
         public void setStyle(final AttributeSet a) {
             this.a = a;
         }
 
-        /** the Pattern to apply this style to */
+        /**
+         * the Pattern to apply this style to
+         */
         private Pattern p;
-        /** the attributes making up this style */
+        /**
+         * the attributes making up this style
+         */
         private AttributeSet a;
     }
 
-    /** Patterns registered with this SnytaxPane */
+    /**
+     * Patterns registered with this SnytaxPane
+     */
     private Vector patterns;
-    /** the cursor to use to indicate a lengthy operation is going on */
+    /**
+     * the cursor to use to indicate a lengthy operation is going on
+     */
     private final Cursor waitCursor = Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR);
 }

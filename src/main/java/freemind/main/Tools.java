@@ -32,6 +32,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
+import lombok.extern.log4j.Log4j2;
 
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -72,20 +73,11 @@ import java.util.zip.Inflater;
 
 /**
  * @author foltin
- *
  */
+@Log4j2
 public class Tools {
 
-    /**
-     *
-     */
     public static final String FREEMIND_LIB_FREEMIND_JAR = "lib/freemind.jar";
-
-    private static org.slf4j.Logger logger = null;
-
-    static {
-        logger = freemind.main.Resources.getInstance().getLogger("Tools");
-    }
 
     public static final String CONTENTS_JAVA_FREEMIND_JAR = "Contents/Java/freemind.jar";
 
@@ -157,7 +149,7 @@ public class Tools {
     public static String PointToXml(Point col) {
         if (col == null) {
             return null; // throw new IllegalArgumentException("Point was
-        }		// null");
+        }        // null");
         Vector<String> l = new Vector<>();
         l.add(Integer.toString(col.x));
         l.add(Integer.toString(col.y));
@@ -179,7 +171,7 @@ public class Tools {
         if (l.size() != 2) {
             throw new IllegalArgumentException(
                     "A point must consist of two numbers (and not: '" + string
-                    + "').");
+                            + "').");
         }
         int x = Integer.parseInt((String) it.next());
         int y = Integer.parseInt((String) it.next());
@@ -232,6 +224,7 @@ public class Tools {
     }
 
     /**
+     *
      */
     public static String[] getAvailableFonts() {
         if (sEnvFonts == null) {
@@ -327,7 +320,7 @@ public class Tools {
 
     /**
      * @return "/" for absolute file names under Unix, "c:\\" or similar under
-     *         windows, null otherwise
+     * windows, null otherwise
      */
     public static String getPrefix(String pFileName) {
         if (isWindows()) {
@@ -408,11 +401,8 @@ public class Tools {
      * If the preferences say, that links should be relative, a relative url is
      * returned.
      *
-     * @param input
-     *                 the file that is treated
-     * @param pMapFile
-     *                 the file, that input is made relative to
-     *
+     * @param input    the file that is treated
+     * @param pMapFile the file, that input is made relative to
      * @return in case of trouble the absolute path.
      */
     public static String fileToRelativeUrlString(File input, File pMapFile) {
@@ -442,11 +432,8 @@ public class Tools {
     }
 
     /**
-     * @param string1
-     *                input (or null)
-     * @param string2
-     *                input (or null)
-     *
+     * @param string1 input (or null)
+     * @param string2 input (or null)
      * @return true, if equal (that means: same text or both null)
      */
     public static boolean safeEquals(String string1, String string2) {
@@ -479,7 +466,7 @@ public class Tools {
     }
 
     public static void setHidden(File file, boolean hidden,
-            boolean synchronously) {
+                                 boolean synchronously) {
         // According to Web articles, UNIX systems do not have attribute hidden
         // in general, rather, they consider files starting with . as hidden.
         String osNameStart = System.getProperty("os.name").substring(0, 3);
@@ -487,7 +474,7 @@ public class Tools {
             try {
                 Runtime.getRuntime().exec(
                         "attrib " + (hidden ? "+" : "-") + "H \""
-                        + file.getAbsolutePath() + "\"");
+                                + file.getAbsolutePath() + "\"");
                 // Synchronize the effect, because it is asynchronous in
                 // general.
                 if (!synchronously) {
@@ -528,7 +515,7 @@ public class Tools {
     }
 
     public static String expandPlaceholders(String message, String s1,
-            String s2, String s3) {
+                                            String s2, String s3) {
         String result = message;
         if (s1 != null) {
             result = result.replaceAll("\\$1", s1);
@@ -640,7 +627,7 @@ public class Tools {
 
         // 8-byte default Salt
         byte[] salt = {(byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
-            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03};
+                (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03};
 
         // Iteration count
         int iterationCount = 19;
@@ -655,6 +642,7 @@ public class Tools {
         }
 
         /**
+         *
          */
         private void init(byte[] mSalt) {
             if (mSalt != null) {
@@ -758,6 +746,7 @@ public class Tools {
     }
 
     /**
+     *
      */
     public static String toBase64(byte[] byteBuffer) {
         return new String(Base64Coding.encode64(byteBuffer));
@@ -841,6 +830,7 @@ public class Tools {
     }
 
     /**
+     *
      */
     public static String byteArrayToUTF8String(byte[] compressedData) {
         // Decode using utf-8
@@ -852,6 +842,7 @@ public class Tools {
     }
 
     /**
+     *
      */
     public static byte[] uTF8StringToByteArray(String uncompressedData) {
         // Code using utf-8
@@ -974,9 +965,8 @@ public class Tools {
     public static Reader getUpdateReader(Reader pReader, String xsltScript) throws IOException {
         StringWriter writer = null;
         InputStream inputStream = null;
-        final org.slf4j.Logger logger = Resources.getInstance().getLogger(Tools.class
-                .getName());
-        logger.info("Updating the reader " + pReader
+
+        log.info("Updating the reader " + pReader
                 + " to the current version.");
         boolean successful = false;
         String errorMessage = null;
@@ -995,12 +985,12 @@ public class Tools {
 
             String fileContents = getFile(pReader);
             if (fileContents.length() > 10) {
-                logger.info("File start before UTF8 replacement: '"
+                log.info("File start before UTF8 replacement: '"
                         + fileContents.substring(0, 9) + "'");
             }
             fileContents = replaceUtf8AndIllegalXmlChars(fileContents);
             if (fileContents.length() > 10) {
-                logger.info("File start after UTF8 replacement: '"
+                log.info("File start after UTF8 replacement: '"
                         + fileContents.substring(0, 9) + "'");
             }
             final StreamSource sr = new StreamSource(new StringReader(
@@ -1018,7 +1008,7 @@ public class Tools {
                     // create an instance of TransformerFactory
                     TransformerFactory transFact = TransformerFactory
                             .newInstance();
-                    logger.info("TransformerFactory class: "
+                    log.info("TransformerFactory class: "
                             + transFact.getClass());
                     Transformer trans;
                     try {
@@ -1043,7 +1033,7 @@ public class Tools {
             Thread transformerThread = new Thread(transformer, "XSLT");
             transformerThread.start();
             transformerThread.join();
-            logger.info("Updating the reader " + pReader
+            log.info("Updating the reader " + pReader
                     + " to the current version. Done."); // +
             // writer.getBuffer().toString());
             successful = transformer.isSuccessful();
@@ -1061,10 +1051,10 @@ public class Tools {
         }
         if (successful) {
             String content = writer.getBuffer().toString();
-            // logger.info("Content before transformation: " + content);
+            // log.info("Content before transformation: " + content);
             String replacedContent = Tools
                     .replaceUtf8AndIllegalXmlChars(content);
-            // logger.info("Content after transformation: " + replacedContent);
+            // log.info("Content after transformation: " + replacedContent);
             return new StringReader(replacedContent);
         } else {
             return new StringReader("<map><node TEXT='"
@@ -1089,11 +1079,9 @@ public class Tools {
     /**
      * In case of trouble, the method returns null.
      *
-     * @param pInputFile
-     *                   the file to read.
-     *
+     * @param pInputFile the file to read.
      * @return the complete content of the file. or null if an exception has
-     *         occured.
+     * occured.
      */
     public static String getFile(File pInputFile) {
         try {
@@ -1161,10 +1149,10 @@ public class Tools {
                 dialog.dispose();
             }
 
-        
-        ;
-		}
-		addEscapeActionToDialog(dialog, new EscapeAction());
+
+            ;
+        }
+        addEscapeActionToDialog(dialog, new EscapeAction());
     }
 
     public static void addEscapeActionToDialog(JDialog dialog, Action action) {
@@ -1172,7 +1160,7 @@ public class Tools {
     }
 
     public static void addKeyActionToDialog(JDialog dialog, Action action,
-            String keyStroke, String actionId) {
+                                            String keyStroke, String actionId) {
         action.putValue(Action.NAME, actionId);
         // Register keystroke
         dialog.getRootPane()
@@ -1210,7 +1198,7 @@ public class Tools {
     }
 
     public static void copyStream(InputStream in, OutputStream out,
-            boolean pCloseOutput) throws IOException {
+                                  boolean pCloseOutput) throws IOException {
         byte[] buf = new byte[1024];
         int len;
         while ((len = in.read(buf)) > 0) {
@@ -1223,7 +1211,7 @@ public class Tools {
     }
 
     public static Point convertPointToAncestor(Component c, Point p,
-            Component destination) {
+                                               Component destination) {
         int x, y;
         while (c != destination) {
             x = c.getX();
@@ -1239,7 +1227,7 @@ public class Tools {
     }
 
     public static void convertPointFromAncestor(Component source, Point p,
-            Component c) {
+                                                Component c) {
         int x, y;
         while (c != source) {
             x = c.getX();
@@ -1255,7 +1243,7 @@ public class Tools {
     }
 
     public static void convertPointToAncestor(Component source, Point point,
-            Class<?> ancestorClass) {
+                                              Class<?> ancestorClass) {
         Component destination = SwingUtilities.getAncestorOfClass(
                 ancestorClass, source);
         convertPointToAncestor(source, point, destination);
@@ -1264,18 +1252,22 @@ public class Tools {
     interface NameMnemonicHolder {
 
         /**
+         *
          */
         String getText();
 
         /**
+         *
          */
         void setText(String replaceAll);
 
         /**
+         *
          */
         void setMnemonic(char charAfterMnemoSign);
 
         /**
+         *
          */
         void setDisplayedMnemonicIndex(int mnemoSignIndex);
 
@@ -1291,37 +1283,37 @@ public class Tools {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#getText()
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#getText()
          */
         public String getText() {
             return btn.getText();
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
+         * (non-Javadoc)
+         *
+         * @see
+         * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
          */
         public void setDisplayedMnemonicIndex(int mnemoSignIndex) {
             btn.setDisplayedMnemonicIndex(mnemoSignIndex);
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
          */
         public void setMnemonic(char charAfterMnemoSign) {
             btn.setMnemonic(charAfterMnemoSign);
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
          */
         public void setText(String text) {
             btn.setText(text);
@@ -1339,27 +1331,27 @@ public class Tools {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#getText()
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#getText()
          */
         public String getText() {
             return action.getValue(Action.NAME).toString();
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
+         * (non-Javadoc)
+         *
+         * @see
+         * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
          */
         public void setDisplayedMnemonicIndex(int mnemoSignIndex) {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
          */
         public void setMnemonic(char charAfterMnemoSign) {
             int vk = (int) charAfterMnemoSign;
@@ -1370,9 +1362,9 @@ public class Tools {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
          */
         public void setText(String text) {
             action.putValue(Action.NAME, text);
@@ -1458,7 +1450,7 @@ public class Tools {
     }
 
     private static void setLabelAndMnemonic(NameMnemonicHolder item,
-            String inLabel) {
+                                            String inLabel) {
         String rawLabel = inLabel;
         if (rawLabel == null) {
             rawLabel = item.getText();
@@ -1559,15 +1551,16 @@ public class Tools {
             // final Exception e = new IllegalArgumentException("HERE");
             if (!EventQueue.isDispatchThread()) {
                 EventQueue.invokeAndWait(new Runnable() {
-                    public void run() {
-                        // logger.info("Waited for event queue.");
-                        // e.printStackTrace();
-                    }
-                ;
-            }  
+                                             public void run() {
+                                                 // log.info("Waited for event queue.");
+                                                 // e.printStackTrace();
+                                             }
+
+                                             ;
+                                         }
                 );
-			} else {
-				logger.warn("Can't wait for event queue, if I'm inside this queue!");
+            } else {
+                log.warn("Can't wait for event queue, if I'm inside this queue!");
             }
         } catch (Exception e) {
             freemind.main.Resources.getInstance().logException(e);
@@ -1578,8 +1571,7 @@ public class Tools {
      * Logs the stacktrace via a dummy exception.
      */
     public static void printStackTrace() {
-        freemind.main.Resources.getInstance().logException(
-                new IllegalArgumentException("HERE"));
+        freemind.main.Resources.getInstance().logException(new IllegalArgumentException("HERE"));
     }
 
     /**
@@ -1593,15 +1585,11 @@ public class Tools {
     /**
      * Adapts the font size inside of a component to the zoom
      *
-     * @param c
-     *                       component
-     * @param zoom
-     *                       zoom factor
-     * @param normalFontSize
-     *                       "unzoomed" normal font size.
-     *
+     * @param c              component
+     * @param zoom           zoom factor
+     * @param normalFontSize "unzoomed" normal font size.
      * @return a copy of the input font (if the size was effectively changed)
-     *         with the correct scale.
+     * with the correct scale.
      */
     public static Font updateFontSize(Font font, float zoom, int normalFontSize) {
         if (font != null) {
@@ -1721,6 +1709,7 @@ public class Tools {
     }
 
     // {{{ setPermissions() method
+
     /**
      * Sets numeric permissions of a file. On non-Unix platforms, does nothing.
      * From jEdit
@@ -1730,7 +1719,7 @@ public class Tools {
         if (permissions != 0) {
             if (isUnix()) {
                 String[] cmdarray = {"chmod",
-                    Integer.toString(permissions, 8), path};
+                        Integer.toString(permissions, 8), path};
 
                 try {
                     Process process = Runtime.getRuntime().exec(cmdarray);
@@ -1741,10 +1730,10 @@ public class Tools {
                     // waitFor() hangs on some Java
                     // implementations.
                     /*
-					 * int exitCode = process.waitFor(); if(exitCode != 0)
-					 * Log.log
-					 * (Log.NOTICE,FileVFS.class,"chmod exited with code " +
-					 * exitCode);
+                     * int exitCode = process.waitFor(); if(exitCode != 0)
+                     * Log.log
+                     * (Log.NOTICE,FileVFS.class,"chmod exited with code " +
+                     * exitCode);
                      */
                 } // Feb 4 2000 5:30 PM
                 // Catch Throwable here rather than Exception.
@@ -1794,17 +1783,17 @@ public class Tools {
     /**
      * @param pNode
      * @param pMindMapController
-     *
      * @return
      */
     public static String getNodeTextHierarchy(MindMapNode pNode,
-            MindMapController pMindMapController) {
+                                              MindMapController pMindMapController) {
         return pNode.getShortText(pMindMapController)
                 + ((pNode.isRoot()) ? "" : (" <- " + getNodeTextHierarchy(
-                                pNode.getParentNode(), pMindMapController)));
+                pNode.getParentNode(), pMindMapController)));
     }
 
     /**
+     *
      */
     public static Clipboard getClipboard() {
         return Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -1812,7 +1801,7 @@ public class Tools {
 
     /**
      * @return a list of MindMapNode s if they are currently contained in the clipboard.
-     *         An empty list otherwise.
+     * An empty list otherwise.
      */
     public static Vector<MindMapNode> getMindMapNodesFromClipboard(MindMapController pMindMapController) {
         Vector<MindMapNode> mindMapNodes = new Vector<MindMapNode>();
@@ -1820,7 +1809,7 @@ public class Tools {
         if (clipboardContents != null) {
             try {
                 List<String> transferData = (List<String>) clipboardContents.getTransferData(MindMapNodesSelection.copyNodeIdsFlavor);
-                for (Iterator<String> it = transferData.iterator(); it.hasNext();) {
+                for (Iterator<String> it = transferData.iterator(); it.hasNext(); ) {
                     String nodeId = (String) it.next();
                     MindMapNode node = pMindMapController.getNodeFromID(nodeId);
                     mindMapNodes.add(node);
@@ -1837,7 +1826,7 @@ public class Tools {
         Timer timer = new Timer(1000, new ActionListener() {
 
             public void actionPerformed(ActionEvent pE) {
-                logger.info("Component: "
+                log.info("Component: "
                         + KeyboardFocusManager.getCurrentKeyboardFocusManager()
                         .getFocusOwner()
                         + ", Window: "
@@ -1851,10 +1840,10 @@ public class Tools {
 
     /**
      * copied from HomePane.java 15 mai 2006
-     *
+     * <p>
      * Sweet Home 3D, Copyright (c) 2006 Emmanuel PUYBARET / eTeks
      * <info@eteks.com>
-     *
+     * <p>
      * - This listener manages accelerator keys that may require the use of
      * shift key depending on keyboard layout (like + - or ?)
      */
@@ -1882,7 +1871,6 @@ public class Tools {
     /**
      * @param pString
      * @param pSearchString
-     *
      * @return the amount of occurrences of pSearchString in pString.
      */
     public static int countOccurrences(String pString, String pSearchString) {
@@ -1911,13 +1899,13 @@ public class Tools {
      * @param pPageFormatProperty
      */
     public static void setPageFormatFromString(Paper pPaper,
-            String pPageFormatProperty) {
+                                               String pPageFormatProperty) {
         try {
             // parse string:
             StringTokenizer tokenizer = new StringTokenizer(
                     pPageFormatProperty, ";");
             if (tokenizer.countTokens() != 6) {
-                logger.warn("Page format property has not the correct format:"
+                log.warn("Page format property has not the correct format:"
                         + pPageFormatProperty);
                 return;
             }
@@ -1931,7 +1919,6 @@ public class Tools {
 
     /**
      * @param pTokenizer
-     *
      * @return
      */
     private static double nt(StringTokenizer pTokenizer) {
@@ -1946,7 +1933,6 @@ public class Tools {
 
     /**
      * @param pPageFormat
-     *
      * @return
      */
     public static String getPageFormatAsString(Paper pPaper) {
@@ -1977,7 +1963,7 @@ public class Tools {
 
             StringBuilder buf = new StringBuilder("[");
 
-            for (Iterator<XmlAction> it = xmlActions.iterator(); it.hasNext();) {
+            for (Iterator<XmlAction> it = xmlActions.iterator(); it.hasNext(); ) {
                 if (buf.length() > 1) {
                     buf.append(',');
                 }
@@ -1996,7 +1982,7 @@ public class Tools {
     }
 
     public static String generateID(String proposedID, Map map,
-            String prefix) {
+                                    String prefix) {
         String myProposedID = (proposedID != null) ? proposedID : "";
         String returnValue;
         do {
@@ -2007,8 +1993,8 @@ public class Tools {
                 myProposedID = "";
             } else {
                 /*
-				 * The prefix is to enable the id to be an ID in the sense of
-				 * XML/DTD.
+                 * The prefix is to enable the id to be an ID in the sense of
+                 * XML/DTD.
                  */
                 returnValue = prefix
                         + Integer.toString(Tools.ran.nextInt(2000000000));
@@ -2022,7 +2008,6 @@ public class Tools {
      * not. It checks this and calls the invokeandwait or the runnable directly.
      *
      * @param pRunnable
-     *
      * @throws InterruptedException
      * @throws InvocationTargetException
      */
@@ -2040,22 +2025,22 @@ public class Tools {
         String path = FreeMindStarter.class.getProtectionDomain()
                 .getCodeSource().getLocation().getPath();
         String decodedPath = URLDecoder.decode(path, "UTF-8");
-        logger.info("Path: " + decodedPath);
+        log.info("Path: " + decodedPath);
         if (decodedPath.endsWith(CONTENTS_JAVA_FREEMIND_JAR)) {
             decodedPath = decodedPath.substring(0, decodedPath.length() - CONTENTS_JAVA_FREEMIND_JAR.length());
             decodedPath = decodedPath + FREE_MIND_APP_CONTENTS_RESOURCES_JAVA;
-            logger.info("macPath: " + decodedPath);
+            log.info("macPath: " + decodedPath);
         } else if (decodedPath.endsWith(FREEMIND_LIB_FREEMIND_JAR)) {
             decodedPath = decodedPath.substring(0, decodedPath.length() - FREEMIND_LIB_FREEMIND_JAR.length());
-            logger.info("reducded Path: " + decodedPath);
+            log.info("reducded Path: " + decodedPath);
         }
         return decodedPath + "dictionaries/";
     }
 
     public static Properties copyChangedProperties(Properties props2,
-            Properties defProps2) {
+                                                   Properties defProps2) {
         Properties toBeStored = new Properties();
-        for (Iterator it = props2.keySet().iterator(); it.hasNext();) {
+        for (Iterator it = props2.keySet().iterator(); it.hasNext(); ) {
             String key = (String) it.next();
             if (!safeEquals(props2.get(key), defProps2.get(key))) {
                 toBeStored.put(key, props2.get(key));
@@ -2091,6 +2076,7 @@ public class Tools {
     }
 
     /**
+     *
      */
     public static int edgeWidthStringToInt(String value) {
         if (value == null) {
@@ -2104,7 +2090,7 @@ public class Tools {
 
     static public int iconFirstIndex(MindMapNode node, String iconName) {
         List<MindIcon> icons = node.getIcons();
-        for (ListIterator<MindIcon> i = icons.listIterator(); i.hasNext();) {
+        for (ListIterator<MindIcon> i = icons.listIterator(); i.hasNext(); ) {
             MindIcon nextIcon = i.next();
             if (iconName.equals(nextIcon.getName())) {
                 return i.previousIndex();

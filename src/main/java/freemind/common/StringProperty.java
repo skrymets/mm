@@ -22,75 +22,74 @@
 /*$Id: StringProperty.java,v 1.1.2.4.2.2 2009/02/04 19:31:21 christianfoltin Exp $*/
 package freemind.common;
 
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+
+import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-
 public class StringProperty extends PropertyBean implements PropertyControl {
-	String description;
+    String description;
 
-	String label;
+    String label;
 
-	JTextField mTextField;
+    JTextField mTextField;
 
-	/**
-	 */
-	public StringProperty(String description, String label) {
-		super();
-		initializeTextfield();
-		this.description = description;
-		this.label = label;
-		// mTextField.addPropertyChangeListener(new PropertyChangeListener() {
-		// public void propertyChange(PropertyChangeEvent pEvt)
-		// {
-		// firePropertyChangeEvent();
-		// }
-		// });
-		mTextField.addKeyListener(new KeyAdapter() {
+    /**
+     *
+     */
+    public StringProperty(String description, String label) {
+        super();
+        initializeTextfield();
+        this.description = description;
+        this.label = label;
+        // mTextField.addPropertyChangeListener(new PropertyChangeListener() {
+        // public void propertyChange(PropertyChangeEvent pEvt)
+        // {
+        // firePropertyChangeEvent();
+        // }
+        // });
+        mTextField.addKeyListener(new KeyAdapter() {
 
-			public void keyReleased(KeyEvent pE) {
-				firePropertyChangeEvent();
-			}
-		});
+            public void keyReleased(KeyEvent pE) {
+                firePropertyChangeEvent();
+            }
+        });
 
-	}
+    }
 
-	/**
-	 * To be overwritten by PasswordProperty
-	 */
-	protected void initializeTextfield() {
-		mTextField = new JTextField();
-	}
-	
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * To be overwritten by PasswordProperty
+     */
+    protected void initializeTextfield() {
+        mTextField = new JTextField();
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setValue(String value) {
-		mTextField.setText(value);
-		mTextField.selectAll();
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public String getValue() {
-		return mTextField.getText();
-	}
+    public void setValue(String value) {
+        mTextField.setText(value);
+        mTextField.selectAll();
+    }
 
-	public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
-		JLabel label = builder.append(pTranslator.getText(getLabel()),
-				mTextField);
-		label.setToolTipText(pTranslator.getText(getDescription()));
-	}
+    public String getValue() {
+        return mTextField.getText();
+    }
 
-	public void setEnabled(boolean pEnabled) {
-		mTextField.setEnabled(pEnabled);
-	}
+    public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
+        JLabel label = builder.append(pTranslator.getText(getLabel()),
+                mTextField);
+        label.setToolTipText(pTranslator.getText(getDescription()));
+    }
+
+    public void setEnabled(boolean pEnabled) {
+        mTextField.setEnabled(pEnabled);
+    }
 
 }

@@ -26,11 +26,9 @@ package com.lightdev.app.shtm;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class DocNameMissingException extends Exception {
     /**
@@ -47,7 +45,7 @@ class DocNameMissingException extends Exception {
      * retrieved by the <code>{@link java.lang.Throwable#getMessage}</code>
      * method of class <code>java.lang.Throwable</code>.
      *
-     * @param   s   the detail message.
+     * @param s the detail message.
      */
     public DocNameMissingException(final String s) {
         super(s);

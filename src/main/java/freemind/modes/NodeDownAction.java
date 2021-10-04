@@ -31,18 +31,18 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class NodeDownAction extends MindmapAction {
-	private final MindMapController modeController;
+    private final MindMapController modeController;
 
-	public NodeDownAction(MindMapController adapter) {
-		super("node_down", adapter);
-		this.modeController = adapter;
-	}
+    public NodeDownAction(MindMapController adapter) {
+        super("node_down", adapter);
+        this.modeController = adapter;
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		MindMapNode selected = modeController.getSelected();
-		List<MindMapNode> selecteds = modeController.getSelecteds();
-		modeController.moveNodes(selected, selecteds, 1);
-		modeController.select(selected, selecteds);
+    public void actionPerformed(ActionEvent e) {
+        MindMapNode selected = modeController.getSelected();
+        List<MindMapNode> selecteds = modeController.getSelecteds();
+        modeController.moveNodes(selected, selecteds, 1);
+        modeController.select(selected, selecteds);
 
-	}
+    }
 }

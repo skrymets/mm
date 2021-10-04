@@ -32,5 +32,5 @@ import freemind.modes.mindmapmode.MindMapNodeModel;
 // __________________
 
 public interface SingleNodeOperation {
-	public void apply(MindMapMapModel map, MindMapNodeModel node);
+    public void apply(MindMapMapModel map, MindMapNodeModel node);
 }

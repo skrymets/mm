@@ -19,19 +19,18 @@
 
 package freemind.view.mindmapview;
 
-import java.awt.LayoutManager;
-import java.awt.Point;
+import java.awt.*;
 
 public interface NodeViewLayout extends LayoutManager {
-	void layoutNodeMotionListenerView(NodeMotionListenerView view);
+    void layoutNodeMotionListenerView(NodeMotionListenerView view);
 
-	Point getMainViewOutPoint(NodeView view, NodeView targetView,
-			Point destinationPoint);
+    Point getMainViewOutPoint(NodeView view, NodeView targetView,
+                              Point destinationPoint);
 
-	Point getMainViewInPoint(NodeView view);
+    Point getMainViewInPoint(NodeView view);
 
-	/**
-	 * @param pFoldingComponent
-	 */
-	void layoutNodeFoldingComponent(NodeFoldingComponent pFoldingComponent);
+    /**
+     * @param pFoldingComponent
+     */
+    void layoutNodeFoldingComponent(NodeFoldingComponent pFoldingComponent);
 }

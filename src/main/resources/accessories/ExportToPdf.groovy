@@ -20,7 +20,7 @@
  * Created on 22.06.2011
  */
 
-/** 
+/**
  * To use this script, call 
  * java -Dstartup_groovy_script=accessories\ExportToPdf.groovy -jar lib\freemind.jar
  */
@@ -32,10 +32,12 @@ def ex = c.getHookFactory().createModeControllerHook("plugins/ExportPdf.xml")
 ex.setController(c)
 // calculate file name
 def file = c.getMap().getFile().getAbsolutePath().replaceFirst(
-                    "\\.[^.]*?\$", "") + ".pdf"
+        "\\.[^.]*?\$", "") + ".pdf"
 try {
-	ex.exportAsPdf(false, c.getRootNode(),
-			new File(file));
-	} catch(e) { print e; }
+    ex.exportAsPdf(false, c.getRootNode(),
+            new File(file));
+} catch (e) {
+    print e;
+}
 System.exit(0);
 return 0;

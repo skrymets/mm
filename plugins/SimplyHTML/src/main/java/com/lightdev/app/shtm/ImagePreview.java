@@ -45,11 +45,9 @@ import javax.swing.SwingConstants;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- *
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class ImagePreview extends JComponent implements Scrollable {
     /**
@@ -64,7 +62,7 @@ class ImagePreview extends JComponent implements Scrollable {
     /**
      * Construct an <CODE>ImagePreview</CODE>.
      *
-     * @param  pic - the image to be previewed
+     * @param pic - the image to be previewed
      */
     public ImagePreview(final ImageIcon pic) {
         setImage(pic);
@@ -81,14 +79,13 @@ class ImagePreview extends JComponent implements Scrollable {
     /**
      * Get the original width of the image previewed in this component
      *
-     * @return  the original width of the image previewed in this component
-     *             or -1 if no image is assigned
+     * @return the original width of the image previewed in this component
+     * or -1 if no image is assigned
      */
     public int getOriginalWidth() {
         if (pic != null) {
             return pic.getIconWidth();
-        }
-        else {
+        } else {
             return -1;
         }
     }
@@ -96,14 +93,13 @@ class ImagePreview extends JComponent implements Scrollable {
     /**
      * Get the original height of the image previewed in this component
      *
-     * @return  the original height of the image previewed in this component
-     *             or -1 if no image is assigned
+     * @return the original height of the image previewed in this component
+     * or -1 if no image is assigned
      */
     public int getOriginalHeight() {
         if (pic != null) {
             return pic.getIconHeight();
-        }
-        else {
+        } else {
             return -1;
         }
     }
@@ -125,7 +121,7 @@ class ImagePreview extends JComponent implements Scrollable {
      * of the component, the image is painted in its original size. Otherwise,
      * the image is scaled down to the size of this component.
      *
-     * @param   g - The graphics context to use for painting.
+     * @param g - The graphics context to use for painting.
      */
     public void paint(final Graphics g) {
         if (pic != null) {
@@ -142,7 +138,7 @@ class ImagePreview extends JComponent implements Scrollable {
      * Gets the size adjustment necessary for the image to fit into this
      * component and returns the resulting scale percentage.
      *
-     * @return  the scale percentage of the image
+     * @return the scale percentage of the image
      */
     public int getScale() {
         int scale = 100;
@@ -160,8 +156,7 @@ class ImagePreview extends JComponent implements Scrollable {
             //System.out.println("ImagePreview getScale vPct " + vPct + "\r\n\r\n");
             if (hPct < vPct) {
                 scale = hPct;
-            }
-            else {
+            } else {
                 scale = vPct;
             }
         }
@@ -172,7 +167,7 @@ class ImagePreview extends JComponent implements Scrollable {
     /**
      * set the preview to a new width maintaining the image proportions
      *
-     * @param  newWidth   the new width for the image preview
+     * @param newWidth the new width for the image preview
      */
     public void setPreviewWidth(final int newWidth) {
         //System.out.println("ImagePreview setPreviewWidth newWidth=" + newWidth);
@@ -181,8 +176,7 @@ class ImagePreview extends JComponent implements Scrollable {
                 final int hPct = (int) (newWidth / ((double) getOriginalWidth() / (double) 100));
                 final int newHeight = getOriginalHeight() * hPct / 100;
                 setPreferredSize(new Dimension(newWidth, newHeight));
-            }
-            catch (final Exception e) {
+            } catch (final Exception e) {
                 e.printStackTrace();
                 setPreferredSize(new Dimension(20, 20));
             }
@@ -193,7 +187,7 @@ class ImagePreview extends JComponent implements Scrollable {
     /**
      * set the preview to a new height maintaining the image proportions
      *
-     * @param  newHeight   the new height for the image preview
+     * @param newHeight the new height for the image preview
      */
     public void setPreviewHeight(final int newHeight) {
         if (pic != null) {
@@ -201,8 +195,7 @@ class ImagePreview extends JComponent implements Scrollable {
                 final int vPct = (int) (newHeight / ((double) getOriginalHeight() / (double) 100));
                 final int newWidth = getOriginalWidth() * vPct / 100;
                 setPreferredSize(new Dimension(newWidth, newHeight));
-            }
-            catch (final Exception e) {
+            } catch (final Exception e) {
                 e.printStackTrace();
                 setPreferredSize(new Dimension(20, 20));
             }
@@ -214,7 +207,7 @@ class ImagePreview extends JComponent implements Scrollable {
      * Adapt the size of the image previewed by this component to a new
      * scale.
      *
-     * @param  newScale   the new scale the image shall adapt to in size
+     * @param newScale the new scale the image shall adapt to in size
      */
     public void setScale(final int newScale) {
         int newWidth;
@@ -237,8 +230,7 @@ class ImagePreview extends JComponent implements Scrollable {
         int currentPosition = 0;
         if (orientation == SwingConstants.HORIZONTAL) {
             currentPosition = visibleRect.x;
-        }
-        else {
+        } else {
             currentPosition = visibleRect.y;
         }
         //Return the number of pixels between currentPosition
@@ -246,8 +238,7 @@ class ImagePreview extends JComponent implements Scrollable {
         if (direction < 0) {
             final int newPosition = currentPosition - (currentPosition / maxUnitIncrement) * maxUnitIncrement;
             return (newPosition == 0) ? maxUnitIncrement : newPosition;
-        }
-        else {
+        } else {
             return ((currentPosition / maxUnitIncrement) + 1) * maxUnitIncrement - currentPosition;
         }
     }
@@ -255,8 +246,7 @@ class ImagePreview extends JComponent implements Scrollable {
     public int getScrollableBlockIncrement(final Rectangle visibleRect, final int orientation, final int direction) {
         if (orientation == SwingConstants.HORIZONTAL) {
             return visibleRect.width - maxUnitIncrement;
-        }
-        else {
+        } else {
             return visibleRect.height - maxUnitIncrement;
         }
     }

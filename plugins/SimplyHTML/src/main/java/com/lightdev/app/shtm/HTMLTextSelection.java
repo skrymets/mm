@@ -35,30 +35,32 @@ import java.io.IOException;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
- *
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  * @see java.awt.datatransfer.DataFlavor.stringFlavor
  * @see java.awt.datatransfer.DataFlavor.plainTextFlavor
  * @see com.lightdev.app.shtm.HTMLText
  */
 class HTMLTextSelection implements Transferable {
-    /** index of HTML text data flavor */
+    /**
+     * index of HTML text data flavor
+     */
     private static final int HTML_TEXT = 0;
-    /** the data to transfer */
+    /**
+     * the data to transfer
+     */
     private final HTMLText data;
-    /** the data flavor of this transferable */
-    private static final DataFlavor[] flavors = { new DataFlavor(com.lightdev.app.shtm.HTMLText.class, "HTMLText") };
+    /**
+     * the data flavor of this transferable
+     */
+    private static final DataFlavor[] flavors = {new DataFlavor(com.lightdev.app.shtm.HTMLText.class, "HTMLText")};
 
     /**
      * construct a <code>HTMLTextSelection</code> with a chunk
      * of styled text.
      *
      * @param data - a HTMLText object
-     *
      * @see com.lightdev.app.shtm.HTMLText
      */
     public HTMLTextSelection(final HTMLText data) {
@@ -66,10 +68,12 @@ class HTMLTextSelection implements Transferable {
     }
 
     /* ---- start of Transferable implementation ----------------------------*/
+
     /**
      * Returns an array of DataFlavor objects indicating the flavors the data
      * can be provided in.  The array should be ordered according to preference
      * for providing the data (from most richly descriptive to least descriptive).
+     *
      * @return an array of data flavors in which this data can be transferred
      */
     public DataFlavor[] getTransferDataFlavors() {
@@ -79,6 +83,7 @@ class HTMLTextSelection implements Transferable {
     /**
      * Returns whether or not the specified data flavor is supported for
      * this object.
+     *
      * @param flavor the requested flavor for the data
      * @return boolean indicating wjether or not the data flavor is supported
      */
@@ -96,17 +101,16 @@ class HTMLTextSelection implements Transferable {
      * of the object returned is defined by the representation class of the flavor.
      *
      * @param flavor the requested flavor for the data
+     * @throws IOException                if the data is no longer available
+     *                                    in the requested flavor.
+     * @throws UnsupportedFlavorException if the requested data flavor is
+     *                                    not supported.
      * @see DataFlavor#getRepresentationClass
-     * @exception IOException                if the data is no longer available
-     *              in the requested flavor.
-     * @exception UnsupportedFlavorException if the requested data flavor is
-     *              not supported.
      */
     public Object getTransferData(final DataFlavor flavor) throws UnsupportedFlavorException, IOException {
         if (flavor.equals(flavors[HTML_TEXT])) {
             return data;
-        }
-        else {
+        } else {
             throw new UnsupportedFlavorException(flavor);
         }
     }

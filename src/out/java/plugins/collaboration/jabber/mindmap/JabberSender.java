@@ -1,22 +1,22 @@
 /*FreeMind - A Program for creating and viewing Mindmaps
-*Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
-*
-*See COPYING for Details
-*
-*This program is free software; you can redistribute it and/or
-*modify it under the terms of the GNU General Public License
-*as published by the Free Software Foundation; either version 2
-*of the License, or (at your option) any later version.
-*
-*This program is distributed in the hope that it will be useful,
-*but WITHOUT ANY WARRANTY; without even the implied warranty of
-*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*GNU General Public License for more details.
-*
-*You should have received a copy of the GNU General Public License
-*along with this program; if not, write to the Free Software
-*Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
+ *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
+ *
+ *See COPYING for Details
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 /*
  * Created on Mar 4, 2004
  *
@@ -42,7 +42,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author RReppel
- * 
+ * <p>
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
@@ -89,14 +89,12 @@ public class JabberSender implements ActionFilter {
     /**
      * Sends a request to share a map. The receiving user can either accept or
      * decline the request.
-     * 
-     * @param requestingUser
-     *            The user who requests the map to be shared.
-     * @param requestReceiverUser
-     *            The user who is to receive the request to share a map.
+     *
+     * @param requestingUser      The user who requests the map to be shared.
+     * @param requestReceiverUser The user who is to receive the request to share a map.
      */
     public void sendMapSharingRequest(String requestingUser,
-            String requestReceiverUser) {
+                                      String requestReceiverUser) {
         try {
             CollaborationAction action = createCollaborationAction(
                     requestingUser, REQUEST_MAP_SHARING);
@@ -114,7 +112,6 @@ public class JabberSender implements ActionFilter {
 
     /**
      * Sends a request to stop sharing a map.
-     *  
      */
     public void sendMapSharingStopRequest() {
         try {
@@ -134,29 +131,25 @@ public class JabberSender implements ActionFilter {
      */
     private CollaborationAction createCollaborationAction(
             String requestingUser, String command) {
-    
+
         CollaborationAction collaboration = new CollaborationAction();
         collaboration.setCmd(command);
         collaboration.setUser(requestingUser);
         collaboration.setTimestamp(String.valueOf(System
                 .currentTimeMillis()));
         return collaboration;
-         
+
     }
 
     /**
      * Sends whether a map sharing invitation was accepted or declined.
-     * 
-     * @param sentFromUser
-     *            The name of the user accepting or declining the invitation.
-     * @param sendToUser
-     *            The user who had requested that his/her map be shared.
-     * @param accepted
-     *            true = accept, false = decline.
-     *  
+     *
+     * @param sentFromUser The name of the user accepting or declining the invitation.
+     * @param sendToUser   The user who had requested that his/her map be shared.
+     * @param accepted     true = accept, false = decline.
      */
     public void sendMapSharingInvitationResponse(String sentFromUser,
-            String sendToUser, boolean accepted) {
+                                                 String sendToUser, boolean accepted) {
         try {
             this.sendToUser = sendToUser;
             String message;
@@ -189,7 +182,9 @@ public class JabberSender implements ActionFilter {
         return controller.getController().marshall(action);
     }
 
-    /** Sends commands to the other user(s?).
+    /**
+     * Sends commands to the other user(s?).
+     *
      * @param requestReceiverUser
      * @param action
      * @throws SendMessageFailedException
@@ -209,8 +204,8 @@ public class JabberSender implements ActionFilter {
                     "sendToUser is null. (Did you specify the user to share with by calling 'setMapShareUser'?)");
         logger.info("Sending message:"
                 + ((message.length() < 100) ? message : (message
-                        .substring(0, 50)
-                        + "..." + message.substring(message.length() - 50))));
+                .substring(0, 50)
+                + "..." + message.substring(message.length() - 50))));
         /*
          * Wait until there is a reply.
          */
@@ -221,7 +216,7 @@ public class JabberSender implements ActionFilter {
     /**
      * True if there is a shared map at present, false otherwise. If this value
      * is false, the sender will ignore requests to send Freemind commands.
-     * 
+     *
      * @param shared
      */
     public void isMapShared(boolean shared) {
@@ -230,7 +225,7 @@ public class JabberSender implements ActionFilter {
 
     /**
      * Sets name of the user with whom the map is shared.
-     * 
+     *
      * @param username
      */
     public void setShareMapUser(String username) {
@@ -238,11 +233,11 @@ public class JabberSender implements ActionFilter {
     }
 
     /**
-     * The overloaded filter action. Each action comes here along and is sent to the other 
+     * The overloaded filter action. Each action comes here along and is sent to the other
      * participants.
      */
     public ActionPair filterAction(ActionPair pair) {
-    	    try {
+        try {
             CompoundAction eAction = new CompoundAction();
             eAction.getListChoiceList().add(
                     pair.getDoAction());

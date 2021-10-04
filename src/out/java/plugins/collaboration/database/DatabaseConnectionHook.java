@@ -35,115 +35,115 @@ import freemind.view.mindmapview.NodeView;
 
 /**
  * @author foltin
- * 
  */
 public class DatabaseConnectionHook extends DatabaseBasics implements
-		PermanentNodeHook, DontSaveMarker {
+        PermanentNodeHook, DontSaveMarker {
 
-	/**
+    /**
      *
      */
 
-	public void startupMapHook() {
-		super.startupMapHook();
-		// this is the internal call. do nothing
-		logger.info("Startup of the permanent hook.");
-		return;
-	}
+    public void startupMapHook() {
+        super.startupMapHook();
+        // this is the internal call. do nothing
+        logger.info("Startup of the permanent hook.");
+        return;
+    }
 
-	public void loadFrom(XMLElement pChild) {
-		// this plugin should not be saved.
-	}
+    public void loadFrom(XMLElement pChild) {
+        // this plugin should not be saved.
+    }
 
-	public void save(XMLElement pXml) {
-		// this plugin should not be saved.
-		// nothing to do.
-	}
+    public void save(XMLElement pXml) {
+        // this plugin should not be saved.
+        // nothing to do.
+    }
 
-	public void shutdownMapHook() {
-		// this is the internal call. shutdown
-		logger.info("Shut down of the permanent hook.");
-		shutdownConnection();
-		super.shutdownMapHook();
-	}
+    public void shutdownMapHook() {
+        // this is the internal call. shutdown
+        logger.info("Shut down of the permanent hook.");
+        shutdownConnection();
+        super.shutdownMapHook();
+    }
 
-	public void shutdownConnection() {
-		if (mUpdateThread != null) {
-			mUpdateThread.deregisterFilter();
-			mUpdateThread.commitSuicide();
-		}
-		mUpdateThread.shutdown(false);
-	}
+    public void shutdownConnection() {
+        if (mUpdateThread != null) {
+            mUpdateThread.deregisterFilter();
+            mUpdateThread.commitSuicide();
+        }
+        mUpdateThread.shutdown(false);
+    }
 
-	public void onAddChild(MindMapNode pAddedChildNode) {
-	}
+    public void onAddChild(MindMapNode pAddedChildNode) {
+    }
 
-	public void onAddChildren(MindMapNode pAddedChild) {
-	}
+    public void onAddChildren(MindMapNode pAddedChild) {
+    }
 
-	public void onLostFocusNode(NodeView pNodeView) {
-	}
+    public void onLostFocusNode(NodeView pNodeView) {
+    }
 
-	public void onNewChild(MindMapNode pNewChildNode) {
-	}
+    public void onNewChild(MindMapNode pNewChildNode) {
+    }
 
-	public void onRemoveChild(MindMapNode pOldChildNode) {
-	}
+    public void onRemoveChild(MindMapNode pOldChildNode) {
+    }
 
-	public void onRemoveChildren(MindMapNode pOldChildNode, MindMapNode pOldDad) {
-	}
+    public void onRemoveChildren(MindMapNode pOldChildNode, MindMapNode pOldDad) {
+    }
 
-	public void onFocusNode(NodeView pNodeView) {
-	}
+    public void onFocusNode(NodeView pNodeView) {
+    }
 
-	public void onUpdateChildrenHook(MindMapNode pUpdatedNode) {
-	}
+    public void onUpdateChildrenHook(MindMapNode pUpdatedNode) {
+    }
 
-	public void onUpdateNodeHook() {
-	}
+    public void onUpdateNodeHook() {
+    }
 
-	public void onViewCreatedHook(NodeView pNodeView) {
-	}
+    public void onViewCreatedHook(NodeView pNodeView) {
+    }
 
-	public void onViewRemovedHook(NodeView pNodeView) {
-	}
+    public void onViewRemovedHook(NodeView pNodeView) {
+    }
 
-	public Integer getRole() {
-		return ROLE_SLAVE;
-	}
+    public Integer getRole() {
+        return ROLE_SLAVE;
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.extensions.PermanentNodeHook#executeTransaction(freemind.modes.mindmapmode.actions.xml.ActionPair)
-	 */
-	protected void executeTransaction(final ActionPair pair)
-			throws InterruptedException, InvocationTargetException {
-	}
+    /* (non-Javadoc)
+     * @see freemind.extensions.PermanentNodeHook#executeTransaction(freemind.modes.mindmapmode.actions.xml.ActionPair)
+     */
+    protected void executeTransaction(final ActionPair pair)
+            throws InterruptedException, InvocationTargetException {
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.extensions.PermanentNodeHook#registerFilter()
-	 */
-	public void registerFilter() {
-	}
+    /* (non-Javadoc)
+     * @see freemind.extensions.PermanentNodeHook#registerFilter()
+     */
+    public void registerFilter() {
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.extensions.PermanentNodeHook#deregisterFilter()
-	 */
-	public void deregisterFilter() {
-	}
+    /* (non-Javadoc)
+     * @see freemind.extensions.PermanentNodeHook#deregisterFilter()
+     */
+    public void deregisterFilter() {
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.extensions.PermanentNodeHook#filterAction(freemind.modes.mindmapmode.actions.xml.ActionPair)
-	 */
-	public ActionPair filterAction(ActionPair pPair) {
-		return null;
-	}
-	public void processUnfinishedLinks() {
-	}
+    /* (non-Javadoc)
+     * @see freemind.extensions.PermanentNodeHook#filterAction(freemind.modes.mindmapmode.actions.xml.ActionPair)
+     */
+    public ActionPair filterAction(ActionPair pPair) {
+        return null;
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.extensions.PermanentNodeHook#saveHtml(java.io.Writer)
-	 */
-	public void saveHtml(Writer pFileout) {
-	}
+    public void processUnfinishedLinks() {
+    }
+
+    /* (non-Javadoc)
+     * @see freemind.extensions.PermanentNodeHook#saveHtml(java.io.Writer)
+     */
+    public void saveHtml(Writer pFileout) {
+    }
 
 }

@@ -1,21 +1,21 @@
 /*FreeMind - A Program for creating and viewing Mindmaps
-*Copyright (C) 2000-2014 Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and others.
-*
-*See COPYING for Details
-*
-*This program is free software; you can redistribute it and/or
-*modify it under the terms of the GNU General Public License
-*as published by the Free Software Foundation; either version 2
-*of the License, or (at your option) any later version.
-*
-*This program is distributed in the hope that it will be useful,
-*but WITHOUT ANY WARRANTY; without even the implied warranty of
-*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*GNU General Public License for more details.
-*
-*You should have received a copy of the GNU General Public License
-*along with this program; if not, write to the Free Software
-*Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *Copyright (C) 2000-2014 Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and others.
+ *
+ *See COPYING for Details
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package freemind.modes.mindmapmode.actions.xml.actors;
 
@@ -30,6 +30,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.common.CommonToggleFoldedAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.ListIterator;
 
@@ -37,6 +38,7 @@ import java.util.ListIterator;
  * @author foltin
  * @date 10.04.2014
  */
+@Log4j2
 public class ToggleFoldedActor extends XmlActorAdapter {
 
     /**
@@ -48,21 +50,18 @@ public class ToggleFoldedActor extends XmlActorAdapter {
 
     public void toggleFolded(ListIterator listIterator) {
 
-        boolean fold = CommonToggleFoldedAction
-                .getFoldingState(CommonToggleFoldedAction.reset(listIterator));
-        CompoundAction doAction = createFoldAction(
-                CommonToggleFoldedAction.reset(listIterator), fold, false);
-        CompoundAction undoAction = createFoldAction(
-                CommonToggleFoldedAction.reset(listIterator), !fold, true);
+        boolean fold = CommonToggleFoldedAction.getFoldingState(CommonToggleFoldedAction.reset(listIterator));
+        CompoundAction doAction = createFoldAction(CommonToggleFoldedAction.reset(listIterator), fold, false);
+        CompoundAction undoAction = createFoldAction(CommonToggleFoldedAction.reset(listIterator), !fold, true);
         execute(new ActionPair(doAction, undoAction));
     }
 
     private CompoundAction createFoldAction(ListIterator<MindMapNode> iterator,
-            boolean fold, boolean undo) {
+                                            boolean fold, boolean undo) {
         CompoundAction comp = new CompoundAction();
         // sort selectedNodes list by depth, in order to guarantee that sons
         // are deleted first:
-        for (ListIterator<MindMapNode> it = iterator; it.hasNext();) {
+        for (ListIterator<MindMapNode> it = iterator; it.hasNext(); ) {
             MindMapNode node = it.next();
             FoldAction foldAction = createSingleFoldAction(fold, node, undo);
             if (foldAction != null) {
@@ -75,8 +74,7 @@ public class ToggleFoldedActor extends XmlActorAdapter {
                 }
             }
         }
-        logger.trace("Compound contains " + comp.sizeChoiceList()
-                + " elements.");
+        log.trace("Compound contains " + comp.sizeChoiceList() + " elements.");
         return comp;
     }
 
@@ -84,14 +82,14 @@ public class ToggleFoldedActor extends XmlActorAdapter {
      * @return null if node cannot be folded.
      */
     private FoldAction createSingleFoldAction(boolean fold, MindMapNode node,
-            boolean undo) {
+                                              boolean undo) {
         FoldAction foldAction = null;
         if ((undo && (node.isFolded() == fold))
                 || (!undo && (node.isFolded() != fold))) {
             if (node.hasChildren()
                     || Tools.safeEquals(
-                            getExMapFeedback().getProperty(
-                                    "enable_leaves_folding"), "true")) {
+                    getExMapFeedback().getProperty(
+                            "enable_leaves_folding"), "true")) {
                 foldAction = new FoldAction();
                 foldAction.setFolded(fold);
                 foldAction.setNode(getNodeID(node));
@@ -126,6 +124,7 @@ public class ToggleFoldedActor extends XmlActorAdapter {
     }
 
     /**
+     *
      */
     public void setFolded(MindMapNode node, boolean folded) {
         FoldAction doAction = createSingleFoldAction(folded, node, false);

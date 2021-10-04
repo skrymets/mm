@@ -53,7 +53,6 @@ import java.util.*;
 
 /**
  * @author foltin
- *
  */
 public class OptionPanel implements TextTranslator {
     // TODO: Cancel and windowClose => Are you sure, or save.
@@ -95,7 +94,6 @@ public class OptionPanel implements TextTranslator {
 
     /**
      * @throws IOException
-     *
      */
     public OptionPanel(FreeMind fm, JDialog frame, OptionPanelFeedback feedback) {
         super();
@@ -122,9 +120,10 @@ public class OptionPanel implements TextTranslator {
     }
 
     /**
+     *
      */
     public void setProperties() {
-        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext();) {
+        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext(); ) {
             PropertyControl control = i.next();
             if (control instanceof PropertyBean) {
                 PropertyBean bean = (PropertyBean) control;
@@ -141,7 +140,7 @@ public class OptionPanel implements TextTranslator {
 
     private Properties getOptionProperties() {
         Properties p = new Properties();
-        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext();) {
+        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext(); ) {
             PropertyControl control = i.next();
             if (control instanceof PropertyBean) {
                 PropertyBean bean = (PropertyBean) control;
@@ -167,7 +166,7 @@ public class OptionPanel implements TextTranslator {
         String lastTabName = null;
 
         controls = getControls();
-        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext();) {
+        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext(); ) {
             PropertyControl control = i.next();
             // System.out.println("layouting : " + control.getLabel());
 
@@ -227,6 +226,7 @@ public class OptionPanel implements TextTranslator {
     }
 
     /**
+     *
      */
     public String getText(String string) {
         if (string == null) {
@@ -243,9 +243,10 @@ public class OptionPanel implements TextTranslator {
     }
 
     /**
+     *
      */
     private void registerTabButton(JButton tabButton, String name,
-            ChangeTabAction changeTabAction) {
+                                   ChangeTabAction changeTabAction) {
         tabButtonMap.put(name, tabButton);
         tabActionMap.put(name, changeTabAction);
         // if no default panel was given, we use the first.
@@ -271,7 +272,7 @@ public class OptionPanel implements TextTranslator {
         private String tabName;
 
         private ChangeTabAction(CardLayout cardLayout, JPanel centralPanel,
-                String tabName) {
+                                String tabName) {
             super();
             this.cardLayout = cardLayout;
             this.centralPanel = centralPanel;
@@ -314,7 +315,7 @@ public class OptionPanel implements TextTranslator {
         }
 
         public void layout(DefaultFormBuilder builder,
-                TextTranslator pTranslator) {
+                           TextTranslator pTranslator) {
 
         }
 
@@ -340,6 +341,7 @@ public class OptionPanel implements TextTranslator {
         GrabKeyDialog.KeyBinding kb;
 
         /**
+         *
          */
         public KeyProperty(final JDialog frame, String description, String label) {
             super();
@@ -389,7 +391,7 @@ public class OptionPanel implements TextTranslator {
         }
 
         public void layout(DefaultFormBuilder builder,
-                TextTranslator pTranslator) {
+                           TextTranslator pTranslator) {
             if (labelText == null) {
                 labelText = pTranslator.getText(getLabel());
             }
@@ -443,18 +445,18 @@ public class OptionPanel implements TextTranslator {
                  */
                 "language.tooltip", FreeMindCommon.RESOURCE_LANGUAGE,
                 new String[]{"automatic", "ar", "bg", "cs", "de", "dk", "en",
-                    "el", "es", "et", "eu", "fr", "gl", "hr", "hu", "id",
-                    "it", "ja", "ko", "lt", "nl", "nn", "nb", "pl",
-                    "pt_BR", "pt_PT", "ro", "ru", "sk", "se", "sl", "sr",
-                    "tr", "uk_UA", "vi", "zh_TW", "zh_CN"},
+                        "el", "es", "et", "eu", "fr", "gl", "hr", "hu", "id",
+                        "it", "ja", "ko", "lt", "nl", "nn", "nb", "pl",
+                        "pt_BR", "pt_PT", "ro", "ru", "sk", "se", "sl", "sr",
+                        "tr", "uk_UA", "vi", "zh_TW", "zh_CN"},
                 new TextTranslator() {
 
-            public String getText(String pKey) {
-                // decorator, that removes "TranslateMe" comments.
-                return Tools.removeTranslateComment(OptionPanel.this
-                        .getText(pKey));
-            }
-        })); // automatic
+                    public String getText(String pKey) {
+                        // decorator, that removes "TranslateMe" comments.
+                        return Tools.removeTranslateComment(OptionPanel.this
+                                .getText(pKey));
+                    }
+                })); // automatic
 
         controls.add(new BooleanProperty(FreeMindCommon.CHECK_SPELLING
                 + TOOLTIP_EXT, FreeMindCommon.CHECK_SPELLING)); // true
@@ -567,8 +569,8 @@ public class OptionPanel implements TextTranslator {
 
         controls.add(new ComboProperty("standardrootnodestyle.tooltip",
                 FreeMind.RESOURCES_ROOT_NODE_STYLE, new String[]{
-                    MindMapNode.STYLE_FORK, MindMapNode.STYLE_BUBBLE,
-                    MindMapNode.STYLE_COMBINED}, this)); // fork
+                MindMapNode.STYLE_FORK, MindMapNode.STYLE_BUBBLE,
+                MindMapNode.STYLE_COMBINED}, this)); // fork
 
         controls.add(new NextLineProperty());
         controls.add(new SeparatorProperty("default_colors"));
@@ -623,7 +625,7 @@ public class OptionPanel implements TextTranslator {
         controls.add(new SeparatorProperty("other_defaults"));
         controls.add(new ComboProperty("standardedgestyle.tooltip",
                 FreeMind.RESOURCES_EDGE_STYLE, new String[]{"bezier",
-                    "linear"}, this)); // bezier
+                "linear"}, this)); // bezier
 
         // controls.add(new ComboProperty(
         //
@@ -676,7 +678,7 @@ public class OptionPanel implements TextTranslator {
         controls.add(new ComboProperty(FreeMind.J_SPLIT_PANE_SPLIT_TYPE
                 + TOOLTIP_EXT, FreeMind.J_SPLIT_PANE_SPLIT_TYPE,
                 new String[]{FreeMind.VERTICAL_SPLIT_BELOW,
-                    FreeMind.HORIZONTAL_SPLIT_RIGHT}, this));
+                        FreeMind.HORIZONTAL_SPLIT_RIGHT}, this));
 
         controls.add(new NumberProperty(
                 StructuredMenuHolder.AMOUNT_OF_VISIBLE_MENU_ITEMS + TOOLTIP_EXT,
@@ -723,7 +725,7 @@ public class OptionPanel implements TextTranslator {
         controls.add(new SeparatorProperty("anti_alias"));
         controls.add(new ComboProperty("antialias.tooltip",
                 FreeMindCommon.RESOURCE_ANTIALIAS, new String[]{
-                    "antialias_edges", "antialias_all", "antialias_none"},
+                "antialias_edges", "antialias_all", "antialias_none"},
                 this)); // true
 
         /* ***************************************************************** */
@@ -737,7 +739,7 @@ public class OptionPanel implements TextTranslator {
         controls.add(new NextLineProperty());
         controls.add(new SeparatorProperty("hyperlink_types"));
         controls.add(new ComboProperty("links.tooltip", "links", new String[]{
-            "relative", "absolute"}, this)); // relative
+                "relative", "absolute"}, this)); // relative
         controls.add(new BooleanProperty(
                 FreeMindCommon.CREATE_THUMBNAIL_ON_SAVE + TOOLTIP_EXT,
                 FreeMindCommon.CREATE_THUMBNAIL_ON_SAVE)); // true
@@ -1220,8 +1222,8 @@ public class OptionPanel implements TextTranslator {
         controls.add(new SeparatorProperty(FreeMind.RESOURCES_SELECTION_METHOD));
         controls.add(new ComboProperty("selection_method.tooltip",
                 FreeMind.RESOURCES_SELECTION_METHOD, new String[]{
-                    "selection_method_direct", "selection_method_delayed",
-                    "selection_method_by_click"}, this)); // selection_method_direct
+                "selection_method_direct", "selection_method_delayed",
+                "selection_method_by_click"}, this)); // selection_method_direct
 
         controls.add(new NumberProperty("time_for_delayed_selection.tooltip",
                 "time_for_delayed_selection", 1, Integer.MAX_VALUE, 1)); // 500
@@ -1290,15 +1292,15 @@ public class OptionPanel implements TextTranslator {
                 null,
                 "html_export_folding",
                 new String[]{"html_export_no_folding",
-                    "html_export_fold_currently_folded",
-                    "html_export_fold_all", "html_export_based_on_headings"},
+                        "html_export_fold_currently_folded",
+                        "html_export_fold_all", "html_export_based_on_headings"},
                 this)); // html_export_fold_currently_folded
 
         controls.add(new NextLineProperty());
         controls.add(new BooleanProperty("export_icons_in_html.tooltip",
                 "export_icons_in_html")); // false
 
-        for (Iterator<FreemindPropertyContributor> iter = sContributors.iterator(); iter.hasNext();) {
+        for (Iterator<FreemindPropertyContributor> iter = sContributors.iterator(); iter.hasNext(); ) {
             FreemindPropertyContributor contributor = iter.next();
             controls.addAll(contributor.getControls(this));
         }

@@ -20,30 +20,27 @@
 
 package freemind.controller;
 
-import java.awt.Insets;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
+
+import java.awt.*;
 
 @SuppressWarnings("serial")
+@Log4j2
 public class MainToolBar extends FreeMindToolBar {
-	Controller controller;
-	private static Logger logger = null;
+    Controller controller;
 
-	public MainToolBar(final Controller controller) {
-		super();
-		this.controller = controller;
-		if (logger == null) {
-			logger = controller.getFrame().getLogger(this.getClass().getName());
-		}
-		setRollover(true);
-		setBorderPainted(false);
-		setMargin(new Insets(0, 0, 0, 0));
-	}
+    public MainToolBar(final Controller controller) {
+        super();
+        this.controller = controller;
+        setRollover(true);
+        setBorderPainted(false);
+        setMargin(new Insets(0, 0, 0, 0));
+    }
 
-	public void activate(boolean visible) {
-	}
+    public void activate(boolean visible) {
+    }
 
-
-	public void setAllActions(boolean enabled) {
-	}
+    public void setAllActions(boolean enabled) {
+    }
 
 }

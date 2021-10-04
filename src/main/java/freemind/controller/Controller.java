@@ -37,7 +37,7 @@ import freemind.preferences.layout.OptionPanel;
 import freemind.preferences.layout.OptionPanel.OptionPanelFeedback;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -63,6 +63,7 @@ import java.util.*;
  * MapModel(editing) or MapView(navigation).
  */
 @SuppressWarnings("serial")
+@Log4j2
 public class Controller implements MapModuleChangeObserver {
 
     private static final String PAGE_FORMAT_PROPERTY = "page_format";
@@ -73,9 +74,6 @@ public class Controller implements MapModuleChangeObserver {
     /**
      * Converts from a local link to the real file URL of the documentation map.
      * (Used to change this behaviour under MacOSX).
-     */
-    private static Logger logger;
-    /**
      * Used for MAC!!!
      */
     public static LocalLinkConverter localDocumentationLinkConverter;
@@ -162,14 +160,8 @@ public class Controller implements MapModuleChangeObserver {
     private JTabbedPane mTabbedPane;
     private boolean mTabbedPaneSelectionUpdate = true;
 
-    //
-    // Constructors
-    //
     public Controller(FreeMindMain frame) {
         this.frame = frame;
-        if (logger == null) {
-            logger = frame.getLogger(this.getClass().getName());
-        }
     }
 
     public void init() {
@@ -246,7 +238,7 @@ public class Controller implements MapModuleChangeObserver {
                 String prop = e.getPropertyName();
                 if ("focusOwner".equals(prop)) {
                     Component comp = (Component) e.getNewValue();
-                    logger.trace("Focus change for " + comp);
+                    log.trace("Focus change for " + comp);
                     if (comp instanceof FreeMindMain) {
                         obtainFocusForSelected();
                     }
@@ -260,7 +252,7 @@ public class Controller implements MapModuleChangeObserver {
         mapModuleManager = new MapModuleManager(this);
         mapModuleManager.addListener(this);
         if (!Tools.isAvailableFontFamily(getProperty("defaultfont"))) {
-            logger.warn("Warning: the font you have set as standard - "
+            log.warn("Warning: the font you have set as standard - "
                     + getProperty("defaultfont") + " - is not available.");
             frame.setProperty("defaultfont", "SansSerif");
         }
@@ -591,7 +583,7 @@ public class Controller implements MapModuleChangeObserver {
     public void numberOfOpenMapInformation(int number, int pIndex) {
         navigationPreviousMap.setEnabled(number > 0);
         navigationNextMap.setEnabled(number > 0);
-        logger.info("number " + number + ", pIndex " + pIndex);
+        log.info("number " + number + ", pIndex " + pIndex);
         navigationMoveMapLeftAction.setEnabled(number > 1 && pIndex > 0);
         navigationMoveMapRightAction.setEnabled(number > 1
                 && pIndex < number - 1);
@@ -765,9 +757,9 @@ public class Controller implements MapModuleChangeObserver {
     public void obtainFocusForSelected() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
                 .clearGlobalFocusOwner();
-        // logger.trace("obtainFocusForSelected");
+        // log.trace("obtainFocusForSelected");
         if (getView() != null) { // is null if the last map was closed.
-            logger.trace("Requesting Focus for " + getView() + " in model "
+            log.trace("Requesting Focus for " + getView() + " in model "
                     + getView().getModel());
             getView().requestFocusInWindow();
         } else {
@@ -776,7 +768,7 @@ public class Controller implements MapModuleChangeObserver {
             // to avoid this, the menu bar gets the focus, and everything seems
             // to be all right!!
             // but I cannot avoid thinking of this change to be a bad hack ....
-            logger.info("No view present. No focus!");
+            log.info("No view present. No focus!");
             getFrame().getFreeMindMenuBar().requestFocus();
         }
     }
@@ -925,7 +917,7 @@ public class Controller implements MapModuleChangeObserver {
                 }
                 if (restorableBuffer.length() != 0) {
                     String restorableString = restorableBuffer.toString();
-                    logger.info("Closed the map " + restorableString);
+                    log.info("Closed the map " + restorableString);
                     restorables.add(restorableString);
                 }
             } else {
@@ -1005,7 +997,7 @@ public class Controller implements MapModuleChangeObserver {
         }
         String pageFormatProperty = getProperty(PAGE_FORMAT_PROPERTY);
         if (!pageFormatProperty.isEmpty()) {
-            logger.info("Page format (stored): " + pageFormatProperty);
+            log.info("Page format (stored): " + pageFormatProperty);
             final Paper storedPaper = new Paper();
             Tools.setPageFormatFromString(storedPaper, pageFormatProperty);
             pageFormat.setPaper(storedPaper);
@@ -1281,7 +1273,7 @@ public class Controller implements MapModuleChangeObserver {
                 } else {
                     url = Tools.fileToUrl(new File(urlText));
                 }
-                logger.info("Opening key docs under " + url);
+                log.info("Opening key docs under " + url);
                 controller.getFrame().openDocument(url);
             } catch (Exception e2) {
                 freemind.main.Resources.getInstance().logException(e2);
@@ -1479,7 +1471,7 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
-            logger.info("ToggleToolbar was asked for selectedness.");
+            log.info("ToggleToolbar was asked for selectedness.");
             return toolbarVisible;
         }
     }
@@ -1507,7 +1499,7 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         public void actionPerformed(ActionEvent e) {
-            // logger.info("ZoomInAction actionPerformed");
+            // log.info("ZoomInAction actionPerformed");
             float currentZoom = getView().getZoom();
             for (int i = 0; i < zoomValues.length; i++) {
                 float val = zoomValues[i];
@@ -1547,7 +1539,7 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         public void actionPerformed(ActionEvent e) {
-            // logger.info("ShowSelectionAsRectangleAction action Performed");
+            // log.info("ShowSelectionAsRectangleAction action Performed");
             toggleSelectionAsRectangle();
         }
 
@@ -1818,7 +1810,7 @@ public class Controller implements MapModuleChangeObserver {
             public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
                 for (int i = 0; i < mTabbedPaneMapModules.size(); ++i) {
                     if (mTabbedPaneMapModules.get(i) == pOldMapModule) {
-                        logger.trace("Remove tab:" + i + " with title:"
+                        log.trace("Remove tab:" + i + " with title:"
                                 + mTabbedPane.getTitleAt(i));
                         mTabbedPaneSelectionUpdate = false;
                         mTabbedPane.removeTabAt(i);
@@ -1859,7 +1851,7 @@ public class Controller implements MapModuleChangeObserver {
             return;
         }
         MapModule module = (MapModule) mTabbedPaneMapModules.get(selectedIndex);
-        logger.trace("Selected index of tab is now: " + selectedIndex
+        log.trace("Selected index of tab is now: " + selectedIndex
                 + " with title:" + module.toString());
         if (module != getMapModule()) {
             // we have to change the active map actively:

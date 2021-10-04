@@ -22,40 +22,39 @@
 /*$Id: HookDescriptorRegistration.java,v 1.1.2.1 2006/08/20 19:34:25 christianfoltin Exp $*/
 package freemind.extensions;
 
-import java.util.List;
-
 import freemind.controller.actions.generated.instance.Plugin;
 import freemind.controller.actions.generated.instance.PluginMode;
 import freemind.controller.actions.generated.instance.PluginRegistration;
 
+import java.util.List;
+
 /**
  * @author foltin
- * 
  */
 public class HookDescriptorRegistration extends HookDescriptorBase {
 
-	private final PluginRegistration mRegistration;
+    private final PluginRegistration mRegistration;
 
-	public HookDescriptorRegistration(String xmlPluginFile,
-			Plugin pluginBase, PluginRegistration pRegistration) {
-		super(pluginBase, xmlPluginFile);
-		mRegistration = pRegistration;
-	}
+    public HookDescriptorRegistration(String xmlPluginFile,
+                                      Plugin pluginBase, PluginRegistration pRegistration) {
+        super(pluginBase, xmlPluginFile);
+        mRegistration = pRegistration;
+    }
 
-	// public PluginRegistration getPluginRegistration() {
-	// return mRegistration;
-	// }
+    // public PluginRegistration getPluginRegistration() {
+    // return mRegistration;
+    // }
 
-	public String getClassName() {
-		return mRegistration.getClassName();
-	}
+    public String getClassName() {
+        return mRegistration.getClassName();
+    }
 
-	public boolean getIsPluginBase() {
-		return mRegistration.getIsPluginBase();
-	}
+    public boolean getIsPluginBase() {
+        return mRegistration.getIsPluginBase();
+    }
 
-	public List<PluginMode> getListPluginModeList() {
-		return mRegistration.getPluginModeList();
-	}
+    public List<PluginMode> getListPluginModeList() {
+        return mRegistration.getPluginModeList();
+    }
 
 }

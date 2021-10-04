@@ -39,20 +39,26 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class ListPanel extends JPanel implements AttributeComponent {
-    /** selector for list type */
+    /**
+     * selector for list type
+     */
     private final AttributeComboBox listType;
-    /** selector for list position */
+    /**
+     * selector for list position
+     */
     private final AttributeComboBox listPosition;
-    /** list indent selector */
+    /**
+     * list indent selector
+     */
     private final BoundariesPanel bndPanel;
-    /** list tag from setValue/getValue (UL or OL) */
+    /**
+     * list tag from setValue/getValue (UL or OL)
+     */
     private String listTag;
 
     /**
@@ -67,29 +73,29 @@ class ListPanel extends JPanel implements AttributeComponent {
         final JPanel formatPanel = new JPanel(g);
         // add label for list type
         Util.addGridBagComponent(formatPanel, new JLabel(Util.getResourceString("listTypeLabel")), g, c, 0, 0,
-            GridBagConstraints.EAST);
+                GridBagConstraints.EAST);
         // add combo box for list type selection
-        String[] items = new String[] { Util.getResourceString("listTypeNone"),
+        String[] items = new String[]{Util.getResourceString("listTypeNone"),
                 Util.getResourceString("listTypeDecimal"), Util.getResourceString("listTypeLowerRoman"),
                 Util.getResourceString("listTypeUpperRoman"), Util.getResourceString("listTypeLowerAlpha"),
                 Util.getResourceString("listTypeUpperAlpha"), Util.getResourceString("listTypeDisc"),
-                Util.getResourceString("listTypeCircle"), Util.getResourceString("listTypeSquare") };
-        String[] names = new String[] { "none", "decimal", "lower-roman", "upper-roman", "lower-alpha", "upper-alpha",
-                "disc", "circle", "square" };
+                Util.getResourceString("listTypeCircle"), Util.getResourceString("listTypeSquare")};
+        String[] names = new String[]{"none", "decimal", "lower-roman", "upper-roman", "lower-alpha", "upper-alpha",
+                "disc", "circle", "square"};
         listType = new AttributeComboBox(items, names, CSS.Attribute.LIST_STYLE_TYPE, null);
         Util.addGridBagComponent(formatPanel, listType, g, c, 1, 0, GridBagConstraints.WEST);
         // add label for list position
         Util.addGridBagComponent(formatPanel, new JLabel(Util.getResourceString("listPositionLabel")), g, c, 0, 1,
-            GridBagConstraints.EAST);
+                GridBagConstraints.EAST);
         // add combo box for list postion selection
-        items = new String[] { Util.getResourceString("listPosInside"), Util.getResourceString("listPosOutside") };
-        names = new String[] { "inside", "outside" };
+        items = new String[]{Util.getResourceString("listPosInside"), Util.getResourceString("listPosOutside")};
+        names = new String[]{"inside", "outside"};
         listPosition = new AttributeComboBox(items, names, CSS.Attribute.LIST_STYLE_POSITION, null);
         Util.addGridBagComponent(formatPanel, listPosition, g, c, 1, 1, GridBagConstraints.WEST);
         // create list boundaries panel
         bndPanel = new BoundariesPanel(CSS.Attribute.MARGIN);
         bndPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("listIndentTitle")));
+                .getResourceString("listIndentTitle")));
         // add components to this ListPanel
         add(formatPanel, BorderLayout.CENTER);
         add(bndPanel, BorderLayout.SOUTH);
@@ -112,11 +118,9 @@ class ListPanel extends JPanel implements AttributeComponent {
         final int index = listType.getSelectedIndex();
         if (index > 5) {
             listTag = HTML.Tag.UL.toString();
-        }
-        else if (index > 0) {
+        } else if (index > 0) {
             listTag = HTML.Tag.OL.toString();
-        }
-        else {
+        } else {
             listTag = null;
         }
     }
@@ -124,11 +128,10 @@ class ListPanel extends JPanel implements AttributeComponent {
     /**
      * set the value of this <code>AttributeComponent</code>
      *
-     * @param a  the set of attributes possibly having an
+     * @param a the set of attributes possibly having an
      *          attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute,
-     *            false if not
+     * false if not
      */
     public boolean setValue(final AttributeSet a) {
         final Object name = a.getAttribute(javax.swing.text.StyleConstants.NameAttribute);
@@ -163,8 +166,7 @@ class ListPanel extends JPanel implements AttributeComponent {
             set.addAttributes(listPosition.getValue(includeUnchanged));
             set.addAttributes(bndPanel.getValue(includeUnchanged));
             return set;
-        }
-        else {
+        } else {
             return getValue();
         }
     }

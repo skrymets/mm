@@ -59,8 +59,6 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the GNU General Public License, for details see file gpl.txt in the distribution package of this software
- *
- *
  */
 class AnchorDialog extends DialogShell implements ActionListener, CaretListener, ListSelectionListener,
         DocumentListener {
@@ -95,13 +93,14 @@ class AnchorDialog extends DialogShell implements ActionListener, CaretListener,
     private static final String helpTopicId = "item165";
 
     //private int renderMode;
+
     /**
      * create an
      * <code>AnchorDialog</code>
      *
      * @param parent the parent dialog of this dialog
-     * @param title the dialog title
-     * @param doc the document to edit anchors of
+     * @param title  the dialog title
+     * @param doc    the document to edit anchors of
      */
     public AnchorDialog(final Dialog parent, final String title, final Document doc) {
         super(parent, title, helpTopicId);
@@ -113,8 +112,8 @@ class AnchorDialog extends DialogShell implements ActionListener, CaretListener,
      * <code>AnchorDialog</code>
      *
      * @param parent the parent frame of this dialog
-     * @param title the dialog title
-     * @param doc the document to edit anchors of
+     * @param title  the dialog title
+     * @param doc    the document to edit anchors of
      */
     public AnchorDialog(final Frame parent, final String title, final Document doc) {
         super(parent, title, helpTopicId);
@@ -126,8 +125,8 @@ class AnchorDialog extends DialogShell implements ActionListener, CaretListener,
      * <code>AnchorDialog</code>
      *
      * @param parent the parent frame of this dialog
-     * @param title the dialog title
-     * @param url the document url
+     * @param title  the dialog title
+     * @param url    the document url
      */
     public AnchorDialog(final Dialog parent, final String title, final URL url) {
         super(parent, title, helpTopicId);
@@ -139,8 +138,8 @@ class AnchorDialog extends DialogShell implements ActionListener, CaretListener,
      * <code>AnchorDialog</code>
      *
      * @param parent the parent frame of this dialog
-     * @param title the dialog title
-     * @param url the document url
+     * @param title  the dialog title
+     * @param url    the document url
      */
     public AnchorDialog(final Frame parent, final String title, final URL url) {
         super(parent, title, helpTopicId);
@@ -362,6 +361,7 @@ class AnchorDialog extends DialogShell implements ActionListener, CaretListener,
     }
 
     /* -------- DocumentListener implementation start ------------*/
+
     /**
      * listens to inserts into the document to track whether or not the document needs to be saved.
      */

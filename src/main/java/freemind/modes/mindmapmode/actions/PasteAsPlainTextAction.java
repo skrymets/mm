@@ -23,7 +23,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.main.HtmlTools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -37,56 +37,49 @@ import java.io.IOException;
  * @date 18.10.2011
  */
 @SuppressWarnings("serial")
+@Log4j2
 public class PasteAsPlainTextAction extends AbstractAction {
 
-	private MindMapController mMindMapController;
-	private static Logger logger;
+    private MindMapController mMindMapController;
 
-	public PasteAsPlainTextAction(MindMapController pMindMapController) {
-		super(pMindMapController.getText("paste_as_plain_text"), null);
-		this.mMindMapController = pMindMapController;
-		if (logger == null) {
-			logger = mMindMapController.getFrame().getLogger(
-					this.getClass().getName());
-		}
+    public PasteAsPlainTextAction(MindMapController pMindMapController) {
+        super(pMindMapController.getText("paste_as_plain_text"), null);
+        this.mMindMapController = pMindMapController;
 
-		setEnabled(false);
-	}
+        setEnabled(false);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent pArg0) {
-		Transferable clipboardContents = mMindMapController
-				.getClipboardContents();
-		// test for plain text support
-		if (clipboardContents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-			try {
-				String plainText = (String) clipboardContents
-						.getTransferData(DataFlavor.stringFlavor);
-				// sometimes these (for XML illegal) characters occur
-				plainText = HtmlTools.makeValidXml(plainText);
-				logger.info("Pasting string " + plainText);
-				// paste.
-				MindMapNode selected = mMindMapController.getSelected();
-				MindMapNode newNode = mMindMapController.addNewNode(selected,
-						selected.getChildCount(), selected.isLeft());
-				mMindMapController.setNodeText(newNode, plainText);
-			} catch (UnsupportedFlavorException e) {
-				freemind.main.Resources.getInstance().logException(e);
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent pArg0) {
+        Transferable clipboardContents = mMindMapController
+                .getClipboardContents();
+        // test for plain text support
+        if (clipboardContents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+            try {
+                String plainText = (String) clipboardContents.getTransferData(DataFlavor.stringFlavor);
+                // sometimes these (for XML illegal) characters occur
+                plainText = HtmlTools.makeValidXml(plainText);
+                log.info("Pasting string " + plainText);
+                // paste.
+                MindMapNode selected = mMindMapController.getSelected();
+                MindMapNode newNode = mMindMapController.addNewNode(selected, selected.getChildCount(), selected.isLeft());
+                mMindMapController.setNodeText(newNode, plainText);
+            } catch (UnsupportedFlavorException e) {
+                freemind.main.Resources.getInstance().logException(e);
 
-			} catch (IOException e) {
-				freemind.main.Resources.getInstance().logException(e);
+            } catch (IOException e) {
+                freemind.main.Resources.getInstance().logException(e);
 
-			}
-		} else {
-			// not supported message.
-			logger.warn("String flavor not supported for transferable "
-					+ clipboardContents);
-		}
-	}
+            }
+        } else {
+            // not supported message.
+            log.warn("String flavor not supported for transferable " + clipboardContents);
+        }
+    }
 
 }

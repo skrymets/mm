@@ -54,153 +54,153 @@ import freemind.modes.mindmapmode.MindMapNodeModel;
 public abstract class CollaborationTestClient extends CommunicationBase {
 
 
-	String mLockId;
+    String mLockId;
 
-	/**
-	 * @param pName
-	 * @param pClient
-	 * @param pMindMapController
-	 * @param pOut
-	 * @param pIn
-	 */
-	public CollaborationTestClient(String pName, Socket pClient,
-			ExtendedMapFeedback pMindMapController, DataOutputStream pOut,
-			DataInputStream pIn) {
-		super(pName, pClient, pMindMapController, pOut, pIn);
-		setCurrentState(STATE_WAIT_FOR_WHO_ARE_YOU);
-	}
+    /**
+     * @param pName
+     * @param pClient
+     * @param pMindMapController
+     * @param pOut
+     * @param pIn
+     */
+    public CollaborationTestClient(String pName, Socket pClient,
+                                   ExtendedMapFeedback pMindMapController, DataOutputStream pOut,
+                                   DataInputStream pIn) {
+        super(pName, pClient, pMindMapController, pOut, pIn);
+        setCurrentState(STATE_WAIT_FOR_WHO_ARE_YOU);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.collaboration.socket.CommunicationBase#terminateSocket()
-	 */
-	@Override
-	public void terminateSocket() throws IOException {
-		commitSuicide();
-		CollaborationGoodbye goodbye = new CollaborationGoodbye();
-		goodbye.setUserId(Tools.getUserName());
-		send(goodbye);
-		close();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see plugins.collaboration.socket.CommunicationBase#terminateSocket()
+     */
+    @Override
+    public void terminateSocket() throws IOException {
+        commitSuicide();
+        CollaborationGoodbye goodbye = new CollaborationGoodbye();
+        goodbye.setUserId(Tools.getUserName());
+        send(goodbye);
+        close();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * plugins.collaboration.socket.CommunicationBase#processCommand(freemind
-	 * .controller.actions.generated.instance.CollaborationActionBase)
-	 */
-	@Override
-	public void processCommand(CollaborationActionBase pCommand)
-			throws Exception {
-		if (pCommand instanceof CollaborationGoodbye) {
-			CollaborationGoodbye goodbye = (CollaborationGoodbye) pCommand;
-			logger.info("Goodbye received from " + goodbye.getUserId());
-			terminateSocket();
-			return;
-		}
-		boolean commandHandled = false;
-		if (pCommand instanceof CollaborationUserInformation) {
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationWhoAreYou) {
-			if (getCurrentState() != STATE_WAIT_FOR_WHO_ARE_YOU) {
-				printWrongState(pCommand);
-			}
-			// check server version:
-			CollaborationWhoAreYou whoAre = (CollaborationWhoAreYou) pCommand;
-			reactOnWhoAreYou(whoAre);
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationOffers) {
-			if (getCurrentState() != STATE_WAIT_FOR_OFFER) {
-				printWrongState(pCommand);
-			}
-			final CollaborationOffers collOffers = (CollaborationOffers) pCommand;
-			reactOnOffers(collOffers);
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationWelcome) {
-			if (getCurrentState() != STATE_WAIT_FOR_WELCOME) {
-				printWrongState(pCommand);
-			}
-			CollaborationWelcome collWelcome = (CollaborationWelcome) pCommand;
-			reactOnWelcome(collWelcome);
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationWrongCredentials) {
-			if (getCurrentState() != STATE_WAIT_FOR_OFFER) {
-				printWrongState(pCommand);
-			}
-			// Over and out.
-			terminateSocket();
-			// Display error message!
-			logger.severe("Wrong credentials");
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationWrongMap) {
-			if (getCurrentState() != STATE_WAIT_FOR_WELCOME) {
-				printWrongState(pCommand);
-			}
-			reactOnWrongMap();
-			// Over and out.
-			terminateSocket();
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationTransaction) {
-			CollaborationTransaction trans = (CollaborationTransaction) pCommand;
-			reactOnTransaction(trans);
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationReceiveLock) {
-			if (getCurrentState() != STATE_WAIT_FOR_LOCK) {
-				printWrongState(pCommand);
-			}
-			CollaborationReceiveLock lockReceived = (CollaborationReceiveLock) pCommand;
-			reactOnReceiveLock(lockReceived);
-			commandHandled = true;
-		}
-		if (pCommand instanceof CollaborationUnableToLock) {
-			// no lock possible.
-			setCurrentState(STATE_IDLE);
-			commandHandled = true;
-		}
-		if (!commandHandled) {
-			logger.warning("Received unknown message of type "
-					+ pCommand.getClass());
-		}
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * plugins.collaboration.socket.CommunicationBase#processCommand(freemind
+     * .controller.actions.generated.instance.CollaborationActionBase)
+     */
+    @Override
+    public void processCommand(CollaborationActionBase pCommand)
+            throws Exception {
+        if (pCommand instanceof CollaborationGoodbye) {
+            CollaborationGoodbye goodbye = (CollaborationGoodbye) pCommand;
+            logger.info("Goodbye received from " + goodbye.getUserId());
+            terminateSocket();
+            return;
+        }
+        boolean commandHandled = false;
+        if (pCommand instanceof CollaborationUserInformation) {
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationWhoAreYou) {
+            if (getCurrentState() != STATE_WAIT_FOR_WHO_ARE_YOU) {
+                printWrongState(pCommand);
+            }
+            // check server version:
+            CollaborationWhoAreYou whoAre = (CollaborationWhoAreYou) pCommand;
+            reactOnWhoAreYou(whoAre);
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationOffers) {
+            if (getCurrentState() != STATE_WAIT_FOR_OFFER) {
+                printWrongState(pCommand);
+            }
+            final CollaborationOffers collOffers = (CollaborationOffers) pCommand;
+            reactOnOffers(collOffers);
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationWelcome) {
+            if (getCurrentState() != STATE_WAIT_FOR_WELCOME) {
+                printWrongState(pCommand);
+            }
+            CollaborationWelcome collWelcome = (CollaborationWelcome) pCommand;
+            reactOnWelcome(collWelcome);
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationWrongCredentials) {
+            if (getCurrentState() != STATE_WAIT_FOR_OFFER) {
+                printWrongState(pCommand);
+            }
+            // Over and out.
+            terminateSocket();
+            // Display error message!
+            logger.severe("Wrong credentials");
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationWrongMap) {
+            if (getCurrentState() != STATE_WAIT_FOR_WELCOME) {
+                printWrongState(pCommand);
+            }
+            reactOnWrongMap();
+            // Over and out.
+            terminateSocket();
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationTransaction) {
+            CollaborationTransaction trans = (CollaborationTransaction) pCommand;
+            reactOnTransaction(trans);
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationReceiveLock) {
+            if (getCurrentState() != STATE_WAIT_FOR_LOCK) {
+                printWrongState(pCommand);
+            }
+            CollaborationReceiveLock lockReceived = (CollaborationReceiveLock) pCommand;
+            reactOnReceiveLock(lockReceived);
+            commandHandled = true;
+        }
+        if (pCommand instanceof CollaborationUnableToLock) {
+            // no lock possible.
+            setCurrentState(STATE_IDLE);
+            commandHandled = true;
+        }
+        if (!commandHandled) {
+            logger.warning("Received unknown message of type "
+                    + pCommand.getClass());
+        }
+    }
 
-	public void reactOnWrongMap() {
-		// Display error message!
-		logger.severe("Wrong map");
-	}
+    public void reactOnWrongMap() {
+        // Display error message!
+        logger.severe("Wrong map");
+    }
 
 
-	void createNewMap(String map) throws IOException {
-		MapAdapter newModel = new MindMapMapModel(mController);
-		((ExtendedMapFeedbackImpl) mController).setMap(newModel);
-		HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();
-		StringReader reader = new StringReader(map);
-		MindMapNodeModel rootNode = (MindMapNodeModel) newModel
-				.createNodeTreeFromXml(reader, IDToTarget);
-		reader.close();
-		newModel.setRoot(rootNode);
-		rootNode.setMap(newModel);
-		mController.invokeHooksRecursively((NodeAdapter) rootNode, newModel);
-	}
-	
-	public abstract void reactOnReceiveLock(
-			CollaborationReceiveLock lockReceived);
+    void createNewMap(String map) throws IOException {
+        MapAdapter newModel = new MindMapMapModel(mController);
+        ((ExtendedMapFeedbackImpl) mController).setMap(newModel);
+        HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();
+        StringReader reader = new StringReader(map);
+        MindMapNodeModel rootNode = (MindMapNodeModel) newModel
+                .createNodeTreeFromXml(reader, IDToTarget);
+        reader.close();
+        newModel.setRoot(rootNode);
+        rootNode.setMap(newModel);
+        mController.invokeHooksRecursively((NodeAdapter) rootNode, newModel);
+    }
 
-	public abstract void reactOnTransaction(CollaborationTransaction trans);
+    public abstract void reactOnReceiveLock(
+            CollaborationReceiveLock lockReceived);
 
-	public abstract void reactOnWelcome(CollaborationWelcome collWelcome)
-			throws IOException;
+    public abstract void reactOnTransaction(CollaborationTransaction trans);
 
-	public abstract void reactOnOffers(final CollaborationOffers collOffers);
+    public abstract void reactOnWelcome(CollaborationWelcome collWelcome)
+            throws IOException;
 
-	public abstract void reactOnWhoAreYou(CollaborationWhoAreYou whoAre);
+    public abstract void reactOnOffers(final CollaborationOffers collOffers);
+
+    public abstract void reactOnWhoAreYou(CollaborationWhoAreYou whoAre);
 
 }

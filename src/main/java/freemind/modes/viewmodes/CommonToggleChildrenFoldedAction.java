@@ -22,36 +22,31 @@
 
 package freemind.modes.viewmodes;
 
-import java.awt.event.ActionEvent;
-import org.slf4j.Logger;
-
-import javax.swing.AbstractAction;
-
 import freemind.view.mindmapview.NodeView;
+import lombok.extern.log4j.Log4j2;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
+@Log4j2
 public class CommonToggleChildrenFoldedAction extends AbstractAction {
 
-	private ViewControllerAdapter modeController;
+    private ViewControllerAdapter modeController;
 
-	private Logger logger;
+    public CommonToggleChildrenFoldedAction(ViewControllerAdapter controller) {
+        super(controller.getText("toggle_children_folded"));
+        this.modeController = controller;
+    }
 
-	public CommonToggleChildrenFoldedAction(ViewControllerAdapter controller) {
-		super(controller.getText("toggle_children_folded"));
-		this.modeController = controller;
-		logger = modeController.getFrame().getLogger(this.getClass().getName());
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		NodeView selected = modeController.getSelectedView();
-		modeController.toggleFolded.toggleFolded(selected.getModel()
-				.childrenUnfolded());
-		modeController.getView().selectAsTheOnlyOneSelected(selected);
-		modeController.getController().obtainFocusForSelected();
-	}
+    public void actionPerformed(ActionEvent e) {
+        NodeView selected = modeController.getSelectedView();
+        modeController.toggleFolded.toggleFolded(selected.getModel().childrenUnfolded());
+        modeController.getView().selectAsTheOnlyOneSelected(selected);
+        modeController.getController().obtainFocusForSelected();
+    }
 
 }

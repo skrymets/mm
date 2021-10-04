@@ -29,36 +29,36 @@ import freemind.model.MindMapNode;
 
 class IgnoreCaseNodeContainsCondition extends NodeCondition {
 
-	static final String VALUE = "value";
-	static final String NAME = "ignore_case_node_contains_condition";
-	private String value;
+    static final String VALUE = "value";
+    static final String NAME = "ignore_case_node_contains_condition";
+    private String value;
 
-	IgnoreCaseNodeContainsCondition(String value) {
-		super();
-		this.value = value.toLowerCase();
-	}
+    IgnoreCaseNodeContainsCondition(String value) {
+        super();
+        this.value = value.toLowerCase();
+    }
 
-	public boolean checkNode(Controller c, MindMapNode node) {
-		return node.getText().toLowerCase().indexOf(value) > -1;
-	}
+    public boolean checkNode(Controller c, MindMapNode node) {
+        return node.getText().toLowerCase().indexOf(value) > -1;
+    }
 
-	public void save(XMLElement element) {
-		XMLElement child = new XMLElement();
-		child.setName(NAME);
-		super.saveAttributes(child);
-		child.setAttribute(VALUE, value);
-		element.addChild(child);
-	}
+    public void save(XMLElement element) {
+        XMLElement child = new XMLElement();
+        child.setName(NAME);
+        super.saveAttributes(child);
+        child.setAttribute(VALUE, value);
+        element.addChild(child);
+    }
 
-	static Condition load(XMLElement element) {
-		return new IgnoreCaseNodeContainsCondition(
-				element.getStringAttribute(VALUE));
-	}
+    static Condition load(XMLElement element) {
+        return new IgnoreCaseNodeContainsCondition(
+                element.getStringAttribute(VALUE));
+    }
 
-	protected String createDesctiption() {
-		final String nodeCondition = ConditionFactory.FILTER_NODE.getName();
-		final String simpleCondition = ConditionFactory.FILTER_CONTAINS.getName();
-		return ConditionFactory.createDescription(nodeCondition,
-				simpleCondition, value, true);
-	}
+    protected String createDesctiption() {
+        final String nodeCondition = ConditionFactory.FILTER_NODE.getName();
+        final String simpleCondition = ConditionFactory.FILTER_CONTAINS.getName();
+        return ConditionFactory.createDescription(nodeCondition,
+                simpleCondition, value, true);
+    }
 }

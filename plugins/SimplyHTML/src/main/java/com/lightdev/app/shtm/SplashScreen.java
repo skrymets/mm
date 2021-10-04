@@ -34,8 +34,8 @@ import javax.swing.JWindow;
 /**
  * Class that displays a splash screen
  * Is run in a separate thread so that the applet continues to load in the background
+ *
  * @author Karsten Pawlik
- * 
  */
 public class SplashScreen extends JWindow {
     private static SplashScreen instance = null;
@@ -52,8 +52,7 @@ public class SplashScreen extends JWindow {
             pack();
             final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
             setLocation((int) (d.getWidth() - getWidth()) / 2, (int) (d.getHeight() - getHeight()) / 2);
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
         }
     }
 

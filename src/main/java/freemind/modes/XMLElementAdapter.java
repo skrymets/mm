@@ -25,6 +25,7 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.*;
 import freemind.modes.attributes.Attribute;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
@@ -32,24 +33,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+@Log4j2
 public class XMLElementAdapter extends XMLElement {
-
-
-    // Logging:
-    protected static org.slf4j.Logger logger;
 
     private Object userObject = null;
     private NodeAdapter mapChild = null;
     private HashMap<String, String> nodeAttributes = new HashMap<>();
 
     // Font attributes
-
     private String fontName;
     private int fontStyle = 0;
     private int fontSize = 0;
 
     // Icon attributes
-
     private String iconName;
 
     // arrow link attributes:
@@ -81,21 +77,15 @@ public class XMLElementAdapter extends XMLElement {
 
     private boolean fontStyleStrikethrough;
 
-    // Overhead methods
-
     public XMLElementAdapter(MapFeedback pMapFeedback) {
         this(pMapFeedback, new Vector<ArrowLinkAdapter>(), new HashMap<String, NodeAdapter>());
     }
 
-    public XMLElementAdapter(MapFeedback pMapFeedback,
-                             Vector<ArrowLinkAdapter> arrowLinkAdapters, HashMap<String, NodeAdapter> IDToTarget) {
+    public XMLElementAdapter(MapFeedback pMapFeedback, Vector<ArrowLinkAdapter> arrowLinkAdapters, HashMap<String, NodeAdapter> IDToTarget) {
         this.mMapFeedback = pMapFeedback;
         this.mArrowLinkAdapters = arrowLinkAdapters;
         this.mIdToTarget = IDToTarget;
-        if (logger == null) {
-            logger = freemind.main.Resources.getInstance().getLogger(
-                    this.getClass().getName());
-        }
+
     }
 
     /**
@@ -225,10 +215,10 @@ public class XMLElementAdapter extends XMLElement {
                 if (typeAttribute == null
                         || XML_NODE_XHTML_TYPE_NODE.equals(typeAttribute)) {
                     // output:
-                    logger.trace("Setting node html content to:" + xmlText);
+                    log.trace("Setting node html content to:" + xmlText);
                     node.setXmlText(xmlText);
                 } else {
-                    logger.trace("Setting note html content to:" + xmlText);
+                    log.trace("Setting note html content to:" + xmlText);
                     node.setXmlNoteText(xmlText);
                 }
             } else if (child.getName().equals("hook")) {
@@ -395,7 +385,7 @@ public class XMLElementAdapter extends XMLElement {
     private NodeAdapter setNodeAttribute(String name, String sValue,
                                          NodeAdapter node) {
         if (name.equals(XML_NODE_TEXT)) {
-            logger.trace("Setting node text content to:" + sValue);
+            log.trace("Setting node text content to:" + sValue);
             node.setUserObject(sValue);
         } else if (name.equals(XML_NODE_ENCRYPTED_CONTENT)) {
             // we change the node implementation to EncryptedMindMapNode.
@@ -527,7 +517,7 @@ public class XMLElementAdapter extends XMLElement {
                     continue;
                 } else if (source == null) {
                     // link source is in nowhere-land
-                    logger.error("Cannot find the label " + oldId
+                    log.error("Cannot find the label " + oldId
                             + " in the map. The link target " + linkTarget
                             + " is not restored.");
                     continue;
@@ -546,7 +536,7 @@ public class XMLElementAdapter extends XMLElement {
                     MindMapLink link = registry.getLinkForId(linkTarget
                             .getUniqueId());
                     if (link == null) {
-                        logger.error("Cannot find the label "
+                        log.error("Cannot find the label "
                                 + linkTarget.getUniqueId()
                                 + " for the link in the map. The link target "
                                 + linkTarget + " is not restored.");
@@ -586,7 +576,7 @@ public class XMLElementAdapter extends XMLElement {
                     newId = oldId;
                 } else {
                     // link target is in nowhere-land
-                    logger.error("Cannot find the label " + oldId
+                    log.error("Cannot find the label " + oldId
                             + " in the map. The link " + arrowLink
                             + " is not restored.");
                     continue;

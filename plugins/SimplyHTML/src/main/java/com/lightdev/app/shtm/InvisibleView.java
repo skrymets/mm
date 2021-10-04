@@ -1,20 +1,20 @@
 /*
-* SimplyHTML, a word processor based on Java, HTML and CSS
-* Copyright (C) 2002 Ulrich Hilger
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * SimplyHTML, a word processor based on Java, HTML and CSS
+ * Copyright (C) 2002 Ulrich Hilger
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package com.lightdev.app.shtm;
 
@@ -37,14 +37,14 @@ import javax.swing.text.View;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class InvisibleView extends View {
-    /** indicates whether or not this view is to be shown in its component */
+    /**
+     * indicates whether or not this view is to be shown in its component
+     */
     boolean isVisible = false;
 
     /**
@@ -59,11 +59,11 @@ class InvisibleView extends View {
      * axis.
      *
      * @param axis may be either <code>View.X_AXIS</code> or
-     *		<code>View.Y_AXIS</code>
-     * @return   the span the view would like to be rendered into.
-     *           Typically the view is told to render into the span
-     *           that is returned, although there is no guarantee.
-     *           The parent may choose to resize or break the view
+     *             <code>View.Y_AXIS</code>
+     * @return the span the view would like to be rendered into.
+     * Typically the view is told to render into the span
+     * that is returned, although there is no guarantee.
+     * The parent may choose to resize or break the view
      * @see View#getPreferredSpan
      */
     public float getPreferredSpan(final int axis) {
@@ -75,8 +75,8 @@ class InvisibleView extends View {
      * axis.
      *
      * @param axis may be either <code>View.X_AXIS</code> or
-     *		<code>View.Y_AXIS</code>
-     * @return  the maximum span the view can be rendered into
+     *             <code>View.Y_AXIS</code>
+     * @return the maximum span the view can be rendered into
      * @see View#getPreferredSpan
      */
     public float getMaximumSpan() {
@@ -88,8 +88,8 @@ class InvisibleView extends View {
      * axis.
      *
      * @param axis may be either <code>View.X_AXIS</code> or
-     *		<code>View.Y_AXIS</code>
-     * @return  the minimum span the view can be rendered into
+     *             <code>View.Y_AXIS</code>
+     * @return the minimum span the view can be rendered into
      * @see View#getPreferredSpan
      */
     public float getMinimumSpan() {
@@ -101,15 +101,14 @@ class InvisibleView extends View {
      * surface.  The view may need to do layout and create child
      * views to enable itself to render into the given allocation.
      *
-     * @param g the rendering surface to use
+     * @param g          the rendering surface to use
      * @param allocation the allocated region to render into
      * @see View#paint
      */
     public void paint(final Graphics g, final Shape allocation) {
         if (isVisible) {
             // paint something here
-        }
-        else {
+        } else {
             setSize(0, 0);
         }
     }
@@ -125,8 +124,8 @@ class InvisibleView extends View {
      * @param y the Y coordinate >= 0
      * @param a the allocated region in which to render
      * @return the location within the model that best represents the
-     *  given point in the view >= 0.  The <code>biasReturn</code>
-     *  argument will be
+     * given point in the view >= 0.  The <code>biasReturn</code>
+     * argument will be
      * filled in to indicate that the point given is closer to the next
      * character in the model or the previous character in the model.
      */
@@ -140,21 +139,21 @@ class InvisibleView extends View {
      * to the view coordinate space.
      *
      * @param pos the position of the desired character (>=0)
-     * @param a the area of the view, which encompasses the requested character
-     * @param b the bias toward the previous character or the
-     *  next character represented by the offset, in case the
-     *  position is a boundary of two views; <code>b</code> will have one
-     *  of these values:
-     * <ul>
-     * <li> <code>Position.Bias.Forward</code>
-     * <li> <code>Position.Bias.Backward</code>
-     * </ul>
+     * @param a   the area of the view, which encompasses the requested character
+     * @param b   the bias toward the previous character or the
+     *            next character represented by the offset, in case the
+     *            position is a boundary of two views; <code>b</code> will have one
+     *            of these values:
+     *            <ul>
+     *            <li> <code>Position.Bias.Forward</code>
+     *            <li> <code>Position.Bias.Backward</code>
+     *            </ul>
      * @return the bounding box, in view coordinate space,
-     *		of the character at the specified position
-     * @exception BadLocationException  if the specified position does
-     *   not represent a valid location in the associated document
-     * @exception IllegalArgumentException if <code>b</code> is not one of the
-     *		legal <code>Position.Bias</code> values listed above
+     * of the character at the specified position
+     * @throws BadLocationException     if the specified position does
+     *                                  not represent a valid location in the associated document
+     * @throws IllegalArgumentException if <code>b</code> is not one of the
+     *                                  legal <code>Position.Bias</code> values listed above
      * @see View#viewToModel
      */
     public Shape modelToView(final int pos, final Shape a, final Position.Bias b)
@@ -176,7 +175,7 @@ class InvisibleView extends View {
      * be called.
      *
      * @param parent the new parent, or <code>null</code> if the view is
-     * 		being removed from a parent
+     *               being removed from a parent
      */
     public void setParent(final View parent) {
         if (parent != null) {

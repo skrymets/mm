@@ -17,46 +17,41 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
+/*
  * Created on 12.07.2005
  * Copyright (C) 2005-2008 Dimitri Polivaev, Christian Foltin
  */
 package freemind.main;
 
+import freemind.common.NamedObject;
+import freemind.common.TextTranslator;
+import freemind.frok.patches.FreeMindMainMock;
+import freemind.main.FreeMindMain.VersionInformation;
+import freemind.modes.FreeMindAwtFileDialog;
+import freemind.modes.FreeMindFileDialog;
+import freemind.modes.FreeMindJFileDialog;
+import lombok.extern.log4j.Log4j2;
+
+import javax.swing.filechooser.FileFilter;
 import java.io.File;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import org.slf4j.Logger;
-
-import javax.swing.filechooser.FileFilter;
-
-import freemind.frok.patches.FreeMindMainMock;
-import freemind.common.NamedObject;
-import freemind.common.TextTranslator;
-import freemind.main.FreeMindMain.VersionInformation;
-import freemind.modes.FreeMindAwtFileDialog;
-import freemind.modes.FreeMindFileDialog;
-import freemind.modes.FreeMindJFileDialog;
 
 /**
  * @author Dimitri Polivaev 12.07.2005
  */
+@Log4j2
 public class Resources implements TextTranslator {
 
     private FreeMindMain main;
     static Resources resourcesInstance = null;
     private HashMap<String, String> countryMap;
-    private Logger logger = null;
 
     private Resources(FreeMindMain frame) {
         this.main = frame;
-        if (logger == null) {
-            logger = main.getLogger(this.getClass().getName());
-        }
     }
 
     static public void createInstance(FreeMindMain frame) {
@@ -114,9 +109,7 @@ public class Resources implements TextTranslator {
     }
 
     /**
-     * @param key
-     *            Property key
-     *
+     * @param key Property key
      * @return the boolean value of the property resp. the default.
      */
     public boolean getBoolProperty(String key) {
@@ -139,9 +132,9 @@ public class Resources implements TextTranslator {
     public HashMap<String, String> getCountryMap() {
         if (countryMap == null) {
             String[] countryMapArray = new String[]{"de", "DE", "en", "UK",
-                "en", "US", "es", "ES", "es", "MX", "fi", "FI", "fr", "FR",
-                "hu", "HU", "it", "CH", "it", "IT", "nl", "NL", "no", "NO",
-                "pt", "PT", "ru", "RU", "sl", "SI", "uk", "UA", "zh", "CN"};
+                    "en", "US", "es", "ES", "es", "MX", "fi", "FI", "fr", "FR",
+                    "hu", "HU", "it", "CH", "it", "IT", "nl", "NL", "no", "NO",
+                    "pt", "PT", "ru", "RU", "sl", "SI", "uk", "UA", "zh", "CN"};
 
             countryMap = new HashMap<>();
             for (int i = 0; i < countryMapArray.length; i = i + 2) {
@@ -151,22 +144,16 @@ public class Resources implements TextTranslator {
         return countryMap;
     }
 
-    /* To obtain a logging element, ask here. */
-    public org.slf4j.Logger getLogger(String forClass) {
-        return main.getLogger(forClass);
-    }
-
     public void logException(Throwable e) {
         logException(e, "");
     }
 
     public void logException(Throwable e, String comment) {
-        logger.info("An exception occured: " + comment, e);
+        log.info("An exception occured: " + comment, e);
     }
 
     public String format(String resourceKey, Object[] messageArguments) {
-        MessageFormat formatter
-                = new MessageFormat(getResourceString(resourceKey));
+        MessageFormat formatter = new MessageFormat(getResourceString(resourceKey));
         String stringResult = formatter.format(messageArguments);
         return stringResult;
     }
@@ -196,7 +183,6 @@ public class Resources implements TextTranslator {
 
     /**
      * @param baseFileName
-     *
      * @return
      */
     public String createThumbnailFileName(File baseFileName) {
@@ -204,8 +190,8 @@ public class Resources implements TextTranslator {
                 + File.separatorChar
                 + "." // hidden
                 + baseFileName.getName().replaceFirst(
-                        FreeMindCommon.FREEMIND_FILE_EXTENSION + "$",
-                        ".png");
+                FreeMindCommon.FREEMIND_FILE_EXTENSION + "$",
+                ".png");
         return fileName;
     }
 

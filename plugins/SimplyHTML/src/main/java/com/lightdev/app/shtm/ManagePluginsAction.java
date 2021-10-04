@@ -36,11 +36,9 @@ import javax.swing.SwingUtilities;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class ManagePluginsAction extends AbstractAction implements SHTMLAction {
     public static final String managePluginsAction = "managePlugins";
@@ -55,9 +53,9 @@ class ManagePluginsAction extends AbstractAction implements SHTMLAction {
     public void actionPerformed(final ActionEvent e) {
         final JPopupMenu menu = (JPopupMenu) ((Component) e.getSource()).getParent();
         final SHTMLPanelImpl shtmlPanel = (SHTMLPanelImpl) SwingUtilities.getAncestorOfClass(SHTMLPanelImpl.class,
-            menu.getInvoker());
+                menu.getInvoker());
         final PluginManagerDialog pmd = new PluginManagerDialog(JOptionPane.getFrameForComponent(shtmlPanel),
-            Util.getResourceString("pluginManagerDialogTitle"));
+                Util.getResourceString("pluginManagerDialogTitle"));
         Util.center(shtmlPanel, pmd);
         pmd.setModal(true);
         pmd.setVisible(true);

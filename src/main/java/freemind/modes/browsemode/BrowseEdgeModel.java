@@ -29,19 +29,19 @@ import java.awt.*;
 
 public class BrowseEdgeModel extends EdgeAdapter {
 
-	public BrowseEdgeModel(MindMapNode node, MapFeedback pMapFeedback) {
-		super(node, pMapFeedback);
-	}
+    public BrowseEdgeModel(MindMapNode node, MapFeedback pMapFeedback) {
+        super(node, pMapFeedback);
+    }
 
-	public XMLElement save() {
-		return null;
-	}
+    public XMLElement save() {
+        return null;
+    }
 
-	public void setColor(Color color) {
-		super.setColor(color);
-	}
+    public void setColor(Color color) {
+        super.setColor(color);
+    }
 
-	public void setStyle(String style) {
-		super.setStyle(style);
-	}
+    public void setStyle(String style) {
+        super.setStyle(style);
+    }
 }

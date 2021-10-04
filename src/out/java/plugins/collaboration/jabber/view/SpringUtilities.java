@@ -1,22 +1,22 @@
 /*FreeMind - A Program for creating and viewing Mindmaps
-*Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
-*
-*See COPYING for Details
-*
-*This program is free software; you can redistribute it and/or
-*modify it under the terms of the GNU General Public License
-*as published by the Free Software Foundation; either version 2
-*of the License, or (at your option) any later version.
-*
-*This program is distributed in the hope that it will be useful,
-*but WITHOUT ANY WARRANTY; without even the implied warranty of
-*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*GNU General Public License for more details.
-*
-*You should have received a copy of the GNU General Public License
-*along with this program; if not, write to the Free Software
-*Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
+ *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
+ *
+ *See COPYING for Details
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 package plugins.collaboration.jabber.view;
 
 import java.awt.Component;
@@ -29,9 +29,8 @@ import javax.swing.SpringLayout;
  * A 1.4 file that provides utility methods for creating form- or grid-style
  * layouts with SpringLayout. These utilities are used by several programs, such
  * as SpringBox and SpringCompactGrid.
- * 
+ * <p>
  * (See http://java.sun.com/docs/books/tutorial/uiswing/layout/spring.html)
- *  
  */
 
 //TODO: Licensing? Copied this from
@@ -52,22 +51,16 @@ public class SpringUtilities {
      * <code>parent</code> in a grid. Each component is as big as the maximum
      * preferred width and height of the components. The parent is made just big
      * enough to fit them all.
-     * 
-     * @param rows
-     *            number of rows
-     * @param cols
-     *            number of columns
-     * @param initialX
-     *            x location to start the grid at
-     * @param initialY
-     *            y location to start the grid at
-     * @param xPad
-     *            x padding between cells
-     * @param yPad
-     *            y padding between cells
+     *
+     * @param rows     number of rows
+     * @param cols     number of columns
+     * @param initialX x location to start the grid at
+     * @param initialY y location to start the grid at
+     * @param xPad     x padding between cells
+     * @param yPad     y padding between cells
      */
     public static void makeGrid(Container parent, int rows, int cols,
-            int initialX, int initialY, int xPad, int yPad) {
+                                int initialX, int initialY, int xPad, int yPad) {
         SpringLayout layout;
         try {
             layout = (SpringLayout) parent.getLayout();
@@ -142,7 +135,7 @@ public class SpringUtilities {
 
     /* Used by makeCompactGrid. */
     private static SpringLayout.Constraints getConstraintsForCell(int row,
-            int col, Container parent, int cols) {
+                                                                  int col, Container parent, int cols) {
         SpringLayout layout = (SpringLayout) parent.getLayout();
         Component c = parent.getComponent(row * cols + col);
         return layout.getConstraints(c);
@@ -154,22 +147,16 @@ public class SpringUtilities {
      * the maximum preferred width of the components in that column; height is
      * similarly determined for each row. The parent is made just big enough to
      * fit them all.
-     * 
-     * @param rows
-     *            number of rows
-     * @param cols
-     *            number of columns
-     * @param initialX
-     *            x location to start the grid at
-     * @param initialY
-     *            y location to start the grid at
-     * @param xPad
-     *            x padding between cells
-     * @param yPad
-     *            y padding between cells
+     *
+     * @param rows     number of rows
+     * @param cols     number of columns
+     * @param initialX x location to start the grid at
+     * @param initialY y location to start the grid at
+     * @param xPad     x padding between cells
+     * @param yPad     y padding between cells
      */
     public static void makeCompactGrid(Container parent, int rows, int cols,
-            int initialX, int initialY, int xPad, int yPad) {
+                                       int initialX, int initialY, int xPad, int yPad) {
         SpringLayout layout;
         try {
             layout = (SpringLayout) parent.getLayout();

@@ -19,21 +19,19 @@
  *
  * Created on 06.07.2006
  */
- /*$Id: FreeMindStarter.java,v 1.1.2.11 2009/03/29 19:37:23 christianfoltin Exp $*/
+/*$Id: FreeMindStarter.java,v 1.1.2.11 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.main;
 
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Properties;
-
-import javax.swing.JOptionPane;
 
 /**
  * This class should check the java version and start freemind. In order to be
@@ -44,7 +42,6 @@ import javax.swing.JOptionPane;
  * used here.
  *
  * @author foltin
- *
  */
 public class FreeMindStarter {
 

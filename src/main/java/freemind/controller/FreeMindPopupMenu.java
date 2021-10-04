@@ -23,59 +23,53 @@
  */
 package freemind.controller;
 
-import java.util.HashSet;
+import lombok.extern.log4j.Log4j2;
 
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import javax.swing.event.MenuListener;
+import java.util.HashSet;
 
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
-public class FreeMindPopupMenu extends JPopupMenu implements
-		StructuredMenuHolder.MenuEventSupplier {
-	private HashSet<MenuListener> listeners = new HashSet<>();
+@Log4j2
+public class FreeMindPopupMenu extends JPopupMenu implements StructuredMenuHolder.MenuEventSupplier {
+    private HashSet<MenuListener> listeners = new HashSet<>();
 
-	protected static org.slf4j.Logger logger = null;
-	
-	public FreeMindPopupMenu() {
-		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
-	}
-	
-	protected void firePopupMenuWillBecomeVisible() {
-		super.firePopupMenuWillBecomeVisible();
-		logger.trace("Popup firePopupMenuWillBecomeVisible called.");
-		for (MenuListener listener : listeners) {
-			listener.menuSelected(null);
-		}
-	}
+    public FreeMindPopupMenu() {
+    }
 
-	public void addMenuListener(MenuListener listener) {
-		listeners.add(listener);
-	}
+    protected void firePopupMenuWillBecomeVisible() {
+        super.firePopupMenuWillBecomeVisible();
+        log.trace("Popup firePopupMenuWillBecomeVisible called.");
+        for (MenuListener listener : listeners) {
+            listener.menuSelected(null);
+        }
+    }
 
-	public void removeMenuListener(MenuListener listener) {
-		listeners.remove(listener);
-	}
+    public void addMenuListener(MenuListener listener) {
+        listeners.add(listener);
+    }
 
-	protected void firePopupMenuCanceled() {
-		super.firePopupMenuCanceled();
-		// logger.info("Popup firePopupMenuCanceled called.");
-		for (MenuListener listener : listeners) {
-			listener.menuCanceled(null);
-		}
-	}
+    public void removeMenuListener(MenuListener listener) {
+        listeners.remove(listener);
+    }
 
-	protected void firePopupMenuWillBecomeInvisible() {
-		super.firePopupMenuWillBecomeInvisible();
-		// logger.info("Popup firePopupMenuWillBecomeInvisible called.");
-		for (MenuListener listener : listeners) {
-			listener.menuDeselected(null);
-		}
-	}
+    protected void firePopupMenuCanceled() {
+        super.firePopupMenuCanceled();
+        // log.info("Popup firePopupMenuCanceled called.");
+        for (MenuListener listener : listeners) {
+            listener.menuCanceled(null);
+        }
+    }
+
+    protected void firePopupMenuWillBecomeInvisible() {
+        super.firePopupMenuWillBecomeInvisible();
+        // log.info("Popup firePopupMenuWillBecomeInvisible called.");
+        for (MenuListener listener : listeners) {
+            listener.menuDeselected(null);
+        }
+    }
 
 }

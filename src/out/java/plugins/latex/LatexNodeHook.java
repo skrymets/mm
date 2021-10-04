@@ -17,7 +17,9 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/** this is only a test class */
+/**
+ * this is only a test class
+ */
 package plugins.latex;
 
 import java.awt.Component;
@@ -33,93 +35,93 @@ import freemind.view.mindmapview.NodeView;
 
 /**
  * @author Dimitry Polivaev
- * 
+ *
  * @file LatexNodeHook.java
  * @package freemind.modes.mindmapmode
  * */
 public class LatexNodeHook extends PermanentMindMapNodeHookAdapter {
-	private String equation;
-	private Set<Component> viewers;
+    private String equation;
+    private Set<Component> viewers;
 
-	/**
-	 */
-	public LatexNodeHook() {
-		super();
-		equation = "\\mbox{I}^\\fgcolor{ff0000}{\\heartsuit}\\mbox{HotEqn}";
-		viewers = new LinkedHashSet<>();
-	}
+    /**
+     */
+    public LatexNodeHook() {
+        super();
+        equation = "\\mbox{I}^\\fgcolor{ff0000}{\\heartsuit}\\mbox{HotEqn}";
+        viewers = new LinkedHashSet<>();
+    }
 
-	public void onViewCreatedHook(NodeView nodeView) {
-		createViewer(nodeView);
-		super.onViewCreatedHook(nodeView);
-	}
+    public void onViewCreatedHook(NodeView nodeView) {
+        createViewer(nodeView);
+        super.onViewCreatedHook(nodeView);
+    }
 
-	public void onViewRemovedHook(NodeView nodeView) {
-		deleteViewer(nodeView);
-		super.onViewRemovedHook(nodeView);
-	}
+    public void onViewRemovedHook(NodeView nodeView) {
+        deleteViewer(nodeView);
+        super.onViewRemovedHook(nodeView);
+    }
 
-	private void deleteViewer(NodeView nodeView) {
-		if (viewers.isEmpty()) {
-			return;
-		}
-		final Container contentPane = nodeView.getContentPane();
-		final int componentCount = contentPane.getComponentCount();
-		for (int i = 0; i < componentCount; i++) {
-			Component component = contentPane.getComponent(i);
-			if (viewers.contains(component)) {
-				viewers.remove(component);
-				contentPane.remove(i);
-				return;
-			}
-		}
+    private void deleteViewer(NodeView nodeView) {
+        if (viewers.isEmpty()) {
+            return;
+        }
+        final Container contentPane = nodeView.getContentPane();
+        final int componentCount = contentPane.getComponentCount();
+        for (int i = 0; i < componentCount; i++) {
+            Component component = contentPane.getComponent(i);
+            if (viewers.contains(component)) {
+                viewers.remove(component);
+                contentPane.remove(i);
+                return;
+            }
+        }
 
-	}
+    }
 
-	public void invoke(MindMapNode node) {
-		for(NodeView view : getMindMapController().getView().getViewers(node)) {
-			createViewer(view);
-		}
-		super.invoke(node);
-	}
+    public void invoke(MindMapNode node) {
+        for (NodeView view : getMindMapController().getView().getViewers(node)) {
+            createViewer(view);
+        }
+        super.invoke(node);
+    }
 
-	private void createViewer(NodeView view) {
-		JZoomedHotEqn comp = new JZoomedHotEqn(this);
-		viewers.add(comp);
-		view.getContentPane().add(comp);
-	}
+    private void createViewer(NodeView view) {
+        JZoomedHotEqn comp = new JZoomedHotEqn(this);
+        viewers.add(comp);
+        view.getContentPane().add(comp);
+    }
 
-	public String getContent(String key) {
-		return equation;
-	}
+    public String getContent(String key) {
+        return equation;
+    }
 
-	public void setContent(String key, String content) {
-		equation = content;
-		Iterator iterator = viewers.iterator();
-		while (iterator.hasNext()) {
-			JZoomedHotEqn comp = (JZoomedHotEqn) iterator.next();
-			comp.setModel(this);
-		}
-		getController().nodeChanged(getNode());
-	}
+    public void setContent(String key, String content) {
+        equation = content;
+        Iterator iterator = viewers.iterator();
+        while (iterator.hasNext()) {
+            JZoomedHotEqn comp = (JZoomedHotEqn) iterator.next();
+            comp.setModel(this);
+        }
+        getController().nodeChanged(getNode());
+    }
 
-	public void loadFrom(XMLElement child) {
-		equation = child.getAttribute("EQUATION", equation).toString();
-		super.loadFrom(child);
-	}
+    public void loadFrom(XMLElement child) {
+        equation = child.getAttribute("EQUATION", equation).toString();
+        super.loadFrom(child);
+    }
 
-	public void save(XMLElement xml) {
-		super.save(xml);
-		xml.setAttribute("EQUATION", equation);
-	}
+    public void save(XMLElement xml) {
+        super.save(xml);
+        xml.setAttribute("EQUATION", equation);
+    }
 
-	public void shutdownMapHook() {
-		Iterator iterator = viewers.iterator();
-		while (iterator.hasNext()) {
-			JZoomedHotEqn comp = (JZoomedHotEqn) iterator.next();
-			comp.getParent().remove(comp);
-		}
-		super.shutdownMapHook();
-	}
+    public void shutdownMapHook() {
+        Iterator iterator = viewers.iterator();
+        while (iterator.hasNext()) {
+            JZoomedHotEqn comp = (JZoomedHotEqn) iterator.next();
+            comp.getParent().remove(comp);
+        }
+        super.shutdownMapHook();
+    }
 
 }

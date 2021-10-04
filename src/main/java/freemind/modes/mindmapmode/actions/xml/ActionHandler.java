@@ -27,18 +27,19 @@ import freemind.controller.actions.generated.instance.XmlAction;
 
 /**
  * @author foltin
- * 
  */
 public interface ActionHandler {
 
-	void executeAction(XmlAction action);
+    void executeAction(XmlAction action);
 
-	/**
-	 */
-	void startTransaction(String name);
+    /**
+     *
+     */
+    void startTransaction(String name);
 
-	/**
-	 */
-	void endTransaction(String name);
+    /**
+     *
+     */
+    void endTransaction(String name);
 
 }

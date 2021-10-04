@@ -19,10 +19,11 @@
  *
  * Created on 10.10.2006
  */
- /*$Id: MindMapControllerMock.java,v 1.1.2.12 2008/12/09 21:09:43 christianfoltin Exp $*/
+/*$Id: MindMapControllerMock.java,v 1.1.2.12 2008/12/09 21:09:43 christianfoltin Exp $*/
 package tests.freemind;
 
 import freemind.frok.patches.FreeMindMainMock;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.datatransfer.Transferable;
@@ -58,7 +59,6 @@ import freemind.view.mindmapview.NodeView;
 
 /**
  * @author foltin
- *
  */
 public class MindMapControllerMock extends MapFeedbackAdapter implements ModeController {
 
@@ -72,9 +72,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getFrame()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getFrame()
      */
     @Override
     public FreeMindMain getFrame() {
@@ -82,9 +82,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getMap()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getMap()
      */
     @Override
     public MindMap getMap() {
@@ -92,9 +92,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#load(java.net.URL)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#load(java.net.URL)
      */
     @Override
     public ModeController load(URL pFile) throws FileNotFoundException,
@@ -104,9 +104,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#load(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#load(java.io.File)
      */
     @Override
     public ModeController load(File pFile) throws FileNotFoundException,
@@ -116,9 +116,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#loadURL(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#loadURL(java.lang.String)
      */
     @Override
     public void loadURL(String pRelative) {
@@ -126,9 +126,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#save(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#save(java.io.File)
      */
     @Override
     public boolean save(File pFile) {
@@ -137,9 +137,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#newMap()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#newMap()
      */
     @Override
     public ModeController newMap() {
@@ -148,9 +148,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#save()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#save()
      */
     @Override
     public boolean save() {
@@ -159,9 +159,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#saveAs()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#saveAs()
      */
     @Override
     public boolean saveAs() {
@@ -170,9 +170,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#open()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#open()
      */
     @Override
     public void open() {
@@ -180,10 +180,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#close(boolean,
-	 * freemind.controller.MapModuleManager)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#close(boolean,
+     * freemind.controller.MapModuleManager)
      */
     @Override
     public boolean close(boolean pForce, MapModuleManager pMapModuleManager) {
@@ -192,9 +192,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#startupController()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#startupController()
      */
     @Override
     public void startupController() {
@@ -202,9 +202,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#shutdownController()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#shutdownController()
      */
     @Override
     public void shutdownController() {
@@ -212,9 +212,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#doubleClick(java.awt.event.MouseEvent)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#doubleClick(java.awt.event.MouseEvent)
      */
     @Override
     public void doubleClick(MouseEvent pE) {
@@ -222,9 +222,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#plainClick(java.awt.event.MouseEvent)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#plainClick(java.awt.event.MouseEvent)
      */
     @Override
     public void plainClick(MouseEvent pE) {
@@ -232,9 +232,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#setVisible(boolean)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#setVisible(boolean)
      */
     @Override
     public void setVisible(boolean pVisible) {
@@ -242,9 +242,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#isBlocked()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#isBlocked()
      */
     @Override
     public boolean isBlocked() {
@@ -253,9 +253,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getNodeFromID(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getNodeFromID(java.lang.String)
      */
     @Override
     public NodeAdapter getNodeFromID(String pNodeID) {
@@ -264,9 +264,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getNodeID(freemind.model.MindMapNode)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getNodeID(freemind.model.MindMapNode)
      */
     @Override
     public String getNodeID(MindMapNode pSelected) {
@@ -275,10 +275,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#select(freemind.view.mindmapview.NodeView)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#select(freemind.view.mindmapview.NodeView)
      */
     @Override
     public void select(NodeView pNode) {
@@ -286,10 +286,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#select(freemind.model.MindMapNode,
-	 * java.util.List)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#select(freemind.model.MindMapNode,
+     * java.util.List)
      */
     @Override
     public void select(MindMapNode pFocused, List<MindMapNode> pSelecteds) {
@@ -297,11 +297,11 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#selectBranch(freemind.view.mindmapview.
-	 * NodeView, boolean)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#selectBranch(freemind.view.mindmapview.
+     * NodeView, boolean)
      */
     @Override
     public void selectBranch(NodeView pSelected, boolean pExtend) {
@@ -309,9 +309,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getSelected()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getSelected()
      */
     @Override
     public MindMapNode getSelected() {
@@ -320,9 +320,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getSelectedView()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getSelectedView()
      */
     @Override
     public NodeView getSelectedView() {
@@ -331,9 +331,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getSelecteds()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getSelecteds()
      */
     @Override
     public List<MindMapNode> getSelecteds() {
@@ -342,9 +342,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getSelectedsByDepth()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getSelectedsByDepth()
      */
     @Override
     public List<MindMapNode> getSelectedsByDepth() {
@@ -353,9 +353,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#sortNodesByDepth(java.util.List)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#sortNodesByDepth(java.util.List)
      */
     @Override
     public void sortNodesByDepth(List<MindMapNode> pInPlaceList) {
@@ -363,10 +363,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#extendSelection(java.awt.event.MouseEvent)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#extendSelection(java.awt.event.MouseEvent)
      */
     @Override
     public boolean extendSelection(MouseEvent pE) {
@@ -375,9 +375,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#setSaved(boolean)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#setSaved(boolean)
      */
     @Override
     public void setSaved(boolean pIsClean) {
@@ -385,24 +385,24 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#registerNodeSelectionListener(freemind.
-	 * modes.ModeController.NodeSelectionListener, boolean)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#registerNodeSelectionListener(freemind.
+     * modes.ModeController.NodeSelectionListener, boolean)
      */
     @Override
     public void registerNodeSelectionListener(NodeSelectionListener pListener,
-            boolean pCallWithCurrentSelection) {
+                                              boolean pCallWithCurrentSelection) {
 
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#deregisterNodeSelectionListener(freemind
-	 * .modes.ModeController.NodeSelectionListener)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#deregisterNodeSelectionListener(freemind
+     * .modes.ModeController.NodeSelectionListener)
      */
     @Override
     public void deregisterNodeSelectionListener(NodeSelectionListener pListener) {
@@ -410,24 +410,24 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#registerNodeLifetimeListener(freemind.modes
-	 * .ModeController.NodeLifetimeListener, boolean)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#registerNodeLifetimeListener(freemind.modes
+     * .ModeController.NodeLifetimeListener, boolean)
      */
     @Override
     public void registerNodeLifetimeListener(NodeLifetimeListener pListener,
-            boolean pFireCreateEvent) {
+                                             boolean pFireCreateEvent) {
 
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#deregisterNodeLifetimeListener(freemind
-	 * .modes.ModeController.NodeLifetimeListener)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#deregisterNodeLifetimeListener(freemind
+     * .modes.ModeController.NodeLifetimeListener)
      */
     @Override
     public void deregisterNodeLifetimeListener(NodeLifetimeListener pListener) {
@@ -435,10 +435,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#displayNode(freemind.model.MindMapNode)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#displayNode(freemind.model.MindMapNode)
      */
     @Override
     public void displayNode(MindMapNode pNode) {
@@ -446,9 +446,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#centerNode(freemind.model.MindMapNode)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#centerNode(freemind.model.MindMapNode)
      */
     @Override
     public void centerNode(MindMapNode pNode) {
@@ -456,11 +456,11 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#getLinkShortText(freemind.model.MindMapNode
-	 * )
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#getLinkShortText(freemind.model.MindMapNode
+     * )
      */
     @Override
     public String getLinkShortText(MindMapNode pNode) {
@@ -469,9 +469,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getModeToolBar()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getModeToolBar()
      */
     @Override
     public JToolBar getModeToolBar() {
@@ -480,9 +480,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getLeftToolBar()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getLeftToolBar()
      */
     @Override
     public Component getLeftToolBar() {
@@ -491,10 +491,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#updateMenus(freemind.controller.
-	 * StructuredMenuHolder)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#updateMenus(freemind.controller.
+     * StructuredMenuHolder)
      */
     @Override
     public void updateMenus(StructuredMenuHolder pHolder) {
@@ -502,10 +502,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#updatePopupMenu(freemind.controller.
-	 * StructuredMenuHolder)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#updatePopupMenu(freemind.controller.
+     * StructuredMenuHolder)
      */
     @Override
     public void updatePopupMenu(StructuredMenuHolder pHolder) {
@@ -513,9 +513,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getPopupMenu()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getPopupMenu()
      */
     @Override
     public JPopupMenu getPopupMenu() {
@@ -524,10 +524,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#showPopupMenu(java.awt.event.MouseEvent)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#showPopupMenu(java.awt.event.MouseEvent)
      */
     @Override
     public void showPopupMenu(MouseEvent pE) {
@@ -535,9 +535,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getPopupForModel(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getPopupForModel(java.lang.Object)
      */
     @Override
     public JPopupMenu getPopupForModel(Object pObj) {
@@ -546,9 +546,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getView()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getView()
      */
     @Override
     public MapView getView() {
@@ -557,9 +557,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#setModel(freemind.model.MapAdapter)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#setModel(freemind.model.MapAdapter)
      */
     @Override
     public void setModel(MapAdapter pModel) {
@@ -567,9 +567,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getMode()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getMode()
      */
     @Override
     public Mode getMode() {
@@ -578,9 +578,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getMapModule()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getMapModule()
      */
     @Override
     public MapModule getMapModule() {
@@ -589,9 +589,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getController()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getController()
      */
     @Override
     public Controller getController() {
@@ -600,9 +600,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getHookFactory()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getHookFactory()
      */
     @Override
     public HookFactory getHookFactory() {
@@ -611,9 +611,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getSelectionColor()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getSelectionColor()
      */
     @Override
     public Color getSelectionColor() {
@@ -622,9 +622,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getText(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getText(java.lang.String)
      */
     @Override
     public String getText(String pTextId) {
@@ -633,9 +633,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#getResource(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#getResource(java.lang.String)
      */
     @Override
     public URL getResource(String pPath) {
@@ -644,10 +644,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#getNodeView(freemind.model.MindMapNode)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#getNodeView(freemind.model.MindMapNode)
      */
     @Override
     public NodeView getNodeView(MindMapNode pNode) {
@@ -656,9 +656,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#refreshMap()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#refreshMap()
      */
     @Override
     public void refreshMap() {
@@ -666,10 +666,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#copy(freemind.model.MindMapNode,
-	 * boolean)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#copy(freemind.model.MindMapNode,
+     * boolean)
      */
     @Override
     public Transferable copy(MindMapNode pNode, boolean pSaveInvisible) {
@@ -678,9 +678,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#copy()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#copy()
      */
     @Override
     public Transferable copy() {
@@ -689,9 +689,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#copySingle()
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#copySingle()
      */
     @Override
     public Transferable copySingle() {
@@ -700,9 +700,9 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#copy(java.util.List, boolean)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#copy(java.util.List, boolean)
      */
     @Override
     public Transferable copy(List<MindMapNode> pSelectedNodes, boolean pCopyInvisible) {
@@ -711,11 +711,11 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#getFileChooser(javax.swing.filechooser.
-	 * FileFilter)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#getFileChooser(javax.swing.filechooser.
+     * FileFilter)
      */
     @Override
     public FreeMindFileDialog getFileChooser(FileFilter pFilter) {
@@ -724,10 +724,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.ModeController#setView(freemind.view.mindmapview.MapView)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.ModeController#setView(freemind.view.mindmapview.MapView)
      */
     @Override
     public void setView(MapView pView) {
@@ -735,10 +735,10 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#setToolTip(freemind.model.MindMapNode,
-	 * java.lang.String, java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.ModeController#setToolTip(freemind.model.MindMapNode,
+     * java.lang.String, java.lang.String)
      */
     @Override
     public void setToolTip(MindMapNode pNode, String pKey, String pValue) {

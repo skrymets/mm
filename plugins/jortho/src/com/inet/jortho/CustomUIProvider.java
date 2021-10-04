@@ -38,10 +38,11 @@ public interface CustomUIProvider {
 
     /**
      * Creates a JButton.
+     *
      * @param resource The resource text for this button
      * @return A JButton that can be used by the spell checker
      */
-    JButton getButton( String resource );
+    JButton getButton(String resource);
 
     /**
      * Creates a JTextField.
@@ -57,7 +58,7 @@ public interface CustomUIProvider {
      * @param text The text for the Label
      * @return A JLabel that can be used by the spell checker
      */
-    JLabel getLabel( String text );
+    JLabel getLabel(String text);
 
     /**
      * Creates a JList.

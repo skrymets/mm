@@ -28,114 +28,90 @@ import freemind.extensions.HookFactory;
 import freemind.extensions.HookInstanciationMethod;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class NodeHookAction extends MindmapAction implements HookAction,
-		MenuItemEnabledListener, MenuItemSelectedListener {
-	String _hookName;
-	MindMapController mMindMapController;
+@Log4j2
+public class NodeHookAction extends MindmapAction implements HookAction, MenuItemEnabledListener, MenuItemSelectedListener {
+    String _hookName;
+    MindMapController mMindMapController;
 
-	public MindMapController getController() {
-		return mMindMapController;
-	}
+    public MindMapController getController() {
+        return mMindMapController;
+    }
 
-	private static Logger logger;
+    public NodeHookAction(String hookName, MindMapController controller) {
+        super(hookName, (Icon) null, controller);
+        this._hookName = hookName;
+        this.mMindMapController = controller;
+    }
 
-	
-	public NodeHookAction(String hookName, MindMapController controller) {
-		super(hookName, (Icon) null, controller);
-		this._hookName = hookName;
-		this.mMindMapController = controller;
-		if (logger == null)
-			logger = controller.getFrame().getLogger(this.getClass().getName());
-	}
+    public void actionPerformed(ActionEvent arg0) {
+        // check, which method of invocation:
+        //
+        mMindMapController.getFrame().setWaitingCursor(true);
+        invoke(mMindMapController.getSelected(), mMindMapController.getSelecteds());
+        mMindMapController.getFrame().setWaitingCursor(false);
+    }
 
-	public void actionPerformed(ActionEvent arg0) {
-		// check, which method of invocation:
-		//
-		mMindMapController.getFrame().setWaitingCursor(true);
-		invoke(mMindMapController.getSelected(),
-				mMindMapController.getSelecteds());
-		mMindMapController.getFrame().setWaitingCursor(false);
-	}
+    public void invoke(MindMapNode focussed, List<MindMapNode> selecteds) {
+        mMindMapController.addHook(focussed, selecteds, _hookName, null);
+    }
 
-	public void invoke(MindMapNode focussed, List<MindMapNode> selecteds) {
-		mMindMapController.addHook(focussed, selecteds, _hookName, null);
-	}
+    private HookInstanciationMethod getInstanciationMethod(String hookName) {
+        HookFactory factory = getHookFactory();
+        // determine instanciation method
+        HookInstanciationMethod instMethod = factory.getInstanciationMethod(hookName);
+        return instMethod;
+    }
 
+    private HookFactory getHookFactory() {
+        HookFactory factory = mMindMapController.getHookFactory();
+        return factory;
+    }
 
+    public boolean isEnabled(JMenuItem item, Action action) {
+        if (!super.isEnabled(item, action) || mMindMapController.getView() == null) {
+            return false;
+        }
+        HookFactory factory = getHookFactory();
+        Object baseClass = factory.getPluginBaseClass(_hookName);
+        if (baseClass != null) {
+            if (baseClass instanceof MenuItemEnabledListener) {
+                MenuItemEnabledListener listener = (MenuItemEnabledListener) baseClass;
+                return listener.isEnabled(item, action);
+            }
+        }
+        return true;
+    }
 
-	/**
-	 */
-	private HookInstanciationMethod getInstanciationMethod(String hookName) {
-		HookFactory factory = getHookFactory();
-		// determine instanciation method
-		HookInstanciationMethod instMethod = factory
-				.getInstanciationMethod(hookName);
-		return instMethod;
-	}
+    public String getHookName() {
+        return _hookName;
+    }
 
-	/**
-	 */
-	private HookFactory getHookFactory() {
-		HookFactory factory = mMindMapController.getHookFactory();
-		return factory;
-	}
+    public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
+        // test if plugin has its own method:
+        HookFactory factory = getHookFactory();
+        Object baseClass = factory.getPluginBaseClass(_hookName);
+        if (baseClass != null) {
+            if (baseClass instanceof MenuItemSelectedListener) {
+                MenuItemSelectedListener listener = (MenuItemSelectedListener) baseClass;
+                return listener.isSelected(pCheckItem, pAction);
+            }
+        }
+        MindMapNode focussed = mMindMapController.getSelected();
+        List<MindMapNode> selecteds = mMindMapController.getSelecteds();
+        HookInstanciationMethod instMethod = getInstanciationMethod(_hookName);
+        // get destination nodes
+        instMethod.getDestinationNodes(mMindMapController, focussed, selecteds);
+        MindMapNode adaptedFocussedNode = instMethod.getCenterNode(mMindMapController, focussed, selecteds);
+        // test if hook already present
+        return instMethod.isAlreadyPresent(_hookName, adaptedFocussedNode);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing.JMenuItem
-	 * , javax.swing.Action)
-	 */
-	public boolean isEnabled(JMenuItem item, Action action) {
-		if (!super.isEnabled(item, action) || mMindMapController.getView() == null) {
-			return false;
-		}
-		HookFactory factory = getHookFactory();
-		Object baseClass = factory.getPluginBaseClass(_hookName);
-		if (baseClass != null) {
-			if (baseClass instanceof MenuItemEnabledListener) {
-				MenuItemEnabledListener listener = (MenuItemEnabledListener) baseClass;
-				return listener.isEnabled(item, action);
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 */
-	public String getHookName() {
-		return _hookName;
-	}
-
-	public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
-		// test if plugin has its own method:
-		HookFactory factory = getHookFactory();
-		Object baseClass = factory.getPluginBaseClass(_hookName);
-		if (baseClass != null) {
-			if (baseClass instanceof MenuItemSelectedListener) {
-				MenuItemSelectedListener listener = (MenuItemSelectedListener) baseClass;
-				return listener.isSelected(pCheckItem, pAction);
-			}
-		}
-		MindMapNode focussed = mMindMapController.getSelected();
-		List<MindMapNode> selecteds = mMindMapController.getSelecteds();
-		HookInstanciationMethod instMethod = getInstanciationMethod(_hookName);
-		// get destination nodes
-		instMethod.getDestinationNodes(mMindMapController, focussed, selecteds);
-		MindMapNode adaptedFocussedNode = instMethod.getCenterNode(
-				mMindMapController, focussed, selecteds);
-		// test if hook already present
-		return instMethod.isAlreadyPresent(_hookName, adaptedFocussedNode);
-
-	}
+    }
 
 }

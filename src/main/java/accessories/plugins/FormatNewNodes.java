@@ -32,92 +32,90 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * This plugin formats new nodes using the formats given to former nodes.
- * 
+ *
  * @author foltin
  */
-public class FormatNewNodes implements ActionHandler, ActionFilter,
-		HookRegistration {
+@Log4j2
+public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistration {
 
-	private MindMapController controller;
+    private MindMapController controller;
 
-	private Logger logger;
+    private HashMap<String, XmlAction> formatActions;
 
-	private HashMap<String, XmlAction> formatActions;
+    public FormatNewNodes(ModeController controller, MindMap map) {
+        this.controller = (MindMapController) controller;
+        this.formatActions = new HashMap<>();
+    }
 
-	public FormatNewNodes(ModeController controller, MindMap map) {
-		this.controller = (MindMapController) controller;
-		logger = controller.getFrame().getLogger(this.getClass().getName());
-		this.formatActions = new HashMap<>();
-	}
+    public void register() {
+        controller.getActionRegistry().registerHandler(this);
+        controller.getActionRegistry().registerFilter(this);
 
-	public void register() {
-		controller.getActionRegistry().registerHandler(this);
-		controller.getActionRegistry().registerFilter(this);
+    }
 
-	}
+    public void deRegister() {
+        controller.getActionRegistry().deregisterHandler(this);
+        controller.getActionRegistry().deregisterFilter(this);
+    }
 
-	public void deRegister() {
-		controller.getActionRegistry().deregisterHandler(this);
-		controller.getActionRegistry().deregisterFilter(this);
-	}
+    public void executeAction(XmlAction action) {
+        // detect format changes:
+        detectFormatChanges(action);
+    }
 
-	public void executeAction(XmlAction action) {
-		// detect format changes:
-		detectFormatChanges(action);
-	}
+    /**
+     *
+     */
+    private void detectFormatChanges(XmlAction doAction) {
 
-	/**
-	 */
-	private void detectFormatChanges(XmlAction doAction) {
+        if (doAction instanceof CompoundAction) {
+            CompoundAction compAction = (CompoundAction) doAction;
 
-		if (doAction instanceof CompoundAction) {
-			CompoundAction compAction = (CompoundAction) doAction;
-            
             List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compAction);
-            
+
             for (XmlAction childAction : xmlActions) {
                 detectFormatChanges(childAction);
             }
-		} else if (doAction instanceof FormatNodeAction) {
-			formatActions.put(doAction.getClass().getName(), doAction);
-		}
+        } else if (doAction instanceof FormatNodeAction) {
+            formatActions.put(doAction.getClass().getName(), doAction);
+        }
 
-	}
+    }
 
-	public void startTransaction(String name) {
-	}
+    public void startTransaction(String name) {
+    }
 
-	public void endTransaction(String name) {
-	}
+    public void endTransaction(String name) {
+    }
 
-	public ActionPair filterAction(ActionPair pair) {
-		if (pair.getDoAction() instanceof NewNodeAction) {
-			NewNodeAction newNodeAction = (NewNodeAction) pair.getDoAction();
-			// add to a compound the newNodeAction and the other formats we
-			// have:
-			CompoundAction compound = new CompoundAction();
+    public ActionPair filterAction(ActionPair pair) {
+        if (pair.getDoAction() instanceof NewNodeAction) {
+            NewNodeAction newNodeAction = (NewNodeAction) pair.getDoAction();
+            // add to a compound the newNodeAction and the other formats we
+            // have:
+            CompoundAction compound = new CompoundAction();
             CompoundAction.Choice choice = new CompoundAction.Choice();
             choice.setNewNodeAction(newNodeAction);
-			compound.addChoice(choice);
-            
-			for (XmlAction formatAction : formatActions.values()) {
-				// deep copy:
-				NodeAction copiedFormatAction = (NodeAction) Tools.deepCopy(formatAction);
-				copiedFormatAction.setNode(newNodeAction.getNewId());
+            compound.addChoice(choice);
+
+            for (XmlAction formatAction : formatActions.values()) {
+                // deep copy:
+                NodeAction copiedFormatAction = (NodeAction) Tools.deepCopy(formatAction);
+                copiedFormatAction.setNode(newNodeAction.getNewId());
                 CompoundAction.Choice copiedFormatActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(copiedFormatAction);
-				compound.addChoice(copiedFormatActionChoice);
-			}
-			ActionPair newPair = new ActionPair(compound, pair.getUndoAction());
-			return newPair;
-		}
-		return pair;
-	}
+                compound.addChoice(copiedFormatActionChoice);
+            }
+            ActionPair newPair = new ActionPair(compound, pair.getUndoAction());
+            return newPair;
+        }
+        return pair;
+    }
 
 }

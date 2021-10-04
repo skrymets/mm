@@ -19,30 +19,25 @@
  *
  * Created on 22.07.2004
  */
- /*$Id: HookDescriptorPluginAction.java,v 1.1.2.2 2008/01/13 20:55:34 christianfoltin Exp $*/
+/*$Id: HookDescriptorPluginAction.java,v 1.1.2.2 2008/01/13 20:55:34 christianfoltin Exp $*/
 package freemind.extensions;
 
+import freemind.controller.actions.generated.instance.*;
+import freemind.frok.patches.JIBXGeneratedUtil;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
-
-import freemind.controller.actions.generated.instance.Plugin;
-import freemind.controller.actions.generated.instance.PluginAction;
-import freemind.controller.actions.generated.instance.PluginMenu;
-import freemind.controller.actions.generated.instance.PluginMode;
-import freemind.controller.actions.generated.instance.PluginProperty;
-import freemind.frok.patches.JIBXGeneratedUtil;
-import java.util.List;
 
 /**
  * This is an information class that holds all outer properties of a hook, i.e.
  * all contents of the XML description file.
- *
+ * <p>
  * Don't use this class for anything except for the implementation of a
  * HookFactory.
  *
  * @author foltin
- *
  */
 public class HookDescriptorPluginAction extends HookDescriptorBase {
 
@@ -52,7 +47,7 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
     private PluginAction pluginAction;
 
     public HookDescriptorPluginAction(String xmlPluginFile,
-            Plugin pluginBase, PluginAction pluginAction) {
+                                      Plugin pluginBase, PluginAction pluginAction) {
         super(pluginBase, xmlPluginFile);
         this.pluginAction = pluginAction;
         if (pluginAction.getName() == null) {
@@ -128,6 +123,7 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
     }
 
     /**
+     *
      */
     public Properties getProperties() {
         return properties;
@@ -135,7 +131,7 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
 
     /**
      * @return whether or not the plugin can be on/off and this should be
-     *         displayed in the menus.
+     * displayed in the menus.
      */
     public boolean isSelectable() {
         return pluginAction.getIsSelectable();

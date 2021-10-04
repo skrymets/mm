@@ -34,6 +34,7 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame.StylePatternFrameType;
 import freemind.view.mindmapview.MapView;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,305 +42,295 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 
-/** */
 @SuppressWarnings("serial")
-public class ChooseFormatPopupDialog extends JDialog implements TextTranslator,
-		KeyListener {
+@Log4j2
+public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, KeyListener {
 
-	/**
-	 * @author foltin
-	 * @date 21.02.2014
-	 */
-	private final class DemoMapFeedback extends ExtendedMapFeedbackAdapter {
-		MindMap mMap;
+    /**
+     * @author foltin
+     * @date 21.02.2014
+     */
+    private final class DemoMapFeedback extends ExtendedMapFeedbackAdapter {
+        MindMap mMap;
 
-		@Override
-		public MindMap getMap() {
-			return mMap;
-		}
-		
-		/* (non-Javadoc)
-		 * @see freemind.modes.MapFeedbackAdapter#getDefaultFont()
-		 */
-		@Override
-		public Font getDefaultFont() {
-			return mController.getController().getDefaultFont();
-		}
-		
-	}
+        @Override
+        public MindMap getMap() {
+            return mMap;
+        }
 
-	public static final int CANCEL = -1;
+        @Override
+        public Font getDefaultFont() {
+            return mController.getController().getDefaultFont();
+        }
 
-	public static final int OK = 1;
+    }
 
-	private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = "accessories.plugins.dialogs.ChooseFormatPopupDialog.window_storage";
+    public static final int CANCEL = -1;
 
-	private int result = CANCEL;
+    public static final int OK = 1;
 
-	private javax.swing.JPanel jContentPane = null;
+    private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = "accessories.plugins.dialogs.ChooseFormatPopupDialog.window_storage";
 
-	private MindMapController mController;
+    private int result = CANCEL;
 
-	private JButton jCancelButton;
+    private javax.swing.JPanel jContentPane = null;
 
-	private JButton jOKButton;
+    private MindMapController mController;
 
-	private StylePatternFrame mStylePatternFrame;
+    private JButton jCancelButton;
 
-	private MapView mDemoFrame;
+    private JButton jOKButton;
 
-	private MindMapNode mDemoNode;
+    private StylePatternFrame mStylePatternFrame;
 
-	protected static org.slf4j.Logger logger = null;
+    private MapView mDemoFrame;
 
-	private MindMapNode mNode;
+    private MindMapNode mDemoNode;
 
-	private DemoMapFeedback mDemoNodeMapFeedback;
+    private MindMapNode mNode;
 
-	/**
-	 * This constructor is used, if you need the user to enter a pattern
-	 * generally.
-	 * @param pNode if this not null, the text resp. children are taken for format demonstration.
-	 * 
-	 */
-	public ChooseFormatPopupDialog(JFrame caller, MindMapController controller,
-			String dialogTitle, Pattern pattern, MindMapNode pNode) {
-		super(caller);
-		this.mController = controller;
-		mNode = pNode;
-		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
-		initialize(dialogTitle);
-		mStylePatternFrame.setPattern(pattern);
-		mStylePatternFrame.addListeners();
-	}
+    private DemoMapFeedback mDemoNodeMapFeedback;
 
-	/**
-	 * This method initializes this
-	 * 
-	 * @return void
-	 */
-	private void initialize(String dialogTitle) {
+    /**
+     * This constructor is used, if you need the user to enter a pattern
+     * generally.
+     *
+     * @param pNode if this not null, the text resp. children are taken for format demonstration.
+     */
+    public ChooseFormatPopupDialog(JFrame caller, MindMapController controller, String dialogTitle, Pattern pattern, MindMapNode pNode) {
+        super(caller);
+        this.mController = controller;
+        mNode = pNode;
 
-		this.setTitle(mController.getText(dialogTitle));
-		JPanel contentPane = getJContentPane();
-		this.setContentPane(contentPane);
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent we) {
-				cancelPressed();
-			}
-		});
-		addKeyListener(this);
-		Action action = new AbstractAction() {
+        initialize(dialogTitle);
+        mStylePatternFrame.setPattern(pattern);
+        mStylePatternFrame.addListeners();
+    }
 
-			public void actionPerformed(ActionEvent arg0) {
-				cancelPressed();
-			}
-		};
-		Tools.addEscapeActionToDialog(this, action);
-		pack();
-		mController.decorateDialog(this, WINDOW_PREFERENCE_STORAGE_PROPERTY);
+    /**
+     * This method initializes this
+     *
+     * @return void
+     */
+    private void initialize(String dialogTitle) {
 
-	}
+        this.setTitle(mController.getText(dialogTitle));
+        JPanel contentPane = getJContentPane();
+        this.setContentPane(contentPane);
+        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                cancelPressed();
+            }
+        });
+        addKeyListener(this);
+        Action action = new AbstractAction() {
 
-	private void close() {
-		WindowConfigurationStorage storage = new WindowConfigurationStorage();
-		mController.storeDialogPositions(this, storage,
-				WINDOW_PREFERENCE_STORAGE_PROPERTY);
-		setVisible(false);
-		this.dispose();
-	}
+            public void actionPerformed(ActionEvent arg0) {
+                cancelPressed();
+            }
+        };
+        Tools.addEscapeActionToDialog(this, action);
+        pack();
+        mController.decorateDialog(this, WINDOW_PREFERENCE_STORAGE_PROPERTY);
 
-	private void okPressed() {
-		result = OK;
-		close();
-	}
+    }
 
-	private void cancelPressed() {
-		result = CANCEL;
-		close();
-	}
+    private void close() {
+        WindowConfigurationStorage storage = new WindowConfigurationStorage();
+        mController.storeDialogPositions(this, storage,
+                WINDOW_PREFERENCE_STORAGE_PROPERTY);
+        setVisible(false);
+        this.dispose();
+    }
 
-	/**
-	 * This method initializes jContentPane
-	 * 
-	 * @return javax.swing.JPanel
-	 */
-	private javax.swing.JPanel getJContentPane() {
-		if (jContentPane == null) {
-			jContentPane = new javax.swing.JPanel();
-			jContentPane.setLayout(new GridBagLayout());
-			/*
-			 * public GridBagConstraints(int gridx, int gridy, int gridwidth,
-			 * int gridheight, double weightx, double weighty, int anchor, int
-			 * fill, Insets insets, int ipadx, int ipady)
-			 */
-			jContentPane.add(new JScrollPane(getStylePatternFrame()),
-					new GridBagConstraints(0, 0, 2, 1, 2.0, 8.0,
-							GridBagConstraints.WEST, GridBagConstraints.BOTH,
-							new Insets(0, 0, 0, 0), 0, 0));
-			jContentPane.add(new JScrollPane(getDemoFrame()),
-					new GridBagConstraints(0, 1, 2, 1, 1.0, 1.0,
-							GridBagConstraints.WEST, GridBagConstraints.BOTH,
-							new Insets(0, 0, 0, 0), 0, 0));
-			jContentPane.add(getJOKButton(), new GridBagConstraints(0, 2, 1, 1,
-					1.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
-					new Insets(0, 0, 0, 0), 0, 0));
-			jContentPane.add(getJCancelButton(), new GridBagConstraints(1, 2,
-					1, 1, 1.0, 0.0, GridBagConstraints.EAST,
-					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			getRootPane().setDefaultButton(getJOKButton());
-		}
-		return jContentPane;
-	}
+    private void okPressed() {
+        result = OK;
+        close();
+    }
 
-	/**
-	 * @return
-	 */
-	private Component getDemoFrame() {
-		if (mDemoFrame == null) {
-			mDemoNodeMapFeedback = new DemoMapFeedback();
-			final MindMapMapModel mMap = new MindMapMapModel(mDemoNodeMapFeedback);
-			mDemoNodeMapFeedback.mMap = mMap;
-			Tools.StringReaderCreator readerCreator = new Tools.StringReaderCreator(
-					mController.getText("accessories/plugins/dialogs/ChooseFormatPopupDialog.DemoNode"));
-			try {
-				MindMapNode root = mMap.loadTree(readerCreator,
-						MapAdapter.sDontAskInstance);
-				mMap.setRoot(root);
-				mDemoNode = (MindMapNode) root.getChildAt(0);
-			} catch (XMLParseException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			} catch (IOException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-			mDemoFrame = new MapView(mMap, mDemoNodeMapFeedback);
-			mDemoFrame.centerNode(mDemoFrame.getNodeView(mDemoNode));
-		}
-		return mDemoFrame;
-	}
+    private void cancelPressed() {
+        result = CANCEL;
+        close();
+    }
 
-	private Component getStylePatternFrame() {
-		if (mStylePatternFrame == null) {
-			mStylePatternFrame = new StylePatternFrame(this, mController,
-					StylePatternFrameType.WITHOUT_NAME_AND_CHILDS) {
-				Pattern mResetPattern = StylePatternFactory.getRemoveAllPattern();
+    /**
+     * This method initializes jContentPane
+     *
+     * @return javax.swing.JPanel
+     */
+    private javax.swing.JPanel getJContentPane() {
+        if (jContentPane == null) {
+            jContentPane = new javax.swing.JPanel();
+            jContentPane.setLayout(new GridBagLayout());
+            /*
+             * public GridBagConstraints(int gridx, int gridy, int gridwidth,
+             * int gridheight, double weightx, double weighty, int anchor, int
+             * fill, Insets insets, int ipadx, int ipady)
+             */
+            jContentPane.add(new JScrollPane(getStylePatternFrame()),
+                    new GridBagConstraints(0, 0, 2, 1, 2.0, 8.0,
+                            GridBagConstraints.WEST, GridBagConstraints.BOTH,
+                            new Insets(0, 0, 0, 0), 0, 0));
+            jContentPane.add(new JScrollPane(getDemoFrame()),
+                    new GridBagConstraints(0, 1, 2, 1, 1.0, 1.0,
+                            GridBagConstraints.WEST, GridBagConstraints.BOTH,
+                            new Insets(0, 0, 0, 0), 0, 0));
+            jContentPane.add(getJOKButton(), new GridBagConstraints(0, 2, 1, 1,
+                    1.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
+                    new Insets(0, 0, 0, 0), 0, 0));
+            jContentPane.add(getJCancelButton(), new GridBagConstraints(1, 2,
+                    1, 1, 1.0, 0.0, GridBagConstraints.EAST,
+                    GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+            getRootPane().setDefaultButton(getJOKButton());
+        }
+        return jContentPane;
+    }
 
-				@Override
-				public void propertyChange(PropertyChangeEvent pEvt) {
-					super.propertyChange(pEvt);
-					if(mNode != null) {
-						mDemoNode.setText(mNode.getText());
-					}
-					mDemoNodeMapFeedback.select(mDemoNode, Tools.getVectorWithSingleElement(mDemoNode));
-					mDemoNodeMapFeedback.applyPattern(mDemoNode, mResetPattern);
-					Pattern pattern = mStylePatternFrame.getResultPattern();
-					mDemoNodeMapFeedback.applyPattern(mDemoNode, pattern);
-					mDemoFrame.getNodeView(mDemoNode).updateAll();
-					mDemoFrame.doLayout();
-				}
-			};
-			mStylePatternFrame.init();
+    /**
+     * @return
+     */
+    private Component getDemoFrame() {
+        if (mDemoFrame == null) {
+            mDemoNodeMapFeedback = new DemoMapFeedback();
+            final MindMapMapModel mMap = new MindMapMapModel(mDemoNodeMapFeedback);
+            mDemoNodeMapFeedback.mMap = mMap;
+            Tools.StringReaderCreator readerCreator = new Tools.StringReaderCreator(
+                    mController.getText("accessories/plugins/dialogs/ChooseFormatPopupDialog.DemoNode"));
+            try {
+                MindMapNode root = mMap.loadTree(readerCreator,
+                        MapAdapter.sDontAskInstance);
+                mMap.setRoot(root);
+                mDemoNode = (MindMapNode) root.getChildAt(0);
+            } catch (XMLParseException e) {
+                freemind.main.Resources.getInstance().logException(e);
+            } catch (IOException e) {
+                freemind.main.Resources.getInstance().logException(e);
+            }
+            mDemoFrame = new MapView(mMap, mDemoNodeMapFeedback);
+            mDemoFrame.centerNode(mDemoFrame.getNodeView(mDemoNode));
+        }
+        return mDemoFrame;
+    }
 
-		}
-		return mStylePatternFrame;
-	}
+    private Component getStylePatternFrame() {
+        if (mStylePatternFrame == null) {
+            mStylePatternFrame = new StylePatternFrame(this, mController,
+                    StylePatternFrameType.WITHOUT_NAME_AND_CHILDS) {
+                Pattern mResetPattern = StylePatternFactory.getRemoveAllPattern();
 
-	/**
-	 * This method initializes jButton
-	 * 
-	 * @return javax.swing.JButton
-	 */
-	private JButton getJOKButton() {
-		if (jOKButton == null) {
-			jOKButton = new JButton();
+                @Override
+                public void propertyChange(PropertyChangeEvent pEvt) {
+                    super.propertyChange(pEvt);
+                    if (mNode != null) {
+                        mDemoNode.setText(mNode.getText());
+                    }
+                    mDemoNodeMapFeedback.select(mDemoNode, Tools.getVectorWithSingleElement(mDemoNode));
+                    mDemoNodeMapFeedback.applyPattern(mDemoNode, mResetPattern);
+                    Pattern pattern = mStylePatternFrame.getResultPattern();
+                    mDemoNodeMapFeedback.applyPattern(mDemoNode, pattern);
+                    mDemoFrame.getNodeView(mDemoNode).updateAll();
+                    mDemoFrame.doLayout();
+                }
+            };
+            mStylePatternFrame.init();
 
-			jOKButton.setAction(new AbstractAction() {
+        }
+        return mStylePatternFrame;
+    }
 
-				public void actionPerformed(ActionEvent e) {
-					okPressed();
-				}
+    /**
+     * This method initializes jButton
+     *
+     * @return javax.swing.JButton
+     */
+    private JButton getJOKButton() {
+        if (jOKButton == null) {
+            jOKButton = new JButton();
 
-			});
+            jOKButton.setAction(new AbstractAction() {
 
-			Tools.setLabelAndMnemonic(jOKButton, mController.getText("ok"));
-		}
-		return jOKButton;
-	}
+                public void actionPerformed(ActionEvent e) {
+                    okPressed();
+                }
 
-	/**
-	 * This method initializes jButton1
-	 * 
-	 * @return javax.swing.JButton
-	 */
-	private JButton getJCancelButton() {
-		if (jCancelButton == null) {
-			jCancelButton = new JButton();
-			jCancelButton.setAction(new AbstractAction() {
+            });
 
-				public void actionPerformed(ActionEvent e) {
-					cancelPressed();
-				}
-			});
-			Tools.setLabelAndMnemonic(jCancelButton,
-					mController.getText(("cancel")));
-		}
-		return jCancelButton;
-	}
+            Tools.setLabelAndMnemonic(jOKButton, mController.getText("ok"));
+        }
+        return jOKButton;
+    }
 
-	/**
-	 * @return Returns the result.
-	 */
-	public int getResult() {
-		return result;
-	}
+    /**
+     * This method initializes jButton1
+     *
+     * @return javax.swing.JButton
+     */
+    private JButton getJCancelButton() {
+        if (jCancelButton == null) {
+            jCancelButton = new JButton();
+            jCancelButton.setAction(new AbstractAction() {
 
-	public String getText(String pKey) {
-		return mController.getText(pKey);
-	}
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed();
+                }
+            });
+            Tools.setLabelAndMnemonic(jCancelButton,
+                    mController.getText(("cancel")));
+        }
+        return jCancelButton;
+    }
 
-	public Pattern getPattern() {
-		return mStylePatternFrame.getResultPattern();
-	}
+    /**
+     * @return Returns the result.
+     */
+    public int getResult() {
+        return result;
+    }
 
-	public Pattern getPattern(Pattern copyIntoPattern) {
-		return mStylePatternFrame.getResultPattern(copyIntoPattern);
-	}
+    public String getText(String pKey) {
+        return mController.getText(pKey);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-	 */
-	public void keyPressed(KeyEvent keyEvent) {
-		System.out.println("key pressed: " + keyEvent);
-		switch (keyEvent.getKeyCode()) {
-		case KeyEvent.VK_ESCAPE:
-			cancelPressed();
-			keyEvent.consume();
-			break;
-		}
-	}
+    public Pattern getPattern() {
+        return mStylePatternFrame.getResultPattern();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
-	 */
-	public void keyReleased(KeyEvent keyEvent) {
-		System.out.println("keyReleased: " + keyEvent);
-	}
+    public Pattern getPattern(Pattern copyIntoPattern) {
+        return mStylePatternFrame.getResultPattern(copyIntoPattern);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-	 */
-	public void keyTyped(KeyEvent keyEvent) {
-		System.out.println("keyTyped: " + keyEvent);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
+    public void keyPressed(KeyEvent keyEvent) {
+        System.out.println("key pressed: " + keyEvent);
+        switch (keyEvent.getKeyCode()) {
+            case KeyEvent.VK_ESCAPE:
+                cancelPressed();
+                keyEvent.consume();
+                break;
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+     */
+    public void keyReleased(KeyEvent keyEvent) {
+        System.out.println("keyReleased: " + keyEvent);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     */
+    public void keyTyped(KeyEvent keyEvent) {
+        System.out.println("keyTyped: " + keyEvent);
+    }
 
 }

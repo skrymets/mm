@@ -1,22 +1,22 @@
 /*FreeMind - A Program for creating and viewing Mindmaps
-*Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
-*
-*See COPYING for Details
-*
-*This program is free software; you can redistribute it and/or
-*modify it under the terms of the GNU General Public License
-*as published by the Free Software Foundation; either version 2
-*of the License, or (at your option) any later version.
-*
-*This program is distributed in the hope that it will be useful,
-*but WITHOUT ANY WARRANTY; without even the implied warranty of
-*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*GNU General Public License for more details.
-*
-*You should have received a copy of the GNU General Public License
-*along with this program; if not, write to the Free Software
-*Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
+ *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
+ *
+ *See COPYING for Details
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 /*
  * Created on Mar 10, 2004
  *
@@ -43,7 +43,7 @@ import javax.swing.SpringLayout;
 
 /**
  * @author RReppel
- * 
+ * <p>
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
@@ -84,16 +84,16 @@ public class MapSharingWizardView extends JFrame {
     JButton backBtn = new JButton("Back");
 
     JPanel wizardButtonPanel = new JPanel(new SpringLayout()); //A panel
-                                                               // showing
-                                                               // "Close" "Back"
-                                                               // and
-                                                               // (optionally)
-                                                               // "Next"
-                                                               // buttons.
+    // showing
+    // "Close" "Back"
+    // and
+    // (optionally)
+    // "Next"
+    // buttons.
 
     JPanel closeButtonPanel = new JPanel(new SpringLayout()); //A panel showing
-                                                              // just the
-                                                              // "Close" button.
+    // just the
+    // "Close" button.
 
     //ShareMapSelection GUI UI Components:
     //TODO: Update resource files.
@@ -144,7 +144,7 @@ public class MapSharingWizardView extends JFrame {
     JPanel acceptDeclineMessageDisplayPanel = new JPanel();
 
     JPanel buttonPanel = new JPanel(new SpringLayout()); //A panel showing just
-                                                         // the "Close" button.
+    // the "Close" button.
 
     public MapSharingWizardView() {
         setSize(WIDTH, HEIGHT);
@@ -178,7 +178,6 @@ public class MapSharingWizardView extends JFrame {
      * This is the GUI where the user chooses between sharing her/his map or
      * waiting for another user to share a map. It's the first screen of the
      * wizard.
-     *  
      */
     private void buildShareMapSelectionGui() {
         JPanel shareMapEditPanel = new JPanel();
@@ -266,7 +265,6 @@ public class MapSharingWizardView extends JFrame {
     /**
      * Builds the interface which prompts a user to select somebody to share a
      * map with.
-     *  
      */
     private void buildSelectUserGui() {
         JPanel selectUserEditPanel = new JPanel();
@@ -304,7 +302,6 @@ public class MapSharingWizardView extends JFrame {
     /**
      * Builds the interface which informs the user that a decision to accept map
      * sharing is pending.
-     *  
      */
     private void buildNotificationMessageGui(String title, String message) {
         //AwaitingMapSharing GUI UI Components:
@@ -372,7 +369,7 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * Adds the "Close", "Back" and "Next" buttons.
-     * 
+     *
      * @param panel
      * @param showBackButtion
      */
@@ -392,13 +389,13 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * Adds the "Close", "Back" and "Next" buttons.
-     * 
+     *
      * @param panel
      */
     private void addCloseButton(JPanel panel) {
         closeButtonPanel = new JPanel(new SpringLayout()); //A panel showing
-                                                           // just the "Close"
-                                                           // button.
+        // just the "Close"
+        // button.
         closeButtonPanel.setSize(WIDTH, COMMANDPANEL_HEIGHT);
         closeButtonPanel.setBackground(BACKGROUNDCOLOR);
         closeButtonPanel.add(closeBtn);
@@ -411,7 +408,7 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * Adds the "Accept" and "Decline" buttons.
-     * 
+     *
      * @param panel
      */
     private void addAcceptDeclineButtons(JPanel panel) {
@@ -427,7 +424,6 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * Removes any previous user interfaces shown on the wizard's content pane
-     *  
      */
     private void removeUIs() {
         this.getContentPane().remove(shareMapSelectionPanel);
@@ -447,11 +443,11 @@ public class MapSharingWizardView extends JFrame {
         acceptDeclineMessageDisplayPanel = new JPanel();
 
         wizardButtonPanel = new JPanel(new SpringLayout()); //A panel showing
-                                                            // "Close" "Back"
-                                                            // and (optionally)
-                                                            // "Next" buttons.
+        // "Close" "Back"
+        // and (optionally)
+        // "Next" buttons.
         buttonPanel = new JPanel(new SpringLayout()); //A panel showing just
-                                                      // the "Close" button.
+        // the "Close" button.
 
     }
 
@@ -536,7 +532,7 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * True if the user has chosen to share his own map with another user.
-     * 
+     *
      * @return
      */
     public boolean isShareMapSelected() {
@@ -545,7 +541,7 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * True if the user has chosen to wait for another user to share a map.
-     * 
+     *
      * @return
      */
     public boolean isWaitForMapSharingSelected() {
@@ -554,7 +550,7 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * The name of the Jabber server to which to connect.
-     * 
+     *
      * @return
      */
     public String getServername() {
@@ -564,7 +560,7 @@ public class MapSharingWizardView extends JFrame {
     /**
      * The name with which the user with which the user should connect to the
      * Jabber server.
-     * 
+     *
      * @return
      */
     public String getUsername() {
@@ -573,7 +569,7 @@ public class MapSharingWizardView extends JFrame {
 
     /**
      * The password for connecting to the Jabber server.
-     * 
+     *
      * @return
      */
     public String getPassword() {
@@ -583,7 +579,7 @@ public class MapSharingWizardView extends JFrame {
     /**
      * The user name of the use with whom to share a map, e.g.
      * "johnsmith@chat.jabbermind.com".
-     * 
+     *
      * @return
      */
     public String getMapShareUserName() {

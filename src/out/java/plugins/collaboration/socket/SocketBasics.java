@@ -45,260 +45,261 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.MapModule;
 
 public abstract class SocketBasics extends MindMapNodeHookAdapter implements
-		MapTitleContributor, FirstActionFilter {
+        MapTitleContributor, FirstActionFilter {
 
-	/**
-	 * 
-	 */
-	private static final String PLUGINS_COLLABORATION_SOCKET = "plugins/collaboration/socket/";
-	public final static String MASTER_HOOK_LABEL = PLUGINS_COLLABORATION_SOCKET
-			+ "socket_master_plugin";
-	public final static String SLAVE_HOOK_LABEL = PLUGINS_COLLABORATION_SOCKET
-			+ "socket_slave_plugin";
-	public final static String SLAVE_STARTER_LABEL = PLUGINS_COLLABORATION_SOCKET
-			+ "socket_slave_starter_plugin";
-	public final static String SLAVE_PUBLISH_LABEL = PLUGINS_COLLABORATION_SOCKET
-			+ "socket_publish_map_plugin";
-	protected static final Integer ROLE_MASTER = Integer.valueOf(0);
-	protected static final Integer ROLE_SLAVE = Integer.valueOf(1);
-	private static final String PORT_PROPERTY = "plugins.collaboration.socket.port";
-	private static final String SOCKET_BASICS_CLASS = "plugins.collaboration.socket.SocketBasics";
+    /**
+     *
+     */
+    private static final String PLUGINS_COLLABORATION_SOCKET = "plugins/collaboration/socket/";
+    public final static String MASTER_HOOK_LABEL = PLUGINS_COLLABORATION_SOCKET
+            + "socket_master_plugin";
+    public final static String SLAVE_HOOK_LABEL = PLUGINS_COLLABORATION_SOCKET
+            + "socket_slave_plugin";
+    public final static String SLAVE_STARTER_LABEL = PLUGINS_COLLABORATION_SOCKET
+            + "socket_slave_starter_plugin";
+    public final static String SLAVE_PUBLISH_LABEL = PLUGINS_COLLABORATION_SOCKET
+            + "socket_publish_map_plugin";
+    protected static final Integer ROLE_MASTER = Integer.valueOf(0);
+    protected static final Integer ROLE_SLAVE = Integer.valueOf(1);
+    private static final String PORT_PROPERTY = "plugins.collaboration.socket.port";
+    private static final String SOCKET_BASICS_CLASS = "plugins.collaboration.socket.SocketBasics";
 
-	protected static final String PASSWORD = SOCKET_BASICS_CLASS + ".password";
-	protected static final String PASSWORD_DESCRIPTION = SOCKET_BASICS_CLASS
-			+ ".password.description";
+    protected static final String PASSWORD = SOCKET_BASICS_CLASS + ".password";
+    protected static final String PASSWORD_DESCRIPTION = SOCKET_BASICS_CLASS
+            + ".password.description";
 
-	protected static final String PASSWORD_VERIFICATION = SOCKET_BASICS_CLASS
-			+ ".password_verification";
-	protected static final String PASSWORD_VERIFICATION_DESCRIPTION = SOCKET_BASICS_CLASS
-			+ ".password_verification_description";
+    protected static final String PASSWORD_VERIFICATION = SOCKET_BASICS_CLASS
+            + ".password_verification";
+    protected static final String PASSWORD_VERIFICATION_DESCRIPTION = SOCKET_BASICS_CLASS
+            + ".password_verification_description";
 
-	protected static final String HOST = SOCKET_BASICS_CLASS + ".host";
-	protected static final String HOST_DESCRIPTION = SOCKET_BASICS_CLASS
-			+ ".host.description";
+    protected static final String HOST = SOCKET_BASICS_CLASS + ".host";
+    protected static final String HOST_DESCRIPTION = SOCKET_BASICS_CLASS
+            + ".host.description";
 
-	protected static final String PORT = SOCKET_BASICS_CLASS + ".port";
-	protected static final String PORT_DESCRIPTION = PORT + ".description";
+    protected static final String PORT = SOCKET_BASICS_CLASS + ".port";
+    protected static final String PORT_DESCRIPTION = PORT + ".description";
 
-	protected static final String TITLE = SOCKET_BASICS_CLASS + ".title";
-	protected static final String UNKNWON_HOST_EXCEPTION_MESSAGE = SOCKET_BASICS_CLASS
-			+ ".unknown_host_exception";
-	protected static final String CONNECT_EXCEPTION_MESSAGE = SOCKET_BASICS_CLASS
-			+ ".connection_exception";
-	protected static final String SOCKET_CREATION_EXCEPTION_MESSAGE = SOCKET_BASICS_CLASS
-			+ ".socket_creation_exception";;
-	public static final int SOCKET_TIMEOUT_IN_MILLIES = 500;
+    protected static final String TITLE = SOCKET_BASICS_CLASS + ".title";
+    protected static final String UNKNWON_HOST_EXCEPTION_MESSAGE = SOCKET_BASICS_CLASS
+            + ".unknown_host_exception";
+    protected static final String CONNECT_EXCEPTION_MESSAGE = SOCKET_BASICS_CLASS
+            + ".connection_exception";
+    protected static final String SOCKET_CREATION_EXCEPTION_MESSAGE = SOCKET_BASICS_CLASS
+            + ".socket_creation_exception";
+    ;
+    public static final int SOCKET_TIMEOUT_IN_MILLIES = 500;
 
-	protected String mPassword;
-	protected boolean mFilterEnabled = true;
-	private String mUserName;
+    protected String mPassword;
+    protected boolean mFilterEnabled = true;
+    private String mUserName;
 
-	public SocketBasics() {
-		super();
-		mUserName = Tools.getUserName();
-	}
+    public SocketBasics() {
+        super();
+        mUserName = Tools.getUserName();
+    }
 
-	protected ExtendedMapFeedback getMapFeedback() {
-		return getMindMapController();
-	}
-	
-	/**
-	 * @return ROLE_MASTER OR ROLE_SLAVE
-	 */
-	public abstract Integer getRole();
+    protected ExtendedMapFeedback getMapFeedback() {
+        return getMindMapController();
+    }
 
-	public void startupMapHook() {
-		super.startupMapHook();
-		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
-		getMindMapController().getController()
-				.registerMapTitleContributor(this);
-	}
+    /**
+     * @return ROLE_MASTER OR ROLE_SLAVE
+     */
+    public abstract Integer getRole();
 
-	public void shutdownMapHook() {
-		Controller controller = getMindMapController().getController();
-		controller.deregisterMapTitleContributor(this);
-		controller.setTitle();
-		super.shutdownMapHook();
-	}
+    public void startupMapHook() {
+        super.startupMapHook();
+        if (logger == null) {
+            logger = freemind.main.Resources.getInstance().getLogger(
+                    this.getClass().getName());
+        }
+        getMindMapController().getController()
+                .registerMapTitleContributor(this);
+    }
 
-	public static void togglePermanentHook(MindMapController controller,
-			final String hookName) {
-		MindMapNode rootNode = controller.getRootNode();
-		List<MindMapNode> selecteds = Arrays.asList(new MindMapNode[] { rootNode });
-		controller.addHook(rootNode, selecteds, hookName, null);
-	}
+    public void shutdownMapHook() {
+        Controller controller = getMindMapController().getController();
+        controller.deregisterMapTitleContributor(this);
+        controller.setTitle();
+        super.shutdownMapHook();
+    }
 
-	protected void setPortProperty(final NumberProperty portProperty) {
-		getMapFeedback().setProperty(PORT_PROPERTY,
-				portProperty.getValue());
-	}
+    public static void togglePermanentHook(MindMapController controller,
+                                           final String hookName) {
+        MindMapNode rootNode = controller.getRootNode();
+        List<MindMapNode> selecteds = Arrays.asList(new MindMapNode[]{rootNode});
+        controller.addHook(rootNode, selecteds, hookName, null);
+    }
 
-	protected NumberProperty getPortProperty() {
-		final NumberProperty portProperty = new NumberProperty(
-				PORT_DESCRIPTION, PORT, 1024, 32767, 1);
-		// fill values:
-		portProperty.setValue(""
-				+ getMapFeedback().getIntProperty(
-						PORT_PROPERTY, 9001));
-		return portProperty;
-	}
+    protected void setPortProperty(final NumberProperty portProperty) {
+        getMapFeedback().setProperty(PORT_PROPERTY,
+                portProperty.getValue());
+    }
 
-	public abstract int getPort();
+    protected NumberProperty getPortProperty() {
+        final NumberProperty portProperty = new NumberProperty(
+                PORT_DESCRIPTION, PORT, 1024, 32767, 1);
+        // fill values:
+        portProperty.setValue(""
+                + getMapFeedback().getIntProperty(
+                PORT_PROPERTY, 9001));
+        return portProperty;
+    }
 
-	public String getMapTitle(String pOldTitle, MapModule pMapModule,
-			MindMap pModel) {
-		if (pMapModule.getModeController() != getMapFeedback()) {
-			return pOldTitle;
-		}
-		CollaborationUserInformation userInfo = getMasterInformation(getMapFeedback());
-		if (userInfo == null) {
-			return pOldTitle;
-		}
-		return pOldTitle
-				+ Resources.getInstance().format(
-						TITLE,
-						new Object[] { this.getRole(),
-								userInfo.getMasterHostname(),
-								userInfo.getMasterIp(),
-								new Integer(userInfo.getMasterPort()),
-								userInfo.getUserIds() });
-	}
+    public abstract int getPort();
 
-	public abstract CollaborationUserInformation getMasterInformation(ExtendedMapFeedback pController);
+    public String getMapTitle(String pOldTitle, MapModule pMapModule,
+                              MindMap pModel) {
+        if (pMapModule.getModeController() != getMapFeedback()) {
+            return pOldTitle;
+        }
+        CollaborationUserInformation userInfo = getMasterInformation(getMapFeedback());
+        if (userInfo == null) {
+            return pOldTitle;
+        }
+        return pOldTitle
+                + Resources.getInstance().format(
+                TITLE,
+                new Object[]{this.getRole(),
+                        userInfo.getMasterHostname(),
+                        userInfo.getMasterIp(),
+                        new Integer(userInfo.getMasterPort()),
+                        userInfo.getUserIds()});
+    }
 
-	public String getPassword() {
-		return mPassword;
-	}
+    public abstract CollaborationUserInformation getMasterInformation(ExtendedMapFeedback pController);
 
-	/**
-	 * Deep search inside the {@link XmlAction} to find a hook (i.e. myself).
-	 * They should not be send over the wire.
-	 * 
-	 * @param pAction
-	 * @param pSearchString
-	 * @return
-	 */
-	private boolean visit(XmlAction pAction, String pSearchString) {
-		if (pAction instanceof CompoundAction) {
-			CompoundAction compound = (CompoundAction) pAction;
-			boolean result = false;
-			for (Iterator<XmlAction> it = compound.getListChoiceList().iterator(); it
-					.hasNext();) {
-				XmlAction action = it.next();
-				result |= visit(action, pSearchString);
-			}
-			return result;
-		}
-		if (pAction instanceof HookNodeAction) {
-			HookNodeAction hookNodeAction = (HookNodeAction) pAction;
-			if (Tools.safeEquals(hookNodeAction.getHookName(), pSearchString)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public String getPassword() {
+        return mPassword;
+    }
 
-	/**
-	 * Try to lock, send update package to master (perhaps, myself), execute
-	 * action and unlock
-	 */
-	public ActionPair filterAction(ActionPair pPair) {
-		if (pPair == null || !mFilterEnabled)
-			return pPair;
-		// Don't send any hook instantiations to others.
-		if (visit(pPair.getDoAction(), SocketConnectionHook.SLAVE_HOOK_LABEL)) {
-			return pPair;
-		}
-		if (visit(pPair.getDoAction(), MindMapMaster.MASTER_HOOK_LABEL)) {
-			return pPair;
-		}
-		String doAction = Tools.marshall(pPair.getDoAction());
-		String undoAction = Tools.marshall(
-				pPair.getUndoAction());
-		logger.info("Require lock for command: " + doAction);
-		try {
-			String lockId = lock(getUserName(), getMapFeedback());
-			/*
-			 * Blocking broadcast call: Client: send to master (who broadcasts
-			 * the command afterwards), Master: send to all clients.
-			 */
-			broadcastCommand(doAction, undoAction, lockId, getMapFeedback());
-		} catch (UnableToGetLockException e) {
-			freemind.main.Resources.getInstance().logException(e);
-			return getEmptyActionPair();
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-			return getEmptyActionPair();
-		} finally {
-			unlock(getMapFeedback());
-		}
-		return pPair;
-	}
+    /**
+     * Deep search inside the {@link XmlAction} to find a hook (i.e. myself).
+     * They should not be send over the wire.
+     *
+     * @param pAction
+     * @param pSearchString
+     * @return
+     */
+    private boolean visit(XmlAction pAction, String pSearchString) {
+        if (pAction instanceof CompoundAction) {
+            CompoundAction compound = (CompoundAction) pAction;
+            boolean result = false;
+            for (Iterator<XmlAction> it = compound.getListChoiceList().iterator(); it
+                    .hasNext(); ) {
+                XmlAction action = it.next();
+                result |= visit(action, pSearchString);
+            }
+            return result;
+        }
+        if (pAction instanceof HookNodeAction) {
+            HookNodeAction hookNodeAction = (HookNodeAction) pAction;
+            if (Tools.safeEquals(hookNodeAction.getHookName(), pSearchString)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public ActionPair getEmptyActionPair() {
-		return new ActionPair(new CompoundAction(), new CompoundAction());
-	}
+    /**
+     * Try to lock, send update package to master (perhaps, myself), execute
+     * action and unlock
+     */
+    public ActionPair filterAction(ActionPair pPair) {
+        if (pPair == null || !mFilterEnabled)
+            return pPair;
+        // Don't send any hook instantiations to others.
+        if (visit(pPair.getDoAction(), SocketConnectionHook.SLAVE_HOOK_LABEL)) {
+            return pPair;
+        }
+        if (visit(pPair.getDoAction(), MindMapMaster.MASTER_HOOK_LABEL)) {
+            return pPair;
+        }
+        String doAction = Tools.marshall(pPair.getDoAction());
+        String undoAction = Tools.marshall(
+                pPair.getUndoAction());
+        logger.info("Require lock for command: " + doAction);
+        try {
+            String lockId = lock(getUserName(), getMapFeedback());
+            /*
+             * Blocking broadcast call: Client: send to master (who broadcasts
+             * the command afterwards), Master: send to all clients.
+             */
+            broadcastCommand(doAction, undoAction, lockId, getMapFeedback());
+        } catch (UnableToGetLockException e) {
+            freemind.main.Resources.getInstance().logException(e);
+            return getEmptyActionPair();
+        } catch (Exception e) {
+            freemind.main.Resources.getInstance().logException(e);
+            return getEmptyActionPair();
+        } finally {
+            unlock(getMapFeedback());
+        }
+        return pPair;
+    }
 
-	@SuppressWarnings("serial")
-	protected static class UnableToGetLockException extends Exception {
+    public ActionPair getEmptyActionPair() {
+        return new ActionPair(new CompoundAction(), new CompoundAction());
+    }
 
-	}
+    @SuppressWarnings("serial")
+    protected static class UnableToGetLockException extends Exception {
 
-	/**
-	 * @param pUserName
-	 *            the user the lock belongs to.
-	 * @param pController TODO
-	 * @return The id associated with this lock.
-	 * @throws UnableToGetLockException
-	 * @throws InterruptedException
-	 */
-	protected abstract String lock(String pUserName, ExtendedMapFeedback pController)
-			throws UnableToGetLockException, InterruptedException;
+    }
 
-	/**
-	 * @return the user's name (to acquire a named lock)
-	 */
-	protected String getUserName() {
-		return mUserName;
-	}
+    /**
+     * @param pUserName   the user the lock belongs to.
+     * @param pController TODO
+     * @return The id associated with this lock.
+     * @throws UnableToGetLockException
+     * @throws InterruptedException
+     */
+    protected abstract String lock(String pUserName, ExtendedMapFeedback pController)
+            throws UnableToGetLockException, InterruptedException;
 
-	/**
-	 * Should send the command to the master, or, if the master itself, sends it
-	 * to the clients.
-	 * @param pController TODO
-	 * 
-	 * @throws Exception
-	 */
-	protected abstract void broadcastCommand(String pDoAction,
-			String pUndoAction, String pLockId, ExtendedMapFeedback pController) throws Exception;
+    /**
+     * @return the user's name (to acquire a named lock)
+     */
+    protected String getUserName() {
+        return mUserName;
+    }
 
-	/**
-	 * Unlocks the previous lock
-	 * @param pController TODO
-	 */
-	protected abstract void unlock(ExtendedMapFeedback pController);
+    /**
+     * Should send the command to the master, or, if the master itself, sends it
+     * to the clients.
+     *
+     * @param pController TODO
+     * @throws Exception
+     */
+    protected abstract void broadcastCommand(String pDoAction,
+                                             String pUndoAction, String pLockId, ExtendedMapFeedback pController) throws Exception;
 
-	protected void registerFilter() {
-		logger.info("Registering filter");
-		getMapFeedback().getActionRegistry().registerFilter(this);
-	}
+    /**
+     * Unlocks the previous lock
+     *
+     * @param pController TODO
+     */
+    protected abstract void unlock(ExtendedMapFeedback pController);
 
-	protected void deregisterFilter() {
-		logger.info("Deregistering filter");
-		getMapFeedback().getActionRegistry().deregisterFilter(this);
-	}
+    protected void registerFilter() {
+        logger.info("Registering filter");
+        getMapFeedback().getActionRegistry().registerFilter(this);
+    }
 
-	protected void executeTransaction(final ActionPair pair, ExtendedMapFeedback pController) {
-		mFilterEnabled = false;
-		try {
-			getMapFeedback().doTransaction("update", pair);
-		} finally {
-			mFilterEnabled = true;
-		}
-	}
+    protected void deregisterFilter() {
+        logger.info("Deregistering filter");
+        getMapFeedback().getActionRegistry().deregisterFilter(this);
+    }
+
+    protected void executeTransaction(final ActionPair pair, ExtendedMapFeedback pController) {
+        mFilterEnabled = false;
+        try {
+            getMapFeedback().doTransaction("update", pair);
+        } finally {
+            mFilterEnabled = true;
+        }
+    }
 
 
 }

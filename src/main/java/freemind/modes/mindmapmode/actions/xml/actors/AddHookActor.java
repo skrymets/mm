@@ -1,21 +1,21 @@
 /*FreeMind - A Program for creating and viewing Mindmaps
-*Copyright (C) 2000-2014 Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and others.
-*
-*See COPYING for Details
-*
-*This program is free software; you can redistribute it and/or
-*modify it under the terms of the GNU General Public License
-*as published by the Free Software Foundation; either version 2
-*of the License, or (at your option) any later version.
-*
-*This program is distributed in the hope that it will be useful,
-*but WITHOUT ANY WARRANTY; without even the implied warranty of
-*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*GNU General Public License for more details.
-*
-*You should have received a copy of the GNU General Public License
-*along with this program; if not, write to the Free Software
-*Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *Copyright (C) 2000-2014 Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and others.
+ *
+ *See COPYING for Details
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package freemind.modes.mindmapmode.actions.xml.actors;
 
@@ -29,6 +29,7 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.ViewAbstraction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.view.mindmapview.NodeView;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.Map;
 import java.util.*;
@@ -37,29 +38,17 @@ import java.util.*;
  * @author foltin
  * @date 01.04.2014
  */
+@Log4j2
 public class AddHookActor extends XmlActorAdapter {
 
-    protected static org.slf4j.Logger logger = null;
-
-    /**
-     * @param pMapFeedback
-     */
     public AddHookActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
-        if (logger == null) {
-            logger = freemind.main.Resources.getInstance().getLogger(
-                    this.getClass().getName());
-        }
     }
 
-    /**
-     */
     private HookFactory getHookFactory() {
         return getExMapFeedback().getHookFactory();
     }
 
-    /**
-     */
     private HookInstanciationMethod getInstanciationMethod(String hookName) {
         HookFactory factory = getHookFactory();
         // determine instanciation method
@@ -88,7 +77,7 @@ public class AddHookActor extends XmlActorAdapter {
     }
 
     private XmlAction createHookNodeUndoAction(MindMapNode focussed,
-            List<MindMapNode> selecteds, String hookName) {
+                                               List<MindMapNode> selecteds, String hookName) {
         CompoundAction undoAction = new CompoundAction();
         HookNodeAction hookNodeAction = createHookNodeAction(focussed, selecteds, hookName, null);
         CompoundAction.Choice hookNodeActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(hookNodeAction);
@@ -115,7 +104,7 @@ public class AddHookActor extends XmlActorAdapter {
                                 if (Tools.safeEquals(parameters.getName(),
                                         PermanentNodeHookAdapter.PARAMETERS)) {
                                     // standard save mechanism
-                                    for (Iterator<String> it = parameters.enumerateAttributeNames(); it.hasNext();) {
+                                    for (Iterator<String> it = parameters.enumerateAttributeNames(); it.hasNext(); ) {
                                         String name = it.next();
                                         NodeChildParameter nodeHookChild = new NodeChildParameter();
                                         nodeHookChild.setKey(name);
@@ -125,18 +114,18 @@ public class AddHookActor extends XmlActorAdapter {
                                     }
 
                                 } else {
-                                    logger.warn("Unusual save mechanism, implement me.");
+                                    log.warn("Unusual save mechanism, implement me.");
                                 }
                             } else {
-                                logger.warn("Unusual save mechanism, implement me.");
+                                log.warn("Unusual save mechanism, implement me.");
                             }
                         }
                         /*
-						 * fc, 30.7.2004: we have to break. otherwise the
-						 * collection is modified at two points (i.e., the
-						 * collection is not valid anymore after removing one
-						 * element). But this is no problem, as there exist only
-						 * "once" plugins currently.
+                         * fc, 30.7.2004: we have to break. otherwise the
+                         * collection is modified at two points (i.e., the
+                         * collection is not valid anymore after removing one
+                         * element). But this is no problem, as there exist only
+                         * "once" plugins currently.
                          */
                         break;
                     }
@@ -147,7 +136,7 @@ public class AddHookActor extends XmlActorAdapter {
     }
 
     public HookNodeAction createHookNodeAction(MindMapNode focussed,
-            List<MindMapNode> selecteds, String hookName, Properties pHookProperties) {
+                                               List<MindMapNode> selecteds, String hookName, Properties pHookProperties) {
         HookNodeAction hookNodeAction = new HookNodeAction();
         hookNodeAction.setNode(getNodeID(focussed));
         hookNodeAction.setHookName(hookName);
@@ -210,8 +199,8 @@ public class AddHookActor extends XmlActorAdapter {
     }
 
     private void invoke(MindMapNode focussed, List<MindMapNode> selecteds, String hookName,
-            XMLElement pXmlParent) {
-        logger.trace("invoke(selecteds) called.");
+                        XMLElement pXmlParent) {
+        log.trace("invoke(selecteds) called.");
         HookInstanciationMethod instMethod = getInstanciationMethod(hookName);
         // get destination nodes
         Collection<MindMapNode> destinationNodes = instMethod.getDestinationNodes(getExMapFeedback(), focussed, selecteds);
@@ -220,7 +209,7 @@ public class AddHookActor extends XmlActorAdapter {
         // test if hook already present
         if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
             // remove the hook:
-            for (Iterator<MindMapNode> i = destinationNodes.iterator(); i.hasNext();) {
+            for (Iterator<MindMapNode> i = destinationNodes.iterator(); i.hasNext(); ) {
                 MindMapNode currentDestinationNode = i.next();
                 // find the hook ini the current node, if present:
                 for (PermanentNodeHook hook : currentDestinationNode.getActivatedHooks()) {
@@ -228,11 +217,11 @@ public class AddHookActor extends XmlActorAdapter {
                         currentDestinationNode.removeHook(hook);
                         getExMapFeedback().nodeChanged(currentDestinationNode);
                         /*
-						 * fc, 30.7.2004: we have to break. otherwise the
-						 * collection is modified at two points (i.e., the
-						 * collection is not valid anymore after removing one
-						 * element). But this is no problem, as there exist only
-						 * "once" plugins currently.
+                         * fc, 30.7.2004: we have to break. otherwise the
+                         * collection is modified at two points (i.e., the
+                         * collection is not valid anymore after removing one
+                         * element). But this is no problem, as there exist only
+                         * "once" plugins currently.
                          */
                         break;
                     }
@@ -241,9 +230,8 @@ public class AddHookActor extends XmlActorAdapter {
         } else {
             // add the hook
             for (MindMapNode currentDestinationNode : destinationNodes) {
-                NodeHook hook = getExMapFeedback().createNodeHook(hookName,
-                        currentDestinationNode);
-                logger.trace("created hook " + hookName);
+                NodeHook hook = getExMapFeedback().createNodeHook(hookName, currentDestinationNode);
+                log.trace("created hook " + hookName);
                 // set parameters, if present
                 if (pXmlParent != null && hook instanceof PermanentNodeHook) {
                     ((PermanentNodeHook) hook).loadFrom(pXmlParent);
@@ -252,7 +240,7 @@ public class AddHookActor extends XmlActorAdapter {
                 currentDestinationNode.invokeHook(hook);
                 if (hook instanceof PermanentNodeHook) {
                     PermanentNodeHook permHook = (PermanentNodeHook) hook;
-                    logger.trace("This is a permanent hook " + hookName);
+                    log.trace("This is a permanent hook " + hookName);
                     // the focused receives the focus:
                     if (currentDestinationNode == adaptedFocussedNode) {
                         permHook.onFocusNode(getNodeView(currentDestinationNode));
@@ -270,7 +258,6 @@ public class AddHookActor extends XmlActorAdapter {
 
     /**
      * @param pNode
-     *
      * @return
      */
     private NodeView getNodeView(MindMapNode pNode) {
@@ -286,15 +273,11 @@ public class AddHookActor extends XmlActorAdapter {
     }
 
     /**
-     * @param focussed
-     *                            The real focussed node
-     * @param selecteds
-     *                            The list of selected nodes
-     * @param adaptedFocussedNode
-     *                            The calculated focussed node (if the hook specifies, that the
+     * @param focussed            The real focussed node
+     * @param selecteds           The list of selected nodes
+     * @param adaptedFocussedNode The calculated focussed node (if the hook specifies, that the
      *                            hook should apply to root, then this is the root node).
-     * @param destinationNodes
-     *                            The calculated list of selected nodes (see last)
+     * @param destinationNodes    The calculated list of selected nodes (see last)
      */
     private void finishInvocation(MindMapNode focussed, List<MindMapNode> selecteds, MindMapNode adaptedFocussedNode, Collection<MindMapNode> destinationNodes) {
         // restore selection only, if nothing selected.

@@ -26,11 +26,11 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+
 import java.util.List;
 
 /**
  * @author foltin
- *
  */
 public class CompoundActor extends XmlActorAdapter {
 
@@ -42,11 +42,11 @@ public class CompoundActor extends XmlActorAdapter {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.actions.ActorXml#act(freemind.controller.actions.
-	 * generated.instance.XmlAction)
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.controller.actions.ActorXml#act(freemind.controller.actions.
+     * generated.instance.XmlAction)
      */
     public void act(XmlAction action) {
         CompoundAction compound = (CompoundAction) action;
@@ -59,9 +59,9 @@ public class CompoundActor extends XmlActorAdapter {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.controller.actions.ActorXml#getDoActionClass()
+     * (non-Javadoc)
+     *
+     * @see freemind.controller.actions.ActorXml#getDoActionClass()
      */
     public Class<CompoundAction> getDoActionClass() {
         return CompoundAction.class;

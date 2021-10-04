@@ -36,161 +36,160 @@ import freemind.view.mindmapview.NodeView;
 
 /**
  * @author foltin
- * 
  */
 public class SocketConnectionHook extends SocketBasics implements
-		PermanentNodeHook, DontSaveMarker {
+        PermanentNodeHook, DontSaveMarker {
 
-	private ClientCommunication mClientCommunication;
+    private ClientCommunication mClientCommunication;
 
-	/**
+    /**
      *
      */
 
-	public void startupMapHook() {
-		super.startupMapHook();
-		// this is the internal call. do nothing
-		logger.info("Startup of the permanent hook.");
-		return;
-	}
+    public void startupMapHook() {
+        super.startupMapHook();
+        // this is the internal call. do nothing
+        logger.info("Startup of the permanent hook.");
+        return;
+    }
 
-	public void loadFrom(XMLElement pChild) {
-		// this plugin should not be saved.
-	}
+    public void loadFrom(XMLElement pChild) {
+        // this plugin should not be saved.
+    }
 
-	public void save(XMLElement pXml) {
-		// this plugin should not be saved.
-		// nothing to do.
-	}
+    public void save(XMLElement pXml) {
+        // this plugin should not be saved.
+        // nothing to do.
+    }
 
-	public void shutdownMapHook() {
-		deregisterFilter();
-		// this is the internal call. shutdown
-		logger.info("Shut down of the permanent hook.");
-		if (mClientCommunication != null) {
-			mClientCommunication.shutdown();
-		}
-		super.shutdownMapHook();
-	}
+    public void shutdownMapHook() {
+        deregisterFilter();
+        // this is the internal call. shutdown
+        logger.info("Shut down of the permanent hook.");
+        if (mClientCommunication != null) {
+            mClientCommunication.shutdown();
+        }
+        super.shutdownMapHook();
+    }
 
-	public void onAddChild(MindMapNode pAddedChildNode) {
-	}
+    public void onAddChild(MindMapNode pAddedChildNode) {
+    }
 
-	public void onAddChildren(MindMapNode pAddedChild) {
-	}
+    public void onAddChildren(MindMapNode pAddedChild) {
+    }
 
-	public void onLostFocusNode(NodeView pNodeView) {
-	}
+    public void onLostFocusNode(NodeView pNodeView) {
+    }
 
-	public void onNewChild(MindMapNode pNewChildNode) {
-	}
+    public void onNewChild(MindMapNode pNewChildNode) {
+    }
 
-	public void onRemoveChild(MindMapNode pOldChildNode) {
-	}
+    public void onRemoveChild(MindMapNode pOldChildNode) {
+    }
 
-	public void onRemoveChildren(MindMapNode pOldChildNode, MindMapNode pOldDad) {
-	}
+    public void onRemoveChildren(MindMapNode pOldChildNode, MindMapNode pOldDad) {
+    }
 
-	public void onFocusNode(NodeView pNodeView) {
-	}
+    public void onFocusNode(NodeView pNodeView) {
+    }
 
-	public void onUpdateChildrenHook(MindMapNode pUpdatedNode) {
-	}
+    public void onUpdateChildrenHook(MindMapNode pUpdatedNode) {
+    }
 
-	public void onUpdateNodeHook() {
-	}
+    public void onUpdateNodeHook() {
+    }
 
-	public void onViewCreatedHook(NodeView pNodeView) {
-	}
+    public void onViewCreatedHook(NodeView pNodeView) {
+    }
 
-	public void onViewRemovedHook(NodeView pNodeView) {
-	}
+    public void onViewRemovedHook(NodeView pNodeView) {
+    }
 
-	public Integer getRole() {
-		return ROLE_SLAVE;
-	}
+    public Integer getRole() {
+        return ROLE_SLAVE;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.collaboration.socket.SocketBasics#getPort()
-	 */
-	public int getPort() {
-		return mClientCommunication.getPort();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see plugins.collaboration.socket.SocketBasics#getPort()
+     */
+    public int getPort() {
+        return mClientCommunication.getPort();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.collaboration.socket.SocketBasics#lock()
-	 */
-	protected String lock(String pUserName, ExtendedMapFeedback pController) throws UnableToGetLockException,
-			InterruptedException {
-		return mClientCommunication.sendLockRequest();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see plugins.collaboration.socket.SocketBasics#lock()
+     */
+    protected String lock(String pUserName, ExtendedMapFeedback pController) throws UnableToGetLockException,
+            InterruptedException {
+        return mClientCommunication.sendLockRequest();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * plugins.collaboration.socket.SocketBasics#broadcastCommand(java.lang.
-	 * String, java.lang.String, java.lang.String)
-	 */
-	protected void broadcastCommand(String pDoAction, String pUndoAction,
-			String pLockId, ExtendedMapFeedback pController) throws Exception {
-		mClientCommunication.sendCommand(pDoAction, pUndoAction, pLockId);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * plugins.collaboration.socket.SocketBasics#broadcastCommand(java.lang.
+     * String, java.lang.String, java.lang.String)
+     */
+    protected void broadcastCommand(String pDoAction, String pUndoAction,
+                                    String pLockId, ExtendedMapFeedback pController) throws Exception {
+        mClientCommunication.sendCommand(pDoAction, pUndoAction, pLockId);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.collaboration.socket.SocketBasics#unlock()
-	 */
-	protected void unlock(ExtendedMapFeedback pController) {
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see plugins.collaboration.socket.SocketBasics#unlock()
+     */
+    protected void unlock(ExtendedMapFeedback pController) {
+    }
 
-	/**
-	 * @param pClientCommunication
-	 */
-	public void setClientCommunication(ClientCommunication pClientCommunication) {
-		mClientCommunication = pClientCommunication;
+    /**
+     * @param pClientCommunication
+     */
+    public void setClientCommunication(ClientCommunication pClientCommunication) {
+        mClientCommunication = pClientCommunication;
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.collaboration.socket.SocketBasics#shutdown()
-	 */
-	public void shutdown() {
-		mClientCommunication.shutdown();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see plugins.collaboration.socket.SocketBasics#shutdown()
+     */
+    public void shutdown() {
+        mClientCommunication.shutdown();
+    }
 
-	public ClientCommunication getClientCommunication() {
-		return mClientCommunication;
-	}
+    public ClientCommunication getClientCommunication() {
+        return mClientCommunication;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.collaboration.socket.SocketBasics#getMasterInformation()
-	 */
-	public CollaborationUserInformation getMasterInformation(ExtendedMapFeedback pController) {
-		if(mClientCommunication != null) {
-			return mClientCommunication.getUserInfo();
-		}
-		return new CollaborationUserInformation();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see plugins.collaboration.socket.SocketBasics#getMasterInformation()
+     */
+    public CollaborationUserInformation getMasterInformation(ExtendedMapFeedback pController) {
+        if (mClientCommunication != null) {
+            return mClientCommunication.getUserInfo();
+        }
+        return new CollaborationUserInformation();
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.extensions.PermanentNodeHook#processUnfinishedLinks()
-	 */
-	public void processUnfinishedLinks() {
-	}
+    /* (non-Javadoc)
+     * @see freemind.extensions.PermanentNodeHook#processUnfinishedLinks()
+     */
+    public void processUnfinishedLinks() {
+    }
 
-	public void saveHtml(Writer pFileout) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
+    public void saveHtml(Writer pFileout) throws IOException {
+        // TODO Auto-generated method stub
+
+    }
 
 }

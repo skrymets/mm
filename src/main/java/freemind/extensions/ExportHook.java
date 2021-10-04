@@ -23,212 +23,190 @@
 
 package freemind.extensions;
 
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.text.MessageFormat;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
-
 import freemind.main.Tools;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;
+import lombok.extern.log4j.Log4j2;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
+import java.text.MessageFormat;
 
 /**
  * @author foltin
- * 
  */
+@Log4j2
 public class ExportHook extends ModeControllerHookAdapter {
-	private MapView view;
+    private MapView view;
 
-	/**
-	 * @param type
-	 * @param description
-	 * @param nameExtension
-	 * @return
-	 */
-	protected File chooseFile(String type, String description,
-			String nameExtension) {
-		ModeController controller = getController();
-		return ExportHook.chooseImageFile(type, description, nameExtension, controller);
-	}
-	
-	public static File chooseImageFile(String type, String description,
-			String nameExtension, ModeController controller) {
-		Container component = controller.getFrame().getContentPane();
-		final ImageFilter filter = new ImageFilter(type, description);
-		FreeMindFileDialog chooser = null;
-		chooser = controller.getFileChooser(filter);
-		File mmFile = controller.getMap().getFile();
-		if (mmFile != null) {
-			String proposedName = mmFile.getAbsolutePath().replaceFirst(
-					"\\.[^.]*?$", "")
-					+ ((nameExtension != null) ? nameExtension : "")
-					+ "."
-					+ type;
-			chooser.setSelectedFile(new File(proposedName));
-		}
-		int returnVal = chooser.showSaveDialog(component);
-		if (returnVal != JFileChooser.APPROVE_OPTION) { // not ok pressed
-			return null;
-		}
+    protected File chooseFile(String type, String description, String nameExtension) {
+        ModeController controller = getController();
+        return ExportHook.chooseImageFile(type, description, nameExtension, controller);
+    }
 
-		// |= Pressed O.K.
-		File chosenFile = chooser.getSelectedFile();
-		String ext = Tools.getExtension(chosenFile.getName());
-		if (!Tools.safeEqualsIgnoreCase(ext, type)) {
-			chosenFile = new File(chosenFile.getParent(), chosenFile.getName()
-					+ "." + type);
-		}
+    public static File chooseImageFile(String type, String description, String nameExtension, ModeController controller) {
+        Container component = controller.getFrame().getContentPane();
+        final ImageFilter filter = new ImageFilter(type, description);
+        FreeMindFileDialog chooser = null;
+        chooser = controller.getFileChooser(filter);
+        File mmFile = controller.getMap().getFile();
+        if (mmFile != null) {
+            String proposedName = mmFile.getAbsolutePath().replaceFirst(
+                    "\\.[^.]*?$", "")
+                    + ((nameExtension != null) ? nameExtension : "")
+                    + "."
+                    + type;
+            chooser.setSelectedFile(new File(proposedName));
+        }
+        int returnVal = chooser.showSaveDialog(component);
+        if (returnVal != JFileChooser.APPROVE_OPTION) { // not ok pressed
+            return null;
+        }
 
-		if (chosenFile.exists()) { // If file exists, ask before overwriting.
-			String overwriteText = MessageFormat.format(controller
-					.getText("file_already_exists"), new Object[] { chosenFile
-					.toString() });
-			int overwriteMap = JOptionPane.showConfirmDialog(component,
-					overwriteText, overwriteText, JOptionPane.YES_NO_OPTION);
-			if (overwriteMap != JOptionPane.YES_OPTION) {
-				return null;
-			}
-		}
-		return chosenFile;
-	}
+        // |= Pressed O.K.
+        File chosenFile = chooser.getSelectedFile();
+        String ext = Tools.getExtension(chosenFile.getName());
+        if (!Tools.safeEqualsIgnoreCase(ext, type)) {
+            chosenFile = new File(chosenFile.getParent(), chosenFile.getName()
+                    + "." + type);
+        }
 
-	public static class ImageFilter extends FileFilter {
-		private String type;
-		private final String description;
+        if (chosenFile.exists()) { // If file exists, ask before overwriting.
+            String overwriteText = MessageFormat.format(controller.getText("file_already_exists"), chosenFile.toString());
+            int overwriteMap = JOptionPane.showConfirmDialog(component, overwriteText, overwriteText, JOptionPane.YES_NO_OPTION);
+            if (overwriteMap != JOptionPane.YES_OPTION) {
+                return null;
+            }
+        }
+        return chosenFile;
+    }
 
-		public ImageFilter(String type, String description) {
-			this.type = type;
-			this.description = description;
-		}
+    public static class ImageFilter extends FileFilter {
+        private String type;
+        private final String description;
 
-		public boolean accept(File f) {
-			if (f.isDirectory()) {
-				return true;
-			}
-			String extension = Tools.getExtension(f.getName());
-			return Tools.safeEqualsIgnoreCase(extension, type);
-		}
+        public ImageFilter(String type, String description) {
+            this.type = type;
+            this.description = description;
+        }
 
-		public String getDescription() {
-			return description == null ? type : description;
-		}
-	}
+        public boolean accept(File f) {
+            if (f.isDirectory()) {
+                return true;
+            }
+            String extension = Tools.getExtension(f.getName());
+            return Tools.safeEqualsIgnoreCase(extension, type);
+        }
 
-	protected String getTranslatableResourceString(String resourceName) {
-		String returnValue = getResourceString(resourceName);
-		if (returnValue != null && returnValue.startsWith("%")) {
-			return getController().getText(returnValue.substring(1));
-		}
-		return returnValue;
-	}
+        public String getDescription() {
+            return description == null ? type : description;
+        }
+    }
 
-	public BufferedImage createBufferedImage() {
-		view = getController().getView();
-		if (view == null)
-			return null;
+    protected String getTranslatableResourceString(String resourceName) {
+        String returnValue = getResourceString(resourceName);
+        if (returnValue != null && returnValue.startsWith("%")) {
+            return getController().getText(returnValue.substring(1));
+        }
+        return returnValue;
+    }
 
-		// Determine which part of the view contains the nodes of the map:
-		// (Needed to eliminate areas of whitespace around the actual rendering
-		// of the map)
+    public BufferedImage createBufferedImage() {
+        view = getController().getView();
+        if (view == null)
+            return null;
 
-		// NodeAdapter root = (NodeAdapter) getController().getMap().getRoot();
+        // Determine which part of the view contains the nodes of the map:
+        // (Needed to eliminate areas of whitespace around the actual rendering
+        // of the map)
 
-		// call prepare printing to lay out for printing before getting the
-		// inner bounds
-		view.preparePrinting();
-		Rectangle innerBounds = view.getInnerBounds();
+        // NodeAdapter root = (NodeAdapter) getController().getMap().getRoot();
 
-		// Create an image containing the map:
-		BufferedImage myImage = (BufferedImage) view.createImage(
-				view.getWidth(), view.getHeight());
+        // call prepare printing to lay out for printing before getting the
+        // inner bounds
+        view.preparePrinting();
+        Rectangle innerBounds = view.getInnerBounds();
 
-		// Render the mind map nodes on the image:
-		Graphics g = myImage.getGraphics();
-		g.clipRect(innerBounds.x, innerBounds.y, innerBounds.width,
-				innerBounds.height);
-		view.print(g);
-		myImage = myImage.getSubimage(innerBounds.x, innerBounds.y,
-				innerBounds.width, innerBounds.height);
-		view.endPrinting();
-		return myImage;
-		// NodeAdapter root = (NodeAdapter) getController().getMap().getRoot();
-		// Rectangle rect = view.getInnerBounds(root.getViewer());
-		//
-		// BufferedImage image =
-		// new BufferedImage(
-		// rect.width,
-		// rect.height,
-		// BufferedImage.TYPE_INT_RGB);
-		// Graphics2D g = (Graphics2D) image.createGraphics();
-		// g.translate(-rect.getMinX(), -rect.getMinY());
-		// view.update(g);
-		// return image;
-	}
+        // Create an image containing the map:
+        BufferedImage myImage = (BufferedImage) view.createImage(
+                view.getWidth(), view.getHeight());
 
-	/**
-     */
-	protected void copyFromResource(String prefix, String fileName,
-			String destinationDirectory) {
-		// adapted from http://javaalmanac.com/egs/java.io/CopyFile.html
-		// Copies src file to dst file.
-		// If the dst file does not exist, it is created
-		try {
-			logger.trace("searching for " + prefix + fileName);
-			URL resource = getResource(prefix + fileName);
-			if (resource == null) {
-				logger.error("Cannot find resource: " + prefix + fileName);
-				return;
-			}
-			InputStream in = resource.openStream();
-			OutputStream out = new FileOutputStream(destinationDirectory + "/"
-					+ fileName);
+        // Render the mind map nodes on the image:
+        Graphics g = myImage.getGraphics();
+        g.clipRect(innerBounds.x, innerBounds.y, innerBounds.width,
+                innerBounds.height);
+        view.print(g);
+        myImage = myImage.getSubimage(innerBounds.x, innerBounds.y,
+                innerBounds.width, innerBounds.height);
+        view.endPrinting();
+        return myImage;
+        // NodeAdapter root = (NodeAdapter) getController().getMap().getRoot();
+        // Rectangle rect = view.getInnerBounds(root.getViewer());
+        //
+        // BufferedImage image =
+        // new BufferedImage(
+        // rect.width,
+        // rect.height,
+        // BufferedImage.TYPE_INT_RGB);
+        // Graphics2D g = (Graphics2D) image.createGraphics();
+        // g.translate(-rect.getMinX(), -rect.getMinY());
+        // view.update(g);
+        // return image;
+    }
 
-			// Transfer bytes from in to out
-			Tools.copyStream(in, out, true);
-		} catch (Exception e) {
-			logger.error("File not found or could not be copied. "
-					+ "Was earching for " + prefix + fileName
-					+ " and should go to " + destinationDirectory);
-			freemind.main.Resources.getInstance().logException(e);
-		}
+    protected void copyFromResource(String prefix, String fileName,
+                                    String destinationDirectory) {
+        // adapted from http://javaalmanac.com/egs/java.io/CopyFile.html
+        // Copies src file to dst file.
+        // If the dst file does not exist, it is created
+        try {
+            log.trace("searching for " + prefix + fileName);
+            URL resource = getResource(prefix + fileName);
+            if (resource == null) {
+                log.error("Cannot find resource: " + prefix + fileName);
+                return;
+            }
+            InputStream in = resource.openStream();
+            OutputStream out = new FileOutputStream(destinationDirectory + "/"
+                    + fileName);
 
-	}
+            // Transfer bytes from in to out
+            Tools.copyStream(in, out, true);
+        } catch (Exception e) {
+            log.error("File not found or could not be copied. "
+                    + "Was earching for " + prefix + fileName
+                    + " and should go to " + destinationDirectory);
+            freemind.main.Resources.getInstance().logException(e);
+        }
 
-	/**
-     */
-	protected void copyFromFile(String dir, String fileName,
-			String destinationDirectory) {
-		// adapted from http://javaalmanac.com/egs/java.io/CopyFile.html
-		// Copies src file to dst file.
-		// If the dst file does not exist, it is created
-		try {
-			logger.trace("searching for " + dir + fileName);
-			File resource = new File(dir, fileName);
-			InputStream in = new FileInputStream(resource);
-			OutputStream out = new FileOutputStream(destinationDirectory + "/"
-					+ fileName);
+    }
 
-			// Transfer bytes from in to out
-			Tools.copyStream(in, out, true);
-		} catch (Exception e) {
-			logger.error("File not found or could not be copied. "
-					+ "Was earching for " + dir + fileName
-					+ " and should go to " + destinationDirectory);
-			freemind.main.Resources.getInstance().logException(e);
-		}
+    protected void copyFromFile(String dir, String fileName,
+                                String destinationDirectory) {
+        // adapted from http://javaalmanac.com/egs/java.io/CopyFile.html
+        // Copies src file to dst file.
+        // If the dst file does not exist, it is created
+        try {
+            log.trace("searching for " + dir + fileName);
+            File resource = new File(dir, fileName);
+            InputStream in = new FileInputStream(resource);
+            OutputStream out = new FileOutputStream(destinationDirectory + "/"
+                    + fileName);
 
-	}
+            // Transfer bytes from in to out
+            Tools.copyStream(in, out, true);
+        } catch (Exception e) {
+            log.error("File not found or could not be copied. "
+                    + "Was earching for " + dir + fileName
+                    + " and should go to " + destinationDirectory);
+            freemind.main.Resources.getInstance().logException(e);
+        }
+
+    }
 
 }

@@ -38,80 +38,80 @@ import java.util.Vector;
  */
 public class ConjunctConditions implements Condition {
 
-	static final String NAME = "conjunct_condition";
-	private Object[] conditions;
+    static final String NAME = "conjunct_condition";
+    private Object[] conditions;
 
-	/**
+    /**
      *
      */
-	public ConjunctConditions(Object[] conditions) {
-		this.conditions = conditions;
-	}
+    public ConjunctConditions(Object[] conditions) {
+        this.conditions = conditions;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.filter.condition.Condition#checkNode(freemind.modes
-	 * .MindMapNode)
-	 */
-	public boolean checkNode(Controller c, MindMapNode node) {
-		int i;
-		for (i = 0; i < conditions.length; i++) {
-			Condition cond = (Condition) conditions[i];
-			if (!cond.checkNode(c, node))
-				return false;
-		}
-		return true;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.controller.filter.condition.Condition#checkNode(freemind.modes
+     * .MindMapNode)
+     */
+    public boolean checkNode(Controller c, MindMapNode node) {
+        int i;
+        for (i = 0; i < conditions.length; i++) {
+            Condition cond = (Condition) conditions[i];
+            if (!cond.checkNode(c, node))
+                return false;
+        }
+        return true;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.filter.condition.Condition#getListCellRendererComponent
-	 * ()
-	 */
-	public JComponent getListCellRendererComponent() {
-		JCondition component = new JCondition();
-		component.add(new JLabel("("));
-		Condition cond = (Condition) conditions[0];
-		JComponent rendererComponent = cond.getListCellRendererComponent();
-		rendererComponent.setOpaque(false);
-		component.add(rendererComponent);
-		int i;
-		for (i = 1; i < conditions.length; i++) {
-			final String and = Tools.removeMnemonic(Resources.getInstance()
-					.getResourceString("filter_and"));
-			String text = ' ' + and + ' ';
-			component.add(new JLabel(text));
-			cond = (Condition) conditions[i];
-			rendererComponent = cond.getListCellRendererComponent();
-			rendererComponent.setOpaque(false);
-			component.add(rendererComponent);
-		}
-		component.add(new JLabel(")"));
-		return component;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.controller.filter.condition.Condition#getListCellRendererComponent
+     * ()
+     */
+    public JComponent getListCellRendererComponent() {
+        JCondition component = new JCondition();
+        component.add(new JLabel("("));
+        Condition cond = (Condition) conditions[0];
+        JComponent rendererComponent = cond.getListCellRendererComponent();
+        rendererComponent.setOpaque(false);
+        component.add(rendererComponent);
+        int i;
+        for (i = 1; i < conditions.length; i++) {
+            final String and = Tools.removeMnemonic(Resources.getInstance()
+                    .getResourceString("filter_and"));
+            String text = ' ' + and + ' ';
+            component.add(new JLabel(text));
+            cond = (Condition) conditions[i];
+            rendererComponent = cond.getListCellRendererComponent();
+            rendererComponent.setOpaque(false);
+            component.add(rendererComponent);
+        }
+        component.add(new JLabel(")"));
+        return component;
+    }
 
-	public void save(XMLElement element) {
-		XMLElement child = new XMLElement();
-		child.setName(NAME);
-		for (int i = 0; i < conditions.length; i++) {
-			Condition cond = (Condition) conditions[i];
-			cond.save(child);
-		}
-		element.addChild(child);
-	}
+    public void save(XMLElement element) {
+        XMLElement child = new XMLElement();
+        child.setName(NAME);
+        for (int i = 0; i < conditions.length; i++) {
+            Condition cond = (Condition) conditions[i];
+            cond.save(child);
+        }
+        element.addChild(child);
+    }
 
-	static Condition load(XMLElement element) {
-		final Vector<XMLElement> children = element.getChildren();
-		Object[] conditions = new Object[children.size()];
-		for (int i = 0; i < conditions.length; i++) {
-			Condition cond = FilterController.getConditionFactory()
-					.loadCondition((XMLElement) children.get(i));
-			conditions[i] = cond;
-		}
-		return new ConjunctConditions(conditions);
-	}
+    static Condition load(XMLElement element) {
+        final Vector<XMLElement> children = element.getChildren();
+        Object[] conditions = new Object[children.size()];
+        for (int i = 0; i < conditions.length; i++) {
+            Condition cond = FilterController.getConditionFactory()
+                    .loadCondition((XMLElement) children.get(i));
+            conditions[i] = cond;
+        }
+        return new ConjunctConditions(conditions);
+    }
 }

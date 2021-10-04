@@ -23,35 +23,38 @@ package tests.freemind;
 import freemind.frok.patches.FreeMindMainMock;
 import junit.framework.TestCase;
 
-/** */
+/**
+ *
+ */
 public class FreeMindTestBase extends TestCase {
 
-	protected FreeMindMainMock mFreeMindMain;
+    protected FreeMindMainMock mFreeMindMain;
 
-	/**
-     * 
+    /**
+     *
      */
-	public FreeMindTestBase() {
-		super();
+    public FreeMindTestBase() {
+        super();
 
-	}
+    }
 
-	/**
+    /**
+     *
      */
-	public FreeMindTestBase(String arg0) {
-		super(arg0);
+    public FreeMindTestBase(String arg0) {
+        super(arg0);
 
-	}
+    }
 
-	protected void setUp() throws Exception {
-		super.setUp();
-		mFreeMindMain = new FreeMindMainMock();
-		System.out.println("Starting " + getName());
-	}
+    protected void setUp() throws Exception {
+        super.setUp();
+        mFreeMindMain = new FreeMindMainMock();
+        System.out.println("Starting " + getName());
+    }
 
-	public FreeMindMainMock getFrame() {
-		return mFreeMindMain;
-	}
+    public FreeMindMainMock getFrame() {
+        return mFreeMindMain;
+    }
 }
 
 // private static java.util.logging.Logger logger =

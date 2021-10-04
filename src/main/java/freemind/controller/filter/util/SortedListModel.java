@@ -24,31 +24,34 @@
  */
 package freemind.controller.filter.util;
 
-import javax.swing.ListModel;
+import javax.swing.*;
 
 /**
  * @author Dimitri Polivaev 18.06.2005
  */
 public interface SortedListModel extends ListModel {
 
-	/**
-     * 
+    /**
+     *
      */
-	void clear();
+    void clear();
 
-	/**
+    /**
+     *
      */
-	boolean contains(Object o);
+    boolean contains(Object o);
 
-	/**
+    /**
+     *
      */
-	void add(Object o);
+    void add(Object o);
 
-	void replace(Object oldO, Object newO);
+    void replace(Object oldO, Object newO);
 
-	void remove(Object o);
+    void remove(Object o);
 
-	/**
+    /**
+     *
      */
-	int getIndexOf(Object o);
+    int getIndexOf(Object o);
 }

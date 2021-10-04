@@ -16,25 +16,8 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*$Id: FreeMindMainMock.java,v 1.1.2.16 2009/03/29 19:37:23 christianfoltin Exp $*/
+/*$Id: FreeMindMainMock.java,v 1.1.2.16 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.frok.patches;
-
-import java.awt.Container;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import java.util.Vector;
-import org.slf4j.Logger;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 
 import freemind.controller.Controller;
 import freemind.controller.MenuBar;
@@ -43,7 +26,19 @@ import freemind.main.FreeMindStarter;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.view.mindmapview.MapView;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.Vector;
 
 /**
  *
@@ -190,7 +185,7 @@ public class FreeMindMainMock implements FreeMindMain {
         ClassLoader classLoader = this.getClass().getClassLoader();
         try {
             return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(
-                getFreemindBaseDir()))}, classLoader);
+                    getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
             freemind.main.Resources.getInstance().logException(e);
             return classLoader;
@@ -236,7 +231,7 @@ public class FreeMindMainMock implements FreeMindMain {
     }
 
     /* (non-Javadoc)
-	 * @see freemind.main.FreeMindMain#getLoggerList()
+     * @see freemind.main.FreeMindMain#getLoggerList()
      */
     public List getLoggerList() {
         return new Vector<>();

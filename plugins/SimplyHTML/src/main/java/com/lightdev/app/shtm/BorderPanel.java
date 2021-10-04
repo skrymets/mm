@@ -40,8 +40,6 @@ import javax.swing.text.html.CSS;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the GNU General Public License, for details see file gpl.txt in the distribution package of this software
- *
- *
  */
 class BorderPanel extends JPanel implements AttributeComponent {
 
@@ -81,7 +79,7 @@ class BorderPanel extends JPanel implements AttributeComponent {
     }
 
     private void addSettings(final GridBagLayout g, final GridBagConstraints c, final String title, final int side,
-            final int x, final int y) {
+                             final int x, final int y) {
         final BorderSettings bs = new BorderSettings(title, side);
         Util.addGridBagComponent(this, bs, g, c, x, y, GridBagConstraints.WEST);
         components.addElement(bs);
@@ -92,7 +90,6 @@ class BorderPanel extends JPanel implements AttributeComponent {
      * <code>AttributeComponent</code>
      *
      * @param a the set of attributes possibly having an attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute, false if not
      */
     public boolean setValue(final AttributeSet a) {
@@ -176,9 +173,9 @@ class BorderPanel extends JPanel implements AttributeComponent {
          * construct a
          * <code>BorderSettings</code> panel
          *
-         * @param title the title of this object
+         * @param title     the title of this object
          * @param borderKey the attribute key for the border width this object represents
-         * @param colorKey the attribute key for the border color this object represents
+         * @param colorKey  the attribute key for the border color this object represents
          */
         public BorderSettings(final String title, final int side) {
             super();
@@ -215,7 +212,6 @@ class BorderPanel extends JPanel implements AttributeComponent {
          * <code>AttributeComponent</code>
          *
          * @param color the <code>CombinedAttribute</code> to take the color from
-         *
          */
         public void setValue(final CombinedAttribute borderWidths, final CombinedAttribute borderColors) {
             String attr = borderColors.getAttribute(side);
