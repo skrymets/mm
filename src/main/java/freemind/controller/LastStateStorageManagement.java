@@ -48,7 +48,7 @@ public class LastStateStorageManagement {
                 }
             }
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         if (mLastStatesMap == null) {
             log.warn("Creating a new last state map storage as there was no old one or it was corrupt.");

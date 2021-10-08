@@ -110,7 +110,7 @@ public abstract class CommunicationBase extends TerminateableThread {
             out.writeUTF(text.substring(index));
             return true;
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return false;
     }
@@ -128,7 +128,7 @@ public abstract class CommunicationBase extends TerminateableThread {
                 text = in.readUTF();
                 mConnectionErrorOccuredEarlier = false;
             } catch (java.io.EOFException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 if (mConnectionErrorOccuredEarlier) {
                     // already lost earlier. check time
                     if (System.currentTimeMillis() - mFirstErrorOnConnection > TIMEOUT_FOR_READ_ERROR_IN_MS) {
@@ -139,7 +139,7 @@ public abstract class CommunicationBase extends TerminateableThread {
                                     try {
                                         terminateSocket();
                                     } catch (IOException e) {
-                                        freemind.main.Resources.getInstance().logException(e);
+                                        log.error(e);
                                     }
                                 }
                             }).start();
@@ -171,7 +171,7 @@ public abstract class CommunicationBase extends TerminateableThread {
                             try {
                                 processCommand(command);
                             } catch (Exception e) {
-                                freemind.main.Resources.getInstance().logException(e);
+                                log.error(e);
                             }
                         }
                     };

@@ -216,9 +216,9 @@ public class EditServer extends Thread {
                                     .load(urli);
                         }
                     } catch (MalformedURLException e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                     } catch (Exception e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                     }
                 }
             });

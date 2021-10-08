@@ -23,11 +23,13 @@
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+@Log4j2
 public class NumberProperty extends PropertyBean implements PropertyControl {
     String description;
     // JSlider slider;
@@ -79,7 +81,7 @@ public class NumberProperty extends PropertyBean implements PropertyControl {
                 intValue = min;
             }
         } catch (NumberFormatException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         spinner.setValue(new Integer(intValue));
     }

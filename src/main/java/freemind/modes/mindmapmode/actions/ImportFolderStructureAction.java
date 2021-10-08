@@ -60,7 +60,7 @@ public class ImportFolderStructureAction extends MindmapAction {
                 frame.setWaitingCursor(true);
                 importFolderStructure(folder, controller.getSelected(), true);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
             }
             frame.setWaitingCursor(false);
             frame.out("Folder structure imported.");

@@ -22,6 +22,7 @@ package freemind.view;
 
 import freemind.main.Resources;
 import freemind.main.Tools;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -32,6 +33,7 @@ import java.net.URLConnection;
  * @author foltin
  * @date 24.05.2015
  */
+@Log4j2
 public class ImageFactory {
     private static ImageFactory mInstance = null;
 
@@ -73,7 +75,7 @@ public class ImageFactory {
                         return createUnscaledIcon(url);
                     }
                 } catch (IOException e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         }

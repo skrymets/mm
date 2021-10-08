@@ -25,6 +25,8 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
 
+import static java.lang.String.format;
+
 /**
  * This class creates all the modes that are available. To add your own mode,
  * simply import it, and create it in getAllModes() (just do the same whats done
@@ -33,7 +35,7 @@ import java.util.*;
 @Log4j2
 public class ModesCreator {
 
-    private Controller c;
+    private Controller controller;
 
     /**
      * Contains translated mode name => Mode instances
@@ -45,8 +47,8 @@ public class ModesCreator {
      */
     private Map<String, String> modesTranslation;
 
-    public ModesCreator(Controller c) {
-        this.c = c;
+    public ModesCreator(Controller controller) {
+        this.controller = controller;
     }
 
     public Set<String> getAllModes() {
@@ -54,7 +56,7 @@ public class ModesCreator {
         if (mCreatedModes == null) {
             mCreatedModes = new TreeMap<>();
             modesTranslation = new HashMap<>();
-            String modestring = c.getFrame().getProperty("modes_since_0_8_0");
+            String modestring = controller.getFrame().getProperty("modes_since_0_8_0");
 
             StringTokenizer tokens = new StringTokenizer(modestring, ",");
 
@@ -74,24 +76,25 @@ public class ModesCreator {
      */
     public Mode getMode(String modeAlias) {
         getAllModes();
+
         if (!modesTranslation.containsKey(modeAlias)) {
             throw new IllegalArgumentException("Unknown mode " + modeAlias);
         }
-        String modeName = (String) modesTranslation.get(modeAlias);
+
+        String modeName = modesTranslation.get(modeAlias);
         if (mCreatedModes.get(modeName) == null) {
             try {
                 Mode mode = null;
                 mode = (Mode) Class.forName(modeName).newInstance();
                 log.info("Initializing mode " + modeAlias);
-                mode.init(c);
+                mode.init(controller);
                 log.info("Done: Initializing mode " + modeAlias);
                 mCreatedModes.put(modeName, mode);
-            } catch (Exception ex) {
-                log.error("Mode " + modeName + " could not be loaded.");
-                freemind.main.Resources.getInstance().logException(ex);
+            } catch (Exception e) {
+                log.error(format("Mode %s could not be loaded.", modeName), e);
             }
         }
-        return (Mode) mCreatedModes.get(modeName);
+        return mCreatedModes.get(modeName);
     }
 
 }

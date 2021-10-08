@@ -30,6 +30,7 @@ import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.preferences.FreemindPropertyListener;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -47,6 +48,8 @@ import java.util.Locale;
  * @author Kai Toedter
  * @version $LastChangedDate: 2006-06-04 15:20:45 +0200 (So, 04 Jun 2006) $
  */
+
+@Log4j2
 public class JDayChooser extends JPanel implements ActionListener, KeyListener,
         FocusListener {
 
@@ -183,7 +186,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
                     markings = (CalendarMarkings) XmlBindingTools.getInstance().unMarshall(marking);
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
             if (markings == null) {
                 // empty one.

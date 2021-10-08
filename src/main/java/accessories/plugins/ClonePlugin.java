@@ -249,7 +249,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
                     mCloneNodes.add(getMindMapController().getNodeFromID(
                             cloneId));
                 } catch (IllegalArgumentException e) {
-                    // freemind.main.Resources.getInstance().logException(e);
+                    // log.error(e);
                     it.remove();
                 }
             }

@@ -124,7 +124,7 @@ public class ExportWithXSLT extends ExportHook {
                     }
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 mTransformResultWithoutError = false;
             }
         }
@@ -224,7 +224,7 @@ public class ExportWithXSLT extends ExportHook {
             ImageIO.write(image, "png", out);
             out.close();
         } catch (IOException e1) {
-            freemind.main.Resources.getInstance().logException(e1);
+            log.error(e1);
         }
     }
 
@@ -355,7 +355,7 @@ public class ExportWithXSLT extends ExportHook {
             trans.transform(xmlSource, result);
         } catch (Exception e) {
             // System.err.println("error applying the xslt file "+e);
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return false;
         }
         ;

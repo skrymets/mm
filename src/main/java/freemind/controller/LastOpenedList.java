@@ -22,6 +22,7 @@ package freemind.controller;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.view.MapModule;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,6 +35,7 @@ import java.util.*;
  * provide persistence for the last recent maps. Maps should be shown in the
  * format:"mode\:key",ie."Mindmap\:/home/joerg/freemind.mm"
  */
+@Log4j2
 public class LastOpenedList {
     private Controller mController;
     private int maxEntries = 25; // is rewritten from property anyway
@@ -52,7 +54,7 @@ public class LastOpenedList {
             maxEntries = new Integer(c.getFrame().getProperty(
                     "last_opened_list_length")).intValue();
         } catch (NumberFormatException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         load(restored);
     }

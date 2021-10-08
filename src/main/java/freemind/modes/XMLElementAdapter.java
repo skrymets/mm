@@ -236,7 +236,7 @@ public class XMLElementAdapter extends XMLElement {
                     // you know exactly what you are doing.
                     hook.setNode(node);
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                     hook = new PermanentNodeHookSubstituteUnknown(loadName);
                 }
                 hook.loadFrom(xml);

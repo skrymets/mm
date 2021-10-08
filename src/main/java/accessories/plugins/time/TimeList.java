@@ -506,7 +506,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             mFlatNodeTableFilterModel.resetFilter();
             mFilterTextSearchField.setText("");
         } catch (BadLocationException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
 
     }
@@ -626,7 +626,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                     .getDocument()));
             mFlatNodeTableFilterModel.setFilter(text);
         } catch (BadLocationException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return model;
     }
@@ -754,8 +754,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                             mFlatNodeTableFilterModel.setFilter(text);
                             updateStatistics();
                         } catch (BadLocationException e) {
-                            freemind.main.Resources.getInstance().logException(
-                                    e);
+                            log.error(e);
                             mFlatNodeTableFilterModel.resetFilter();
                         }
                     }

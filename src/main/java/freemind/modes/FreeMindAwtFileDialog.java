@@ -152,7 +152,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
                             .setChosenDirectory(getSelectedFile()
                                     .getParentFile());
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         }

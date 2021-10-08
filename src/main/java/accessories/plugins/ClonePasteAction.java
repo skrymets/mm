@@ -678,7 +678,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                             shadowNode.getCloneNode());
                 }
             } catch (IllegalArgumentException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
 

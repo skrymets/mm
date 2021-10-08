@@ -162,7 +162,7 @@ public class ExportVectorGraphic extends ExportHook {
             trans.transform(xmlSource, result);
         } catch (Exception e) {
             // System.err.println("error applying the xslt file "+e);
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         ;
         return;

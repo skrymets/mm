@@ -87,10 +87,8 @@ public class HtmlTools {
                 log.trace("Leave toXhtml with " + resultXml);
                 return resultXml;
             }
-        } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
-        } catch (BadLocationException e) {
-            freemind.main.Resources.getInstance().logException(e);
+        } catch (IOException | BadLocationException e) {
+            log.error(e);
         }
         // fallback:
         String fallbackText = removeAllTagsFromString(htmlText);
@@ -599,8 +597,8 @@ public class HtmlTools {
     /**
      * Determines whether the character is valid in XML. Invalid characters
      * include most of the range x00-x1F, and more.
-     *
-     * @see http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char.
+     * <p>
+     * See http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char.
      */
     public static boolean isXMLValidCharacter(char character) {
         // Order the tests in such a sequence that the most probable
@@ -814,7 +812,7 @@ public class HtmlTools {
                     }
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
 
@@ -828,7 +826,7 @@ public class HtmlTools {
                     }
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
 

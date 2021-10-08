@@ -26,6 +26,7 @@ import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
 
@@ -33,11 +34,9 @@ import java.io.*;
  * @author foltin
  * @date 10.04.2014
  */
+@Log4j2
 public class RevertActor extends XmlActorAdapter {
 
-    /**
-     * @param pMapFeedback
-     */
     public RevertActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
     }
@@ -57,7 +56,7 @@ public class RevertActor extends XmlActorAdapter {
                     getExMapFeedback().getMap(), null, null);
             execute(new ActionPair(doAction, undoAction));
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -126,7 +125,7 @@ public class RevertActor extends XmlActorAdapter {
                     getExMapFeedback().load(tempFile);
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }

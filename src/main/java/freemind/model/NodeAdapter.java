@@ -562,7 +562,7 @@ public abstract class NodeAdapter implements MindMapNode {
             copy.setFolded(false);
             return copy;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
     }
@@ -895,7 +895,7 @@ public abstract class NodeAdapter implements MindMapNode {
             // FIXME: Do something special here, but in any case, do not add the
             // hook
             // to the activatedHooks:
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return;
         }
         if (hook instanceof PermanentNodeHook) {
@@ -993,7 +993,7 @@ public abstract class NodeAdapter implements MindMapNode {
             try {
                 removeHook(hook);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }
@@ -1035,7 +1035,7 @@ public abstract class NodeAdapter implements MindMapNode {
                         toolTipChanged = true;
                     }
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         } else {

@@ -211,7 +211,7 @@ public class StandaloneMindMapMaster extends SocketMaster {
             mMasterThread = new MasterThread();
             mMasterThread.start();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             System.exit(1);
             return;
         }
@@ -255,7 +255,7 @@ public class StandaloneMindMapMaster extends SocketMaster {
         try {
             mServer.close();
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 

@@ -489,12 +489,12 @@ public class ClientCommunication extends CommunicationBase {
                 // in between, the socket has been closed.
             }
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         try {
             close();
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 

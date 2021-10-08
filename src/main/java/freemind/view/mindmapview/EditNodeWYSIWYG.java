@@ -29,6 +29,7 @@ import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
@@ -43,6 +44,7 @@ import java.net.URL;
 /**
  * @author Daniel Polansky
  */
+@Log4j2
 public class EditNodeWYSIWYG extends EditNodeBase {
 
     private KeyEvent firstEvent;
@@ -100,7 +102,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
                         getBase().getController().getFrame()
                                 .openDocument(new URL(pE.getActionCommand()));
                     } catch (Exception e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                     }
                 }
             });
@@ -306,7 +308,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             htmlEditorPanel.getMostRecentFocusOwner().requestFocus();
             htmlEditorWindow.setVisible(true);
         } catch (Exception ex) { // Probably class not found exception
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
             System.err
                     .println("Loading of WYSIWYG HTML editor failed. Use the other editors instead.");
         }

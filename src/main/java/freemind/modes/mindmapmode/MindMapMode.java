@@ -35,7 +35,7 @@ import java.net.URISyntaxException;
 @Log4j2
 public class MindMapMode extends Mode {
 
-    private Controller c;
+    private Controller controller;
     private MindMapController modecontroller;
     private final String MODENAME = "MindMap";
     private boolean isRunning = false;
@@ -43,8 +43,8 @@ public class MindMapMode extends Mode {
     public MindMapMode() {
     }
 
-    public void init(Controller c) {
-        this.c = c;
+    public void init(Controller controller) {
+        this.controller = controller;
         modecontroller = (MindMapController) createModeController();
     }
 
@@ -65,7 +65,7 @@ public class MindMapMode extends Mode {
      */
     public void activate() {
         if (isRunning) {
-            c.getMapModuleManager().changeToMapOfMode(this);
+            controller.getMapModuleManager().changeToMapOfMode(this);
         } else {
             isRunning = true;
         }
@@ -78,7 +78,7 @@ public class MindMapMode extends Mode {
     }
 
     public Controller getController() {
-        return c;
+        return controller;
     }
 
     public ModeController getDefaultModeController() {

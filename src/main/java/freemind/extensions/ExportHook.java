@@ -181,7 +181,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             log.error("File not found or could not be copied. "
                     + "Was earching for " + prefix + fileName
                     + " and should go to " + destinationDirectory);
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
 
     }
@@ -204,7 +204,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             log.error("File not found or could not be copied. "
                     + "Was earching for " + dir + fileName
                     + " and should go to " + destinationDirectory);
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
 
     }

@@ -53,7 +53,7 @@ public class FreemindHelpStarter extends ModeControllerHookAdapter {
             hb.setViewDisplayed(true);
         } catch (Exception ee) {
             // Say what the exception really is
-            freemind.main.Resources.getInstance().logException(ee);
+            log.error(ee);
             logger.warning("HelpSet " + ee.getMessage() + ee);
             logger.warning("HelpSet " + helpHS + " not found");
             return;

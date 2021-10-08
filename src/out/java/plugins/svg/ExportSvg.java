@@ -62,7 +62,7 @@ public class ExportSvg extends ExportVectorGraphic {
             bos.flush();
             bos.close();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             JOptionPane.showMessageDialog(getController().getFrame()
                             .getContentPane(), e.getLocalizedMessage(), null,
                     JOptionPane.ERROR_MESSAGE);

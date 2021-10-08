@@ -37,6 +37,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
+import static java.lang.String.format;
+
 /**
  * Manages the hook available from the class path.
  *
@@ -104,7 +106,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                 }
             } catch (ClassNotFoundException e) {
                 log.error("Class not found.");
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         return returnValue;
@@ -146,7 +148,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                                 null);
                     } catch (Exception e) {
                         // error case
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                         continue;
                     }
                     // plugin is loaded.
@@ -190,11 +192,9 @@ public class MindMapHookFactory extends HookFactoryAdapter {
             String path = "";
             for (PluginClasspath plPath : descriptor.getPluginClasspath()) {
                 path += plPath.getJar() + ";";
+
+                log.error(format("Error occurred loading hook: %s\nClasspath: %s\nException:", descriptor.getClassName(), path), e);
             }
-            freemind.main.Resources.getInstance().logException(
-                    e,
-                    "Error occurred loading hook: " + descriptor.getClassName()
-                            + "\nClasspath: " + path + "\nException:");
             return null;
         }
     }
@@ -306,7 +306,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                 container.isPluginBase = descriptor.getIsPluginBase();
                 returnValue.add(container);
             } catch (ClassNotFoundException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         return returnValue;

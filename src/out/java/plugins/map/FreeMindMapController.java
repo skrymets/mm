@@ -765,7 +765,7 @@ public class FreeMindMapController extends JMapController implements
                 int zoom = Integer.parseInt(splitResult[2]);
                 return new PositionHolder(lat, lon, zoom);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 return null;
             }
         }
@@ -1164,7 +1164,7 @@ public class FreeMindMapController extends JMapController implements
                 ImageIO.write(myImage, "png", out);
                 out.close();
             } catch (IOException e1) {
-                freemind.main.Resources.getInstance().logException(e1);
+                log.error(e1);
             }
             map.setZoomContolsVisible(zoomContolsVisible);
             mMindMapController.getFrame().setWaitingCursor(false);
@@ -2153,7 +2153,7 @@ public class FreeMindMapController extends JMapController implements
                 }
             }
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             returnValue = false;
         }
         setCursor(Cursor.DEFAULT_CURSOR, false);
@@ -2176,7 +2176,7 @@ public class FreeMindMapController extends JMapController implements
                     .getInstance().unMarshall(result);
             return reversegeocode;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return null;
     }
@@ -2391,7 +2391,7 @@ public class FreeMindMapController extends JMapController implements
         } catch (Exception e) {
             logger.fine("Searching for " + b.toString() + " gave an error");
             final String errorString = e.toString();
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             logger.warning("Result was " + result);
             results.addPlace(getErrorPlace(errorString, "ERROR"));
         }

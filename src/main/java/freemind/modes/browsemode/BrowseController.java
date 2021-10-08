@@ -105,9 +105,9 @@ public class BrowseController extends ViewControllerAdapter {
                     log.trace("Try to open link " + link);
                     modeController.getFrame().openDocument(new URL(link));
                 } catch (MalformedURLException e1) {
-                    freemind.main.Resources.getInstance().logException(e1);
+                    log.error(e1);
                 } catch (Exception e1) {
-                    freemind.main.Resources.getInstance().logException(e1);
+                    log.error(e1);
                 }
             }
         }

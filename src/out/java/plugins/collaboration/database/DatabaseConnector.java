@@ -94,7 +94,7 @@ public class DatabaseConnector extends DatabaseBasics {
             mUpdateThread.insertUser();
             mUpdateThread.start();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             // TODO: Need a better message here.
             controller.getController().errorMessage(e.getLocalizedMessage());
             return;

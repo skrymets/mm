@@ -189,7 +189,7 @@ public class MindMapMaster extends SocketMaster implements PermanentNodeHook,
             mListener = new MasterThread();
             mListener.start();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             controller.getController().errorMessage(
                     Resources.getInstance().format(
                             SOCKET_CREATION_EXCEPTION_MESSAGE,
@@ -236,7 +236,7 @@ public class MindMapMaster extends SocketMaster implements PermanentNodeHook,
                 mServer.close();
             }
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         mMasterStarted = false;
         super.shutdownMapHook();
@@ -258,7 +258,7 @@ public class MindMapMaster extends SocketMaster implements PermanentNodeHook,
                     serverCommunication.commitSuicide();
                     serverCommunication.close();
                 } catch (IOException e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
             sessionData.mConnections.clear();

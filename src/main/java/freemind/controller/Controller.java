@@ -1070,7 +1070,7 @@ public class Controller implements MapModuleChangeObserver {
                     printerJob.print();
                     storePageFormat();
                 } catch (Exception ex) {
-                    freemind.main.Resources.getInstance().logException(ex);
+                    log.error(ex);
                 } finally {
                     frame.setWaitingCursor(false);
                 }
@@ -1239,14 +1239,13 @@ public class Controller implements MapModuleChangeObserver {
                             createNewMode(BrowseMode.MODENAME);
                             controller.getModeController().load(endUrl);
                         } catch (Exception e1) {
-                            freemind.main.Resources.getInstance().logException(
-                                    e1);
+                            log.error(e1);
                         }
                     }
                 });
             } catch (MalformedURLException e1) {
                 // TODO Auto-generated catch block
-                freemind.main.Resources.getInstance().logException(e1);
+                log.error(e1);
             }
         }
     }
@@ -1276,7 +1275,7 @@ public class Controller implements MapModuleChangeObserver {
                 log.info("Opening key docs under " + url);
                 controller.getFrame().openDocument(url);
             } catch (Exception e2) {
-                freemind.main.Resources.getInstance().logException(e2);
+                log.error(e2);
                 return;
             }
         }

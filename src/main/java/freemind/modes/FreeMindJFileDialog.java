@@ -20,6 +20,8 @@
 
 package freemind.modes;
 
+import lombok.extern.log4j.Log4j2;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
@@ -32,6 +34,7 @@ import java.awt.*;
  * @date 23.02.2012
  */
 @SuppressWarnings("serial")
+@Log4j2
 public class FreeMindJFileDialog extends JFileChooser implements FreeMindFileDialog {
 
     private DirectoryResultListener mDirectoryResultListener = null;
@@ -50,7 +53,7 @@ public class FreeMindJFileDialog extends JFileChooser implements FreeMindFileDia
             try {
                 mDirectoryResultListener.setChosenDirectory(getCurrentDirectory());
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }

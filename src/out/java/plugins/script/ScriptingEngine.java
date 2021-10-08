@@ -321,7 +321,7 @@ public class ScriptingEngine extends MindMapHookAdapter {
 
         }
         if (e2 != null) {
-            freemind.main.Resources.getInstance().logException(e2);
+            log.error(e2);
             pOutStream.print(e2.getMessage());
             String cause = ((e2.getCause() != null) ? e2.getCause()
                     .getMessage() : "");

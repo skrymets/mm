@@ -24,6 +24,7 @@ import freemind.main.Tools;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 import java.io.File;
@@ -36,6 +37,7 @@ import java.util.ListIterator;
  * This class represents a single Node of a Tree. It contains direct handles to
  * its parent and children and to its view.
  */
+@Log4j2
 public class FileNodeModel extends NodeAdapter {
     private File file;
     private Color color;
@@ -160,7 +162,7 @@ public class FileNodeModel extends NodeAdapter {
         try {
             return Tools.fileToUrl(file).toString();
         } catch (MalformedURLException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return file.toString();
     }

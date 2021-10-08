@@ -30,31 +30,28 @@ import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
 import freemind.modes.mindmapmode.actions.ApplyPatternAction.ExternalPatternAction;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.Font;
-import java.io.*;
+import java.io.Writer;
 import java.util.List;
 import java.util.*;
 
 /**
  * This class constructs patterns from files or from nodes and saves them back.
  */
+@Log4j2
 public class StylePatternFactory {
     public static final String FALSE_VALUE = "false";
 
     public static final String TRUE_VALUE = "true";
 
-    public static List<Pattern> loadPatterns(File file) throws Exception {
-        return loadPatterns(new BufferedReader(new FileReader(file)));
-    }
-
     /**
      * @return a List of Pattern elements.
-     * @throws Exception
      */
-    public static List<Pattern> loadPatterns(Reader reader) throws Exception {
+    public static List<Pattern> loadPatterns(String patternsXML) {
 
-        Patterns patterns = (Patterns) XmlBindingTools.getInstance().unMarshall(reader);
+        Patterns patterns = (Patterns) XmlBindingTools.getInstance().unMarshall(patternsXML);
 
         // translate standard strings:
         for (Pattern pattern : patterns.getPatternList()) {
@@ -432,19 +429,14 @@ public class StylePatternFactory {
                 pNode.setFontSize(pFeedback.getDefaultFont().getSize());
             } else {
                 try {
-                    pNode.setFontSize(Integer
-                            .parseInt(nodeFontSize));
+                    pNode.setFontSize(Integer.parseInt(nodeFontSize));
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance()
-                            .logException(e);
+                    log.error(e);
                 }
             }
         }
         if (pattern.getPatternNodeFontItalic() != null) {
-            ((NodeAdapter) pNode)
-                    .setItalic(
-                            TRUE_VALUE.equals(pattern.getPatternNodeFontItalic()
-                                    .getValue()));
+            ((NodeAdapter) pNode).setItalic(TRUE_VALUE.equals(pattern.getPatternNodeFontItalic().getValue()));
         }
         if (pattern.getPatternNodeFontBold() != null) {
             ((NodeAdapter) pNode).setBold(TRUE_VALUE.equals(pattern.getPatternNodeFontBold().getValue()));

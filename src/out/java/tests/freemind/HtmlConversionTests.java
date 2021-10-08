@@ -62,7 +62,7 @@ public class HtmlConversionTests extends FreeMindTestBase {
             try {
                 mFlavor = new DataFlavor("text/html; class=java.lang.String");
             } catch (ClassNotFoundException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
 

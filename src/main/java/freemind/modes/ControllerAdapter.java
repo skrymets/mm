@@ -249,13 +249,13 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             try {
                 listener.onFocusNode(getSelectedView());
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
             for (NodeView view : getView().getSelecteds()) {
                 try {
                     listener.onSelectionChange(view, true);
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         }
@@ -378,10 +378,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         try {
             return load(Tools.fileToUrl(file));
         } catch (XMLParseException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -411,7 +411,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 }
                 modeController.select(sel, selected);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 newModeController.getView().moveToRoot();
             }
         } else {
@@ -461,7 +461,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 try {
                     centerNode(getNodeFromID(target));
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                     // give "not found" message
                     getFrame().out(
                             Tools.expandPlaceholders(getText("link_not_found"),
@@ -514,7 +514,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                         newModeController.centerNode(newModeController
                                 .getNodeFromID(ref));
                     } catch (Exception e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                         getFrame().out(
                                 Tools.expandPlaceholders(
                                         getText("link_not_found"), ref));
@@ -526,11 +526,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 getFrame().openDocument(originalURL);
             }
         } catch (MalformedURLException ex) {
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
             getController().errorMessage(getText("url_error") + "\n" + ex);
             return;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         } finally {
             setWaitingCursor(false);
         }
@@ -623,13 +623,13 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 Tools.makeFileHidden(new File(fileName), true);
             }
         } catch (FileNotFoundException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             String message = Tools.expandPlaceholders(getText("save_failed"),
                     file.getName());
             getController().errorMessage(message);
         } catch (Exception e) {
             log.error("Error in MindMapMapModel.save(): ");
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         } finally {
             setWaitingCursor(false);
         }
@@ -778,7 +778,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         } else if (exceptionType.equals("java.io.FileNotFoundException")) {
             getController().errorMessage(ex.getMessage());
         } else {
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
             getController().errorMessage(ex);
         }
     }
@@ -1277,9 +1277,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                     getMap().getAsRTF(selectedNodes), getMap().getAsHTML(
                     selectedNodes), null, null, createForNodeIdsFlavor);
         } catch (UnsupportedFlavorException ex) {
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
         } catch (IOException ex) {
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
         }
         return null;
     }

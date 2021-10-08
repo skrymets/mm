@@ -78,21 +78,23 @@ public class FreeMindCommon {
                 // if(languageResources == null)
                 defaultResources = getLanguageResources(DEFAULT_LANGUAGE);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
                 log.error("Error loading Resources");
             }
             // printResourceTable();
         }
 
         private PropertyResourceBundle getLanguageResources(String lang) throws IOException {
-            URL systemResource = mFreeMindMain.getResource("Resources_" + lang + ".properties");
+            URL systemResource = mFreeMindMain.getResource("strings/Resources_" + lang + ".properties");
             if (systemResource == null) {
                 return null;
             }
+
             InputStream in = systemResource.openStream();
             if (in == null) {
                 return null;
             }
+
             PropertyResourceBundle bundle = new PropertyResourceBundle(in);
             in.close();
             return bundle;
@@ -223,7 +225,7 @@ public class FreeMindCommon {
         try {
             return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return classLoader;
         }
     }
@@ -327,7 +329,7 @@ public class FreeMindCommon {
                 baseDir = file.getCanonicalPath();
                 log.info("Basedir is: " + baseDir);
             } catch (Exception e) {
-                Resources.getInstance().logException(e);
+                log.error(e);
                 throw new IllegalArgumentException("FreeMind base dir can't be determined.");
             }
         }

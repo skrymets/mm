@@ -416,8 +416,8 @@ public class Tools {
                 relative = Tools.toRelativeURL(Tools.fileToUrl(pMapFile), link);
             }
             return relative;
-        } catch (MalformedURLException ex) {
-            freemind.main.Resources.getInstance().logException(ex);
+        } catch (MalformedURLException e) {
+            log.error(e);
         }
         return input.getAbsolutePath();
     }
@@ -486,7 +486,7 @@ public class Tools {
                     timeOut--;
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }
@@ -1015,9 +1015,9 @@ public class Tools {
                         trans = transFact.newTransformer(xsltSource);
                         trans.transform(sr, result);
                         successful = true;
-                    } catch (Exception ex) {
-                        freemind.main.Resources.getInstance().logException(ex);
-                        errorMessage = ex.toString();
+                    } catch (Exception e) {
+                        log.error(e);
+                        errorMessage = e.toString();
                     }
                 }
 
@@ -1038,9 +1038,9 @@ public class Tools {
             // writer.getBuffer().toString());
             successful = transformer.isSuccessful();
             errorMessage = transformer.getErrorMessage();
-        } catch (Exception ex) {
-            Resources.getInstance().logException(ex, xsltScript);
-            errorMessage = ex.getLocalizedMessage();
+        } catch (Exception e) {
+            log.error(e);
+            errorMessage = e.getLocalizedMessage();
         } finally {
             if (inputStream != null) {
                 inputStream.close();
@@ -1087,13 +1087,12 @@ public class Tools {
         try {
             return getFile(getReaderFromFile(pInputFile));
         } catch (FileNotFoundException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
     }
 
-    public static Reader getReaderFromFile(File pInputFile)
-            throws FileNotFoundException {
+    public static Reader getReaderFromFile(File pInputFile) throws FileNotFoundException {
         return new FileReader(pInputFile);
     }
 
@@ -1109,12 +1108,12 @@ public class Tools {
             }
             bufferedReader.close();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
                 } catch (Exception ex) {
-                    freemind.main.Resources.getInstance().logException(ex);
+                    log.error(e);
                 }
             }
             return null;
@@ -1563,29 +1562,13 @@ public class Tools {
                 log.warn("Can't wait for event queue, if I'm inside this queue!");
             }
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
-    }
-
-    /**
-     * Logs the stacktrace via a dummy exception.
-     */
-    public static void printStackTrace() {
-        freemind.main.Resources.getInstance().logException(new IllegalArgumentException("HERE"));
-    }
-
-    /**
-     * Logs the stacktrace into a string.
-     */
-    public static String getStackTrace() {
-        IllegalArgumentException ex = new IllegalArgumentException("HERE");
-        return getStacktrace(ex);
     }
 
     /**
      * Adapts the font size inside of a component to the zoom
      *
-     * @param c              component
      * @param zoom           zoom factor
      * @param normalFontSize "unzoomed" normal font size.
      * @return a copy of the input font (if the size was effectively changed)
@@ -1753,7 +1736,7 @@ public class Tools {
                 b.append(fileToUrl(new File(fileName)));
                 b.append('\n');
             } catch (MalformedURLException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         return b.toString();
@@ -1767,7 +1750,7 @@ public class Tools {
             try {
                 ret.add(new URL(url));
             } catch (MalformedURLException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         return ret;
@@ -1816,7 +1799,7 @@ public class Tools {
                 }
             } catch (Exception e) {
                 // e.printStackTrace();
-                // freemind.main.Resources.getInstance().logException(e);
+                // log.error(e);
             }
         }
         return mindMapNodes;
@@ -1894,10 +1877,6 @@ public class Tools {
         map.remove(keyStrokeF8);
     }
 
-    /**
-     * @param pPageFormat
-     * @param pPageFormatProperty
-     */
     public static void setPageFormatFromString(Paper pPaper,
                                                String pPageFormatProperty) {
         try {
@@ -1913,28 +1892,20 @@ public class Tools {
             pPaper.setImageableArea(nt(tokenizer), nt(tokenizer),
                     nt(tokenizer), nt(tokenizer));
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
-    /**
-     * @param pTokenizer
-     * @return
-     */
     private static double nt(StringTokenizer pTokenizer) {
         String nextToken = pTokenizer.nextToken();
         try {
             return Double.parseDouble(nextToken);
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return 0;
     }
 
-    /**
-     * @param pPageFormat
-     * @return
-     */
     public static String getPageFormatAsString(Paper pPaper) {
         return pPaper.getWidth() + ";" + pPaper.getHeight() + ";"
                 + pPaper.getImageableX() + ";" + pPaper.getImageableY() + ";"
@@ -1949,7 +1920,7 @@ public class Tools {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return null;
     }
@@ -2037,8 +2008,7 @@ public class Tools {
         return decodedPath + "dictionaries/";
     }
 
-    public static Properties copyChangedProperties(Properties props2,
-                                                   Properties defProps2) {
+    public static Properties copyChangedProperties(Properties props2, Properties defProps2) {
         Properties toBeStored = new Properties();
         for (Iterator it = props2.keySet().iterator(); it.hasNext(); ) {
             String key = (String) it.next();
@@ -2069,7 +2039,7 @@ public class Tools {
             }
             in.close();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return new StringBuffer();
         }
         return buffer;
@@ -2113,14 +2083,6 @@ public class Tools {
 
     }
 
-    // http://stackoverflow.com/questions/1149703/stacktrace-to-string-in-java
-    public static String getStacktrace(Exception e) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        return sw.toString();
-    }
-
     public static void makeFileHidden(File file, boolean setHidden) {
         try {
             if (!file.exists() || !isWindows()) {
@@ -2132,7 +2094,7 @@ public class Tools {
                 Files.setAttribute(path, "dos:hidden", setHidden);
             }
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 

@@ -26,6 +26,7 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.*;
 import freemind.modes.*;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 import java.io.*;
@@ -35,7 +36,10 @@ import java.nio.channels.FileLock;
 import java.util.List;
 import java.util.*;
 
+import static java.lang.String.format;
+
 @SuppressWarnings("serial")
+@Log4j2
 public class MindMapMapModel extends MapAdapter {
 
     public static final String RESTORE_MODE_MIND_MAP = "MindMap:";
@@ -117,7 +121,7 @@ public class MindMapMapModel extends MapAdapter {
 
             return stringWriter.toString();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
     }
@@ -136,7 +140,7 @@ public class MindMapMapModel extends MapAdapter {
             return stringWriter.toString();
 
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
     }
@@ -152,7 +156,7 @@ public class MindMapMapModel extends MapAdapter {
 
         } catch (Exception e) {
             System.err.println("Error in MindMapMapModel.saveTXT(): ");
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return false;
         }
     }
@@ -167,7 +171,7 @@ public class MindMapMapModel extends MapAdapter {
 
             return stringWriter.toString();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
     }
@@ -209,7 +213,7 @@ public class MindMapMapModel extends MapAdapter {
             fileout.write("}");
             return true;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return false;
         }
     }
@@ -485,7 +489,7 @@ public class MindMapMapModel extends MapAdapter {
 
                 writeSemaphoreFile(lockedSemaphoreFile);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }
@@ -563,8 +567,7 @@ public class MindMapMapModel extends MapAdapter {
                                 System.err
                                         .println("Error in automatic MindMapMapModel.save(): "
                                                 + e.getMessage());
-                                freemind.main.Resources.getInstance()
-                                        .logException(e);
+                                log.error(e);
                                 return;
                             }
                         }
@@ -580,16 +583,15 @@ public class MindMapMapModel extends MapAdapter {
                             System.err
                                     .println("Error in automatic MindMapMapModel.save(): "
                                             + e.getMessage());
-                            freemind.main.Resources.getInstance().logException(
-                                    e);
+                            log.error(e);
                         }
                         tempFileStack.add(tempFile); // add at the back.
                     }
                 });
             } catch (InterruptedException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             } catch (InvocationTargetException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }
@@ -612,8 +614,7 @@ public class MindMapMapModel extends MapAdapter {
                     .newInstance(constrObjs);
             return nodeImplementor;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e,
-                    "Error occurred loading node implementor: " + nodeClass);
+            log.error(format("Error occurred loading node implementor: %s", nodeClass), e);
             // the best we can do is to return the normal class:
             NodeAdapter node = new MindMapNodeModel(pMap);
             return node;

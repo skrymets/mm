@@ -516,7 +516,7 @@ public class StructuredMenuHolder {
                         isEnabled = holder.getEnabledListener().isEnabled(
                                 menuItem, action);
                     } catch (Exception e) {
-                        Resources.getInstance().logException(e);
+                        log.error(e);
                     }
                     action.setEnabled(isEnabled);
 //					menuItem.setEnabled(isEnabled);
@@ -528,7 +528,7 @@ public class StructuredMenuHolder {
                         selected = holder.getSelectionListener().isSelected(
                                 menuItem, action);
                     } catch (Exception e) {
-                        Resources.getInstance().logException(e);
+                        log.error(e);
                     }
                     if (menuItem instanceof JCheckBoxMenuItem) {
                         JCheckBoxMenuItem checkItem = (JCheckBoxMenuItem) menuItem;

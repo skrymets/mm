@@ -21,6 +21,7 @@
 package freemind.modes.mindmapmode.dialogs;
 
 import freemind.common.ComboProperty;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.Vector;
 
@@ -30,24 +31,17 @@ import java.util.Vector;
  * @author foltin
  * @date 26.09.2013
  */
+@Log4j2
 public class IntegerComboProperty extends ComboProperty {
 
-    /**
-     * @param pDescription
-     * @param pLabel
-     * @param pPossibles
-     * @param pSizesVector
-     */
-    public IntegerComboProperty(String pDescription, String pLabel,
-                                String[] pPossibles, Vector<String> pSizesVector) {
+
+    public IntegerComboProperty(String pDescription,
+                                String pLabel,
+                                String[] pPossibles,
+                                Vector<String> pSizesVector) {
         super(pDescription, pLabel, pPossibles, pSizesVector);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.common.ComboProperty#setValue(java.lang.String)
-     */
     public void setValue(String pValue) {
         String lastMatchedValue = null;
         if (possibleValues.contains(pValue)) {
@@ -66,7 +60,7 @@ public class IntegerComboProperty extends ComboProperty {
                     lastMatchedValue = stringValue;
                 }
             } catch (NumberFormatException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         super.setValue(pValue);

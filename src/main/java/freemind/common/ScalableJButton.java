@@ -29,7 +29,7 @@ import java.awt.event.ComponentListener;
 /**
  * @author foltin
  * @date 19.06.2015
- * @see http://stackoverflow.com/questions/8183949/swing-scale-a-text-font-of-component
+ * See http://stackoverflow.com/questions/8183949/swing-scale-a-text-font-of-component
  */
 
 @Log4j2

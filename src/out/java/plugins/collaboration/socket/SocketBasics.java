@@ -228,10 +228,10 @@ public abstract class SocketBasics extends MindMapNodeHookAdapter implements
              */
             broadcastCommand(doAction, undoAction, lockId, getMapFeedback());
         } catch (UnableToGetLockException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return getEmptyActionPair();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return getEmptyActionPair();
         } finally {
             unlock(getMapFeedback());

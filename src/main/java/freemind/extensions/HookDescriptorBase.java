@@ -158,7 +158,7 @@ public class HookDescriptorBase {
             classLoaderCache.put(key, loader);
             return loader;
         } catch (MalformedURLException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return this.getClass().getClassLoader();
         }
     }

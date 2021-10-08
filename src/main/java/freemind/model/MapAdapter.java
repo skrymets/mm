@@ -111,7 +111,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                             mFileTime = lastModified;
                         }
                     } catch (Exception e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                     }
                 }
             }
@@ -489,7 +489,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                 // Issue event here.
                 pMapSourceChangedObserver.mapSourceChanged(this);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         mMapSourceChangedObserverSet.add(pMapSourceChangedObserver);
@@ -601,7 +601,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         } catch (Exception ex) {
             String errorMessage = "Error while parsing file:" + ex;
             System.err.println(errorMessage);
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
             NodeAdapter result = createNodeAdapter(this, null);
             result.setText(errorMessage);
             return (MindMapNode) result;

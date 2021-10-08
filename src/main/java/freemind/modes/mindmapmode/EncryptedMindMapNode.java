@@ -131,7 +131,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
                 }
                 isDecrypted = true;
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 setAccessible(false);
             }
         }
@@ -200,7 +200,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
                 setFolded(true);
                 setAccessible(false);
             } catch (IOException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }
@@ -350,7 +350,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
             String encrypted = encrypter.encrypt(childXml.toString());
             return encrypted;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         throw new IllegalArgumentException("Can't encrypt the node.");
     }

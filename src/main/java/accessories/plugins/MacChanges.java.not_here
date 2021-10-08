@@ -72,7 +72,7 @@ public class MacChanges extends ApplicationAdapter {
 					return Tools.fileToUrl(new File(Tools.getFreeMindBasePath()
 							+ File.separator + link));
 				} catch (UnsupportedEncodingException e) {
-					freemind.main.Resources.getInstance().logException(e);
+					log.error(e);
 					return null;
 				}
 			}
@@ -123,7 +123,7 @@ public class MacChanges extends ApplicationAdapter {
 			}
 			event.setHandled(true);
 		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
+			log.error(e);
 		}
 	}
 

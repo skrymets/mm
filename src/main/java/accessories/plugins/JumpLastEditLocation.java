@@ -62,7 +62,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
             log.trace("Selecting " + node + " as last edit location.");
             getMindMapController().select(node, Tools.getVectorWithSingleElement(node));
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -99,7 +99,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                 } catch (IllegalArgumentException e) {
                     // node not found, retry...
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             } while (index > 0);
             return null;
@@ -160,7 +160,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                     log.trace("New last edit location: " + lastLocation
                             + " from " + controller.marshall(doAction));
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                     log.warn("Not able to marshall the action "
                             + doAction.getClass() + " as " + doAction);
                 }

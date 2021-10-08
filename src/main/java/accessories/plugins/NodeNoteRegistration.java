@@ -218,7 +218,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 editorPane.setSelectionEnd(selectionEnd);
                 editorPane.setSelectionStart(selectionStart);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
 
@@ -396,7 +396,7 @@ public class NodeNoteRegistration implements HookRegistration,
                     getMindMapController().getFrame().openDocument(
                             new URL(pE.getActionCommand()));
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         });

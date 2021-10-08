@@ -108,7 +108,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
                                 e.getYOnScreen() + diffy);
                     }
                 } catch (AWTException e1) {
-                    freemind.main.Resources.getInstance().logException(e1);
+                    log.error(e1);
                 }
                 dragStartingPoint.x += ((node.getHGap() < 0) ? 2 : 1) * diffx;
                 dragStartingPoint.y += ((node.getShiftY() < 0) ? 2 : 1) * diffy;

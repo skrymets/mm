@@ -52,13 +52,13 @@ public abstract class TerminateableThread extends Thread {
             try {
                 shouldBeCalledDirectlyAgain = processAction();
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
             if (!shouldBeCalledDirectlyAgain) {
                 try {
                     Thread.sleep(mSleepTime);
                 } catch (InterruptedException e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
 
                 }
             }
@@ -83,7 +83,7 @@ public abstract class TerminateableThread extends Thread {
             try {
                 Thread.sleep(mSleepTime);
             } catch (InterruptedException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         if (timeout == 0) {

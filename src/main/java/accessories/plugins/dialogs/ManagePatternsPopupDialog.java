@@ -32,7 +32,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame.StylePatternFrameType;
 import freemind.swing.DefaultListModel;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -42,12 +42,9 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.Vector;
 
-/**
- *
- */
 @SuppressWarnings("serial")
-public class ManagePatternsPopupDialog extends JDialog implements
-        TextTranslator, KeyListener {
+@Log4j2
+public class ManagePatternsPopupDialog extends JDialog implements TextTranslator, KeyListener {
     private static Pattern sLastSelectedPattern = null;
 
     private static final String STACK_PATTERN_FRAME = "PATTERN";
@@ -115,19 +112,14 @@ public class ManagePatternsPopupDialog extends JDialog implements
 
     private JSplitPane mSplitPane;
 
-    private static Logger logger = null;
-
-    /**
-     * This is the default constructor
-     */
     public ManagePatternsPopupDialog(JFrame caller, MindMapController controller) {
         super(caller);
         this.mController = controller;
         List<Pattern> patternList = new Vector<>();
         try {
-            patternList = StylePatternFactory.loadPatterns(controller.getPatternReader());
+            patternList = StylePatternFactory.loadPatterns(controller.getPatternsXML());
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             JOptionPane.showMessageDialog(this,
                     getDialogTitle(),
                     controller.getText("accessories/plugins/ManagePatterns.not_found"),

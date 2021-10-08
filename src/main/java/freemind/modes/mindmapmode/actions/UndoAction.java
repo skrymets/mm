@@ -140,7 +140,7 @@ public class UndoAction extends AbstractXmlAction {
             try {
                 maxEntries = new Integer(controller.getFrame().getProperty("undo_levels"));
             } catch (NumberFormatException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
             while (actionPairList.size() > maxEntries) {
                 actionPairList.remove(actionPairList.size() - 1); // remove

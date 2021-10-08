@@ -28,6 +28,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
@@ -42,21 +43,13 @@ import java.util.List;
 /**
  * @author Dimitri Polivaev
  */
+@Log4j2
 public class SplitNode extends MindMapNodeHookAdapter {
 
-    /**
-     *
-     */
     public SplitNode() {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode,
-     * java.util.List)
-     */
     public void invoke(MindMapNode node) {
         super.invoke(node);
         final List<MindMapNode> list = getMindMapController().getSelecteds();
@@ -140,9 +133,9 @@ public class SplitNode extends MindMapNodeHookAdapter {
                     return null;
                 }
             } catch (IOException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             } catch (BadLocationException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
             return parts;
         }

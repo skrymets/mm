@@ -208,7 +208,7 @@ public class ScriptingRegistration implements HookRegistration,
                 try {
                     executeScript(controller.getRootNode(), scriptString);
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             } else {
                 ScriptingEngine.logger.warning("Starting script not found!");

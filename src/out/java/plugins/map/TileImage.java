@@ -122,7 +122,7 @@ public class TileImage implements ImageObserver {
             mTilesPresent = false;
             mImageCreated = true;
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -132,7 +132,7 @@ public class TileImage implements ImageObserver {
             mTilesPresent = false;
             mImageCreated = true;
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -143,7 +143,7 @@ public class TileImage implements ImageObserver {
             stream.close();
             return Tools.toBase64(stream.toByteArray());
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return null;
 

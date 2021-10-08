@@ -26,6 +26,7 @@ import freemind.main.FreeMindStarter;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.view.mindmapview.MapView;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,19 +41,14 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-/**
- *
- */
+@Log4j2
 public class FreeMindMainMock implements FreeMindMain {
 
     private Properties mProperties;
 
-    /**
-     *
-     */
     public FreeMindMainMock() {
         super();
-        mProperties = new FreeMindStarter().readDefaultPreferences();
+        mProperties = new FreeMindStarter().loadDefaultPreferences().orElse(new Properties());
         Resources.createInstance(this);
 
     }
@@ -79,7 +75,7 @@ public class FreeMindMainMock implements FreeMindMain {
     public void setWaitingCursor(boolean waiting) {
     }
 
-    public File getPatternsFile() {
+    public String getPatternsXML() {
         return null;
     }
 
@@ -187,7 +183,7 @@ public class FreeMindMainMock implements FreeMindMain {
             return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(
                     getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return classLoader;
         }
     }

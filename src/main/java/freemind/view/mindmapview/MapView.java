@@ -272,14 +272,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_BACKGROUND_COLOR);
                 standardMapBackgroundColor = Tools.xmlToColor(stdcolor);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
                 standardMapBackgroundColor = Color.WHITE;
             }
             try {
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_NODE_TEXT_COLOR);
                 standardNodeTextColor = Tools.xmlToColor(stdcolor);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
                 standardSelectColor = Color.WHITE;
             }
             // initialize the selectedColor:
@@ -287,7 +287,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_SELECTED_NODE_COLOR);
                 standardSelectColor = Tools.xmlToColor(stdcolor);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
                 standardSelectColor = Color.BLUE.darker();
             }
 
@@ -296,14 +296,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String stdtextcolor = mFeedback.getProperty(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR);
                 standardSelectRectangleColor = Tools.xmlToColor(stdtextcolor);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
                 standardSelectRectangleColor = Color.WHITE;
             }
             try {
                 String drawCircle = mFeedback.getProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION);
                 standardDrawRectangleForSelection = Tools.xmlToBoolean(drawCircle);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
                 standardDrawRectangleForSelection = false;
             }
 
@@ -311,7 +311,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String printOnWhite = mFeedback.getProperty(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND);
                 printOnWhiteBackground = Tools.xmlToBoolean(printOnWhite);
             } catch (Exception ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
                 printOnWhiteBackground = true;
             }
             // only created once:
@@ -475,7 +475,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             try {
                 maxNodeWidth = Integer.parseInt(mFeedback.getProperty("max_node_width"));
             } catch (NumberFormatException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 maxNodeWidth = Integer.parseInt(mFeedback.getProperty("el__max_default_window_width"));
             }
         }
@@ -1411,7 +1411,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             userZoomFactor = Double.parseDouble(mFeedback
                     .getProperty("user_zoom"));
         } catch (Exception e) {
-            // freemind.main.Resources.getInstance().logException(e);
+            // log.error(e);
         }
         userZoomFactor = Math.max(0, userZoomFactor);
         userZoomFactor = Math.min(2, userZoomFactor);

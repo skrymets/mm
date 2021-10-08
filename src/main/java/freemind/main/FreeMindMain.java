@@ -26,7 +26,6 @@ import freemind.view.mindmapview.MapView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -51,7 +50,7 @@ public interface FreeMindMain {
 
     void setWaitingCursor(boolean waiting);
 
-    File getPatternsFile();
+    String getPatternsXML();
 
     MenuBar getFreeMindMenuBar();
 

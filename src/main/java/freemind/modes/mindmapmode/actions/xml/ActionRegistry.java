@@ -151,7 +151,7 @@ public class ActionRegistry {
             try {
                 undoActionHandler.executeAction(pair);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 returnValue = false;
             }
         }
@@ -169,7 +169,7 @@ public class ActionRegistry {
             try {
                 handler.executeAction(filteredPair.getDoAction());
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 returnValue = false;
                 // to break or not to break. this is the question here...
             }

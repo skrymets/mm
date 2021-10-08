@@ -144,14 +144,6 @@ public class Resources implements TextTranslator {
         return countryMap;
     }
 
-    public void logException(Throwable e) {
-        logException(e, "");
-    }
-
-    public void logException(Throwable e, String comment) {
-        log.info("An exception occured: " + comment, e);
-    }
-
     public String format(String resourceKey, Object[] messageArguments) {
         MessageFormat formatter = new MessageFormat(getResourceString(resourceKey));
         String stringResult = formatter.format(messageArguments);

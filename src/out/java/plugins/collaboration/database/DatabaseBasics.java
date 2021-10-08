@@ -155,7 +155,7 @@ public abstract class DatabaseBasics extends MindMapNodeHookAdapter implements
                 }
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
 
             }
         }

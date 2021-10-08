@@ -415,7 +415,7 @@ public class MapSharingController {
                  * sw.write(" </map>\n");
                  *
                  * sender.sendMap(sw.getBuffer().toString()); } catch(Exception
-                 * e) { freemind.main.Resources.getInstance().logException(e); }
+                 * e) { log.error(e); }
                  */
                 jabberConnectionWizardView.showSharingAcceptedMessage(userName);
             } else {

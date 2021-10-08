@@ -236,11 +236,11 @@ public class ServerCommunication extends CommunicationBase {
                 setCurrentState(STATE_WAIT_FOR_COMMAND);
                 commandHandled = true;
             } catch (UnableToGetLockException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 CollaborationUnableToLock unableToLock = new CollaborationUnableToLock();
                 send(unableToLock);
             } catch (InterruptedException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         if (!commandHandled) {

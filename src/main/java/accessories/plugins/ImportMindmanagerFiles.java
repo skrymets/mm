@@ -105,9 +105,9 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
                 break;
             }
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         } catch (XMLParseException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -122,7 +122,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
             Transformer trans = transFact.newTransformer(xsltSource);
             trans.transform(xmlSource, result);
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
         return writer.toString();

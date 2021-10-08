@@ -246,7 +246,7 @@ public class PasteActor extends XmlActorAdapter {
                         processUnfinishedLinksInHooks(importNode);
                     }
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         }
@@ -467,9 +467,9 @@ public class PasteActor extends XmlActorAdapter {
                             isLeft, t);
                     break;
                 } catch (UnsupportedFlavorException e) {
-                    Resources.getInstance().logException(e);
+                    log.error(e);
                 } catch (IOException e) {
-                    Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         }
@@ -502,7 +502,7 @@ public class PasteActor extends XmlActorAdapter {
             processUnfinishedLinksInHooks(node);
             return node;
         } catch (IOException ee) {
-            freemind.main.Resources.getInstance().logException(ee);
+            log.error(ee);
             return null;
         }
     }
@@ -735,7 +735,7 @@ public class PasteActor extends XmlActorAdapter {
                         pUndoAction.setNodeAmount(determineAmountOfNewNodes(t));
                         amountAlreadySet = true;
                     } catch (Exception e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                         // ok, something went wrong, but this breaks undo, only.
                         pUndoAction.setNodeAmount(1);
                     }
@@ -781,18 +781,16 @@ public class PasteActor extends XmlActorAdapter {
                         amountAlreadySet = true;
                     }
                 } // getData throws this.
-                catch (UnsupportedFlavorException ufe) {
-                    freemind.main.Resources.getInstance().logException(ufe);
-                } catch (IOException ioe) {
-                    freemind.main.Resources.getInstance().logException(ioe);
+                catch (UnsupportedFlavorException | IOException e) {
+                    log.error(e);
                 }
 
             }
             return trans;
         } catch (UnsupportedFlavorException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return null;
     }
@@ -834,7 +832,7 @@ public class PasteActor extends XmlActorAdapter {
                     newNode.setParent(pParent);
                     return newNode;
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
                 return null;
             }

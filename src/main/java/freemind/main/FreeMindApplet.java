@@ -23,17 +23,18 @@ package freemind.main;
 import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.view.mindmapview.MapView;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.*;
 
 @SuppressWarnings("serial")
+@Log4j2
 public class FreeMindApplet extends JApplet implements FreeMindMain {
 
     public static final VersionInformation version = FreeMind.VERSION;
@@ -58,7 +59,7 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
         return true;
     }
 
-    public File getPatternsFile() {
+    public String getPatternsXML() {
         return null;
     }
 
@@ -189,7 +190,7 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
                 System.err.println("View is null.");
             }
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -300,10 +301,9 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
                 URL mapUrl = new URL(initialMapName);
                 getController().getModeController().load(mapUrl);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
-
     }
 
     private void setPropertyByParameter(String key) {

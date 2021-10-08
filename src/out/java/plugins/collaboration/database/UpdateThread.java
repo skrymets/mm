@@ -103,7 +103,7 @@ public class UpdateThread extends Thread implements ResultHandler,
         try {
             mPrepareStatement = mConnection.prepareStatement(QUERY);
         } catch (SQLException e1) {
-            freemind.main.Resources.getInstance().logException(e1);
+            log.error(e1);
             return;
         }
         int counter = 1;
@@ -123,7 +123,7 @@ public class UpdateThread extends Thread implements ResultHandler,
                     mController.getController().setTitle();
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         mIsTerminated = true;
@@ -137,7 +137,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         if (timeout == 0) {
@@ -156,7 +156,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             mConnection.close();
             mConnection = null;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -189,7 +189,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             }
             rs.close();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -286,7 +286,7 @@ public class UpdateThread extends Thread implements ResultHandler,
         try {
             insertIntoActionTable(expression);
         } catch (SQLException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return pPair;
     }
@@ -369,7 +369,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             // and wait until the others should have shut down.
             Thread.sleep(2000);
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -391,7 +391,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             }
             rs.close();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return result;
     }

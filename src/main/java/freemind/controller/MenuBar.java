@@ -396,7 +396,7 @@ public class MenuBar extends JMenuBar {
             } catch (Exception ex) {
                 c.errorMessage("An error occured on opening the file: "
                         + restoreable + ".");
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(ex);
             }
         }
     }

@@ -111,7 +111,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                     Thread.sleep(10);
                 }
             } catch (InterruptedException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
             mIsInterrupted = false;
             return i > 0;
@@ -144,7 +144,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                     try {
                         sum += Double.parseDouble(number);
                     } catch (NumberFormatException e) {
-                        // freemind.main.Resources.getInstance().logException(e);
+                        // log.error(e);
                     }
                 }
             }
@@ -184,14 +184,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      */
     private final class MapSourceChangeDialog implements Runnable {
 
-        /**
-         *
-         */
         private boolean mReturnValue = true;
 
-        /**
-         * @param pReturnValue
-         */
         private MapSourceChangeDialog() {
         }
 
@@ -359,8 +353,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         super(mode);
         // create action factory:
         actionFactory = new ActionRegistry();
-        // create node information timer and actions. They don't fire, until
-        // called to do so.
+        // create node information timer and actions. They don't fire, until called to do so.
         mNodeInformationTimerAction = new NodeInformationTimerAction();
         mNodeInformationTimer = new Timer(100, mNodeInformationTimerAction);
         mNodeInformationTimer.setRepeats(false);
@@ -388,7 +381,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             mMenuStructure = updateMenusFromXml(in);
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
 
         log.info("MindMapPopupMenu");
@@ -406,16 +399,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         undo = new UndoAction(this);
         redo = new RedoAction(this);
         // register default action handler:
-        // the executor must be the first here, because it is executed last
-        // then.
-        getActionRegistry().registerHandler(
-                new DefaultActionHandler(getActionRegistry()));
-        getActionRegistry().registerUndoHandler(
-                new UndoActionHandler(this, undo, redo));
+        // the executor must be the first here, because it is executed last then.
+        getActionRegistry().registerHandler(new DefaultActionHandler(getActionRegistry()));
+        getActionRegistry().registerUndoHandler(new UndoActionHandler(this, undo, redo));
         // debug:
-        // getActionFactory().registerHandler(
-        // new freemind.modes.mindmapmode.actions.xml.PrintActionHandler(
-        // this));
+        // getActionFactory().registerHandler(new freemind.modes.mindmapmode.actions.xml.PrintActionHandler(this));
 
         cut = new CutAction(this);
         paste = new PasteAction(this);
@@ -445,42 +433,43 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         // this is an unknown icon and thus corrected by mindicon:
         removeLastIconAction = new RemoveIconAction(this);
         // this action handles the xml stuff: (undo etc.)
-        unknownIconAction = new IconAction(this,
-                MindIcon.factory((String) MindIcon.getAllIconNames().get(0)),
-                removeLastIconAction);
+        unknownIconAction = new IconAction(this, MindIcon.factory(MindIcon.getAllIconNames().get(0)), removeLastIconAction);
         removeLastIconAction.setIconAction(unknownIconAction);
         removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
         // load pattern actions:
         loadPatternActions();
-        EdgeWidth_WIDTH_PARENT = new EdgeWidthAction(this,
-                EdgeAdapter.WIDTH_PARENT);
+
+        EdgeWidth_WIDTH_PARENT = new EdgeWidthAction(this, EdgeAdapter.WIDTH_PARENT);
         EdgeWidth_WIDTH_THIN = new EdgeWidthAction(this, EdgeAdapter.WIDTH_THIN);
         EdgeWidth_1 = new EdgeWidthAction(this, 1);
         EdgeWidth_2 = new EdgeWidthAction(this, 2);
         EdgeWidth_4 = new EdgeWidthAction(this, 4);
         EdgeWidth_8 = new EdgeWidthAction(this, 8);
-        edgeWidths = new EdgeWidthAction[]{EdgeWidth_WIDTH_PARENT,
-                EdgeWidth_WIDTH_THIN, EdgeWidth_1, EdgeWidth_2, EdgeWidth_4,
+        edgeWidths = new EdgeWidthAction[]{
+                EdgeWidth_WIDTH_PARENT,
+                EdgeWidth_WIDTH_THIN,
+                EdgeWidth_1,
+                EdgeWidth_2,
+                EdgeWidth_4,
                 EdgeWidth_8};
-        EdgeStyle_linear = new EdgeStyleAction(this,
-                EdgeAdapter.EDGESTYLE_LINEAR);
-        EdgeStyle_bezier = new EdgeStyleAction(this,
-                EdgeAdapter.EDGESTYLE_BEZIER);
-        EdgeStyle_sharp_linear = new EdgeStyleAction(this,
-                EdgeAdapter.EDGESTYLE_SHARP_LINEAR);
-        EdgeStyle_sharp_bezier = new EdgeStyleAction(this,
-                EdgeAdapter.EDGESTYLE_SHARP_BEZIER);
-        edgeStyles = new EdgeStyleAction[]{EdgeStyle_linear,
-                EdgeStyle_bezier, EdgeStyle_sharp_linear,
-                EdgeStyle_sharp_bezier};
+
+        EdgeStyle_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_LINEAR);
+        EdgeStyle_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_BEZIER);
+        EdgeStyle_sharp_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_LINEAR);
+        EdgeStyle_sharp_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_BEZIER);
+        edgeStyles = new EdgeStyleAction[]{
+                EdgeStyle_linear,
+                EdgeStyle_bezier,
+                EdgeStyle_sharp_linear,
+                EdgeStyle_sharp_bezier
+        };
+
         cloud = new CloudAction(this);
-        cloudColor = new freemind.modes.mindmapmode.actions.CloudColorAction(
-                this);
+        cloudColor = new CloudColorAction(this);
         addArrowLinkAction = new AddArrowLinkAction(this);
         removeArrowLinkAction = new RemoveArrowLinkAction(this, null);
         colorArrowLinkAction = new ColorArrowLinkAction(this, null);
-        changeArrowsInArrowLinkAction = new ChangeArrowsInArrowLinkAction(this,
-                "none", null, null, true, true);
+        changeArrowsInArrowLinkAction = new ChangeArrowsInArrowLinkAction(this, "none", null, null, true, true);
         nodeBackgroundColor = new NodeBackgroundColorAction(this);
         removeNodeBackgroundColor = new RemoveNodeBackgroundColorAction(this);
         setLinkByTextField = new SetLinkByTextFieldAction(this);
@@ -505,66 +494,47 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      */
     private void loadPatternActions() {
         try {
-            loadPatterns(getPatternReader());
+            loadPatterns(getPatternsXML());
         } catch (Exception ex) {
-            System.err.println("Patterns not loaded:" + ex);
-            // repair old patterns:
-            String repairTitle = "Repair patterns";
-            File patternsFile = getFrame().getPatternsFile();
-            int result = JOptionPane
-                    .showConfirmDialog(
-                            null,
-                            "<html>The pattern file format has changed, <br>"
-                                    + "and it seems, that your pattern file<br>"
-                                    + "'"
-                                    + patternsFile.getAbsolutePath()
-                                    + "'<br> is formatted in the old way. <br>"
-                                    + "Should I try to repair the pattern file <br>"
-                                    + "(otherwise, you should update it by hand or delete it)?",
-                            repairTitle, JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
-                // try xslt script:
-                boolean success = false;
-                try {
-                    loadPatterns(Tools.getUpdateReader(
-                            Tools.getReaderFromFile(patternsFile),
-                            "patterns_updater.xslt"));
-                    // save patterns directly:
-                    StylePatternFactory.savePatterns(new FileWriter(
-                            patternsFile), mPatternsList);
-                    success = true;
-                } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
-                }
-                if (success) {
-                    JOptionPane.showMessageDialog(null,
-                            "Successfully repaired the pattern file.",
-                            repairTitle, JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "An error occured repairing the pattern file.",
-                            repairTitle, JOptionPane.WARNING_MESSAGE);
-                }
-            }
+            log.error("Patterns not loaded", ex);
+//            // repair old patterns:
+//            String repairTitle = "Repair patterns";
+//            File patternsFile = getFrame().getPatternsXML();
+//            int result = JOptionPane.showConfirmDialog(null,
+//                    "<html>The pattern file format has changed, <br>"
+//                            + "and it seems, that your pattern file<br>"
+//                            + "'"
+//                            + patternsFile.getAbsolutePath()
+//                            + "'<br> is formatted in the old way. <br>"
+//                            + "Should I try to repair the pattern file <br>"
+//                            + "(otherwise, you should update it by hand or delete it)?",
+//                    repairTitle, JOptionPane.YES_NO_OPTION);
+//            if (result == JOptionPane.YES_OPTION) {
+//                // try xslt script:
+//                boolean success = false;
+//                try {
+//                    loadPatterns(Tools.getUpdateReader(Tools.getReaderFromFile(patternsFile), "patterns_updater.xslt"));
+//                    // save patterns directly:
+//                    StylePatternFactory.savePatterns(new FileWriter(patternsFile), mPatternsList);
+//                    success = true;
+//                } catch (Exception e) {
+//                    log.error(e);
+//                }
+//                if (success) {
+//                    JOptionPane.showMessageDialog(null,
+//                            "Successfully repaired the pattern file.",
+//                            repairTitle, JOptionPane.PLAIN_MESSAGE);
+//                } else {
+//                    JOptionPane.showMessageDialog(null,
+//                            "An error occured repairing the pattern file.",
+//                            repairTitle, JOptionPane.WARNING_MESSAGE);
+//                }
+//            }
         }
     }
 
-    /**
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    public Reader getPatternReader() throws FileNotFoundException, IOException {
-        Reader reader = null;
-        File patternsFile = getFrame().getPatternsFile();
-        if (patternsFile != null && patternsFile.exists()) {
-            reader = new FileReader(patternsFile);
-        } else {
-            System.out.println("User patterns file " + patternsFile
-                    + " not found.");
-            reader = new InputStreamReader(getResource("patterns.xml")
-                    .openStream());
-        }
-        return reader;
+    public String getPatternsXML() {
+        return getFrame().getPatternsXML();
     }
 
     /**
@@ -602,7 +572,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                 }
             } catch (Exception e) {
                 // Thrown by tryToLock
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
                 getFrame().getController().informationMessage(
                         Tools.expandPlaceholders(
                                 getText("locking_failed_by_open"),
@@ -654,8 +624,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      *
      * @throws Exception
      */
-    public void loadPatterns(Reader reader) throws Exception {
-        createPatterns(StylePatternFactory.loadPatterns(reader));
+    public void loadPatterns(String patternsXML) throws Exception {
+        createPatterns(StylePatternFactory.loadPatterns(patternsXML));
     }
 
     private void createPatterns(List<Pattern> patternsList) throws Exception {
@@ -697,7 +667,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                 registrationInstance.register();
                 mRegistrations.add(registrationInstance);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         invokeHooksRecursively((NodeAdapter) getRootNode(), getMap());
@@ -997,7 +967,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                     .unmarshalDocument(in, null);
             return menus;
         } catch (JiBXException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             throw new IllegalArgumentException(
                     "Menu structure could not be read.");
         }
@@ -1052,8 +1022,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                     } else {
                         add(holder, theCategory, theAction, keystroke);
                     }
-                } catch (Exception e1) {
-                    freemind.main.Resources.getInstance().logException(e1);
+                } catch (Exception e) {
+                    log.error(e);
                 }
             } else if (obj instanceof MenuSeparator) {
                 holder.addSeparator(categoryCopy);
@@ -1270,7 +1240,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                         file);
                 loadURL(file.toString());
             } catch (IOException ex) {
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(e);
             }
         }
     }
@@ -1348,7 +1318,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             } catch (MalformedURLException ex) {
                 JOptionPane.showMessageDialog(getView(),
                         "Couldn't create valid URL for:" + getMap().getFile());
-                freemind.main.Resources.getInstance().logException(ex);
+                log.error(e);
                 return;
             }
             try {
@@ -1903,7 +1873,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             // and good bye.
             hook.shutdownMapHook();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
@@ -2013,12 +1983,9 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                         - secondStart).write();
                 strings[1] = out.toString();
                 return strings;
-            } catch (IOException e) {
+            } catch (IOException | BadLocationException e) {
                 // TODO Auto-generated catch block
-                freemind.main.Resources.getInstance().logException(e);
-            } catch (BadLocationException e) {
-                // TODO Auto-generated catch block
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         } else {
             if (pos >= text.length()) {

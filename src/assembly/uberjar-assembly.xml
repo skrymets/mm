@@ -12,6 +12,10 @@
             <source>${basedir}/LICENSE</source>
             <outputDirectory></outputDirectory>
         </file>
+<!--        <file>-->
+<!--            <source>${basedir}/main/resources/log4j2.xml</source>-->
+<!--            <outputDirectory></outputDirectory>-->
+<!--        </file>-->
     </files>
 
     <fileSets>
@@ -37,14 +41,4 @@
             <outputDirectory></outputDirectory>
         </fileSet>
     </fileSets>
-
-    <!--    <dependencySets>-->
-    <!--        <dependencySet>-->
-    <!--            <includes>-->
-    <!--                <include>xml-apis:xml-apis:jar:1.3.04</include>-->
-    <!--                <include>org.apache.logging.log4j:log4j-api:jar:2.12.1</include>-->
-    <!--            </includes>-->
-    <!--            <outputDirectory>lib</outputDirectory>-->
-    <!--        </dependencySet>-->
-    <!--    </dependencySets>-->
 </assembly>

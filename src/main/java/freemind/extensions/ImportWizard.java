@@ -39,6 +39,8 @@ import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import static java.lang.String.format;
+
 /**
  * Converts an unqualified class name to import statements by scanning through
  * the classpath.
@@ -82,7 +84,7 @@ public class ImportWizard {
                 foundPlugins.add(key);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
             if (classPathFile.exists()) {
                 String lowerCaseFileName = classPathEntry.toLowerCase();
@@ -124,8 +126,7 @@ public class ImportWizard {
                 }
             }
         } catch (Exception ex) {
-            freemind.main.Resources.getInstance().logException(ex,
-                    "Problem opening " + classPathFile + " with zip.");
+            log.error(format("Problem opening %s with zip.", classPathFile), ex);
         }
     }
 

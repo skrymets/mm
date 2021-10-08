@@ -79,7 +79,7 @@ public class LastStorageManagementTests extends FreeMindTestBase {
         try {
             Thread.sleep(1);
         } catch (InterruptedException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
 
         }
     }
