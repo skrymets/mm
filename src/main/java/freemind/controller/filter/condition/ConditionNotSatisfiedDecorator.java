@@ -31,7 +31,7 @@ import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 
 import javax.swing.*;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * @author dimitri 08.05.2005
@@ -39,7 +39,7 @@ import java.util.Vector;
 public class ConditionNotSatisfiedDecorator implements Condition {
 
     static final String NAME = "negate_condition";
-    private Condition originalCondition;
+    private final Condition originalCondition;
 
     /**
      *
@@ -88,9 +88,8 @@ public class ConditionNotSatisfiedDecorator implements Condition {
     }
 
     static Condition load(XMLElement element) {
-        final Vector<XMLElement> children = element.getChildren();
-        Condition cond = FilterController.getConditionFactory().loadCondition(
-                (XMLElement) children.get(0));
+        final List<XMLElement> children = element.getChildren();
+        Condition cond = FilterController.getConditionFactory().loadCondition(children.get(0));
         return new ConditionNotSatisfiedDecorator(cond);
     }
 

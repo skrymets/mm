@@ -25,7 +25,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.MenuItemSelectedListener;
 import freemind.extensions.HookFactory;
-import freemind.extensions.HookInstanciationMethod;
+import freemind.extensions.HookInstantiationMethod;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.extern.log4j.Log4j2;
@@ -62,10 +62,10 @@ public class NodeHookAction extends MindmapAction implements HookAction, MenuIte
         mMindMapController.addHook(focussed, selecteds, _hookName, null);
     }
 
-    private HookInstanciationMethod getInstanciationMethod(String hookName) {
+    private HookInstantiationMethod getInstanciationMethod(String hookName) {
         HookFactory factory = getHookFactory();
         // determine instanciation method
-        HookInstanciationMethod instMethod = factory.getInstanciationMethod(hookName);
+        HookInstantiationMethod instMethod = factory.getInstantiationMethod(hookName);
         return instMethod;
     }
 
@@ -105,7 +105,7 @@ public class NodeHookAction extends MindmapAction implements HookAction, MenuIte
         }
         MindMapNode focussed = mMindMapController.getSelected();
         List<MindMapNode> selecteds = mMindMapController.getSelecteds();
-        HookInstanciationMethod instMethod = getInstanciationMethod(_hookName);
+        HookInstantiationMethod instMethod = getInstanciationMethod(_hookName);
         // get destination nodes
         instMethod.getDestinationNodes(mMindMapController, focussed, selecteds);
         MindMapNode adaptedFocussedNode = instMethod.getCenterNode(mMindMapController, focussed, selecteds);

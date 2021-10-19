@@ -22,7 +22,6 @@
 
 package freemind.modes.common;
 
-import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
 import lombok.extern.log4j.Log4j2;
@@ -39,7 +38,7 @@ import java.util.ListIterator;
 @Log4j2
 public class CommonToggleFoldedAction extends AbstractAction {
 
-    private ControllerAdapter modeController;
+    private final ControllerAdapter modeController;
 
     public CommonToggleFoldedAction(ControllerAdapter controller) {
         super(controller.getText("toggle_folded"));
@@ -82,7 +81,7 @@ public class CommonToggleFoldedAction extends AbstractAction {
          * Retrieve the information whether or not all nodes have the same
          * folding state.
          */
-        Tools.BooleanHolder state = null;
+        Boolean state = null;
         boolean allNodeHaveSameFoldedStatus = true;
         for (ListIterator<MindMapNode> it = iterator; it.hasNext(); ) {
             MindMapNode node = it.next();
@@ -91,10 +90,9 @@ public class CommonToggleFoldedAction extends AbstractAction {
                 continue;
             }
             if (state == null) {
-                state = new Tools.BooleanHolder();
-                state.setValue(node.isFolded());
+                state = node.isFolded();
             } else {
-                if (node.isFolded() != state.getValue()) {
+                if (node.isFolded() != state) {
                     allNodeHaveSameFoldedStatus = false;
                     break;
                 }
@@ -103,7 +101,7 @@ public class CommonToggleFoldedAction extends AbstractAction {
         /* if the folding state is ambiguous, the nodes are folded. */
         boolean fold = true;
         if (allNodeHaveSameFoldedStatus && state != null) {
-            fold = !state.getValue();
+            fold = !state;
         }
         return fold;
     }

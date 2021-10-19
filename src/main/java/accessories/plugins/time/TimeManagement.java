@@ -23,7 +23,7 @@
 package accessories.plugins.time;
 
 import freemind.common.XmlBindingTools;
-import freemind.controller.MapModuleManager.MapModuleChangeObserver;
+import freemind.controller.MapModuleChangeObserver;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.CalendarMarking;
 import freemind.controller.actions.generated.instance.CalendarMarkings;

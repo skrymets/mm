@@ -39,7 +39,6 @@ import java.util.regex.Pattern;
 public class FlatNodeTableFilterModel extends AbstractTableModel {
 
     private final TableModel mTableModel;
-    private String mFilterRegexp;
     /**
      * Contains indices or rows matching the filter criteria.
      */
@@ -69,9 +68,8 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
     }
 
     public void setFilter(String filterRegexp) {
-        this.mFilterRegexp = filterRegexp;
         // System.out.println("Setting filter to '"+mFilterRegexp+"'");
-        mPattern = Pattern.compile(mFilterRegexp, Pattern.CASE_INSENSITIVE);
+        mPattern = Pattern.compile(filterRegexp, Pattern.CASE_INSENSITIVE);
         updateIndexArray();
         fireTableDataChanged();
     }

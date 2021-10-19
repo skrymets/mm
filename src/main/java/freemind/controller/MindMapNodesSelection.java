@@ -22,10 +22,13 @@
 /*$Id: MindMapNodesSelection.java,v 1.2.18.2.12.3 2007/02/04 22:02:02 dpolivaev Exp $*/
 package freemind.controller;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.awt.datatransfer.*;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
+@Log4j2
 public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 
     private String nodesContent;
@@ -53,18 +56,14 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 
     static {
         try {
-            mindMapNodesFlavor = new DataFlavor(
-                    "text/freemind-nodes; class=java.lang.String");
+            mindMapNodesFlavor = new DataFlavor("text/freemind-nodes; class=java.lang.String");
             rtfFlavor = new DataFlavor("text/rtf; class=java.io.InputStream");
             htmlFlavor = new DataFlavor("text/html; class=java.lang.String");
-            fileListFlavor = new DataFlavor(
-                    "application/x-java-file-list; class=java.util.List");
-            dropActionFlavor = new DataFlavor(
-                    "text/drop-action; class=java.lang.String");
-            copyNodeIdsFlavor = new DataFlavor(
-                    "application/freemind-node-ids; class=java.util.List");
+            fileListFlavor = new DataFlavor("application/x-java-file-list; class=java.util.List");
+            dropActionFlavor = new DataFlavor("text/drop-action; class=java.lang.String");
+            copyNodeIdsFlavor = new DataFlavor("application/freemind-node-ids; class=java.util.List");
         } catch (Exception e) {
-            System.err.println(e);
+            log.error(e);
         }
     }
 

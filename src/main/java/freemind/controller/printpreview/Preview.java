@@ -33,7 +33,6 @@ class Preview extends JComponent {
     private final static int DEFAULT_PREVIEW_SIZE = 300;
     private final static double MINIMUM_ZOOM_FACTOR = 0.1;
     private BufferedImage previewPageImage = null;
-    private Graphics2D imageGraphics;
     private PageFormat mPageFormat;
 
     public Preview(MapView view, double zoom, PageFormat pPageFormat) {
@@ -64,7 +63,7 @@ class Preview extends JComponent {
         if (previewPageImage == null) {
             previewPageImage = (BufferedImage) createImage(
                     getPageWidth(format) - 1, getPageHeight(format) - 1);
-            imageGraphics = previewPageImage.createGraphics();
+            Graphics2D imageGraphics = previewPageImage.createGraphics();
             imageGraphics.scale(zoom, zoom);
             while (Printable.NO_SUCH_PAGE == view.print(imageGraphics, format,
                     index) && index > 0) {

@@ -46,6 +46,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
 /**
  * @author foltin
  * @date 20.03.2014
@@ -339,7 +341,7 @@ public class PasteActor extends XmlActorAdapter {
             textFromClipboard = "<html><body>" + textFromClipboard + "</body></html>";
             log.trace("directHtmlFlavor: " + textFromClipboard);
             if (Resources.getInstance().getBoolProperty(
-                    FreeMind.RESOUCES_PASTE_HTML_STRUCTURE)) {
+                    FreeMind.RESOURCES_PASTE_HTML_STRUCTURE)) {
                 HtmlTools.getInstance().insertHtmlIntoNodes(textFromClipboard,
                         target, mNodeCreator);
             } else {
@@ -607,7 +609,7 @@ public class PasteActor extends XmlActorAdapter {
                         visibleText += " > ";
                     }
                     visibleText += textPartIdx == 0 ? textParts[textPartIdx]
-                            : Tools.firstLetterCapitalized(textParts[textPartIdx]
+                            : capitalize(textParts[textPartIdx]
                             .replaceAll("^~*", ""));
                 }
             }
@@ -647,16 +649,16 @@ public class PasteActor extends XmlActorAdapter {
             // Change the array of candidate parents accordingly
 
             for (int j = parentNodes.size() - 1; j >= 0; --j) {
-                if (depth > ((Integer) parentNodesDepths.get(j)).intValue()) {
+                if (depth > parentNodesDepths.get(j).intValue()) {
                     for (int k = j + 1; k < parentNodes.size(); ++k) {
-                        MindMapNode n = (MindMapNode) parentNodes.get(k);
+                        MindMapNode n = parentNodes.get(k);
                         if (n.getParentNode() == parent) {
                             // addUndoAction(n);
                         }
                         parentNodes.remove(k);
                         parentNodesDepths.remove(k);
                     }
-                    MindMapNode target = (MindMapNode) parentNodes.get(j);
+                    MindMapNode target = parentNodes.get(j);
                     node.setLeft(isLeft);
                     insertNodeInto(node, target);
                     parentNodes.add(node);
@@ -667,7 +669,7 @@ public class PasteActor extends XmlActorAdapter {
         }
 
         for (int k = 0; k < parentNodes.size(); ++k) {
-            MindMapNode n = (MindMapNode) parentNodes.get(k);
+            MindMapNode n = parentNodes.get(k);
             if (n.getParentNode() == parent) {
                 // addUndoAction(n);
             }

@@ -17,9 +17,6 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/**
- * this is only a test class
- */
 package accessories.plugins;
 
 import freemind.model.MindMapNode;
@@ -35,15 +32,15 @@ import java.util.Vector;
 
 /**
  * @author christianfoltin
- *
  * @file BlinkingNodeHook.java
  * @package freemind.modes.mindmapmode
- * */
+ */
 public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
 
     private Timer timer = null;
 
     /**
+     *
      */
     public BlinkingNodeHook() {
         super();
@@ -79,7 +76,9 @@ public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
 
         }
 
-        /** TimerTask method to enable the selection after a given time. */
+        /**
+         * TimerTask method to enable the selection after a given time.
+         */
         public void run() {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -99,7 +98,7 @@ public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
                             if (index >= colors.size())
                                 index = 0;
                             view.getMainView().setForeground(
-                                    (Color) colors.get(index));
+                                    colors.get(index));
                         }
 
                     });

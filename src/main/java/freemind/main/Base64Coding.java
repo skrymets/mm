@@ -123,7 +123,7 @@ public class Base64Coding {
 
         int i = 0;
         int remaining = b.length;
-        char c[] = new char[4];
+        char[] c = new char[4];
         while (remaining > 0) {
             // Three input bytes are encoded as four chars (6 bits) as
             // 00000011 11112222 22333333

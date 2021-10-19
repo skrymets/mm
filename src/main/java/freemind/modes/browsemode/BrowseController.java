@@ -45,7 +45,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.security.AccessControlException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;
@@ -430,18 +429,10 @@ public class BrowseController extends ViewControllerAdapter {
 
         try {
             urlStreamReader = new InputStreamReader(url.openStream());
-        } catch (AccessControlException ex) {
-            getFrame().getController()
-                    .errorMessage(
-                            "Could not open URL " + url.toString()
-                                    + ". Access Denied.");
-            System.err.println(ex);
-            return null;
         } catch (Exception ex) {
-            getFrame().getController().errorMessage(
-                    "Could not open URL " + url.toString() + ".");
-            System.err.println(ex);
-            // freemind.main.Resources.getInstance().logExecption(ex);
+            final String message = format("Could not open URL %s.", url);
+            getFrame().getController().errorMessage(message);
+            log.error(message, ex);
             return null;
         }
 
@@ -451,7 +442,7 @@ public class BrowseController extends ViewControllerAdapter {
             urlStreamReader.close();
             return root;
         } catch (Exception ex) {
-            System.err.println(ex);
+            log.error(ex);
             return null;
         }
     }

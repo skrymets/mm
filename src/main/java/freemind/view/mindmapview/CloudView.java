@@ -69,7 +69,7 @@ public class CloudView {
         if (getIterativeLevel() > 4)
             distanceBetweenPoints = 100 * getZoom(); /* flat */
         double distanceToConvexHull = getDistanceToConvexHull();
-        /** get coordinates */
+        /* get coordinates */
         LinkedList<Point> coordinates = new LinkedList<>();
         ConvexHull hull = new ConvexHull();
         source.getCoordinates(coordinates);

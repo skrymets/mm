@@ -27,9 +27,10 @@ import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Manages the actors and filters for xml transactions inside FreeMind.
@@ -43,25 +44,18 @@ public class ActionRegistry {
      * This Vector denotes all handler of the action to be called for each
      * action.
      */
-    private Vector<ActionHandler> registeredHandler;
+    private final List<ActionHandler> registeredHandler = new ArrayList<>();
     /**
      * This set denotes all filters for XmlActions.
      */
-    private Vector<ActionFilter> registeredFilters;
+    private final List<ActionFilter> registeredFilters = new ArrayList<>();
     /**
      * HashMap of Action class -> actor instance.
      */
-    private HashMap<Class<?>, ActorXml> registeredActors;
+    private final HashMap<Class<?>, ActorXml> registeredActors = new HashMap<Class<?>, ActorXml>();
     private UndoActionHandler undoActionHandler;
 
-    /**
-     *
-     */
     public ActionRegistry() {
-        super();
-        registeredHandler = new Vector<ActionHandler>();
-        registeredFilters = new Vector<ActionFilter>();
-        registeredActors = new HashMap<Class<?>, ActorXml>();
     }
 
     /**
@@ -83,30 +77,22 @@ public class ActionRegistry {
         if (!registeredFilters.contains(newFilter)) {
             if (newFilter instanceof FinalActionFilter) {
                 /* Insert as the last one here. */
-                registeredFilters.insertElementAt(newFilter,
-                        registeredFilters.size());
+                registeredFilters.add(newFilter);
             } else if (newFilter instanceof FirstActionFilter) {
                 /* Insert as the first one here. */
-                registeredFilters.insertElementAt(newFilter, 0);
+                registeredFilters.add(0, newFilter);
             } else {
                 /* Insert before FinalActionFilters */
                 int index = 0;
-                for (Iterator<ActionFilter> it = registeredFilters.iterator(); it.hasNext(); ) {
-                    ActionFilter filter = it.next();
+                for (ActionFilter filter : registeredFilters) {
                     if (filter instanceof FinalActionFilter) {
                         break;
                     }
                     index++;
                 }
-                registeredFilters.insertElementAt(newFilter, index);
+                registeredFilters.add(index, newFilter);
             }
         }
-        // int count = 0;
-        // for (Iterator it = registeredFilters.iterator(); it.hasNext();) {
-        // ActionFilter filter = (ActionFilter) it.next();
-        // log.info("Filter " + count + ": " + filter.getClass().getName());
-        // count++;
-        // }
     }
 
     public void deregisterFilter(ActionFilter newFilter) {
@@ -127,9 +113,6 @@ public class ActionRegistry {
         }
     }
 
-    /**
-     * @return see {@link #executeAction(ActionPair)}
-     */
     public boolean doTransaction(String pName, ActionPair pPair) {
         this.startTransaction(pName);
         boolean result = this.executeAction(pPair);
@@ -158,14 +141,13 @@ public class ActionRegistry {
 
         ActionPair filteredPair = pair;
         // first filter:
-        for (Iterator<ActionFilter> i = registeredFilters.iterator(); i.hasNext(); ) {
-            ActionFilter filter = i.next();
+        for (ActionFilter filter : registeredFilters) {
             filteredPair = filter.filterAction(filteredPair);
         }
 
         Object[] aArray = registeredHandler.toArray();
-        for (int i = 0; i < aArray.length; i++) {
-            ActionHandler handler = (ActionHandler) aArray[i];
+        for (Object o : aArray) {
+            ActionHandler handler = (ActionHandler) o;
             try {
                 handler.executeAction(filteredPair.getDoAction());
             } catch (Exception e) {

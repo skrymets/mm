@@ -102,7 +102,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
         }
     }
 
-    private FreeMindFilenameFilter mFilter;
+    private final FreeMindFilenameFilter mFilter;
     private DirectoryResultListener mDirectoryResultListener = null;
 
     /**
@@ -110,9 +110,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
      * @date 27.02.2012
      */
     private final class FreeMindFilenameFilter implements FilenameFilter {
-        /**
-         *
-         */
+
         private FileFilter mCustomFilter = new NullFilter();
         /**
          * Filter for dirs, files or both.
@@ -148,9 +146,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
         if (getFile() != null) {
             if (mDirectoryResultListener != null) {
                 try {
-                    mDirectoryResultListener
-                            .setChosenDirectory(getSelectedFile()
-                                    .getParentFile());
+                    mDirectoryResultListener.setChosenDirectory(getSelectedFile().getParentFile());
                 } catch (Exception e) {
                     log.error(e);
                 }

@@ -43,7 +43,6 @@ public class FreeMindProgressMonitor extends JDialog {
     private static final String PROGRESS_MONITOR_WINDOW_CONFIGURATION_STORAGE = "progress_monitor_window_configuration_storage";
     private JLabel mLabel;
     private JProgressBar mProgressBar;
-    private JButton mCancelButton;
     protected boolean mCanceled = false;
 
     /**
@@ -53,7 +52,7 @@ public class FreeMindProgressMonitor extends JDialog {
         setTitle(getString(pTitle));
         mLabel = new JLabel("!");
         mProgressBar = new JProgressBar();
-        mCancelButton = new JButton();
+        JButton mCancelButton = new JButton();
         Tools.setLabelAndMnemonic(mCancelButton, getString(("cancel")));
         mCancelButton.addActionListener(new ActionListener() {
 

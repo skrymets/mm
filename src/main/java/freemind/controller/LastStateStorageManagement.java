@@ -27,8 +27,14 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
 import lombok.extern.log4j.Log4j2;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
 /**
  * @author foltin
@@ -44,12 +50,12 @@ public class LastStateStorageManagement {
             if (action != null) {
                 if (action instanceof MindmapLastStateMapStorage) {
                     mLastStatesMap = (MindmapLastStateMapStorage) action;
-
                 }
             }
         } catch (Exception e) {
             log.error(e);
         }
+
         if (mLastStatesMap == null) {
             log.warn("Creating a new last state map storage as there was no old one or it was corrupt.");
             mLastStatesMap = new MindmapLastStateMapStorage();
@@ -61,7 +67,7 @@ public class LastStateStorageManagement {
     }
 
     public void clearTabIndices() {
-        for (MindmapLastStateStorage store : mLastStatesMap.getMindmapLastStateStorageList()) {
+        for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
             store.setTabIndex(-1);
         }
     }
@@ -69,8 +75,7 @@ public class LastStateStorageManagement {
     public void changeOrAdd(MindmapLastStateStorage pStore) {
         boolean found = false;
         for (MindmapLastStateStorage store : mLastStatesMap.getMindmapLastStateStorageList()) {
-            if (Tools.safeEquals(pStore.getRestorableName(),
-                    store.getRestorableName())) {
+            if (Tools.safeEquals(pStore.getRestorableName(), store.getRestorableName())) {
                 // deep copy
                 store.setLastZoom(pStore.getLastZoom());
                 store.setLastSelected(pStore.getLastSelected());
@@ -95,8 +100,7 @@ public class LastStateStorageManagement {
             // make map from date to object:
             TreeMap<Long, MindmapLastStateStorage> dateToStoreMap = new TreeMap<>();
             for (MindmapLastStateStorage store : mLastStatesMap.getMindmapLastStateStorageList()) {
-                dateToStoreMap
-                        .put(Long.valueOf(-store.getLastChanged()), store);
+                dateToStoreMap.put(Long.valueOf(-store.getLastChanged()), store);
             }
             // clear list
             mLastStatesMap.clearMindmapLastStateStorageList();
@@ -128,19 +132,12 @@ public class LastStateStorageManagement {
     }
 
     public List<MindmapLastStateStorage> getLastOpenList() {
-        Vector<MindmapLastStateStorage> ret = new Vector<>();
-        for (MindmapLastStateStorage store : mLastStatesMap.getMindmapLastStateStorageList()) {
-            if (store.getTabIndex() >= 0) {
-                ret.add(store);
-            }
-        }
-        Collections.sort(ret, new Comparator<MindmapLastStateStorage>() {
+        return emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())
+                .stream()
+                .filter(storage -> storage.getTabIndex() >= 0)
+                .sorted(comparingInt(MindmapLastStateStorage::getTabIndex))
+                .collect(toList());
 
-            public int compare(MindmapLastStateStorage store0, MindmapLastStateStorage store1) {
-                return store0.getTabIndex() - store1.getTabIndex();
-            }
-        });
-        return ret;
     }
 
     public int getLastFocussedTab() {

@@ -389,17 +389,14 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     protected void restoreMapsLastState(final ModeController newModeController,
                                         final MapAdapter model) {
         // restore zoom, etc.
-        String lastStateMapXml = getFrame().getProperty(
-                FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(
-                lastStateMapXml);
-        MindmapLastStateStorage store = management.getStorage(model
-                .getRestorable());
+        String lastStateMapXml = getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
+        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
+        MindmapLastStateStorage store = management.getStorage(model.getRestorable());
         if (store != null) {
             ModeController modeController = newModeController;
             // Zoom must be set on combo box, too.
             getController().setZoom(store.getLastZoom());
-            MindMapNode sel = null;
+            MindMapNode sel;
             try {
                 // Selected:
                 sel = modeController.getNodeFromID(store.getLastSelected());
@@ -463,7 +460,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 } catch (Exception e) {
                     log.error(e);
                     // give "not found" message
-                    getFrame().out(
+                    getFrame().setStatusText(
                             Tools.expandPlaceholders(getText("link_not_found"),
                                     target));
                 }
@@ -515,7 +512,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                                 .getNodeFromID(ref));
                     } catch (Exception e) {
                         log.error(e);
-                        getFrame().out(
+                        getFrame().setStatusText(
                                 Tools.expandPlaceholders(
                                         getText("link_not_found"), ref));
                         return;
@@ -868,7 +865,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      */
     public boolean close(boolean force, MapModuleManager mapModuleManager) {
         // remove old messages.
-        getFrame().out("");
+        getFrame().setStatusText("");
         if (!force && !getModel().isSaved()) {
             String text = getText("save_unsaved") + "\n"
                     + mapModuleManager.getMapModule().toString();
@@ -887,9 +884,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 return false;
             }
         }
-        LastStateStorageManagement management = new LastStateStorageManagement(
-                getFrame().getProperty(
-                        FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE));
+        final String lastStateMapStorage = getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
+        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapStorage);
+
         String restorable = getModel().getRestorable();
         if (restorable != null) {
             MindmapLastStateStorage store = management.getStorage(restorable);
@@ -913,20 +910,14 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 store.addNodeListMember(member);
             }
             management.changeOrAdd(store);
-            getFrame().setProperty(
-                    FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE,
-                    management.getXml());
+            getFrame().setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE, management.getXml());
         }
 
         getModel().destroy();
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.modes.ModeController#setVisible(boolean)
-     */
+
     public void setVisible(boolean visible) {
         NodeView node = getSelectedView();
         if (visible) {
@@ -1149,10 +1140,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         public void actionPerformed(ActionEvent e) {
             boolean success = save();
             if (success) {
-                getFrame().out(getText("saved")); // perhaps... (PN)
+                getFrame().setStatusText(getText("saved")); // perhaps... (PN)
             } else {
                 String message = "Saving failed.";
-                getFrame().out(message);
+                getFrame().setStatusText(message);
                 getController().errorMessage(message);
             }
             getController().setTitle(); // Possible update of read-only

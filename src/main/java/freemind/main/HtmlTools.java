@@ -47,12 +47,11 @@ public class HtmlTools {
 
     public static final String NBSP = "\u00A0";
 
-    private static HtmlTools sInstance = new HtmlTools();
+    private static final HtmlTools sInstance = new HtmlTools();
 
-    private static final Pattern HTML_PATTERN = Pattern
-            .compile("(?s).*<\\s*html.*?>.*");
-    private static final Pattern FIND_TAGS_PATTERN = Pattern
-            .compile("([^<]*)(<[^>]+>)");
+    private static final Pattern HTML_PATTERN = Pattern.compile("(?s).*<\\s*html.*?>.*");
+    private static final Pattern FIND_TAGS_PATTERN = Pattern.compile("([^<]*)(<[^>]+>)");
+
     private static final Pattern SLASHED_TAGS_PATTERN = Pattern.compile("<(("
             + "br|area|base|basefont|" + "bgsound|button|col|colgroup|embed|hr"
             + "|img|input|isindex|keygen|link|meta"
@@ -76,6 +75,7 @@ public class HtmlTools {
         if (!isHtmlNode(htmlText)) {
             return null;
         }
+
         log.trace("Enter toXhtml with " + htmlText);
         StringReader reader = new StringReader(htmlText);
         StringWriter writer = new StringWriter();
@@ -255,7 +255,7 @@ public class HtmlTools {
      */
     private void append(StringBuffer pSbResult, String pText, int pStart,
                         int pEnd) {
-        pSbResult.append(pText.substring(pStart, pEnd));
+        pSbResult.append(pText, pStart, pEnd);
     }
 
     public int getMinimalOriginalPosition(int pI, ArrayList<IndexPair> pListOfIndices) {
@@ -298,15 +298,13 @@ public class HtmlTools {
      * Opposite to {@link HtmlTools#unescapeHTMLUnicodeEntity(String)}
      */
     public static String unicodeToHTMLUnicodeEntity(String text, boolean pPreserveNewlines) {
-        /*
-         * Heuristic reserve for expansion : factor 1.2
-         */
+        // Heuristic reserve for expansion : factor 1.2
         StringBuffer result = new StringBuffer((int) (text.length() * 1.2));
         int intValue;
         char myChar;
         for (int i = 0; i < text.length(); ++i) {
             myChar = text.charAt(i);
-            intValue = (int) text.charAt(i);
+            intValue = text.charAt(i);
             boolean outOfRange = intValue < 32 || intValue > 126;
             if (pPreserveNewlines && myChar == '\n') {
                 outOfRange = false;
@@ -315,8 +313,7 @@ public class HtmlTools {
                 outOfRange = false;
             }
             if (outOfRange) {
-                result.append("&#x").append(Integer.toString(intValue, 16))
-                        .append(';');
+                result.append("&#x").append(Integer.toString(intValue, 16)).append(';');
             } else {
                 result.append(myChar);
             }
@@ -740,7 +737,7 @@ public class HtmlTools {
         int mLevel = 0;
         private MindMapNode mParentNode;
         private MindMapNode mCurrentNode = null;
-        private NodeCreator mCreator;
+        private final NodeCreator mCreator;
         private boolean mFirstUl;
         private String mLink;
 

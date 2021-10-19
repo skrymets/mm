@@ -29,8 +29,6 @@ import java.awt.*;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-import java.util.Vector;
 
 public interface FreeMindMain {
 
@@ -65,7 +63,7 @@ public interface FreeMindMain {
 
     Container getContentPane();
 
-    void out(String msg);
+    void setStatusText(String msg);
 
     void err(String msg);
 
@@ -124,101 +122,7 @@ public interface FreeMindMain {
 
     int getWinY();
 
-    int VERSION_TYPE_ALPHA = 0;
-    int VERSION_TYPE_BETA = 1;
-    int VERSION_TYPE_RC = 2;
-    int VERSION_TYPE_RELEASE = 3;
     String ENABLE_NODE_MOVEMENT = "enable_node_movement";
-
-    class VersionInformation {
-        public int mMaj = 0;
-        public int mMid = 9;
-        public int mMin = 0;
-        public int mType = VERSION_TYPE_BETA;
-        public int mNum = 17;
-
-        public VersionInformation(int pMaj, int pMid, int pMin, int pType, int pNum) {
-            super();
-            mMaj = pMaj;
-            mMid = pMid;
-            mMin = pMin;
-            mType = pType;
-            mNum = pNum;
-        }
-
-        /**
-         * Sets the version number from a string.
-         *
-         * @param pString : The version number coding. Example "0.9.0 Beta 1"
-         *                Keywords are "Alpha", "Beta", "RC". Separation by " " or
-         *                by ".".
-         */
-        public VersionInformation(String pString) {
-            StringTokenizer t = new StringTokenizer(pString, ". ", false);
-            String[] info = new String[t.countTokens()];
-            int i = 0;
-            while (t.hasMoreTokens()) {
-                info[i++] = t.nextToken();
-            }
-            if (info.length != 3 && info.length != 5)
-                throw new IllegalArgumentException("Wrong number of tokens for version information: " + pString);
-            mMaj = Integer.parseInt(info[0]);
-            mMid = Integer.parseInt(info[1]);
-            mMin = Integer.parseInt(info[2]);
-            if (info.length == 3) {
-                // release.
-                mType = VERSION_TYPE_RELEASE;
-                mNum = 0;
-                return;
-            }
-            // here,we have info.length == 5!
-            Vector<String> types = new Vector<>();
-            types.add("Alpha");
-            types.add("Beta");
-            types.add("RC");
-            int typeIndex = types.indexOf(info[3]);
-            if (typeIndex < 0) {
-                throw new IllegalArgumentException(
-                        "Wrong version type for version information: "
-                                + info[4]);
-            }
-            mType = typeIndex;
-            mNum = Integer.parseInt(info[4]);
-        }
-
-        public String toString() {
-            StringBuffer buf = new StringBuffer();
-            buf.append(mMaj);
-            buf.append('.');
-            buf.append(mMid);
-            buf.append('.');
-            buf.append(mMin);
-            switch (mType) {
-                case VERSION_TYPE_ALPHA:
-                    buf.append(' ');
-                    buf.append("Alpha");
-                    break;
-                case VERSION_TYPE_BETA:
-                    buf.append(' ');
-                    buf.append("Beta");
-                    break;
-                case VERSION_TYPE_RC:
-                    buf.append(' ');
-                    buf.append("RC");
-                    break;
-                case VERSION_TYPE_RELEASE:
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown version type "
-                            + mType);
-            }
-            if (mType != VERSION_TYPE_RELEASE) {
-                buf.append(' ');
-                buf.append(mNum);
-            }
-            return buf.toString();
-        }
-    }
 
     /**
      * version info:

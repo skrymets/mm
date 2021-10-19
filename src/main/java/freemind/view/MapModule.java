@@ -24,25 +24,32 @@ import freemind.model.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class is the key to one Model/View bundle which represents one map.
  */
+
+@Getter
+@Setter
 public class MapModule {
-    private String name;
-    private MindMap model;
-    private MapView view;
-    private Mode mode;
-    private ModeController modeController;
+    private final MindMap model;
+    private final MapView view;
+    private final Mode mode;
+    private final ModeController modeController;
+
     /**
      * Contains an extension if a map with same file name is already opened.
      */
     private String displayName;
-    private static int unnamedMapsNumber = 1;// used to give unique names to
-    // maps
+    private String name;
 
-    public MapModule(MindMap model, MapView view, Mode mode,
-                     ModeController modeController) {
+    private static AtomicInteger unnamedMapsNumber = new AtomicInteger(1); // used to give unique names to maps
+
+    public MapModule(MindMap model, MapView view, Mode mode, ModeController modeController) {
         this.model = model;
         this.view = view;
         this.mode = mode;
@@ -62,43 +69,9 @@ public class MapModule {
     }
 
     public void rename() {
-        if (getModel().toString() != null) {
-            name = getModel().toString();
-        } else {
-            name = mode.getController().getFrame().getResourceString("mindmap")
-                    + unnamedMapsNumber++;
-        }
+        name = getModel().toString() == null
+                ? mode.getController().getFrame().getResourceString("mindmap") + unnamedMapsNumber.incrementAndGet()
+                : getModel().toString();
     }
 
-    public MindMap getModel() {
-        return model;
-    }
-
-    public MapView getView() {
-        return view;
-    }
-
-    public Mode getMode() {
-        return mode;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ModeController getModeController() {
-        return modeController;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String pDisplayName) {
-        displayName = pDisplayName;
-    }
 }

@@ -54,7 +54,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      * The current version and all other version that don't need XML update for
      * sure.
      */
-    public static final String EXPECTED_START_STRINGS[] = {
+    public static final String[] EXPECTED_START_STRINGS = {
             MAP_INITIAL_START + FreeMind.XML_VERSION + "\"",
             MAP_INITIAL_START + "0.7.1\""};
 

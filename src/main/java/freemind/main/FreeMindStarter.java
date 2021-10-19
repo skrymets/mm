@@ -31,12 +31,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Properties;
 
-import static freemind.main.FreeMind.DEFAULT_HOME_DIRECTORY;
-import static freemind.main.FreeMind.FREEMIND_DEFAULT_USER_PREFERENCES_FILE;
 import static java.lang.String.format;
 import static java.nio.file.Files.*;
 import static java.util.Optional.empty;
@@ -54,6 +54,12 @@ public class FreeMindStarter {
     private static final String DEFAULT_PREFERENCES_RESOURCE = "freemind.properties";
 
     private static final String REQUIRED_JAVA_VERSION = "1.8.0";
+    private static final String USER_PROPERTIES_DIRECTORY = ".freemind";
+
+    private static final Path DEFAULT_HOME_DIRECTORY = Paths.get(System.getProperty("user.home"), USER_PROPERTIES_DIRECTORY);
+
+    private static final String USER_PROPERTIES_FILE = "user.properties";
+    private static final Path FREEMIND_DEFAULT_USER_PREFERENCES_FILE = DEFAULT_HOME_DIRECTORY.resolve(USER_PROPERTIES_FILE);
 
     public static void main(String[] args) {
         // First check version of Java

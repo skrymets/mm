@@ -75,7 +75,7 @@ public abstract class EdgeView {
 
     protected static Stroke getEclipsedStroke() {
         if (ECLIPSED_STROKE == null) {
-            float dash[] = {3.0f, 9.0f};
+            float[] dash = {3.0f, 9.0f};
             ECLIPSED_STROKE = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 12.0f, dash, 0.0f);
         }
         return ECLIPSED_STROKE;

@@ -119,7 +119,7 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
             // Display link in status line
             String link = newlySelectedNodeView.getModel().getLink();
             link = (link != null ? link : " ");
-            getController().getFrame().out(link);
+            getController().getFrame().setStatusText(link);
         }
         return retValue;
     }

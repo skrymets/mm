@@ -25,12 +25,12 @@ package freemind.extensions;
 import freemind.controller.actions.generated.instance.Plugin;
 import freemind.model.MindMapNode;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 public interface HookFactory {
 
-    public static class RegistrationContainer {
+    class RegistrationContainer {
         public Class hookRegistrationClass;
 
         public boolean isPluginBase;
@@ -41,41 +41,28 @@ public interface HookFactory {
         }
     }
 
-    /**
-     * @return a string vector with representatives for plugins.
-     */
-    public abstract Vector<String> getPossibleNodeHooks();
+    List<String> getPossibleNodeHooks();
+
+    Collection<String> getPossibleModeControllerHooks();
+
+    ModeControllerHook createModeControllerHook(String hookName);
 
     /**
-     * @return a string vector with representatives for plugins.
+     * Do not call this method directly. Call ModeController.createNodeHook instead.
      */
-    public abstract Vector<String> getPossibleModeControllerHooks();
-
-    public abstract ModeControllerHook createModeControllerHook(String hookName);
-
-    /**
-     * Do not call this method directly. Call ModeController.createNodeHook
-     * instead.
-     */
-    public abstract NodeHook createNodeHook(String hookName);
+    NodeHook createNodeHook(String hookName);
 
     /**
      * @return null if not present, the hook otherwise.
      */
-    public abstract PermanentNodeHook getHookInNode(MindMapNode node,
-                                                    String hookName);
+    PermanentNodeHook getHookInNode(MindMapNode node, String hookName);
 
     /**
-     * @return returns a list of menu position strings for the
-     * StructuredMenuHolder.
+     * @return returns a list of menu position strings for the StructuredMenuHolder.
      */
-    public abstract List<String> getHookMenuPositions(String hookName);
+    List<String> getHookMenuPositions(String hookName);
 
-    /**
-     *
-     */
-    public abstract HookInstanciationMethod getInstanciationMethod(
-            String hookName);
+    HookInstantiationMethod getInstantiationMethod(String hookName);
 
     /**
      * Each Plugin can have a list of HookRegistrations that are called after
@@ -89,7 +76,7 @@ public interface HookFactory {
      * registration via the registerRegistrationContainer method when
      * instanciated (this is typically done in the ModeController).
      */
-    public abstract List<RegistrationContainer> getRegistrations();
+    List<RegistrationContainer> getRegistrations();
 
     /**
      * See getRegistrations. The registration makes sense for the factory, as
@@ -97,11 +84,9 @@ public interface HookFactory {
      * Moreover, the factory can tell other hooks it creates, who is its base
      * plugin.
      */
-    public abstract void registerRegistrationContainer(
-            HookFactory.RegistrationContainer container,
-            HookRegistration instanciatedRegistrationObject);
+    void registerRegistrationContainer(HookFactory.RegistrationContainer container, HookRegistration registrationObject);
 
-    public abstract void deregisterAllRegistrationContainer();
+    void deregisterAllRegistrationContainer();
 
     /**
      * A plugin base class is a common registration class of multiple plugins.
@@ -110,6 +95,6 @@ public interface HookFactory {
      *
      * @return the base class if declared and successfully instanciated or NULL.
      */
-    public abstract Object getPluginBaseClass(String hookName);
+    Object getPluginBaseClass(String hookName);
 
 }

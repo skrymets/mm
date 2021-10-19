@@ -42,7 +42,6 @@ import java.text.MessageFormat;
  */
 @Log4j2
 public class ExportHook extends ModeControllerHookAdapter {
-    private MapView view;
 
     protected File chooseFile(String type, String description, String nameExtension) {
         ModeController controller = getController();
@@ -117,7 +116,7 @@ public class ExportHook extends ModeControllerHookAdapter {
     }
 
     public BufferedImage createBufferedImage() {
-        view = getController().getView();
+        MapView view = getController().getView();
         if (view == null)
             return null;
 

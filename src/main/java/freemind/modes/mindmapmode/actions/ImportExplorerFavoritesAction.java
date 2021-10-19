@@ -49,7 +49,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
                 .getContentPane());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File folder = chooser.getSelectedFile();
-            controller.getFrame().out("Importing Favorites ...");
+            controller.getFrame().setStatusText("Importing Favorites ...");
             // getFrame().repaint(); // Refresh the frame, namely hide dialog
             // and show status
             // getView().updateUI();
@@ -59,7 +59,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
                      * redisplay=
                      */
                     true);
-            controller.getFrame().out("Favorites imported.");
+            controller.getFrame().setStatusText("Favorites imported.");
         }
     }
 

@@ -33,8 +33,8 @@ import java.awt.geom.Rectangle2D;
 class PathBBox {
     public static Rectangle2D getBBox(Shape s) {
         boolean first = true;
-        double bounds[] = new double[4];
-        double coords[] = new double[6];
+        double[] bounds = new double[4];
+        double[] coords = new double[6];
         double curx = 0;
         double cury = 0;
         double movx = 0;
@@ -127,7 +127,7 @@ class PathBBox {
         return -(cp + cp - cur - cur) / (2.0 * (cur - cp - cp + end));
     }
 
-    private static void accumQuad(double bounds[], double t, double curx,
+    private static void accumQuad(double[] bounds, double t, double curx,
                                   double cury, double cpx0, double cpy0, double endx, double endy) {
         double u = (1 - t);
         double x = curx * u * u + 2.0 * cpx0 * t * u + endx * t * t;
@@ -135,7 +135,7 @@ class PathBBox {
         accum(bounds, x, y);
     }
 
-    private static int findCubicZeros(double zeros[], double cur, double cp0,
+    private static int findCubicZeros(double[] zeros, double cur, double cp0,
                                       double cp1, double end) {
         // The polynomial form of the Cubic is:
         // eqn[0] = cur;
@@ -158,7 +158,7 @@ class PathBBox {
         return ret;
     }
 
-    private static void accumCubic(double bounds[], double t, double curx,
+    private static void accumCubic(double[] bounds, double t, double curx,
                                    double cury, double cpx0, double cpy0, double cpx1, double cpy1,
                                    double endx, double endy) {
         double u = (1 - t);

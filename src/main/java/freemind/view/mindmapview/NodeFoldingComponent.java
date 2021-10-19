@@ -48,7 +48,6 @@ public class NodeFoldingComponent extends JButton {
     private boolean mIsEntered;
     private int mColorCounter = 0;
     private NodeView nodeView;
-    private boolean mIsEnabled = true;
     private Timer mTimer = null;
 
     public NodeFoldingComponent(NodeView view) {
@@ -63,7 +62,7 @@ public class NodeFoldingComponent extends JButton {
         setFocusable(false);
         setAlignmentY(Component.TOP_ALIGNMENT);
         setUI(new RoundImageButtonUI());
-        mIsEnabled = Resources.getInstance().getBoolProperty(
+        boolean mIsEnabled = Resources.getInstance().getBoolProperty(
                 FreeMind.RESOURCES_DISPLAY_FOLDING_BUTTONS);
         if (mIsEnabled) {
             addMouseListener(new MouseListener() {

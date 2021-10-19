@@ -36,7 +36,6 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         MouseListener {
     private Vector<IconInformation> icons;
     private int result;
-    private JPanel iconPanel = new JPanel();
     private JLabel[] iconLabels;
     private JLabel descriptionLabel;
     private int numOfIcons;
@@ -73,6 +72,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         GridLayout gridlayout = new GridLayout(0, xDimension);
         gridlayout.setHgap(3);
         gridlayout.setVgap(3);
+        JPanel iconPanel = new JPanel();
         iconPanel.setLayout(gridlayout);
 
         iconLabels = new JLabel[numOfIcons];

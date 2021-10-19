@@ -51,8 +51,8 @@ public class LinearEdgeView extends EdgeView {
             int dx = w / 3 + 1;
             if (getTarget().isLeft())
                 dx = -dx;
-            int xs[] = {start.x, start.x + dx, end.x - dx, end.x};
-            int ys[] = {start.y, start.y, end.y, end.y};
+            int[] xs = {start.x, start.x + dx, end.x - dx, end.x};
+            int[] ys = {start.y, start.y, end.y, end.y};
             g.drawPolyline(xs, ys, 4);
             if (isTargetEclipsed()) {
                 g.setColor(g.getBackground());

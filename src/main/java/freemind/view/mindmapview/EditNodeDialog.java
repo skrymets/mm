@@ -29,18 +29,22 @@ import freemind.modes.ModeController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * @author foltin
  */
 public class EditNodeDialog extends EditNodeBase {
-    private KeyEvent firstEvent;
+    private final KeyEvent firstEvent;
 
     /**
      * Private variable to hold the last value of the "Enter confirms" state.
      */
-    private static Tools.BooleanHolder booleanHolderForConfirmState;
+//    private static Boolean[] booleanHolderForConfirmState = new Boolean[]{false};
+    private static Boolean booleanHolderForConfirmState = null;
 
     public EditNodeDialog(final NodeView node, final String text,
                           final KeyEvent firstEvent, ModeController controller,
@@ -51,7 +55,7 @@ public class EditNodeDialog extends EditNodeBase {
 
     class LongNodeDialog extends EditDialog {
         private static final long serialVersionUID = 6185443281994675732L;
-        private JTextArea textArea;
+        private final JTextArea textArea;
 
         LongNodeDialog() {
             super(EditNodeDialog.this);
@@ -64,30 +68,15 @@ public class EditNodeDialog extends EditNodeBase {
             // wrap around words rather than characters
 
             final JScrollPane editorScrollPane = new JScrollPane(textArea);
-            editorScrollPane
-                    .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            editorScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-            // int preferredHeight = new
-            // Integer(getFrame().getProperty("el__default_window_height")).intValue();
             int preferredHeight = getNode().getHeight();
-            preferredHeight = Math.max(
-                    preferredHeight,
-                    Integer.parseInt(getFrame().getProperty(
-                            "el__min_default_window_height")));
-            preferredHeight = Math.min(
-                    preferredHeight,
-                    Integer.parseInt(getFrame().getProperty(
-                            "el__max_default_window_height")));
+            preferredHeight = Math.max(preferredHeight, Integer.parseInt(getFrame().getProperty("el__min_default_window_height")));
+            preferredHeight = Math.min(preferredHeight, Integer.parseInt(getFrame().getProperty("el__max_default_window_height")));
 
             int preferredWidth = getNode().getWidth();
-            preferredWidth = Math.max(
-                    preferredWidth,
-                    Integer.parseInt(getFrame().getProperty(
-                            "el__min_default_window_width")));
-            preferredWidth = Math.min(
-                    preferredWidth,
-                    Integer.parseInt(getFrame().getProperty(
-                            "el__max_default_window_width")));
+            preferredWidth = Math.max(preferredWidth, Integer.parseInt(getFrame().getProperty("el__min_default_window_width")));
+            preferredWidth = Math.min(preferredWidth, Integer.parseInt(getFrame().getProperty("el__max_default_window_width")));
 
             editorScrollPane.setPreferredSize(new Dimension(preferredWidth,
                     preferredHeight));
@@ -108,43 +97,23 @@ public class EditNodeDialog extends EditNodeBase {
             Tools.setLabelAndMnemonic(enterConfirms, getText("enter_confirms"));
 
             if (booleanHolderForConfirmState == null) {
-                booleanHolderForConfirmState = new Tools.BooleanHolder();
-                booleanHolderForConfirmState.setValue(enterConfirms
-                        .isSelected());
+                booleanHolderForConfirmState = enterConfirms.isSelected();
             } else {
-                enterConfirms.setSelected(booleanHolderForConfirmState
-                        .getValue());
+                enterConfirms.setSelected(booleanHolderForConfirmState);
             }
 
-            okButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    // next try to avoid bug 1159: focus jumps to file-menu after closing html-editing-window
-                    EventQueue.invokeLater(new Runnable() {
-                        public void run() {
-                            submit();
-                        }
-                    });
-                }
+            okButton.addActionListener(e -> {
+                // next try to avoid bug 1159: focus jumps to file-menu after closing html-editing-window
+                EventQueue.invokeLater(() -> submit());
             });
 
-            cancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    cancel();
-                }
-            });
+            cancelButton.addActionListener(e -> cancel());
 
-            splitButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    split();
-                }
-            });
+            splitButton.addActionListener(e -> split());
 
-            enterConfirms.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    textArea.requestFocus();
-                    booleanHolderForConfirmState.setValue(enterConfirms
-                            .isSelected());
-                }
+            enterConfirms.addActionListener(e -> {
+                textArea.requestFocus();
+                booleanHolderForConfirmState = enterConfirms.isSelected();
             });
 
             // On Enter act as if OK button was pressed
@@ -156,12 +125,10 @@ public class EditNodeDialog extends EditNodeBase {
                         e.consume();
                         confirmedCancel();
                     } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        if (enterConfirms.isSelected()
-                                && (e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) {
+                        if (enterConfirms.isSelected() && (e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) {
                             e.consume();
                             textArea.insert("\n", textArea.getCaretPosition());
-                        } else if (enterConfirms.isSelected()
-                                || ((e.getModifiers() & KeyEvent.ALT_MASK) != 0)) {
+                        } else if (enterConfirms.isSelected() || ((e.getModifiers() & KeyEvent.ALT_MASK) != 0)) {
                             e.consume();
                             submit();
                         } else {
@@ -210,8 +177,7 @@ public class EditNodeDialog extends EditNodeBase {
             });
 
             Font font = getNode().getTextFont();
-            font = Tools.updateFontSize(font, getView().getZoom(),
-                    font.getSize());
+            font = Tools.updateFontSize(font, getView().getZoom(), font.getSize());
             textArea.setFont(font);
 
             final Color nodeTextColor = getNode().getTextColor();
@@ -230,7 +196,7 @@ public class EditNodeDialog extends EditNodeBase {
             buttonPane.add(splitButton);
             buttonPane.setMaximumSize(new Dimension(1000, 20));
 
-            if (getFrame().getProperty("el__buttons_position").equals("above")) {
+            if ("above".equals(getFrame().getProperty("el__buttons_position"))) {
                 panel.add(buttonPane);
                 panel.add(editorScrollPane);
             } else {
@@ -264,8 +230,7 @@ public class EditNodeDialog extends EditNodeBase {
         }
 
         protected void split() {
-            getEditControl().split(textArea.getText(),
-                    textArea.getCaretPosition());
+            getEditControl().split(textArea.getText(), textArea.getCaretPosition());
             super.split();
         }
 
@@ -289,7 +254,6 @@ public class EditNodeDialog extends EditNodeBase {
 
     public void show() {
         final EditDialog dialog = new LongNodeDialog();
-
         dialog.pack(); // calculate the size
 
         // set position

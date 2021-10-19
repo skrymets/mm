@@ -57,6 +57,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.Collections.unmodifiableList;
+
 /**
  * XMLElement is a representation of an XML object. The object is able to parse
  * XML code.
@@ -98,8 +100,7 @@ import java.util.regex.Pattern;
  * <DL>
  * <DT><B>Retrieving Child Elements</B></DT>
  * <DD>
- * You can enumerate the children of an element using
- * {@link #enumerateChildren() enumerateChildren}. The number of child elements
+ * The number of child elements
  * can be retrieved using {@link #countChildren() countChildren}.</DD>
  * </DL>
  * <DL>
@@ -175,7 +176,7 @@ public class XMLElement {
      * </dd>
      * </dl>
      */
-    private TreeMap<String, String> attributes;
+    private final TreeMap<String, String> attributes;
 
     /**
      * Child elements of the element.
@@ -192,7 +193,7 @@ public class XMLElement {
      * </dd>
      * </dl>
      */
-    private Vector<XMLElement> children;
+    private final List<XMLElement> children;
 
     /**
      * The name of the element.
@@ -251,7 +252,7 @@ public class XMLElement {
      * </dd>
      * </dl>
      */
-    private Hashtable<String, char[]> entities;
+    private final Map<String, String> entities;
 
     /**
      * The line number where the element starts.
@@ -265,7 +266,7 @@ public class XMLElement {
      * </dd>
      * </dl>
      */
-    private int lineNr;
+    private final int lineNr;
 
     /**
      * <code>true</code> if the case of the element and attribute names are case
@@ -277,7 +278,7 @@ public class XMLElement {
      * <code>true</code> if the leading and trailing whitespace of #PCDATA
      * sections have to be ignored.
      */
-    private boolean ignoreWhitespace;
+    private final boolean ignoreWhitespace;
 
     /**
      * Character read too much. This character provides push-back functionality
@@ -329,7 +330,7 @@ public class XMLElement {
      * <li>countChildren() => 0
      * <li>enumerateChildren() => empty enumeration
      * <li>enumeratePropertyNames() => empty enumeration
-     * <li>getChildren() => empty vector
+     * <li>getChildren() => empty List
      * <li>getContent() => ""
      * <li>getLineNr() => 0
      * <li>getName() => null
@@ -337,14 +338,14 @@ public class XMLElement {
      * </dd>
      * </dl>
      *
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable)
+     * @see XMLElement#XMLElement(Map)
      * XMLElement(Hashtable)
      * @see freemind.main.XMLElement#XMLElement(boolean)
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable, boolean)
+     * @see XMLElement#XMLElement(Map, boolean)
      * XMLElement(Hashtable, boolean)
      */
     public XMLElement() {
-        this(new Hashtable<String, char[]>(), false, true, true);
+        this(new HashMap<>(), false, true, true);
     }
 
     /**
@@ -374,7 +375,7 @@ public class XMLElement {
      * <li>countChildren() => 0
      * <li>enumerateChildren() => empty enumeration
      * <li>enumeratePropertyNames() => empty enumeration
-     * <li>getChildren() => empty vector
+     * <li>getChildren() => empty List
      * <li>getContent() => ""
      * <li>getLineNr() => 0
      * <li>getName() => null
@@ -383,12 +384,13 @@ public class XMLElement {
      * </dl>
      * <dl>
      *
+     * @param entities
      * @see freemind.main.XMLElement#XMLElement()
      * @see freemind.main.XMLElement#XMLElement(boolean)
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable, boolean)
+     * @see XMLElement#XMLElement(Map, boolean)
      * XMLElement(Hashtable, boolean)
      */
-    public XMLElement(Hashtable<String, char[]> entities) {
+    public XMLElement(Map<String, String> entities) {
         this(entities, false, true, true);
     }
 
@@ -411,7 +413,7 @@ public class XMLElement {
      * <li>countChildren() => 0
      * <li>enumerateChildren() => empty enumeration
      * <li>enumeratePropertyNames() => empty enumeration
-     * <li>getChildren() => empty vector
+     * <li>getChildren() => empty List
      * <li>getContent() => ""
      * <li>getLineNr() => 0
      * <li>getName() => null
@@ -421,13 +423,13 @@ public class XMLElement {
      * <dl>
      *
      * @see freemind.main.XMLElement#XMLElement()
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable)
+     * @see XMLElement#XMLElement(Map)
      * XMLElement(Hashtable)
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable, boolean)
+     * @see XMLElement#XMLElement(Map, boolean)
      * XMLElement(Hashtable, boolean)
      */
     public XMLElement(boolean skipLeadingWhitespace) {
-        this(new Hashtable<String, char[]>(), skipLeadingWhitespace, true, true);
+        this(new HashMap<>(), skipLeadingWhitespace, true, true);
     }
 
     /**
@@ -458,7 +460,7 @@ public class XMLElement {
      * <li>countChildren() => 0
      * <li>enumerateChildren() => empty enumeration
      * <li>enumeratePropertyNames() => empty enumeration
-     * <li>getChildren() => empty vector
+     * <li>getChildren() => empty List
      * <li>getContent() => ""
      * <li>getLineNr() => 0
      * <li>getName() => null
@@ -469,10 +471,10 @@ public class XMLElement {
      *
      * @see freemind.main.XMLElement#XMLElement()
      * @see freemind.main.XMLElement#XMLElement(boolean)
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable)
+     * @see XMLElement#XMLElement(Map)
      * XMLElement(Hashtable)
      */
-    public XMLElement(Hashtable<String, char[]> entities, boolean skipLeadingWhitespace) {
+    public XMLElement(Map<String, String> entities, boolean skipLeadingWhitespace) {
         this(entities, skipLeadingWhitespace, true, true);
     }
 
@@ -500,7 +502,7 @@ public class XMLElement {
      * <li>countChildren() => 0
      * <li>enumerateChildren() => empty enumeration
      * <li>enumeratePropertyNames() => empty enumeration
-     * <li>getChildren() => empty vector
+     * <li>getChildren() => empty List
      * <li>getContent() => ""
      * <li>getLineNr() => 0
      * <li>getName() => null
@@ -511,12 +513,12 @@ public class XMLElement {
      *
      * @see freemind.main.XMLElement#XMLElement()
      * @see freemind.main.XMLElement#XMLElement(boolean)
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable)
+     * @see XMLElement#XMLElement(Map)
      * XMLElement(Hashtable)
-     * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable, boolean)
+     * @see XMLElement#XMLElement(Map, boolean)
      * XMLElement(Hashtable, boolean)
      */
-    public XMLElement(Hashtable<String, char[]> entities, boolean skipLeadingWhitespace,
+    public XMLElement(Map<String, String> entities, boolean skipLeadingWhitespace,
                       boolean ignoreCase) {
         this(entities, skipLeadingWhitespace, true, ignoreCase);
     }
@@ -554,7 +556,7 @@ public class XMLElement {
      * <li>countChildren() => 0
      * <li>enumerateChildren() => empty enumeration
      * <li>enumeratePropertyNames() => empty enumeration
-     * <li>getChildren() => empty vector
+     * <li>getChildren() => empty List
      * <li>getContent() => ""
      * <li>getLineNr() => 0
      * <li>getName() => null
@@ -565,30 +567,26 @@ public class XMLElement {
      *
      * @see freemind.main.XMLElement#createAnotherElement()
      */
-    protected XMLElement(Hashtable<String, char[]> entities, boolean skipLeadingWhitespace,
-                         boolean fillBasicConversionTable, boolean ignoreCase) {
+    protected XMLElement(Map<String, String> entities,
+                         boolean skipLeadingWhitespace,
+                         boolean fillBasicConversionTable,
+                         boolean ignoreCase) {
+
         this.ignoreWhitespace = skipLeadingWhitespace;
         this.ignoreCase = ignoreCase;
         this.name = null;
         this.contents = "";
         this.attributes = new TreeMap<>();
-        this.children = new Vector<>();
+        this.children = new ArrayList<>();
         this.entities = entities;
         this.lineNr = 0;
-        Enumeration<String> enumerator = this.entities.keys();
-        while (enumerator.hasMoreElements()) {
-            String key = enumerator.nextElement();
-            Object value = this.entities.get(key);
-            if (value instanceof String) {
-                this.entities.put(key, ((String) value).toCharArray());
-            }
-        }
+
         if (fillBasicConversionTable) {
-            this.entities.put("amp", new char[]{'&'});
-            this.entities.put("quot", new char[]{'"'});
-            this.entities.put("apos", new char[]{'\''});
-            this.entities.put("lt", new char[]{'<'});
-            this.entities.put("gt", new char[]{'>'});
+            this.entities.put("amp", "&");
+            this.entities.put("quot", "\"");
+            this.entities.put("apos", "'");
+            this.entities.put("lt", "<");
+            this.entities.put("gt", ">");
         }
     }
 
@@ -627,13 +625,12 @@ public class XMLElement {
      * <dl>
      *
      * @see freemind.main.XMLElement#countChildren()
-     * @see freemind.main.XMLElement#enumerateChildren()
      * @see freemind.main.XMLElement#getChildren()
      * @see freemind.main.XMLElement#removeChild(XMLElement)
      * removeChild(XMLElement)
      */
     public void addChild(XMLElement child) {
-        this.children.addElement(child);
+        this.children.add(child);
     }
 
     /**
@@ -904,7 +901,7 @@ public class XMLElement {
     }
 
     /**
-     * Enumerates the child elements.
+     * Returns the child elements as a List. It is safe to modify this List.
      *
      * <dl>
      * <dt><b>Postconditions:</b></dt>
@@ -917,40 +914,11 @@ public class XMLElement {
      *
      * @see freemind.main.XMLElement#addChild(XMLElement) addChild(XMLElement)
      * @see freemind.main.XMLElement#countChildren()
-     * @see freemind.main.XMLElement#getChildren()
      * @see freemind.main.XMLElement#removeChild(XMLElement)
      * removeChild(XMLElement)
      */
-    public Enumeration enumerateChildren() {
-        return this.children.elements();
-    }
-
-    /**
-     * Returns the child elements as a Vector. It is safe to modify this Vector.
-     *
-     * <dl>
-     * <dt><b>Postconditions:</b></dt>
-     * <dd>
-     * <ul>
-     * <li><code>result != null</code>
-     * </ul>
-     * </dd>
-     * </dl>
-     *
-     * @see freemind.main.XMLElement#addChild(XMLElement) addChild(XMLElement)
-     * @see freemind.main.XMLElement#countChildren()
-     * @see freemind.main.XMLElement#enumerateChildren()
-     * @see freemind.main.XMLElement#removeChild(XMLElement)
-     * removeChild(XMLElement)
-     */
-    public Vector<XMLElement> getChildren() {
-        try {
-            return (Vector<XMLElement>) this.children.clone();
-        } catch (Exception e) {
-            // this never happens, however, some Java compilers are so
-            // braindead that they require this exception clause
-            return null;
-        }
+    public List<XMLElement> getChildren() {
+        return unmodifiableList(this.children);
     }
 
     /**
@@ -1289,7 +1257,7 @@ public class XMLElement {
         if (this.ignoreCase) {
             name = name.toUpperCase(Locale.ENGLISH);
         }
-        String value = (String) this.attributes.get(name);
+        String value = this.attributes.get(name);
         if (value == null) {
             return defaultValue;
         } else {
@@ -1350,7 +1318,7 @@ public class XMLElement {
             key = defaultKey;
         }
         try {
-            result = (Integer) valueSet.get(key);
+            result = valueSet.get(key);
         } catch (ClassCastException e) {
             throw this.invalidValueSet(name);
         }
@@ -1428,7 +1396,7 @@ public class XMLElement {
         if (this.ignoreCase) {
             name = name.toUpperCase(Locale.ENGLISH);
         }
-        String value = (String) this.attributes.get(name);
+        String value = this.attributes.get(name);
         if (value == null) {
             return defaultValue;
         } else {
@@ -1490,7 +1458,7 @@ public class XMLElement {
             key = defaultKey;
         }
         try {
-            result = (Double) valueSet.get(key);
+            result = valueSet.get(key);
         } catch (ClassCastException e) {
             throw this.invalidValueSet(name);
         }
@@ -1848,8 +1816,7 @@ public class XMLElement {
      *
      * @throws XMLParseException If an error occured while parsing the string.
      */
-    public void parseCharArray(char[] input, int offset, int end)
-            throws XMLParseException {
+    public void parseCharArray(char[] input, int offset, int end) throws XMLParseException {
         this.parseCharArray(input, offset, end, /* startingLineNr */1);
     }
 
@@ -1926,11 +1893,10 @@ public class XMLElement {
      *
      * @see freemind.main.XMLElement#addChild(XMLElement) addChild(XMLElement)
      * @see freemind.main.XMLElement#countChildren()
-     * @see freemind.main.XMLElement#enumerateChildren()
      * @see freemind.main.XMLElement#getChildren()
      */
     public void removeChild(XMLElement child) {
-        this.children.removeElement(child);
+        this.children.remove(child);
     }
 
     /**
@@ -2108,7 +2074,7 @@ public class XMLElement {
             OutputStreamWriter writer = new OutputStreamWriter(out);
             this.write(writer);
             writer.flush();
-            return new String(out.toByteArray());
+            return out.toString();
         } catch (IOException e) {
             // Java exception handling suxx
             return super.toString();
@@ -2166,7 +2132,7 @@ public class XMLElement {
 
             for (String key : this.attributes.keySet()) {
                 writer.write(' ');
-                String value = (String) this.attributes.get(key);
+                String value = this.attributes.get(key);
                 writer.write(key);
                 writer.write('=');
                 writer.write('"');
@@ -2199,9 +2165,7 @@ public class XMLElement {
         } else {
             writer.write('>');
             writer.write('\n');
-            Enumeration enumerator = this.enumerateChildren();
-            while (enumerator.hasMoreElements()) {
-                XMLElement child = (XMLElement) enumerator.nextElement();
+            for (XMLElement child : this.getChildren()) {
                 child.write(writer);
             }
             if (withClosingTag) {
@@ -2271,7 +2235,7 @@ public class XMLElement {
                     writer.write(';');
                     break;
                 default:
-                    int unicode = (int) ch;
+                    int unicode = ch;
                     if ((unicode < 32) || (unicode > 126)) {
                         writer.write('&');
                         writer.write('#');
@@ -2863,7 +2827,7 @@ public class XMLElement {
             }
             buf.append(ch);
         } else {
-            char[] value = (char[]) this.entities.get(key);
+            char[] value = this.entities.get(key).toCharArray();
             if (value == null) {
                 throw this.unknownEntity(key);
             }

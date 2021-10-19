@@ -33,48 +33,22 @@ import java.awt.*;
  */
 @SuppressWarnings("serial")
 public class FreeMindToolBar extends JToolBar {
-    private static Insets nullInsets = new Insets(0, 0, 0, 0);
+    private static final Insets nullInsets = new Insets(0, 0, 0, 0);
 
-    /**
-     *
-     */
     public FreeMindToolBar() {
         this("", JToolBar.HORIZONTAL);
     }
 
-    /**
-     *
-     */
-    public FreeMindToolBar(int arg0) {
-        this("", arg0);
-    }
-
-    /**
-     *
-     */
-    public FreeMindToolBar(String arg0) {
-        this(arg0, JToolBar.HORIZONTAL);
-    }
-
-    /**
-     *
-     */
     public FreeMindToolBar(String arg0, int arg1) {
         super(arg0, arg1);
         this.setMargin(nullInsets);
         setFloatable(false);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.JToolBar#add(javax.swing.Action)
-     */
-    public JButton add(Action arg0) {
-        final Object actionName = arg0.getValue(Action.NAME);
-        arg0.putValue(Action.SHORT_DESCRIPTION,
-                Tools.removeMnemonic(actionName.toString()));
-        JButton returnValue = super.add(arg0);
+    public JButton add(Action action) {
+        final Object actionName = action.getValue(Action.NAME);
+        action.putValue(Action.SHORT_DESCRIPTION, Tools.removeMnemonic(actionName.toString()));
+        JButton returnValue = super.add(action);
         returnValue.setName(actionName.toString());
         returnValue.setText("");
         returnValue.setMargin(nullInsets);

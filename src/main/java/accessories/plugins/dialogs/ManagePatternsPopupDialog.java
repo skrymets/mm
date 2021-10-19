@@ -108,8 +108,6 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
 
     private boolean mIsDragging = false;
 
-    private accessories.plugins.dialogs.ListTransferHandler mListHandler;
-
     private JSplitPane mSplitPane;
 
     public ManagePatternsPopupDialog(JFrame caller, MindMapController controller) {
@@ -203,7 +201,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
             jContentPane = new javax.swing.JPanel();
             jContentPane.setLayout(new GridBagLayout());
             mList = new JList<>();
-            mListHandler = new ListTransferHandler();
+            ListTransferHandler mListHandler = new ListTransferHandler();
             mList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             mPatternListModel = new DefaultListModel<Pattern>();
             mPatternListModel.addAll(patternList);

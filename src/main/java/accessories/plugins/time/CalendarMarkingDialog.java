@@ -41,17 +41,15 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     private JSwitchableCalendar endDate;
     private JColorChooser markerColor;
     private JComboBox<String> repetitionType;
-    private JSpinner repeatEachNOccurence;
-    private JSpinner firstOccurence;
     private JTextField nameField;
     private SpinnerNumberModel mRepeatEachNOccurenceModel;
     private SpinnerNumberModel mFirstOccurenceModel;
-    private static String MARKINGS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><calendar_markings><calendar_marking name=\"bla\" color=\"#cc0099\" start_date=\"1443650400000\" end_date=\"1447801200000\" repeat_type=\"yearly\" repeat_each_n_occurence=\"1\" first_occurence=\"2\"/></calendar_markings>";
     private JTextArea mTextArea;
     private boolean mStarted = false;
 
     public static void main(String[] args) {
         CalendarMarkingDialog dialog = new CalendarMarkingDialog(null);
+        String MARKINGS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><calendar_markings><calendar_marking name=\"bla\" color=\"#cc0099\" start_date=\"1443650400000\" end_date=\"1447801200000\" repeat_type=\"yearly\" repeat_each_n_occurence=\"1\" first_occurence=\"2\"/></calendar_markings>";
         CalendarMarkings markings = (CalendarMarkings) Tools.unMarshall(MARKINGS);
         dialog.setCalendarMarking(markings.getCalendarMarking(0));
         dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
@@ -148,11 +146,11 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             ;
 
             mRepeatEachNOccurenceModel = new SpinnerNumberModel(1, 1, 100, 1);
-            repeatEachNOccurence = new JSpinner(mRepeatEachNOccurenceModel);
+            JSpinner repeatEachNOccurence = new JSpinner(mRepeatEachNOccurenceModel);
             JLabel firstOccurenceLabel = getLabel("First_Occurence");
             ;
             mFirstOccurenceModel = new SpinnerNumberModel(0, 0, 100, 1);
-            firstOccurence = new JSpinner(mFirstOccurenceModel);
+            JSpinner firstOccurence = new JSpinner(mFirstOccurenceModel);
             JLabel startDateLabel = getLabel("Start_Date");
             ;
             startDate = new JSwitchableCalendar();

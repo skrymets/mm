@@ -51,6 +51,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author dimitri
@@ -167,7 +168,7 @@ public class FilterComposerDialog extends JDialog {
             if (min >= 0) {
                 int max = conditionList.getMinSelectionIndex();
                 if (min == max) {
-                    Condition oldCond = (Condition) conditionList
+                    Condition oldCond = conditionList
                             .getSelectedValue();
                     Condition newCond = new ConditionNotSatisfiedDecorator(
                             oldCond);
@@ -182,49 +183,33 @@ public class FilterComposerDialog extends JDialog {
 
     private class CreateConjunctConditionAction extends AbstractAction {
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
-         */
         CreateConjunctConditionAction() {
             super();
-            Tools.setLabelAndMnemonic(this, Resources.getInstance()
-                    .getResourceString("filter_and"));
+            Tools.setLabelAndMnemonic(this, Resources.getInstance().getResourceString("filter_and"));
         }
 
         public void actionPerformed(ActionEvent e) {
-            Object[] selectedValues = conditionList.getSelectedValues();
-            if (selectedValues.length < 2)
+            List<Condition> selectedValues = conditionList.getSelectedValuesList();
+            if (selectedValues.size() < 2)
                 return;
+
             Condition newCond = new ConjunctConditions(selectedValues);
             DefaultComboBoxModel<Condition> model = (DefaultComboBoxModel<Condition>) conditionList.getModel();
             model.addElement(newCond);
             validate();
-
         }
     }
 
     private class CreateDisjunctConditionAction extends AbstractAction {
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
-         */
         CreateDisjunctConditionAction() {
             super();
-            Tools.setLabelAndMnemonic(this, Resources.getInstance()
-                    .getResourceString("filter_or"));
+            Tools.setLabelAndMnemonic(this, Resources.getInstance().getResourceString("filter_or"));
         }
 
         public void actionPerformed(ActionEvent e) {
-            Object[] selectedValues = conditionList.getSelectedValues();
-            if (selectedValues.length < 2)
+            List<Condition> selectedValues = conditionList.getSelectedValuesList();
+            if (selectedValues.size() < 2)
                 return;
             Condition newCond = new DisjunctConditions(selectedValues);
             DefaultComboBoxModel<Condition> model = (DefaultComboBoxModel<Condition>) conditionList.getModel();
@@ -237,13 +222,6 @@ public class FilterComposerDialog extends JDialog {
     private class ConditionListSelectionListener implements
             ListSelectionListener, ListDataListener {
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * javax.swing.event.ListSelectionListener#valueChanged(javax.swing.
-         * event.ListSelectionEvent)
-         */
         public void valueChanged(ListSelectionEvent e) {
 
             if (conditionList.getMinSelectionIndex() == -1) {
@@ -252,8 +230,7 @@ public class FilterComposerDialog extends JDialog {
                 btnOr.setEnabled(false);
                 btnDelete.setEnabled(false);
                 return;
-            } else if (conditionList.getMinSelectionIndex() == conditionList
-                    .getMaxSelectionIndex()) {
+            } else if (conditionList.getMinSelectionIndex() == conditionList.getMaxSelectionIndex()) {
                 btnNot.setEnabled(true);
                 btnAnd.setEnabled(false);
                 btnOr.setEnabled(false);
@@ -283,12 +260,8 @@ public class FilterComposerDialog extends JDialog {
 
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
-                EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                        if (selectCondition()) {
-                            dispose();
-                        }
-                    }
+                EventQueue.invokeLater(() -> {
+                    if (selectCondition()) dispose();
                 });
             }
         }
@@ -314,12 +287,8 @@ public class FilterComposerDialog extends JDialog {
                 return true;
             String extension = Tools.getExtension(f.getName());
             if (extension != null) {
-                if (extension
-                        .equals(FilterController.FREEMIND_FILTER_EXTENSION_WITHOUT_DOT)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return extension
+                        .equals(FilterController.FREEMIND_FILTER_EXTENSION_WITHOUT_DOT);
             }
             return false;
         }
@@ -468,32 +437,28 @@ public class FilterComposerDialog extends JDialog {
         }
     }
 
-    private FilterController mFilterController;
-    private JList<Condition> conditionList;
-    private JComboBox<Condition> simpleCondition;
+    private final FilterController mFilterController;
+    private final JList<Condition> conditionList;
+    private final JComboBox<Condition> simpleCondition;
     private JComboBox values;
-    private JComboBox attributes;
-    private JButton btnAdd;
-    private JButton btnNot;
-    private JButton btnAnd;
-    private JButton btnOr;
-    private JButton btnDelete;
-    private JCheckBox caseInsensitive;
-    private ExtendedComboBoxModel icons;
-    private ExtendedComboBoxModel nodes;
-    private DefaultComboBoxModel<Condition> simpleNodeConditionComboBoxModel;
-    private DefaultComboBoxModel<Condition> simpleIconConditionComboBoxModel;
-    private ExtendedComboBoxModel filteredAttributeComboBoxModel;
+    private final JComboBox attributes;
+    private final JButton btnNot;
+    private final JButton btnAnd;
+    private final JButton btnOr;
+    private final JButton btnDelete;
+    private final JCheckBox caseInsensitive;
+    private final ExtendedComboBoxModel icons;
+    private final ExtendedComboBoxModel nodes;
+    private final DefaultComboBoxModel<Condition> simpleNodeConditionComboBoxModel;
+    private final DefaultComboBoxModel<Condition> simpleIconConditionComboBoxModel;
+    private final ExtendedComboBoxModel filteredAttributeComboBoxModel;
     private DefaultComboBoxModel internalConditionsModel;
-    private ComboBoxModel externalConditionsModel;
-    private JButton btnOK;
-    private JButton btnApply;
-    private JButton btnCancel;
-    private JButton btnSave;
-    private JButton btnLoad;
-    private ConditionListSelectionListener conditionListListener;
-    private Controller mController;
-    private DefaultComboBoxModel simpleAttributeConditionComboBoxModel;
+    private final JButton btnOK;
+    private final JButton btnApply;
+    private final JButton btnCancel;
+    private final ConditionListSelectionListener conditionListListener;
+    private final Controller mController;
+    private final DefaultComboBoxModel simpleAttributeConditionComboBoxModel;
 
     public FilterComposerDialog(Controller controller, final FilterToolbar pFilterToolbar) {
         super(controller.getJFrame(), controller.getResourceString("filter_dialog"));
@@ -547,7 +512,7 @@ public class FilterComposerDialog extends JDialog {
         conditionButtonBox.setBorder(new EmptyBorder(0, 10, 0, 10));
         getContentPane().add(conditionButtonBox, BorderLayout.EAST);
 
-        btnAdd = new JButton(new AddConditionAction());
+        JButton btnAdd = new JButton(new AddConditionAction());
         btnAdd.setMaximumSize(maxButtonDimension);
         conditionButtonBox.add(Box.createVerticalGlue());
         conditionButtonBox.add(btnAdd);
@@ -611,14 +576,14 @@ public class FilterComposerDialog extends JDialog {
 
         if (!controller.getFrame().isApplet()) {
             ActionListener saveAction = new SaveAction();
-            btnSave = new JButton();
+            JButton btnSave = new JButton();
             Tools.setLabelAndMnemonic(btnSave, Resources.getInstance()
                     .getResourceString("save"));
             btnSave.addActionListener(saveAction);
             btnSave.setMaximumSize(maxButtonDimension);
 
             ActionListener loadAction = new LoadAction();
-            btnLoad = new JButton();
+            JButton btnLoad = new JButton();
             Tools.setLabelAndMnemonic(btnLoad, Resources.getInstance()
                     .getResourceString("load"));
             btnLoad.addActionListener(loadAction);
@@ -745,7 +710,7 @@ public class FilterComposerDialog extends JDialog {
     }
 
     private void initInternalConditionModel() {
-        externalConditionsModel = mFilterController.getFilterConditionModel();
+        ComboBoxModel externalConditionsModel = mFilterController.getFilterConditionModel();
         if (internalConditionsModel == null) {
             internalConditionsModel = new DefaultComboBoxModel<>();
             internalConditionsModel.addListDataListener(conditionListListener);

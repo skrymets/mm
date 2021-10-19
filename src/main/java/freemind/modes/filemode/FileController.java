@@ -169,7 +169,7 @@ public class FileController extends ViewControllerAdapter {
      */
     @Override
     public void out(String pFormat) {
-        getFrame().out(pFormat);
+        getFrame().setStatusText(pFormat);
     }
 
 }

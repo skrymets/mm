@@ -36,12 +36,9 @@ public class UnicodeReader extends Reader {
     private static final int BOM_SIZE = 4;
 
     /**
-     *
-     * @param in
-     *            inputstream to be read
-     * @param defaultEnc
-     *            default encoding if stream does not have BOM marker. Give NULL
-     *            to use system-level default.
+     * @param in         inputstream to be read
+     * @param defaultEnc default encoding if stream does not have BOM marker. Give NULL
+     *                   to use system-level default.
      */
     public UnicodeReader(InputStream in, String defaultEnc) {
         internalIn = new PushbackInputStream(in, BOM_SIZE);
@@ -71,7 +68,7 @@ public class UnicodeReader extends Reader {
             return;
 
         String encoding;
-        byte bom[] = new byte[BOM_SIZE];
+        byte[] bom = new byte[BOM_SIZE];
         int n, unread;
         n = internalIn.read(bom, 0, bom.length);
 

@@ -34,6 +34,8 @@ import java.awt.geom.Point2D;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * The MouseMotionListener which belongs to every NodeView.
  * Handles delayed selection.
@@ -46,43 +48,30 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
     /**
      * time in ms, overwritten by property time_for_delayed_selection
      */
-    private static Tools.IntHolder timeForDelayedSelection;
+    private static Integer timeForDelayedSelection = 0;
 
     /**
      * overwritten by property delayed_selection_enabled
      */
-    private static Tools.BooleanHolder delayedSelectionEnabled;
+    private static Boolean delayedSelectionEnabled = Boolean.FALSE;
 
     /**
      * And a static method to reread this holder. This is used when the
      * selection method is changed via the option menu.
      */
     public void updateSelectionMethod() {
-        if (timeForDelayedSelection == null) {
-            timeForDelayedSelection = new Tools.IntHolder();
-        }
-        delayedSelectionEnabled = new Tools.BooleanHolder();
-        delayedSelectionEnabled.setValue(c.getFrame()
-                .getProperty("selection_method")
-                .equals("selection_method_direct") ? false : true);
-        /*
-         * set time for delay to infinity, if selection_method equals
-         * selection_method_by_click.
-         */
-        if (c.getFrame().getProperty("selection_method")
-                .equals("selection_method_by_click")) {
-            timeForDelayedSelection.setValue(Integer.MAX_VALUE);
-        } else {
-            timeForDelayedSelection.setValue(Integer.parseInt(c.getFrame()
-                    .getProperty("time_for_delayed_selection")));
-        }
+        delayedSelectionEnabled = !"selection_method_direct".equals(c.getFrame().getProperty("selection_method"));
+
+        // set time for delay to infinity, if selection_method equals selection_method_by_click.
+        timeForDelayedSelection = "selection_method_by_click".equals(c.getFrame().getProperty("selection_method"))
+                ? Integer.MAX_VALUE
+                : parseInt(c.getFrame().getProperty("time_for_delayed_selection"));
     }
 
     private Timer timerForDelayedSelection;
 
     /**
-     * The mouse has to stay in this region to enable the selection after a
-     * given time.
+     * The mouse has to stay in this region to enable the selection after a given time.
      */
     private Rectangle controlRegionForDelayedSelection;
 
@@ -102,11 +91,10 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
         boolean isLink = (node).updateCursor(e.getX());
         // links are displayed in the status bar:
         if (isLink) {
-            c.getFrame().out(c.getLinkShortText(node.getNodeView().getModel()));
+            c.getFrame().setStatusText(c.getLinkShortText(node.getNodeView().getModel()));
         }
         // test if still in selection region:
-        if (controlRegionForDelayedSelection != null
-                && delayedSelectionEnabled.getValue()) {
+        if (controlRegionForDelayedSelection != null && delayedSelectionEnabled) {
             if (!controlRegionForDelayedSelection.contains(e.getPoint())) {
                 // point is not in the region. start timer again and adjust
                 // region to the current point:
@@ -212,18 +200,15 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
         timerForDelayedSelection = new Timer();
         timerForDelayedSelection.schedule(
                 new timeDelayedSelection(c, e),
-                /*
-                 * if the new selection method is not enabled we put 0 to get
-                 * direct selection.
-                 */
-                (delayedSelectionEnabled.getValue()) ? timeForDelayedSelection
-                        .getValue() : 0);
+                // if the new selection method is not enabled we put 0 to get direct selection.
+                delayedSelectionEnabled ? timeForDelayedSelection : 0);
     }
 
     protected void stopTimerForDelayedSelection() {
         // stop timer.
         if (timerForDelayedSelection != null)
             timerForDelayedSelection.cancel();
+
         timerForDelayedSelection = null;
         controlRegionForDelayedSelection = null;
     }
@@ -242,16 +227,11 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
          * TimerTask method to enable the selection after a given time.
          */
         public void run() {
-            /*
-             * formerly in ControllerAdapter. To guarantee, that point-to-select
-             * does not change selection if any meta key is pressed.
-             */
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    if (e.getModifiers() == 0 && !c.isBlocked()
-                            && c.getView().getSelecteds().size() <= 1) {
-                        c.extendSelection(e);
-                    }
+            // * formerly in ControllerAdapter. To guarantee, that point-to-select does not change selection if
+            // any meta key is pressed.
+            SwingUtilities.invokeLater(() -> {
+                if (e.getModifiers() == 0 && !c.isBlocked() && c.getView().getSelecteds().size() <= 1) {
+                    c.extendSelection(e);
                 }
             });
         }

@@ -3,7 +3,7 @@
     <plugin_action documentation="%accessories/plugins/ApplyFormatPlugin.properties_documentation"
                    name="%accessories/plugins/ApplyFormatPlugin.properties_name"
                    base="freemind.extensions.NodeHookAdapter" label="accessories/plugins/ApplyFormatPlugin.properties"
-                   class_name="accessories.plugins.ApplyFormatPlugin" instanciation="ApplyToRoot">
+                   class_name="accessories.plugins.ApplyFormatPlugin" instanciation="ApplyToRoot" isSelectable="false">
         <plugin_mode class_name="freemind.modes.mindmapmode"/>
         <plugin_menu location="menu_bar/format/change/apply_format_from_menu"/>
     </plugin_action>

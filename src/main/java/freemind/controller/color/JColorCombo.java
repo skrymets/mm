@@ -21,7 +21,6 @@
 package freemind.controller.color;
 
 import freemind.main.Tools;
-import freemind.modes.mindmapmode.MindMapToolBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,11 +35,9 @@ public class JColorCombo extends JComboBox<ColorPair> {
 
         private static final int ICON_SIZE = (int) (Tools.getScalingFactor() * 16);
 
-        private BufferedImage mImage;
-
         public ColorIcon(Color pColor) {
             super(new BufferedImage(ICON_SIZE, ICON_SIZE, BufferedImage.TYPE_INT_RGB));
-            mImage = (BufferedImage) getImage();
+            BufferedImage mImage = (BufferedImage) getImage();
             Graphics g = mImage.getGraphics();
             g.setColor(pColor);
             g.fillRect(0, 0, ICON_SIZE, ICON_SIZE);
@@ -61,10 +58,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
         setMaximumRowCount(20);
     }
 
-    /**
-     * See {@link MindMapToolBar}
-     */
-    public java.awt.Dimension getMaximumSize() {
+    public Dimension getMaximumSize() {
         return getPreferredSize();
     }
 
@@ -91,7 +85,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
                 setForeground(list.getForeground());
             }
 
-            ColorPair pair = (ColorPair) value;
+            ColorPair pair = value;
             ImageIcon icon = new ColorIcon(pair.color);
             setIcon(icon);
             setText(pair.displayName);

@@ -48,6 +48,7 @@ public class ImageFactory {
         if (Tools.getScalingFactorPlain() == 100) {
             return createUnscaledIcon(pUrl);
         }
+
         ScalableImageIcon icon = new ScalableImageIcon(pUrl);
         icon.setScale(Tools.getScalingFactor());
         return icon;
@@ -60,10 +61,7 @@ public class ImageFactory {
         return new ImageIcon(pResource);
     }
 
-    /**
-     * @param pString
-     * @return
-     */
+
     public ImageIcon createIcon(String pFilePath) {
         if (Tools.getScalingFactorPlain() == 200) {
             // test for existence  of a scaled icon:

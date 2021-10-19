@@ -23,7 +23,7 @@
 package accessories.plugins.time;
 
 import freemind.common.ScalableJTable;
-import freemind.controller.MapModuleManager.MapModuleChangeObserver;
+import freemind.controller.MapModuleChangeObserver;
 import freemind.controller.MenuItemSelectedListener;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.TimeWindowColumnSetting;
@@ -979,7 +979,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
     static class IconsHolder implements Comparable<IconsHolder> {
         Vector<MindIcon> icons = new Vector<>();
 
-        private Vector<String> iconNames;
+        private final Vector<String> iconNames;
 
         public IconsHolder(MindMapNode node) {
             icons.addAll(node.getIcons());

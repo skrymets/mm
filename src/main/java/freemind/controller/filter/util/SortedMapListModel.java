@@ -49,7 +49,7 @@ public class SortedMapListModel extends AbstractListModel implements
         }
     }
 
-    public void addAll(Object elements[]) {
+    public void addAll(Object[] elements) {
         Collection c = Arrays.asList(elements);
         model.addAll(c);
         fireContentsChanged(this, 0, getSize());

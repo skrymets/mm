@@ -18,7 +18,7 @@
             name="%accessories/plugins/ClonePasteAction.properties_name"
             key_stroke="%keystroke_accessories/plugins/ClonePasteAction.properties_key"
             base="freemind.extensions.NodeHookAdapter" label="accessories/plugins/ClonePasteAction.properties"
-            class_name="accessories.plugins.ClonePasteAction" instanciation="other">
+            class_name="accessories.plugins.ClonePasteAction" instanciation="Other">
         <!-- Instantiations: Once, OnceForRoot, OnceForAllNodes, Other, ApplyToRoot -->
         <plugin_mode class_name="freemind.modes.mindmapmode"/>
         <plugin_menu location="menu_bar/edit/paste/paste_as_clone"/>
@@ -30,7 +30,7 @@
             base="freemind.extensions.NodeHookAdapter"
             label="accessories/plugins/DeactivateCloneAction.properties"
             class_name="accessories.plugins.DeactivateCloneAction"
-            instanciation="other">
+            instanciation="Other">
         <plugin_mode class_name="freemind.modes.mindmapmode"/>
         <plugin_menu location="menu_bar/edit/paste/paste_as_clone2"/>
     </plugin_action>

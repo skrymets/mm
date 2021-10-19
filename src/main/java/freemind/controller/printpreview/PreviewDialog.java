@@ -34,7 +34,6 @@ import java.net.URL;
 @SuppressWarnings("serial")
 public class PreviewDialog extends JDialog implements ActionListener {
     private final static double DEFAULT_ZOOM_FACTOR_STEP = 0.1;
-    private JLabel pageNumber;
 
     public PreviewDialog(String title, MapView view, PageFormat pPageFormat) {
         super(JOptionPane.getFrameForComponent(view), title, true);
@@ -45,7 +44,7 @@ public class PreviewDialog extends JDialog implements ActionListener {
         JToolBar toolbar = new JToolBar();
         // toolbar.setRollover(true);
         getContentPane().add(toolbar, "North");
-        pageNumber = new JLabel("- 1 -");
+        JLabel pageNumber = new JLabel("- 1 -");
         final JButton button = getButton("Back24.gif", new BrowseAction(
                 preview, pageNumber, -1));
         toolbar.add(button);

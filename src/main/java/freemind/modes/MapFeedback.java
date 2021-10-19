@@ -37,25 +37,19 @@ import java.util.List;
  */
 public interface MapFeedback {
     /**
-     * Is issued before a node is deleted. It is issued via
-     * NodeLifetimeListener.
+     * Is issued before a node is deleted. It is issued via NodeLifetimeListener.
      */
     void fireNodePreDeleteEvent(MindMapNode node);
 
     /**
-     * Is issued after a node is deleted. It is issued via
-     * NodeLifetimeListener.
+     * Is issued after a node is deleted. It is issued via NodeLifetimeListener.
      */
     void fireNodePostDeleteEvent(MindMapNode node, MindMapNode parent);
 
-    /**
-     * @param pNode
-     */
     void firePreSaveEvent(MindMapNode pNode);
 
     /**
-     * Invoke this method after you've changed how a node is to be represented
-     * in the tree.
+     * Invoke this method after you've changed how a node is to be represented in the tree.
      */
     void nodeChanged(MindMapNode node);
 
@@ -63,11 +57,7 @@ public interface MapFeedback {
 
     void fireRecursiveNodeCreateEvent(MindMapNode node);
 
-    /**
-     * @see ModeController#paste(MindMapNode, MindMapNode)
-     */
-    void paste(MindMapNode pNode,
-               MindMapNode pParent);
+    void paste(MindMapNode pNode, MindMapNode pParent);
 
     /**
      * @param pTextId
@@ -83,11 +73,6 @@ public interface MapFeedback {
 
     int getIntProperty(String key, int defaultValue);
 
-
-    /**
-     * @param pProperty
-     * @param pValue
-     */
     void setProperty(String pProperty, String pValue);
 
     /**

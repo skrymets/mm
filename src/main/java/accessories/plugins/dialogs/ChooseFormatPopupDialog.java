@@ -73,9 +73,9 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
     private int result = CANCEL;
 
-    private javax.swing.JPanel jContentPane = null;
+    private JPanel jContentPane = null;
 
-    private MindMapController mController;
+    private final MindMapController mController;
 
     private JButton jCancelButton;
 
@@ -87,7 +87,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
     private MindMapNode mDemoNode;
 
-    private MindMapNode mNode;
+    private final MindMapNode mNode;
 
     private DemoMapFeedback mDemoNodeMapFeedback;
 
@@ -156,12 +156,10 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
     /**
      * This method initializes jContentPane
-     *
-     * @return javax.swing.JPanel
      */
-    private javax.swing.JPanel getJContentPane() {
+    private JPanel getJContentPane() {
         if (jContentPane == null) {
-            jContentPane = new javax.swing.JPanel();
+            jContentPane = new JPanel();
             jContentPane.setLayout(new GridBagLayout());
             /*
              * public GridBagConstraints(int gridx, int gridy, int gridwidth,
@@ -215,9 +213,8 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
     private Component getStylePatternFrame() {
         if (mStylePatternFrame == null) {
-            mStylePatternFrame = new StylePatternFrame(this, mController,
-                    StylePatternFrameType.WITHOUT_NAME_AND_CHILDS) {
-                Pattern mResetPattern = StylePatternFactory.getRemoveAllPattern();
+            mStylePatternFrame = new StylePatternFrame(this, mController, StylePatternFrameType.WITHOUT_NAME_AND_CHILDS) {
+                final Pattern mResetPattern = StylePatternFactory.getRemoveAllPattern();
 
                 @Override
                 public void propertyChange(PropertyChangeEvent pEvt) {

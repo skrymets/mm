@@ -204,21 +204,22 @@ public class ExportDialog extends JFrame {
 
     class FileChooseListener implements ActionListener {
 
-        private Component parent = null;
-        private JTextField jtf = null;
-        private int kind = 0;
-        private final String xslch = getResourceString("ExportDialog.9"); //$NON-NLS-1$
-        private final String expch = getResourceString("ExportDialog.10"); //$NON-NLS-1$
-        private String WindowTitle = null;
+        private Component parent;
+        private JTextField jtf;
+        private int kind;
+        private String WindowTitle;
 
-        public FileChooseListener(int wit, JTextField jt, Component c,
-                                  File mmFile) {
+        public FileChooseListener(int wit, JTextField jt, Component c, File mmFile) {
             parent = c;
             jtf = jt;
             kind = wit;
             if (kind == 0) {
+                //$NON-NLS-1$
+                String xslch = getResourceString("ExportDialog.9");
                 WindowTitle = xslch;
             } else {
+                //$NON-NLS-1$
+                String expch = getResourceString("ExportDialog.10");
                 WindowTitle = expch;
             }
         }
@@ -228,8 +229,7 @@ public class ExportDialog extends JFrame {
             ExampleFileFilter filter = null;
 
             if (kind == 0) {
-                filter = new ExampleFileFilter(
-                        new String("xsl"), getResourceString("ExportDialog.13")); //$NON-NLS-1$ //$NON-NLS-2$
+                filter = new ExampleFileFilter("xsl", getResourceString("ExportDialog.13")); //$NON-NLS-1$ //$NON-NLS-2$
             }
             FreeMindFileDialog chooser = mController.getFileChooser(filter);
             chooser.setDialogTitle(WindowTitle);

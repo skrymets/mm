@@ -52,7 +52,6 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
     private int mCurrentMonthPosition;
     private JSwitchableCalendar mCurrentlyActivePanel;
     private Calendar mCurrentDate;
-    private GridBagLayout mGridLayout;
 
     public JTripleCalendar(int pCurrentMonthPosition, Calendar pCurrentDate) {
         mCurrentMonthPosition = pCurrentMonthPosition;
@@ -63,7 +62,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
         Calendar panelDate = (Calendar) mCurrentDate.clone();
         panelDate.add(Calendar.MONTH, -pCurrentMonthPosition);
         this.setName("JTripleCalendar");
-        mGridLayout = new GridBagLayout();
+        GridBagLayout mGridLayout = new GridBagLayout();
         setLayout(mGridLayout);
         int monthIndex = 0;
         mIgnoreChangeEvent = true;

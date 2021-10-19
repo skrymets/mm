@@ -27,17 +27,14 @@ import freemind.modes.ModeController;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 @Log4j2
 public class MindMapMode extends Mode {
 
     private Controller controller;
-    private MindMapController modecontroller;
-    private final String MODENAME = "MindMap";
+    private MindMapController mindMapController;
     private boolean isRunning = false;
 
     public MindMapMode() {
@@ -45,23 +42,19 @@ public class MindMapMode extends Mode {
 
     public void init(Controller controller) {
         this.controller = controller;
-        modecontroller = (MindMapController) createModeController();
+        mindMapController = (MindMapController) createModeController();
     }
 
     public ModeController createModeController() {
-        log.trace("Creating new MindMapController...");
-        MindMapController mindMapController = new MindMapController(this);
-        log.trace("Creating new MindMapController. Done:" + mindMapController);
-        return mindMapController;
+        return new MindMapController(this);
     }
 
     public String toString() {
-        return MODENAME;
+        return "MindMap";
     }
 
     /**
-     * Called whenever this mode is chosen in the program. (updates Actions
-     * etc.)
+     * Called whenever this mode is chosen in the program. (updates Actions etc.)
      */
     public void activate() {
         if (isRunning) {
@@ -71,10 +64,8 @@ public class MindMapMode extends Mode {
         }
     }
 
-    public void restore(String restoreable) throws FileNotFoundException,
-            XMLParseException, MalformedURLException, IOException,
-            URISyntaxException {
-        getDefaultModeController().load(new File(restoreable));
+    public void restore(String restorable) throws XMLParseException, IOException, URISyntaxException {
+        getDefaultModeController().load(new File(restorable));
     }
 
     public Controller getController() {
@@ -82,7 +73,7 @@ public class MindMapMode extends Mode {
     }
 
     public ModeController getDefaultModeController() {
-        return modecontroller;
+        return mindMapController;
     }
 
 }

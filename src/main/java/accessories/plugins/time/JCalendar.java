@@ -65,8 +65,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
      */
     protected JMonthChooser monthChooser;
 
-    private JPanel monthYearPanel;
-
     /**
      * the year chhoser
      */
@@ -180,7 +178,7 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
 
         setLayout(new BorderLayout());
 
-        monthYearPanel = new JPanel();
+        JPanel monthYearPanel = new JPanel();
         monthYearPanel.setLayout(new BorderLayout());
 
         monthChooser = new JMonthChooser(monthSpinner);

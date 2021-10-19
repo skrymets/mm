@@ -30,60 +30,48 @@ import java.io.File;
  */
 public interface FreeMindFileDialog {
 
-    public interface DirectoryResultListener {
+    interface DirectoryResultListener {
         void setChosenDirectory(File pDir);
     }
 
-    public int showOpenDialog(Component pParent) throws HeadlessException;
+    int showOpenDialog(Component pParent) throws HeadlessException;
 
-    public int showSaveDialog(Component pParent) throws HeadlessException;
+    int showSaveDialog(Component pParent) throws HeadlessException;
 
-    public void setDialogTitle(String pDialogTitle);
+    void setDialogTitle(String pDialogTitle);
 
     /**
      * Sets the default file filter (that one that is activated at showup).
      *
      * @see #addChoosableFileFilter(FileFilter)
      */
-    public void addChoosableFileFilterAsDefault(FileFilter pFilter);
+    void addChoosableFileFilterAsDefault(FileFilter pFilter);
 
     /**
      * Adds a further file filter for optional use. It is not selected by default, but this is UI dependent.
      *
      * @see #addChoosableFileFilterAsDefault(FileFilter)
      */
-    public void addChoosableFileFilter(FileFilter pFilter);
+    void addChoosableFileFilter(FileFilter pFilter);
 
     /**
      * @param pMode JFileChooser.DIRECTORIES_ONLY, JFileChooser.FILES_ONLY, JFileChooser.FILES_AND_DIRECTORIES
      */
-    public void setFileSelectionMode(int pMode);
+    void setFileSelectionMode(int pMode);
 
-    public void setMultiSelectionEnabled(boolean pB);
+    void setMultiSelectionEnabled(boolean pB);
 
-    public boolean isMultiSelectionEnabled();
+    boolean isMultiSelectionEnabled();
 
-    /**
-     * @return
-     */
-    public File[] getSelectedFiles();
+    File[] getSelectedFiles();
 
-    /**
-     * @return
-     */
-    public File getSelectedFile();
+    File getSelectedFile();
 
-    /**
-     * @param pLastCurrentDir
-     */
-    public void setCurrentDirectory(File pLastCurrentDir);
+    void setCurrentDirectory(File pLastCurrentDir);
 
-    /**
-     * @param pFile
-     */
-    public void setSelectedFile(File pFile);
+    void setSelectedFile(File pFile);
 
-    public void registerDirectoryResultListener(DirectoryResultListener pDirectoryResultListener);
+    void registerDirectoryResultListener(DirectoryResultListener pDirectoryResultListener);
 
 
 }

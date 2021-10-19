@@ -65,12 +65,12 @@ public abstract class HookFactoryAdapter implements HookFactory {
      */
     public void registerRegistrationContainer(
             HookFactory.RegistrationContainer container,
-            HookRegistration instanciatedRegistrationObject) {
+            HookRegistration registrationObject) {
         // registration only for pluginBases.
         if (container.isPluginBase) {
             allRegistrationInstances.put(
                     container.correspondingPlugin.getLabel(),
-                    instanciatedRegistrationObject);
+                    registrationObject);
         }
     }
 

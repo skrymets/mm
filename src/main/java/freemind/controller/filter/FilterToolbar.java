@@ -50,8 +50,6 @@ class FilterToolbar extends FreeMindToolBar {
     private JCheckBox showAncestors;
     private JCheckBox showDescendants;
     private Filter activeFilter;
-    private JButton btnEdit;
-    private JButton btnUnfoldAncestors;
     private Controller c;
     private String pathToFilterFile;
     private FilterChangeListener filterChangeListener;
@@ -196,10 +194,10 @@ class FilterToolbar extends FreeMindToolBar {
                 + "auto."
                 + FilterController.FREEMIND_FILTER_EXTENSION_WITHOUT_DOT;
 
-        btnEdit = add(new EditFilterAction());
+        JButton btnEdit = add(new EditFilterAction());
         add(btnEdit);
 
-        btnUnfoldAncestors = add(new UnfoldAncestorsAction());
+        JButton btnUnfoldAncestors = add(new UnfoldAncestorsAction());
         btnUnfoldAncestors.setToolTipText(Resources.getInstance()
                 .getResourceString("filter_unfold_ancestors"));
         add(btnUnfoldAncestors);

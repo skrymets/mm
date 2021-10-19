@@ -19,7 +19,7 @@
  *
  * Created on 22.07.2004
  */
-/*$Id: HookInstanciationMethod.java,v 1.1.4.1.16.3 2007/06/05 20:53:30 dpolivaev Exp $*/
+/*$Id: HookInstantiationMethod.java,v 1.1.4.1.16.3 2007/06/05 20:53:30 dpolivaev Exp $*/
 package freemind.extensions;
 
 import freemind.model.MindMapNode;
@@ -27,8 +27,8 @@ import freemind.modes.MapFeedback;
 
 import java.util.*;
 
-public class HookInstanciationMethod {
-    private static interface DestinationNodesGetter {
+public class HookInstantiationMethod {
+    private interface DestinationNodesGetter {
         Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds);
 
         MindMapNode getCenterNode(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds);
@@ -79,8 +79,8 @@ public class HookInstanciationMethod {
 
     }
 
-    private boolean isSingleton;
-    private DestinationNodesGetter getter;
+    private final boolean isSingleton;
+    private final DestinationNodesGetter getter;
     private final boolean isPermanent;
     private final boolean isUndoable;
 
@@ -95,7 +95,7 @@ public class HookInstanciationMethod {
         return isPermanent;
     }
 
-    private HookInstanciationMethod(boolean isPermanent, boolean isSingleton,
+    private HookInstantiationMethod(boolean isPermanent, boolean isSingleton,
                                     DestinationNodesGetter getter, boolean isUndoable) {
         this.isPermanent = isPermanent;
         this.isSingleton = isSingleton;
@@ -103,35 +103,35 @@ public class HookInstanciationMethod {
         this.isUndoable = isUndoable;
     }
 
-    static final public HookInstanciationMethod Once = new HookInstanciationMethod(
+    static final public HookInstantiationMethod Once = new HookInstantiationMethod(
             true, true, new DefaultDestinationNodesGetter(), true);
     /**
      * The hook should only be added/removed to the root node.
      */
-    static final public HookInstanciationMethod OnceForRoot = new HookInstanciationMethod(
+    static final public HookInstantiationMethod OnceForRoot = new HookInstantiationMethod(
             true, true, new RootDestinationNodesGetter(), true);
     /**
      * Each (or none) node should have the hook.
      */
-    static final public HookInstanciationMethod OnceForAllNodes = new HookInstanciationMethod(
+    static final public HookInstantiationMethod OnceForAllNodes = new HookInstantiationMethod(
             true, true, new AllDestinationNodesGetter(), true);
     /**
      * This is for MindMapHooks in general. Here, no undo- or redoaction are
      * performed, the undo information is given by the actions the hook
      * performs.
      */
-    static final public HookInstanciationMethod Other = new HookInstanciationMethod(
+    static final public HookInstantiationMethod Other = new HookInstantiationMethod(
             false, false, new DefaultDestinationNodesGetter(), false);
     /**
      * This is for MindMapHooks that wish to be applied to root, whereevery they
      * are called from. Here, no undo- or redoaction are performed, the undo
      * information is given by the actions the hook performs.
      */
-    static final public HookInstanciationMethod ApplyToRoot = new HookInstanciationMethod(
+    static final public HookInstantiationMethod ApplyToRoot = new HookInstantiationMethod(
             false, false, new RootDestinationNodesGetter(), false);
 
-    static final public HashMap<String, HookInstanciationMethod> getAllInstanciationMethods() {
-        HashMap<String, HookInstanciationMethod> res = new HashMap<>();
+    static public HashMap<String, HookInstantiationMethod> getAllInstanciationMethods() {
+        HashMap<String, HookInstantiationMethod> res = new HashMap<>();
         res.put("Once", Once);
         res.put("OnceForRoot", OnceForRoot);
         res.put("OnceForAllNodes", OnceForAllNodes);

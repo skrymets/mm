@@ -39,13 +39,9 @@ public class FreeMindJFileDialog extends JFileChooser implements FreeMindFileDia
 
     private DirectoryResultListener mDirectoryResultListener = null;
 
-    /* (non-Javadoc)
-     * @see freemind.modes.FreeMindFileDialog#registerDirectoryResultListener(freemind.modes.FreeMindFileDialog.DirectoryResultListener)
-     */
-    public void registerDirectoryResultListener(
-            DirectoryResultListener pDirectoryResultListener) {
+    @Override
+    public void registerDirectoryResultListener(DirectoryResultListener pDirectoryResultListener) {
         mDirectoryResultListener = pDirectoryResultListener;
-
     }
 
     protected void callDirectoryListener(final int result) {
@@ -58,29 +54,21 @@ public class FreeMindJFileDialog extends JFileChooser implements FreeMindFileDia
         }
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.JFileChooser#showOpenDialog(java.awt.Component)
-     */
+    @Override
     public int showOpenDialog(Component pParent) throws HeadlessException {
-        // TODO Auto-generated method stub
         final int result = super.showOpenDialog(pParent);
         callDirectoryListener(result);
         return result;
     }
 
-
-    /* (non-Javadoc)
-     * @see javax.swing.JFileChooser#showSaveDialog(java.awt.Component)
-     */
+    @Override
     public int showSaveDialog(Component pParent) throws HeadlessException {
         final int result = super.showSaveDialog(pParent);
         callDirectoryListener(result);
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.FreeMindFileDialog#addChoosableFileFilterAsDefault(javax.swing.filechooser.FileFilter)
-     */
+    @Override
     public void addChoosableFileFilterAsDefault(FileFilter pFilter) {
         addChoosableFileFilter(pFilter);
         setFileFilter(pFilter);

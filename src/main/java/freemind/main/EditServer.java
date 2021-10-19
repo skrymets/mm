@@ -22,8 +22,6 @@
 
 package freemind.main;
 
-//{{{ Imports
-
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -65,6 +63,7 @@ import java.util.Vector;
  */
 @Log4j2
 public class EditServer extends Thread {
+
     private final FreeMindMain mFrame;
 
     EditServer(String portFile, FreeMindMain pFrame) {

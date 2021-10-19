@@ -233,7 +233,7 @@ public class MenuBar extends JMenuBar {
 
     private void updateMapsMenu(StructuredMenuHolder holder, String basicKey) {
         MapModuleManager mapModuleManager = c.getMapModuleManager();
-        List<MapModule> mapModuleVector = mapModuleManager.getMapModuleVector();
+        List<MapModule> mapModuleVector = mapModuleManager.getMapModuleList();
         if (mapModuleVector == null) {
             return;
         }
@@ -382,7 +382,7 @@ public class MenuBar extends JMenuBar {
     }
 
     private class LastOpenedActionListener implements ActionListener {
-        private String mKey;
+        private final String mKey;
 
         public LastOpenedActionListener(String pKey) {
             mKey = pKey;

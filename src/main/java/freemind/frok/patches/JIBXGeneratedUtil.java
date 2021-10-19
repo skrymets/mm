@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
 /**
  * @author skrymets
@@ -31,8 +32,7 @@ public class JIBXGeneratedUtil {
 
     public static List<Object> listPluginChoice(Plugin plugin) {
 
-        List<Object> pluginChoice = plugin
-                .getChoiceList()
+        List<Object> pluginChoice = emptyIfNull(plugin.getChoiceList())
                 .stream()
                 .map((Plugin.Choice choice) -> {
                     Object ret = null;
@@ -52,8 +52,7 @@ public class JIBXGeneratedUtil {
     }
 
     public static List<Object> listPluginActions(PluginAction action) {
-        List<Object> pluginActions = action
-                .getChoiceList()
+        List<Object> pluginActions = emptyIfNull(action.getChoiceList())
                 .stream()
                 .map((PluginAction.Choice choice) -> {
                     Object ret = null;
@@ -163,129 +162,89 @@ public class JIBXGeneratedUtil {
     }
 
     public static List<XmlAction> listXmlActions(CompoundAction pAction) {
-        List<XmlAction> xmlActions = pAction.getChoiceList()
+        List<XmlAction> xmlActions = emptyIfNull(pAction.getChoiceList())
                 .stream().
                 map((CompoundAction.Choice choice) -> {
                     if (choice.ifCompoundAction()) {
                         return choice.getCompoundAction();
-
                     } else if (choice.ifSelectNodeAction()) {
                         return choice.getSelectNodeAction();
-
                     } else if (choice.ifCutNodeAction()) {
                         return choice.getCutNodeAction();
-
                     } else if (choice.ifPasteNodeAction()) {
                         return choice.getPasteNodeAction();
-
                     } else if (choice.ifUndoPasteNodeAction()) {
                         return choice.getUndoPasteNodeAction();
-
                     } else if (choice.ifRevertXmlAction()) {
                         return choice.getRevertXmlAction();
-
                     } else if (choice.ifBoldNodeAction()) {
                         return choice.getBoldNodeAction();
-
                     } else if (choice.ifStrikethroughNodeAction()) {
                         return choice.getStrikethroughNodeAction();
-
                     } else if (choice.ifItalicNodeAction()) {
                         return choice.getItalicNodeAction();
-
                     } else if (choice.ifUnderlinedNodeAction()) {
                         return choice.getUnderlinedNodeAction();
-
                     } else if (choice.ifFontSizeNodeAction()) {
                         return choice.getFontSizeNodeAction();
-
                     } else if (choice.ifFontNodeAction()) {
                         return choice.getFontNodeAction();
-
                     } else if (choice.ifNodeColorFormatAction()) {
                         return choice.getNodeColorFormatAction();
-
                     } else if (choice.ifNodeBackgroundColorFormatAction()) {
                         return choice.getNodeBackgroundColorFormatAction();
-
                     } else if (choice.ifNodeStyleFormatAction()) {
                         return choice.getNodeStyleFormatAction();
-
                     } else if (choice.ifEdgeColorFormatAction()) {
                         return choice.getEdgeColorFormatAction();
-
                     } else if (choice.ifEdgeWidthFormatAction()) {
                         return choice.getEdgeWidthFormatAction();
-
                     } else if (choice.ifEdgeStyleFormatAction()) {
                         return choice.getEdgeStyleFormatAction();
-
                     } else if (choice.ifDeleteNodeAction()) {
                         return choice.getDeleteNodeAction();
-
                     } else if (choice.ifEditNodeAction()) {
                         return choice.getEditNodeAction();
-
                     } else if (choice.ifNewNodeAction()) {
                         return choice.getNewNodeAction();
-
                     } else if (choice.ifFoldAction()) {
                         return choice.getFoldAction();
-
                     } else if (choice.ifMoveNodesAction()) {
                         return choice.getMoveNodesAction();
-
                     } else if (choice.ifHookNodeAction()) {
                         return choice.getHookNodeAction();
-
                     } else if (choice.ifAddIconAction()) {
                         return choice.getAddIconAction();
-
                     } else if (choice.ifRemoveIconXmlAction()) {
                         return choice.getRemoveIconXmlAction();
-
                     } else if (choice.ifRemoveAllIconsXmlAction()) {
                         return choice.getRemoveAllIconsXmlAction();
-
                     } else if (choice.ifMoveNodeXmlAction()) {
                         return choice.getMoveNodeXmlAction();
-
                     } else if (choice.ifAddCloudXmlAction()) {
                         return choice.getAddCloudXmlAction();
-
                     } else if (choice.ifCloudColorXmlAction()) {
                         return choice.getCloudColorXmlAction();
-
                     } else if (choice.ifAddArrowLinkXmlAction()) {
                         return choice.getAddArrowLinkXmlAction();
-
                     } else if (choice.ifAddLinkXmlAction()) {
                         return choice.getAddLinkXmlAction();
-
                     } else if (choice.ifRemoveArrowLinkXmlAction()) {
                         return choice.getRemoveArrowLinkXmlAction();
-
                     } else if (choice.ifArrowLinkColorXmlAction()) {
                         return choice.getArrowLinkColorXmlAction();
-
                     } else if (choice.ifArrowLinkArrowXmlAction()) {
                         return choice.getArrowLinkArrowXmlAction();
-
                     } else if (choice.ifArrowLinkPointXmlAction()) {
                         return choice.getArrowLinkPointXmlAction();
-
                     } else if (choice.ifSetAttributeAction()) {
                         return choice.getSetAttributeAction();
-
                     } else if (choice.ifInsertAttributeAction()) {
                         return choice.getInsertAttributeAction();
-
                     } else if (choice.ifAddAttributeAction()) {
                         return choice.getAddAttributeAction();
-
                     } else if (choice.ifRemoveAttributeAction()) {
                         return choice.getRemoveAttributeAction();
-
                     } else if (choice.ifEditNoteToNodeAction()) {
                         return choice.getEditNoteToNodeAction();
                     } else if (choice.ifPlaceNodeXmlAction()) {

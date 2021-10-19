@@ -24,7 +24,7 @@
 package freemind.controller.filter;
 
 import freemind.controller.Controller;
-import freemind.controller.MapModuleManager.MapModuleChangeObserver;
+import freemind.controller.MapModuleChangeObserver;
 import freemind.controller.filter.condition.Condition;
 import freemind.controller.filter.condition.ConditionFactory;
 import freemind.controller.filter.condition.ConditionRenderer;
@@ -39,13 +39,12 @@ import freemind.view.MapModule;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.Vector;
 
 /**
  * @author dimitri
  */
 public class FilterController implements MapModuleChangeObserver {
-    private Controller c;
+    private final Controller c;
     private FilterToolbar filterToolbar;
     private DefaultComboBoxModel<Condition> filterConditionModel;
     static private ConditionRenderer conditionRenderer = null;
@@ -169,35 +168,34 @@ public class FilterController implements MapModuleChangeObserver {
         return filterConditionModel;
     }
 
-    public void setFilterConditionModel(
-            DefaultComboBoxModel<Condition> filterConditionModel) {
+    public void setFilterConditionModel(DefaultComboBoxModel<Condition> filterConditionModel) {
         this.filterConditionModel = filterConditionModel;
         filterToolbar.setFilterConditionModel(filterConditionModel);
     }
 
-    void saveConditions(DefaultComboBoxModel<Condition> filterConditionModel,
-                        String pathToFilterFile) throws IOException {
+    void saveConditions(DefaultComboBoxModel<Condition> filterConditionModel, String pathToFilterFile) throws IOException {
+
         XMLElement saver = new XMLElement();
         saver.setName("filter_conditions");
         Writer writer = new FileWriter(pathToFilterFile);
         for (int i = 0; i < filterConditionModel.getSize(); i++) {
-            Condition cond = (Condition) filterConditionModel.getElementAt(i);
+            Condition cond = filterConditionModel.getElementAt(i);
             cond.save(saver);
         }
         saver.write(writer);
         writer.close();
     }
 
-    void loadConditions(DefaultComboBoxModel<Condition> filterConditionModel,
-                        String pathToFilterFile) throws IOException {
+    void loadConditions(DefaultComboBoxModel<Condition> filterConditionModel, String pathToFilterFile) throws IOException {
         filterConditionModel.removeAllElements();
+
         XMLElement loader = new XMLElement();
         Reader reader = new FileReader(pathToFilterFile);
         loader.parseFromReader(reader);
         reader.close();
-        final Vector<XMLElement> conditions = loader.getChildren();
-        for (int i = 0; i < conditions.size(); i++) {
-            filterConditionModel.addElement(FilterController.getConditionFactory().loadCondition(conditions.get(i)));
+
+        for (XMLElement condition : loader.getChildren()) {
+            filterConditionModel.addElement(FilterController.getConditionFactory().loadCondition(condition));
         }
     }
 }

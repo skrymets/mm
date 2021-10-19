@@ -33,7 +33,7 @@ import java.awt.*;
 
 @Log4j2
 public class NodeAttributeTable extends MindMapNodeHookAdapter {
-    
+
     public void startupMapHook() {
         super.startupMapHook();
         String foldingType = getResourceString("command");

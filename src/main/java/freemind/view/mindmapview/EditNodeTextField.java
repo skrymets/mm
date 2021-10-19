@@ -56,12 +56,13 @@ public class EditNodeTextField extends EditNodeBase {
     final int MINIMAL_WIDTH = 50;
     final int MINIMAL_HEIGHT = 20;
 
-    private KeyEvent firstEvent;
+    private final KeyEvent firstEvent;
     protected JTextField textfield;
     protected JComponent mParent;
     private final JComponent mFocusListener;
 
-    private Tools.IntHolder mEventSource;
+    //    private Tools.IntHolder mEventSource;
+    private Integer mEventSource;
     private UndoManager mUndoManager;
 
     public EditNodeTextField(final NodeView node, final String text,
@@ -135,8 +136,7 @@ public class EditNodeTextField extends EditNodeBase {
 
         // textField.selectAll(); // no selection on edit (PN)
 
-        mEventSource = new Tools.IntHolder();
-        mEventSource.setValue(EDIT);
+        mEventSource = EDIT;
 
         // create the listener
         final TextFieldListener textFieldListener = new TextFieldListener();
@@ -222,7 +222,7 @@ public class EditNodeTextField extends EditNodeBase {
     // listener class
     class TextFieldListener implements KeyListener, FocusListener,
             MouseListener, ComponentListener {
-        private boolean checkSpelling = Resources.getInstance()
+        private final boolean checkSpelling = Resources.getInstance()
                 .getBoolProperty(FreeMindCommon.CHECK_SPELLING);
 
         public void focusGained(FocusEvent e) {
@@ -234,16 +234,16 @@ public class EditNodeTextField extends EditNodeBase {
             // - scrolling while in editing mode (it can behave just like
             // other viewers)
             // - block selected events while in editing mode
-            if (!textfield.isVisible() || mEventSource.getValue() == CANCEL) {
+            if (!textfield.isVisible() || mEventSource == CANCEL) {
                 if (checkSpelling) {
-                    mEventSource.setValue(EDIT); // allow focus lost again
+                    mEventSource = EDIT; // allow focus lost again
                 }
                 return;
             }
             if (e == null) { // can be when called explicitly
                 hideMe();
                 getEditControl().ok(textfield.getText());
-                mEventSource.setValue(CANCEL); // disallow real focus lost
+                mEventSource = CANCEL; // disallow real focus lost
             } else {
                 // always confirm the text if not yet
                 hideMe();
@@ -254,8 +254,7 @@ public class EditNodeTextField extends EditNodeBase {
         public void keyPressed(KeyEvent e) {
             // add to check meta keydown by koh 2004.04.16
             // log.info("Key " + e);
-            if (e.isAltDown() || e.isControlDown() || e.isMetaDown()
-                    || mEventSource.getValue() == CANCEL) {
+            if (e.isAltDown() || e.isControlDown() || e.isMetaDown() || mEventSource == CANCEL) {
                 return;
             }
 
@@ -267,7 +266,7 @@ public class EditNodeTextField extends EditNodeBase {
                 case KeyEvent.VK_ENTER:
                     e.consume();
 
-                    mEventSource.setValue(CANCEL);
+                    mEventSource = CANCEL;
                     hideMe();
                     // do not process loose of focus
                     if (commit) {
@@ -311,7 +310,7 @@ public class EditNodeTextField extends EditNodeBase {
                 if (checkSpelling) {
                     popupMenu.add(SpellChecker.createCheckerMenu());
                     popupMenu.add(SpellChecker.createLanguagesMenu());
-                    mEventSource.setValue(CANCEL); // disallow real focus lost
+                    mEventSource = CANCEL; // disallow real focus lost
                 }
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
                 e.consume();

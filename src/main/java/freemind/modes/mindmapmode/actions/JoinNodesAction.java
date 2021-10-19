@@ -84,15 +84,15 @@ public class JoinNodesAction extends MindmapAction {
     private String addContent(String content, boolean isHtml,
                               String nodeContent, boolean isHtmlNode) {
         if (isHtml) {
-            final String start[] = BODY_END.split(content, -2);
+            final String[] start = BODY_END.split(content, -2);
             content = start[0];
             if (!isHtmlNode) {
-                final String end[] = BODY_START.split(content, 2);
+                final String[] end = BODY_START.split(content, 2);
                 nodeContent = end[0] + "<body><p>" + nodeContent + "</p>";
             }
         }
         if (isHtmlNode & !content.equals("")) {
-            final String end[] = BODY_START.split(nodeContent, 2);
+            final String[] end = BODY_START.split(nodeContent, 2);
             nodeContent = end[1];
             if (!isHtml) {
                 content = end[0] + "<body><p>" + content + "</p>";

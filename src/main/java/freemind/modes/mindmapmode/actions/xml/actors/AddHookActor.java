@@ -49,11 +49,9 @@ public class AddHookActor extends XmlActorAdapter {
         return getExMapFeedback().getHookFactory();
     }
 
-    private HookInstanciationMethod getInstanciationMethod(String hookName) {
+    private HookInstantiationMethod getInstantiationMethod(String hookName) {
         HookFactory factory = getHookFactory();
-        // determine instanciation method
-        HookInstanciationMethod instMethod = factory
-                .getInstanciationMethod(hookName);
+        HookInstantiationMethod instMethod = factory.getInstantiationMethod(hookName);
         return instMethod;
     }
 
@@ -64,11 +62,11 @@ public class AddHookActor extends XmlActorAdapter {
         XmlAction undoAction = null;
         // this is the non operation:
         undoAction = new CompoundAction();
-        if (getInstanciationMethod(hookName).isPermanent()) {
+        if (getInstantiationMethod(hookName).isPermanent()) {
             // double application = remove.
             undoAction = createHookNodeUndoAction(focussed, selecteds, hookName);
         }
-        if (getInstanciationMethod(hookName).isUndoable()) {
+        if (getInstantiationMethod(hookName).isUndoable()) {
             execute(new ActionPair(doAction, undoAction));
         } else {
             // direct invocation without undo and such stuff.
@@ -76,18 +74,18 @@ public class AddHookActor extends XmlActorAdapter {
         }
     }
 
-    private XmlAction createHookNodeUndoAction(MindMapNode focussed,
-                                               List<MindMapNode> selecteds, String hookName) {
-        CompoundAction undoAction = new CompoundAction();
-        HookNodeAction hookNodeAction = createHookNodeAction(focussed, selecteds, hookName, null);
+    private XmlAction createHookNodeUndoAction(MindMapNode focussed, List<MindMapNode> selectedMindMapNodes, String hookName) {
+
+        HookNodeAction hookNodeAction = createHookNodeAction(focussed, selectedMindMapNodes, hookName, null);
         CompoundAction.Choice hookNodeActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(hookNodeAction);
+
+        CompoundAction undoAction = new CompoundAction();
         undoAction.addChoice(hookNodeActionChoice);
-        HookInstanciationMethod instMethod = getInstanciationMethod(hookName);
+
+        HookInstantiationMethod instMethod = getInstantiationMethod(hookName);
         // get destination nodes
-        Collection<MindMapNode> destinationNodes = instMethod.getDestinationNodes(
-                getExMapFeedback(), focussed, selecteds);
-        MindMapNode adaptedFocussedNode = instMethod.getCenterNode(
-                getExMapFeedback(), focussed, selecteds);
+        Collection<MindMapNode> destinationNodes = instMethod.getDestinationNodes(getExMapFeedback(), focussed, selectedMindMapNodes);
+        MindMapNode adaptedFocussedNode = instMethod.getCenterNode(getExMapFeedback(), focussed, selectedMindMapNodes);
         // test if hook already present
         if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
             // remove the hook:
@@ -99,8 +97,9 @@ public class AddHookActor extends XmlActorAdapter {
                         if (!(hook instanceof DontSaveMarker)) {
                             hook.save(child);
                             if (child.countChildren() == 1) {
-                                XMLElement parameters = (XMLElement) child
-                                        .getChildren().firstElement();
+
+                                XMLElement parameters = child.getChildren().get(0);
+
                                 if (Tools.safeEquals(parameters.getName(),
                                         PermanentNodeHookAdapter.PARAMETERS)) {
                                     // standard save mechanism
@@ -108,8 +107,7 @@ public class AddHookActor extends XmlActorAdapter {
                                         String name = it.next();
                                         NodeChildParameter nodeHookChild = new NodeChildParameter();
                                         nodeHookChild.setKey(name);
-                                        nodeHookChild.setValue(parameters
-                                                .getStringAttribute(name));
+                                        nodeHookChild.setValue(parameters.getStringAttribute(name));
                                         hookNodeAction.addNodeChildParameter(nodeHookChild);
                                     }
 
@@ -135,13 +133,13 @@ public class AddHookActor extends XmlActorAdapter {
         return undoAction;
     }
 
-    public HookNodeAction createHookNodeAction(MindMapNode focussed,
-                                               List<MindMapNode> selecteds, String hookName, Properties pHookProperties) {
+    public HookNodeAction createHookNodeAction(MindMapNode focussed, List<MindMapNode> selectedMindMapNodes, String hookName, Properties pHookProperties) {
+
         HookNodeAction hookNodeAction = new HookNodeAction();
         hookNodeAction.setNode(getNodeID(focussed));
         hookNodeAction.setHookName(hookName);
         // selectedNodes list
-        for (MindMapNode node : selecteds) {
+        for (MindMapNode node : selectedMindMapNodes) {
             NodeListMember nodeListMember = new NodeListMember();
             nodeListMember.setNode(getNodeID(node));
             hookNodeAction.addNodeListMember(nodeListMember);
@@ -160,11 +158,10 @@ public class AddHookActor extends XmlActorAdapter {
     public void act(XmlAction action) {
         if (action instanceof HookNodeAction) {
             HookNodeAction hookNodeAction = (HookNodeAction) action;
-            MindMapNode selected = getNodeFromID(
-                    hookNodeAction.getNode());
-            Vector<MindMapNode> selecteds = new Vector<>();
+            MindMapNode selected = getNodeFromID(hookNodeAction.getNode());
+            List<MindMapNode> selectedMindMapNodes = new ArrayList<>();
             for (NodeListMember node : hookNodeAction.getNodeListMemberList()) {
-                selecteds.add(getNodeFromID(node.getNode()));
+                selectedMindMapNodes.add(getNodeFromID(node.getNode()));
             }
             // reconstruct child-xml:
             XMLElement xmlParent = new XMLElement();
@@ -173,10 +170,9 @@ public class AddHookActor extends XmlActorAdapter {
             xmlParent.addChild(child);
             child.setName(PermanentNodeHookAdapter.PARAMETERS);
             for (NodeChildParameter childParameter : hookNodeAction.getNodeChildParameterList()) {
-                child.setAttribute(childParameter.getKey(),
-                        childParameter.getValue());
+                child.setAttribute(childParameter.getKey(), childParameter.getValue());
             }
-            invoke(selected, selecteds, hookNodeAction.getHookName(), xmlParent);
+            invoke(selected, selectedMindMapNodes, hookNodeAction.getHookName(), xmlParent);
         }
     }
 
@@ -190,22 +186,19 @@ public class AddHookActor extends XmlActorAdapter {
         XmlAction doAction = null;
         // this is the non operation:
         doAction = new CompoundAction();
-        if (getInstanciationMethod(pHookName).isPermanent()) {
+        if (getInstantiationMethod(pHookName).isPermanent()) {
             // double application = remove.
-            doAction = createHookNodeUndoAction(pFocussed, pSelecteds,
-                    pHookName);
+            doAction = createHookNodeUndoAction(pFocussed, pSelecteds, pHookName);
         }
         execute(new ActionPair(undoAction, doAction));
     }
 
-    private void invoke(MindMapNode focussed, List<MindMapNode> selecteds, String hookName,
-                        XMLElement pXmlParent) {
+    private void invoke(MindMapNode focussed, List<MindMapNode> selecteds, String hookName, XMLElement pXmlParent) {
         log.trace("invoke(selecteds) called.");
-        HookInstanciationMethod instMethod = getInstanciationMethod(hookName);
+        HookInstantiationMethod instMethod = getInstantiationMethod(hookName);
         // get destination nodes
         Collection<MindMapNode> destinationNodes = instMethod.getDestinationNodes(getExMapFeedback(), focussed, selecteds);
-        MindMapNode adaptedFocussedNode = instMethod.getCenterNode(
-                getExMapFeedback(), focussed, selecteds);
+        MindMapNode adaptedFocussedNode = instMethod.getCenterNode(getExMapFeedback(), focussed, selecteds);
         // test if hook already present
         if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
             // remove the hook:

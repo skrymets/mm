@@ -62,10 +62,10 @@ public class CommonNodeKeyListener implements KeyListener {
         c = controller;
         this.editHandler = editHandler;
 
-        up = c.getFrame().getAdjustableProperty("keystroke_move_up");
-        down = c.getFrame().getAdjustableProperty("keystroke_move_down");
-        left = c.getFrame().getAdjustableProperty("keystroke_move_left");
-        right = c.getFrame().getAdjustableProperty("keystroke_move_right");
+        String up = c.getFrame().getAdjustableProperty("keystroke_move_up");
+        String down = c.getFrame().getAdjustableProperty("keystroke_move_down");
+        String left = c.getFrame().getAdjustableProperty("keystroke_move_left");
+        String right = c.getFrame().getAdjustableProperty("keystroke_move_right");
 
         // like in excel - write a letter means edit (PN)
         // on the other hand it doesn't allow key navigation (sdfe)

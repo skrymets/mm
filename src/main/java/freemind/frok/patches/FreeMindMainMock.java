@@ -21,10 +21,7 @@ package freemind.frok.patches;
 
 import freemind.controller.Controller;
 import freemind.controller.MenuBar;
-import freemind.main.FreeMindMain;
-import freemind.main.FreeMindStarter;
-import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.*;
 import freemind.view.mindmapview.MapView;
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
@@ -40,6 +37,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Vector;
+
+import static freemind.main.VersionInformation.Type.ALPHA;
 
 @Log4j2
 public class FreeMindMainMock implements FreeMindMain {
@@ -99,7 +98,7 @@ public class FreeMindMainMock implements FreeMindMain {
         return null;
     }
 
-    public void out(String msg) {
+    public void setStatusText(String msg) {
     }
 
     public void err(String msg) {
@@ -169,8 +168,7 @@ public class FreeMindMainMock implements FreeMindMain {
     }
 
     public VersionInformation getFreemindVersion() {
-        return new VersionInformation(1, 0, 0, FreeMindMain.VERSION_TYPE_ALPHA,
-                42);
+        return new VersionInformation(1, 0, 0, ALPHA, 42);
     }
 
     public Logger getLogger(String forClass) {

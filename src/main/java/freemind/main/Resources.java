@@ -26,7 +26,6 @@ package freemind.main;
 import freemind.common.NamedObject;
 import freemind.common.TextTranslator;
 import freemind.frok.patches.FreeMindMainMock;
-import freemind.main.FreeMindMain.VersionInformation;
 import freemind.modes.FreeMindAwtFileDialog;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.FreeMindJFileDialog;
@@ -46,7 +45,7 @@ import java.util.ResourceBundle;
 @Log4j2
 public class Resources implements TextTranslator {
 
-    private FreeMindMain main;
+    private final FreeMindMain main;
     static Resources resourcesInstance = null;
     private HashMap<String, String> countryMap;
 
@@ -160,13 +159,8 @@ public class Resources implements TextTranslator {
     }
 
     public FreeMindFileDialog getStandardFileChooser(FileFilter filter) {
-        FreeMindFileDialog chooser;
-        if (!Tools.isMacOsX()) {
-            chooser = new FreeMindJFileDialog();
-        } else {
-            // only for mac
-            chooser = new FreeMindAwtFileDialog();
-        }
+        FreeMindFileDialog chooser = Tools.isMacOsX() ? new FreeMindAwtFileDialog() : new FreeMindJFileDialog();
+
         if (filter != null) {
             chooser.addChoosableFileFilterAsDefault(filter);
         }

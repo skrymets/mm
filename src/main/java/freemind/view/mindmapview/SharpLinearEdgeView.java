@@ -36,8 +36,8 @@ public class SharpLinearEdgeView extends EdgeView {
         g.setPaint(getColor());
         g.setStroke(DEF_STROKE);
         int w = getMap().getZoomed(getWidth() / 2 + 1);
-        int xs[] = {start.x, end.x, start.x};
-        int ys[] = {start.y + w, end.y, start.y - w};
+        int[] xs = {start.x, end.x, start.x};
+        int[] ys = {start.y + w, end.y, start.y - w};
         // g.drawPolygon(xs,ys,3);
         g.fillPolygon(xs, ys, 3);
     }

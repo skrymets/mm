@@ -78,10 +78,8 @@ public class FreeMindCommon {
                 // if(languageResources == null)
                 defaultResources = getLanguageResources(DEFAULT_LANGUAGE);
             } catch (Exception ex) {
-                log.error(ex);
-                log.error("Error loading Resources");
+                log.error("Error loading Resources", ex);
             }
-            // printResourceTable();
         }
 
         private PropertyResourceBundle getLanguageResources(String lang) throws IOException {
@@ -185,7 +183,6 @@ public class FreeMindCommon {
 
     public FreeMindCommon(FreeMindMain main) {
         super();
-        // TODO Auto-generated constructor stub
         this.mFreeMindMain = main;
     }
 
