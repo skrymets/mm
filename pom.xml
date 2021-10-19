@@ -83,6 +83,13 @@
             <version>2.7</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+
+
         <!-- ************************************************************************* -->
         <dependency>
             <groupId>xml-apis</groupId>
@@ -303,7 +310,6 @@
                 <artifactId>jibx-maven-plugin</artifactId>
                 <version>${jibx.version}</version>
                 <configuration>
-                    <schemaLocation>src/main/resources/bindings/xsd</schemaLocation>
                     <customizations>
                         <customization>src/main/resources/bindings/xsd/customizations.xml</customization>
                     </customizations>
@@ -311,23 +317,34 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>generate-jibx-base</id>
+                        <id>generate-jibx-code</id>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>schema-codegen</goal>
                         </goals>
                         <configuration>
+                            <schemaLocation>${basedir}/src/main/resources/bindings/xsd</schemaLocation>
+                            <includeSchemas>
+                                <includeSchema>freemind_actions.xsd</includeSchema>
+                                <includeSchema>freemind.xsd</includeSchema>
+                            </includeSchemas>
                             <verbose>true</verbose>
                         </configuration>
                     </execution>
                     <execution>
                         <id>compile-binding</id>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>bind</goal>
                         </goals>
                         <configuration>
-                            <directory>target/generated-sources</directory>
+                            <schemaBindingDirectory>${basedir}/target/generated-sources</schemaBindingDirectory>
+                            <includeSchemaBindings>
+                                <includeSchemaBinding>binding.xml</includeSchemaBinding>
+                            </includeSchemaBindings>
                             <load>true</load>
                             <validate>true</validate>
+                            <verbose>true</verbose>
                             <verify>true</verify>
                         </configuration>
                     </execution>

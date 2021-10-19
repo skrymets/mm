@@ -58,9 +58,6 @@ public class HookDescriptorBase {
         mXmlPluginFile = xmlPluginFile;
     }
 
-    /**
-     *
-     */
     protected String getFromResourceIfNecessary(String string) {
         if (string == null) {
             return string;

@@ -659,9 +659,9 @@
                     <xs:sequence>
                         <xs:element ref="result"/>
                     </xs:sequence>
-                    <xs:attribute name="attribution" use="required"/>
+                    <xs:attribute name="attribution" type="xs:string" use="required"/>
                     <xs:attribute name="querystring" type="xs:string" use="required"/>
-                    <xs:attribute name="timestamp" use="required"/>
+                    <xs:attribute name="timestamp" type="xs:string" use="required"/>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
@@ -1200,16 +1200,18 @@
     </xs:element>
 
     <!-- A map with filename to zoom and last selected is stored here-->
-    <xs:complexType name="mindmap_last_state_map_storage">
-        <xs:complexContent>
-            <xs:extension base="xml_action">
-                <xs:sequence>
-                    <xs:element ref="mindmap_last_state_storage" maxOccurs="unbounded" minOccurs="0"/>
-                </xs:sequence>
-                <xs:attribute name="last_focused_tab" use="optional" type="xs:int" default="-1"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="mindmap_last_state_map_storage">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xml_action">
+                    <xs:sequence>
+                        <xs:element ref="mindmap_last_state_storage" maxOccurs="unbounded" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="last_focused_tab" use="optional" type="xs:int" default="-1"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
 
     <!-- ======================================================================================= 
@@ -1345,7 +1347,7 @@
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="xml_action">
-                    <xs:choice>
+                    <xs:sequence>
                         <xs:element minOccurs="0" maxOccurs="1" ref="pattern_node_background_color"/>
                         <xs:element minOccurs="0" maxOccurs="1" ref="pattern_node_color"/>
                         <xs:element minOccurs="0" maxOccurs="1" ref="pattern_node_style"/>
@@ -1361,7 +1363,7 @@
                         <xs:element minOccurs="0" maxOccurs="1" ref="pattern_edge_width"/>
                         <xs:element minOccurs="0" maxOccurs="1" ref="pattern_child"/>
                         <xs:element minOccurs="0" maxOccurs="1" ref="pattern_script"/>
-                    </xs:choice>
+                    </xs:sequence>
                     <xs:attribute name="name" use="optional" type="xs:string"/>
                     <!-- Used to store the not-translated name at FreeMind runtime -->
                     <xs:attribute name="original_name" use="optional" type="xs:string"/>

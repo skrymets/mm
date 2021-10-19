@@ -102,7 +102,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
         boolean isLink = (node).updateCursor(e.getX());
         // links are displayed in the status bar:
         if (isLink) {
-            c.getFrame().out(c.getLinkShortText(node.getNodeView().getModel()));
+            c.getFrame().setStatusText(c.getLinkShortText(node.getNodeView().getModel()));
         }
         // test if still in selection region:
         if (controlRegionForDelayedSelection != null

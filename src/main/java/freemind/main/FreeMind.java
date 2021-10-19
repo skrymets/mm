@@ -53,6 +53,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     private static final String USER_PROPERTIES_FILE = "userproperties";
 
     static final Path DEFAULT_HOME_DIRECTORY = Paths.get(System.getProperty("user.home"), USER_PROPERTIES_DIRECTORY);
+
     static final Path FREEMIND_DEFAULT_USER_PREFERENCES_FILE = DEFAULT_HOME_DIRECTORY.resolve(USER_PROPERTIES_FILE);
 
     public static final String J_SPLIT_PANE_SPLIT_TYPE = "JSplitPane.SPLIT_TYPE";
@@ -60,8 +61,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     public static final String VERTICAL_SPLIT_BELOW = "vertical_split_below";
 
     public static final String HORIZONTAL_SPLIT_RIGHT = "horizontal_split_right";
-
-    public static final String LOG_FILE_NAME = "log";
 
     private static final String PORT_FILE = "portFile";
 
@@ -257,14 +256,12 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         info.append("; freemind_xml_version = ");
         info.append(XML_VERSION);
 
-        try {
-            String propsLoc = "version.properties";
-            URL versionUrl = ClassLoader.getSystemResource(propsLoc);
+        String propsLoc = "version.properties";
+        URL versionUrl = FreeMind.class.getClassLoader().getResource(propsLoc);
+        try (InputStream stream = versionUrl.openStream()) {
             Properties buildNumberPros = new Properties();
-            InputStream stream = versionUrl.openStream();
             buildNumberPros.load(stream);
             info.append("\nBuild: " + buildNumberPros.getProperty("build.number") + "\n");
-            stream.close();
         } catch (Exception e) {
             info.append("Problems reading build number file: " + e);
         }
@@ -350,7 +347,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     private void loadPatternsFile() {
-        try (InputStream inputStream = FreeMind.class.getResourceAsStream("patterns.xml")) {
+        try (InputStream inputStream = FreeMind.class.getClassLoader().getResourceAsStream("patterns.xml")) {
             patternsXML = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
             log.error("Couldn't load patterns.xml");
@@ -495,23 +492,21 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         return menuBar;
     }
 
-    public void out(String msg) {
-        if (status != null) {
-            status.setText(msg);
-            // Automatically remove old messages after a certain time.
-            mStatusMessageDisplayTimer.restart();
+    public void setStatusText(String msg) {
+        if (status == null) {
+            return;
         }
+
+        status.setText(msg);
+        mStatusMessageDisplayTimer.restart();
     }
 
     public void err(String msg) {
-        out(msg);
+        setStatusText(msg);
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
     public void actionPerformed(ActionEvent pE) {
-        out("");
+        setStatusText("");
         mStatusMessageDisplayTimer.stop();
     }
 
@@ -954,7 +949,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     fileLoaded = true;
                 } catch (Exception e) {
                     log.error(e);
-                    out("An error occured on opening the file: " + restoreable + ".");
+                    setStatusText("An error occured on opening the file: " + restoreable + ".");
                 }
             }
         }
@@ -1018,7 +1013,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             return true;
         } catch (Exception e) {
             log.error(e);
-            out("An error occured on opening the file: " + filename + ".");
+            setStatusText("An error occured on opening the file: " + filename + ".");
             return false;
         }
     }

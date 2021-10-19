@@ -99,7 +99,7 @@ public class FreeMindMainMock implements FreeMindMain {
         return null;
     }
 
-    public void out(String msg) {
+    public void setStatusText(String msg) {
     }
 
     public void err(String msg) {

@@ -65,7 +65,7 @@ public interface FreeMindMain {
 
     Container getContentPane();
 
-    void out(String msg);
+    void setStatusText(String msg);
 
     void err(String msg);
 

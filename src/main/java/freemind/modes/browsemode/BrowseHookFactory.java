@@ -47,7 +47,7 @@ public class BrowseHookFactory extends HookFactoryAdapter {
      *
      * @see freemind.extensions.HookFactory#getPossibleNodeHooks()
      */
-    public Vector<String> getPossibleNodeHooks() {
+    public List<String> getPossibleNodeHooks() {
         return new Vector<>();
     }
 
@@ -111,7 +111,7 @@ public class BrowseHookFactory extends HookFactoryAdapter {
      * @see
      * freemind.extensions.HookFactory#getInstanciationMethod(java.lang.String)
      */
-    public HookInstanciationMethod getInstanciationMethod(String hookName) {
+    public HookInstanciationMethod getInstantiationMethod(String hookName) {
         // TODO Auto-generated method stub
         return null;
     }

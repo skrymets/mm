@@ -25,10 +25,10 @@ package freemind.extensions;
 import freemind.controller.actions.generated.instance.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
-import java.util.Vector;
+import java.util.*;
+
+import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 /**
  * This is an information class that holds all outer properties of a hook, i.e.
@@ -41,21 +41,19 @@ import java.util.Vector;
  */
 public class HookDescriptorPluginAction extends HookDescriptorBase {
 
-    private Properties properties;
-    public Vector<String> menuPositions;
-    private Vector<String> modes;
-    private PluginAction pluginAction;
+    private final Properties properties = new Properties();
+    public final List<String> menuPositions = new ArrayList<>();
+    private final List<String> modes = new ArrayList<>();
+    private final PluginAction pluginAction;
 
-    public HookDescriptorPluginAction(String xmlPluginFile,
-                                      Plugin pluginBase, PluginAction pluginAction) {
+    public HookDescriptorPluginAction(String xmlPluginFile, Plugin pluginBase, PluginAction pluginAction) {
         super(pluginBase, xmlPluginFile);
+
+        requireNonNull(pluginAction);
         this.pluginAction = pluginAction;
-        if (pluginAction.getName() == null) {
-            pluginAction.setName(pluginAction.getLabel());
+        if (this.pluginAction.getName() == null) {
+            this.pluginAction.setName(pluginAction.getLabel());
         }
-        menuPositions = new Vector<>();
-        properties = new Properties();
-        modes = new Vector<>();
 
         List<Object> pluginActions = JIBXGeneratedUtil.listPluginActions(pluginAction);
 
@@ -76,17 +74,15 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
     }
 
     public String toString() {
-        return "[HookDescriptor props=" + properties + ", menu positions="
-                + menuPositions + "]";
+        return format("[HookDescriptor props=%s, menu positions=%s]", properties, menuPositions);
     }
 
-    public HookInstanciationMethod getInstanciationMethod() {
+    public HookInstanciationMethod getInstantiationMethod() {
         if (pluginAction.getInstanciation() != null) {
-            HashMap<String, HookInstanciationMethod> allInstMethods = HookInstanciationMethod
-                    .getAllInstanciationMethods();
+            HashMap<String, HookInstanciationMethod> allInstMethods = HookInstanciationMethod.getAllInstanciationMethods();
             for (String name : allInstMethods.keySet()) {
                 if (pluginAction.getInstanciation().xmlValue().equalsIgnoreCase(name)) {
-                    return (HookInstanciationMethod) allInstMethods.get(name);
+                    return allInstMethods.get(name);
                 }
             }
         }
@@ -94,7 +90,7 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
         return HookInstanciationMethod.Other;
     }
 
-    public Vector<String> getModes() {
+    public Collection<String> getModes() {
         return modes;
     }
 
@@ -122,9 +118,6 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
         return getFromPropertiesIfNecessary(pluginAction.getKeyStroke());
     }
 
-    /**
-     *
-     */
     public Properties getProperties() {
         return properties;
     }
@@ -134,7 +127,11 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
      * displayed in the menus.
      */
     public boolean isSelectable() {
-        return pluginAction.getIsSelectable();
+        try {
+            return pluginAction.getIsSelectable();
+        } catch (Exception ex) {
+        }
+        return false;
     }
 
 }

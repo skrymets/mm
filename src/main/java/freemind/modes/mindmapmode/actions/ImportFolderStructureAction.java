@@ -50,7 +50,7 @@ public class ImportFolderStructureAction extends MindmapAction {
         int returnVal = chooser.showOpenDialog(frame.getContentPane());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File folder = chooser.getSelectedFile();
-            frame.out("Importing folder structure ...");
+            frame.setStatusText("Importing folder structure ...");
             // getFrame().repaint(); // Refresh the frame, namely hide dialog
             // and show status
             // getView().updateUI();
@@ -63,7 +63,7 @@ public class ImportFolderStructureAction extends MindmapAction {
                 log.error(ex);
             }
             frame.setWaitingCursor(false);
-            frame.out("Folder structure imported.");
+            frame.setStatusText("Folder structure imported.");
         }
     }
 
@@ -75,7 +75,7 @@ public class ImportFolderStructureAction extends MindmapAction {
         log.trace("Entering folder: " + folder);
 
         if (folder.isDirectory()) {
-            getFrame().out(folder.getName());
+            getFrame().setStatusText(folder.getName());
             File[] list = folder.listFiles();
             if (list != null) {
                 // Go recursively to subfolders

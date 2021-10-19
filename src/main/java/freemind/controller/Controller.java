@@ -258,11 +258,7 @@ public class Controller implements MapModuleChangeObserver {
         }
     }
 
-    //
-    // get/set methods
-    //
-    public static final String JAVA_VERSION = System
-            .getProperty("java.version");
+    public static final String JAVA_VERSION = System.getProperty("java.version");
 
     public String getProperty(String property) {
         return frame.getProperty(property);
@@ -325,18 +321,19 @@ public class Controller implements MapModuleChangeObserver {
      * Returns the current model
      */
     public MindMap getModel() {
-        if (getMapModule() != null) {
-            return getMapModule().getModel();
+        if (getMapModule() == null) {
+            return null;
         }
-        return null;
+
+        return getMapModule().getModel();
     }
 
     public MapView getView() {
-        if (getMapModule() != null) {
-            return getMapModule().getView();
-        } else {
+        if (getMapModule() == null) {
             // System.err.println("[Freemind-Developer-Internal-Warning (do not write a bug report, please)]: Tried to get view without being able to get map module.");
             return null;
+        } else {
+            return getMapModule().getView();
         }
     }
 
@@ -615,9 +612,8 @@ public class Controller implements MapModuleChangeObserver {
         getMode().activate();
 
         Object[] messageArguments = {getMode().toLocalizedString()};
-        MessageFormat formatter = new MessageFormat(
-                getResourceString("mode_status"));
-        getFrame().out(formatter.format(messageArguments));
+        MessageFormat formatter = new MessageFormat(getResourceString("mode_status"));
+        getFrame().setStatusText(formatter.format(messageArguments));
 
         return true;
     }
@@ -750,19 +746,13 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     public void errorMessage(Object message, JComponent component) {
-        JOptionPane.showMessageDialog(component, message.toString(),
-                "FreeMind", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(component, message.toString(), "FreeMind", JOptionPane.ERROR_MESSAGE);
     }
 
     public void obtainFocusForSelected() {
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .clearGlobalFocusOwner();
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
         // log.trace("obtainFocusForSelected");
-        if (getView() != null) { // is null if the last map was closed.
-            log.trace("Requesting Focus for " + getView() + " in model "
-                    + getView().getModel());
-            getView().requestFocusInWindow();
-        } else {
+        if (getView() == null) {
             // fc, 6.1.2004: bug fix, that open and quit are not working if no
             // map is present.
             // to avoid this, the menu bar gets the focus, and everything seems
@@ -770,16 +760,11 @@ public class Controller implements MapModuleChangeObserver {
             // but I cannot avoid thinking of this change to be a bad hack ....
             log.info("No view present. No focus!");
             getFrame().getFreeMindMenuBar().requestFocus();
+        } else { // is null if the last map was closed.
+            log.trace("Requesting Focus for " + getView() + " in model " + getView().getModel());
+            getView().requestFocusInWindow();
         }
     }
-
-    //
-    // Map Navigation
-    //
-
-    //
-    // other
-    //
 
     public void setZoom(float zoom) {
         getView().setZoom(zoom);
@@ -789,7 +774,7 @@ public class Controller implements MapModuleChangeObserver {
         Object[] messageArguments = {String.valueOf(zoom * 100f)};
         String stringResult = Resources.getInstance().format(
                 "user_defined_zoom_status_bar", messageArguments);
-        getFrame().out(stringResult);
+        getFrame().setStatusText(stringResult);
     }
 
     // ////////////
@@ -928,9 +913,9 @@ public class Controller implements MapModuleChangeObserver {
         }
         // store last tab session:
         int index = 0;
+
         String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(
-                lastStateMapXml);
+        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
         management.setLastFocussedTab(-1);
         management.clearTabIndices();
         for (String restorable : restorables) {
@@ -943,8 +928,7 @@ public class Controller implements MapModuleChangeObserver {
             }
             index++;
         }
-        setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE,
-                management.getXml());
+        setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE, management.getXml());
 
         String lastOpenedString = lastOpened.save();
         setProperty("lastOpened", lastOpenedString);
@@ -1719,7 +1703,7 @@ public class Controller implements MapModuleChangeObserver {
             c.getNodeMouseMotionListener().updateSelectionMethod();
             String statusBarString = c.getResourceString(command);
             if (statusBarString != null) // should not happen
-                c.getFrame().out(statusBarString);
+                c.getFrame().setStatusText(statusBarString);
         }
 
         public void propertyChanged(String propertyName, String newValue,

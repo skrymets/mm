@@ -60,7 +60,7 @@ public class ExportBranchAction extends MindmapAction {
         }
         // If the current map is not saved yet, save it first.
         if (mMindMapController.getMap().getFile() == null) {
-            mMindMapController.getFrame().out(
+            mMindMapController.getFrame().setStatusText(
                     "You must save the current map first!");
             if (!mMindMapController.save()) {
                 return;

@@ -53,7 +53,7 @@ public class AddHookActor extends XmlActorAdapter {
         HookFactory factory = getHookFactory();
         // determine instanciation method
         HookInstanciationMethod instMethod = factory
-                .getInstanciationMethod(hookName);
+                .getInstantiationMethod(hookName);
         return instMethod;
     }
 

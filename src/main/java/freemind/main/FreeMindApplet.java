@@ -169,7 +169,7 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
     public void setTitle(String title) {
     }
 
-    public void out(String msg) {
+    public void setStatusText(String msg) {
         status.setText(msg);
     }
 

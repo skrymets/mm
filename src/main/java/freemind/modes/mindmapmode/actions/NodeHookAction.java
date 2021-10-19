@@ -65,7 +65,7 @@ public class NodeHookAction extends MindmapAction implements HookAction, MenuIte
     private HookInstanciationMethod getInstanciationMethod(String hookName) {
         HookFactory factory = getHookFactory();
         // determine instanciation method
-        HookInstanciationMethod instMethod = factory.getInstanciationMethod(hookName);
+        HookInstanciationMethod instMethod = factory.getInstantiationMethod(hookName);
         return instMethod;
     }
 

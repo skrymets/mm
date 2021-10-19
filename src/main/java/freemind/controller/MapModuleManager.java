@@ -46,7 +46,7 @@ import java.util.*;
  */
 public class MapModuleManager {
 
-    public static interface MapModuleChangeObserver {
+    public interface MapModuleChangeObserver {
         /**
          * The params may be null to indicate the there was no previous map, or
          * that the last map is closed now.

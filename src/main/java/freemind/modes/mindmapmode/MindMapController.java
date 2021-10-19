@@ -132,8 +132,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                 return;
             }
             double sum = 0d;
-            java.util.regex.Pattern p = java.util.regex.Pattern
-                    .compile(REGEXP_FOR_NUMBERS_IN_STRINGS);
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile(REGEXP_FOR_NUMBERS_IN_STRINGS);
             for (MindMapNode selectedNode : selecteds) {
                 if (mIsInterrupted) {
                     return;
@@ -151,8 +150,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             if (amountOfSelecteds > 1) {
                 nodeStatusLine = Resources.getInstance().format(
                         "node_status_line_several_selected_nodes",
-                        new Object[]{new Integer(amountOfSelecteds),
-                                new Double(sum)});
+                        new Object[]{new Integer(amountOfSelecteds), new Double(sum)});
             } else {
                 MindMapNode sel = (MindMapNode) selecteds.get(0);
                 long amountOfChildren = 0;
@@ -173,7 +171,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                                 new Integer(sel.getChildCount()),
                                 amountOfChildren});
             }
-            getFrame().out(nodeStatusLine);
+            getFrame().setStatusText(nodeStatusLine);
         }
 
     }
@@ -202,9 +200,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                     OptionalDontShowMeAgainDialog.BOTH_OK_AND_CANCEL_OPTIONS_ARE_STORED)
                     .show().getResult();
             if (showResult != JOptionPane.OK_OPTION) {
-                getFrame().out(
-                        Tools.expandPlaceholders(getText("file_not_reloaded"),
-                                getMap().getFile().toString()));
+                getFrame().setStatusText(Tools.expandPlaceholders(getText("file_not_reloaded"), getMap().getFile().toString()));
                 mReturnValue = false;
                 return;
             }
@@ -217,7 +213,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public interface MindMapControllerPlugin {
-
     }
 
     private static final String RESOURCE_UNFOLD_ON_PASTE = "unfold_on_paste";
@@ -376,8 +371,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         log.info("mindmap_menus");
         // load menus:
         try {
-            InputStream in;
-            in = this.getFrame().getResource("mindmap_menus.xml").openStream();
+            InputStream in = this.getFrame().getResource("mindmap_menus.xml").openStream();
             mMenuStructure = updateMenusFromXml(in);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -893,9 +887,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     // fc, 14.12.2004: end "different models" change
     // get/set methods
 
-    /**
-     *
-     */
     public void updateMenus(StructuredMenuHolder holder) {
 
         List<Object> objects = mMenuStructure
@@ -944,38 +935,25 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         }
     }
 
-    /**
-     *
-     */
-    public void createPatternSubMenu(StructuredMenuHolder holder,
-                                     String formatMenuString) {
+    public void createPatternSubMenu(StructuredMenuHolder holder, String formatMenuString) {
         for (int i = 0; i < patterns.length; ++i) {
-            JMenuItem item = holder.addAction(patterns[i], formatMenuString
-                    + "patterns/patterns/" + i);
-            item.setAccelerator(KeyStroke
-                    .getKeyStroke(getFrame().getAdjustableProperty(
-                            "keystroke_apply_pattern_" + (i + 1))));
+            JMenuItem item = holder.addAction(patterns[i], formatMenuString + "patterns/patterns/" + i);
+            item.setAccelerator(KeyStroke.getKeyStroke(getFrame().getAdjustableProperty("keystroke_apply_pattern_" + (i + 1))));
         }
     }
 
     public MenuStructure updateMenusFromXml(InputStream in) {
         // get from resources:
         try {
-            IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance()
-                    .createUnmarshaller();
-            MenuStructure menus = (MenuStructure) unmarshaller
-                    .unmarshalDocument(in, null);
+            IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance().createUnmarshaller();
+            MenuStructure menus = (MenuStructure) unmarshaller.unmarshalDocument(in, null);
             return menus;
         } catch (JiBXException e) {
             log.error(e);
-            throw new IllegalArgumentException(
-                    "Menu structure could not be read.");
+            throw new IllegalArgumentException("Menu structure could not be read.");
         }
     }
 
-    /**
-     *
-     */
     public void processMenuCategory(StructuredMenuHolder holder, List<Object> list, String category) {
         String categoryCopy = category;
         ButtonGroup buttonGroup = null;
@@ -1709,7 +1687,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     public void loadURL(String relative) {
         if (getMap().getFile() == null) {
-            getFrame().out("You must save the current map first!");
+            getFrame().setStatusText("You must save the current map first!");
             boolean result = save();
             // canceled??
             if (!result) {
@@ -1851,7 +1829,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         hook.setMap(getMap());
         if (hook instanceof PermanentNodeHook) {
             PermanentNodeHook permHook = (PermanentNodeHook) hook;
-            if (hookFactory.getInstanciationMethod(hookName).isSingleton()) {
+            if (hookFactory.getInstantiationMethod(hookName).isSingleton()) {
                 // search for already instanciated hooks of this type:
                 PermanentNodeHook otherHook = hookFactory.getHookInNode(node,
                         hookName);
@@ -2098,7 +2076,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             // Display link in status line
             String link = newlySelectedNodeView.getModel().getLink();
             if (link != null) {
-                getController().getFrame().out(link);
+                getController().getFrame().setStatusText(link);
             }
         }
         log.trace("MouseEvent: extend:" + extend + ", range:" + range
@@ -2309,7 +2287,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      */
     @Override
     public void out(String pFormat) {
-        getFrame().out(pFormat);
+        getFrame().setStatusText(pFormat);
     }
 
     /* (non-Javadoc)
