@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -43,11 +44,15 @@ import static freemind.main.VersionInformation.Type.ALPHA;
 @Log4j2
 public class FreeMindMainMock implements FreeMindMain {
 
-    private Properties mProperties;
+    private final Properties mProperties;
 
     public FreeMindMainMock() {
         super();
-        mProperties = new FreeMindStarter().loadDefaultPreferences().orElse(new Properties());
+        try {
+            mProperties = new FreeMindStarter().loadDefaultPreferences();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Resources.createInstance(this);
 
     }

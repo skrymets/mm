@@ -47,19 +47,18 @@ import java.net.URISyntaxException;
  * @date 28.09.2011
  */
 @Log4j2
-public class IndependantMapViewCreator extends MapFeedbackAdapter {
+public class IndependentMapViewCreator extends MapFeedbackAdapter {
 
     private MindMapMapModel mMap;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.setProperty("java.awt.headless", "true");
         if (args.length != 2) {
-            System.out
-                    .println("Export map to png.\nUsage:\n java -jar lib/freemind.jar freemind.view.mindmapview.IndependantMapViewCreator <map_path>.mm <picture_path>.png");
+            System.out.println("Export map to png.\nUsage:\n java -jar lib/freemind.jar freemind.view.mindmapview.IndependentMapViewCreator <map_path>.mm <picture_path>.png");
             System.exit(0);
         }
         FreeMindMainMock freeMindMain = new FreeMindMainMock();
-        IndependantMapViewCreator creator = new IndependantMapViewCreator();
+        IndependentMapViewCreator creator = new IndependentMapViewCreator();
         try {
             String outputFileName = args[1];
             creator.exportFileToPng(args[0], outputFileName, freeMindMain);
@@ -83,7 +82,7 @@ public class IndependantMapViewCreator extends MapFeedbackAdapter {
     }
 
     public MapView createMapViewForFile(String inputFileName, JPanel parent,
-                                        FreeMindMain pFreeMindMain) throws FileNotFoundException,
+                                        FreeMindMain pFreeMindMain) throws
             IOException, URISyntaxException {
         mMap = new MindMapMapModel(this);
         Tools.FileReaderCreator readerCreator = new Tools.FileReaderCreator(new File(inputFileName));
@@ -98,7 +97,7 @@ public class IndependantMapViewCreator extends MapFeedbackAdapter {
     }
 
     public void exportFileToPng(String inputFileName, String outputFileName,
-                                FreeMindMain pFreeMindMain) throws FileNotFoundException,
+                                FreeMindMain pFreeMindMain) throws
             IOException, URISyntaxException {
         JPanel parent = new JPanel();
         Rectangle bounds = new Rectangle(0, 0, 400, 600);

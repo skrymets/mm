@@ -23,7 +23,12 @@
 package freemind.view.mindmapview;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
+
+import static java.lang.Math.abs;
 
 public class ConvexHull {
 
@@ -45,10 +50,10 @@ public class ConvexHull {
         return 1;
     }
 
-    protected class thetaComparator implements Comparator<Point> {
+    protected class ThetaComparator implements Comparator<Point> {
         Point p0;
 
-        public thetaComparator(Point p0) {
+        public ThetaComparator(Point p0) {
             this.p0 = new Point(p0);
         }
 
@@ -82,70 +87,68 @@ public class ConvexHull {
             int dx, dy, ax, ay;
             double t;
             dx = p2.x - p1.x;
-            ax = Math.abs(dx);
+            ax = abs(dx);
             dy = p2.y - p1.y;
-            ay = Math.abs(dy);
+            ay = abs(dy);
             if ((dx == 0) && (dy == 0))
                 t = 0;
             else
                 t = ((double) dy) / ((double) (ax + ay));
             if (dx < 0)
                 t = 2f - t;
-            else {
-                if (dy < 0)
-                    t = 4f + t;
-            }
+            else if (dy < 0)
+                t = 4f + t;
+
             return t * 90f;
         }
     }
 
-    Vector<Point> doGraham(Vector<Point> p) {
+    List<Point> doGraham(List<Point> points) {
         int i, min, M;
         Point t;
         min = 0;
         // search for minimum:
-        for (i = 1; i < p.size(); ++i) {
-            if (((Point) p.get(i)).y < ((Point) p.get(min)).y)
+        for (i = 1; i < points.size(); ++i) {
+            if (points.get(i).y < points.get(min).y)
                 min = i;
         }
         // continue along the values with same y component
-        for (i = 0; i < p.size(); ++i) {
-            if ((((Point) p.get(i)).y == ((Point) p.get(min)).y)
-                    && (((Point) p.get(i)).x > ((Point) p.get(min)).x)) {
+        for (i = 0; i < points.size(); ++i) {
+            if ((points.get(i).y == points.get(min).y)
+                    && (points.get(i).x > points.get(min).x)) {
                 min = i;
             }
         }
         // swap:
-        t = (Point) p.get(0);
-        p.set(0, p.get(min));
-        p.set(min, t);
-        thetaComparator comp = new thetaComparator((Point) p.get(0));
-        Collections.sort(p, comp);
-        p.add(0, new Point((Point) p.get(p.size() - 1))); // the first is the
-        // last.
+        t = points.get(0);
+        points.set(0, points.get(min));
+        points.set(min, t);
+        ThetaComparator comp = new ThetaComparator(points.get(0));
+        points.sort(comp);
+        // the first is the last.
+        points.add(0, new Point(points.get(points.size() - 1)));
         M = 3;
-        for (i = 4; i < p.size(); ++i) {
-            while (ccw((Point) p.get(M), (Point) p.get(M - 1), (Point) p.get(i)) >= 0) {
+        for (i = 4; i < points.size(); ++i) {
+            while (ccw(points.get(M), points.get(M - 1), points.get(i)) >= 0) {
                 M--;
             }
             M++;
             // swap:
-            t = (Point) p.get(M);
-            p.set(M, p.get(i));
-            p.set(i, t);
+            t = points.get(M);
+            points.set(M, points.get(i));
+            points.set(i, t);
         }
-        p.remove(0);
-        p.setSize(M);
-        return p;
+        points.remove(0);
+        return points.subList(0, M);
     }
 
-    public Vector<Point> calculateHull(LinkedList<Point> coordinates) {
-        Vector<Point> q = new Vector<>();
+    public List<Point> calculateHull(List<Point> coordinates) {
+        List<Point> q = new ArrayList<>();
         ListIterator<Point> coordinates_it = coordinates.listIterator();
         while (coordinates_it.hasNext()) {
-            q.add((Point) coordinates_it.next());
+            q.add(coordinates_it.next());
         }
-        Vector<Point> res = doGraham(q);
+        List<Point> res = doGraham(q);
         return res;
     }
 

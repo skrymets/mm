@@ -29,12 +29,10 @@ import freemind.preferences.FreemindPropertyListener;
 import java.awt.*;
 
 public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
-
     public static final String RESOURCES_STANDARDLINKSTYLE = "standardlinkstyle";
     private static Color standardColor = null;
     private static String standardStyle = null;
     private static LinkAdapterListener listener = null;
-
     String destinationLabel;
     String referenceText;
     protected MindMapNode source;

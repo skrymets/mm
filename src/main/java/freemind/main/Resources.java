@@ -130,10 +130,7 @@ public class Resources implements TextTranslator {
 
     public HashMap<String, String> getCountryMap() {
         if (countryMap == null) {
-            String[] countryMapArray = new String[]{"de", "DE", "en", "UK",
-                    "en", "US", "es", "ES", "es", "MX", "fi", "FI", "fr", "FR",
-                    "hu", "HU", "it", "CH", "it", "IT", "nl", "NL", "no", "NO",
-                    "pt", "PT", "ru", "RU", "sl", "SI", "uk", "UA", "zh", "CN"};
+            String[] countryMapArray = new String[]{"de", "DE", "en", "UK", "en", "US", "es", "ES", "es", "MX", "fi", "FI", "fr", "FR", "hu", "HU", "it", "CH", "it", "IT", "nl", "NL", "no", "NO", "pt", "PT", "ru", "RU", "sl", "SI", "uk", "UA", "zh", "CN"};
 
             countryMap = new HashMap<>();
             for (int i = 0; i < countryMapArray.length; i = i + 2) {
@@ -172,12 +169,8 @@ public class Resources implements TextTranslator {
      * @return
      */
     public String createThumbnailFileName(File baseFileName) {
-        String fileName = baseFileName.getParent()
-                + File.separatorChar
-                + "." // hidden
-                + baseFileName.getName().replaceFirst(
-                FreeMindCommon.FREEMIND_FILE_EXTENSION + "$",
-                ".png");
+        String fileName = baseFileName.getParent() + File.separatorChar + "." // hidden
+                + baseFileName.getName().replaceFirst(FreeMindCommon.FREEMIND_FILE_EXTENSION + "$", ".png");
         return fileName;
     }
 

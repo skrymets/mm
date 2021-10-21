@@ -72,7 +72,13 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.toHexString;
 import static java.lang.String.format;
+import static java.util.stream.Collectors.joining;
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+import static org.apache.commons.lang3.StringUtils.defaultString;
+import static org.apache.commons.lang3.StringUtils.deleteWhitespace;
 
 /**
  * @author foltin
@@ -117,43 +123,40 @@ public class Tools {
         if (col == null) {
             return null;
         }
-        String red = Integer.toHexString(col.getRed());
+
+        String red = toHexString(col.getRed());
         if (col.getRed() < 16) {
             red = "0" + red;
         }
-        String green = Integer.toHexString(col.getGreen());
+        String green = toHexString(col.getGreen());
         if (col.getGreen() < 16) {
             green = "0" + green;
         }
-        String blue = Integer.toHexString(col.getBlue());
+        String blue = toHexString(col.getBlue());
         if (col.getBlue() < 16) {
             blue = "0" + blue;
         }
         return "#" + red + green + blue;
     }
 
-    public static Color xmlToColor(String string) {
-        if (string == null) {
-            return null;
-        }
-        string = string.trim();
+    public static Color xmlToColor(String xmlColor) {
+        String string = deleteWhitespace(defaultString(xmlColor));
         if (string.length() == 7) {
-
-            int red = Integer.parseInt(string.substring(1, 3), 16);
-            int green = Integer.parseInt(string.substring(3, 5), 16);
-            int blue = Integer.parseInt(string.substring(5, 7), 16);
+            int red = parseInt(string.substring(1, 3), 16);
+            int green = parseInt(string.substring(3, 5), 16);
+            int blue = parseInt(string.substring(5, 7), 16);
             return new Color(red, green, blue);
         } else {
-            throw new IllegalArgumentException("No xml color given by '"
-                    + string + "'.");
+            throw new IllegalArgumentException("No xml color given by '" + string + "'.");
         }
     }
 
     public static String PointToXml(Point col) {
         if (col == null) {
-            return null; // throw new IllegalArgumentException("Point was
-        }        // null");
-        Vector<String> l = new Vector<>();
+            return null;
+        }
+
+        List<String> l = new ArrayList<>();
         l.add(Integer.toString(col.x));
         l.add(Integer.toString(col.y));
         return listToString(l);
@@ -165,19 +168,18 @@ public class Tools {
         }
         // fc, 3.11.2004: bug fix for alpha release of FM
         if (string.startsWith("java.awt.Point")) {
-            string = string.replaceAll(
-                    "java\\.awt\\.Point\\[x=(-*[0-9]*),y=(-*[0-9]*)\\]",
-                    "$1;$2");
+            string = string.replaceAll("java\\.awt\\.Point\\[x=(-*[0-9]*),y=(-*[0-9]*)\\]", "$1;$2");
         }
+
         List<String> l = stringToList(string);
         ListIterator<String> it = l.listIterator(0);
         if (l.size() != 2) {
-            throw new IllegalArgumentException(
-                    "A point must consist of two numbers (and not: '" + string
-                            + "').");
+            throw new IllegalArgumentException("A point must consist of two numbers (and not: '" + string + "').");
         }
-        int x = Integer.parseInt(it.next());
-        int y = Integer.parseInt(it.next());
+
+        int x = parseInt(it.next());
+        int y = parseInt(it.next());
+
         return new Point(x, y);
     }
 
@@ -203,12 +205,8 @@ public class Tools {
     }
 
     public static String listToString(List<?> list) {
-        ListIterator<?> it = list.listIterator(0);
-        StringBuffer str = new StringBuffer();
-        while (it.hasNext()) {
-            str.append(it.next().toString() + ";");
-        }
-        return str.toString();
+        final String listAsString = emptyIfNull(list).stream().map(Object::toString).collect(joining(";"));
+        return listAsString;
     }
 
     /**
@@ -222,9 +220,6 @@ public class Tools {
         return file;
     }
 
-    /**
-     *
-     */
     public static String[] getAvailableFonts() {
         if (sEnvFonts == null) {
             GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -258,8 +253,7 @@ public class Tools {
      */
     public static String getExtension(String s) {
         int i = s.lastIndexOf('.');
-        return (i > 0 && i < s.length() - 1) ? s.substring(i + 1).toLowerCase()
-                .trim() : "";
+        return (i > 0 && i < s.length() - 1) ? s.substring(i + 1).toLowerCase().trim() : "";
     }
 
     public static String removeExtension(String s) {
@@ -268,20 +262,17 @@ public class Tools {
     }
 
     public static boolean isAbsolutePath(String path) {
-        // On Windows, we cannot just ask if the file name starts with file
-        // separator.
-        // If path contains ":" at the second position, then it is not relative,
-        // I guess.
+        // On Windows, we cannot just ask if the file name starts with file separator.
+        // If path contains ":" at the second position, then it is not relative, I guess.
         // However, if it starts with separator, then it is absolute too.
 
         // Possible problems: Not tested on Macintosh, but should work.
-        // Koh, 1.4.2004: Resolved problem: I tested on Mac OS X 10.3.3 and
-        // worked.
+        // Koh, 1.4.2004: Resolved problem: I tested on Mac OS X 10.3.3 and worked.
         String osNameStart = System.getProperty("os.name").substring(0, 3);
         String fileSeparator = System.getProperty("file.separator");
+
         if (osNameStart.equals("Win")) {
-            return ((path.length() > 1) && path.charAt(1) == ':')
-                    || path.startsWith(fileSeparator);
+            return ((path.length() > 1) && path.charAt(1) == ':') || path.startsWith(fileSeparator);
         } else if (osNameStart.equals("Mac")) {
             // Koh:Panther (or Java 1.4.2) may change file path rule
             return path.startsWith(fileSeparator);
@@ -299,10 +290,8 @@ public class Tools {
      */
     public static String urlGetFile(URL url) {
         if (isWindows() && isFile(url)) {
-            String fileName = url.toString().replaceFirst("^file:", "")
-                    .replace('/', '\\');
-            return (fileName.indexOf(':') >= 0) ? fileName.replaceFirst(
-                    "^\\\\*", "") : fileName;
+            String fileName = url.toString().replaceFirst("^file:", "").replace('/', '\\');
+            return (fileName.indexOf(':') >= 0) ? fileName.replaceFirst("^\\\\*", "") : fileName;
         } // Network path
         else {
             return url.getFile();
@@ -339,18 +328,16 @@ public class Tools {
      * "new URL(URL context, URL relative)".
      */
     public static String toRelativeURL(URL base, URL target) {
-        // Precondition: If URL is a path to folder, then it must end with '/'
-        // character.
-        if (base == null || !base.getProtocol().equals(target.getProtocol())
-                || !base.getHost().equals(target.getHost())) {
+        // Precondition: If URL is a path to folder, then it must end with '/' character.
+        if (base == null || !base.getProtocol().equals(target.getProtocol()) || !base.getHost().equals(target.getHost())) {
             return target.toString();
         }
+
         String baseString = base.getFile();
         String targetString = target.getFile();
         String result = "";
         // remove filename from URL
-        targetString = targetString.substring(0,
-                targetString.lastIndexOf("/") + 1);
+        targetString = targetString.substring(0, targetString.lastIndexOf("/") + 1);
         // remove filename from URL
         baseString = baseString.substring(0, baseString.lastIndexOf("/") + 1);
 
@@ -361,23 +348,20 @@ public class Tools {
             // remove last part:
             index = targetString.lastIndexOf("/", index - 1);
             if (index < 0) {
-                // no common part. This is strange, as both should start with /,
-                // but...
+                // no common part. This is strange, as both should start with /, but...
                 break;
             }
         }
 
         // now, baseString is targetString + "/" + rest. we determine
         // rest=baseStringRest now.
-        String baseStringRest = baseString
-                .substring(index);
+        String baseStringRest = baseString.substring(index);
 
         // Maybe this causes problems under windows
         StringTokenizer baseTokens = new StringTokenizer(baseStringRest, "/");
 
         // Maybe this causes problems under windows
-        StringTokenizer targetTokens = new StringTokenizer(
-                targetString.substring(index + 1), "/");
+        StringTokenizer targetTokens = new StringTokenizer(targetString.substring(index + 1), "/");
 
         String nextTargetToken = "";
 
@@ -385,14 +369,14 @@ public class Tools {
             result = result.concat("../");
             baseTokens.nextToken();
         }
+
         while (targetTokens.hasMoreTokens()) {
             nextTargetToken = targetTokens.nextToken();
             result = result.concat(nextTargetToken + "/");
         }
 
         String temp = target.getFile();
-        result = result.concat(temp.substring(temp.lastIndexOf("/") + 1
-        ));
+        result = result.concat(temp.substring(temp.lastIndexOf("/") + 1));
         return result;
     }
 

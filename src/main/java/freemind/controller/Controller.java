@@ -55,6 +55,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.*;
 
+import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Collections.swap;
 import static java.util.stream.IntStream.range;
@@ -548,8 +549,7 @@ public class Controller implements MapModuleChangeObserver {
         navigationNextMap.setEnabled(number > 0);
         log.info("number " + number + ", pIndex " + pIndex);
         navigationMoveMapLeftAction.setEnabled(number > 1 && pIndex > 0);
-        navigationMoveMapRightAction.setEnabled(number > 1
-                && pIndex < number - 1);
+        navigationMoveMapRightAction.setEnabled(number > 1 && pIndex < number - 1);
     }
 
     /**
@@ -1614,8 +1614,7 @@ public class Controller implements MapModuleChangeObserver {
         });
         getMapModuleManager().addListener(new MapModuleChangeObserver() {
 
-            public void afterMapModuleChange(MapModule pOldMapModule,
-                                             Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
+            public void afterMapModuleChange(MapModule pOldMapModule, Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
                 int selectedIndex = tabbedPane.getSelectedIndex();
                 if (pNewMapModule == null) {
                     return;
@@ -1650,8 +1649,7 @@ public class Controller implements MapModuleChangeObserver {
             public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
                 for (int i = 0; i < tabbedPaneMapModules.size(); ++i) {
                     if (tabbedPaneMapModules.get(i) == pOldMapModule) {
-                        log.trace("Remove tab:" + i + " with title:"
-                                + tabbedPane.getTitleAt(i));
+                        log.trace(format("Remove tab:%d with title:%s", i, tabbedPane.getTitleAt(i)));
                         mTabbedPaneSelectionUpdate = false;
                         tabbedPane.removeTabAt(i);
                         tabbedPaneMapModules.remove(i);
@@ -1662,6 +1660,7 @@ public class Controller implements MapModuleChangeObserver {
                 }
             }
         });
+
         registerMapTitleChangeListener((pNewMapTitle, pMapModule, pModel) ->
                 range(0, tabbedPaneMapModules.size())
                         .filter(i -> tabbedPaneMapModules.get(i) == pMapModule)

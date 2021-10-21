@@ -26,57 +26,31 @@ import freemind.extensions.*;
 import freemind.modes.common.plugins.MapNodePositionHolderBase;
 import freemind.modes.common.plugins.ReminderHookBase;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Vector;
 
 /**
  * @author foltin
  */
 public class BrowseHookFactory extends HookFactoryAdapter {
 
-    /**
-     *
-     */
     public BrowseHookFactory() {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.HookFactory#getPossibleNodeHooks()
-     */
     public List<String> getPossibleNodeHooks() {
-        return new Vector<>();
+        return new ArrayList<>();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.HookFactory#getPossibleModeControllerHooks()
-     */
-    public Vector<String> getPossibleModeControllerHooks() {
-        return new Vector<>();
+    public List<String> getPossibleModeControllerHooks() {
+        return new ArrayList<>();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.extensions.HookFactory#createModeControllerHook(java.lang.String
-     * )
-     */
     public ModeControllerHook createModeControllerHook(String hookName) {
-        // TODO Auto-generated method stub
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.HookFactory#createNodeHook(java.lang.String)
-     */
     public NodeHook createNodeHook(String hookName) {
         // System.out.println("create node hook:"+hookName);
         NodeHook hook;
@@ -94,25 +68,12 @@ public class BrowseHookFactory extends HookFactoryAdapter {
         return hook;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.extensions.HookFactory#getHookMenuPositions(java.lang.String)
-     */
     public List<String> getHookMenuPositions(String hookName) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.extensions.HookFactory#getInstanciationMethod(java.lang.String)
-     */
     public HookInstantiationMethod getInstantiationMethod(String hookName) {
-        // TODO Auto-generated method stub
         return null;
     }
 

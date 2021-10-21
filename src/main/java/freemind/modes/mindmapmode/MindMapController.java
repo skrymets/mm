@@ -81,6 +81,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @SuppressWarnings("serial")
 @Log4j2
 public class MindMapController extends ControllerAdapter implements ExtendedMapFeedback, MapSourceChangedObserver {
@@ -961,7 +963,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                         .map((mcb) -> {
                             return (Object) mcb;
                         })
-                        .collect(Collectors.toList());
+                        .collect(toList());
                 processMenuCategory(holder, objects, newCategory);
             } else if (obj instanceof MenuActionBase) {
                 MenuActionBase action = (MenuActionBase) obj;

@@ -28,11 +28,6 @@ import java.awt.*;
 @SuppressWarnings("serial")
 class RootMainView extends MainView {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.view.mindmapview.NodeView.MainView#getPreferredSize()
-     */
     public Dimension getPreferredSize() {
         Dimension prefSize = super.getPreferredSize();
         prefSize.width *= 1.1;

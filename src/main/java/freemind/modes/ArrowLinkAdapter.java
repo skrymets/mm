@@ -24,35 +24,25 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapNode;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 
-public abstract class ArrowLinkAdapter extends LinkAdapter implements
-        MindMapArrowLink {
+@Log4j2
+public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArrowLink {
 
-    /**
-     *
-     */
     private static final String ARROW_DEFAULT_UP = "DEFAULT";
-    /**
-     *
-     */
     private static final String ARROW_NONE_UC = "NONE";
 
-    /**
-     * the zero is the start point of the line;
-     */
+    /* the zero is the start point of the line */
     protected Point startInclination;
-    /**
-     * the zero is the end point of the line;
-     */
+    /* the zero is the end point of the line */
     protected Point endInclination;
     protected String startArrow;
     protected String endArrow;
     protected boolean showControlPointsFlag;
 
-    public ArrowLinkAdapter(MindMapNode source, MindMapNode target,
-                            MapFeedback pMapFeedback) {
+    public ArrowLinkAdapter(MindMapNode source, MindMapNode target, MapFeedback pMapFeedback) {
         super(source, target, pMapFeedback);
         startArrow = ARROW_NONE;
         endArrow = ARROW_DEFAULT;
@@ -87,39 +77,36 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements
     }
 
     public void setStartArrow(String startArrow) {
-        if (startArrow == null || startArrow.toUpperCase().equals(ARROW_NONE_UC)) {
+        if (startArrow == null || startArrow.equalsIgnoreCase(ARROW_NONE_UC)) {
             this.startArrow = ARROW_NONE;
             return;
-        } else if (startArrow.toUpperCase().equals(ARROW_DEFAULT_UP)) {
+        } else if (startArrow.equalsIgnoreCase(ARROW_DEFAULT_UP)) {
             this.startArrow = ARROW_DEFAULT;
             return;
         }
         // dont change:
-        System.err.println("Cannot set the start arrow type to " + startArrow);
+        log.error("Cannot set the start arrow type to {}", startArrow);
     }
 
     public void setEndArrow(String endArrow) {
-        if (endArrow == null || endArrow.toUpperCase().equals(ARROW_NONE_UC)) {
+        if (endArrow == null || endArrow.equalsIgnoreCase(ARROW_NONE_UC)) {
             this.endArrow = ARROW_NONE;
             return;
-        } else if (endArrow.toUpperCase().equals(ARROW_DEFAULT_UP)) {
+        } else if (endArrow.equalsIgnoreCase(ARROW_DEFAULT_UP)) {
             this.endArrow = ARROW_DEFAULT;
             return;
         }
         // dont change:
-        System.err.println("Cannot set the end arrow type to " + endArrow);
+        log.error("Cannot set the end arrow type to {}", endArrow);
     }
 
     public Object clone() {
         ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) super.clone();
         // now replace the points:
-        arrowLink.startInclination = (startInclination == null) ? null
-                : new Point(startInclination.x, startInclination.y);
-        arrowLink.endInclination = (endInclination == null) ? null : new Point(
-                endInclination.x, endInclination.y);
-        arrowLink.startArrow = (startArrow == null) ? null : new String(
-                startArrow);
-        arrowLink.endArrow = (endArrow == null) ? null : new String(endArrow);
+        arrowLink.startInclination = (startInclination == null) ? null : new Point(startInclination.x, startInclination.y);
+        arrowLink.endInclination = (endInclination == null) ? null : new Point(endInclination.x, endInclination.y);
+        arrowLink.startArrow = (startArrow == null) ? null : startArrow;
+        arrowLink.endArrow = (endArrow == null) ? null : endArrow;
         return arrowLink;
     }
 
@@ -151,12 +138,10 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements
             arrowLink.setAttribute("REFERENCETEXT", getReferenceText());
         }
         if (getStartInclination() != null) {
-            arrowLink.setAttribute("STARTINCLINATION",
-                    Tools.PointToXml(getStartInclination()));
+            arrowLink.setAttribute("STARTINCLINATION", Tools.PointToXml(getStartInclination()));
         }
         if (getEndInclination() != null) {
-            arrowLink.setAttribute("ENDINCLINATION",
-                    Tools.PointToXml(getEndInclination()));
+            arrowLink.setAttribute("ENDINCLINATION", Tools.PointToXml(getEndInclination()));
         }
         if (getStartArrow() != null)
             arrowLink.setAttribute("STARTARROW", (getStartArrow()));

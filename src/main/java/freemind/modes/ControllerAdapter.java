@@ -31,7 +31,7 @@ import freemind.model.NodeAdapter;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
-import freemind.view.mindmapview.IndependantMapViewCreator;
+import freemind.view.mindmapview.IndependentMapViewCreator;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
@@ -69,14 +69,14 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     private Mode mode;
 
-    private Color selectionColor = new Color(200, 220, 200);
+    private final Color selectionColor = new Color(200, 220, 200);
     /**
      * The model, this controller belongs to. It may be null, if it is the
      * default controller that does not show a map.
      */
     private MapAdapter mModel;
-    private HashSet<NodeSelectionListener> mNodeSelectionListeners = new HashSet<>();
-    private HashSet<NodeLifetimeListener> mNodeLifetimeListeners = new HashSet<>();
+    private final HashSet<NodeSelectionListener> mNodeSelectionListeners = new HashSet<>();
+    private final HashSet<NodeLifetimeListener> mNodeLifetimeListeners = new HashSet<>();
     private File lastCurrentDir = null;
 
     /**
@@ -342,7 +342,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * You may decide to overload this or take the default and implement the
      * functionality in your MapModel (implements MindMap)
      */
-    public MapFeedback load(URL file) throws FileNotFoundException,
+    public MapFeedback load(URL file) throws
             IOException, XMLParseException, URISyntaxException {
         String mapDisplayName = getController().getMapModuleManager()
                 .checkIfFileIsAlreadyOpened(file);
@@ -373,7 +373,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * You may decide to overload this or take the default and implement the
      * functionality in your MapModel (implements MindMap)
      */
-    public MapFeedback load(File file) throws FileNotFoundException,
+    public MapFeedback load(File file) throws
             IOException {
         try {
             return load(Tools.fileToUrl(file));
@@ -614,7 +614,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                         .createThumbnailFileName(baseFileName);
                 // due to a windows bug, the file must not be hidden before writing it.
                 Tools.makeFileHidden(new File(fileName), false);
-                IndependantMapViewCreator.printToFile(getView(), fileName,
+                IndependentMapViewCreator.printToFile(getView(), fileName,
                         true,
                         getIntProperty(FreeMindCommon.THUMBNAIL_SIZE, 800));
                 Tools.makeFileHidden(new File(fileName), true);

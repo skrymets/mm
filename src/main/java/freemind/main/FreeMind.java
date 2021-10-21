@@ -43,6 +43,7 @@ import java.util.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @SuppressWarnings("serial")
 @Log4j2
@@ -672,54 +673,49 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private void checkForAnotherInstance(String[] pArgs) {
         String portFile = getPortFile();
-        if (portFile == null) {
+        if (isEmpty(portFile) || !new File(portFile).exists()) {
             return;
         }
-        // {{{ Try connecting to another running FreeMind instance
-        if (portFile != null && new File(portFile).exists()) {
-            try {
-                BufferedReader in = new BufferedReader(new FileReader(portFile));
+
+        try {
+            try (BufferedReader in = new BufferedReader(new FileReader(portFile))) {
                 String check = in.readLine();
-                if (!check.equals("b")) {
+                if (!"b".equals(check)) {
                     throw new Exception("Wrong port file format");
                 }
 
                 int port = parseInt(in.readLine());
                 int key = parseInt(in.readLine());
 
-                Socket socket = new Socket(InetAddress.getByName("127.0.0.1"),
-                        port);
-                DataOutputStream out = new DataOutputStream(
-                        socket.getOutputStream());
-                out.writeInt(key);
+                Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), port);
+                try (DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+                    out.writeInt(key);
 
-                String script;
-                // Put url to open here
-                script = Tools.arrayToUrls(pArgs);
-                out.writeUTF(script);
+                    String script;
+                    // Put url to open here
+                    script = Tools.arrayToUrls(pArgs);
+                    out.writeUTF(script);
 
-                log.info("Waiting for server");
-                // block until its closed
-                try {
-                    socket.getInputStream().read();
-                } catch (Exception e) {
+                    log.info("Waiting for server");
+                    // block until its closed
+                    try {
+                        socket.getInputStream().read();
+                    } catch (Exception e) {
+                    }
+
+                    in.close();
                 }
-
-                in.close();
-                out.close();
-
-                System.exit(0);
-            } catch (Exception e) {
-                // ok, this one seems to confuse newbies
-                // endlessly, so log it as NOTICE, not
-                // ERROR
-                log.info("An error occurred"
-                        + " while connecting to the FreeMind server instance."
-                        + " This probably means that"
-                        + " FreeMind crashed and/or exited abnormally"
-                        + " the last time it was run." + " If you don't"
-                        + " know what this means, don't worry. Exception: " + e);
             }
+
+            System.exit(0);
+        } catch (Exception e) {
+            // ok, this one seems to confuse newbies endlessly, so log it as NOTICE, not ERROR
+            log.info("An error occurred"
+                    + " while connecting to the FreeMind server instance."
+                    + " This probably means that"
+                    + " FreeMind crashed and/or exited abnormally"
+                    + " the last time it was run." + " If you don't"
+                    + " know what this means, don't worry. Exception: " + e);
         }
 
     }
@@ -728,9 +724,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
      * @return null, if no port should be opened.
      */
     private String getPortFile() {
-        if (editServer == null
-                && Resources.getInstance().getBoolProperty(
-                RESOURCES_DON_T_OPEN_PORT)) {
+        if (editServer == null && Resources.getInstance().getBoolProperty(RESOURCES_DON_T_OPEN_PORT)) {
             return null;
         }
         return getFreemindDirectory() + File.separator + getProperty(PORT_FILE);
@@ -860,7 +854,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         // try to load mac module:
         try {
             Class macClass = Class.forName("accessories.plugins.MacChanges");
-            // lazy programming. the mac class has exactly one constructor with a modeController.
+            // lazy programming.
+            // the mac class has exactly one constructor with a modeController.
             macClass.getConstructors()[0].newInstance(this);
         } catch (Exception e) {
             log.error(e);

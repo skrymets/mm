@@ -25,7 +25,7 @@ import freemind.modes.MindMapCloud;
 import java.awt.*;
 import java.awt.geom.QuadCurve2D;
 import java.util.LinkedList;
-import java.util.Vector;
+import java.util.List;
 
 // end Convex Hull
 
@@ -45,7 +45,7 @@ public class CloudView {
         return cloudModel.getIterativeLevel();
     }
 
-    static private CloudView heightCalculator = new CloudView(null, null);
+    static private final CloudView heightCalculator = new CloudView(null, null);
 
     protected CloudView(MindMapCloud cloudModel, NodeView source) {
         this.cloudModel = cloudModel;
@@ -75,29 +75,29 @@ public class CloudView {
         source.getCoordinates(coordinates);
         // source.getCoordinates(coordinates, (getIterativeLevel()==0)?(int)(5*
         // getZoom()):0 /* = additionalDistanceForConvexHull */);
-        Vector<Point> res = hull.calculateHull(coordinates);
+        List<Point> res = hull.calculateHull(coordinates);
         Polygon p = new Polygon();
         for (int i = 0; i < res.size(); ++i) {
-            Point pt = (Point) res.get(i);
+            Point pt = res.get(i);
             p.addPoint(pt.x, pt.y);
         }
         g.fillPolygon(p);
         g.drawPolygon(p);
         /* ok, now the arcs: */
-        Point lastPoint = new Point((Point) res.get(0));
+        Point lastPoint = new Point(res.get(0));
         double x0, y0;
-        x0 = (double) lastPoint.x;
-        y0 = (double) lastPoint.y;
+        x0 = lastPoint.x;
+        y0 = lastPoint.y;
         /* close the path: */
         res.add(res.get(0));
         double x2, y2; /* the drawing start points. */
         x2 = x0;
         y2 = y0;
         for (int i = res.size() - 1; i >= 0; --i) {
-            Point nextPoint = new Point((Point) res.get(i));
+            Point nextPoint = new Point(res.get(i));
             double x1, y1, x3, y3, dx, dy, dxn, dyn;
-            x1 = (double) nextPoint.x;
-            y1 = (double) nextPoint.y;
+            x1 = nextPoint.x;
+            y1 = nextPoint.y;
             dx = x1 - x0; /* direction of p0 -> p1 */
             dy = y1 - y0;
             double length = Math.sqrt(dx * dx + dy * dy);

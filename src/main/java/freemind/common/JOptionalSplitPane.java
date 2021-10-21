@@ -26,6 +26,7 @@ import freemind.main.Resources;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -38,7 +39,7 @@ import java.util.HashMap;
 @SuppressWarnings("serial")
 public class JOptionalSplitPane extends JPanel {
 
-    private HashMap<Integer, JComponent> mComponentHash = new HashMap<Integer, JComponent>();
+    private final HashMap<Integer, JComponent> mComponentHash = new HashMap<Integer, JComponent>();
     private JComponent mBasicComponent = null;
     private int mLastDividerPosition = -1;
 
@@ -156,7 +157,7 @@ public class JOptionalSplitPane extends JPanel {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Resources.createInstance(new FreeMindMainMock());
         final JFrame frame = new JFrame("JOptionalSplitPane");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

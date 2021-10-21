@@ -30,17 +30,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Properties;
 
 import static java.lang.String.format;
 import static java.nio.file.Files.*;
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -52,20 +48,18 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class FreeMindStarter {
 
     private static final String DEFAULT_PREFERENCES_RESOURCE = "freemind.properties";
-
     private static final String REQUIRED_JAVA_VERSION = "1.8.0";
     private static final String USER_PROPERTIES_DIRECTORY = ".freemind";
-
     private static final Path DEFAULT_HOME_DIRECTORY = Paths.get(System.getProperty("user.home"), USER_PROPERTIES_DIRECTORY);
 
     private static final String USER_PROPERTIES_FILE = "user.properties";
     private static final Path FREEMIND_DEFAULT_USER_PREFERENCES_FILE = DEFAULT_HOME_DIRECTORY.resolve(USER_PROPERTIES_FILE);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // First check version of Java
         checkJavaVersion();
 
-        Properties defaultPreferences = loadDefaultPreferences().orElse(new Properties());
+        Properties defaultPreferences = loadDefaultPreferences();
         Properties userPreferences = loadUsersPreferences(defaultPreferences);
 
         createFreeMindHomeDirectory();
@@ -101,17 +95,21 @@ public class FreeMindStarter {
         log.info("Checking Java Version...");
 
         String javaVersion = System.getProperty("java.version");
+        final String javaHome = System.getProperty("java.home");
 
         if (REQUIRED_JAVA_VERSION.compareTo(javaVersion) >= 0) {
             String message = format(
-                    "Warning: FreeMind requires version Java %s or higher (your version: %%s, installed in %%s).",
+                    "FreeMind requires Java of version {} or higher (your version: {}, installed in {}).",
                     REQUIRED_JAVA_VERSION,
                     javaVersion,
-                    System.getProperty("java.home"));
+                    javaHome);
             log.error(message);
+
             showMessageDialog(null, message, "FreeMind", JOptionPane.WARNING_MESSAGE);
             System.exit(1);
         }
+
+        log.debug("Java version: {}. JAVA_HOME:  {}", javaVersion, javaHome);
     }
 
     private static void createFreeMindHomeDirectory() {
@@ -157,22 +155,18 @@ public class FreeMindStarter {
         return userPreferences;
     }
 
-    public static Optional<Properties> loadDefaultPreferences() {
-        final String ERR_MSG = "Could not load default properties.";
-
-        URL defaultPropertiesURL = FreeMindStarter.class.getClassLoader().getResource(DEFAULT_PREFERENCES_RESOURCE);
-        if (defaultPropertiesURL == null) {
-            log.error(ERR_MSG);
-        } else {
-            try (InputStream stream = defaultPropertiesURL.openStream()) {
-                Properties defaultProperties = new Properties();
-                defaultProperties.load(stream);
-                return of(defaultProperties);
-            } catch (IOException e) {
-                log.error(ERR_MSG, e);
-            }
+    public static Properties loadDefaultPreferences() throws IOException {
+        try (InputStream stream = FreeMindStarter.class.getClassLoader().getResourceAsStream(DEFAULT_PREFERENCES_RESOURCE)) {
+            Properties defaultProperties = new Properties();
+            defaultProperties.load(stream);
+            return defaultProperties;
+        } catch (IOException e) {
+            log.error("Could not load default properties {}. Reason: {}",
+                    DEFAULT_PREFERENCES_RESOURCE,
+                    e.getMessage()
+            );
+            throw e;
         }
-        return empty();
     }
 
 }
