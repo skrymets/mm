@@ -90,30 +90,46 @@ import javax.swing.event.MenuListener;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class DynamicResource {
-    /** name constant for labels in the resource file */
+    /**
+     * name constant for labels in the resource file
+     */
     public static final String labelSuffix = "Label";
-    /** name constant for action commands in the resource file */
+    /**
+     * name constant for action commands in the resource file
+     */
     private static final String actionSuffix = "Action";
-    /** name constant for indicating image resources in the resource file */
+    /**
+     * name constant for indicating image resources in the resource file
+     */
     public static final String imageSuffix = "Image";
-    /** name constant for tool tip strings in the resource file */
+    /**
+     * name constant for tool tip strings in the resource file
+     */
     public static final String toolTipSuffix = "Tip";
-    /** name constant for selected icon names in the resource file */
+    /**
+     * name constant for selected icon names in the resource file
+     */
     public static final String selectedIconSuffix = "SelectedIcon";
-    /** indicator for menu separators */
+    /**
+     * indicator for menu separators
+     */
     public static final String menuSeparatorKey = "-";
-    /** dynamic storage for menu items */
+    /**
+     * dynamic storage for menu items
+     */
     private final Hashtable menuItems = new Hashtable();
-    /** dynamic storage for actions */
+    /**
+     * dynamic storage for actions
+     */
     private final Hashtable commands = new Hashtable();
-    /** dynamic storage for menus */
+    /**
+     * dynamic storage for menus
+     */
     private final Hashtable menus = new Hashtable();
     public static final String IMAGE_EMPTY = "empty.gif";
 
@@ -126,8 +142,8 @@ class DynamicResource {
     /**
      * add an action to this <code>DynamicResource</code>
      *
-     * @param cmd  the internal identifier for the action
-     * @param action  the action to associate with actionCommand
+     * @param cmd    the internal identifier for the action
+     * @param action the action to associate with actionCommand
      */
     public void addAction(final String cmd, final Action action) {
         commands.put(cmd, action);
@@ -137,9 +153,8 @@ class DynamicResource {
      * Create a menu bar.  This reads the
      * definition of the menu from the associated resource file.
      *
-     * @param resources  the TextResources to get the menu definition from
-     * @param name  name of the menu bar definition
-     *
+     * @param resources the TextResources to get the menu definition from
+     * @param name      name of the menu bar definition
      * @return the created menu bar
      */
     public SHTMLMenuBar createMenubar(final TextResources resources, final String name) {
@@ -158,8 +173,8 @@ class DynamicResource {
      * Create a menu for the app.  This reads the
      * definition of the menu from the associated resource file.
      *
-     * @param resources  the TextResources to get the menu definition from
-     * @param key  the key of the menu definition in the resource file
+     * @param resources the TextResources to get the menu definition from
+     * @param key       the key of the menu definition in the resource file
      * @return the created menu
      */
     public JMenu createMenu(final TextResources resources, final String key) {
@@ -173,8 +188,7 @@ class DynamicResource {
         for (int i = 0; i < itemKeys.length; i++) {
             if (itemKeys[i].equals(menuSeparatorKey)) {
                 menu.addSeparator();
-            }
-            else {
+            } else {
                 final JMenuItem mi = createMenuItem(resources, itemKeys[i]);
                 menu.add(mi);
             }
@@ -191,8 +205,8 @@ class DynamicResource {
      * Create a menu for the app.  This reads the
      * definition of the menu from the associated resource file.
      *
-     * @param resources  the TextResources to get the menu definition from
-     * @param key  the key of the menu definition in the resource file
+     * @param resources the TextResources to get the menu definition from
+     * @param key       the key of the menu definition in the resource file
      * @return the created menu
      */
     public JPopupMenu createPopupMenu(final TextResources resources, final String key) {
@@ -206,8 +220,7 @@ class DynamicResource {
         for (int i = 0; i < itemKeys.length; i++) {
             if (itemKeys[i].equals(menuSeparatorKey)) {
                 menu.addSeparator();
-            }
-            else {
+            } else {
                 final JMenuItem mi = createMenuItem(resources, itemKeys[i]);
                 menu.add(mi);
             }
@@ -222,9 +235,9 @@ class DynamicResource {
     /**
      * create a menu item
      *
-     * @param resources  the TextResources to get the item definition from
-     * @param cmd the action command to be associated
-     *      with the new menu item
+     * @param resources the TextResources to get the item definition from
+     * @param cmd       the action command to be associated
+     *                  with the new menu item
      * @return the created menu item
      */
     public JMenuItem createMenuItem(final TextResources resources, final String cmd) {
@@ -271,17 +284,16 @@ class DynamicResource {
                 mi.setIcon(icon);
             }
             String name = (String) a.getValue(Action.NAME);
-            if(name == null)
-            	name = Util.getResourceString(resources, cmd + labelSuffix);
-			mi.setText(name);
+            if (name == null)
+                name = Util.getResourceString(resources, cmd + labelSuffix);
+            mi.setText(name);
             /**
              * initially set the enabled state of the menu item
              * according to its action's enabled state
              */
             mi.setEnabled(a.isEnabled());
-        }
-        else {
-        	mi.setText(Util.getResourceString(resources, cmd + labelSuffix));
+        } else {
+            mi.setText(Util.getResourceString(resources, cmd + labelSuffix));
             mi.setEnabled(false);
         }
         /**
@@ -294,8 +306,8 @@ class DynamicResource {
     /**
      * get a string from the resources file
      *
-     * @param resources  the TextResources to get the string from
-     * @param nm  the key of the string
+     * @param resources the TextResources to get the string from
+     * @param nm        the key of the string
      * @return the string for the given key or null if not found
      */
     static public String getResourceString(final TextResources resources, final String key) {
@@ -307,8 +319,7 @@ class DynamicResource {
             System.err.println("SimplyHTML : Warning : resources are null.");
             new Throwable("Dummy").printStackTrace();
             return key;
-        }
-        catch (final MissingResourceException mre) {
+        } catch (final MissingResourceException mre) {
             System.err.println("SimplyHTML : Warning : resource is missing: " + key);
             return key;
         }
@@ -316,11 +327,11 @@ class DynamicResource {
 
     /**
      * listen to menu select events for proper updating of menu items
-     *
+     * <p>
      * whenever a menu is selected, its menu items are iterated and the
      * update method of the item's action is called causing
      * the menu item to reflect the correct enabled state.
-     *
+     * <p>
      * As each menu item is connected with a PropertyChangeListener
      * listening to property changes on it'Saction, the menu item is
      * updated by the PropertyChangeListener whenever the enabledState
@@ -335,8 +346,7 @@ class DynamicResource {
             Action action;
             for (int i = 0; i < items.length; i++) {
                 if (items[i] instanceof JPopupMenu.Separator) {
-                }
-                else if (items[i] instanceof JMenuItem) {
+                } else if (items[i] instanceof JMenuItem) {
                     action = getAction(((JMenuItem) items[i]).getActionCommand());
                     if (action instanceof SHTMLAction) {
                         ((SHTMLAction) action).update();
@@ -355,7 +365,7 @@ class DynamicResource {
     /**
      * get an action from the commands table
      *
-     * @param cmd  the name of the action the get
+     * @param cmd the name of the action the get
      * @return the action found for the given name
      */
     public Action getAction(final String cmd) {
@@ -371,18 +381,20 @@ class DynamicResource {
         return commands.elements();
     }
 
-    /** create our PropertyChangeListener implementation */
+    /**
+     * create our PropertyChangeListener implementation
+     */
     private PropertyChangeListener createActionChangeListener(final AbstractButton b) {
         return new ActionChangedListener(b);
     }
 
     /**
      * associate a menu item to an action.
-     *
+     * <p>
      * When registering this
      * action listener with an action, it gets informed by
      * property changes of that particular action.
-     *
+     * <p>
      * By passing a menu item to the constructor of ActionChangedListener,
      * an instance of ActionChangedListener 'remembers' the menu item
      * its property are associated to.
@@ -400,8 +412,7 @@ class DynamicResource {
             if (e.getPropertyName().equals(Action.NAME)) {
                 final String text = (String) e.getNewValue();
                 menuItem.setText(text);
-            }
-            else if (propertyName.equals("enabled")) {
+            } else if (propertyName.equals("enabled")) {
                 final Boolean enabledState = (Boolean) e.getNewValue();
                 menuItem.setEnabled(enabledState.booleanValue());
             }
@@ -412,9 +423,9 @@ class DynamicResource {
      * get the menu item that was created for the given
      * command.
      *
-     * @param cmd  name of the action.
+     * @param cmd name of the action.
      * @return item created for the given command or null
-     *  if one wasn't created.
+     * if one wasn't created.
      */
     public JMenuItem getMenuItem(final String cmd) {
         return (JMenuItem) menuItems.get(cmd);
@@ -427,11 +438,10 @@ class DynamicResource {
      * given commamd, an icon is created for the respective image resource.
      * otherwise, null is returned.</p>
      *
-     * @param resources  the TextResources to get the icon from
-     * @param cmd  the command an icon is requested for
-     *
+     * @param resources the TextResources to get the icon from
+     * @param cmd       the command an icon is requested for
      * @return the icon for that command or null, if none is present
-     *        for this command
+     * for this command
      */
     static public Icon getIconForCommand(final TextResources resources, final String cmd) {
         return DynamicResource.getIconForName(resources, cmd + imageSuffix);
@@ -455,8 +465,8 @@ class DynamicResource {
      * coming with SimplyHTML has a key for every resource pointing to
      * the subdirectory relative to the class path.</p>
      *
-     * @param resources  the TextResources to get the resource from
-     * @param key  the key of the resource in the resource file
+     * @param resources the TextResources to get the resource from
+     * @param key       the key of the resource in the resource file
      * @return the resource location as a URL
      */
     static public URL getResource(final TextResources resources, final String key) {
@@ -472,9 +482,8 @@ class DynamicResource {
      * Create a tool bar.  This reads the definition of a tool bar
      * from the associated resource file.
      *
-     * @param resources  the TextResources to get the tool bar definition from
-     * @param nm  the name of the tool bar definition in the resource file
-     *
+     * @param resources the TextResources to get the tool bar definition from
+     * @param nm        the name of the tool bar definition in the resource file
      * @return the created tool bar
      */
     public JToolBar createToolBar(final TextResources resources, final String nm) {
@@ -491,8 +500,7 @@ class DynamicResource {
             if (itemKeys[i].equals(menuSeparatorKey)) {
                 separator = new JSeparator(JSeparator.VERTICAL);
                 toolBar.add(separator);
-            }
-            else {
+            } else {
                 action = getAction(itemKeys[i]);
                 newButton = toolBar.add(action);
                 newButton.setMinimumSize(buttonSize);

@@ -30,9 +30,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 // Daniel: this seems like a description of what pattern should do rather
@@ -362,11 +361,12 @@ public class StylePattern {
     }
 
     public static List loadPatterns(Reader reader) throws Exception {
-        List list = new LinkedList();
+        List list = new ArrayList();
+
         XMLElement parser = new XMLElement();
         parser.parseFromReader(reader);
-        for (Enumeration e = parser.enumerateChildren(); e.hasMoreElements(); ) {
-            list.add(new StylePattern((XMLElement) e.nextElement(), list));
+        for (XMLElement xmlElement : parser.getChildren()) {
+            list.add(new StylePattern(xmlElement, list));
         }
         return list;
     }

@@ -36,17 +36,19 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class StyleSelector extends JComboBox implements AttributeComponent, ChangeListener {
     private final SHTMLPanelImpl shtmlPanel;
-    /** the CSS attribute key this AttributeComponent object represents */
+    /**
+     * the CSS attribute key this AttributeComponent object represents
+     */
     private final HTML.Attribute key;
-    /** indicates whether or not to ignore change events */
+    /**
+     * indicates whether or not to ignore change events
+     */
     private final boolean ignoreChanges = false;
     private final String standardStyleName = Util.getResourceString("standardStyleName");
     private String paragraphType;
@@ -55,7 +57,7 @@ class StyleSelector extends JComboBox implements AttributeComponent, ChangeListe
     /**
      * construct a <code>StyleSelector</code>
      *
-     * @param key  the attribute this component represents
+     * @param key the attribute this component represents
      */
     public StyleSelector(final SHTMLPanelImpl shtmlPanel, final HTML.Attribute key) {
         this.key = key;
@@ -66,11 +68,10 @@ class StyleSelector extends JComboBox implements AttributeComponent, ChangeListe
     /**
      * set the value of this combo box
      *
-     * @param a  the set of attributes possibly having a
+     * @param a the set of attributes possibly having a
      *          font size attribute this pick list could display
-     *
      * @return true, if the set of attributes had a matching attribute,
-     *            false if not
+     * false if not
      */
     public boolean setValue(final AttributeSet a) {
         boolean success = false;
@@ -78,8 +79,7 @@ class StyleSelector extends JComboBox implements AttributeComponent, ChangeListe
         if (attr != null) {
             setSelectedItem(attr.toString());
             success = true;
-        }
-        else {
+        } else {
             setSelectedItem(standardStyleName);
         }
         return success;
@@ -101,6 +101,7 @@ class StyleSelector extends JComboBox implements AttributeComponent, ChangeListe
     }
 
     /* --------------- ChangeListener implementation start --------------- */
+
     /**
      * this method listens and reacts to changes to either the JTabbedPane of FrmMain or
      * a given StyleSheet this component was registered with. Once either one changes
@@ -135,11 +136,9 @@ class StyleSelector extends JComboBox implements AttributeComponent, ChangeListe
             final Vector styleNames = Util.getStyleNamesForTag((document).getStyleSheet(), paragraphType);
             styleNames.insertElementAt(standardStyleName, 0);
             setModel(new DefaultComboBoxModel(styleNames));
-        }
-        catch (final NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             setModel(new DefaultComboBoxModel());
-        }
-        finally {
+        } finally {
             updateRunning = false;
         }
     }

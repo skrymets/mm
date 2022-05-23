@@ -35,23 +35,31 @@ import java.util.jar.JarFile;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class PluginManager {
-    /** name of sub-package where plug-ins are stored */
+    /**
+     * name of sub-package where plug-ins are stored
+     */
     private final String PLUGIN_PACKAGE = "installed";
-    /** the class loader pointing to all plug-in locations (JARs) */
+    /**
+     * the class loader pointing to all plug-in locations (JARs)
+     */
     private URLClassLoader loader;
-    /** the class names of all loaded plug-ins */
+    /**
+     * the class names of all loaded plug-ins
+     */
     private final Vector pluginClassNames = new Vector();
-    /** the plug-in objects loaded by this <code>PluginManager</code> */
+    /**
+     * the plug-in objects loaded by this <code>PluginManager</code>
+     */
     private final Hashtable loadedPlugins = new Hashtable();
     private final Hashtable nameMap = new Hashtable();
-    /** the URLs pointing to the classes in pluginClassNames */
+    /**
+     * the URLs pointing to the classes in pluginClassNames
+     */
     private final Vector urls = new Vector();
     private final SHTMLPanelImpl owner;
 
@@ -77,8 +85,7 @@ class PluginManager {
     /**
      * get a loaded plug-in by its GUI name.
      *
-     * @param guiName  the GUI name of this plaug-in
-     *
+     * @param guiName the GUI name of this plaug-in
      * @return the plug-in having the given GUI name, or null of no plug-in
      * with that name is present
      */
@@ -109,7 +116,7 @@ class PluginManager {
                 final String nextClass = (String) cNames.nextElement();
                 //System.out.println("PluginManager loadPlugins loading " + pluginPrefix + nextClass /* pluginPrefix + (String) cNames.nextElement()*/);
                 cl = loader.loadClass(/*pluginPrefix +*/
-                /*(String) cNames.nextElement()*/pluginPrefix + nextClass);
+                        /*(String) cNames.nextElement()*/pluginPrefix + nextClass);
                 //System.out.println("PluginManager loadPlugins calling newInstance ");
                 o = cl.newInstance();
                 if (o instanceof SHTMLPlugin) {
@@ -121,8 +128,7 @@ class PluginManager {
                     loadedPlugins.put(intName, o);
                     nameMap.put(p.getGUIName(), intName);
                 }
-            }
-            catch (final Exception e) {
+            } catch (final Exception e) {
                 Util.errMsg(null, this.getClass().getName() + ".loadPlugins: " + e.getMessage(), e);
             }
         }
@@ -132,9 +138,8 @@ class PluginManager {
      * get a class loader for a given set of URLs
      * specifying one or more class paths
      *
-     * @param urls  set of URLs specifying the class path(s)
-     *
-     * @return  the class loader
+     * @param urls set of URLs specifying the class path(s)
+     * @return the class loader
      */
     private URLClassLoader createLoader(final Vector urls) {
         final URL[] urlArray = new URL[urls.size()];
@@ -156,16 +161,15 @@ class PluginManager {
      * <code>pluginClassNames</code> are initialized and
      * filled accordingly.</p>
      *
-     * @param pluginPath  the path to look for plug-in JAR files, e.g.
-     * com/lightdev/app/shtm/plugin/installed/
+     * @param pluginPath the path to look for plug-in JAR files, e.g.
+     *                   com/lightdev/app/shtm/plugin/installed/
      */
     private void findPlugins(final String pluginPath) {
         final String appPath = Util.getClassFilePath(this.getClass());
         String filePath;
         if (appPath.indexOf(":") < 0) {
             filePath = "/" + appPath;
-        }
-        else {
+        } else {
             filePath = appPath;
         }
         //System.out.println("PluginManager.findPlugins appPath=" + appPath + ", filePath=" + filePath);
@@ -190,8 +194,7 @@ class PluginManager {
                                 /*System.out.println("PluginManager.findPlugins adding URL " + Util.FILE_PREFIX +
                                                   Util.URL_SEPARATOR + appPath + fName);*/
                                 urls.addElement(new URL(Util.FILE_PREFIX + Util.URL_SEPARATOR + appPath + fName));
-                            }
-                            else if (fName.endsWith(Util.JAR_EXTENSION)) {
+                            } else if (fName.endsWith(Util.JAR_EXTENSION)) {
                                 readJar(appPath, pluginPath, content[i], fName);
                             }
                         }
@@ -199,8 +202,7 @@ class PluginManager {
                 }
             }
             loader = createLoader(urls);
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             Util.errMsg(null, this.getClass().getName() + ".findPlugins: " + e.getMessage(), e);
         }
     }
@@ -215,11 +217,11 @@ class PluginManager {
      * respective paramaters, it is faster to pass the existing values as
      * parameters than to re-build the values locally.</p>
      *
-     * @param filePath  the absolute path pointing to the JAR file, e.g.
-     *   file:/C:/Programs/SimplyHTML/
-     * @param pluginPath  the path inside filePath pointing to potential plug-ins
-     * @param jarFile  the file object referring to the JAR file to read
-     * @param fileName  the name of the JAR file
+     * @param filePath   the absolute path pointing to the JAR file, e.g.
+     *                   file:/C:/Programs/SimplyHTML/
+     * @param pluginPath the path inside filePath pointing to potential plug-ins
+     * @param jarFile    the file object referring to the JAR file to read
+     * @param fileName   the name of the JAR file
      */
     private void readJar(final String filePath, final String pluginPath, final File jarFile, final String fileName) {
         try {
@@ -234,11 +236,10 @@ class PluginManager {
                                       Util.URL_SEPARATOR + filePath + fileName);*/
                     urls.addElement(new URL(Util.FILE_PREFIX + Util.URL_SEPARATOR + filePath + fileName));
                     pluginClassNames.addElement(jeName.substring(pluginPath.length(),
-                        jeName.indexOf(Util.CLASS_SEPARATOR)));
+                            jeName.indexOf(Util.CLASS_SEPARATOR)));
                 }
             }
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             /*Util.errMsg(null, this.getClass().getName() + ".readJar: " +
                         e.getMessage(), e);*/
         }

@@ -24,6 +24,7 @@ import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.mindmapmode.MindMapController;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,91 +32,80 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 @SuppressWarnings("serial")
+@Log4j2
 public class ImportFolderStructureAction extends MindmapAction {
-	// Logging:
-	private static org.slf4j.Logger logger;
-	private final MindMapController controller;
 
-	public ImportFolderStructureAction(MindMapController controller) {
-		super("import_folder_structure", controller);
-		this.controller = controller;
-		if (logger == null)
-			logger = controller.getFrame().getLogger(this.getClass().getName());
-	}
+    private final MindMapController controller;
 
-	public void actionPerformed(ActionEvent e) {
-		FreeMindFileDialog chooser = controller.getFileChooser(null);
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		chooser.setDialogTitle(controller
-				.getText("select_folder_for_importing"));
-		FreeMindMain frame = getFrame();
-		int returnVal = chooser.showOpenDialog(frame.getContentPane());
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File folder = chooser.getSelectedFile();
-			frame.out("Importing folder structure ...");
-			// getFrame().repaint(); // Refresh the frame, namely hide dialog
-			// and show status
-			// getView().updateUI();
-			// Problem: the frame should be refreshed here, but I don't know how
-			// to do it
-			try {
-				frame.setWaitingCursor(true);
-				importFolderStructure(folder, controller.getSelected(),/*
-																		 * redisplay
-																		 * =
-																		 */
-						true);
-			} catch (Exception ex) {
-				freemind.main.Resources.getInstance().logException(ex);
-			}
-			frame.setWaitingCursor(false);
-			frame.out("Folder structure imported.");
-		}
-	}
+    public ImportFolderStructureAction(MindMapController controller) {
+        super("import_folder_structure", controller);
+        this.controller = controller;
+    }
 
-	private FreeMindMain getFrame() {
-		return controller.getFrame();
-	}
+    public void actionPerformed(ActionEvent e) {
+        FreeMindFileDialog chooser = controller.getFileChooser(null);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setDialogTitle(controller.getText("select_folder_for_importing"));
+        FreeMindMain frame = getFrame();
+        int returnVal = chooser.showOpenDialog(frame.getContentPane());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File folder = chooser.getSelectedFile();
+            frame.setStatusText("Importing folder structure ...");
+            // getFrame().repaint(); // Refresh the frame, namely hide dialog
+            // and show status
+            // getView().updateUI();
+            // Problem: the frame should be refreshed here, but I don't know how
+            // to do it
+            try {
+                frame.setWaitingCursor(true);
+                importFolderStructure(folder, controller.getSelected(), true);
+            } catch (Exception ex) {
+                log.error(ex);
+            }
+            frame.setWaitingCursor(false);
+            frame.setStatusText("Folder structure imported.");
+        }
+    }
 
-	public void importFolderStructure(File folder, MindMapNode target,
-			boolean redisplay) throws MalformedURLException {
-		logger.trace("Entering folder: " + folder);
+    private FreeMindMain getFrame() {
+        return controller.getFrame();
+    }
 
-		if (folder.isDirectory()) {
-			getFrame().out(folder.getName());
-			File[] list = folder.listFiles();
-			if (list != null) {
-				// Go recursively to subfolders
-				for (int i = 0; i < list.length; i++) {
-					if (list[i].isDirectory()) {
-						// Insert a new node
-						MindMapNode node = addNode(target, list[i].getName(),
-								Tools.fileToUrl(list[i]).toString());
-						importFolderStructure(list[i], node, false);
-					}
-				}
-				// For each file: add it
-				for (int i = 0; i < list.length; i++) {
-					if (!list[i].isDirectory()) {
-						addNode(target, list[i].getName(),
-								Tools.fileToUrl(list[i]).toString());
-					}
-				}
-			}
-		}
-		controller.setFolded(target, true);
+    public void importFolderStructure(File folder, MindMapNode target, boolean redisplay) throws MalformedURLException {
+        log.trace("Entering folder: " + folder);
 
-	}
+        if (folder.isDirectory()) {
+            getFrame().setStatusText(folder.getName());
+            File[] list = folder.listFiles();
+            if (list != null) {
+                // Go recursively to subfolders
+                for (int i = 0; i < list.length; i++) {
+                    if (list[i].isDirectory()) {
+                        // Insert a new node
+                        MindMapNode node = addNode(target, list[i].getName(),
+                                Tools.fileToUrl(list[i]).toString());
+                        importFolderStructure(list[i], node, false);
+                    }
+                }
+                // For each file: add it
+                for (int i = 0; i < list.length; i++) {
+                    if (!list[i].isDirectory()) {
+                        addNode(target, list[i].getName(),
+                                Tools.fileToUrl(list[i]).toString());
+                    }
+                }
+            }
+        }
+        controller.setFolded(target, true);
 
-	/**
-     */
-	private MindMapNode addNode(MindMapNode target, String nodeContent,
-			String link) {
-		MindMapNode node = controller.addNewNode(target,
-				target.getChildCount(), target.isNewChildLeft());
-		controller.setNodeText(node, nodeContent);
-		controller.setLink(node, link);
-		return node;
-	}
+    }
+
+    private MindMapNode addNode(MindMapNode target, String nodeContent, String link) {
+
+        MindMapNode node = controller.addNewNode(target, target.getChildCount(), target.isNewChildLeft());
+        controller.setNodeText(node, nodeContent);
+        controller.setLink(node, link);
+        return node;
+    }
 
 }

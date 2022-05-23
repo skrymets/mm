@@ -44,38 +44,52 @@ import javax.swing.JPanel;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class DialogShell extends JDialog implements ActionListener {
-    /** panel containing dialog buttons */
+    /**
+     * panel containing dialog buttons
+     */
     protected JPanel buttonPanel;
-    /** button to confirm the operation */
+    /**
+     * button to confirm the operation
+     */
     protected AbstractButton okButton;
-    /** button to cancel the operation */
+    /**
+     * button to cancel the operation
+     */
     protected AbstractButton cancelButton;
-    /** button to display context sensitive help */
+    /**
+     * button to display context sensitive help
+     */
     protected AbstractButton helpButton;
     /**
      * the result of the operation, one of RESULT_CANCEL and RESULT_OK
      */
     private int result;
-    /** result value for a cancelled operation */
+    /**
+     * result value for a cancelled operation
+     */
     public static int RESULT_CANCEL = 1;
-    /** result value for a confirmed operation */
+    /**
+     * result value for a confirmed operation
+     */
     public static int RESULT_OK = 0;
-    /** id of associated help topic (if any) */
+    /**
+     * id of associated help topic (if any)
+     */
     protected String helpTopicId = null;
-    /** Listens to enter and cancel. */
+    /**
+     * Listens to enter and cancel.
+     */
     private KeyListener completionKeyListener = null;
 
     /**
      * constructor
      *
-     * @param parent  the parent dialog
+     * @param parent the parent dialog
      * @param title  the title for this dialog
      */
     public DialogShell(final Dialog parent, final String title) {
@@ -86,7 +100,7 @@ class DialogShell extends JDialog implements ActionListener {
     /**
      * constructor
      *
-     * @param parent  the parent frame
+     * @param parent the parent frame
      * @param title  the title for this dialog
      */
     public DialogShell(final Frame parent, final String title) {
@@ -97,9 +111,9 @@ class DialogShell extends JDialog implements ActionListener {
     /**
      * constructor
      *
-     * @param parent  the parent frame
-     * @param title  the title for this dialog
-     * @param helpTopicId  the id of the help topic to display for this dialog
+     * @param parent      the parent frame
+     * @param title       the title for this dialog
+     * @param helpTopicId the id of the help topic to display for this dialog
      */
     public DialogShell(final Frame parent, final String title, final String helpTopicId) {
         super(parent, title);
@@ -110,9 +124,9 @@ class DialogShell extends JDialog implements ActionListener {
     /**
      * constructor
      *
-     * @param parent  the parent dialog
-     * @param title  the title for this dialog
-     * @param helpTopicId  the id of the help topic to display for this dialog
+     * @param parent      the parent dialog
+     * @param title       the title for this dialog
+     * @param helpTopicId the id of the help topic to display for this dialog
      */
     public DialogShell(final Dialog parent, final String title, final String helpTopicId) {
         super(parent, title);
@@ -140,8 +154,7 @@ class DialogShell extends JDialog implements ActionListener {
                 helpButton = SHTMLHelpBroker.createHelpButton(helpTopicId);
                 helpButton.setText(Util.getResourceString("helpLabel"));
                 buttonPanel.add(helpButton);
-            }
-            catch (final NoClassDefFoundError e) {
+            } catch (final NoClassDefFoundError e) {
                 helpTopicId = null;
             }
         }
@@ -194,8 +207,7 @@ class DialogShell extends JDialog implements ActionListener {
         final Object src = e.getSource();
         if (src == cancelButton) {
             cancel();
-        }
-        else if (src == okButton) {
+        } else if (src == okButton) {
             confirm();
         }
     }
@@ -207,8 +219,7 @@ class DialogShell extends JDialog implements ActionListener {
                     if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                         e.consume();
                         cancel();
-                    }
-                    else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         e.consume();
                         confirm();
                     }

@@ -35,7 +35,7 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,150 +45,112 @@ import java.util.Vector;
 /**
  * Changes the root node to another one What happens with clouds? This is ok, as
  * it can be removed afterwards.
- * 
+ *
  * @author foltin
  * @date 01.10.2011
  */
+@Log4j2
 public class ChangeRootNode extends MindMapNodeHookAdapter {
-	private static final String TRANSACTION_NAME = "ChangeRootNode";
+    private static final String TRANSACTION_NAME = "ChangeRootNode";
 
-	public void invoke(MindMapNode node) {
-		// we dont need node.
-		MindMapNode focussed = getMindMapController().getSelected();
-		MindMapNode rootNode = getMindMapController().getRootNode();
+    public void invoke(MindMapNode node) {
+        // we dont need node.
+        MindMapNode focussed = getMindMapController().getSelected();
+        MindMapNode rootNode = getMindMapController().getRootNode();
 
-		getMindMapController().doTransaction(
-				TRANSACTION_NAME,
-				new ActionPair(getAction(focussed), getAction(rootNode)));
+        getMindMapController().doTransaction(TRANSACTION_NAME, new ActionPair(getAction(focussed), getAction(rootNode)));
+    }
 
-	};
+    /**
+     * @param pNode the new root node.
+     * @return the corresponding action.
+     */
+    private XmlAction getAction(MindMapNode pNode) {
+        ChangeRootNodeAction action = new ChangeRootNodeAction();
+        action.setNode(getMindMapController().getNodeID(pNode));
+        return action;
+    }
 
-	/**
-	 * @param pNode
-	 *            the new root node.
-	 * @return the corresponding action.
-	 */
-	private XmlAction getAction(MindMapNode pNode) {
-		ChangeRootNodeAction action = new ChangeRootNodeAction();
-		action.setNode(getMindMapController().getNodeID(pNode));
-		return action;
-	}
+    public static class Registration implements HookRegistration, MenuItemEnabledListener, ActorXml {
 
-	public static class Registration implements HookRegistration,
-			MenuItemEnabledListener, ActorXml {
+        private final MindMapController controller;
 
-		private final MindMapController controller;
+        private final MindMap mMap;
 
-		private final MindMap mMap;
+        public Registration(ModeController controller, MindMap map) {
+            this.controller = (MindMapController) controller;
+            mMap = map;
+        }
 
-		private final Logger logger;
+        public boolean isEnabled(JMenuItem pItem, Action pAction) {
+            return controller.getSelecteds().size() == 1;
+        }
 
-		public Registration(ModeController controller, MindMap map) {
-			this.controller = (MindMapController) controller;
-			mMap = map;
-			logger = controller.getFrame().getLogger(this.getClass().getName());
-		}
+        public void register() {
+            controller.getActionRegistry().registerActor(this, getDoActionClass());
+        }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing
-		 * .JMenuItem, javax.swing.Action)
-		 */
-		public boolean isEnabled(JMenuItem pItem, Action pAction) {
-			return controller.getSelecteds().size() == 1;
-		}
+        public void deRegister() {
+            controller.getActionRegistry().deregisterActor(getDoActionClass());
+        }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.extensions.HookRegistration#register()
-		 */
-		public void register() {
-			controller.getActionRegistry().registerActor(this,
-					getDoActionClass());
-		}
+        public void act(XmlAction pAction) {
+            if (pAction instanceof ChangeRootNodeAction) {
+                ChangeRootNodeAction rootNodeAction = (ChangeRootNodeAction) pAction;
+                MindMapNode focussed = controller.getNodeFromID(rootNodeAction.getNode());
+                if (focussed.isRoot()) {
+                    // node is already root. Everything ok.
+                    return;
+                }
+                /*
+                 * moving the hooks: 1. new interface method: movehook 2. change
+                 * root node from old to new node copying text, decoration, etc.
+                 * 3. deactivate all root hooks. this is possibly the best
+                 * solution as it is consequent. Method 3 is chosen.
+                 */
+                MindMapNode oldRoot = mMap.getRootNode();
+                oldRoot.removeAllHooks();
+                // change the root node:
+                mMap.changeRoot(focussed);
+                // remove all viewers:
+                Vector<MindMapNode> nodes = new Vector<>();
+                nodes.add(focussed);
+                MapView view = controller.getView();
+                while (!nodes.isEmpty()) {
+                    MindMapNode child = (MindMapNode) nodes.firstElement();
+                    log.trace("Removing viewers for " + child);
+                    nodes.remove(0);
+                    nodes.addAll(child.getChildren());
+                    Collection<NodeView> viewers = new Vector<>(view.getViewers(child));
+                    for (NodeView viewer : viewers) {
+                        view.removeViewer(child, viewer);
+                    }
+                }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.extensions.HookRegistration#deRegister()
-		 */
-		public void deRegister() {
-			controller.getActionRegistry().deregisterActor(getDoActionClass());
-		}
+                MapView mapView = view;
+                for (int i = mapView.getComponentCount() - 1; i >= 0; i--) {
+                    Component comp = mapView.getComponent(i);
+                    if (comp instanceof NodeView
+                            || comp instanceof NodeMotionListenerView) {
+                        mapView.remove(comp);
+                    }
+                }
+                mapView.initRoot();
+                mapView.add(mapView.getRoot());
+                mapView.doLayout();
+                controller.nodeChanged(focussed);
+                log.trace("layout done.");
+                controller.select(focussed,
+                        Tools.getVectorWithSingleElement(focussed));
+                controller.centerNode(focussed);
+                controller.obtainFocusForSelected();
+            }
+        }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.modes.mindmapmode.actions.xml.ActorXml#act(freemind.controller
-		 * .actions.generated.instance.XmlAction)
-		 */
-		public void act(XmlAction pAction) {
-			if (pAction instanceof ChangeRootNodeAction) {
-				ChangeRootNodeAction rootNodeAction = (ChangeRootNodeAction) pAction;
-				MindMapNode focussed = controller.getNodeFromID(rootNodeAction.getNode());
-				if (focussed.isRoot()) {
-					// node is already root. Everything ok.
-					return;
-				}
-				/*
-				 * moving the hooks: 1. new interface method: movehook 2. change
-				 * root node from old to new node copying text, decoration, etc.
-				 * 3. deactivate all root hooks. this is possibly the best
-				 * solution as it is consequent. Method 3 is chosen.
-				 */
-				MindMapNode oldRoot = mMap.getRootNode();
-				oldRoot.removeAllHooks();
-				// change the root node:
-				mMap.changeRoot(focussed);
-				// remove all viewers:
-				Vector<MindMapNode> nodes = new Vector<>();
-				nodes.add(focussed);
-				MapView view = controller.getView();
-				while (!nodes.isEmpty()) {
-					MindMapNode child = (MindMapNode) nodes.firstElement();
-					logger.trace("Removing viewers for " + child);
-					nodes.remove(0);
-					nodes.addAll(child.getChildren());
-					Collection<NodeView> viewers = new Vector<>(view.getViewers(child));
-					for (NodeView viewer :  viewers) {
-						view.removeViewer(child, viewer);
-					}
-				}
+        public Class<ChangeRootNodeAction> getDoActionClass() {
+            return ChangeRootNodeAction.class;
+        }
 
-				MapView mapView = view;
-				for (int i = mapView.getComponentCount() - 1; i >= 0; i--) {
-					Component comp = mapView.getComponent(i);
-					if (comp instanceof NodeView
-							|| comp instanceof NodeMotionListenerView) {
-						mapView.remove(comp);
-					}
-				}
-				mapView.initRoot();
-				mapView.add(mapView.getRoot());
-				mapView.doLayout();
-				controller.nodeChanged(focussed);
-				logger.trace("layout done.");
-				controller.select(focussed,
-						Tools.getVectorWithSingleElement(focussed));
-				controller.centerNode(focussed);
-				controller.obtainFocusForSelected();
-			}
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.modes.mindmapmode.actions.xml.ActorXml#getDoActionClass()
-		 */
-		public Class<ChangeRootNodeAction> getDoActionClass() {
-			return ChangeRootNodeAction.class;
-		}
-
-	}
+    }
 
 }

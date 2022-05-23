@@ -25,14 +25,13 @@ import freemind.controller.filter.Filter;
 import freemind.controller.filter.condition.NoFilteringCondition;
 import freemind.controller.filter.util.SortedMapListModel;
 import freemind.main.FreeMind;
-import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.MapFeedback;
 import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.XMLElementAdapter;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
@@ -47,6 +46,7 @@ import java.net.URL;
 import java.util.*;
 
 @SuppressWarnings("serial")
+@Log4j2
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     public static final String MAP_INITIAL_START = "<map version=\"";
     public static final String FREEMIND_VERSION_UPDATER_XSLT = "freemind/modes/mindmapmode/freemind_version_updater.xslt";
@@ -54,7 +54,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      * The current version and all other version that don't need XML update for
      * sure.
      */
-    public static final String EXPECTED_START_STRINGS[] = {
+    public static final String[] EXPECTED_START_STRINGS = {
             MAP_INITIAL_START + FreeMind.XML_VERSION + "\"",
             MAP_INITIAL_START + "0.7.1\""};
 
@@ -67,7 +67,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     protected boolean readOnly = true;
     private File file;
     private long mFileTime = 0;
-    static protected Logger logger;
     private Filter filter = null;
     private HashSet<MapSourceChangedObserver> mMapSourceChangedObserverSet = new HashSet<>();
     private Timer mTimerForFileChangeObservation;
@@ -76,9 +75,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     public MapAdapter(MapFeedback mapFeedback) {
         super(null);
         this.mMapFeedback = mapFeedback;
-        if (logger == null) {
-            logger = Resources.getInstance().getLogger(this.getClass().getName());
-        }
         filter = new DefaultFilter(NoFilteringCondition.createCondition(),
                 true, false);
         mTimerForFileChangeObservation = new Timer();
@@ -103,7 +99,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             }
             if (shouldFire) {
                 for (MapSourceChangedObserver observer : mMapSourceChangedObserverSet) {
-                    logger.info("File " + getFile()
+                    log.info("File " + getFile()
                             + " changed on disk as it was last modified at "
                             + new Date(lastModified));
                     try {
@@ -115,7 +111,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                             mFileTime = lastModified;
                         }
                     } catch (Exception e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                     }
                 }
             }
@@ -493,7 +489,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                 // Issue event here.
                 pMapSourceChangedObserver.mapSourceChanged(this);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         mMapSourceChangedObserverSet.add(pMapSourceChangedObserver);
@@ -605,7 +601,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         } catch (Exception ex) {
             String errorMessage = "Error while parsing file:" + ex;
             System.err.println(errorMessage);
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
             NodeAdapter result = createNodeAdapter(this, null);
             result.setText(errorMessage);
             return (MindMapNode) result;

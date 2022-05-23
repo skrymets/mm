@@ -19,7 +19,7 @@
  *
  * Created on 06.09.2006
  */
- /*$Id: TransformTest.java,v 1.1.2.3 2009/03/01 20:16:29 christianfoltin Exp $*/
+/*$Id: TransformTest.java,v 1.1.2.3 2009/03/01 20:16:29 christianfoltin Exp $*/
 package tests.freemind;
 
 import java.io.ByteArrayOutputStream;
@@ -41,6 +41,7 @@ import freemind.controller.actions.generated.instance.instance.PluginProperty;
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
+
 import java.util.List;
 
 public class TransformTest extends FreeMindTestBase {
@@ -113,7 +114,7 @@ public class TransformTest extends FreeMindTestBase {
 
         List<Object> listPluginChoice = JIBXGeneratedUtil.listPluginChoice(plugin);
 
-        for (Iterator iter = listPluginChoice.iterator(); iter.hasNext();) {
+        for (Iterator iter = listPluginChoice.iterator(); iter.hasNext(); ) {
 
             Object p = iter.next();
             if (p instanceof PluginAction) {
@@ -124,7 +125,7 @@ public class TransformTest extends FreeMindTestBase {
 
                 List<Object> listPluginActions = JIBXGeneratedUtil.listPluginActions(pl);
 
-                for (Iterator iterator = listPluginActions.iterator(); iterator.hasNext();) {
+                for (Iterator iterator = listPluginActions.iterator(); iterator.hasNext(); ) {
                     Object plObject = (Object) iterator.next();
                     if (plObject instanceof PluginProperty) {
                         PluginProperty property = (PluginProperty) plObject;
@@ -136,7 +137,7 @@ public class TransformTest extends FreeMindTestBase {
         }
         return properties;
     }
-    
+
     private void doExportWithExportPlugin(String mapFileToBeExported, String destinationFileName, Properties properties) throws Exception {
         InputStream xmlSource = ClassLoader.getSystemResource(mapFileToBeExported).openStream();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -153,7 +154,7 @@ public class TransformTest extends FreeMindTestBase {
     }
 
     private void doExportWithOooPlugin(String mapFileToBeExported,
-            String destinationFileName, Properties properties)
+                                       String destinationFileName, Properties properties)
             throws IOException {
         InputStream xmlSource = ClassLoader.getSystemResource(
                 mapFileToBeExported).openStream();

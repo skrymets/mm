@@ -17,7 +17,9 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/** this is only a test class */
+/**
+ * this is only a test class
+ */
 package plugins.search;
 
 import java.io.File;
@@ -30,70 +32,70 @@ import freemind.modes.mindmapmode.hooks.MindMapHookAdapter;
 import freemind.view.MapModule;
 
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  * @author Stephen Leonard
  * @since 14 Feb 2014
- * 
+ *
  * @version $Author:: $: Author of last commit
  * @version $Rev:: $: Revision of last commit
  * @version $Date:: $: Date of last commit
- * 
+ *
  */
 public class SearchControllerHook extends MindMapHookAdapter implements
-		ISearchController {
+        ISearchController {
 
-	/**
-	 */
-	public SearchControllerHook() {
-		super();
-		if (logger == null) {
-			logger = getController().getFrame().getLogger(
-					this.getClass().getName());
-		}
-	}
+    /**
+     */
+    public SearchControllerHook() {
+        super();
+        if (logger == null) {
+            logger = getController().getFrame().getLogger(
+                    this.getClass().getName());
+        }
+    }
 
-	public Logger getLogger(Class<?> className) {
-		return getController().getFrame().getLogger(className.getName());
-	}
+    public Logger getLogger(Class<?> className) {
+        return getController().getFrame().getLogger(className.getName());
+    }
 
-	/**
-	 * 
-	 */
-	/* (non-Javadoc)
-	 * @see freemind.extensions.HookAdapter#startupMapHook()
-	 */
-	@Override
-	public void startupMapHook() {
-		super.startupMapHook();
-		SearchViewPanel panel = new SearchViewPanel(this);
-		panel.setVisible(true);
-	}
+    /**
+     *
+     */
+    /* (non-Javadoc)
+     * @see freemind.extensions.HookAdapter#startupMapHook()
+     */
+    @Override
+    public void startupMapHook() {
+        super.startupMapHook();
+        SearchViewPanel panel = new SearchViewPanel(this);
+        panel.setVisible(true);
+    }
 
 
-	public JFrame getJFrame() {
-		return getController()
-				.getFrame().getJFrame();
-	}
+    public JFrame getJFrame() {
+        return getController()
+                .getFrame().getJFrame();
+    }
 
-	public void openMap(String mapModule) {
-		logger.fine("open map :" + mapModule);
-		getController().loadURL(mapModule);
-	}
+    public void openMap(String mapModule) {
+        logger.fine("open map :" + mapModule);
+        getController().loadURL(mapModule);
+    }
 
-	public File[] getFilesOfOpenTabs() {
-		List<MapModule> maps = getController().getFrame().getController()
-				.getMapModuleManager().getMapModuleVector();
-		File[] mapFiles = new File[maps.size()];
-		for (int i = 0; i < mapFiles.length; i++) {
-			mapFiles[i] = maps.get(i).getModel().getFile();
-		}
-		return mapFiles;
-	}
+    public File[] getFilesOfOpenTabs() {
+        List<MapModule> maps = getController().getFrame().getController()
+                .getMapModuleManager().getMapModuleVector();
+        File[] mapFiles = new File[maps.size()];
+        for (int i = 0; i < mapFiles.length; i++) {
+            mapFiles[i] = maps.get(i).getModel().getFile();
+        }
+        return mapFiles;
+    }
 
-	@Override
-	public void setWaitingCursor(boolean waiting) {
-		getController().getFrame().setWaitingCursor(waiting);
-	}
+    @Override
+    public void setWaitingCursor(boolean waiting) {
+        getController().getFrame().setWaitingCursor(waiting);
+    }
 }

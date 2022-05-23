@@ -43,22 +43,22 @@ import javax.swing.JFrame;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- *
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class FrmMain extends JFrame {
     public static final String APP_NAME = "SimplyHTML";
     public static final String VERSION = "0.16.05";
-    /** static reference to this instance of class FrmMain */
+    /**
+     * static reference to this instance of class FrmMain
+     */
     private SHTMLPanelImpl mainPane;
 
     private FrmMain() {
         SHTMLPanelImpl.setTextResources(null);
         setIconImage(Toolkit.getDefaultToolkit().createImage(
-            DynamicResource.getResource(SHTMLPanelImpl.getResources(), "appIcon")));
+                DynamicResource.getResource(SHTMLPanelImpl.getResources(), "appIcon")));
         setTitle(APP_NAME);
     }
 
@@ -86,11 +86,9 @@ class FrmMain extends JFrame {
                     getSHTMLPanel().getMostRecentFocusOwner().requestFocus();
                 }
             });
-        }
-        catch (final InterruptedException e) {
+        } catch (final InterruptedException e) {
             e.printStackTrace();
-        }
-        catch (final InvocationTargetException e) {
+        } catch (final InvocationTargetException e) {
             e.printStackTrace();
         }
         SplashScreen.hideInstance();

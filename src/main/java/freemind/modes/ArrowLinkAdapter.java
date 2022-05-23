@@ -24,163 +24,152 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapNode;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 
-public abstract class ArrowLinkAdapter extends LinkAdapter implements
-		MindMapArrowLink {
+@Log4j2
+public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArrowLink {
 
-	/**
-	 * 
-	 */
-	private static final String ARROW_DEFAULT_UP = "DEFAULT";
-	/**
-	 * 
-	 */
-	private static final String ARROW_NONE_UC = "NONE";
+    private static final String ARROW_DEFAULT_UP = "DEFAULT";
+    private static final String ARROW_NONE_UC = "NONE";
 
-	/** the zero is the start point of the line; */
-	protected Point startInclination;
-	/** the zero is the end point of the line; */
-	protected Point endInclination;
-	protected String startArrow;
-	protected String endArrow;
-	protected boolean showControlPointsFlag;
+    /* the zero is the start point of the line */
+    protected Point startInclination;
+    /* the zero is the end point of the line */
+    protected Point endInclination;
+    protected String startArrow;
+    protected String endArrow;
+    protected boolean showControlPointsFlag;
 
-	public ArrowLinkAdapter(MindMapNode source, MindMapNode target,
-			MapFeedback pMapFeedback) {
-		super(source, target, pMapFeedback);
-		startArrow = ARROW_NONE;
-		endArrow = ARROW_DEFAULT;
-	}
+    public ArrowLinkAdapter(MindMapNode source, MindMapNode target, MapFeedback pMapFeedback) {
+        super(source, target, pMapFeedback);
+        startArrow = ARROW_NONE;
+        endArrow = ARROW_DEFAULT;
+    }
 
-	public Point getStartInclination() {
-		if (startInclination == null)
-			return null;
-		return new Point(startInclination);
-	}
+    public Point getStartInclination() {
+        if (startInclination == null)
+            return null;
+        return new Point(startInclination);
+    }
 
-	public Point getEndInclination() {
-		if (endInclination == null)
-			return null;
-		return new Point(endInclination);
-	}
+    public Point getEndInclination() {
+        if (endInclination == null)
+            return null;
+        return new Point(endInclination);
+    }
 
-	public String getStartArrow() {
-		return startArrow;
-	}
+    public String getStartArrow() {
+        return startArrow;
+    }
 
-	public String getEndArrow() {
-		return endArrow;
-	}
+    public String getEndArrow() {
+        return endArrow;
+    }
 
-	public void setStartInclination(Point startInclination) {
-		this.startInclination = startInclination;
-	}
+    public void setStartInclination(Point startInclination) {
+        this.startInclination = startInclination;
+    }
 
-	public void setEndInclination(Point endInclination) {
-		this.endInclination = endInclination;
-	}
+    public void setEndInclination(Point endInclination) {
+        this.endInclination = endInclination;
+    }
 
-	public void setStartArrow(String startArrow) {
-		if (startArrow == null || startArrow.toUpperCase().equals(ARROW_NONE_UC)) {
-			this.startArrow = ARROW_NONE;
-			return;
-		} else if (startArrow.toUpperCase().equals(ARROW_DEFAULT_UP)) {
-			this.startArrow = ARROW_DEFAULT;
-			return;
-		}
-		// dont change:
-		System.err.println("Cannot set the start arrow type to " + startArrow);
-	}
+    public void setStartArrow(String startArrow) {
+        if (startArrow == null || startArrow.equalsIgnoreCase(ARROW_NONE_UC)) {
+            this.startArrow = ARROW_NONE;
+            return;
+        } else if (startArrow.equalsIgnoreCase(ARROW_DEFAULT_UP)) {
+            this.startArrow = ARROW_DEFAULT;
+            return;
+        }
+        // dont change:
+        log.error("Cannot set the start arrow type to {}", startArrow);
+    }
 
-	public void setEndArrow(String endArrow) {
-		if (endArrow == null || endArrow.toUpperCase().equals(ARROW_NONE_UC)) {
-			this.endArrow = ARROW_NONE;
-			return;
-		} else if (endArrow.toUpperCase().equals(ARROW_DEFAULT_UP)) {
-			this.endArrow = ARROW_DEFAULT;
-			return;
-		}
-		// dont change:
-		System.err.println("Cannot set the end arrow type to " + endArrow);
-	}
+    public void setEndArrow(String endArrow) {
+        if (endArrow == null || endArrow.equalsIgnoreCase(ARROW_NONE_UC)) {
+            this.endArrow = ARROW_NONE;
+            return;
+        } else if (endArrow.equalsIgnoreCase(ARROW_DEFAULT_UP)) {
+            this.endArrow = ARROW_DEFAULT;
+            return;
+        }
+        // dont change:
+        log.error("Cannot set the end arrow type to {}", endArrow);
+    }
 
-	public Object clone() {
-		ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) super.clone();
-		// now replace the points:
-		arrowLink.startInclination = (startInclination == null) ? null
-				: new Point(startInclination.x, startInclination.y);
-		arrowLink.endInclination = (endInclination == null) ? null : new Point(
-				endInclination.x, endInclination.y);
-		arrowLink.startArrow = (startArrow == null) ? null : new String(
-				startArrow);
-		arrowLink.endArrow = (endArrow == null) ? null : new String(endArrow);
-		return arrowLink;
-	}
+    public Object clone() {
+        ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) super.clone();
+        // now replace the points:
+        arrowLink.startInclination = (startInclination == null) ? null : new Point(startInclination.x, startInclination.y);
+        arrowLink.endInclination = (endInclination == null) ? null : new Point(endInclination.x, endInclination.y);
+        arrowLink.startArrow = (startArrow == null) ? null : startArrow;
+        arrowLink.endArrow = (endArrow == null) ? null : endArrow;
+        return arrowLink;
+    }
 
-	public void showControlPoints(boolean bShowControlPointsFlag) {
-		showControlPointsFlag = bShowControlPointsFlag;
-	}
+    public void showControlPoints(boolean bShowControlPointsFlag) {
+        showControlPointsFlag = bShowControlPointsFlag;
+    }
 
-	public boolean getShowControlPointsFlag() {
-		return showControlPointsFlag;
-	}
+    public boolean getShowControlPointsFlag() {
+        return showControlPointsFlag;
+    }
 
-	public XMLElement save() {
-		XMLElement arrowLink = new XMLElement();
-		arrowLink.setName("arrowlink");
+    public XMLElement save() {
+        XMLElement arrowLink = new XMLElement();
+        arrowLink.setName("arrowlink");
 
-		if (style != null) {
-			arrowLink.setAttribute("STYLE", style);
-		}
-		if (getUniqueId() != null) {
-			arrowLink.setAttribute("ID", getUniqueId());
-		}
-		if (color != null) {
-			arrowLink.setAttribute("COLOR", Tools.colorToXml(color));
-		}
-		if (getDestinationLabel() != null) {
-			arrowLink.setAttribute("DESTINATION", getDestinationLabel());
-		}
-		if (getReferenceText() != null) {
-			arrowLink.setAttribute("REFERENCETEXT", getReferenceText());
-		}
-		if (getStartInclination() != null) {
-			arrowLink.setAttribute("STARTINCLINATION",
-					Tools.PointToXml(getStartInclination()));
-		}
-		if (getEndInclination() != null) {
-			arrowLink.setAttribute("ENDINCLINATION",
-					Tools.PointToXml(getEndInclination()));
-		}
-		if (getStartArrow() != null)
-			arrowLink.setAttribute("STARTARROW", (getStartArrow()));
-		if (getEndArrow() != null)
-			arrowLink.setAttribute("ENDARROW", (getEndArrow()));
-		return arrowLink;
-	}
-	
-	public ArrowLinkTarget createArrowLinkTarget(MindMapLinkRegistry pRegistry) {
-		ArrowLinkTarget linkTarget = new ArrowLinkTarget(source, target, mMapFeedback);
-		linkTarget.setSourceLabel(pRegistry.getLabel(source));
-		copy(linkTarget);
-		return linkTarget;
-	}
+        if (style != null) {
+            arrowLink.setAttribute("STYLE", style);
+        }
+        if (getUniqueId() != null) {
+            arrowLink.setAttribute("ID", getUniqueId());
+        }
+        if (color != null) {
+            arrowLink.setAttribute("COLOR", Tools.colorToXml(color));
+        }
+        if (getDestinationLabel() != null) {
+            arrowLink.setAttribute("DESTINATION", getDestinationLabel());
+        }
+        if (getReferenceText() != null) {
+            arrowLink.setAttribute("REFERENCETEXT", getReferenceText());
+        }
+        if (getStartInclination() != null) {
+            arrowLink.setAttribute("STARTINCLINATION", Tools.PointToXml(getStartInclination()));
+        }
+        if (getEndInclination() != null) {
+            arrowLink.setAttribute("ENDINCLINATION", Tools.PointToXml(getEndInclination()));
+        }
+        if (getStartArrow() != null)
+            arrowLink.setAttribute("STARTARROW", (getStartArrow()));
+        if (getEndArrow() != null)
+            arrowLink.setAttribute("ENDARROW", (getEndArrow()));
+        return arrowLink;
+    }
 
-	protected void copy(ArrowLinkAdapter linkTarget) {
-		linkTarget.setUniqueId(getUniqueId());
-		linkTarget.setColor(getColor());
-		linkTarget.setDestinationLabel(getDestinationLabel());
-		linkTarget.setEndArrow(getEndArrow());
-		linkTarget.setEndInclination(getEndInclination());
-		linkTarget.setReferenceText(getReferenceText());
-		linkTarget.setStartArrow(getStartArrow());
-		linkTarget.setStartInclination(getStartInclination());
-		linkTarget.setStyle(getStyle());
-		linkTarget.setTarget(getTarget());
-		linkTarget.setWidth(getWidth());
-		linkTarget.setSource(getSource());
-	}
+    public ArrowLinkTarget createArrowLinkTarget(MindMapLinkRegistry pRegistry) {
+        ArrowLinkTarget linkTarget = new ArrowLinkTarget(source, target, mMapFeedback);
+        linkTarget.setSourceLabel(pRegistry.getLabel(source));
+        copy(linkTarget);
+        return linkTarget;
+    }
+
+    protected void copy(ArrowLinkAdapter linkTarget) {
+        linkTarget.setUniqueId(getUniqueId());
+        linkTarget.setColor(getColor());
+        linkTarget.setDestinationLabel(getDestinationLabel());
+        linkTarget.setEndArrow(getEndArrow());
+        linkTarget.setEndInclination(getEndInclination());
+        linkTarget.setReferenceText(getReferenceText());
+        linkTarget.setStartArrow(getStartArrow());
+        linkTarget.setStartInclination(getStartInclination());
+        linkTarget.setStyle(getStyle());
+        linkTarget.setTarget(getTarget());
+        linkTarget.setWidth(getWidth());
+        linkTarget.setSource(getSource());
+    }
 
 }

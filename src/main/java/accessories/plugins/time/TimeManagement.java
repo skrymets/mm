@@ -23,7 +23,7 @@
 package accessories.plugins.time;
 
 import freemind.common.XmlBindingTools;
-import freemind.controller.MapModuleManager.MapModuleChangeObserver;
+import freemind.controller.MapModuleChangeObserver;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.CalendarMarking;
 import freemind.controller.actions.generated.instance.CalendarMarkings;
@@ -37,6 +37,7 @@ import freemind.modes.common.plugins.ReminderHookBase;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapHookAdapter;
 import freemind.view.MapModule;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,499 +58,500 @@ import java.util.Vector;
 
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
-public class TimeManagement extends MindMapHookAdapter implements
-		PropertyChangeListener, ActionListener, MapModuleChangeObserver {
+@Log4j2
+public class TimeManagement extends MindMapHookAdapter implements PropertyChangeListener, ActionListener, MapModuleChangeObserver {
 
-	private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = TimeManagement.class
-			.getName() + "_properties";
+    private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = TimeManagement.class
+            .getName() + "_properties";
 
-	
-	private interface NodeFactory {
-		MindMapNode getNode(MindMapNode pNode);
-	}
 
-	private class AppendDateAbstractAction extends AbstractAction {
+    private interface NodeFactory {
+        MindMapNode getNode(MindMapNode pNode);
+    }
 
-		private NodeFactory mFactory;
+    private class AppendDateAbstractAction extends AbstractAction {
 
-		public AppendDateAbstractAction() {
+        private NodeFactory mFactory;
 
-		}
+        public AppendDateAbstractAction() {
 
-		public void init(NodeFactory pFactory, String pText) {
-			mFactory = pFactory;
-			putValue(Action.NAME, getMindMapController().getText(pText));
-		}
+        }
 
-		public void actionPerformed(ActionEvent actionEvent) {
-			MindMapNode lastElement = null;
-			Vector<MindMapNode> sel = new Vector<>();
-			for (MindMapNode element : getMindMapController().getSelecteds()) {
-				element = mFactory.getNode(element);
-				DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-				String dateAsString = df.format(getCalendarDate());
-				getMindMapController().setNodeText(element,
-						element.getText() + " " + dateAsString);
-				lastElement = element;
-				sel.add(element);
-			}
-			getMindMapController().select(lastElement, sel);
-			requestFocusForDay();
-		}
+        public void init(NodeFactory pFactory, String pText) {
+            mFactory = pFactory;
+            putValue(Action.NAME, getMindMapController().getText(pText));
+        }
 
-	}
+        public void actionPerformed(ActionEvent actionEvent) {
+            MindMapNode lastElement = null;
+            Vector<MindMapNode> sel = new Vector<>();
+            for (MindMapNode element : getMindMapController().getSelecteds()) {
+                element = mFactory.getNode(element);
+                DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+                String dateAsString = df.format(getCalendarDate());
+                getMindMapController().setNodeText(element,
+                        element.getText() + " " + dateAsString);
+                lastElement = element;
+                sel.add(element);
+            }
+            getMindMapController().select(lastElement, sel);
+            requestFocusForDay();
+        }
 
-	private class AppendDateAction extends AppendDateAbstractAction {
-		public AppendDateAction() {
-			init(new NodeFactory() {
+    }
 
-				public MindMapNode getNode(MindMapNode pNode) {
-					return pNode;
-				}
-			}, "plugins/TimeManagement.xml_appendButton");
-		}
+    private class AppendDateAction extends AppendDateAbstractAction {
+        public AppendDateAction() {
+            init(new NodeFactory() {
 
-	}
+                public MindMapNode getNode(MindMapNode pNode) {
+                    return pNode;
+                }
+            }, "plugins/TimeManagement.xml_appendButton");
+        }
 
-	private class AppendDateToChildAction extends AppendDateAbstractAction {
-		public AppendDateToChildAction() {
-			init(new NodeFactory() {
+    }
 
-				public MindMapNode getNode(MindMapNode pNode) {
-					return getMindMapController().addNewNode(pNode,
-							pNode.getChildCount(), pNode.isLeft());
-				}
-			}, "plugins/TimeManagement.xml_appendAsNewButton");
-		}
-	}
+    private class AppendDateToChildAction extends AppendDateAbstractAction {
+        public AppendDateToChildAction() {
+            init(new NodeFactory() {
 
-	private class AppendDateToSiblingAction extends AppendDateAbstractAction {
-		public AppendDateToSiblingAction() {
-			init(new NodeFactory() {
+                public MindMapNode getNode(MindMapNode pNode) {
+                    return getMindMapController().addNewNode(pNode,
+                            pNode.getChildCount(), pNode.isLeft());
+                }
+            }, "plugins/TimeManagement.xml_appendAsNewButton");
+        }
+    }
 
-				public MindMapNode getNode(MindMapNode pNode) {
-					MindMapNode parent = pNode;
-					if (!pNode.isRoot()) {
-						parent = pNode.getParentNode();
-					}
-					return getMindMapController().addNewNode(parent,
-							parent.getIndex(pNode) + 1, parent.isLeft());
-				}
-			}, "plugins/TimeManagement.xml_appendAsNewSiblingButton");
-		}
-	}
+    private class AppendDateToSiblingAction extends AppendDateAbstractAction {
+        public AppendDateToSiblingAction() {
+            init(new NodeFactory() {
 
-	private class RemindAction extends AbstractAction {
-		public RemindAction() {
-			super(getMindMapController().getText(
-					"plugins/TimeManagement.xml_reminderButton"));
-		}
+                public MindMapNode getNode(MindMapNode pNode) {
+                    MindMapNode parent = pNode;
+                    if (!pNode.isRoot()) {
+                        parent = pNode.getParentNode();
+                    }
+                    return getMindMapController().addNewNode(parent,
+                            parent.getIndex(pNode) + 1, parent.isLeft());
+                }
+            }, "plugins/TimeManagement.xml_appendAsNewSiblingButton");
+        }
+    }
 
-		public void actionPerformed(ActionEvent pE) {
-			TimeManagement.this.actionPerformed(pE);
-		}
-	}
+    private class RemindAction extends AbstractAction {
+        public RemindAction() {
+            super(getMindMapController().getText(
+                    "plugins/TimeManagement.xml_reminderButton"));
+        }
 
-	private final class RemoveReminders extends AbstractAction {
-		public RemoveReminders() {
-			super(getMindMapController().getText(
-					"plugins/TimeManagement.xml_removeReminderButton"));
-		}
+        public void actionPerformed(ActionEvent pE) {
+            TimeManagement.this.actionPerformed(pE);
+        }
+    }
 
-		public void actionPerformed(ActionEvent e) {
-			for (MindMapNode node : getMindMapController().getSelecteds()) {
-				ReminderHookBase alreadyPresentHook = TimeManagementOrganizer
-						.getHook(node);
-				if (alreadyPresentHook != null) {
-					addHook(node, 0L); // means remove hook, as it is already
-					// present.
-				}
-			}
-		}
-	}
+    private final class RemoveReminders extends AbstractAction {
+        public RemoveReminders() {
+            super(getMindMapController().getText(
+                    "plugins/TimeManagement.xml_removeReminderButton"));
+        }
 
-	private class TodayAction extends AbstractAction {
-		public TodayAction() {
-			super(getMindMapController().getText(
-					"plugins/TimeManagement.xml_todayButton"));
-		}
+        public void actionPerformed(ActionEvent e) {
+            for (MindMapNode node : getMindMapController().getSelecteds()) {
+                ReminderHookBase alreadyPresentHook = TimeManagementOrganizer
+                        .getHook(node);
+                if (alreadyPresentHook != null) {
+                    addHook(node, 0L); // means remove hook, as it is already
+                    // present.
+                }
+            }
+        }
+    }
 
-		public void actionPerformed(ActionEvent arg0) {
-			calendar.setCalendar(Calendar.getInstance());
-		}
-	}
+    private class TodayAction extends AbstractAction {
+        public TodayAction() {
+            super(getMindMapController().getText(
+                    "plugins/TimeManagement.xml_todayButton"));
+        }
 
-	private class CloseAction extends AbstractAction {
-		public CloseAction() {
-			super(getMindMapController().getText(
-					"plugins/TimeManagement.xml_closeButton"));
-		}
+        public void actionPerformed(ActionEvent arg0) {
+            calendar.setCalendar(Calendar.getInstance());
+        }
+    }
 
-		public void actionPerformed(ActionEvent arg0) {
-			disposeDialog();
-		}
-	}
+    private class CloseAction extends AbstractAction {
+        public CloseAction() {
+            super(getMindMapController().getText(
+                    "plugins/TimeManagement.xml_closeButton"));
+        }
 
-	private class AddMarkAction extends AbstractAction {
-		
-		public AddMarkAction() {
-			putValue(Action.NAME, getMindMapController().getText("plugins/TimeManagement.xml_addMarkingsButton"));
-		}
-		
-		public void actionPerformed(ActionEvent actionEvent) {
-			Calendar cal = getCalendar();
-			Resources res = Resources.getInstance();
-			String xml = res.getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
-			XmlBindingTools bind = XmlBindingTools.getInstance();
-			CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
-			CalendarMarkingDialog dialog = new CalendarMarkingDialog(getMindMapController());
-			dialog.setDates(cal);
-			dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
-			dialog.setVisible(true);
-			if(dialog.getResult() == CalendarMarkingDialog.OK){
-				result.addCalendarMarking(dialog.getCalendarMarking());
-				getMindMapController().setProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML, bind.marshall(result));
-				calendar.repaint();
-			}
-		}
-		
-	}
-	private class RemoveMarkAction extends AbstractAction {
-		
-		public RemoveMarkAction() {
-			putValue(Action.NAME, getMindMapController().getText("plugins/TimeManagement.removeMarkingsButton"));
-		}
-		
-		public void actionPerformed(ActionEvent actionEvent) {
-			Calendar cal = getCalendar();
-			Resources res = Resources.getInstance();
-			String xml = res.getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
-			XmlBindingTools bind = XmlBindingTools.getInstance();
-			CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
-			CalendarMarkingEvaluator ev = new CalendarMarkingEvaluator(result);
-			CalendarMarking marking = ev.isMarked(cal);
-			if(marking != null){
-				for (int i = 0; i < result.sizeCalendarMarkingList(); i++) {
-					CalendarMarking mark = result.getCalendarMarking(i);
-					if(mark == marking){
-						result.getCalendarMarkingList().remove(i);
-						break;
-					}
-				}
-			}
-			getMindMapController().setProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML, bind.marshall(result));
-			calendar.repaint();
-		}
-		
-	}
-	
-	public final static String REMINDER_HOOK_NAME = "plugins/TimeManagementReminder.xml";
+        public void actionPerformed(ActionEvent arg0) {
+            disposeDialog();
+        }
+    }
 
-	private static Calendar lastDate = null;
+    private class AddMarkAction extends AbstractAction {
 
-	private static int lastActivePosition = 4;
+        public AddMarkAction() {
+            putValue(Action.NAME, getMindMapController().getText("plugins/TimeManagement.xml_addMarkingsButton"));
+        }
 
-	private JTripleCalendar calendar;
+        public void actionPerformed(ActionEvent actionEvent) {
+            Calendar cal = getCalendar();
+            Resources res = Resources.getInstance();
+            String xml = res.getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
+            XmlBindingTools bind = XmlBindingTools.getInstance();
+            CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
+            CalendarMarkingDialog dialog = new CalendarMarkingDialog(getMindMapController());
+            dialog.setDates(cal);
+            dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
+            dialog.setVisible(true);
+            if (dialog.getResult() == CalendarMarkingDialog.OK) {
+                result.addCalendarMarking(dialog.getCalendarMarking());
+                getMindMapController().setProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML, bind.marshall(result));
+                calendar.repaint();
+            }
+        }
 
-	private JDialog mDialog;
+    }
 
-	private JPanel timePanel;
+    private class RemoveMarkAction extends AbstractAction {
 
-	private JTextField hourField;
+        public RemoveMarkAction() {
+            putValue(Action.NAME, getMindMapController().getText("plugins/TimeManagement.removeMarkingsButton"));
+        }
 
-	private JTextField minuteField;
+        public void actionPerformed(ActionEvent actionEvent) {
+            Calendar cal = getCalendar();
+            Resources res = Resources.getInstance();
+            String xml = res.getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
+            XmlBindingTools bind = XmlBindingTools.getInstance();
+            CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
+            CalendarMarkingEvaluator ev = new CalendarMarkingEvaluator(result);
+            CalendarMarking marking = ev.isMarked(cal);
+            if (marking != null) {
+                for (int i = 0; i < result.sizeCalendarMarkingList(); i++) {
+                    CalendarMarking mark = result.getCalendarMarking(i);
+                    if (mark == marking) {
+                        result.getCalendarMarkingList().remove(i);
+                        break;
+                    }
+                }
+            }
+            getMindMapController().setProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML, bind.marshall(result));
+            calendar.repaint();
+        }
 
-	private MindMapController mController;
+    }
 
-	private static TimeManagement sCurrentlyOpenTimeManagement = null;
+    public final static String REMINDER_HOOK_NAME = "plugins/TimeManagementReminder.xml";
 
-	public void startupMapHook() {
-		super.startupMapHook();
-		if (sCurrentlyOpenTimeManagement != null) {
-			sCurrentlyOpenTimeManagement.mDialog.getContentPane().setVisible(
-					true);
-			return;
-		}
-		sCurrentlyOpenTimeManagement = this;
-		this.mController = super.getMindMapController();
-		getMindMapController().getController().getMapModuleManager()
-				.addListener(this);
-		mDialog = new JDialog(getMindMapController().getFrame().getJFrame(),
-				false /*
-					 * not modal
-					 */);
-		mDialog.setTitle(getResourceString("plugins/TimeManagement.xml_WindowTitle"));
-		mDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		mDialog.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent event) {
-				disposeDialog();
-			}
-		});
-		Action closeAction = new CloseAction();
-		Tools.addEscapeActionToDialog(mDialog, closeAction);
-		/** Menu **/
-		StructuredMenuHolder menuHolder = new StructuredMenuHolder();
-		JMenuBar menu = new JMenuBar();
-		menuHolder.addMenu(new JMenu(getMindMapController().getText(
-				"TimeManagement.Actions")), "main/actions/.");
-		addAccelerator(menuHolder.addAction(new AppendDateAction(),
-				"main/actions/append"),
-				"keystroke_plugins/TimeManagement_append");
-		addAccelerator(menuHolder.addAction(new AppendDateToChildAction(),
-				"main/actions/appendAsChild"),
-				"keystroke_plugins/TimeManagement_appendAsChild");
-		addAccelerator(menuHolder.addAction(new AppendDateToSiblingAction(),
-				"main/actions/appendAsSibling"),
-				"keystroke_plugins/TimeManagement_appendAsSibling");
-		JMenuItem remindMenuItem = addAccelerator(
-				menuHolder.addAction(new RemindAction(), "main/actions/remind"),
-				"keystroke_plugins/TimeManagementRemind");
-		remindMenuItem
-				.setToolTipText(getResourceString("plugins/TimeManagement.xml_reminderButton_tooltip"));
-		JMenuItem removeRemindersItem = addAccelerator(menuHolder.addAction(
-				new RemoveReminders(), "main/actions/removeReminders"),
-				"keystroke_plugins/TimeManagementRemoveReminders");
-		removeRemindersItem
-				.setToolTipText(getResourceString("plugins/TimeManagement.xml_removeReminderButton_tooltip"));
+    private static Calendar lastDate = null;
 
-		addAccelerator(
-				menuHolder.addAction(new TodayAction(), "main/actions/today"),
-				"keystroke_plugins/TimeManagementToday");
-		menuHolder.addAction(new CloseAction(), "main/actions/close");
-		menuHolder.addMenu(new JMenu(getMindMapController().getText(
-				"TimeManagement.Markings")), "main/markings/.");
-		addAccelerator(
-				menuHolder.addAction(new AddMarkAction(), "main/markings/add"),
-				"keystroke_plugins/TimeManagement_add_marking");
-		addAccelerator(
-				menuHolder.addAction(new RemoveMarkAction(), "main/markings/remove"),
-				"keystroke_plugins/TimeManagement_remove_marking");
-		menuHolder.updateMenus(menu, "main/");
-		mDialog.setJMenuBar(menu);
+    private static int lastActivePosition = 4;
 
-		calendar = new JTripleCalendar(lastActivePosition, lastDate);
-		Container contentPane = mDialog.getContentPane();
-		contentPane.setLayout(new GridBagLayout());
-		GridBagConstraints gb1 = new GridBagConstraints();
-		gb1.gridx = 0;
-		gb1.gridwidth = 4;
-		gb1.fill = GridBagConstraints.BOTH;
-		gb1.gridy = 0;
-		gb1.weightx = 1;
-		gb1.weighty = 1;
-		calendar.getDayChooser().addPropertyChangeListener(this);
-		contentPane.add(calendar, gb1);
-		{
-			GridBagConstraints gb2 = new GridBagConstraints();
-			gb2.gridx = 0;
-			gb2.gridy = 1;
-			gb2.gridwidth = 4;
-			gb2.weightx = 0;
-			gb2.weighty = 0;
-			gb2.fill = GridBagConstraints.HORIZONTAL;
-			contentPane.add(getTimePanel(), gb2);
-		}
-		mDialog.pack();
-		// focus fix after startup.
-		mDialog.addWindowFocusListener(new WindowAdapter() {
+    private JTripleCalendar calendar;
 
-			public void windowGainedFocus(WindowEvent e) {
-				requestFocusForDay();
-				mDialog.removeWindowFocusListener(this);
-			}
-		});
-		getMindMapController().decorateDialog(mDialog, WINDOW_PREFERENCE_STORAGE_PROPERTY);
-		mDialog.setVisible(true);
+    private JDialog mDialog;
 
-	}
+    private JPanel timePanel;
 
-	/**
-	 */
-	private JPanel getTimePanel() {
-		if (timePanel == null) {
-			timePanel = new JPanel();
-			timePanel.setLayout(new GridBagLayout());
-			{
-				GridBagConstraints gb2 = new GridBagConstraints();
-				gb2.gridx = 0;
-				gb2.gridy = 0;
-				gb2.fill = GridBagConstraints.HORIZONTAL;
-				timePanel.add(new JLabel(
-						getResourceString("plugins/TimeManagement.xml_hour")),
-						gb2);
-			}
-			{
-				GridBagConstraints gb2 = new GridBagConstraints();
-				gb2.gridx = 1;
-				gb2.gridy = 0;
-				gb2.fill = GridBagConstraints.HORIZONTAL;
-				hourField = new JTextField(2);
-				hourField.setText(""+Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-				timePanel.add(hourField, gb2);
-			}
-			{
-				GridBagConstraints gb2 = new GridBagConstraints();
-				gb2.gridx = 2;
-				gb2.gridy = 0;
-				gb2.fill = GridBagConstraints.HORIZONTAL;
-				timePanel
-						.add(new JLabel(
-								getResourceString("plugins/TimeManagement.xml_minute")),
-								gb2);
-			}
-			{
-				GridBagConstraints gb2 = new GridBagConstraints();
-				gb2.gridx = 3;
-				gb2.gridy = 0;
-				gb2.fill = GridBagConstraints.HORIZONTAL;
-				minuteField = new JTextField(2);
-				String minuteString = new Integer(Calendar.getInstance().get(
-						Calendar.MINUTE)).toString();
-				// padding with "0"
-				if (minuteString.length() < 2) {
-					minuteString = "0" + minuteString;
-				}
-				minuteField.setText(minuteString);
-				timePanel.add(minuteField, gb2);
-			}
+    private JTextField hourField;
 
-		}
-		return timePanel;
-	}
+    private JTextField minuteField;
 
-	public void propertyChange(PropertyChangeEvent event) {
-		if (event.getPropertyName().equals(JDayChooser.DAY_PROPERTY)) {
-		}
-	}
+    private MindMapController mController;
 
-	public void actionPerformed(ActionEvent arg0) {
-		Date date = getCalendarDate();
-		// add permanent node hook to the nodes and this hook checks
-		// permanently.
-		for (MindMapNode node : getMindMapController().getSelecteds()) {
-			ReminderHookBase alreadyPresentHook = TimeManagementOrganizer.getHook(node);
-			if (alreadyPresentHook != null) {
-				// already present:
-				Object[] messageArguments = {
-						new Date(alreadyPresentHook.getRemindUserAt()), date };
-				MessageFormat formatter = new MessageFormat(
-						getMindMapController()
-								.getText(
-										"plugins/TimeManagement.xml_reminderNode_onlyOneDate"));
-				String message = formatter.format(messageArguments);
-				logger.info(messageArguments.length + ", " + message);
-				int result = JOptionPane.showConfirmDialog(
-						getMindMapController().getFrame().getJFrame(), message,
-						"FreeMind", JOptionPane.YES_NO_OPTION);
-				if (result == JOptionPane.NO_OPTION)
-					return;
-				// here, the old has to be removed and the new one installed.
-				addHook(node, 0L); // means remove hook, as it is already
-									// present.
+    private static TimeManagement sCurrentlyOpenTimeManagement = null;
 
-			}
-			addHook(node, date.getTime());
-			ReminderHookBase rh = TimeManagementOrganizer.getHook(node);
-			if (rh == null) {
-				throw new IllegalArgumentException(
-						"hook not found although it is present!!");
-			}
-			node.invokeHook(rh);
-			getMindMapController().nodeChanged(node);
-		}
-		// disposeDialog();
-	}
+    public void startupMapHook() {
+        super.startupMapHook();
+        if (sCurrentlyOpenTimeManagement != null) {
+            sCurrentlyOpenTimeManagement.mDialog.getContentPane().setVisible(
+                    true);
+            return;
+        }
+        sCurrentlyOpenTimeManagement = this;
+        this.mController = super.getMindMapController();
+        getMindMapController().getController().getMapModuleManager()
+                .addListener(this);
+        mDialog = new JDialog(getMindMapController().getFrame().getJFrame(),
+                false /*
+         * not modal
+         */);
+        mDialog.setTitle(getResourceString("plugins/TimeManagement.xml_WindowTitle"));
+        mDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        mDialog.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent event) {
+                disposeDialog();
+            }
+        });
+        Action closeAction = new CloseAction();
+        Tools.addEscapeActionToDialog(mDialog, closeAction);
+        /** Menu **/
+        StructuredMenuHolder menuHolder = new StructuredMenuHolder();
+        JMenuBar menu = new JMenuBar();
+        menuHolder.addMenu(new JMenu(getMindMapController().getText(
+                "TimeManagement.Actions")), "main/actions/.");
+        addAccelerator(menuHolder.addAction(new AppendDateAction(),
+                        "main/actions/append"),
+                "keystroke_plugins/TimeManagement_append");
+        addAccelerator(menuHolder.addAction(new AppendDateToChildAction(),
+                        "main/actions/appendAsChild"),
+                "keystroke_plugins/TimeManagement_appendAsChild");
+        addAccelerator(menuHolder.addAction(new AppendDateToSiblingAction(),
+                        "main/actions/appendAsSibling"),
+                "keystroke_plugins/TimeManagement_appendAsSibling");
+        JMenuItem remindMenuItem = addAccelerator(
+                menuHolder.addAction(new RemindAction(), "main/actions/remind"),
+                "keystroke_plugins/TimeManagementRemind");
+        remindMenuItem
+                .setToolTipText(getResourceString("plugins/TimeManagement.xml_reminderButton_tooltip"));
+        JMenuItem removeRemindersItem = addAccelerator(menuHolder.addAction(
+                        new RemoveReminders(), "main/actions/removeReminders"),
+                "keystroke_plugins/TimeManagementRemoveReminders");
+        removeRemindersItem
+                .setToolTipText(getResourceString("plugins/TimeManagement.xml_removeReminderButton_tooltip"));
 
-	/**
-	 * @param pRemindAt
-	 *            TODO
-	 */
-	private void addHook(MindMapNode node, long pRemindAt) {
-		// add the hook:
-		Properties properties = new Properties();
-		if (pRemindAt != 0L) {
-			properties.put(ReminderHookBase.REMINDUSERAT,
-					new Long(pRemindAt).toString());
-		}
-		getMindMapController().addHook(node,
-				Tools.getVectorWithSingleElement(node), REMINDER_HOOK_NAME,
-				properties);
-	}
+        addAccelerator(
+                menuHolder.addAction(new TodayAction(), "main/actions/today"),
+                "keystroke_plugins/TimeManagementToday");
+        menuHolder.addAction(new CloseAction(), "main/actions/close");
+        menuHolder.addMenu(new JMenu(getMindMapController().getText(
+                "TimeManagement.Markings")), "main/markings/.");
+        addAccelerator(
+                menuHolder.addAction(new AddMarkAction(), "main/markings/add"),
+                "keystroke_plugins/TimeManagement_add_marking");
+        addAccelerator(
+                menuHolder.addAction(new RemoveMarkAction(), "main/markings/remove"),
+                "keystroke_plugins/TimeManagement_remove_marking");
+        menuHolder.updateMenus(menu, "main/");
+        mDialog.setJMenuBar(menu);
 
-	/**
-	 *
-	 */
-	private void disposeDialog() {
-		WindowConfigurationStorage storage = new WindowConfigurationStorage();
-		getMindMapController().storeDialogPositions(mDialog, storage,
-				WINDOW_PREFERENCE_STORAGE_PROPERTY);
-		mDialog.setVisible(false);
-		mDialog.dispose();
-		lastDate = getCalendar();
-		lastActivePosition = calendar.getCurrentMonthPosition();
-		sCurrentlyOpenTimeManagement = null;
-	}
+        calendar = new JTripleCalendar(lastActivePosition, lastDate);
+        Container contentPane = mDialog.getContentPane();
+        contentPane.setLayout(new GridBagLayout());
+        GridBagConstraints gb1 = new GridBagConstraints();
+        gb1.gridx = 0;
+        gb1.gridwidth = 4;
+        gb1.fill = GridBagConstraints.BOTH;
+        gb1.gridy = 0;
+        gb1.weightx = 1;
+        gb1.weighty = 1;
+        calendar.getDayChooser().addPropertyChangeListener(this);
+        contentPane.add(calendar, gb1);
+        {
+            GridBagConstraints gb2 = new GridBagConstraints();
+            gb2.gridx = 0;
+            gb2.gridy = 1;
+            gb2.gridwidth = 4;
+            gb2.weightx = 0;
+            gb2.weighty = 0;
+            gb2.fill = GridBagConstraints.HORIZONTAL;
+            contentPane.add(getTimePanel(), gb2);
+        }
+        mDialog.pack();
+        // focus fix after startup.
+        mDialog.addWindowFocusListener(new WindowAdapter() {
 
-	/**
-	 */
-	private Date getCalendarDate() {
-		Calendar cal = getCalendar();
-		try {
-			int value = 0;
-			value = Integer.parseInt(hourField.getText());
-			cal.set(Calendar.HOUR_OF_DAY, value);
-			value = Integer.parseInt(minuteField.getText());
-			cal.set(Calendar.MINUTE, value);
-			cal.set(Calendar.SECOND, 0);
-		} catch (Exception e) {
-		}
-		return cal.getTime();
-	}
+            public void windowGainedFocus(WindowEvent e) {
+                requestFocusForDay();
+                mDialog.removeWindowFocusListener(this);
+            }
+        });
+        getMindMapController().decorateDialog(mDialog, WINDOW_PREFERENCE_STORAGE_PROPERTY);
+        mDialog.setVisible(true);
 
-	protected Calendar getCalendar() {
-		return calendar.getCalendar();
-	}
+    }
 
-	public void afterMapClose(MapModule oldMapModule, Mode oldMode) {
-	}
+    /**
+     *
+     */
+    private JPanel getTimePanel() {
+        if (timePanel == null) {
+            timePanel = new JPanel();
+            timePanel.setLayout(new GridBagLayout());
+            {
+                GridBagConstraints gb2 = new GridBagConstraints();
+                gb2.gridx = 0;
+                gb2.gridy = 0;
+                gb2.fill = GridBagConstraints.HORIZONTAL;
+                timePanel.add(new JLabel(
+                                getResourceString("plugins/TimeManagement.xml_hour")),
+                        gb2);
+            }
+            {
+                GridBagConstraints gb2 = new GridBagConstraints();
+                gb2.gridx = 1;
+                gb2.gridy = 0;
+                gb2.fill = GridBagConstraints.HORIZONTAL;
+                hourField = new JTextField(2);
+                hourField.setText("" + Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                timePanel.add(hourField, gb2);
+            }
+            {
+                GridBagConstraints gb2 = new GridBagConstraints();
+                gb2.gridx = 2;
+                gb2.gridy = 0;
+                gb2.fill = GridBagConstraints.HORIZONTAL;
+                timePanel
+                        .add(new JLabel(
+                                        getResourceString("plugins/TimeManagement.xml_minute")),
+                                gb2);
+            }
+            {
+                GridBagConstraints gb2 = new GridBagConstraints();
+                gb2.gridx = 3;
+                gb2.gridy = 0;
+                gb2.fill = GridBagConstraints.HORIZONTAL;
+                minuteField = new JTextField(2);
+                String minuteString = new Integer(Calendar.getInstance().get(
+                        Calendar.MINUTE)).toString();
+                // padding with "0"
+                if (minuteString.length() < 2) {
+                    minuteString = "0" + minuteString;
+                }
+                minuteField.setText(minuteString);
+                timePanel.add(minuteField, gb2);
+            }
 
-	public void afterMapModuleChange(MapModule oldMapModule, Mode oldMode,
-			MapModule newMapModule, Mode newMode) {
-	}
+        }
+        return timePanel;
+    }
 
-	public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode,
-			MapModule newMapModule, Mode newMode) {
-		getMindMapController().getController().getMapModuleManager()
-				.removeListener(this);
-		disposeDialog();
-	}
+    public void propertyChange(PropertyChangeEvent event) {
+        if (event.getPropertyName().equals(JDayChooser.DAY_PROPERTY)) {
+        }
+    }
 
-	public boolean isMapModuleChangeAllowed(MapModule oldMapModule,
-			Mode oldMode, MapModule newMapModule, Mode newMode) {
-		return true;
-	}
+    public void actionPerformed(ActionEvent arg0) {
+        Date date = getCalendarDate();
+        // add permanent node hook to the nodes and this hook checks
+        // permanently.
+        for (MindMapNode node : getMindMapController().getSelecteds()) {
+            ReminderHookBase alreadyPresentHook = TimeManagementOrganizer.getHook(node);
+            if (alreadyPresentHook != null) {
+                // already present:
+                Object[] messageArguments = {
+                        new Date(alreadyPresentHook.getRemindUserAt()), date};
+                MessageFormat formatter = new MessageFormat(
+                        getMindMapController()
+                                .getText(
+                                        "plugins/TimeManagement.xml_reminderNode_onlyOneDate"));
+                String message = formatter.format(messageArguments);
+                log.info(messageArguments.length + ", " + message);
+                int result = JOptionPane.showConfirmDialog(
+                        getMindMapController().getFrame().getJFrame(), message,
+                        "FreeMind", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.NO_OPTION)
+                    return;
+                // here, the old has to be removed and the new one installed.
+                addHook(node, 0L); // means remove hook, as it is already
+                // present.
 
-	public void numberOfOpenMapInformation(int number, int pIndex) {
-	}
+            }
+            addHook(node, date.getTime());
+            ReminderHookBase rh = TimeManagementOrganizer.getHook(node);
+            if (rh == null) {
+                throw new IllegalArgumentException(
+                        "hook not found although it is present!!");
+            }
+            node.invokeHook(rh);
+            getMindMapController().nodeChanged(node);
+        }
+        // disposeDialog();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.mindmapmode.hooks.MindMapHookAdapter#getMindMapController
-	 * ()
-	 */
-	public MindMapController getMindMapController() {
-		return mController;
-	}
+    /**
+     * @param pRemindAt TODO
+     */
+    private void addHook(MindMapNode node, long pRemindAt) {
+        // add the hook:
+        Properties properties = new Properties();
+        if (pRemindAt != 0L) {
+            properties.put(ReminderHookBase.REMINDUSERAT,
+                    new Long(pRemindAt).toString());
+        }
+        getMindMapController().addHook(node,
+                Tools.getVectorWithSingleElement(node), REMINDER_HOOK_NAME,
+                properties);
+    }
 
-	/**
-	 * 
-	 */
-	private void requestFocusForDay() {
-		calendar.getDayChooser().getSelectedDay().requestFocus();
-	}
+    /**
+     *
+     */
+    private void disposeDialog() {
+        WindowConfigurationStorage storage = new WindowConfigurationStorage();
+        getMindMapController().storeDialogPositions(mDialog, storage,
+                WINDOW_PREFERENCE_STORAGE_PROPERTY);
+        mDialog.setVisible(false);
+        mDialog.dispose();
+        lastDate = getCalendar();
+        lastActivePosition = calendar.getCurrentMonthPosition();
+        sCurrentlyOpenTimeManagement = null;
+    }
+
+    /**
+     *
+     */
+    private Date getCalendarDate() {
+        Calendar cal = getCalendar();
+        try {
+            int value = 0;
+            value = Integer.parseInt(hourField.getText());
+            cal.set(Calendar.HOUR_OF_DAY, value);
+            value = Integer.parseInt(minuteField.getText());
+            cal.set(Calendar.MINUTE, value);
+            cal.set(Calendar.SECOND, 0);
+        } catch (Exception e) {
+        }
+        return cal.getTime();
+    }
+
+    protected Calendar getCalendar() {
+        return calendar.getCalendar();
+    }
+
+    public void afterMapClose(MapModule oldMapModule, Mode oldMode) {
+    }
+
+    public void afterMapModuleChange(MapModule oldMapModule, Mode oldMode,
+                                     MapModule newMapModule, Mode newMode) {
+    }
+
+    public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode,
+                                      MapModule newMapModule, Mode newMode) {
+        getMindMapController().getController().getMapModuleManager()
+                .removeListener(this);
+        disposeDialog();
+    }
+
+    public boolean isMapModuleChangeAllowed(MapModule oldMapModule,
+                                            Mode oldMode, MapModule newMapModule, Mode newMode) {
+        return true;
+    }
+
+    public void numberOfOpenMapInformation(int number, int pIndex) {
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.mindmapmode.hooks.MindMapHookAdapter#getMindMapController
+     * ()
+     */
+    public MindMapController getMindMapController() {
+        return mController;
+    }
+
+    /**
+     *
+     */
+    private void requestFocusForDay() {
+        calendar.getDayChooser().getSelectedDay().requestFocus();
+    }
 }

@@ -56,11 +56,9 @@ import javax.swing.undo.UndoableEdit;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 public class SHTMLDocument extends HTMLDocument {
     public static final String SUFFIX = "&nbsp;";
@@ -83,7 +81,7 @@ public class SHTMLDocument extends HTMLDocument {
      * storage implementation and the given style/attribute
      * storage mechanism.
      *
-     * @param styles  the styles
+     * @param styles the styles
      */
     public SHTMLDocument(final StyleSheet styles) {
         this(new GapContent(BUFFER_SIZE_DEFAULT), styles);
@@ -94,7 +92,7 @@ public class SHTMLDocument extends HTMLDocument {
      * storage implementation and the given style/attribute
      * storage mechanism.
      *
-     * @param c  the container for the content
+     * @param c      the container for the content
      * @param styles the styles
      */
     public SHTMLDocument(final Content c, final StyleSheet styles) {
@@ -105,8 +103,8 @@ public class SHTMLDocument extends HTMLDocument {
     /**
      * apply a set of attributes to a given document element
      *
-     * @param e  the element to apply attributes to
-     * @param a  the set of attributes to apply
+     * @param e the element to apply attributes to
+     * @param a the set of attributes to apply
      */
     public void addAttributes(final Element e, final AttributeSet a) {
         if ((e != null) && (a != null)) {
@@ -116,7 +114,7 @@ public class SHTMLDocument extends HTMLDocument {
                 //System.out.println("SHTMLDocument addAttributes a=" + a);
                 final int start = e.getStartOffset();
                 final DefaultDocumentEvent changes = new DefaultDocumentEvent(start, e.getEndOffset() - start,
-                    DocumentEvent.EventType.CHANGE);
+                        DocumentEvent.EventType.CHANGE);
                 final AttributeSet sCopy = a.copyAttributes();
                 final MutableAttributeSet attr = (MutableAttributeSet) e.getAttributes();
                 changes.addEdit(new AttributeUndoableEdit(e, sCopy, false));
@@ -124,8 +122,7 @@ public class SHTMLDocument extends HTMLDocument {
                 changes.end();
                 fireChangedUpdate(changes);
                 fireUndoableEditUpdate(new UndoableEditEvent(this, changes));
-            }
-            finally {
+            } finally {
                 writeUnlock();
             }
         }
@@ -134,9 +131,9 @@ public class SHTMLDocument extends HTMLDocument {
     /**
      * Removes a consecutive group of child elements.
      *
-     * @param element  the parent element to remove child elements from
-     * @param index  the index of the first child element to remove
-     * @param count  the number of child elements to remove
+     * @param element the parent element to remove child elements from
+     * @param index   the index of the first child element to remove
+     * @param count   the number of child elements to remove
      */
     public void removeElements(final Element element, final int index, final int count) throws BadLocationException {
         writeLock();
@@ -149,7 +146,7 @@ public class SHTMLDocument extends HTMLDocument {
                 removed[counter] = element.getElement(counter + index);
             }
             final DefaultDocumentEvent defaultDocumentEvent = new DefaultDocumentEvent(start, end - start,
-                DocumentEvent.EventType.REMOVE);
+                    DocumentEvent.EventType.REMOVE);
             ((AbstractDocument.BranchElement) element).replace(index, removed.length, added);
             defaultDocumentEvent.addEdit(new ElementEdit(element, index, removed, added));
             final UndoableEdit undoableEdit = getContent().remove(start, end - start);
@@ -162,8 +159,7 @@ public class SHTMLDocument extends HTMLDocument {
             if (undoableEdit != null) {
                 fireUndoableEditUpdate(new UndoableEditEvent(this, defaultDocumentEvent));
             }
-        }
-        finally {
+        } finally {
             writeUnlock();
         }
     }
@@ -190,12 +186,10 @@ public class SHTMLDocument extends HTMLDocument {
                 }
                 writer.writeEndTag(parentElement);
                 super.setOuterHTML(parentElement, writer.toString());
-            }
-            else {
+            } else {
                 super.setOuterHTML(paragraphElement, htmlText);
             }
-        }
-        finally {
+        } finally {
             endCompoundEdit();
         }
     }
@@ -207,8 +201,7 @@ public class SHTMLDocument extends HTMLDocument {
         try {
             startCompoundEdit();
             super.insertAfterEnd(elem, htmlText);
-        }
-        finally {
+        } finally {
             endCompoundEdit();
         }
     }
@@ -220,8 +213,7 @@ public class SHTMLDocument extends HTMLDocument {
         try {
             startCompoundEdit();
             super.insertAfterStart(elem, htmlText);
-        }
-        finally {
+        } finally {
             endCompoundEdit();
         }
     }
@@ -233,8 +225,7 @@ public class SHTMLDocument extends HTMLDocument {
         try {
             startCompoundEdit();
             super.insertBeforeEnd(elem, htmlText);
-        }
-        finally {
+        } finally {
             endCompoundEdit();
         }
     }
@@ -246,13 +237,14 @@ public class SHTMLDocument extends HTMLDocument {
         try {
             startCompoundEdit();
             super.insertBeforeStart(elem, htmlText);
-        }
-        finally {
+        } finally {
             endCompoundEdit();
         }
     }
 
-    /** */
+    /**
+     *
+     */
     public void replaceHTML(final Element firstElement, final int number, final String htmlText)
             throws BadLocationException, IOException {
         if (number > 1) {
@@ -264,13 +256,11 @@ public class SHTMLDocument extends HTMLDocument {
                     startCompoundEdit();
                     removeElements(parent, removeIndex, number - 1);
                     setOuterHTML(parent.getElement(removeIndex), htmlText);
-                }
-                finally {
+                } finally {
                     endCompoundEdit();
                 }
             }
-        }
-        else if (number == 1) {
+        } else if (number == 1) {
             setOuterHTML(firstElement, htmlText);
         }
     }
@@ -293,20 +283,21 @@ public class SHTMLDocument extends HTMLDocument {
     protected void fireUndoableEditUpdate(final UndoableEditEvent e) {
         if (compoundEditDepth == 0) {
             super.fireUndoableEditUpdate(e);
-        }
-        else {
+        } else {
             if (compoundEdit == null) {
-                compoundEdit = new CompoundEdit();;
+                compoundEdit = new CompoundEdit();
+                ;
             }
             compoundEdit.addEdit(e.getEdit());
         }
     }
 
     /* ------------------ custom document title handling start -------------------- */
+
     /**
      * set the title of this SHTMLDocument
      *
-     * @param title  the title this document shall have
+     * @param title the title this document shall have
      */
     public void setDocumentTitle(final String title) {
         try {
@@ -321,14 +312,12 @@ public class SHTMLDocument extends HTMLDocument {
                         insertBeforeEnd(pImpl, titleHTML);
                     }
                 }
-            }
-            else {
+            } else {
                 final Element body = Util.findElementDown(HTML.Tag.BODY.toString(), defaultRoot);
                 insertBeforeStart(body, "<head>" + titleHTML + "</head>");
             }
             putProperty(Document.TitleProperty, title);
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             Util.errMsg(null, "An exception occurred while trying to insert the title", e);
         }
     }
@@ -336,20 +325,20 @@ public class SHTMLDocument extends HTMLDocument {
     /**
      * get the title of this SHTMLDocument
      *
-     * @return  the title of this document or null if none was set so far
+     * @return the title of this document or null if none was set so far
      */
     public String getDocumentTitle() {
         final Object title = getProperty(Document.TitleProperty);
         if (title != null) {
             return title.toString();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
     /* ------------------ custom document title handling end -------------------- */
     /* ------------------ custom style sheet reference handling start -------------------- */
+
     /**
      * insert a style sheet reference into the head of this SHTMLDocument
      */
@@ -365,18 +354,15 @@ public class SHTMLDocument extends HTMLDocument {
                     final Element link = Util.findElementDown(HTML.Tag.LINK.toString(), pImpl);
                     if (link != null) {
                         setOuterHTML(link, styleRef);
-                    }
-                    else {
+                    } else {
                         insertBeforeEnd(pImpl, styleRef);
                     }
                 }
-            }
-            else {
+            } else {
                 final Element body = Util.findElementDown(HTML.Tag.BODY.toString(), defaultRoot);
                 insertBeforeStart(body, "<head>" + styleRef + "</head>");
             }
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             Util.errMsg(null, "An exception occurred while trying to insert the style sheet reference link", e);
         }
     }
@@ -395,7 +381,7 @@ public class SHTMLDocument extends HTMLDocument {
      * <code>DocumentPane</code>.
      *
      * @return the reference to this document's style sheet or
-     *    null if none is found
+     * null if none is found
      */
     public String getStyleRef() {
         String linkName = null;
@@ -411,6 +397,7 @@ public class SHTMLDocument extends HTMLDocument {
 
     /* ------------------ custom style sheet reference handling end -------------------- */
     /* -------- custom reader implementation start ------ */
+
     /**
      * Fetches the reader for the parser to use to load the document
      * with HTML.  This is implemented to return an instance of
@@ -430,11 +417,17 @@ public class SHTMLDocument extends HTMLDocument {
      * to handle SPAN tags
      */
     public class SHTMLReader extends HTMLDocument.HTMLReader {
-        /** action needed to handle SPAN tags */
+        /**
+         * action needed to handle SPAN tags
+         */
         SHTMLCharacterAction characterAction = new SHTMLCharacterAction();
-        /** the attributes found in a STYLE attribute */
+        /**
+         * the attributes found in a STYLE attribute
+         */
         AttributeSet styleAttributes;
-        /** indicates whether we're inside a SPAN tag */
+        /**
+         * indicates whether we're inside a SPAN tag
+         */
         boolean inSpan = false;
         boolean emptyDocument;
         private boolean paragraphInserted;
@@ -444,7 +437,6 @@ public class SHTMLDocument extends HTMLDocument {
 
         /**
          * Constructor
-         * 
          */
         public SHTMLReader(final int offset, final boolean emptyDocument) {
             super(offset, 0, 0, null);
@@ -456,33 +448,30 @@ public class SHTMLDocument extends HTMLDocument {
 
         /**
          * Handles the start tag received by the parser.
-         *
+         * <p>
          * If it is a SPAN tag, converts the contents of the STYLE
          * attribute to an AttributeSet, and adds it to the contents
          * of this tag.
-         *
+         * <p>
          * Otherwise lets HTMLDocument.HTMLReader do the work.
          */
         public void handleStartTag(final HTML.Tag tag, final MutableAttributeSet attributeSet, final int pos) {
             if (tag == HTML.Tag.BODY) {
                 inBody = true;
-            }
-            else if (inBody) {
+            } else if (inBody) {
                 isParagraphTag = isParagraphTag(tag);
                 if (isParagraphTag) {
                     if (paragraphCreated && !paragraphInserted) {
                         insertParagraphEndTag(pos);
                     }
                     paragraphInserted = true;
-                }
-                else if (!paragraphCreated && !paragraphInserted) {
+                } else if (!paragraphCreated && !paragraphInserted) {
                     insertParagraphStartTag(pos);
                 }
             }
             if (tag == HTML.Tag.SPAN && !keepSpanTag) {
                 handleStartSpan(attributeSet);
-            }
-            else {
+            } else {
                 super.handleStartTag(tag, attributeSet, pos);
                 if (tag == HTML.Tag.FONT) {
                     charAttr.removeAttribute(tag);
@@ -504,10 +493,10 @@ public class SHTMLDocument extends HTMLDocument {
         private boolean isParagraphTag(final Tag t) {
             if (paragraphElements == null) {
                 paragraphElements = new HashSet();
-                final Object[] elementList = new Object[] { HTML.Tag.BLOCKQUOTE, HTML.Tag.DIR, HTML.Tag.DIV,
+                final Object[] elementList = new Object[]{HTML.Tag.BLOCKQUOTE, HTML.Tag.DIR, HTML.Tag.DIV,
                         HTML.Tag.DL, HTML.Tag.DT, HTML.Tag.FRAMESET, HTML.Tag.H1, HTML.Tag.H2, HTML.Tag.H3,
                         HTML.Tag.H4, HTML.Tag.H5, HTML.Tag.H6, HTML.Tag.HR, HTML.Tag.LI, HTML.Tag.MENU, HTML.Tag.OL,
-                        HTML.Tag.P, HTML.Tag.PRE, HTML.Tag.TABLE, HTML.Tag.TD, HTML.Tag.TH, HTML.Tag.TR, HTML.Tag.UL };
+                        HTML.Tag.P, HTML.Tag.PRE, HTML.Tag.TABLE, HTML.Tag.TD, HTML.Tag.TH, HTML.Tag.TR, HTML.Tag.UL};
                 for (int i = 0; i < elementList.length; i++) {
                     paragraphElements.add(elementList[i]);
                 }
@@ -521,8 +510,7 @@ public class SHTMLDocument extends HTMLDocument {
                 attributeSet.removeAttribute(HTML.Attribute.STYLE);
                 styleAttributes = getStyleSheet().getDeclaration(styleAttributeValue);
                 attributeSet.addAttributes(styleAttributes);
-            }
-            else {
+            } else {
                 styleAttributes = null;
             }
             final TagAction action = characterAction;
@@ -545,12 +533,10 @@ public class SHTMLDocument extends HTMLDocument {
             if (t == HTML.Tag.SPAN && !keepSpanTag) {
                 if (inSpan) {
                     handleEndTag(t, pos);
-                }
-                else {
+                } else {
                     handleStartTag(t, a, pos);
                 }
-            }
-            else {
+            } else {
                 super.handleSimpleTag(t, a, pos);
             }
         }
@@ -576,11 +562,9 @@ public class SHTMLDocument extends HTMLDocument {
                     super.handleEndTag(HTML.Tag.P, pos);
                 }
                 super.handleEndTag(t, pos);
-            }
-            else if (t == HTML.Tag.SPAN && !keepSpanTag) {
+            } else if (t == HTML.Tag.SPAN && !keepSpanTag) {
                 handleEndSpan();
-            }
-            else {
+            } else {
                 super.handleEndTag(t, pos);
             }
         }
@@ -627,7 +611,7 @@ public class SHTMLDocument extends HTMLDocument {
                 }
                 //System.out.println("mapping attributes");
                 charAttr = (MutableAttributeSet) new AttributeMapper(charAttr)
-                    .getMappedAttributes(AttributeMapper.toJava);
+                        .getMappedAttributes(AttributeMapper.toJava);
             }
 
             public void end(final HTML.Tag t) {
@@ -641,8 +625,10 @@ public class SHTMLDocument extends HTMLDocument {
         return getParagraphElement(pos, inSetParagraphAttributes);
     }
 
-    /** Gets the current paragraph element, retracing out of p-implied if the parameter
+    /**
+     * Gets the current paragraph element, retracing out of p-implied if the parameter
      * noImplied is true.
+     *
      * @see javax.swing.text.DefaultStyledDocument#getParagraphElement(int)
      */
     public Element getParagraphElement(final int pos, final boolean noPImplied) {
@@ -676,7 +662,7 @@ public class SHTMLDocument extends HTMLDocument {
     public void removeParagraphAttributes(final int offset, final int length) {
         startCompoundEdit();
         // clear all paragraph attributes in selection
-        for (int i = offset; i < offset + length;) {
+        for (int i = offset; i < offset + length; ) {
             final Element paragraphElement = super.getParagraphElement(i);
             removeParagraphAtributes(paragraphElement);
             final int endOffset = paragraphElement.getEndOffset();
@@ -697,11 +683,9 @@ public class SHTMLDocument extends HTMLDocument {
             htmlStartWriter.writeChildElements(paragraphElement);
             htmlStartWriter.writeEndTag(paragraphElement.getName());
             setOuterHTML(paragraphElement, writer.toString());
-        }
-        catch (final IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
-        }
-        catch (final BadLocationException e) {
+        } catch (final BadLocationException e) {
             e.printStackTrace();
         }
     }
@@ -729,8 +713,7 @@ public class SHTMLDocument extends HTMLDocument {
                 url = docDir.toURI().toURL();
                 super.setBase(url);
                 return url;
-            }
-            catch (final MalformedURLException e) {
+            } catch (final MalformedURLException e) {
             }
         }
         return url;

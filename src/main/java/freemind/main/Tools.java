@@ -32,6 +32,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
+import lombok.extern.log4j.Log4j2;
 
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -59,6 +60,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributes;
@@ -70,22 +72,21 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.toHexString;
+import static java.lang.String.format;
+import static java.util.stream.Collectors.joining;
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+import static org.apache.commons.lang3.StringUtils.defaultString;
+import static org.apache.commons.lang3.StringUtils.deleteWhitespace;
+
 /**
  * @author foltin
- *
  */
+@Log4j2
 public class Tools {
 
-    /**
-     *
-     */
     public static final String FREEMIND_LIB_FREEMIND_JAR = "lib/freemind.jar";
-
-    private static org.slf4j.Logger logger = null;
-
-    static {
-        logger = freemind.main.Resources.getInstance().getLogger("Tools");
-    }
 
     public static final String CONTENTS_JAVA_FREEMIND_JAR = "Contents/Java/freemind.jar";
 
@@ -107,7 +108,7 @@ public class Tools {
 
     }
 
-    private static String sEnvFonts[] = null;
+    private static String[] sEnvFonts = null;
 
     // bug fix from Dimitri.
     public static Random ran = new Random();
@@ -122,43 +123,40 @@ public class Tools {
         if (col == null) {
             return null;
         }
-        String red = Integer.toHexString(col.getRed());
+
+        String red = toHexString(col.getRed());
         if (col.getRed() < 16) {
             red = "0" + red;
         }
-        String green = Integer.toHexString(col.getGreen());
+        String green = toHexString(col.getGreen());
         if (col.getGreen() < 16) {
             green = "0" + green;
         }
-        String blue = Integer.toHexString(col.getBlue());
+        String blue = toHexString(col.getBlue());
         if (col.getBlue() < 16) {
             blue = "0" + blue;
         }
         return "#" + red + green + blue;
     }
 
-    public static Color xmlToColor(String string) {
-        if (string == null) {
-            return null;
-        }
-        string = string.trim();
+    public static Color xmlToColor(String xmlColor) {
+        String string = deleteWhitespace(defaultString(xmlColor));
         if (string.length() == 7) {
-
-            int red = Integer.parseInt(string.substring(1, 3), 16);
-            int green = Integer.parseInt(string.substring(3, 5), 16);
-            int blue = Integer.parseInt(string.substring(5, 7), 16);
+            int red = parseInt(string.substring(1, 3), 16);
+            int green = parseInt(string.substring(3, 5), 16);
+            int blue = parseInt(string.substring(5, 7), 16);
             return new Color(red, green, blue);
         } else {
-            throw new IllegalArgumentException("No xml color given by '"
-                    + string + "'.");
+            throw new IllegalArgumentException("No xml color given by '" + string + "'.");
         }
     }
 
     public static String PointToXml(Point col) {
         if (col == null) {
-            return null; // throw new IllegalArgumentException("Point was
-        }		// null");
-        Vector<String> l = new Vector<>();
+            return null;
+        }
+
+        List<String> l = new ArrayList<>();
         l.add(Integer.toString(col.x));
         l.add(Integer.toString(col.y));
         return listToString(l);
@@ -170,19 +168,18 @@ public class Tools {
         }
         // fc, 3.11.2004: bug fix for alpha release of FM
         if (string.startsWith("java.awt.Point")) {
-            string = string.replaceAll(
-                    "java\\.awt\\.Point\\[x=(-*[0-9]*),y=(-*[0-9]*)\\]",
-                    "$1;$2");
+            string = string.replaceAll("java\\.awt\\.Point\\[x=(-*[0-9]*),y=(-*[0-9]*)\\]", "$1;$2");
         }
+
         List<String> l = stringToList(string);
         ListIterator<String> it = l.listIterator(0);
         if (l.size() != 2) {
-            throw new IllegalArgumentException(
-                    "A point must consist of two numbers (and not: '" + string
-                    + "').");
+            throw new IllegalArgumentException("A point must consist of two numbers (and not: '" + string + "').");
         }
-        int x = Integer.parseInt((String) it.next());
-        int y = Integer.parseInt((String) it.next());
+
+        int x = parseInt(it.next());
+        int y = parseInt(it.next());
+
         return new Point(x, y);
     }
 
@@ -191,11 +188,7 @@ public class Tools {
     }
 
     public static boolean xmlToBoolean(String string) {
-        if ("true".equals(string)) {
-            return true;
-        }
-
-        return false;
+        return "true".equals(string);
     }
 
     /**
@@ -212,12 +205,8 @@ public class Tools {
     }
 
     public static String listToString(List<?> list) {
-        ListIterator<?> it = list.listIterator(0);
-        StringBuffer str = new StringBuffer();
-        while (it.hasNext()) {
-            str.append(it.next().toString() + ";");
-        }
-        return str.toString();
+        final String listAsString = emptyIfNull(list).stream().map(Object::toString).collect(joining(";"));
+        return listAsString;
     }
 
     /**
@@ -231,8 +220,6 @@ public class Tools {
         return file;
     }
 
-    /**
-     */
     public static String[] getAvailableFonts() {
         if (sEnvFonts == null) {
             GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -266,8 +253,7 @@ public class Tools {
      */
     public static String getExtension(String s) {
         int i = s.lastIndexOf('.');
-        return (i > 0 && i < s.length() - 1) ? s.substring(i + 1).toLowerCase()
-                .trim() : "";
+        return (i > 0 && i < s.length() - 1) ? s.substring(i + 1).toLowerCase().trim() : "";
     }
 
     public static String removeExtension(String s) {
@@ -276,20 +262,17 @@ public class Tools {
     }
 
     public static boolean isAbsolutePath(String path) {
-        // On Windows, we cannot just ask if the file name starts with file
-        // separator.
-        // If path contains ":" at the second position, then it is not relative,
-        // I guess.
+        // On Windows, we cannot just ask if the file name starts with file separator.
+        // If path contains ":" at the second position, then it is not relative, I guess.
         // However, if it starts with separator, then it is absolute too.
 
         // Possible problems: Not tested on Macintosh, but should work.
-        // Koh, 1.4.2004: Resolved problem: I tested on Mac OS X 10.3.3 and
-        // worked.
+        // Koh, 1.4.2004: Resolved problem: I tested on Mac OS X 10.3.3 and worked.
         String osNameStart = System.getProperty("os.name").substring(0, 3);
         String fileSeparator = System.getProperty("file.separator");
+
         if (osNameStart.equals("Win")) {
-            return ((path.length() > 1) && path.substring(1, 2).equals(":"))
-                    || path.startsWith(fileSeparator);
+            return ((path.length() > 1) && path.charAt(1) == ':') || path.startsWith(fileSeparator);
         } else if (osNameStart.equals("Mac")) {
             // Koh:Panther (or Java 1.4.2) may change file path rule
             return path.startsWith(fileSeparator);
@@ -307,10 +290,8 @@ public class Tools {
      */
     public static String urlGetFile(URL url) {
         if (isWindows() && isFile(url)) {
-            String fileName = url.toString().replaceFirst("^file:", "")
-                    .replace('/', '\\');
-            return (fileName.indexOf(':') >= 0) ? fileName.replaceFirst(
-                    "^\\\\*", "") : fileName;
+            String fileName = url.toString().replaceFirst("^file:", "").replace('/', '\\');
+            return (fileName.indexOf(':') >= 0) ? fileName.replaceFirst("^\\\\*", "") : fileName;
         } // Network path
         else {
             return url.getFile();
@@ -318,7 +299,7 @@ public class Tools {
     }
 
     public static boolean isWindows() {
-        return System.getProperty("os.name").substring(0, 3).equals("Win");
+        return System.getProperty("os.name").startsWith("Win");
     }
 
     public static boolean isFile(URL url) {
@@ -327,7 +308,7 @@ public class Tools {
 
     /**
      * @return "/" for absolute file names under Unix, "c:\\" or similar under
-     *         windows, null otherwise
+     * windows, null otherwise
      */
     public static String getPrefix(String pFileName) {
         if (isWindows()) {
@@ -347,18 +328,16 @@ public class Tools {
      * "new URL(URL context, URL relative)".
      */
     public static String toRelativeURL(URL base, URL target) {
-        // Precondition: If URL is a path to folder, then it must end with '/'
-        // character.
-        if (base == null || !base.getProtocol().equals(target.getProtocol())
-                || !base.getHost().equals(target.getHost())) {
+        // Precondition: If URL is a path to folder, then it must end with '/' character.
+        if (base == null || !base.getProtocol().equals(target.getProtocol()) || !base.getHost().equals(target.getHost())) {
             return target.toString();
         }
+
         String baseString = base.getFile();
         String targetString = target.getFile();
         String result = "";
         // remove filename from URL
-        targetString = targetString.substring(0,
-                targetString.lastIndexOf("/") + 1);
+        targetString = targetString.substring(0, targetString.lastIndexOf("/") + 1);
         // remove filename from URL
         baseString = baseString.substring(0, baseString.lastIndexOf("/") + 1);
 
@@ -369,23 +348,20 @@ public class Tools {
             // remove last part:
             index = targetString.lastIndexOf("/", index - 1);
             if (index < 0) {
-                // no common part. This is strange, as both should start with /,
-                // but...
+                // no common part. This is strange, as both should start with /, but...
                 break;
             }
         }
 
         // now, baseString is targetString + "/" + rest. we determine
         // rest=baseStringRest now.
-        String baseStringRest = baseString
-                .substring(index, baseString.length());
+        String baseStringRest = baseString.substring(index);
 
         // Maybe this causes problems under windows
         StringTokenizer baseTokens = new StringTokenizer(baseStringRest, "/");
 
         // Maybe this causes problems under windows
-        StringTokenizer targetTokens = new StringTokenizer(
-                targetString.substring(index + 1), "/");
+        StringTokenizer targetTokens = new StringTokenizer(targetString.substring(index + 1), "/");
 
         String nextTargetToken = "";
 
@@ -393,14 +369,14 @@ public class Tools {
             result = result.concat("../");
             baseTokens.nextToken();
         }
+
         while (targetTokens.hasMoreTokens()) {
             nextTargetToken = targetTokens.nextToken();
             result = result.concat(nextTargetToken + "/");
         }
 
         String temp = target.getFile();
-        result = result.concat(temp.substring(temp.lastIndexOf("/") + 1,
-                temp.length()));
+        result = result.concat(temp.substring(temp.lastIndexOf("/") + 1));
         return result;
     }
 
@@ -408,11 +384,8 @@ public class Tools {
      * If the preferences say, that links should be relative, a relative url is
      * returned.
      *
-     * @param input
-     *                 the file that is treated
-     * @param pMapFile
-     *                 the file, that input is made relative to
-     *
+     * @param input    the file that is treated
+     * @param pMapFile the file, that input is made relative to
      * @return in case of trouble the absolute path.
      */
     public static String fileToRelativeUrlString(File input, File pMapFile) {
@@ -426,8 +399,8 @@ public class Tools {
                 relative = Tools.toRelativeURL(Tools.fileToUrl(pMapFile), link);
             }
             return relative;
-        } catch (MalformedURLException ex) {
-            freemind.main.Resources.getInstance().logException(ex);
+        } catch (MalformedURLException e) {
+            log.error(e);
         }
         return input.getAbsolutePath();
     }
@@ -442,54 +415,44 @@ public class Tools {
     }
 
     /**
-     * @param string1
-     *                input (or null)
-     * @param string2
-     *                input (or null)
-     *
+     * @param string1 input (or null)
+     * @param string2 input (or null)
      * @return true, if equal (that means: same text or both null)
      */
+    @Deprecated
     public static boolean safeEquals(String string1, String string2) {
         return (string1 != null && string2 != null && string1.equals(string2))
                 || (string1 == null && string2 == null);
     }
 
+    @Deprecated
     public static boolean safeEquals(Object obj1, Object obj2) {
         return (obj1 != null && obj2 != null && obj1.equals(obj2))
                 || (obj1 == null && obj2 == null);
     }
 
+    @Deprecated
     public static boolean safeEqualsIgnoreCase(String string1, String string2) {
-        return (string1 != null && string2 != null && string1.toLowerCase()
-                .equals(string2.toLowerCase()))
+        return (string1 != null && string2 != null && string1
+                .equalsIgnoreCase(string2))
                 || (string1 == null && string2 == null);
     }
 
+    @Deprecated
     public static boolean safeEquals(Color color1, Color color2) {
         return (color1 != null && color2 != null && color1.equals(color2))
                 || (color1 == null && color2 == null);
     }
 
-    public static String firstLetterCapitalized(String text) {
-        if (text == null || text.length() == 0) {
-            return text;
-        }
-        return text.substring(0, 1).toUpperCase()
-                + text.substring(1, text.length());
-    }
 
-    public static void setHidden(File file, boolean hidden,
-            boolean synchronously) {
+    public static void setHidden(File file, boolean hidden, boolean synchronously) {
         // According to Web articles, UNIX systems do not have attribute hidden
         // in general, rather, they consider files starting with . as hidden.
         String osNameStart = System.getProperty("os.name").substring(0, 3);
         if (osNameStart.equals("Win")) {
             try {
-                Runtime.getRuntime().exec(
-                        "attrib " + (hidden ? "+" : "-") + "H \""
-                        + file.getAbsolutePath() + "\"");
-                // Synchronize the effect, because it is asynchronous in
-                // general.
+                Runtime.getRuntime().exec(format("attrib %sH \"%s\"", hidden ? "+" : "-", file.getAbsolutePath()));
+                // Synchronize the effect, because it is asynchronous in general.
                 if (!synchronously) {
                     return;
                 }
@@ -499,7 +462,7 @@ public class Tools {
                     timeOut--;
                 }
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }
@@ -527,8 +490,7 @@ public class Tools {
         return result;
     }
 
-    public static String expandPlaceholders(String message, String s1,
-            String s2, String s3) {
+    public static String expandPlaceholders(String message, String s1, String s2, String s3) {
         String result = message;
         if (s1 != null) {
             result = result.replaceAll("\\$1", s1);
@@ -540,90 +502,6 @@ public class Tools {
             result = result.replaceAll("\\$3", s3);
         }
         return result;
-    }
-
-    public static class IntHolder {
-
-        private int value = 0;
-
-        public IntHolder() {
-        }
-
-        public IntHolder(int value) {
-            this.value = value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public String toString() {
-            return "IntHolder(" + value + ")";
-        }
-
-        public void increase() {
-            value++;
-        }
-    }
-
-    public static class BooleanHolder {
-
-        private boolean value;
-
-        public BooleanHolder() {
-        }
-
-        public BooleanHolder(boolean initialValue) {
-            value = initialValue;
-        }
-
-        public void setValue(boolean value) {
-            this.value = value;
-        }
-
-        public boolean getValue() {
-            return value;
-        }
-    }
-
-    public static class ObjectHolder {
-
-        Object object;
-
-        public ObjectHolder() {
-        }
-
-        public void setObject(Object object) {
-            this.object = object;
-        }
-
-        public Object getObject() {
-            return object;
-        }
-    }
-
-    public static class Pair {
-
-        Object first;
-
-        Object second;
-
-        public Pair(Object first, Object second) {
-            this.first = first;
-            this.second = second;
-        }
-
-        public Object getFirst() {
-            return first;
-        }
-
-        public Object getSecond() {
-            return second;
-        }
     }
 
     /**
@@ -640,13 +518,13 @@ public class Tools {
 
         // 8-byte default Salt
         byte[] salt = {(byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
-            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03};
+                (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03};
 
         // Iteration count
         int iterationCount = 19;
 
         private final char[] passPhrase;
-        private String mAlgorithm;
+        private final String mAlgorithm;
 
         public DesEncrypter(StringBuffer pPassPhrase, String pAlgorithm) {
             passPhrase = new char[pPassPhrase.length()];
@@ -655,6 +533,7 @@ public class Tools {
         }
 
         /**
+         *
          */
         private void init(byte[] mSalt) {
             if (mSalt != null) {
@@ -689,7 +568,7 @@ public class Tools {
         public String encrypt(String str) {
             try {
                 // Encode the string into bytes using utf-8
-                byte[] utf8 = str.getBytes("UTF8");
+                byte[] utf8 = str.getBytes(StandardCharsets.UTF_8);
                 // determine salt by random:
                 byte[] newSalt = new byte[SALT_LENGTH];
                 for (int i = 0; i < newSalt.length; i++) {
@@ -705,7 +584,6 @@ public class Tools {
                         + Tools.toBase64(enc);
             } catch (javax.crypto.BadPaddingException e) {
             } catch (IllegalBlockSizeException e) {
-            } catch (UnsupportedEncodingException e) {
             }
             return null;
         }
@@ -732,10 +610,9 @@ public class Tools {
                 byte[] utf8 = dcipher.doFinal(dec);
 
                 // Decode using utf-8
-                return new String(utf8, "UTF8");
+                return new String(utf8, StandardCharsets.UTF_8);
             } catch (javax.crypto.BadPaddingException e) {
             } catch (IllegalBlockSizeException e) {
-            } catch (UnsupportedEncodingException e) {
             }
             return null;
         }
@@ -758,9 +635,10 @@ public class Tools {
     }
 
     /**
+     *
      */
     public static String toBase64(byte[] byteBuffer) {
-        return new String(Base64Coding.encode64(byteBuffer));
+        return Base64Coding.encode64(byteBuffer);
     }
 
     /**
@@ -841,25 +719,19 @@ public class Tools {
     }
 
     /**
+     *
      */
     public static String byteArrayToUTF8String(byte[] compressedData) {
         // Decode using utf-8
-        try {
-            return new String(compressedData, "UTF8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF8 packing not allowed");
-        }
+        return new String(compressedData, StandardCharsets.UTF_8);
     }
 
     /**
+     *
      */
     public static byte[] uTF8StringToByteArray(String uncompressedData) {
         // Code using utf-8
-        try {
-            return uncompressedData.getBytes("UTF8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF8 packing not allowed");
-        }
+        return uncompressedData.getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -875,12 +747,6 @@ public class Tools {
 
     public static String dateToString(Date date) {
         return Long.toString(date.getTime());
-    }
-
-    public static boolean safeEquals(BooleanHolder holder, BooleanHolder holder2) {
-        return (holder == null && holder2 == null)
-                || (holder != null && holder2 != null && holder.getValue() == holder2
-                .getValue());
     }
 
     public static void setDialogLocationRelativeTo(JDialog dialog, Component c) {
@@ -974,9 +840,8 @@ public class Tools {
     public static Reader getUpdateReader(Reader pReader, String xsltScript) throws IOException {
         StringWriter writer = null;
         InputStream inputStream = null;
-        final org.slf4j.Logger logger = Resources.getInstance().getLogger(Tools.class
-                .getName());
-        logger.info("Updating the reader " + pReader
+
+        log.info("Updating the reader " + pReader
                 + " to the current version.");
         boolean successful = false;
         String errorMessage = null;
@@ -995,12 +860,12 @@ public class Tools {
 
             String fileContents = getFile(pReader);
             if (fileContents.length() > 10) {
-                logger.info("File start before UTF8 replacement: '"
+                log.info("File start before UTF8 replacement: '"
                         + fileContents.substring(0, 9) + "'");
             }
             fileContents = replaceUtf8AndIllegalXmlChars(fileContents);
             if (fileContents.length() > 10) {
-                logger.info("File start after UTF8 replacement: '"
+                log.info("File start after UTF8 replacement: '"
                         + fileContents.substring(0, 9) + "'");
             }
             final StreamSource sr = new StreamSource(new StringReader(
@@ -1018,16 +883,16 @@ public class Tools {
                     // create an instance of TransformerFactory
                     TransformerFactory transFact = TransformerFactory
                             .newInstance();
-                    logger.info("TransformerFactory class: "
+                    log.info("TransformerFactory class: "
                             + transFact.getClass());
                     Transformer trans;
                     try {
                         trans = transFact.newTransformer(xsltSource);
                         trans.transform(sr, result);
                         successful = true;
-                    } catch (Exception ex) {
-                        freemind.main.Resources.getInstance().logException(ex);
-                        errorMessage = ex.toString();
+                    } catch (Exception e) {
+                        log.error(e);
+                        errorMessage = e.toString();
                     }
                 }
 
@@ -1043,14 +908,14 @@ public class Tools {
             Thread transformerThread = new Thread(transformer, "XSLT");
             transformerThread.start();
             transformerThread.join();
-            logger.info("Updating the reader " + pReader
+            log.info("Updating the reader " + pReader
                     + " to the current version. Done."); // +
             // writer.getBuffer().toString());
             successful = transformer.isSuccessful();
             errorMessage = transformer.getErrorMessage();
-        } catch (Exception ex) {
-            Resources.getInstance().logException(ex, xsltScript);
-            errorMessage = ex.getLocalizedMessage();
+        } catch (Exception e) {
+            log.error(e);
+            errorMessage = e.getLocalizedMessage();
         } finally {
             if (inputStream != null) {
                 inputStream.close();
@@ -1061,10 +926,10 @@ public class Tools {
         }
         if (successful) {
             String content = writer.getBuffer().toString();
-            // logger.info("Content before transformation: " + content);
+            // log.info("Content before transformation: " + content);
             String replacedContent = Tools
                     .replaceUtf8AndIllegalXmlChars(content);
-            // logger.info("Content after transformation: " + replacedContent);
+            // log.info("Content after transformation: " + replacedContent);
             return new StringReader(replacedContent);
         } else {
             return new StringReader("<map><node TEXT='"
@@ -1089,23 +954,20 @@ public class Tools {
     /**
      * In case of trouble, the method returns null.
      *
-     * @param pInputFile
-     *                   the file to read.
-     *
+     * @param pInputFile the file to read.
      * @return the complete content of the file. or null if an exception has
-     *         occured.
+     * occured.
      */
     public static String getFile(File pInputFile) {
         try {
             return getFile(getReaderFromFile(pInputFile));
         } catch (FileNotFoundException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
     }
 
-    public static Reader getReaderFromFile(File pInputFile)
-            throws FileNotFoundException {
+    public static Reader getReaderFromFile(File pInputFile) throws FileNotFoundException {
         return new FileReader(pInputFile);
     }
 
@@ -1121,12 +983,12 @@ public class Tools {
             }
             bufferedReader.close();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
                 } catch (Exception ex) {
-                    freemind.main.Resources.getInstance().logException(ex);
+                    log.error(e);
                 }
             }
             return null;
@@ -1161,10 +1023,9 @@ public class Tools {
                 dialog.dispose();
             }
 
-        
-        ;
-		}
-		addEscapeActionToDialog(dialog, new EscapeAction());
+
+        }
+        addEscapeActionToDialog(dialog, new EscapeAction());
     }
 
     public static void addEscapeActionToDialog(JDialog dialog, Action action) {
@@ -1172,7 +1033,7 @@ public class Tools {
     }
 
     public static void addKeyActionToDialog(JDialog dialog, Action action,
-            String keyStroke, String actionId) {
+                                            String keyStroke, String actionId) {
         action.putValue(Action.NAME, actionId);
         // Register keystroke
         dialog.getRootPane()
@@ -1210,7 +1071,7 @@ public class Tools {
     }
 
     public static void copyStream(InputStream in, OutputStream out,
-            boolean pCloseOutput) throws IOException {
+                                  boolean pCloseOutput) throws IOException {
         byte[] buf = new byte[1024];
         int len;
         while ((len = in.read(buf)) > 0) {
@@ -1223,7 +1084,7 @@ public class Tools {
     }
 
     public static Point convertPointToAncestor(Component c, Point p,
-            Component destination) {
+                                               Component destination) {
         int x, y;
         while (c != destination) {
             x = c.getX();
@@ -1239,7 +1100,7 @@ public class Tools {
     }
 
     public static void convertPointFromAncestor(Component source, Point p,
-            Component c) {
+                                                Component c) {
         int x, y;
         while (c != source) {
             x = c.getX();
@@ -1250,12 +1111,11 @@ public class Tools {
 
             c = c.getParent();
         }
-        ;
 
     }
 
     public static void convertPointToAncestor(Component source, Point point,
-            Class<?> ancestorClass) {
+                                              Class<?> ancestorClass) {
         Component destination = SwingUtilities.getAncestorOfClass(
                 ancestorClass, source);
         convertPointToAncestor(source, point, destination);
@@ -1264,18 +1124,22 @@ public class Tools {
     interface NameMnemonicHolder {
 
         /**
+         *
          */
         String getText();
 
         /**
+         *
          */
         void setText(String replaceAll);
 
         /**
+         *
          */
         void setMnemonic(char charAfterMnemoSign);
 
         /**
+         *
          */
         void setDisplayedMnemonicIndex(int mnemoSignIndex);
 
@@ -1283,7 +1147,7 @@ public class Tools {
 
     private static class ButtonHolder implements NameMnemonicHolder {
 
-        private AbstractButton btn;
+        private final AbstractButton btn;
 
         public ButtonHolder(AbstractButton btn) {
             super();
@@ -1291,37 +1155,37 @@ public class Tools {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#getText()
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#getText()
          */
         public String getText() {
             return btn.getText();
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
+         * (non-Javadoc)
+         *
+         * @see
+         * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
          */
         public void setDisplayedMnemonicIndex(int mnemoSignIndex) {
             btn.setDisplayedMnemonicIndex(mnemoSignIndex);
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
          */
         public void setMnemonic(char charAfterMnemoSign) {
             btn.setMnemonic(charAfterMnemoSign);
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
          */
         public void setText(String text) {
             btn.setText(text);
@@ -1331,7 +1195,7 @@ public class Tools {
 
     private static class ActionHolder implements NameMnemonicHolder {
 
-        private Action action;
+        private final Action action;
 
         public ActionHolder(Action action) {
             super();
@@ -1339,30 +1203,30 @@ public class Tools {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#getText()
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#getText()
          */
         public String getText() {
             return action.getValue(Action.NAME).toString();
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
+         * (non-Javadoc)
+         *
+         * @see
+         * freemind.main.Tools.IAbstractButton#setDisplayedMnemonicIndex(int)
          */
         public void setDisplayedMnemonicIndex(int mnemoSignIndex) {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setMnemonic(char)
          */
         public void setMnemonic(char charAfterMnemoSign) {
-            int vk = (int) charAfterMnemoSign;
+            int vk = charAfterMnemoSign;
             if (vk >= 'a' && vk <= 'z') {
                 vk -= ('a' - 'A');
             }
@@ -1370,9 +1234,9 @@ public class Tools {
         }
 
         /*
-		 * (non-Javadoc)
-		 * 
-		 * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
+         * (non-Javadoc)
+         *
+         * @see freemind.main.Tools.IAbstractButton#setText(java.lang.String)
          */
         public void setText(String text) {
             action.putValue(Action.NAME, text);
@@ -1434,7 +1298,7 @@ public class Tools {
         }
     }
 
-    public static interface ReaderCreator {
+    public interface ReaderCreator {
 
         Reader createReader() throws FileNotFoundException;
     }
@@ -1457,25 +1321,25 @@ public class Tools {
         setLabelAndMnemonic(new ActionHolder(action), inLabel);
     }
 
-    private static void setLabelAndMnemonic(NameMnemonicHolder item,
-            String inLabel) {
-        String rawLabel = inLabel;
+    private static void setLabelAndMnemonic(NameMnemonicHolder mnemonicHolder, String labelToSet) {
+        String rawLabel = labelToSet;
+
         if (rawLabel == null) {
-            rawLabel = item.getText();
+            rawLabel = mnemonicHolder.getText();
         }
         if (rawLabel == null) {
             return;
         }
-        item.setText(removeMnemonic(rawLabel));
+        mnemonicHolder.setText(removeMnemonic(rawLabel));
         int mnemoSignIndex = rawLabel.indexOf("&");
         if (mnemoSignIndex >= 0 && mnemoSignIndex + 1 < rawLabel.length()) {
             char charAfterMnemoSign = rawLabel.charAt(mnemoSignIndex + 1);
             if (charAfterMnemoSign != ' ') {
                 // no mnemonics under Mac OS:
                 if (!isMacOsX()) {
-                    item.setMnemonic(charAfterMnemoSign);
+                    mnemonicHolder.setMnemonic(charAfterMnemoSign);
                     // sets the underline to exactly this character.
-                    item.setDisplayedMnemonicIndex(mnemoSignIndex);
+                    mnemonicHolder.setDisplayedMnemonicIndex(mnemoSignIndex);
                 }
             }
         }
@@ -1559,49 +1423,28 @@ public class Tools {
             // final Exception e = new IllegalArgumentException("HERE");
             if (!EventQueue.isDispatchThread()) {
                 EventQueue.invokeAndWait(new Runnable() {
-                    public void run() {
-                        // logger.info("Waited for event queue.");
-                        // e.printStackTrace();
-                    }
-                ;
-            }  
+                                             public void run() {
+                                                 // log.info("Waited for event queue.");
+                                                 // e.printStackTrace();
+                                             }
+
+                                         }
                 );
-			} else {
-				logger.warn("Can't wait for event queue, if I'm inside this queue!");
+            } else {
+                log.warn("Can't wait for event queue, if I'm inside this queue!");
             }
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
-    }
-
-    /**
-     * Logs the stacktrace via a dummy exception.
-     */
-    public static void printStackTrace() {
-        freemind.main.Resources.getInstance().logException(
-                new IllegalArgumentException("HERE"));
-    }
-
-    /**
-     * Logs the stacktrace into a string.
-     */
-    public static String getStackTrace() {
-        IllegalArgumentException ex = new IllegalArgumentException("HERE");
-        return getStacktrace(ex);
     }
 
     /**
      * Adapts the font size inside of a component to the zoom
      *
-     * @param c
-     *                       component
-     * @param zoom
-     *                       zoom factor
-     * @param normalFontSize
-     *                       "unzoomed" normal font size.
-     *
+     * @param zoom           zoom factor
+     * @param normalFontSize "unzoomed" normal font size.
      * @return a copy of the input font (if the size was effectively changed)
-     *         with the correct scale.
+     * with the correct scale.
      */
     public static Font updateFontSize(Font font, float zoom, int normalFontSize) {
         if (font != null) {
@@ -1692,15 +1535,6 @@ public class Tools {
         return nodes;
     }
 
-    public static <T> void swapVectorPositions(Vector<T> pVector, int src, int dst) {
-        if (src >= pVector.size() || dst >= pVector.size() || src < 0
-                || dst < 0) {
-            throw new IllegalArgumentException("One index is out of bounds "
-                    + src + ", " + dst + ", size= " + pVector.size());
-        }
-        pVector.set(dst, pVector.set(src, pVector.get(dst)));
-    }
-
     public static Object getField(Object[] pObjects, String pField)
             throws IllegalArgumentException, SecurityException,
             IllegalAccessException, NoSuchFieldException {
@@ -1721,6 +1555,7 @@ public class Tools {
     }
 
     // {{{ setPermissions() method
+
     /**
      * Sets numeric permissions of a file. On non-Unix platforms, does nothing.
      * From jEdit
@@ -1730,7 +1565,7 @@ public class Tools {
         if (permissions != 0) {
             if (isUnix()) {
                 String[] cmdarray = {"chmod",
-                    Integer.toString(permissions, 8), path};
+                        Integer.toString(permissions, 8), path};
 
                 try {
                     Process process = Runtime.getRuntime().exec(cmdarray);
@@ -1741,10 +1576,10 @@ public class Tools {
                     // waitFor() hangs on some Java
                     // implementations.
                     /*
-					 * int exitCode = process.waitFor(); if(exitCode != 0)
-					 * Log.log
-					 * (Log.NOTICE,FileVFS.class,"chmod exited with code " +
-					 * exitCode);
+                     * int exitCode = process.waitFor(); if(exitCode != 0)
+                     * Log.log
+                     * (Log.NOTICE,FileVFS.class,"chmod exited with code " +
+                     * exitCode);
                      */
                 } // Feb 4 2000 5:30 PM
                 // Catch Throwable here rather than Exception.
@@ -1764,7 +1599,7 @@ public class Tools {
                 b.append(fileToUrl(new File(fileName)));
                 b.append('\n');
             } catch (MalformedURLException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         return b.toString();
@@ -1778,7 +1613,7 @@ public class Tools {
             try {
                 ret.add(new URL(url));
             } catch (MalformedURLException e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
         return ret;
@@ -1794,17 +1629,17 @@ public class Tools {
     /**
      * @param pNode
      * @param pMindMapController
-     *
      * @return
      */
     public static String getNodeTextHierarchy(MindMapNode pNode,
-            MindMapController pMindMapController) {
+                                              MindMapController pMindMapController) {
         return pNode.getShortText(pMindMapController)
                 + ((pNode.isRoot()) ? "" : (" <- " + getNodeTextHierarchy(
-                                pNode.getParentNode(), pMindMapController)));
+                pNode.getParentNode(), pMindMapController)));
     }
 
     /**
+     *
      */
     public static Clipboard getClipboard() {
         return Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -1812,7 +1647,7 @@ public class Tools {
 
     /**
      * @return a list of MindMapNode s if they are currently contained in the clipboard.
-     *         An empty list otherwise.
+     * An empty list otherwise.
      */
     public static Vector<MindMapNode> getMindMapNodesFromClipboard(MindMapController pMindMapController) {
         Vector<MindMapNode> mindMapNodes = new Vector<MindMapNode>();
@@ -1820,14 +1655,14 @@ public class Tools {
         if (clipboardContents != null) {
             try {
                 List<String> transferData = (List<String>) clipboardContents.getTransferData(MindMapNodesSelection.copyNodeIdsFlavor);
-                for (Iterator<String> it = transferData.iterator(); it.hasNext();) {
-                    String nodeId = (String) it.next();
+                for (Iterator<String> it = transferData.iterator(); it.hasNext(); ) {
+                    String nodeId = it.next();
                     MindMapNode node = pMindMapController.getNodeFromID(nodeId);
                     mindMapNodes.add(node);
                 }
             } catch (Exception e) {
                 // e.printStackTrace();
-                // freemind.main.Resources.getInstance().logException(e);
+                // log.error(e);
             }
         }
         return mindMapNodes;
@@ -1837,7 +1672,7 @@ public class Tools {
         Timer timer = new Timer(1000, new ActionListener() {
 
             public void actionPerformed(ActionEvent pE) {
-                logger.info("Component: "
+                log.info("Component: "
                         + KeyboardFocusManager.getCurrentKeyboardFocusManager()
                         .getFocusOwner()
                         + ", Window: "
@@ -1851,10 +1686,10 @@ public class Tools {
 
     /**
      * copied from HomePane.java 15 mai 2006
-     *
+     * <p>
      * Sweet Home 3D, Copyright (c) 2006 Emmanuel PUYBARET / eTeks
      * <info@eteks.com>
-     *
+     * <p>
      * - This listener manages accelerator keys that may require the use of
      * shift key depending on keyboard layout (like + - or ?)
      */
@@ -1882,7 +1717,6 @@ public class Tools {
     /**
      * @param pString
      * @param pSearchString
-     *
      * @return the amount of occurrences of pSearchString in pString.
      */
     public static int countOccurrences(String pString, String pSearchString) {
@@ -1906,18 +1740,14 @@ public class Tools {
         map.remove(keyStrokeF8);
     }
 
-    /**
-     * @param pPageFormat
-     * @param pPageFormatProperty
-     */
     public static void setPageFormatFromString(Paper pPaper,
-            String pPageFormatProperty) {
+                                               String pPageFormatProperty) {
         try {
             // parse string:
             StringTokenizer tokenizer = new StringTokenizer(
                     pPageFormatProperty, ";");
             if (tokenizer.countTokens() != 6) {
-                logger.warn("Page format property has not the correct format:"
+                log.warn("Page format property has not the correct format:"
                         + pPageFormatProperty);
                 return;
             }
@@ -1925,30 +1755,20 @@ public class Tools {
             pPaper.setImageableArea(nt(tokenizer), nt(tokenizer),
                     nt(tokenizer), nt(tokenizer));
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
-    /**
-     * @param pTokenizer
-     *
-     * @return
-     */
     private static double nt(StringTokenizer pTokenizer) {
         String nextToken = pTokenizer.nextToken();
         try {
             return Double.parseDouble(nextToken);
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return 0;
     }
 
-    /**
-     * @param pPageFormat
-     *
-     * @return
-     */
     public static String getPageFormatAsString(Paper pPaper) {
         return pPaper.getWidth() + ";" + pPaper.getHeight() + ";"
                 + pPaper.getImageableX() + ";" + pPaper.getImageableY() + ";"
@@ -1963,7 +1783,7 @@ public class Tools {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
         return null;
     }
@@ -1977,7 +1797,7 @@ public class Tools {
 
             StringBuilder buf = new StringBuilder("[");
 
-            for (Iterator<XmlAction> it = xmlActions.iterator(); it.hasNext();) {
+            for (Iterator<XmlAction> it = xmlActions.iterator(); it.hasNext(); ) {
                 if (buf.length() > 1) {
                     buf.append(',');
                 }
@@ -1986,17 +1806,17 @@ public class Tools {
             }
             buf.append(']');
 
-            return classString + " " + buf.toString();
+            return classString + " " + buf;
         }
         return classString;
     }
 
     public static XmlAction deepCopy(XmlAction action) {
-        return (XmlAction) unMarshall(marshall(action));
+        return unMarshall(marshall(action));
     }
 
     public static String generateID(String proposedID, Map map,
-            String prefix) {
+                                    String prefix) {
         String myProposedID = (proposedID != null) ? proposedID : "";
         String returnValue;
         do {
@@ -2007,11 +1827,11 @@ public class Tools {
                 myProposedID = "";
             } else {
                 /*
-				 * The prefix is to enable the id to be an ID in the sense of
-				 * XML/DTD.
+                 * The prefix is to enable the id to be an ID in the sense of
+                 * XML/DTD.
                  */
                 returnValue = prefix
-                        + Integer.toString(Tools.ran.nextInt(2000000000));
+                        + Tools.ran.nextInt(2000000000);
             }
         } while (map.containsKey(returnValue));
         return returnValue;
@@ -2022,7 +1842,6 @@ public class Tools {
      * not. It checks this and calls the invokeandwait or the runnable directly.
      *
      * @param pRunnable
-     *
      * @throws InterruptedException
      * @throws InvocationTargetException
      */
@@ -2040,22 +1859,21 @@ public class Tools {
         String path = FreeMindStarter.class.getProtectionDomain()
                 .getCodeSource().getLocation().getPath();
         String decodedPath = URLDecoder.decode(path, "UTF-8");
-        logger.info("Path: " + decodedPath);
+        log.info("Path: " + decodedPath);
         if (decodedPath.endsWith(CONTENTS_JAVA_FREEMIND_JAR)) {
             decodedPath = decodedPath.substring(0, decodedPath.length() - CONTENTS_JAVA_FREEMIND_JAR.length());
             decodedPath = decodedPath + FREE_MIND_APP_CONTENTS_RESOURCES_JAVA;
-            logger.info("macPath: " + decodedPath);
+            log.info("macPath: " + decodedPath);
         } else if (decodedPath.endsWith(FREEMIND_LIB_FREEMIND_JAR)) {
             decodedPath = decodedPath.substring(0, decodedPath.length() - FREEMIND_LIB_FREEMIND_JAR.length());
-            logger.info("reducded Path: " + decodedPath);
+            log.info("reducded Path: " + decodedPath);
         }
         return decodedPath + "dictionaries/";
     }
 
-    public static Properties copyChangedProperties(Properties props2,
-            Properties defProps2) {
+    public static Properties copyChangedProperties(Properties props2, Properties defProps2) {
         Properties toBeStored = new Properties();
-        for (Iterator it = props2.keySet().iterator(); it.hasNext();) {
+        for (Iterator it = props2.keySet().iterator(); it.hasNext(); ) {
             String key = (String) it.next();
             if (!safeEquals(props2.get(key), defProps2.get(key))) {
                 toBeStored.put(key, props2.get(key));
@@ -2084,13 +1902,14 @@ public class Tools {
             }
             in.close();
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return new StringBuffer();
         }
         return buffer;
     }
 
     /**
+     *
      */
     public static int edgeWidthStringToInt(String value) {
         if (value == null) {
@@ -2104,7 +1923,7 @@ public class Tools {
 
     static public int iconFirstIndex(MindMapNode node, String iconName) {
         List<MindIcon> icons = node.getIcons();
-        for (ListIterator<MindIcon> i = icons.listIterator(); i.hasNext();) {
+        for (ListIterator<MindIcon> i = icons.listIterator(); i.hasNext(); ) {
             MindIcon nextIcon = i.next();
             if (iconName.equals(nextIcon.getName())) {
                 return i.previousIndex();
@@ -2127,14 +1946,6 @@ public class Tools {
 
     }
 
-    // http://stackoverflow.com/questions/1149703/stacktrace-to-string-in-java
-    public static String getStacktrace(Exception e) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        return sw.toString();
-    }
-
     public static void makeFileHidden(File file, boolean setHidden) {
         try {
             if (!file.exists() || !isWindows()) {
@@ -2146,7 +1957,7 @@ public class Tools {
                 Files.setAttribute(path, "dos:hidden", setHidden);
             }
         } catch (IOException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 

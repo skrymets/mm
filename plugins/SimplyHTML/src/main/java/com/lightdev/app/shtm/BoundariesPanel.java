@@ -36,8 +36,6 @@ import javax.swing.text.html.CSS;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the GNU General Public License, for details see file gpl.txt in the distribution package of this software
- *
- *
  */
 class BoundariesPanel extends JPanel implements AttributeComponent {
 
@@ -89,7 +87,7 @@ class BoundariesPanel extends JPanel implements AttributeComponent {
     }
 
     private void addSizeSelector(final GridBagLayout g, final GridBagConstraints c, final Object attr, final int x,
-            final int y) {
+                                 final int y) {
         final SizeSelectorPanel ssp = new SizeSelectorPanel(attr, null, false, SizeSelectorPanel.TYPE_LABEL);
         Util.addGridBagComponent(this, ssp, g, c, x, y, GridBagConstraints.WEST);
         components.addElement(ssp);
@@ -100,7 +98,6 @@ class BoundariesPanel extends JPanel implements AttributeComponent {
      * <code>AttributeComponent</code>
      *
      * @param a the set of attributes possibly having an attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute, false if not
      */
     public boolean setValue(final AttributeSet a) {

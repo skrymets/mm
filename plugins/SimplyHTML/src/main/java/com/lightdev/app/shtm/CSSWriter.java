@@ -37,7 +37,6 @@ import javax.swing.text.html.StyleSheet;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the GNU General Public License, for details see file gpl.txt in the distribution package of this software
- *
  */
 class CSSWriter {
 
@@ -65,7 +64,7 @@ class CSSWriter {
     /**
      * construct a new CSSWriter
      *
-     * @param writer the writer to write to
+     * @param writer     the writer to write to
      * @param styleSheet the StyleSheet to write
      */
     public CSSWriter(final Writer writer, final StyleSheet styleSheet) {
@@ -94,8 +93,7 @@ class CSSWriter {
      * <p>Takes the style with the given name from the style sheet passed in the constructor and writes it to the writer passed in the constructor.</p>.
      *
      * @param ruleName the name of the rule to write out
-     *
-     * @exception IOException if i/o fails
+     * @throws IOException if i/o fails
      */
     private void writeRule(final String ruleName) throws IOException {
         writeRule(ruleName, styleSheet.getStyle(ruleName));
@@ -107,9 +105,8 @@ class CSSWriter {
      * <p>Takes the style passed in paramter 'rule' and writes it under the given name to the writer passed in the constructor.</p>.
      *
      * @param ruleName the name of the rule to write out
+     * @throws IOException if i/o fails
      * @apram rule the style to write out
-     *
-     * @exception IOException if i/o fails
      */
     public void writeRule(final String ruleName, final AttributeSet rule) throws IOException {
         //System.out.println("CSSWriter writeRule ruleName=" + ruleName);
@@ -129,7 +126,6 @@ class CSSWriter {
      * whenever an Attribute contains another AttributeSet.</p>
      *
      * @param style the <code>Style</code> to write
-     *
      * @return true, if the style was closed in this run of recursion, false if not
      */
     private boolean writeStyle(final AttributeSet style) throws IOException {

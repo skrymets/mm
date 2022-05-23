@@ -63,6 +63,42 @@
             <version>2.9.0</version>
         </dependency>
 
+        <!-- ************************************************************************* -->
+
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+
+
+        <!-- ************************************************************************* -->
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.3.04</version>
+        </dependency>
+
+        <!-- ************************************************************************* -->
+
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-bridge</artifactId>
@@ -181,11 +217,24 @@
             <version>1.7.28</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.12.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
+        <!-- ************************************************************************* -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- ************************************************************************* -->
@@ -194,35 +243,73 @@
 
     <build>
         <plugins>
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-resources-plugin</artifactId>-->
+            <!--&lt;!&ndash;                <version>3.1.0</version>&ndash;&gt;-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>copy-compiled-classes</id>-->
+            <!--                        <phase>validate</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>copy-resources</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <outputDirectory>${basedir}/target/classes</outputDirectory>-->
+            <!--                            <resources>-->
+            <!--                                <resource>-->
+            <!--                                    <directory>${project.basedir}/src/main/compiled</directory>-->
+            <!--                                    <filtering>false</filtering>-->
+            <!--                                </resource>-->
+            <!--                            </resources>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
+
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-jar-plugin</artifactId>-->
+            <!--                &lt;!&ndash;                <version>3.2.0</version>&ndash;&gt;-->
+            <!--                <configuration>-->
+            <!--                    <archive>-->
+            <!--                        <index>true</index>-->
+            <!--                        <addMavenDescriptor>false</addMavenDescriptor>-->
+            <!--                        <manifest>-->
+            <!--                            <addClasspath>true</addClasspath>-->
+            <!--                            <classpathPrefix>lib/</classpathPrefix>-->
+            <!--                            <addExtensions>false</addExtensions>-->
+            <!--                            <mainClass>freemind.main.FreeMindStarter</mainClass>-->
+            <!--                        </manifest>-->
+            <!--                    </archive>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>copy-compiled-classes</id>
-                        <phase>validate</phase>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>copy-resources</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/src/main/compiled</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.jibx</groupId>
                 <artifactId>jibx-maven-plugin</artifactId>
                 <version>${jibx.version}</version>
                 <configuration>
-                    <schemaLocation>src/main/resources/bindings/xsd</schemaLocation>
                     <customizations>
                         <customization>src/main/resources/bindings/xsd/customizations.xml</customization>
                     </customizations>
@@ -230,28 +317,72 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>generate-jibx-base</id>
+                        <id>generate-jibx-code</id>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>schema-codegen</goal>
                         </goals>
                         <configuration>
+                            <schemaLocation>${basedir}/src/main/resources/bindings/xsd</schemaLocation>
+                            <includeSchemas>
+                                <includeSchema>freemind_actions.xsd</includeSchema>
+                                <includeSchema>freemind.xsd</includeSchema>
+                            </includeSchemas>
                             <verbose>true</verbose>
                         </configuration>
                     </execution>
                     <execution>
                         <id>compile-binding</id>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>bind</goal>
                         </goals>
                         <configuration>
-                            <directory>target/generated-sources</directory>
+                            <schemaBindingDirectory>${basedir}/target/generated-sources</schemaBindingDirectory>
+                            <includeSchemaBindings>
+                                <includeSchemaBinding>binding.xml</includeSchemaBinding>
+                            </includeSchemaBindings>
                             <load>true</load>
                             <validate>true</validate>
+                            <verbose>true</verbose>
                             <verify>true</verify>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <finalName>mm-${project.version}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/assembly/uberjar-assembly.xml</descriptor>
+                    </descriptors>
+                    <archive>
+                        <index>true</index>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <addExtensions>false</addExtensions>
+                            <mainClass>freemind.main.FreeMindStarter</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

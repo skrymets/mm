@@ -22,14 +22,13 @@
 /*$Id: MenuItemEnabledListener.java,v 1.1.4.1.16.1 2008/01/13 20:55:34 christianfoltin Exp $*/
 package freemind.controller;
 
-import javax.swing.Action;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 public interface MenuItemEnabledListener {
-	/**
-	 * @param pItem
-	 * @param pAction
-	 * @return true, if the menu item should be accessible. False otherwise.
-	 */
-	boolean isEnabled(JMenuItem pItem, Action pAction);
+    /**
+     * @param pItem
+     * @param pAction
+     * @return true, if the menu item should be accessible. False otherwise.
+     */
+    boolean isEnabled(JMenuItem pItem, Action pAction);
 }

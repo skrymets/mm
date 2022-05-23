@@ -31,78 +31,78 @@ import freemind.controller.actions.generated.instance.instance.Place;
 @SuppressWarnings("serial")
 public class MapSearchMarkerLocation extends MapMarkerBase {
 
-	public static final int CIRCLE_SELECTED_FACTOR = 2;
-	private final Place mPlace;
+    public static final int CIRCLE_SELECTED_FACTOR = 2;
+    private final Place mPlace;
 
-	/**
-	 * @param pMapDialog
-	 * @param pNewPlace
-	 */
-	public MapSearchMarkerLocation(MapDialog pMapDialog, Place pNewPlace) {
-		super(pMapDialog);
-		mBulletColor = Color.RED;
-		mPlace = pNewPlace;
-		update();
-	}
+    /**
+     * @param pMapDialog
+     * @param pNewPlace
+     */
+    public MapSearchMarkerLocation(MapDialog pMapDialog, Place pNewPlace) {
+        super(pMapDialog);
+        mBulletColor = Color.RED;
+        mPlace = pNewPlace;
+        update();
+    }
 
-	/**
-	 * Either start or when something changes on the node, this method is
-	 * called.
-	 */
-	public void update() {
-		setText(mPlace.getDisplayName());
-		setForeground(mBulletColor);
-		setSize(getPreferredSize());
-	}
+    /**
+     * Either start or when something changes on the node, this method is
+     * called.
+     */
+    public void update() {
+        setText(mPlace.getDisplayName());
+        setForeground(mBulletColor);
+        setSize(getPreferredSize());
+    }
 
-	public double getLat() {
-		return mPlace.getLat();
-	}
+    public double getLat() {
+        return mPlace.getLat();
+    }
 
-	public double getLon() {
-		return mPlace.getLon();
-	}
+    public double getLon() {
+        return mPlace.getLon();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.map.MapMarkerBase#paintCenter(java.awt.Graphics,
-	 * java.awt.Point)
-	 */
-	protected void paintCenter(Graphics pG, Point pPosition) {
-		if (isSelected()) {
-			Graphics2D g2 = (Graphics2D) pG;
-			Stroke oldStroke = g2.getStroke();
-			g2.setStroke(new BasicStroke(4));
-			int xo = pPosition.x - CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
-			int xu = pPosition.x + CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
-			int yo = pPosition.y - CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
-			int yu = pPosition.y + CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
-			g2.drawLine(xo, yo, xu, yu);
-			g2.drawLine(xu, yo, xo, yu);
-			g2.setStroke(oldStroke);
-		} else {
-			super.paintCenter(pG, pPosition);
-		}
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see plugins.map.MapMarkerBase#paintCenter(java.awt.Graphics,
+     * java.awt.Point)
+     */
+    protected void paintCenter(Graphics pG, Point pPosition) {
+        if (isSelected()) {
+            Graphics2D g2 = (Graphics2D) pG;
+            Stroke oldStroke = g2.getStroke();
+            g2.setStroke(new BasicStroke(4));
+            int xo = pPosition.x - CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
+            int xu = pPosition.x + CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
+            int yo = pPosition.y - CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
+            int yu = pPosition.y + CIRCLE_RADIUS * CIRCLE_SELECTED_FACTOR;
+            g2.drawLine(xo, yo, xu, yu);
+            g2.drawLine(xu, yo, xo, yu);
+            g2.setStroke(oldStroke);
+        } else {
+            super.paintCenter(pG, pPosition);
+        }
+    }
 
-	public String toString() {
-		return "MapSearchMarkerLocation for search text "
-				+ mPlace.getDisplayName() + " at " + getLat() + " " + getLon();
-	}
+    public String toString() {
+        return "MapSearchMarkerLocation for search text "
+                + mPlace.getDisplayName() + " at " + getLat() + " " + getLon();
+    }
 
-	public Place getPlace() {
-		return mPlace;
-	}
+    public Place getPlace() {
+        return mPlace;
+    }
 
-	@Override
-	public void setLat(double pLat) {
-		mPlace.setLat(pLat);
-	}
+    @Override
+    public void setLat(double pLat) {
+        mPlace.setLat(pLat);
+    }
 
-	@Override
-	public void setLon(double pLon) {
-		mPlace.setLon(pLon);
-	}
+    @Override
+    public void setLon(double pLon) {
+        mPlace.setLon(pLon);
+    }
 
 }

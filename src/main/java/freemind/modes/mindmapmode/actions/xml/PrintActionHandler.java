@@ -25,61 +25,34 @@ package freemind.modes.mindmapmode.actions.xml;
 
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.mindmapmode.MindMapController;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * @author foltin
- * 
  */
+@Log4j2
 public class PrintActionHandler implements ActionHandler {
 
-	private MindMapController c;
+    private MindMapController c;
 
-	// Logging:
-	private static org.slf4j.Logger logger;
+    public PrintActionHandler(MindMapController c) {
+        super();
+        this.c = c;
 
-	/**
-	 *
-	 */
-	public PrintActionHandler(MindMapController c) {
-		super();
-		this.c = c;
-		if (logger == null)
-			logger = c.getFrame().getLogger(this.getClass().getName());
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.actions.ActionHandler#startTransaction(java.lang.
-	 * String)
-	 */
-	public void startTransaction(String name) {
+    public void startTransaction(String name) {
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.actions.ActionHandler#endTransaction(java.lang.String
-	 * )
-	 */
-	public void endTransaction(String name) {
+    public void endTransaction(String name) {
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.actions.ActionHandler#executeAction(freemind.controller
-	 * .actions.ActionPair)
-	 */
-	public void executeAction(XmlAction action) {
-		String s = c.marshall(action);
-		logger.info(s);
-		// Tools.printStackTrace();
-	}
+    public void executeAction(XmlAction action) {
+        String s = c.marshall(action);
+        log.info(s);
+        // Tools.printStackTrace();
+    }
 
 }

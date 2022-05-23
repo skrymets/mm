@@ -29,16 +29,15 @@ import javax.swing.Action;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
- *
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  * @see javax.swing.Action
  */
 public interface SHTMLAction extends Action {
-    /** update the action's state */
+    /**
+     * update the action's state
+     */
     public void update();
 
     /**

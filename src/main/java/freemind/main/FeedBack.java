@@ -23,11 +23,12 @@
 package freemind.main;
 
 public interface FeedBack {
-	void progress(int act, String messageId, Object[] pMessageParameters);
 
-	int getActualValue();
+    void progress(int act, String messageId, Object[] pMessageParameters);
 
-	void setMaximumValue(int max);
+    int getActualValue();
 
-	void increase(String messageId, Object[] pMessageParameters);
+    void setMaximumValue(int max);
+
+    void increase(String messageId, Object[] pMessageParameters);
 }

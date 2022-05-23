@@ -50,8 +50,6 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the GNU General Public License, for details see file gpl.txt in the distribution package of this software
- *
- *
  */
 class ColorPanel extends JPanel implements ActionListener, AttributeComponent {
 
@@ -80,10 +78,10 @@ class ColorPanel extends JPanel implements ActionListener, AttributeComponent {
     /**
      * construct a color panel
      *
-     * @param title the title of the color panel
-     * @param col the color to be displayed first
+     * @param title     the title of the color panel
+     * @param col       the color to be displayed first
      * @param titleFont font for title
-     * @param key the attribute key this component shall return color values for
+     * @param key       the attribute key this component shall return color values for
      */
     public ColorPanel(final String title, final Color col, final Object key) {
         super(new BorderLayout(5, 5));
@@ -190,7 +188,6 @@ class ColorPanel extends JPanel implements ActionListener, AttributeComponent {
      * <code>AttributeComponent</code>
      *
      * @param a the set of attributes possibly having an attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute, false if not
      */
     public boolean setValue(final AttributeSet a) {

@@ -17,7 +17,7 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
+/*
  * Created on 06.03.2004
  *
  * To change the template for this generated file go to
@@ -43,11 +43,11 @@ import java.util.Vector;
 
 /**
  * @author adapted to the plugin mechanism by ganzer
- *
  */
 public class IconSelectionPlugin extends MindMapNodeHookAdapter {
 
     /**
+     *
      */
     public IconSelectionPlugin() {
         super();

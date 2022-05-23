@@ -21,68 +21,66 @@ package freemind.extensions;
 
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Straight forward implementation with some helpers.
- * 
+ *
  * @author foltin
- * 
- * */
+ */
+@Log4j2
 public abstract class NodeHookAdapter extends HookAdapter implements NodeHook {
 
-	private MindMap map;
+    private MindMap map;
 
-	private MindMapNode node;
+    private MindMapNode node;
 
-	/**
-	 * 
-	 */
-	public NodeHookAdapter() {
-		super();
-	}
+    public NodeHookAdapter() {
+        super();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.NodeHook#invoke()
-	 */
-	public void invoke(MindMapNode node) {
-		logger.trace("invoke(node) called.");
-	}
+    public void invoke(MindMapNode node) {
+        log.trace("invoke(node) called.");
+    }
 
-	/**
-	 */
-	public MindMapNode getNode() {
-		return node;
-	}
+    /**
+     *
+     */
+    public MindMapNode getNode() {
+        return node;
+    }
 
-	/**
-	 */
-	public void setNode(MindMapNode node) {
-		this.node = node;
-	}
+    /**
+     *
+     */
+    public void setNode(MindMapNode node) {
+        this.node = node;
+    }
 
-	/**
-	 */
-	protected MindMap getMap() {
-		return map;
-	}
+    /**
+     *
+     */
+    protected MindMap getMap() {
+        return map;
+    }
 
-	/**
-	 */
-	protected void nodeChanged(MindMapNode node) {
-		getController().nodeChanged(node);
-	}
+    /**
+     *
+     */
+    protected void nodeChanged(MindMapNode node) {
+        getController().nodeChanged(node);
+    }
 
-	/**
-	 */
-	public void setMap(MindMap map) {
-		this.map = map;
-	}
+    /**
+     *
+     */
+    public void setMap(MindMap map) {
+        this.map = map;
+    }
 
-	public String getNodeId() {
-		return getController().getNodeID(getNode());
-	}
+    public String getNodeId() {
+        return getController().getNodeID(getNode());
+    }
 
 
 }

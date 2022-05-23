@@ -25,10 +25,7 @@
 
 package accessories.plugins.util.xslt;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import lombok.extern.log4j.Log4j2;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -36,43 +33,46 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
- * 
  * @author joerg
  */
+@Log4j2
 public class XmlExporter {
 
-	/** Creates a new instance of XmlExporter */
-	public XmlExporter() {
-	}
+    public XmlExporter() {
+    }
 
-	public void transForm(File xmlFile, File xsltFile, File resultFile) throws FileNotFoundException {
-	    Source xmlSource = new StreamSource(xmlFile);
-	    // System.out.println("set xsl");
-	    Source xsltSource = new StreamSource(xsltFile);
-	    // System.out.println("set result");
-	    FileOutputStream resultOutputStream = new FileOutputStream(resultFile);
-	    Result result = new StreamResult(resultOutputStream);
+    public void transForm(File xmlFile, File xsltFile, File resultFile) throws FileNotFoundException {
+        Source xmlSource = new StreamSource(xmlFile);
+        // System.out.println("set xsl");
+        Source xsltSource = new StreamSource(xsltFile);
+        // System.out.println("set result");
+        FileOutputStream resultOutputStream = new FileOutputStream(resultFile);
+        Result result = new StreamResult(resultOutputStream);
 
-	    // create an instance of TransformerFactory
-	    try {
-	        // System.out.println("make transform instance");
-	        TransformerFactory transFact = TransformerFactory.newInstance();
+        // create an instance of TransformerFactory
+        try {
+            // System.out.println("make transform instance");
+            TransformerFactory transFact = TransformerFactory.newInstance();
 
-	        Transformer trans = transFact.newTransformer(xsltSource);
+            Transformer trans = transFact.newTransformer(xsltSource);
 
-	        trans.transform(xmlSource, result);
-	    } catch (Exception e) {
-	        // System.err.println("error applying the xslt file "+e);
-	        freemind.main.Resources.getInstance().logException(e);
-	    } finally {
-	        try {
-	            resultOutputStream.close();
-	        } catch (IOException e) {
-	            freemind.main.Resources.getInstance().logException(e);
-	        }
-	    }
-	}
+            trans.transform(xmlSource, result);
+        } catch (Exception e) {
+            // System.err.println("error applying the xslt file "+e);
+            log.error(e);
+        } finally {
+            try {
+                resultOutputStream.close();
+            } catch (IOException e) {
+                log.error(e);
+            }
+        }
+    }
 
 }

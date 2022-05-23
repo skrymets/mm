@@ -33,43 +33,42 @@ import freemind.modes.mindmapmode.actions.xml.actors.PasteActor.NodeCoordinate;
 public class UndoPasteActor extends XmlActorAdapter {
 
 
+    /**
+     * @param pMapFeedback
+     */
+    public UndoPasteActor(ExtendedMapFeedback pMapFeedback) {
+        super(pMapFeedback);
+    }
 
-	/**
-	 * @param pMapFeedback
-	 */
-	public UndoPasteActor(ExtendedMapFeedback pMapFeedback) {
-		super(pMapFeedback);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.modes.mindmapmode.actions.xml.ActorXml#act(freemind.controller
+     * .actions.generated.instance.XmlAction)
+     */
+    public void act(XmlAction pAction) {
+        if (pAction instanceof UndoPasteNodeAction) {
+            UndoPasteNodeAction undoAction = (UndoPasteNodeAction) pAction;
+            MindMapNode selectedNode = getNodeFromID(undoAction.getNode());
+            int amount = undoAction.getNodeAmount();
+            while (amount > 0) {
+                NodeCoordinate coordinate = new NodeCoordinate(selectedNode,
+                        undoAction.isAsSibling(), undoAction.isIsLeft());
+                MindMapNode targetNode = coordinate.getNode();
+                getXmlActorFactory().getDeleteChildActor().deleteWithoutUndo(targetNode);
+                amount--;
+            }
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.mindmapmode.actions.xml.ActorXml#act(freemind.controller
-	 * .actions.generated.instance.XmlAction)
-	 */
-	public void act(XmlAction pAction) {
-		if (pAction instanceof UndoPasteNodeAction) {
-			UndoPasteNodeAction undoAction = (UndoPasteNodeAction) pAction;
-			MindMapNode selectedNode = getNodeFromID(undoAction.getNode());
-			int amount = undoAction.getNodeAmount();
-			while(amount > 0) {
-				NodeCoordinate coordinate = new NodeCoordinate(selectedNode,
-						undoAction.isAsSibling(), undoAction.isIsLeft());
-				MindMapNode targetNode = coordinate.getNode();
-				getXmlActorFactory().getDeleteChildActor().deleteWithoutUndo(targetNode);
-				amount--;
-			}
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.mindmapmode.actions.xml.ActorXml#getDoActionClass()
-	 */
-	public Class<UndoPasteNodeAction> getDoActionClass() {
-		return UndoPasteNodeAction.class;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.mindmapmode.actions.xml.ActorXml#getDoActionClass()
+     */
+    public Class<UndoPasteNodeAction> getDoActionClass() {
+        return UndoPasteNodeAction.class;
+    }
 
 }

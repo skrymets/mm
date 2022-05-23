@@ -32,11 +32,9 @@ import javax.swing.text.html.CSS;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class MarginPanel extends AttributePanel {
     private final BoundariesPanel margin;
@@ -50,13 +48,13 @@ class MarginPanel extends AttributePanel {
         margin = new BoundariesPanel(CSS.Attribute.MARGIN);
         // set border and title and add margin panel
         margin
-            .setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util.getResourceString("marginLabel")));
+                .setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util.getResourceString("marginLabel")));
         this.add(margin);
         // construct padding panel
         padding = new BoundariesPanel(CSS.Attribute.PADDING);
         // set border and title adn add padding panel
         padding.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("paddingLabel")));
+                .getResourceString("paddingLabel")));
         this.add(padding);
     }
 

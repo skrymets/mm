@@ -21,6 +21,7 @@ package freemind.view.mindmapview;
 
 import freemind.main.Resources;
 import freemind.main.Tools;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,14 +32,11 @@ import java.awt.*;
  * @author Dimitri
  */
 @SuppressWarnings("serial")
+@Log4j2
 public class NodeMotionListenerView extends JComponent {
-    protected static org.slf4j.Logger logger = null;
 
     public NodeMotionListenerView(NodeView view) {
         super();
-        if (logger == null) {
-            logger = freemind.main.Resources.getInstance().getLogger(this.getClass().getName());
-        }
         this.movedView = view;
 
         MapView map = view.getMap();

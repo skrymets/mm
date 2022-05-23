@@ -23,62 +23,60 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import javax.swing.Icon;
 import freemind.modes.FreemindAction;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import lombok.extern.log4j.Log4j2;
+
+import javax.swing.*;
 
 /**
  * Common class for mindmap actions.
+ *
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
-public abstract class MindmapAction extends FreemindAction  {
+@Log4j2
+public abstract class MindmapAction extends FreemindAction {
 
-	private final MindMapController pMindMapController;
+    private final MindMapController pMindMapController;
 
-	/**
-	 * @param title
-	 *            is a fixed title (no translation is done via resources)
-	 */
-	public MindmapAction(String title, Icon icon,
-			MindMapController mindMapController) {
-		super(title, icon, mindMapController);
-		this.pMindMapController = mindMapController;
+    /**
+     * @param title is a fixed title (no translation is done via resources)
+     */
+    public MindmapAction(String title, Icon icon,
+                         MindMapController mindMapController) {
+        super(title, icon, mindMapController);
+        this.pMindMapController = mindMapController;
 
-	}
+    }
 
-	/**
-	 * @param title
-	 *            Title is a resource.
-	 */
-	public MindmapAction(String title, 
-			MindMapController mindMapController) {
-		this(title, (String) null, mindMapController);
-	}
-	
-	/**
-	 * @param title
-	 *            Title is a resource.
-	 * @param iconPath
-	 *            is a path to an icon.
-	 */
-	public MindmapAction(String title, String iconPath,
-			final MindMapController mindMapController) {
-		this(mindMapController.getText(title), (iconPath == null) ? null
-				: freemind.view.ImageFactory.getInstance().createIcon(mindMapController.getResource(iconPath)),
-				mindMapController);
-	}
+    /**
+     * @param title Title is a resource.
+     */
+    public MindmapAction(String title, MindMapController mindMapController) {
+        this(title, (String) null, mindMapController);
+    }
 
-	public void addActor(ActorXml actor) {
-		// registration:
-		pMindMapController.getActionRegistry().registerActor(actor,
-				actor.getDoActionClass());
-	}
+    /**
+     * @param title    Title is a resource.
+     * @param iconPath is a path to an icon.
+     */
+    public MindmapAction(String title, String iconPath, final MindMapController mindMapController) {
+        this(mindMapController.getText(title),
+                (iconPath == null)
+                        ? null
+                        : freemind.view.ImageFactory.getInstance().createIcon(mindMapController.getResource(iconPath)),
+                mindMapController);
+    }
 
-	public MindMapController getMindMapController() {
-		return pMindMapController;
-	}
-	
+    public void addActor(ActorXml actor) {
+        // registration:
+        pMindMapController.getActionRegistry().registerActor(actor, actor.getDoActionClass());
+    }
+
+    public MindMapController getMindMapController() {
+        return pMindMapController;
+    }
+
 }

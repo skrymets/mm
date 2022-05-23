@@ -32,11 +32,9 @@ import javax.swing.text.AttributeSet;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class ListDialog extends DialogShell {
     private final ListPanel listPanel;
@@ -55,7 +53,7 @@ class ListDialog extends DialogShell {
     /**
      * set the attributes this ListDialog shall represent
      *
-     * @param a  the set of attributes to display list attributes from
+     * @param a the set of attributes to display list attributes from
      */
     public void setListAttributes(final AttributeSet a) {
         listPanel.setValue(a);

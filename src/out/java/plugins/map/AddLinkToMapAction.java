@@ -31,25 +31,25 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
  */
 public class AddLinkToMapAction extends MindMapNodeHookAdapter {
 
-	static final String NODE_CONTEXT_PLUGIN_NAME = "plugins/map/MapDialog_AddLinkToMapAction.properties";
+    static final String NODE_CONTEXT_PLUGIN_NAME = "plugins/map/MapDialog_AddLinkToMapAction.properties";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
-	 */
-	public void invoke(MindMapNode pNode) {
-		List<MindMapNode> selecteds = getMindMapController().getSelecteds();
-		for (MindMapNode node : selecteds) {
-			MapNodePositionHolder hook = MapNodePositionHolder.getHook(node);
-			if(hook != null) {
-				if(node.getLink() != null) {
-					// TODO: ask user if should overwrite?
-					continue;
-				}
-				getMindMapController().setLink(node, FreeMindMapController.getLink(hook));
-			}
-		}
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
+     */
+    public void invoke(MindMapNode pNode) {
+        List<MindMapNode> selecteds = getMindMapController().getSelecteds();
+        for (MindMapNode node : selecteds) {
+            MapNodePositionHolder hook = MapNodePositionHolder.getHook(node);
+            if (hook != null) {
+                if (node.getLink() != null) {
+                    // TODO: ask user if should overwrite?
+                    continue;
+                }
+                getMindMapController().setLink(node, FreeMindMapController.getLink(hook));
+            }
+        }
+    }
 }

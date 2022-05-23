@@ -24,30 +24,26 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class NodeUpAction extends MindmapAction  {
-	private final MindMapController modeController;
-	private static Logger logger;
+@Log4j2
+public class NodeUpAction extends MindmapAction {
+    private final MindMapController modeController;
 
-	public NodeUpAction(MindMapController modeController) {
-		super("node_up", modeController);
-		this.modeController = modeController;
-		if (logger == null) {
-			logger = modeController.getFrame().getLogger(
-					this.getClass().getName());
-		}
-	}
+    public NodeUpAction(MindMapController modeController) {
+        super("node_up", modeController);
+        this.modeController = modeController;
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		MindMapNode selected = modeController.getSelected();
-		List<MindMapNode> selecteds = modeController.getSelecteds();
-		modeController.moveNodes(selected, selecteds, -1);
-		modeController.select(selected, selecteds);
-	}
+    public void actionPerformed(ActionEvent e) {
+        MindMapNode selected = modeController.getSelected();
+        List<MindMapNode> selecteds = modeController.getSelecteds();
+        modeController.moveNodes(selected, selecteds, -1);
+        modeController.select(selected, selecteds);
+    }
 
 }

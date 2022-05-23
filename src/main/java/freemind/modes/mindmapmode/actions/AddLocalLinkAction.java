@@ -25,6 +25,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,55 +33,45 @@ import java.util.Vector;
 
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
+@Log4j2
 public class AddLocalLinkAction extends MindmapAction {
 
-	private final MindMapController modeController;
+    private final MindMapController modeController;
 
-	/**
-     */
-	public AddLocalLinkAction(MindMapController modeController) {
-		super("paste_as_local_link", "images/stock_right.png", modeController);
-		this.modeController = modeController;
-	}
+    public AddLocalLinkAction(MindMapController modeController) {
+        super("paste_as_local_link", "images/stock_right.png", modeController);
+        this.modeController = modeController;
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		MindMapNode source = modeController.getSelected();
-		Vector<MindMapNode> nodesFromClipboard = Tools
-				.getMindMapNodesFromClipboard(modeController);
-		if (nodesFromClipboard.size() == 0) {
-			modeController.getController().errorMessage(
-					modeController.getText("no_copied_nodes"));
-			return;
-		}
-		boolean first = true;
-		for (MindMapNode destination : nodesFromClipboard) {
-			if(!first) {
-				logger.warn("Can't link the node '"+source+"' to more than one destination. Only the last is used.");
-			}
-			if(source != destination) {
-				modeController.setLink(source, "#" + modeController.getNodeID(destination));
-			} else {
-				// hmm, give an error?
-				logger.warn("Can't link the node '"+source+"' onto itself. Skipped.");
-			}
-			first = false;
-		}
-	}
+    public void actionPerformed(ActionEvent e) {
+        MindMapNode source = modeController.getSelected();
+        Vector<MindMapNode> nodesFromClipboard = Tools.getMindMapNodesFromClipboard(modeController);
+        if (nodesFromClipboard.size() == 0) {
+            modeController.getController().errorMessage(modeController.getText("no_copied_nodes"));
+            return;
+        }
+        boolean first = true;
+        for (MindMapNode destination : nodesFromClipboard) {
+            if (!first) {
+                log.warn("Can't link the node '" + source + "' to more than one destination. Only the last is used.");
+            }
+            if (source != destination) {
+                modeController.setLink(source, "#" + modeController.getNodeID(destination));
+            } else {
+                // hmm, give an error?
+                log.warn("Can't link the node '" + source + "' onto itself. Skipped.");
+            }
+            first = false;
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.FreemindAction#isEnabled(javax.swing.JMenuItem,
-	 * javax.swing.Action)
-	 */
-	@Override
-	public boolean isEnabled(JMenuItem pItem, Action pAction) {
-		return super.isEnabled(pItem, pAction)
-				&& (modeController != null)
-				&& Tools.getMindMapNodesFromClipboard(modeController).size() == 1;
-	}
+    @Override
+    public boolean isEnabled(JMenuItem pItem, Action pAction) {
+        return super.isEnabled(pItem, pAction)
+                && (modeController != null)
+                && Tools.getMindMapNodesFromClipboard(modeController).size() == 1;
+    }
 
 }

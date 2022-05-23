@@ -18,20 +18,16 @@
  */
 package freemind.modes;
 
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.view.ScalableImageIcon;
+
+import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.KeyStroke;
-
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.view.ScalableImageIcon;
 
 /**
  * This class represents a MindIcon than can be applied to a node or a whole
@@ -63,6 +59,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     }
 
     /**
+     *
      */
     private MindIcon(String name, ImageIcon icon) {
         setName(name);
@@ -87,8 +84,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     /**
      * Set the value of name.
      *
-     * @param name
-     *             Value to assign to name.
+     * @param name Value to assign to name.
      */
     public void setName(String name) {
 
@@ -168,8 +164,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     /**
      * Set the value of icon.
      *
-     * @param _associatedIcon
-     *                        Value to assign to icon.
+     * @param _associatedIcon Value to assign to icon.
      */
     protected void setIcon(ImageIcon _associatedIcon) {
         this.associatedIcon = _associatedIcon;
@@ -207,6 +202,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     }
 
     /**
+     *
      */
     public static MindIcon factory(String iconName, ImageIcon icon) {
         if (createdIcons.containsKey(iconName)) {
@@ -219,9 +215,9 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(MindIcon icon) {
         int i1 = getNumber();
@@ -240,6 +236,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     }
 
     /**
+     *
      */
     public JComponent getRendererComponent() {
         if (component == null) {

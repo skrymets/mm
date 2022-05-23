@@ -27,5 +27,5 @@ package freemind.preferences;
  * preferences.
  */
 public interface FreemindPropertyListener {
-	void propertyChanged(String propertyName, String newValue, String oldValue);
+    void propertyChanged(String propertyName, String newValue, String oldValue);
 }

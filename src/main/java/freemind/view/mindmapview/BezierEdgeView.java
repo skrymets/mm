@@ -20,9 +20,7 @@
 
 package freemind.view.mindmapview;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.CubicCurve2D;
 
 /**
@@ -30,50 +28,50 @@ import java.awt.geom.CubicCurve2D;
  */
 public class BezierEdgeView extends EdgeView {
 
-	CubicCurve2D.Float graph = new CubicCurve2D.Float();
-	private static final int XCTRL = 12;// the distance between endpoint and
-										// controlpoint
-	private static final int CHILD_XCTRL = 20; // -||- at the child's end
+    CubicCurve2D.Float graph = new CubicCurve2D.Float();
+    private static final int XCTRL = 12;// the distance between endpoint and
+    // controlpoint
+    private static final int CHILD_XCTRL = 20; // -||- at the child's end
 
-	public BezierEdgeView() {
-		super();
-	}
+    public BezierEdgeView() {
+        super();
+    }
 
-	private void update() {
+    private void update() {
 
-		// YCTRL could be implemented but then we had to check whether target is
-		// above or below source.
-		int sign = (getTarget().isLeft()) ? -1 : 1;
-		int sourceSign = 1;
-		if (getSource().isRoot()
-				&& !VerticalRootNodeViewLayout.USE_COMMON_OUT_POINT_FOR_ROOT_NODE) {
-			sourceSign = 0;
-		}
-		int xctrl = getMap().getZoomed(sourceSign * sign * XCTRL);
-		int childXctrl = getMap().getZoomed(-1 * sign * CHILD_XCTRL);
+        // YCTRL could be implemented but then we had to check whether target is
+        // above or below source.
+        int sign = (getTarget().isLeft()) ? -1 : 1;
+        int sourceSign = 1;
+        if (getSource().isRoot()
+                && !VerticalRootNodeViewLayout.USE_COMMON_OUT_POINT_FOR_ROOT_NODE) {
+            sourceSign = 0;
+        }
+        int xctrl = getMap().getZoomed(sourceSign * sign * XCTRL);
+        int childXctrl = getMap().getZoomed(-1 * sign * CHILD_XCTRL);
 
-		graph.setCurve(start.x, start.y, start.x + xctrl, start.y, end.x
-				+ childXctrl, end.y, end.x, end.y);
-	}
+        graph.setCurve(start.x, start.y, start.x + xctrl, start.y, end.x
+                + childXctrl, end.y, end.x, end.y);
+    }
 
-	protected void paint(Graphics2D g) {
-		update();
-		final Color color = getColor();
-		g.setColor(color);
-		final Stroke stroke = getStroke();
-		g.setStroke(stroke);
-		g.draw(graph);
+    protected void paint(Graphics2D g) {
+        update();
+        final Color color = getColor();
+        g.setColor(color);
+        final Stroke stroke = getStroke();
+        g.setStroke(stroke);
+        g.draw(graph);
 
-		if (isTargetEclipsed()) {
-			g.setColor(g.getBackground());
-			g.setStroke(getEclipsedStroke());
-			g.draw(graph);
-			g.setStroke(stroke);
-			g.setColor(color);
-		}
-	}
+        if (isTargetEclipsed()) {
+            g.setColor(g.getBackground());
+            g.setStroke(getEclipsedStroke());
+            g.draw(graph);
+            g.setStroke(stroke);
+            g.setColor(color);
+        }
+    }
 
-	public Color getColor() {
-		return getModel().getColor();
-	}
+    public Color getColor() {
+        return getModel().getColor();
+    }
 }

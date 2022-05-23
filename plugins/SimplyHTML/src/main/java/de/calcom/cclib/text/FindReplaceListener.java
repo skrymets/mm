@@ -37,7 +37,6 @@ import java.util.EventListener;
  * @author CalCom
  * @author <a href="http://www.calcom.de">http://www.calcom.de</a>
  * @author <a href="mailto:info@calcom.de">info@calcom.de</a>
- *
  * @version 1.5, April 27, 2003
  */
 public interface FindReplaceListener extends EventListener {
@@ -46,7 +45,7 @@ public interface FindReplaceListener extends EventListener {
      * the end of the current document and requires the next document
      * of a group of documents.
      *
-     * @param  e  the object having details for the event
+     * @param e the object having details for the event
      */
     public void getNextDocument(FindReplaceEvent e);
 
@@ -55,7 +54,7 @@ public interface FindReplaceListener extends EventListener {
      * an operation for a group of documents which requires to start at
      * the first document.
      *
-     * @param  e  the object having details for the event
+     * @param e the object having details for the event
      */
     public void getFirstDocument(FindReplaceEvent e);
 
@@ -63,7 +62,7 @@ public interface FindReplaceListener extends EventListener {
      * this event gets fired when a FindReplaceDialog has finalized its
      * task.
      *
-     * @param  e  the object having details for the event
+     * @param e the object having details for the event
      */
     public void findReplaceTerminated(FindReplaceEvent e);
 }

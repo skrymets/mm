@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 
 /**
  * Default implementation of TextResources based on java.util.ResourceBundle
- * 
+ *
  * @author Dimitri Polivaev
  * 14.01.2007
  */
@@ -46,8 +46,7 @@ public class DefaultTextResources implements TextResources {
     public String getString(final String pKey) {
         try {
             return resources.getString(pKey);
-        }
-        catch (final MissingResourceException ex) {
+        } catch (final MissingResourceException ex) {
             if (properties != null) {
                 return properties.getProperty(pKey);
             }

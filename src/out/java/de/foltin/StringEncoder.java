@@ -24,12 +24,9 @@ public final class StringEncoder {
      * the encoded string as <code>&#92;u001f</code>. Backslash characters are
      * themselves encoded with a double backslash.
      *
-     * @param value
-     *              string to encode (possibly null)
-     *
+     * @param value string to encode (possibly null)
      * @return the encoded version of {@code value}, or {@code null} if
-     *         {@code value} was {@code null}
-     *
+     * {@code value} was {@code null}
      * @see #decode
      */
     public static String encode(String value) {
@@ -73,14 +70,10 @@ public final class StringEncoder {
      * not of the form <code>&#92;uNNNN</code> or <code>\\</code>) will cause an
      * exception to be thrown.
      *
-     * @param text
-     *             string to decode (possibly null)
-     *
+     * @param text string to decode (possibly null)
      * @return the decoded version of {@code text}, or {@code null} if
-     *         {@code text} was {@code null}
-     *
-     * @throws IllegalArgumentException
-     *                                  if {@code text} contains an invalid escape sequence
+     * {@code text} was {@code null}
+     * @throws IllegalArgumentException if {@code text} contains an invalid escape sequence
      * @see #encode
      */
     public static String decode(String text) {
@@ -115,7 +108,7 @@ public final class StringEncoder {
             if (ch != 'u') {
                 throw new IllegalArgumentException(
                         "illegal escape sequence '\\" + ch
-                        + "' in encoded string");
+                                + "' in encoded string");
             }
 
             // Decode hex value
@@ -129,8 +122,8 @@ public final class StringEncoder {
                 if (nibble == -1) {
                     throw new IllegalArgumentException(
                             "illegal escape sequence '"
-                            + text.substring(i - j - 2, i - j + 4)
-                            + "' in encoded string");
+                                    + text.substring(i - j - 2, i - j + 4)
+                                    + "' in encoded string");
                 }
                 // assert nibble >= 0 && nibble <= 0xf;
                 value = (value << 4) | nibble;

@@ -28,6 +28,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
@@ -41,127 +42,118 @@ import java.util.List;
 
 /**
  * @author Dimitri Polivaev
- * 
  */
+@Log4j2
 public class SplitNode extends MindMapNodeHookAdapter {
 
-	/**
-	 * 
-	 */
-	public SplitNode() {
-		super();
-	}
+    public SplitNode() {
+        super();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.extensions.NodeHook#invoke(freemind.model.MindMapNode,
-	 * java.util.List)
-	 */
-	public void invoke(MindMapNode node) {
-		super.invoke(node);
-		final List<MindMapNode> list = getMindMapController().getSelecteds();
-		
-		for(MindMapNode next : list) {
-			splitNode(next);
-		}
-	}
+    public void invoke(MindMapNode node) {
+        super.invoke(node);
+        final List<MindMapNode> list = getMindMapController().getSelecteds();
 
-	private void splitNode(MindMapNode node) {
-		if (node.isRoot()) {
-			return;
-		}
-		String text = node.toString();
-		String[] parts = splitNode(text);
-		if (parts == null || parts.length == 1) {
-			return;
-		}
-		final MindMapController c = getMindMapController();
-		int firstPartNumber = 0;
-		while (parts[firstPartNumber] == null) {
-			firstPartNumber++;
-		}
-		c.setNodeText(node, parts[firstPartNumber]);
-		MindMapNode parent = node.getParentNode();
-		final int nodePosition = parent.getChildPosition(node) + 1;
-		for (int i = parts.length - 1; i > firstPartNumber; i--) {
-			final MindMapNode lowerNode = c.addNewNode(parent, nodePosition,
-					node.isLeft());
-			final String part = parts[i];
-			if (part == null) {
-				continue;
-			}
-			lowerNode.setColor(node.getColor());
-			lowerNode.setFont(node.getFont());
-			c.setNodeText(lowerNode, part);
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					final MapView mapView = c.getView();
-					mapView.toggleSelected(mapView.getNodeView(lowerNode));
-				}
-			});
-		}
-	}
+        for (MindMapNode next : list) {
+            splitNode(next);
+        }
+    }
 
-	private String[] splitNode(String text) {
-		if (text.startsWith("<html>")) {
-			String[] parts = null;
-			HTMLEditorKit kit = new HTMLEditorKit();
-			HTMLDocument doc = new HTMLDocument();
-			StringReader buf = new StringReader(text);
-			try {
-				kit.read(buf, doc, 0);
-				Element parent = getParentElement(doc);
-				if (parent == null) {
-					return null;
-				}
-				final int elementCount = parent.getElementCount();
-				int notEmptyElementCount = 0;
-				parts = new String[elementCount];
-				for (int i = 0; i < elementCount; i++) {
-					Element current = parent.getElement(i);
-					final int start = current.getStartOffset();
-					final int end = current.getEndOffset();
-					final String paragraphText = doc
-							.getText(start, end - start).trim();
-					if (paragraphText.length() > 0) {
-						StringWriter out = new StringWriter();
-						new FixedHTMLWriter(out, doc, start, end - start)
-								.write();
-						final String string = out.toString();
-						if (!string.equals("")) {
-							parts[i] = string;
-							notEmptyElementCount++;
-						} else {
-							parts[i] = null;
-						}
-					}
-				}
-				if (notEmptyElementCount <= 1) {
-					return null;
-				}
-			} catch (IOException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			} catch (BadLocationException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-			return parts;
-		}
-		return text.split("\n");
-	}
+    private void splitNode(MindMapNode node) {
+        if (node.isRoot()) {
+            return;
+        }
+        String text = node.toString();
+        String[] parts = splitNode(text);
+        if (parts == null || parts.length == 1) {
+            return;
+        }
+        final MindMapController c = getMindMapController();
+        int firstPartNumber = 0;
+        while (parts[firstPartNumber] == null) {
+            firstPartNumber++;
+        }
+        c.setNodeText(node, parts[firstPartNumber]);
+        MindMapNode parent = node.getParentNode();
+        final int nodePosition = parent.getChildPosition(node) + 1;
+        for (int i = parts.length - 1; i > firstPartNumber; i--) {
+            final MindMapNode lowerNode = c.addNewNode(parent, nodePosition,
+                    node.isLeft());
+            final String part = parts[i];
+            if (part == null) {
+                continue;
+            }
+            lowerNode.setColor(node.getColor());
+            lowerNode.setFont(node.getFont());
+            c.setNodeText(lowerNode, part);
+            EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    final MapView mapView = c.getView();
+                    mapView.toggleSelected(mapView.getNodeView(lowerNode));
+                }
+            });
+        }
+    }
 
-	private Element getParentElement(HTMLDocument doc) {
-		final Element htmlRoot = doc.getDefaultRootElement();
-		Element parentCandidate = htmlRoot.getElement(htmlRoot
-				.getElementCount() - 1);
-		do {
-			if (parentCandidate.getElementCount() > 1) {
-				return parentCandidate;
-			}
-			parentCandidate = parentCandidate.getElement(0);
-		} while (!(parentCandidate.isLeaf() || parentCandidate.getName()
-				.equalsIgnoreCase("p-implied")));
-		return null;
-	}
+    private String[] splitNode(String text) {
+        if (text.startsWith("<html>")) {
+            String[] parts = null;
+            HTMLEditorKit kit = new HTMLEditorKit();
+            HTMLDocument doc = new HTMLDocument();
+            StringReader buf = new StringReader(text);
+            try {
+                kit.read(buf, doc, 0);
+                Element parent = getParentElement(doc);
+                if (parent == null) {
+                    return null;
+                }
+                final int elementCount = parent.getElementCount();
+                int notEmptyElementCount = 0;
+                parts = new String[elementCount];
+                for (int i = 0; i < elementCount; i++) {
+                    Element current = parent.getElement(i);
+                    final int start = current.getStartOffset();
+                    final int end = current.getEndOffset();
+                    final String paragraphText = doc
+                            .getText(start, end - start).trim();
+                    if (paragraphText.length() > 0) {
+                        StringWriter out = new StringWriter();
+                        new FixedHTMLWriter(out, doc, start, end - start)
+                                .write();
+                        final String string = out.toString();
+                        if (!string.equals("")) {
+                            parts[i] = string;
+                            notEmptyElementCount++;
+                        } else {
+                            parts[i] = null;
+                        }
+                    }
+                }
+                if (notEmptyElementCount <= 1) {
+                    return null;
+                }
+            } catch (IOException e) {
+                log.error(e);
+            } catch (BadLocationException e) {
+                log.error(e);
+            }
+            return parts;
+        }
+        return text.split("\n");
+    }
+
+    private Element getParentElement(HTMLDocument doc) {
+        final Element htmlRoot = doc.getDefaultRootElement();
+        Element parentCandidate = htmlRoot.getElement(htmlRoot
+                .getElementCount() - 1);
+        do {
+            if (parentCandidate.getElementCount() > 1) {
+                return parentCandidate;
+            }
+            parentCandidate = parentCandidate.getElement(0);
+        } while (!(parentCandidate.isLeaf() || parentCandidate.getName()
+                .equalsIgnoreCase("p-implied")));
+        return null;
+    }
 
 }

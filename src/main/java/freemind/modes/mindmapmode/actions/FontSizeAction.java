@@ -29,32 +29,34 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
 public class FontSizeAction extends NodeGeneralAction {
 
-	/** This action is used for all sizes, which have to be set first. */
-	private String actionSize;
-
-	/**
+    /**
+     * This action is used for all sizes, which have to be set first.
      */
-	public FontSizeAction(MindMapController modeController) {
-		super(modeController, "font_size", null, (NodeActorXml) null);
-		// default value:
-		actionSize = modeController.getFrame().getProperty("defaultfontsize");
-	}
+    private String actionSize;
 
-	public void actionPerformed(String size) {
-		this.actionSize = size;
-		super.actionPerformed(null);
-	}
+    /**
+     *
+     */
+    public FontSizeAction(MindMapController modeController) {
+        super(modeController, "font_size", null, (NodeActorXml) null);
+        // default value:
+        actionSize = modeController.getFrame().getProperty("defaultfontsize");
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.NodeGeneralAction#getActionPair(freemind.modes.mindmapmode.MindMapNodeModel)
-	 */
-	@Override
-	protected ActionPair getActionPair(MindMapNodeModel pSelected) {
-		return getMindMapController().getActorFactory().getFontSizeActor().getActionPair(pSelected, actionSize);
-	}
+    public void actionPerformed(String size) {
+        this.actionSize = size;
+        super.actionPerformed(null);
+    }
+
+    /* (non-Javadoc)
+     * @see freemind.modes.mindmapmode.actions.NodeGeneralAction#getActionPair(freemind.modes.mindmapmode.MindMapNodeModel)
+     */
+    @Override
+    protected ActionPair getActionPair(MindMapNodeModel pSelected) {
+        return getMindMapController().getActorFactory().getFontSizeActor().getActionPair(pSelected, actionSize);
+    }
 }

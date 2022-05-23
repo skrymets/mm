@@ -20,17 +20,17 @@
 
 package freemind.main;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 public interface IFreeMindSplash {
 
-	public abstract FeedBack getFeedBack();
+    public abstract FeedBack getFeedBack();
 
-	public abstract void close();
+    public abstract void close();
 
-	public abstract void setVisible(boolean pB);
+    public abstract void setVisible(boolean pB);
 
-	public abstract ImageIcon getWindowIcon();
+    public abstract ImageIcon getWindowIcon();
 
 }
 // private static org.slf4j.Logger logger =

@@ -31,18 +31,18 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class ToggleChildrenFoldedAction extends MindmapAction {
-	private final MindMapController modeController;
+    private final MindMapController modeController;
 
-	public ToggleChildrenFoldedAction(MindMapController modeController) {
-		super("toggle_children_folded", modeController);
-		this.modeController = modeController;
-	}
+    public ToggleChildrenFoldedAction(MindMapController modeController) {
+        super("toggle_children_folded", modeController);
+        this.modeController = modeController;
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		MindMapNode selected = modeController.getSelected();
-		modeController.getActorFactory().getToggleFoldedActor().toggleFolded(selected.childrenUnfolded());
-		final MapView mapView = modeController.getView();
-		mapView.selectAsTheOnlyOneSelected(mapView.getNodeView(selected));
-		modeController.getController().obtainFocusForSelected();
-	}
+    public void actionPerformed(ActionEvent e) {
+        MindMapNode selected = modeController.getSelected();
+        modeController.getActorFactory().getToggleFoldedActor().toggleFolded(selected.childrenUnfolded());
+        final MapView mapView = modeController.getView();
+        mapView.selectAsTheOnlyOneSelected(mapView.getNodeView(selected));
+        modeController.getController().obtainFocusForSelected();
+    }
 }

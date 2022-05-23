@@ -30,63 +30,63 @@ import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.common.plugins.ReminderHookBase;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 
 /**
  * Enables the encrypt/decrypt menu item only if the map/node is encrypted.
- * 
+ *
  * @author foltin
- * 
  */
+@Log4j2
 public class TimeManagementOrganizer implements HookRegistration,
-		MenuItemEnabledListener {
+        MenuItemEnabledListener {
 
-	private final ModeController controller;
-	private final org.slf4j.Logger logger;
+    private final ModeController controller;
 
-	public TimeManagementOrganizer(ModeController controller, MindMap map) {
-		this.controller = controller;
-		logger = controller.getFrame().getLogger(this.getClass().getName());
-	}
+    public TimeManagementOrganizer(ModeController controller, MindMap map) {
+        this.controller = controller;
+    }
 
-	public void register() {
-	}
+    public void register() {
+    }
 
-	public void deRegister() {
-	}
+    public void deRegister() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing.JMenuItem
-	 * , javax.swing.Action)
-	 */
-	public boolean isEnabled(JMenuItem item, Action action) {
-		if (action instanceof NodeHookAction) {
-			String hookName = ((NodeHookAction) action).getHookName();
-			if (hookName.equals("plugins/time/RemoveReminderHook.java")) {
-				boolean visible = false;
-				for (MindMapNode node : controller.getSelecteds()) {
-					if (TimeManagementOrganizer.getHook(node) != null) {
-						visible = true;
-					}
-				}
-				item.setVisible(visible);
-			}
-		}
-		return true;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing.JMenuItem
+     * , javax.swing.Action)
+     */
+    public boolean isEnabled(JMenuItem item, Action action) {
+        if (action instanceof NodeHookAction) {
+            String hookName = ((NodeHookAction) action).getHookName();
+            if (hookName.equals("plugins/time/RemoveReminderHook.java")) {
+                boolean visible = false;
+                for (MindMapNode node : controller.getSelecteds()) {
+                    if (TimeManagementOrganizer.getHook(node) != null) {
+                        visible = true;
+                    }
+                }
+                item.setVisible(visible);
+            }
+        }
+        return true;
+    }
 
-	/**
-	 */
-	public static ReminderHookBase getHook(MindMapNode node) {
-		for (PermanentNodeHook element : node.getActivatedHooks()) {
-			if (element instanceof ReminderHookBase) {
-				return (ReminderHookBase) element;
-			}
-		}
-		return null;
-	}
+    /**
+     *
+     */
+    public static ReminderHookBase getHook(MindMapNode node) {
+        for (PermanentNodeHook element : node.getActivatedHooks()) {
+            if (element instanceof ReminderHookBase) {
+                return (ReminderHookBase) element;
+            }
+        }
+        return null;
+    }
 }

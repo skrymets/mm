@@ -52,8 +52,7 @@ public final class FreeMindSecurityManager extends SecurityManager {
             return;
         }
         if (mFinalSecurityManager != null) {
-            throw new SecurityException(
-                    "There is a SecurityManager installed already.");
+            throw new SecurityException("There is a SecurityManager installed already.");
         }
         mFinalSecurityManager = pFinalSecurityManager;
     }

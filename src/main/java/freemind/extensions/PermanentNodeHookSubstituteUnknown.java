@@ -20,41 +20,41 @@
 
 package freemind.extensions;
 
-import java.util.Iterator;
-
 import freemind.main.XMLElement;
+
+import java.util.Iterator;
 
 /**
  * If a hook can't be find at map loading, this substition is used.
  * The class saves xml data such that it is preserved until the hook is back.
  */
 public class PermanentNodeHookSubstituteUnknown extends
-		PermanentNodeHookAdapter {
+        PermanentNodeHookAdapter {
 
-	private final String hookName;
+    private final String hookName;
 
-	public PermanentNodeHookSubstituteUnknown(String name) {
-		super();
-		hookName = name;
-	}
+    public PermanentNodeHookSubstituteUnknown(String name) {
+        super();
+        hookName = name;
+    }
 
-	private XMLElement child;
+    private XMLElement child;
 
-	public void loadFrom(XMLElement child) {
-		this.child = child;
-		super.loadFrom(child);
-	}
+    public void loadFrom(XMLElement child) {
+        this.child = child;
+        super.loadFrom(child);
+    }
 
-	public void save(XMLElement xml) {
-		super.save(xml);
-		for (Iterator<XMLElement> i = child.getChildren().iterator(); i.hasNext();) {
-			XMLElement childchild = i.next();
-			xml.addChild(childchild);
-		}
-	}
+    public void save(XMLElement xml) {
+        super.save(xml);
+        for (Iterator<XMLElement> i = child.getChildren().iterator(); i.hasNext(); ) {
+            XMLElement childchild = i.next();
+            xml.addChild(childchild);
+        }
+    }
 
-	public String getName() {
-		return hookName;
-	}
+    public String getName() {
+        return hookName;
+    }
 
 }

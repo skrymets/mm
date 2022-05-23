@@ -21,8 +21,8 @@ package com.lightdev.app.shtm;
 
 /**
  * interface for getting text based resources
- * 
- *  * @author Dimitri Polivaev
+ * <p>
+ * * @author Dimitri Polivaev
  * 14.01.2007
  */
 public interface TextResources {

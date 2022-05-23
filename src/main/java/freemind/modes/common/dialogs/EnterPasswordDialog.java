@@ -20,288 +20,279 @@
 
 package freemind.modes.common.dialogs;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import freemind.common.TextTranslator;
+import freemind.main.Tools;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-
-import freemind.common.TextTranslator;
-import freemind.main.Tools;
-
-/** */
+/**
+ *
+ */
 @SuppressWarnings("serial")
 public class EnterPasswordDialog extends JDialog {
 
-	public static final int CANCEL = -1;
+    public static final int CANCEL = -1;
 
-	public static final int OK = 1;
+    public static final int OK = 1;
 
-	private int result = CANCEL;
+    private int result = CANCEL;
 
-	private javax.swing.JPanel jContentPane = null;
+    private javax.swing.JPanel jContentPane = null;
 
-	private JLabel jLabel = null;
+    private JPasswordField jPasswordField = null;
 
-	private JLabel jLabel1 = null;
+    private JPasswordField jPasswordField1 = null;
 
-	private JPasswordField jPasswordField = null;
+    private JButton jOKButton = null;
 
-	private JPasswordField jPasswordField1 = null;
+    private JButton jCancelButton = null;
 
-	private JButton jOKButton = null;
+    private StringBuffer password = null;
 
-	private JButton jCancelButton = null;
+    private boolean enterTwoPasswords = true;
 
-	private StringBuffer password = null;
+    private TextTranslator mTranslator;
 
-	private boolean enterTwoPasswords = true;
-
-	private TextTranslator mTranslator;
-
-	/**
-	 * @deprecated do not use. This is for visual editor only.
-	 */
-	public EnterPasswordDialog() {
-
-	}
-
-	/**
-	 * This is the default constructor
-	 */
-	public EnterPasswordDialog(JFrame caller, TextTranslator pTranslator,
-			boolean enterTwoPasswords) {
-		super(caller, "", true /* =modal */);
-		this.mTranslator = pTranslator;
-		this.enterTwoPasswords = enterTwoPasswords;
-		initialize();
-	}
-
-	/**
-	 * This method initializes this
-	 * 
-	 * @return void
-	 */
-	private void initialize() {
-		if(enterTwoPasswords)
-			this.setTitle(mTranslator
-				.getText("accessories/plugins/EncryptNode.properties_0")); //$NON-NLS-1$
-		else
-			this.setTitle(mTranslator
-					.getText("accessories/plugins/EncryptNode.properties_8")); //$NON-NLS-1$
-		this.setSize(350, 200);
-		this.setContentPane(getJContentPane());
-		this.setLocationRelativeTo(getParent());
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent we) {
-				cancelPressed();
-			}
-
-		});
-		Tools.addEscapeActionToDialog(this, new AbstractAction() {
-			public void actionPerformed(ActionEvent pE) {
-				cancelPressed();
-			}
-		});
-
-	}
-
-	private void close() {
-		this.dispose();
-
-	}
-
-	private void okPressed() {
-		// check if equal:
-		if (!checkEqualAndMinimumSize()) {
-			JOptionPane.showMessageDialog(this, mTranslator
-					.getText("accessories/plugins/EncryptNode.properties_1")); //$NON-NLS-1$
-			return;
-		}
-		password = new StringBuffer();
-		password.append(jPasswordField.getPassword());
-		result = OK;
-		close();
-	}
-
-	/**
+    /**
+     * @deprecated do not use. This is for visual editor only.
      */
-	private boolean checkEqualAndMinimumSize() {
+    public EnterPasswordDialog() {
 
-		char[] a1 = jPasswordField.getPassword();
+    }
 
-		if (a1.length < 2) {
-			return false;
-		}
+    /**
+     * This is the default constructor
+     */
+    public EnterPasswordDialog(JFrame caller, TextTranslator pTranslator,
+                               boolean enterTwoPasswords) {
+        super(caller, "", true /* =modal */);
+        this.mTranslator = pTranslator;
+        this.enterTwoPasswords = enterTwoPasswords;
+        initialize();
+    }
 
-		if (enterTwoPasswords) {
-			char[] a2 = jPasswordField1.getPassword();
-			if (a1.length != a2.length) {
-				return false;
-			}
-			for (int i = 0; i < a1.length; i++) {
-				if (a1[i] != a2[i]) {
-					return false;
-				}
+    /**
+     * This method initializes this
+     *
+     * @return void
+     */
+    private void initialize() {
+        if (enterTwoPasswords)
+            this.setTitle(mTranslator
+                    .getText("accessories/plugins/EncryptNode.properties_0")); //$NON-NLS-1$
+        else
+            this.setTitle(mTranslator
+                    .getText("accessories/plugins/EncryptNode.properties_8")); //$NON-NLS-1$
+        this.setSize(350, 200);
+        this.setContentPane(getJContentPane());
+        this.setLocationRelativeTo(getParent());
+        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                cancelPressed();
+            }
 
-			}
-		}
-		return true;
-	}
+        });
+        Tools.addEscapeActionToDialog(this, new AbstractAction() {
+            public void actionPerformed(ActionEvent pE) {
+                cancelPressed();
+            }
+        });
 
-	private void cancelPressed() {
-		password = null;
-		result = CANCEL;
-		close();
-	}
+    }
 
-	/**
-	 * This method initializes jContentPane
-	 * 
-	 * @return javax.swing.JPanel
-	 */
-	private javax.swing.JPanel getJContentPane() {
-		if (jContentPane == null) {
+    private void close() {
+        this.dispose();
 
-			jLabel1 = new JLabel();
-			jLabel = new JLabel();
-			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
-			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
-			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
-			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
+    }
 
-			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
-			GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
-			jContentPane = new javax.swing.JPanel();
-			jContentPane.setLayout(new GridBagLayout());
-			gridBagConstraints1.gridx = 0;
-			gridBagConstraints1.gridy = 1;
-			gridBagConstraints1.fill = java.awt.GridBagConstraints.HORIZONTAL;
-			gridBagConstraints1.insets = new java.awt.Insets(0, 5, 0, 0);
-			jLabel.setText(mTranslator
-					.getText("accessories/plugins/EncryptNode.properties_2")); //$NON-NLS-1$
-			gridBagConstraints2.gridx = 0;
-			gridBagConstraints2.gridy = 2;
-			gridBagConstraints2.insets = new java.awt.Insets(0, 5, 0, 0);
-			gridBagConstraints2.fill = java.awt.GridBagConstraints.HORIZONTAL;
-			jLabel1.setText(mTranslator
-					.getText("accessories/plugins/EncryptNode.properties_3")); //$NON-NLS-1$
-			gridBagConstraints3.gridx = 1;
-			gridBagConstraints3.gridy = 1;
-			gridBagConstraints3.weightx = 1.0;
-			gridBagConstraints3.fill = java.awt.GridBagConstraints.HORIZONTAL;
-			gridBagConstraints4.gridx = 1;
-			gridBagConstraints4.gridy = 2;
-			gridBagConstraints4.weightx = 1.0;
-			gridBagConstraints4.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    private void okPressed() {
+        // check if equal:
+        if (!checkEqualAndMinimumSize()) {
+            JOptionPane.showMessageDialog(this, mTranslator
+                    .getText("accessories/plugins/EncryptNode.properties_1")); //$NON-NLS-1$
+            return;
+        }
+        password = new StringBuffer();
+        password.append(jPasswordField.getPassword());
+        result = OK;
+        close();
+    }
 
-			gridBagConstraints6.gridx = 0;
-			gridBagConstraints6.gridy = 3;
-			gridBagConstraints6.insets = new java.awt.Insets(20, 0, 0, 0);
-			gridBagConstraints7.gridx = 1;
-			gridBagConstraints7.gridy = 3;
-			gridBagConstraints7.insets = new java.awt.Insets(20, 0, 0, 0);
-			jContentPane.add(jLabel, gridBagConstraints1);
-			jContentPane.add(getJPasswordField(), gridBagConstraints3);
+    /**
+     *
+     */
+    private boolean checkEqualAndMinimumSize() {
 
-			if (enterTwoPasswords) {
-				jContentPane.add(getJPasswordField1(), gridBagConstraints4);
-				jContentPane.add(jLabel1, gridBagConstraints2);
-			}
-			jContentPane.add(getJOKButton(), gridBagConstraints6);
-			jContentPane.add(getJCancelButton(), gridBagConstraints7);
-			getRootPane().setDefaultButton(getJOKButton());
-		}
-		return jContentPane;
-	}
+        char[] a1 = jPasswordField.getPassword();
 
-	/**
-	 * This method initializes jPasswordField
-	 * 
-	 * @return javax.swing.JPasswordField
-	 */
-	private JPasswordField getJPasswordField() {
-		if (jPasswordField == null) {
-			jPasswordField = new JPasswordField();
-		}
-		return jPasswordField;
-	}
+        if (a1.length < 2) {
+            return false;
+        }
 
-	/**
-	 * This method initializes jPasswordField1
-	 * 
-	 * @return javax.swing.JPasswordField
-	 */
-	private JPasswordField getJPasswordField1() {
-		if (jPasswordField1 == null) {
-			jPasswordField1 = new JPasswordField();
-		}
-		return jPasswordField1;
-	}
+        if (enterTwoPasswords) {
+            char[] a2 = jPasswordField1.getPassword();
+            if (a1.length != a2.length) {
+                return false;
+            }
+            for (int i = 0; i < a1.length; i++) {
+                if (a1[i] != a2[i]) {
+                    return false;
+                }
 
-	/**
-	 * This method initializes jButton
-	 * 
-	 * @return javax.swing.JButton
-	 */
-	private JButton getJOKButton() {
-		if (jOKButton == null) {
-			jOKButton = new JButton();
+            }
+        }
+        return true;
+    }
 
-			jOKButton.setAction(new AbstractAction() {
+    private void cancelPressed() {
+        password = null;
+        result = CANCEL;
+        close();
+    }
 
-				public void actionPerformed(ActionEvent e) {
-					okPressed();
-				}
+    /**
+     * This method initializes jContentPane
+     *
+     * @return javax.swing.JPanel
+     */
+    private javax.swing.JPanel getJContentPane() {
+        if (jContentPane == null) {
 
-			});
+            JLabel jLabel1 = new JLabel();
+            JLabel jLabel = new JLabel();
+            GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
+            GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
+            GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
+            GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 
-			jOKButton.setText(mTranslator
-					.getText("accessories/plugins/EncryptNode.properties_6")); //$NON-NLS-1$
-		}
-		return jOKButton;
-	}
+            GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
+            GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
+            jContentPane = new javax.swing.JPanel();
+            jContentPane.setLayout(new GridBagLayout());
+            gridBagConstraints1.gridx = 0;
+            gridBagConstraints1.gridy = 1;
+            gridBagConstraints1.fill = java.awt.GridBagConstraints.HORIZONTAL;
+            gridBagConstraints1.insets = new java.awt.Insets(0, 5, 0, 0);
+            jLabel.setText(mTranslator
+                    .getText("accessories/plugins/EncryptNode.properties_2")); //$NON-NLS-1$
+            gridBagConstraints2.gridx = 0;
+            gridBagConstraints2.gridy = 2;
+            gridBagConstraints2.insets = new java.awt.Insets(0, 5, 0, 0);
+            gridBagConstraints2.fill = java.awt.GridBagConstraints.HORIZONTAL;
+            jLabel1.setText(mTranslator
+                    .getText("accessories/plugins/EncryptNode.properties_3")); //$NON-NLS-1$
+            gridBagConstraints3.gridx = 1;
+            gridBagConstraints3.gridy = 1;
+            gridBagConstraints3.weightx = 1.0;
+            gridBagConstraints3.fill = java.awt.GridBagConstraints.HORIZONTAL;
+            gridBagConstraints4.gridx = 1;
+            gridBagConstraints4.gridy = 2;
+            gridBagConstraints4.weightx = 1.0;
+            gridBagConstraints4.fill = java.awt.GridBagConstraints.HORIZONTAL;
 
-	/**
-	 * This method initializes jButton1
-	 * 
-	 * @return javax.swing.JButton
-	 */
-	private JButton getJCancelButton() {
-		if (jCancelButton == null) {
-			jCancelButton = new JButton();
-			jCancelButton.setAction(new AbstractAction() {
+            gridBagConstraints6.gridx = 0;
+            gridBagConstraints6.gridy = 3;
+            gridBagConstraints6.insets = new java.awt.Insets(20, 0, 0, 0);
+            gridBagConstraints7.gridx = 1;
+            gridBagConstraints7.gridy = 3;
+            gridBagConstraints7.insets = new java.awt.Insets(20, 0, 0, 0);
+            jContentPane.add(jLabel, gridBagConstraints1);
+            jContentPane.add(getJPasswordField(), gridBagConstraints3);
 
-				public void actionPerformed(ActionEvent e) {
-					cancelPressed();
-				}
-			});
-			jCancelButton.setText(mTranslator
-					.getText("accessories/plugins/EncryptNode.properties_7")); //$NON-NLS-1$
-		}
-		return jCancelButton;
-	}
+            if (enterTwoPasswords) {
+                jContentPane.add(getJPasswordField1(), gridBagConstraints4);
+                jContentPane.add(jLabel1, gridBagConstraints2);
+            }
+            jContentPane.add(getJOKButton(), gridBagConstraints6);
+            jContentPane.add(getJCancelButton(), gridBagConstraints7);
+            getRootPane().setDefaultButton(getJOKButton());
+        }
+        return jContentPane;
+    }
 
-	/**
-	 * @return Returns the result.
-	 */
-	public int getResult() {
-		return result;
-	}
+    /**
+     * This method initializes jPasswordField
+     *
+     * @return javax.swing.JPasswordField
+     */
+    private JPasswordField getJPasswordField() {
+        if (jPasswordField == null) {
+            jPasswordField = new JPasswordField();
+        }
+        return jPasswordField;
+    }
 
-	/**
-	 * @return Returns the password.
-	 */
-	public StringBuffer getPassword() {
-		return password;
-	}
+    /**
+     * This method initializes jPasswordField1
+     *
+     * @return javax.swing.JPasswordField
+     */
+    private JPasswordField getJPasswordField1() {
+        if (jPasswordField1 == null) {
+            jPasswordField1 = new JPasswordField();
+        }
+        return jPasswordField1;
+    }
+
+    /**
+     * This method initializes jButton
+     *
+     * @return javax.swing.JButton
+     */
+    private JButton getJOKButton() {
+        if (jOKButton == null) {
+            jOKButton = new JButton();
+
+            jOKButton.setAction(new AbstractAction() {
+
+                public void actionPerformed(ActionEvent e) {
+                    okPressed();
+                }
+
+            });
+
+            jOKButton.setText(mTranslator
+                    .getText("accessories/plugins/EncryptNode.properties_6")); //$NON-NLS-1$
+        }
+        return jOKButton;
+    }
+
+    /**
+     * This method initializes jButton1
+     *
+     * @return javax.swing.JButton
+     */
+    private JButton getJCancelButton() {
+        if (jCancelButton == null) {
+            jCancelButton = new JButton();
+            jCancelButton.setAction(new AbstractAction() {
+
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed();
+                }
+            });
+            jCancelButton.setText(mTranslator
+                    .getText("accessories/plugins/EncryptNode.properties_7")); //$NON-NLS-1$
+        }
+        return jCancelButton;
+    }
+
+    /**
+     * @return Returns the result.
+     */
+    public int getResult() {
+        return result;
+    }
+
+    /**
+     * @return Returns the password.
+     */
+    public StringBuffer getPassword() {
+        return password;
+    }
 }

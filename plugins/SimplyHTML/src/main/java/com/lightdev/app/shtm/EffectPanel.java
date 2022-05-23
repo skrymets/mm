@@ -40,18 +40,22 @@ import javax.swing.text.html.CSS;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class EffectPanel extends JPanel implements AttributeComponent {
-    /** a radio button for the underline attribute */
+    /**
+     * a radio button for the underline attribute
+     */
     JRadioButton uLine;
-    /** a radio button for the strike through attribute */
+    /**
+     * a radio button for the strike through attribute
+     */
     JRadioButton strike;
-    /** a radio button if no line effect is set */
+    /**
+     * a radio button if no line effect is set
+     */
     JRadioButton noLine;
     private Object originalValue;
     private int setValCount = 0;
@@ -81,8 +85,7 @@ class EffectPanel extends JPanel implements AttributeComponent {
     public AttributeSet getValue(final boolean includeUnchanged) {
         if (includeUnchanged) {
             return getAttributes();
-        }
-        else {
+        } else {
             return getValue();
         }
     }
@@ -93,8 +96,7 @@ class EffectPanel extends JPanel implements AttributeComponent {
         if (uLine.isSelected()) {
             selection = Util.CSS_ATTRIBUTE_UNDERLINE;
             StyleConstants.setUnderline(set, true);
-        }
-        else if (strike.isSelected()) {
+        } else if (strike.isSelected()) {
             selection = Util.CSS_ATTRIBUTE_LINE_THROUGH;
             StyleConstants.setStrikeThrough(set, true);
         }
@@ -107,8 +109,7 @@ class EffectPanel extends JPanel implements AttributeComponent {
         if (((originalValue == null) && (!selection.equalsIgnoreCase(Util.CSS_ATTRIBUTE_NONE)))
                 || ((originalValue != null) && (!originalValue.toString().equalsIgnoreCase(selection)))) {
             return set;
-        }
-        else {
+        } else {
             return new SimpleAttributeSet();
         }
     }
@@ -123,19 +124,16 @@ class EffectPanel extends JPanel implements AttributeComponent {
                     originalValue = Util.CSS_ATTRIBUTE_UNDERLINE;
                 }
                 success = true;
-            }
-            else if (value.equalsIgnoreCase(Util.CSS_ATTRIBUTE_LINE_THROUGH)) {
+            } else if (value.equalsIgnoreCase(Util.CSS_ATTRIBUTE_LINE_THROUGH)) {
                 strike.setSelected(true);
                 if (++setValCount < 2) {
                     originalValue = Util.CSS_ATTRIBUTE_LINE_THROUGH;
                 }
                 success = true;
-            }
-            else {
+            } else {
                 noLine.setSelected(true);
             }
-        }
-        else {
+        } else {
             noLine.setSelected(true);
         }
         return success;

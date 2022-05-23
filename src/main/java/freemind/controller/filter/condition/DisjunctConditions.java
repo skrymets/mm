@@ -31,87 +31,57 @@ import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 
 import javax.swing.*;
-import java.util.Vector;
+import java.util.List;
+
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author dimitri 08.05.2005
  */
 public class DisjunctConditions implements Condition {
 
-	static final String NAME = "disjunct_condition";
-	private Object[] conditions;
+    static final String NAME = "disjunct_condition";
+    private final List<Condition> conditions;
 
-	/**
-     *
-     */
-	public DisjunctConditions(Object[] conditions) {
-		this.conditions = conditions;
-	}
+    public DisjunctConditions(List<Condition> conditions) {
+        this.conditions = conditions;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.filter.condition.Condition#checkNode(freemind.modes
-	 * .MindMapNode)
-	 */
-	public boolean checkNode(Controller c, MindMapNode node) {
-		int i;
-		for (i = 0; i < conditions.length; i++) {
-			Condition cond = (Condition) conditions[i];
-			if (cond.checkNode(c, node))
-				return true;
-		}
-		return false;
-	}
+    public boolean checkNode(Controller c, MindMapNode node) {
+        final boolean checkNegative = conditions.stream().anyMatch(condition -> !condition.checkNode(c, node));
+        return !checkNegative;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.filter.condition.Condition#getListCellRendererComponent
-	 * ()
-	 */
-	public JComponent getListCellRendererComponent() {
-		JCondition component = new JCondition();
-		component.add(new JLabel("("));
-		Condition cond = (Condition) conditions[0];
-		JComponent rendererComponent = cond.getListCellRendererComponent();
-		rendererComponent.setOpaque(false);
-		component.add(rendererComponent);
-		int i;
-		for (i = 1; i < conditions.length; i++) {
-			final String or = Tools.removeMnemonic(Resources.getInstance()
-					.getResourceString("filter_or"));
-			String text = ' ' + or + ' ';
-			component.add(new JLabel(text));
-			cond = (Condition) conditions[i];
-			rendererComponent = cond.getListCellRendererComponent();
-			rendererComponent.setOpaque(false);
-			component.add(rendererComponent);
-		}
-		component.add(new JLabel(")"));
-		return component;
-	}
+    public JComponent getListCellRendererComponent() {
+        JCondition component = new JCondition();
+        component.add(new JLabel("("));
 
-	public void save(XMLElement element) {
-		XMLElement child = new XMLElement();
-		child.setName(NAME);
-		for (int i = 0; i < conditions.length; i++) {
-			Condition cond = (Condition) conditions[i];
-			cond.save(child);
-		}
-		element.addChild(child);
-	}
+        String text = format(" %s ", Tools.removeMnemonic(Resources.getInstance().getResourceString("filter_or")));
 
-	static Condition load(XMLElement element) {
-		final Vector<XMLElement> children = element.getChildren();
-		Object[] conditions = new Object[children.size()];
-		for (int i = 0; i < conditions.length; i++) {
-			Condition cond = FilterController.getConditionFactory()
-					.loadCondition(children.get(i));
-			conditions[i] = cond;
-		}
-		return new DisjunctConditions(conditions);
-	}
+        conditions.stream().forEachOrdered(condition -> {
+            component.add(new JLabel(text));
+            JComponent rendererComponent = condition.getListCellRendererComponent();
+            rendererComponent.setOpaque(false);
+            component.add(rendererComponent);
+        });
+
+        component.add(new JLabel(")"));
+        return component;
+    }
+
+    public void save(XMLElement element) {
+        XMLElement child = new XMLElement();
+        child.setName(NAME);
+        conditions.forEach(condition -> condition.save(child));
+        element.addChild(child);
+    }
+
+    static Condition load(XMLElement element) {
+        final List<Condition> conditions = element.getChildren().stream()
+                .map(xmlElement -> FilterController.getConditionFactory().loadCondition(xmlElement))
+                .collect(toList());
+
+        return new DisjunctConditions(conditions);
+    }
 }

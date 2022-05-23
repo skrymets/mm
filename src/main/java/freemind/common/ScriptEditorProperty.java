@@ -22,111 +22,89 @@
 /*$Id: ScriptEditorProperty.java,v 1.1.2.6 2008/07/04 20:44:02 christianfoltin Exp $*/
 package freemind.common;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-
 import freemind.main.HtmlTools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
+import lombok.extern.log4j.Log4j2;
 
-public class ScriptEditorProperty extends PropertyBean implements
-		PropertyControl, ActionListener {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-	public interface ScriptEditorStarter extends MindMapControllerPlugin {
-		String startEditor(String scriptInput);
-	}
+@Log4j2
+public class ScriptEditorProperty extends PropertyBean implements PropertyControl, ActionListener {
 
-	String description;
+    public interface ScriptEditorStarter extends MindMapControllerPlugin {
+        String startEditor(String scriptInput);
+    }
 
-	String label;
+    String description;
+    String label;
+    String script;
+    JButton mButton;
 
-	String script;
+    final JPopupMenu menu = new JPopupMenu();
 
-	JButton mButton;
-	final JPopupMenu menu = new JPopupMenu();
+    private final MindMapController mMindMapController;
 
-	private final MindMapController mMindMapController;
+    public ScriptEditorProperty(String description, String label, MindMapController pMindMapController) {
+        super();
+        this.description = description;
+        this.label = label;
+        mMindMapController = pMindMapController;
 
-	private static org.slf4j.Logger logger = null;
+        mButton = new JButton();
+        mButton.addActionListener(this);
+        script = "";
+    }
 
-	/**
-	 */
-	public ScriptEditorProperty(String description, String label,
-			MindMapController pMindMapController) {
-		super();
-		this.description = description;
-		this.label = label;
-		mMindMapController = pMindMapController;
-		if (logger == null) {
-			logger = mMindMapController.getFrame().getLogger(
-					this.getClass().getName());
-		}
-		mButton = new JButton();
-		mButton.addActionListener(this);
-		script = "";
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public void setValue(String value) {
+        setScriptValue(value);
+    }
 
-	public void setValue(String value) {
-		setScriptValue(value);
-	}
+    public String getValue() {
+        return HtmlTools.unicodeToHTMLUnicodeEntity(HtmlTools.toXMLEscapedText(script), false);
+    }
 
-	public String getValue() {
-		return HtmlTools.unicodeToHTMLUnicodeEntity(HtmlTools
-				.toXMLEscapedText(script), false);
-	}
+    public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
+        JLabel label = builder.append(pTranslator.getText(getLabel()), mButton);
+        label.setToolTipText(pTranslator.getText(getDescription()));
+    }
 
-	public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
-		JLabel label = builder.append(pTranslator.getText(getLabel()), mButton);
-		label.setToolTipText(pTranslator.getText(getDescription()));
-	}
+    public void actionPerformed(ActionEvent arg0) {
+        // search for plugin that handles the script editor.
+        for (MindMapControllerPlugin plugin : mMindMapController.getPlugins()) {
+            if (plugin instanceof ScriptEditorStarter) {
+                ScriptEditorStarter starter = (ScriptEditorStarter) plugin;
+                String resultScript = starter.startEditor(script);
+                if (resultScript != null) {
+                    script = resultScript;
+                    firePropertyChangeEvent();
+                }
+            }
+        }
+    }
 
-	public void actionPerformed(ActionEvent arg0) {
-		// search for plugin that handles the script editor.
-		for (MindMapControllerPlugin plugin : mMindMapController.getPlugins()) {
-			if (plugin instanceof ScriptEditorStarter) {
-				ScriptEditorStarter starter = (ScriptEditorStarter) plugin;
-				String resultScript = starter.startEditor(script);
-				if (resultScript != null) {
-					script = resultScript;
-					firePropertyChangeEvent();
-				}
-			}
-		}
-	}
+    private void setScriptValue(String result) {
+        if (result == null) {
+            result = "";
+        }
+        script = HtmlTools.toXMLUnescapedText(HtmlTools.unescapeHTMLUnicodeEntity(result));
+        log.trace("Setting script to " + script);
+        mButton.setText(script);
+    }
 
-	/**
-	 */
-	private void setScriptValue(String result) {
-		if (result == null) {
-			result = "";
-		}
-		script = HtmlTools.toXMLUnescapedText(HtmlTools
-				.unescapeHTMLUnicodeEntity(result));
-		logger.trace("Setting script to " + script);
-		mButton.setText(script);
-	}
-
-	// /**
-	// */
-	// private Color getColorValue() {
-	// return color;
-	// }
-
-	public void setEnabled(boolean pEnabled) {
-		mButton.setEnabled(pEnabled);
-	}
+    public void setEnabled(boolean pEnabled) {
+        mButton.setEnabled(pEnabled);
+    }
 
 }

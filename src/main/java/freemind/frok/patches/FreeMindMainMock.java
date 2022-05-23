@@ -16,11 +16,21 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*$Id: FreeMindMainMock.java,v 1.1.2.16 2009/03/29 19:37:23 christianfoltin Exp $*/
+/*$Id: FreeMindMainMock.java,v 1.1.2.16 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.frok.patches;
 
-import java.awt.Container;
+import freemind.controller.Controller;
+import freemind.controller.MenuBar;
+import freemind.main.*;
+import freemind.view.mindmapview.MapView;
+import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -28,36 +38,21 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import org.slf4j.Logger;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
+import static freemind.main.VersionInformation.Type.ALPHA;
 
-import freemind.controller.Controller;
-import freemind.controller.MenuBar;
-import freemind.main.FreeMindMain;
-import freemind.main.FreeMindStarter;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.view.mindmapview.MapView;
-import org.slf4j.LoggerFactory;
-
-/**
- *
- */
+@Log4j2
 public class FreeMindMainMock implements FreeMindMain {
 
-    private Properties mProperties;
+    private final Properties mProperties;
 
-    /**
-     *
-     */
     public FreeMindMainMock() {
         super();
-        mProperties = new FreeMindStarter().readDefaultPreferences();
+        try {
+            mProperties = new FreeMindStarter().loadDefaultPreferences();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Resources.createInstance(this);
 
     }
@@ -84,7 +79,7 @@ public class FreeMindMainMock implements FreeMindMain {
     public void setWaitingCursor(boolean waiting) {
     }
 
-    public File getPatternsFile() {
+    public String getPatternsXML() {
         return null;
     }
 
@@ -108,7 +103,7 @@ public class FreeMindMainMock implements FreeMindMain {
         return null;
     }
 
-    public void out(String msg) {
+    public void setStatusText(String msg) {
     }
 
     public void err(String msg) {
@@ -178,8 +173,7 @@ public class FreeMindMainMock implements FreeMindMain {
     }
 
     public VersionInformation getFreemindVersion() {
-        return new VersionInformation(1, 0, 0, FreeMindMain.VERSION_TYPE_ALPHA,
-                42);
+        return new VersionInformation(1, 0, 0, ALPHA, 42);
     }
 
     public Logger getLogger(String forClass) {
@@ -190,9 +184,9 @@ public class FreeMindMainMock implements FreeMindMain {
         ClassLoader classLoader = this.getClass().getClassLoader();
         try {
             return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(
-                getFreemindBaseDir()))}, classLoader);
+                    getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return classLoader;
         }
     }
@@ -236,7 +230,7 @@ public class FreeMindMainMock implements FreeMindMain {
     }
 
     /* (non-Javadoc)
-	 * @see freemind.main.FreeMindMain#getLoggerList()
+     * @see freemind.main.FreeMindMain#getLoggerList()
      */
     public List getLoggerList() {
         return new Vector<>();

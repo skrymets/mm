@@ -44,10 +44,9 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author RReppel - Connects to a jabber server. - Establishes a private chat
- *         with another user. - Listens to a limited number of FreeMind commands
- *         sent by the other user. - Performs the FreeMind actions corresponding
- *         to the commands sent.
- *  
+ * with another user. - Listens to a limited number of FreeMind commands
+ * sent by the other user. - Performs the FreeMind actions corresponding
+ * to the commands sent.
  */
 public class JabberListener {
 
@@ -62,8 +61,8 @@ public class JabberListener {
     JabberSession session;
 
     public JabberListener(MindMapController c,
-            MapSharingController sharingWizardController, String jabberServer,
-            int port, String userName, String password) {
+                          MapSharingController sharingWizardController, String jabberServer,
+                          int port, String userName, String password) {
         controller = c;
         if (logger == null) {
             logger = controller.getController().getFrame().getLogger(
@@ -90,7 +89,7 @@ public class JabberListener {
                     sharingWizardController)); //end addMessageListener
         } //end MindMapJabberController
         catch (Exception ex) {
-            freemind.main.Resources.getInstance().logException(ex);
+            log.error(ex);
             String message;
             //TODO: Descriptive error message on Jabber server connection
             // failure.
@@ -118,12 +117,10 @@ public class JabberListener {
     }
 
     /**
-     * 
      * @author RReppel
-     * 
+     * <p>
      * Listens to received Jabber messages and initiates the appropriate
      * FreeMind actions.
-     *  
      */
     private class FreeMindJabberMessageListener implements
             JabberMessageListener {
@@ -143,7 +140,7 @@ public class JabberListener {
                     .getMessage();
             if (latestMsg.getType().equals(JabberChatMessage.TYPE_CHAT)
                     || latestMsg.getType()
-                            .equals(JabberChatMessage.TYPE_NORMAL)) {
+                    .equals(JabberChatMessage.TYPE_NORMAL)) {
                 commandQueue.addLast(latestMsg); //Add the message to the end
                 // of the list of commands to
                 // be applied.
@@ -154,7 +151,7 @@ public class JabberListener {
 
                 String msgString = Tools.decompress(msg.getBody());
                 // list.
-                if(logger.isLoggable(Level.INFO)){
+                if (logger.isLoggable(Level.INFO)) {
                     String displayMessage = ("Sending message:" + ((msgString
                             .length() < 100) ? msgString : (msgString
                             .substring(0, 50)
@@ -188,7 +185,7 @@ public class JabberListener {
                             logger.warning("Unknown command:" + cmd);
                         }
                     } catch (Exception e) {
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                     } //end catch
                 } else if (action instanceof CompoundAction) {
                     CompoundAction pair = (CompoundAction) action;
@@ -202,12 +199,14 @@ public class JabberListener {
                     }
                     executeRemoteCommand(pair);
                 } else {
-                    logger.warning("Unknown collaboration message:"+msgString);
+                    logger.warning("Unknown collaboration message:" + msgString);
                 }//endif
             } //endif
         } //end messageReceived
 
-        /** Executes a command that was received via the jabber channel.
+        /**
+         * Executes a command that was received via the jabber channel.
+         *
          * @param pair
          */
         private void executeRemoteCommand(CompoundAction pair) {
@@ -228,7 +227,7 @@ public class JabberListener {
                                 .executeAction(ePair);
                     } catch (Exception e) {
                         // TODO: handle exception
-                        freemind.main.Resources.getInstance().logException(e);
+                        log.error(e);
                     }
                     sharingWizardController.setSendingEnabled(true);
                 }

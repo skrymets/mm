@@ -23,11 +23,8 @@
  */
 package freemind.modes.mindmapmode;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Insets;
-
-import javax.swing.JScrollPane;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Dimitri Polivaev 15.11.2005
@@ -35,48 +32,49 @@ import javax.swing.JScrollPane;
 @SuppressWarnings("serial")
 public class JAutoScrollBarPane extends JScrollPane {
 
-	/**
+    /**
+     *
      */
-	public JAutoScrollBarPane(Component view) {
-		super(view, VERTICAL_SCROLLBAR_NEVER, HORIZONTAL_SCROLLBAR_NEVER);
-	}
+    public JAutoScrollBarPane(Component view) {
+        super(view, VERTICAL_SCROLLBAR_NEVER, HORIZONTAL_SCROLLBAR_NEVER);
+    }
 
-	public void doLayout() {
-		super.doLayout();
-		Insets insets = getInsets();
-		int insetHeight = insets.top + insets.bottom;
-		Dimension prefSize = getViewport().getPreferredSize();
-		int height = getHeight() - insetHeight;
-		if (getHorizontalScrollBar().isVisible()) {
-			height -= getHorizontalScrollBar().getHeight();
-		}
-		boolean isVsbNeeded = height < prefSize.height;
-		boolean layoutAgain = false;
+    public void doLayout() {
+        super.doLayout();
+        Insets insets = getInsets();
+        int insetHeight = insets.top + insets.bottom;
+        Dimension prefSize = getViewport().getPreferredSize();
+        int height = getHeight() - insetHeight;
+        if (getHorizontalScrollBar().isVisible()) {
+            height -= getHorizontalScrollBar().getHeight();
+        }
+        boolean isVsbNeeded = height < prefSize.height;
+        boolean layoutAgain = false;
 
-		if (isVsbNeeded
-				&& getVerticalScrollBarPolicy() == VERTICAL_SCROLLBAR_NEVER) {
-			setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-			layoutAgain = true;
-		} else if (!isVsbNeeded
-				&& getVerticalScrollBarPolicy() == VERTICAL_SCROLLBAR_ALWAYS) {
-			setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
-			layoutAgain = true;
-		}
+        if (isVsbNeeded
+                && getVerticalScrollBarPolicy() == VERTICAL_SCROLLBAR_NEVER) {
+            setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+            layoutAgain = true;
+        } else if (!isVsbNeeded
+                && getVerticalScrollBarPolicy() == VERTICAL_SCROLLBAR_ALWAYS) {
+            setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
+            layoutAgain = true;
+        }
 
-		if (layoutAgain) {
-			super.doLayout();
-		}
-	}
+        if (layoutAgain) {
+            super.doLayout();
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.JComponent#getPreferredSize()
-	 */
-	public Dimension getPreferredSize() {
-		if (!isValid()) {
-			doLayout();
-		}
-		return super.getPreferredSize();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.swing.JComponent#getPreferredSize()
+     */
+    public Dimension getPreferredSize() {
+        if (!isValid()) {
+            doLayout();
+        }
+        return super.getPreferredSize();
+    }
 }

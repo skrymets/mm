@@ -30,7 +30,6 @@ import freemind.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin
- *
  */
 public class JabberStarter extends ModeControllerHookAdapter {
 

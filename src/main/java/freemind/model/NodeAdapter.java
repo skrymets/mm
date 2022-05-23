@@ -10,6 +10,7 @@ import freemind.main.*;
 import freemind.modes.*;
 import freemind.modes.attributes.Attribute;
 import freemind.preferences.FreemindPropertyListener;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
@@ -28,6 +29,7 @@ import java.util.*;
  * This class represents a single Node of a Tree. It contains direct handles to
  * its parent and children and to its view.
  */
+@Log4j2
 public abstract class NodeAdapter implements MindMapNode {
 
     final static int SHIFT = -2;// height of the vertical shift between node and
@@ -97,8 +99,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
     private static final boolean ALLOWSCHILDREN = true;
     private HistoryInformation historyInformation = null;
-    // Logging:
-    static protected org.slf4j.Logger logger;
     private MindMap map = null;
     private String noteText;
     private String xmlNoteText;
@@ -106,17 +106,12 @@ public abstract class NodeAdapter implements MindMapNode {
     private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
     private Vector<Attribute> mAttributeVector = null;
 
-    //
-    // Constructors
-    //
-
     protected NodeAdapter(Object userObject, MindMap pMap) {
         this.map = pMap;
         setText((String) userObject);
         hooks = null; // lazy, fc, 30.6.2005.
         activatedHooks = null; // lazy, fc, 30.6.2005
-        if (logger == null)
-            logger = Resources.getInstance().getLogger(this.getClass().getName());
+
         // create creation time:
         setHistoryInformation(new HistoryInformation());
         if (sSaveIdPropertyChangeListener == null) {
@@ -124,8 +119,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
                 public void propertyChanged(String propertyName, String newValue, String oldValue) {
                     if (propertyName.equals(FreeMindCommon.SAVE_ONLY_INTRISICALLY_NEEDED_IDS)) {
-                        sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(
-                                newValue).booleanValue();
+                        sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(newValue).booleanValue();
                     }
                 }
             };
@@ -178,7 +172,7 @@ public abstract class NodeAdapter implements MindMapNode {
     }
 
     public final String getNoteText() {
-        // logger.info("Note html: " + noteText);
+        // log.info("Note html: " + noteText);
         return noteText;
     }
 
@@ -568,7 +562,7 @@ public abstract class NodeAdapter implements MindMapNode {
             copy.setFolded(false);
             return copy;
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return null;
         }
     }
@@ -770,7 +764,7 @@ public abstract class NodeAdapter implements MindMapNode {
     // other)?
 
     public void insert(MutableTreeNode child, int index) {
-        logger.trace("Insert at " + index + " the node " + child);
+        log.trace("Insert at " + index + " the node " + child);
         final MindMapNode childNode = (MindMapNode) child;
         if (index < 0) { // add to the end (used in xml load) (PN)
             index = getChildCount();
@@ -901,7 +895,7 @@ public abstract class NodeAdapter implements MindMapNode {
             // FIXME: Do something special here, but in any case, do not add the
             // hook
             // to the activatedHooks:
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
             return;
         }
         if (hook instanceof PermanentNodeHook) {
@@ -989,7 +983,7 @@ public abstract class NodeAdapter implements MindMapNode {
         hooks.remove(hook);
         if (hooks.size() == 0)
             hooks = null;
-        logger.trace("Removed hook " + name + " at " + hook + ".");
+        log.trace("Removed hook " + name + " at " + hook + ".");
     }
 
     public void removeAllHooks() {
@@ -999,7 +993,7 @@ public abstract class NodeAdapter implements MindMapNode {
             try {
                 removeHook(hook);
             } catch (Exception e) {
-                freemind.main.Resources.getInstance().logException(e);
+                log.error(e);
             }
         }
     }
@@ -1036,12 +1030,12 @@ public abstract class NodeAdapter implements MindMapNode {
                     if (new File(thumbnailFileName).exists()) {
                         URL thumbUrl = Tools.fileToUrl(new File(thumbnailFileName));
                         String imgHtml = "<img src=\"" + thumbUrl + "\" " + linkHtmlPart + "/>";
-                        logger.info("Adding new tooltip: " + imgHtml);
+                        log.info("Adding new tooltip: " + imgHtml);
                         result.put(TOOLTIP_PREVIEW_KEY, imgHtml);
                         toolTipChanged = true;
                     }
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             }
         } else {
@@ -1357,7 +1351,7 @@ public abstract class NodeAdapter implements MindMapNode {
      * This method must be synchronized as the TreeMap isn't.
      */
     public synchronized void setStateIcon(String key, ImageIcon icon) {
-        // logger.info("Set state of key:"+key+", icon "+icon);
+        // log.info("Set state of key:"+key+", icon "+icon);
         createStateIcons();
         if (icon != null) {
             stateIcons.put(key, icon);

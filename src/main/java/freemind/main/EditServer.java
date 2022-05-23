@@ -22,219 +22,211 @@
 
 package freemind.main;
 
-//{{{ Imports
+import lombok.extern.log4j.Log4j2;
+
+import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.URL;
+import java.net.*;
 import java.util.Random;
 import java.util.Vector;
-
-import javax.swing.SwingUtilities;
 
 /**
  * Inter-process communication.
  * <p>
- * 
+ * <p>
  * The edit server protocol is very simple. <code>$HOME/.jedit/server</code> is
  * an ASCII file containing two lines, the first being the port number, the
  * second being the authorization key.
  * <p>
- * 
+ * <p>
  * You connect to that port on the local machine, sending the authorization key
  * as four bytes in network byte order, followed by the length of the BeanShell
  * script as two bytes in network byte order, followed by the script in UTF8
  * encoding. After the socked is closed, the BeanShell script will be executed
  * by FreeMind.
  * <p>
- * 
+ * <p>
  * The snippet is executed in the AWT thread. None of the usual BeanShell
  * variables (view, buffer, textArea, editPane) are set so the script has to
  * figure things out by itself.
  * <p>
- * 
+ * <p>
  * In most cases, the script will call the static
- * {@link #handleClient(boolean,String,String[])} method, but of course more
+ * {@link #handleClient(boolean, String, String[])} method, but of course more
  * complicated stuff can be done too.
- * 
+ *
  * @author Slava Pestov
  * @version $Id: EditServer.java 19384 2011-02-23 16:50:37Z k_satoda $
  */
+@Log4j2
 public class EditServer extends Thread {
-	protected static org.slf4j.Logger logger = null;
-	private final FreeMindMain mFrame;
 
-	// {{{ EditServer constructor
-	EditServer(String portFile, FreeMindMain pFrame) {
-		super("FreeMind server daemon [" + portFile + "]");
-		mFrame = pFrame;
-		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
-		setDaemon(true);
-		this.portFile = portFile;
+    private final FreeMindMain mFrame;
 
-		try {
-			// On Unix, set permissions of port file to rw-------,
-			// so that on broken Unices which give everyone read
-			// access to user home dirs, people can't see your
-			// port file (and hence send arbitriary BeanShell code
-			// your way. Nasty.)
-			if (Tools.isUnix()) {
-				new File(portFile).createNewFile();
-				Tools.setPermissions(portFile, 0600);
-			}
+    EditServer(String portFile, FreeMindMain pFrame) {
+        super("FreeMind server daemon [" + portFile + "]");
+        mFrame = pFrame;
+        setDaemon(true);
+        this.portFile = portFile;
 
-			// Bind to any port on localhost; accept 2 simultaneous
-			// connection attempts before rejecting connections
-			socket = new ServerSocket(0, 2, InetAddress.getByName("127.0.0.1"));
-			authKey = new Random().nextInt(Integer.MAX_VALUE);
-			int port = socket.getLocalPort();
+        try {
+            // On Unix, set permissions of port file to rw-------,
+            // so that on broken Unices which give everyone read
+            // access to user home dirs, people can't see your
+            // port file (and hence send arbitriary BeanShell code
+            // your way. Nasty.)
+            if (Tools.isUnix()) {
+                new File(portFile).createNewFile();
+                Tools.setPermissions(portFile, 0600);
+            }
 
-			FileWriter out = new FileWriter(portFile);
+            // Bind to any port on localhost; accept 2 simultaneous
+            // connection attempts before rejecting connections
+            socket = new ServerSocket(0, 2, InetAddress.getByName("127.0.0.1"));
+            authKey = new Random().nextInt(Integer.MAX_VALUE);
+            int port = socket.getLocalPort();
 
-			try {
-				out.write("b\n");
-				out.write(String.valueOf(port));
-				out.write("\n");
-				out.write(String.valueOf(authKey));
-				out.write("\n");
-			} finally {
-				out.close();
-			}
+            FileWriter out = new FileWriter(portFile);
 
-			ok = true;
+            try {
+                out.write("b\n");
+                out.write(String.valueOf(port));
+                out.write("\n");
+                out.write(String.valueOf(authKey));
+                out.write("\n");
+            } finally {
+                out.close();
+            }
 
-			logger.info("FreeMind server started on port "
-					+ socket.getLocalPort());
-			logger.info("Authorization key is " + authKey);
-		} catch (IOException io) {
-			/*
-			 * on some Windows versions, connections to localhost fail if the
-			 * network is not running. To avoid confusing newbies with weird
-			 * error messages, log errors that occur while starting the server
-			 * as NOTICE, not ERROR
-			 */
-			logger.info("" + io);
-		}
-	} // }}}
+            ok = true;
 
-	// {{{ run() method
-	public void run() {
-		for (;;) {
-			if (abort)
-				return;
+            log.info("FreeMind server started on port "
+                    + socket.getLocalPort());
+            log.info("Authorization key is " + authKey);
+        } catch (IOException io) {
+            /*
+             * on some Windows versions, connections to localhost fail if the
+             * network is not running. To avoid confusing newbies with weird
+             * error messages, log errors that occur while starting the server
+             * as NOTICE, not ERROR
+             */
+            log.info("" + io);
+        }
+    } // }}}
 
-			Socket client = null;
-			try {
-				client = socket.accept();
+    // {{{ run() method
+    public void run() {
+        for (; ; ) {
+            if (abort)
+                return;
 
-				// Stop script kiddies from opening the edit
-				// server port and just leaving it open, as a
-				// DoS
-				client.setSoTimeout(1000);
+            Socket client = null;
+            try {
+                client = socket.accept();
 
-				logger.info(client + ": connected");
+                // Stop script kiddies from opening the edit
+                // server port and just leaving it open, as a
+                // DoS
+                client.setSoTimeout(1000);
 
-				DataInputStream in = new DataInputStream(
-						client.getInputStream());
+                log.info(client + ": connected");
 
-				if (!handleClient(client, in))
-					abort = true;
-			} catch (Exception e) {
-				if (!abort)
-					logger.info("" + e);
-				abort = true;
-			} finally {
-				/*
-				 * if(client != null) { try { client.close(); } catch(Exception
-				 * e) { logger.info(e); }
-				 * 
-				 * client = null; }
-				 */
-			}
-		}
-	} // }}}
+                DataInputStream in = new DataInputStream(
+                        client.getInputStream());
 
-	// {{{ isOK() method
-	boolean isOK() {
-		return ok;
-	} // }}}
+                if (!handleClient(client, in))
+                    abort = true;
+            } catch (Exception e) {
+                if (!abort)
+                    log.info("" + e);
+                abort = true;
+            } finally {
+                /*
+                 * if(client != null) { try { client.close(); } catch(Exception
+                 * e) { log.info(e); }
+                 *
+                 * client = null; }
+                 */
+            }
+        }
+    } // }}}
 
-	// {{{ getPort method
-	public int getPort() {
-		return socket.getLocalPort();
-	} // }}}
+    // {{{ isOK() method
+    boolean isOK() {
+        return ok;
+    } // }}}
 
-	// {{{ stopServer() method
-	void stopServer() {
-		abort = true;
-		try {
-			socket.close();
-		} catch (IOException io) {
-		}
+    // {{{ getPort method
+    public int getPort() {
+        return socket.getLocalPort();
+    } // }}}
 
-		new File(portFile).delete();
-	} // }}}
+    // {{{ stopServer() method
+    void stopServer() {
+        abort = true;
+        try {
+            socket.close();
+        } catch (IOException io) {
+        }
 
-	// {{{ Private members
+        new File(portFile).delete();
+    } // }}}
 
-	// {{{ Instance variables
-	private String portFile;
-	private ServerSocket socket;
-	private int authKey;
-	private boolean ok;
-	private boolean abort;
+    // {{{ Private members
 
-	// }}}
+    // {{{ Instance variables
+    private String portFile;
+    private ServerSocket socket;
+    private int authKey;
+    private boolean ok;
+    private boolean abort;
 
-	// {{{ handleClient() method
-	private boolean handleClient(final Socket client, DataInputStream in)
-			throws Exception {
-		int key = in.readInt();
-		if (key != authKey) {
-			logger.info(client + ": wrong" + " authorization key (got " + key
-					+ ", expected " + authKey + ")");
-			in.close();
-			client.close();
+    // }}}
 
-			return false;
-		} else {
-			// Reset the timeout
-			client.setSoTimeout(0);
+    // {{{ handleClient() method
+    private boolean handleClient(final Socket client, DataInputStream in)
+            throws Exception {
+        int key = in.readInt();
+        if (key != authKey) {
+            log.info(client + ": wrong" + " authorization key (got " + key
+                    + ", expected " + authKey + ")");
+            in.close();
+            client.close();
 
-			logger.info(client + ": authenticated" + " successfully");
+            return false;
+        } else {
+            // Reset the timeout
+            client.setSoTimeout(0);
 
-			final String script = in.readUTF();
-			logger.info(script);
+            log.info(client + ": authenticated" + " successfully");
 
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						Vector<URL> urls = Tools.urlStringToUrls(script);
-						for (URL urli : urls) {
-							mFrame.getController().getModeController()
-									.load(urli);
-						}
-					} catch (MalformedURLException e) {
-						freemind.main.Resources.getInstance().logException(e);
-					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
-					}
-				}
-			});
-			in.close();
-			client.close();
+            final String script = in.readUTF();
+            log.info(script);
 
-			return true;
-		}
-	} // }}}
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    try {
+                        Vector<URL> urls = Tools.urlStringToUrls(script);
+                        for (URL urli : urls) {
+                            mFrame.getController().getModeController()
+                                    .load(urli);
+                        }
+                    } catch (MalformedURLException e) {
+                        log.error(e);
+                    } catch (Exception e) {
+                        log.error(e);
+                    }
+                }
+            });
+            in.close();
+            client.close();
 
-	// }}}
+            return true;
+        }
+    } // }}}
+
+    // }}}
 }

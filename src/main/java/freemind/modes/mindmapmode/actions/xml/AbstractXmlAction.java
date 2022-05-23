@@ -23,68 +23,61 @@
 
 package freemind.modes.mindmapmode.actions.xml;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.Action;
-import javax.swing.Icon;
-
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.MindmapAction;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
 public abstract class AbstractXmlAction extends MindmapAction {
 
-	private ActorXml actor;
+    private ActorXml actor;
 
-	private MindMapController controller;
+    private MindMapController controller;
 
-	protected AbstractXmlAction(String name, Icon icon,
-			MindMapController controller) {
-		super(name, icon, controller);
-		this.controller = controller;
-	}
+    protected AbstractXmlAction(String name, Icon icon, MindMapController controller) {
+        super(name, icon, controller);
+        this.controller = controller;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	final public void actionPerformed(ActionEvent arg0) {
-		xmlActionPerformed(arg0);
-	}
+    final public void actionPerformed(ActionEvent arg0) {
+        xmlActionPerformed(arg0);
+    }
 
-	protected String getShortDescription() {
-		return (String) getValue(Action.SHORT_DESCRIPTION);
-	}
+    protected String getShortDescription() {
+        return (String) getValue(Action.SHORT_DESCRIPTION);
+    }
 
-	/**
-	 */
-	protected abstract void xmlActionPerformed(ActionEvent arg0);
+    /**
+     *
+     */
+    protected abstract void xmlActionPerformed(ActionEvent arg0);
 
-	/**
-	 */
-	public MindMapController getMindMapController() {
-		return controller;
-	}
+    /**
+     *
+     */
+    public MindMapController getMindMapController() {
+        return controller;
+    }
 
-	public void addActor(ActorXml actor) {
-		this.actor = actor;
-		if (actor != null) {
-			// registration:
-			getMindMapController().getActionRegistry().registerActor(actor,
-					actor.getDoActionClass());
-		}
-	}
+    public void addActor(ActorXml actor) {
+        this.actor = actor;
+        if (actor != null) {
+            // registration:
+            getMindMapController().getActionRegistry().registerActor(actor,
+                    actor.getDoActionClass());
+        }
+    }
 
-	/**
-	 */
-	public ActorXml getActor() {
-		return actor;
-	}
+    /**
+     *
+     */
+    public ActorXml getActor() {
+        return actor;
+    }
 
 }

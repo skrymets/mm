@@ -1,22 +1,22 @@
 /*FreeMind - A Program for creating and viewing Mindmaps
-*Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
-*
-*See COPYING for Details
-*
-*This program is free software; you can redistribute it and/or
-*modify it under the terms of the GNU General Public License
-*as published by the Free Software Foundation; either version 2
-*of the License, or (at your option) any later version.
-*
-*This program is distributed in the hope that it will be useful,
-*but WITHOUT ANY WARRANTY; without even the implied warranty of
-*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*GNU General Public License for more details.
-*
-*You should have received a copy of the GNU General Public License
-*along with this program; if not, write to the Free Software
-*Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
+ *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
+ *
+ *See COPYING for Details
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 /*
  * Created on Mar 10, 2004
  *
@@ -35,7 +35,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author RReppel
- * 
+ * <p>
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
@@ -48,7 +48,9 @@ public class MapSharingController {
 
     private final int STATE_SENT_SHARE_REQUEST_PENDING = 3;
 
-    /** Waiting for a user to accept or decline the sharing of a map. */
+    /**
+     * Waiting for a user to accept or decline the sharing of a map.
+     */
     private final int STATE_RECEIVED_SHARE_REQUEST_PENDING = 4;
 
     private final int STATE_SHARING_MAP = 5;
@@ -128,7 +130,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
          */
         public void mouseEntered(MouseEvent arg0) {
@@ -136,7 +138,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
          */
         public void mouseExited(MouseEvent arg0) {
@@ -144,7 +146,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
          */
         public void mousePressed(MouseEvent arg0) {
@@ -152,7 +154,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
          */
         public void mouseReleased(MouseEvent arg0) {
@@ -181,7 +183,7 @@ public class MapSharingController {
                 // Should display error dialog.
                 mapSharingListener = new JabberListener(controller,
                         mapSharingWizardController, jabberConnectionWizardView
-                                .getServername(), JABBER_SERVER_PORT,
+                        .getServername(), JABBER_SERVER_PORT,
                         jabberConnectionWizardView.getUsername(),
                         jabberConnectionWizardView.getPassword());
                 setState(STATE_CONNECTED);
@@ -191,8 +193,8 @@ public class MapSharingController {
                 sender.setShareMapUser(jabberConnectionWizardView
                         .getMapShareUserName());
                 sender.sendMapSharingRequest(jabberConnectionWizardView
-                        .getUsername()
-                        + "@" + jabberConnectionWizardView.getServername(),
+                                .getUsername()
+                                + "@" + jabberConnectionWizardView.getServername(),
                         jabberConnectionWizardView.getMapShareUserName());
                 jabberConnectionWizardView.showAwaitMapSharingMessage();
             }
@@ -200,7 +202,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
          */
         public void mouseEntered(MouseEvent arg0) {
@@ -208,7 +210,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
          */
         public void mouseExited(MouseEvent arg0) {
@@ -216,7 +218,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
          */
         public void mousePressed(MouseEvent arg0) {
@@ -224,7 +226,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
          */
         public void mouseReleased(MouseEvent arg0) {
@@ -249,7 +251,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
          */
         public void mouseEntered(MouseEvent arg0) {
@@ -257,7 +259,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
          */
         public void mouseExited(MouseEvent arg0) {
@@ -265,7 +267,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
          */
         public void mousePressed(MouseEvent arg0) {
@@ -273,7 +275,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
          */
         public void mouseReleased(MouseEvent arg0) {
@@ -306,7 +308,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
          */
         public void mouseEntered(MouseEvent arg0) {
@@ -314,7 +316,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
          */
         public void mouseExited(MouseEvent arg0) {
@@ -322,7 +324,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
          */
         public void mousePressed(MouseEvent arg0) {
@@ -330,7 +332,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
          */
         public void mouseReleased(MouseEvent arg0) {
@@ -354,7 +356,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
          */
         public void mouseEntered(MouseEvent arg0) {
@@ -362,7 +364,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
          */
         public void mouseExited(MouseEvent arg0) {
@@ -370,7 +372,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
          */
         public void mousePressed(MouseEvent arg0) {
@@ -378,7 +380,7 @@ public class MapSharingController {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
          */
         public void mouseReleased(MouseEvent arg0) {
@@ -389,7 +391,7 @@ public class MapSharingController {
     /**
      * Called by the JabberListener to indicate that a user has accepted or
      * declined an invitation to share a map.
-     * 
+     *
      * @param isAccepted
      */
     public void setMapShareRequestAccepted(String userName, boolean isAccepted) {
@@ -403,7 +405,7 @@ public class MapSharingController {
                  * MindMapXMLElement mapElement = new
                  * MindMapXMLElement(controller.getFrame()); try { StringWriter
                  * sw = new StringWriter();
-                 * 
+                 *
                  * sw.write(" <map version=\"" +
                  * controller.getFrame().getFreemindVersion()+"\">\n");
                  * MindMapMapModel mindMapNodeModel = (MindMapMapModel)
@@ -411,9 +413,9 @@ public class MapSharingController {
                  * mindMapNodeModel.saveInternal(sw, true); // save(sw,
                  * (MindMapMapModel) controller.getView().getModel().getRoot());
                  * sw.write(" </map>\n");
-                 * 
+                 *
                  * sender.sendMap(sw.getBuffer().toString()); } catch(Exception
-                 * e) { freemind.main.Resources.getInstance().logException(e); }
+                 * e) { log.error(e); }
                  */
                 jabberConnectionWizardView.showSharingAcceptedMessage(userName);
             } else {
@@ -425,7 +427,7 @@ public class MapSharingController {
     }
 
     public void setMapSharingRequested(String username, String mapContent,
-            String mapFileName) {
+                                       String mapFileName) {
         setState(STATE_RECEIVED_SHARE_REQUEST_PENDING);
         mapSharingRequestingUser = username;
         this.mapContent = mapContent;
@@ -446,7 +448,6 @@ public class MapSharingController {
 
     /**
      * Stops sharing the current map and disconnects from server.
-     *  
      */
     private void stopSharing() {
         mapSharingListener.getSession().disconnect();
@@ -458,7 +459,7 @@ public class MapSharingController {
     /**
      * Called by the JabberListener when the other user no longer shares his/her
      * map.
-     * 
+     *
      * @param username
      */
     public void setSharingStopped(String username) {
@@ -469,7 +470,7 @@ public class MapSharingController {
     /**
      * Sets the new state of the map sharing controller and updates the Freemind
      * window title to indicate the state.
-     * 
+     *
      * @param newState
      */
     private void setState(int newState) {
@@ -478,32 +479,32 @@ public class MapSharingController {
         //TODO: Hack alert. Window title setting belongs into a view...
         //Set the window title:
         switch (newState) {
-        case STATE_CONNECTED:
-            //TODO: Update resource files.
-            controller.getFrame().setTitle(frameTitle + " - " + "Connected");
-            //				controller.getFrame().getFreeMindMenuBar().getMenu(0).getItem(7).setText("Disconnect");
-            break;
-        case STATE_NOT_CONNECTED:
-            controller.getFrame().setTitle(frameTitle);
-            //TODO: Update resource files.
-            //Change the "File->Share" menu item to be "File->Share"
-            //				if(controller.getFrame().getFreeMindMenuBar() != null)
-            //					controller.getFrame().getFreeMindMenuBar().getMenu(0).getItem(7).setText("Share");
+            case STATE_CONNECTED:
+                //TODO: Update resource files.
+                controller.getFrame().setTitle(frameTitle + " - " + "Connected");
+                //				controller.getFrame().getFreeMindMenuBar().getMenu(0).getItem(7).setText("Disconnect");
+                break;
+            case STATE_NOT_CONNECTED:
+                controller.getFrame().setTitle(frameTitle);
+                //TODO: Update resource files.
+                //Change the "File->Share" menu item to be "File->Share"
+                //				if(controller.getFrame().getFreeMindMenuBar() != null)
+                //					controller.getFrame().getFreeMindMenuBar().getMenu(0).getItem(7).setText("Share");
 
-            break;
-        case STATE_SENT_SHARE_REQUEST_PENDING:
-            break;
-        case STATE_RECEIVED_SHARE_REQUEST_PENDING:
-            break;
-        case STATE_SHARING_MAP:
-            //TODO: Update resource files.
-            controller.getFrame().setTitle(frameTitle + " - " + "Sharing Map");
-            //Change the "File->Share" menu item to be "File->Stop Sharing"
-            //				if(controller.getFrame().getFreeMindMenuBar() != null)
-            //					controller.getFrame().getFreeMindMenuBar().getMenu(0).getItem(7).setText("Stop
-            // Sharing");
-            break;
-        default:
+                break;
+            case STATE_SENT_SHARE_REQUEST_PENDING:
+                break;
+            case STATE_RECEIVED_SHARE_REQUEST_PENDING:
+                break;
+            case STATE_SHARING_MAP:
+                //TODO: Update resource files.
+                controller.getFrame().setTitle(frameTitle + " - " + "Sharing Map");
+                //Change the "File->Share" menu item to be "File->Stop Sharing"
+                //				if(controller.getFrame().getFreeMindMenuBar() != null)
+                //					controller.getFrame().getFreeMindMenuBar().getMenu(0).getItem(7).setText("Stop
+                // Sharing");
+                break;
+            default:
 
         } //endswitch
     }

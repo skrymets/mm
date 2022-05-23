@@ -33,7 +33,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
-import org.slf4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.util.List;
@@ -45,10 +45,10 @@ import java.util.Vector;
  *
  * @author foltin
  */
+@Log4j2
 public class JumpLastEditLocation extends MindMapNodeHookAdapter {
 
     public JumpLastEditLocation() {
-
     }
 
     public void invoke(MindMapNode pNode) {
@@ -59,22 +59,18 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
             if (node == null) {
                 return;
             }
-            this.logger.trace("Selecting " + node + " as last edit location.");
-            getMindMapController().select(node,
-                    Tools.getVectorWithSingleElement(node));
+            log.trace("Selecting " + node + " as last edit location.");
+            getMindMapController().select(node, Tools.getVectorWithSingleElement(node));
         } catch (Exception e) {
-            freemind.main.Resources.getInstance().logException(e);
+            log.error(e);
         }
     }
 
-    public static class JumpLastEditLocationRegistration implements
-            HookRegistration, ActionHandler, MenuItemEnabledListener {
+    public static class JumpLastEditLocationRegistration implements HookRegistration, ActionHandler, MenuItemEnabledListener {
 
         private static final String PLUGIN_NAME = "accessories/plugins/JumpLastEditLocation.properties";
 
         private MindMapController controller;
-
-        private Logger logger;
 
         private Vector<String> mLastEditLocations = new Vector<>();
 
@@ -103,16 +99,14 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                 } catch (IllegalArgumentException e) {
                     // node not found, retry...
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
+                    log.error(e);
                 }
             } while (index > 0);
             return null;
         }
 
-        public JumpLastEditLocationRegistration(ModeController controller,
-                MindMap map) {
+        public JumpLastEditLocationRegistration(ModeController controller, MindMap map) {
             this.controller = (MindMapController) controller;
-            logger = controller.getFrame().getLogger(this.getClass().getName());
         }
 
         public void register() {
@@ -129,6 +123,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
         }
 
         /**
+         *
          */
         private void detectFormatChanges(XmlAction doAction) {
             if (doAction instanceof CompoundAction) {
@@ -154,7 +149,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                 // prevent double entries
                 if (mLastEditLocations.size() > 0
                         && Tools.safeEquals(lastLocation,
-                                mLastEditLocations.lastElement())) {
+                        mLastEditLocations.lastElement())) {
                     return;
                 }
                 mLastEditLocations.add(lastLocation);
@@ -162,11 +157,11 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                     mLastEditLocations.remove(0);
                 }
                 try {
-                    logger.trace("New last edit location: " + lastLocation
+                    log.trace("New last edit location: " + lastLocation
                             + " from " + controller.marshall(doAction));
                 } catch (Exception e) {
-                    freemind.main.Resources.getInstance().logException(e);
-                    logger.warn("Not able to marshall the action "
+                    log.error(e);
+                    log.warn("Not able to marshall the action "
                             + doAction.getClass() + " as " + doAction);
                 }
             }

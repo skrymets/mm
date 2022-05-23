@@ -4,9 +4,9 @@
  *  Copyright (C) 2005-2008 by i-net software
  *
  *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License as 
+ *  modify it under the terms of the GNU General Public License as
  *  published by the Free Software Foundation; either version 2 of the
- *  License, or (at your option) any later version. 
+ *  License, or (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful, but
  *  WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  *  USA.
- *  
+ *
  * Created on 20.02.2008
  */
 package com.inet.jortho;
@@ -30,17 +30,17 @@ package com.inet.jortho;
  */
 public class SpellCheckerOptions {
 
-    private int     suggestionsLimitMenu   = 15;
+    private int suggestionsLimitMenu = 15;
 
-    private int     suggestionsLimitDialog = 15;
+    private int suggestionsLimitDialog = 15;
 
-    private boolean caseSensitive          = true;
+    private boolean caseSensitive = true;
 
-    private boolean ignoreCapitalization   = false;
+    private boolean ignoreCapitalization = false;
 
-    private boolean ignoreAllCaps          = true;
+    private boolean ignoreAllCaps = true;
 
-    private boolean ignoreNumbers          = false;
+    private boolean ignoreNumbers = false;
 
     private boolean languageDisableVisible = false;
 
@@ -53,11 +53,10 @@ public class SpellCheckerOptions {
 
     /**
      * Set the maximun count of entries for the suggestion menu. The default is 15.
-     * 
-     * @param count
-     *            the suggestion limit for the suggestion menu
+     *
+     * @param count the suggestion limit for the suggestion menu
      */
-    public void setSuggestionsLimitMenu( int count ) {
+    public void setSuggestionsLimitMenu(int count) {
         this.suggestionsLimitMenu = count;
     }
 
@@ -72,17 +71,16 @@ public class SpellCheckerOptions {
 
     /**
      * Set the maximun count of entries for the suggestion list in the spell checker dialog. The default is 15.
-     * 
-     * @param count
-     *            the suggestion limit for the spell checker dialog
+     *
+     * @param count the suggestion limit for the spell checker dialog
      */
-    public void setSuggestionsLimitDialog( int count ) {
+    public void setSuggestionsLimitDialog(int count) {
         this.suggestionsLimitDialog = count;
     }
 
     /**
      * Get the maximun count of enties for the suggestion list in the spell checker dialog.
-     * 
+     *
      * @return the suggestions limit
      */
     public int getSuggestionsLimitDialog() {
@@ -95,7 +93,7 @@ public class SpellCheckerOptions {
      *
      * @param caseSensitive whether the spell checker is to be case-sensitive for the first letter of each word.
      */
-    public void setCaseSensitive( boolean caseSensitive ) {
+    public void setCaseSensitive(boolean caseSensitive) {
         this.caseSensitive = caseSensitive;
     }
 
@@ -112,10 +110,9 @@ public class SpellCheckerOptions {
      * Set whether capitalized words should be correct if the word is in the dictionary as lower-case. This is often used in a title or in
      * names. The first word of a sentence will always ignore the capitalization. The default is false.
      *
-     * @param ignore
-     *            the new value
+     * @param ignore the new value
      */
-    public void setIgnoreCapitalization( boolean ignore ) {
+    public void setIgnoreCapitalization(boolean ignore) {
         ignoreCapitalization = ignore;
     }
 
@@ -132,16 +129,15 @@ public class SpellCheckerOptions {
      * Set if words that are entirely in uppercase should be ignored for spell checking. This is most often used for
      * abbreviations such DNS or HTTP. The default value is true.
      *
-     * @param ignore
-     *            the new value
+     * @param ignore the new value
      */
-    public void setIgnoreAllCapsWords( boolean ignore ) {
+    public void setIgnoreAllCapsWords(boolean ignore) {
         ignoreAllCaps = ignore;
     }
 
     /**
      * Whether words entirely in upper-case should be ignored for spell checking.
-     * 
+     *
      * @return true, if all entirely upper-case words are to be ignored
      */
     public boolean isIgnoreAllCapsWords() {
@@ -151,10 +147,9 @@ public class SpellCheckerOptions {
     /**
      * Set if words that include a number in any position should be ignored for spell checking. The default is false.
      *
-     * @param ignore
-     *            the new value
+     * @param ignore the new value
      */
-    public void setIgnoreWordsWithNumbers( boolean ignore ) {
+    public void setIgnoreWordsWithNumbers(boolean ignore) {
         ignoreNumbers = ignore;
     }
 
@@ -166,20 +161,19 @@ public class SpellCheckerOptions {
     public boolean isIgnoreWordsWithNumbers() {
         return ignoreNumbers;
     }
-    
+
     /**
      * Set if the disbale menu item visble in the language menu. The default is false.
-     * 
-     * @param visible
-     *            the new value
+     *
+     * @param visible the new value
      */
-    public void setLanguageDisableVisible( boolean visible ) {
+    public void setLanguageDisableVisible(boolean visible) {
         languageDisableVisible = visible;
     }
 
     /**
      * If in the language menu the menu item disable visible.
-     * 
+     *
      * @return true, if visible
      */
     public boolean isLanguageDisableVisible() {
