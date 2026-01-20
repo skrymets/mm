@@ -38,8 +38,6 @@ public interface FreeMindMain {
 
     JFrame getJFrame();
 
-    boolean isApplet();
-
     MapView getView();
 
     void setView(MapView view);

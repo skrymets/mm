@@ -93,7 +93,7 @@
     </xs:element>
 
 
-    <!-- cut Action 
+    <!-- cut Action
    The node is given in NodeCoordinates (see PasteAction).
     -->
     <xs:element name="cut_node_action">
@@ -587,25 +587,25 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- <searchresults 
-    timestamp="Tue, 08 Nov 11 22:49:54 -0500" 
-    attribution="Data Copyright OpenStreetMap Contributors, Some Rights Reserved. CC-BY-SA 2.0." 
-    querystring="innsbruck" 
-    polygon="false" 
-    exclude_place_ids="228452,25664166,26135863,25440203" 
+    <!-- <searchresults
+    timestamp="Tue, 08 Nov 11 22:49:54 -0500"
+    attribution="Data Copyright OpenStreetMap Contributors, Some Rights Reserved. CC-BY-SA 2.0."
+    querystring="innsbruck"
+    polygon="false"
+    exclude_place_ids="228452,25664166,26135863,25440203"
     more_url="http://open.mapquestapi.com/nominatim/v1/search?format=xml&amp;exclude_place_ids=228452,25664166,26135863,25440203&amp;accept-language=&amp;q=innsbruck"
     >
-  <place 
-      place_id="228452" 
-      osm_type="node" 
-      osm_id="34840064" 
-      place_rank="16" 
-      boundingbox="47.2554266357,47.2754304504,11.3827679062,11.4027688599" 
-      lat="47.2654296" 
-      lon="11.3927685" 
-      display_name="Innsbruck, Bezirk Innsbruck-Stadt, Innsbruck-Stadt, Tirol, Österreich, Europe" 
-      class="place" 
-      type="city" 
+  <place
+      place_id="228452"
+      osm_type="node"
+      osm_id="34840064"
+      place_rank="16"
+      boundingbox="47.2554266357,47.2754304504,11.3827679062,11.4027688599"
+      lat="47.2654296"
+      lon="11.3927685"
+      display_name="Innsbruck, Bezirk Innsbruck-Stadt, Innsbruck-Stadt, Tirol, Österreich, Europe"
+      class="place"
+      type="city"
       icon="http://open.mapquestapi.com/nominatim/v1/images/mapicons/poi_place_city.p.20.png"
   />
 
@@ -685,7 +685,7 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- 
+    <!--
                                  <xs:element ref="addressparts"/>
            <xs:element name="addressparts">
              <xs:complexType>
@@ -887,7 +887,7 @@
                     <xs:sequence>
                         <xs:element ref="collaboration_map_offer" maxOccurs="unbounded" minOccurs="0"/>
                     </xs:sequence>
-                    <!-- It makes a difference if the server has only one map, 
+                    <!-- It makes a difference if the server has only one map,
                     or it is a single-map-server. In the first case, the creation of new maps isn't possible. -->
                     <xs:attribute name="is_single_offer" use="optional" type="xs:boolean" default="false"/>
                 </xs:extension>
@@ -1187,14 +1187,14 @@
                     </xs:sequence>
                     <!--  time attribute to be able to remove the oldest entries. -->
                     <xs:attribute name="last_changed" use="required" type="xs:long"/>
-                    <!-- -1 means, that this map wasn't open at the last session. -->
+                    <!-- -1 means that this map wasn't open at the last session. -->
                     <xs:attribute name="tab_index" use="required" type="xs:int"/>
                     <xs:attribute name="restorable_name" use="required" type="xs:string"/>
                     <xs:attribute name="last_zoom" use="required" type="xs:float"/>
-                    <!--  viewport in the map -->
+                    <!--  viewport on the map -->
                     <xs:attribute name="x" use="required" type="xs:int"/>
                     <xs:attribute name="y" use="required" type="xs:int"/>
-                    <!--  last selecteds -->
+                    <!--  last selected -->
                     <xs:attribute name="last_selected" use="required" type="xs:string"/>
                 </xs:extension>
             </xs:complexContent>
@@ -1216,8 +1216,8 @@
     </xs:element>
 
 
-    <!-- ======================================================================================= 
-                                                                                 Patterns
+    <!-- =======================================================================================
+        Patterns
     ======================================================================================= -->
 
 
@@ -1389,7 +1389,7 @@
     </xs:element>
 
 
-    <!-- ======================================================================================= 
+    <!-- =======================================================================================
                                                                                  Plugin XML
     ======================================================================================= -->
     <xs:element name="plugin">

@@ -857,10 +857,8 @@ public class Controller implements MapModuleChangeObserver {
             if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {
                 setProperty("appwindow_x", valueOf(getFrame().getWinX()));
                 setProperty("appwindow_y", valueOf(getFrame().getWinY()));
-                setProperty("appwindow_width",
-                        valueOf(getFrame().getWinWidth()));
-                setProperty("appwindow_height",
-                        valueOf(getFrame().getWinHeight()));
+                setProperty("appwindow_width", valueOf(getFrame().getWinWidth()));
+                setProperty("appwindow_height", valueOf(getFrame().getWinHeight()));
             }
             setProperty("appwindow_state", valueOf(winState));
         }

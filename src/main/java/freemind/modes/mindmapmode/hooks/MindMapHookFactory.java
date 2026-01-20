@@ -257,6 +257,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
             for (PluginMode possibleMode : descriptor.getListPluginModeList()) {
                 if (mode.getPackage().getName().equals(possibleMode.getClassName())) {
                     modeFound = true;
+                    break;
                 }
             }
             if (!modeFound)

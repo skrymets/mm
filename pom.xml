@@ -8,7 +8,6 @@
     <packaging>jar</packaging>
 
     <name>freemind</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,8 +16,7 @@
         <maven.compiler.target>11</maven.compiler.target>
 
         <lucene.version>4.6.0</lucene.version>
-        <groovy.version>2.1.8</groovy.version>
-        <batik.version>1.7</batik.version>
+        <batik.version>1.17</batik.version>
         <jibx.version>1.3.3</jibx.version>
 
         <jibx.config.directory>src/main/resources/bindings</jibx.config.directory>
@@ -29,7 +27,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -54,7 +52,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>${groovy.version}</version>
+            <version>2.4.21</version>
         </dependency>
 
         <dependency>
@@ -74,13 +72,13 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
+            <version>2.14.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-configuration2</artifactId>
-            <version>2.7</version>
+            <version>2.12.0</version>
         </dependency>
 
         <dependency>
@@ -89,6 +87,11 @@
             <version>4.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
 
         <!-- ************************************************************************* -->
         <dependency>
@@ -150,7 +153,7 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.10.3</version>
+            <version>1.15.3</version>
         </dependency>
 
         <dependency>
@@ -170,6 +173,12 @@
             <groupId>org.jibx</groupId>
             <artifactId>jibx-bind</artifactId>
             <version>${jibx.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Consider to exclude -->
@@ -212,21 +221,22 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.28</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.12.1</version>
+            <version>2.25.3</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.12.1</version>
+            <version>2.25.3</version>
+        </dependency>
+
+        <!-- SLF4J to Log4j2 binding -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.25.3</version>
         </dependency>
 
         <!-- ************************************************************************* -->
@@ -368,6 +378,32 @@
                             <validate>true</validate>
                             <verbose>true</verbose>
                             <verify>true</verify>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Inject StringEncoder format element into JiBX binding.xml -->
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <id>inject-string-encoder</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <file>${basedir}/target/generated-sources/binding.xml</file>
+                            <replacements>
+                                <replacement>
+                                    <token><![CDATA[<binding name="binding" package="freemind.controller.actions.generated.instance" trim-whitespace="true">]]></token>
+                                    <value><![CDATA[<binding name="binding" package="freemind.controller.actions.generated.instance" trim-whitespace="true">
+  <format type="java.lang.String" serializer="de.foltin.StringEncoder.encode" deserializer="de.foltin.StringEncoder.decode"/>]]></value>
+                                </replacement>
+                            </replacements>
                         </configuration>
                     </execution>
                 </executions>

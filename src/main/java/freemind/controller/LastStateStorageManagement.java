@@ -93,6 +93,10 @@ public class LastStateStorageManagement {
         }
         if (!found) {
             setLastChanged(pStore);
+            // Ensure list is initialized (JiBX may leave it null for optional empty collections)
+            if (mLastStatesMap.getMindmapLastStateStorageList() == null) {
+                mLastStatesMap.setMindmapLastStateStorageList(new ArrayList<>());
+            }
             mLastStatesMap.addMindmapLastStateStorage(pStore);
         }
         // size limit

@@ -39,6 +39,14 @@
                 <directory>${project.basedir}/resources</directory>
                 <filtering>false</filtering>
             </resource>
+            <!-- Copy dictionaries to JAR root for proper loading in uberjar -->
+            <resource>
+                <directory>${project.basedir}/resources/com/inet/jortho/i18n/resource/languages</directory>
+                <includes>
+                    <include>*.ortho</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
         </resources>
 
         <testResources>

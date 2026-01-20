@@ -12,14 +12,14 @@
             </tokenfilter>
         </filterchain>
     </loadfile>
-    
-    
+
+
     <property name="java_source_version" value="1.7" />
     <property name="java_target_version" value="1.7" />
 
     <property name="freemind.buildnumber.file" value="version.properties"/>
     <property name="freemind.installer_year" value="2009"/>
-    
+
     <property name="src" location="."/>
 
     <property name="build" location="../bin/classes" />
@@ -63,17 +63,17 @@
         </fileset>
     </path>
 
-    <!-- - - - - - - - - - - - - - - - - - 
-     target: init                      
+    <!-- - - - - - - - - - - - - - - - - -
+     target: init
     - - - - - - - - - - - - - - - - - -->
     <target name="init">
         <buildnumber file="${freemind.buildnumber.file}"/>
         <loadproperties srcfile="${freemind.buildnumber.file}">
         </loadproperties>
         <property name="version" value="${ver}_${build.number}"/>
-		
+
         <property environment="env" />
-		
+
         <echo>FreeMind Version = ${ver}, build ${build.number}.</echo>
 
     </target>
@@ -86,14 +86,14 @@
     <!-- =================================
      target: gen
     ================================= -->
-    
+
     <target name="gen" depends="xmlbind.checkStatusOfGeneration" description="--> Generates the JixB binding jar." unless="xmlbind.isUpToDate">
         <mkdir dir="binding" />
         <mkdir dir="binding/src" />
         <mkdir dir="binding/run" />
         <mkdir dir="binding/classes" />
-                
-        <javac includeantruntime="false"  destdir="binding/run" 
+
+        <javac includeantruntime="false"  destdir="binding/run"
                srcdir="${src}"
                classpath="${classpath}"
                debug="${debug}"
@@ -101,19 +101,19 @@
                target="${java_target_version}">
             <include name="de/foltin/**" />
         </javac>
-                
+
         <java fork="true" classpath="binding/run" classname="de.foltin.CompileXsdStart">
         </java>
-           
+
         <delete dir="binding/run"  quiet="true"/>
-                
-                                
+
+
         <!-- Special file for String encoding. -->
         <mkdir dir="binding/src/de/foltin"/>
         <copy  todir="binding/src/de/foltin" file="${src}/de/foltin/StringEncoder.java"/>
-                
+
         <javac includeantruntime="false"  srcdir="binding/src" destdir="binding/classes" source="${java_source_version}" target="${java_target_version}" debug="on" />
-        
+
         <echo message="Running binding compiler..." />
         <bind verbose="false" load="true">
             <bindingfileset dir="binding/src">
@@ -121,7 +121,7 @@
             </bindingfileset>
             <classpathset dir="binding/classes" />
         </bind>
-        
+
         <jar destfile="${jibxjar}">
             <fileset dir="binding/classes">
                 <include name="**/*.class" />
@@ -131,7 +131,7 @@
                 <include name="**/*.xml" />
             </fileset>
         </jar>
-        
+
         <delete dir="binding">
         </delete>
 
@@ -216,7 +216,7 @@
             <!-- exclude jars too!
             <fileset dir="${build}/accessories"/> -->
         </copy>
-        
+
         <!-- third party libs -->
         <mkdir dir="${dist.lib}" />
         <copy todir="${dist.lib}">
@@ -242,7 +242,7 @@
 
     </target>
 
-		
+
     <target name="jar" depends="build">
         <mkdir dir="${dist.lib}" />
         <tempfile prefix="manifest" property="temp.manifest.file"/>

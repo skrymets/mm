@@ -342,7 +342,7 @@ public class StylePatternFactory {
     }
 
     /**
-     * @return a pattern, that removes all properties of a node to its defaults.
+     * @return a pattern that removes all properties of a node to its defaults.
      */
     public static Pattern getRemoveAllPattern() {
         Pattern result = new Pattern();

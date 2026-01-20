@@ -388,10 +388,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         freeMindCommon.loadUIProperties(defaultPreferences);
     }
 
-    public boolean isApplet() {
-        return false;
-    }
-
     public String getPatternsXML() {
         return patternsXML;
     }

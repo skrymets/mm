@@ -421,26 +421,26 @@ public class Tools {
      */
     @Deprecated
     public static boolean safeEquals(String string1, String string2) {
-        return (string1 != null && string2 != null && string1.equals(string2))
+        return (string1 != null && string1.equals(string2))
                 || (string1 == null && string2 == null);
     }
 
     @Deprecated
     public static boolean safeEquals(Object obj1, Object obj2) {
-        return (obj1 != null && obj2 != null && obj1.equals(obj2))
+        return (obj1 != null && obj1.equals(obj2))
                 || (obj1 == null && obj2 == null);
     }
 
     @Deprecated
     public static boolean safeEqualsIgnoreCase(String string1, String string2) {
-        return (string1 != null && string2 != null && string1
+        return (string1 != null && string1
                 .equalsIgnoreCase(string2))
                 || (string1 == null && string2 == null);
     }
 
     @Deprecated
     public static boolean safeEquals(Color color1, Color color2) {
-        return (color1 != null && color2 != null && color1.equals(color2))
+        return (color1 != null && color1.equals(color2))
                 || (color1 == null && color2 == null);
     }
 
@@ -452,7 +452,7 @@ public class Tools {
         if (osNameStart.equals("Win")) {
             try {
                 Runtime.getRuntime().exec(format("attrib %sH \"%s\"", hidden ? "+" : "-", file.getAbsolutePath()));
-                // Synchronize the effect, because it is asynchronous in general.
+                // Synchronize the effect because it is asynchronous in general.
                 if (!synchronously) {
                     return;
                 }
@@ -1650,7 +1650,7 @@ public class Tools {
      * An empty list otherwise.
      */
     public static List<MindMapNode> getMindMapNodesFromClipboard(MindMapController pMindMapController) {
-        Vector<MindMapNode> mindMapNodes = new Vector<MindMapNode>();
+        List<MindMapNode> mindMapNodes = new ArrayList<>();
         Transferable clipboardContents = pMindMapController.getClipboardContents();
         if (clipboardContents != null) {
             try {
