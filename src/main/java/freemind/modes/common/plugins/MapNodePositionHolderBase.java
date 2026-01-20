@@ -26,7 +26,7 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.io.File;
@@ -40,7 +40,7 @@ import java.util.HashMap;
  * @date 16.08.2012
  */
 
-@Log4j2
+@Slf4j
 public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
 
     public static final String NODE_MAP_HOOK_NAME = "plugins/map/MapNodePositionHolder.properties";

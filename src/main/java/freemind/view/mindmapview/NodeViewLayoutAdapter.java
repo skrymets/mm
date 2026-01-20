@@ -21,7 +21,7 @@ package freemind.view.mindmapview;
 
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ import java.awt.*;
  * @author foltin
  * @date 11.07.2013
  */
-@Log4j2
+@Slf4j
 abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
     protected final int LISTENER_VIEW_WIDTH = 10;
 

@@ -22,7 +22,7 @@ package freemind.modes.browsemode;
 
 import freemind.modes.ControllerAdapter;
 import freemind.modes.common.dialogs.PersistentEditableComboBox;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +30,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class BrowseToolBar extends JToolBar {
 
     public static final String BROWSE_URL_STORAGE_KEY = "browse_url_storage";
@@ -55,7 +55,7 @@ public class BrowseToolBar extends JToolBar {
                 try {
                     c.load(new URL(urlText));
                 } catch (Exception e1) {
-                    log.error(e1);
+                    log.error(e1.getLocalizedMessage(), e1);
                     // FIXME: Give a good error message.
                     c.getController().errorMessage(e1);
                 }

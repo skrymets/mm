@@ -22,13 +22,13 @@
 /*$Id: MindMapNodesSelection.java,v 1.2.18.2.12.3 2007/02/04 22:02:02 dpolivaev Exp $*/
 package freemind.controller;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.datatransfer.*;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
-@Log4j2
+@Slf4j
 public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 
     private String nodesContent;
@@ -63,7 +63,7 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
             dropActionFlavor = new DataFlavor("text/drop-action; class=java.lang.String");
             copyNodeIdsFlavor = new DataFlavor("application/freemind-node-ids; class=java.util.List");
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

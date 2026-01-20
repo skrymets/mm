@@ -24,7 +24,7 @@
 package accessories.plugins;
 
 import freemind.extensions.ExportHook;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import javax.xml.transform.Result;
@@ -41,7 +41,7 @@ import java.io.*;
  * @author kakeda
  * @author rreppel
  */
-@Log4j2
+@Slf4j
 public class ExportToImage extends ExportHook {
 
     public ExportToImage() {
@@ -78,7 +78,7 @@ public class ExportToImage extends ExportHook {
             // encoder.encode(image);
             out.close();
         } catch (IOException e1) {
-            log.error(e1);
+            log.error(e1.getLocalizedMessage(), e1);
         }
         getController().getFrame().setWaitingCursor(false);
         return true;
@@ -107,7 +107,7 @@ public class ExportToImage extends ExportHook {
             trans.transform(xmlSource, result);
         } catch (Exception e) {
             // System.err.println("error applying the xslt file "+e);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return;
     }

@@ -27,7 +27,7 @@ import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.ImageFactory;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.jibx.runtime.IUnmarshallingContext;
 
 import javax.swing.*;
@@ -45,7 +45,7 @@ import static java.lang.String.format;
  *
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class MindMapHookFactory extends HookFactoryAdapter {
     /**
      * Match xml files in the accessories/plugin directory and not in its subdirectories.
@@ -126,7 +126,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                         plugin = (Plugin) unmarshaller.unmarshalDocument(in, null);
                     } catch (Exception e) {
                         // error case
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                         continue;
                     }
                     // plugin is loaded.
@@ -157,8 +157,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
         try {
             // constructed.
             ClassLoader loader = descriptor.getPluginClassLoader();
-            Class hookClass = Class.forName(descriptor.getClassName(), true,
-                    loader);
+            Class hookClass = Class.forName(descriptor.getClassName(), true, loader);
             MindMapHook hook = (MindMapHook) hookClass.newInstance();
             decorateHook(hookName, descriptor, hook);
             return hook;
@@ -272,7 +271,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                 container.isPluginBase = descriptor.getIsPluginBase();
                 returnValue.add(container);
             } catch (ClassNotFoundException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         return returnValue;

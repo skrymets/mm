@@ -37,7 +37,7 @@ import freemind.modes.common.plugins.ReminderHookBase;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapHookAdapter;
 import freemind.view.MapModule;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,7 +60,7 @@ import java.util.Vector;
  * @author foltin
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class TimeManagement extends MindMapHookAdapter implements PropertyChangeListener, ActionListener, MapModuleChangeObserver {
 
     private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = TimeManagement.class

@@ -24,7 +24,7 @@ import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +32,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class ImportFolderStructureAction extends MindmapAction {
 
     private final MindMapController controller;
@@ -60,7 +60,7 @@ public class ImportFolderStructureAction extends MindmapAction {
                 frame.setWaitingCursor(true);
                 importFolderStructure(folder, controller.getSelected(), true);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
             }
             frame.setWaitingCursor(false);
             frame.setStatusText("Folder structure imported.");

@@ -152,7 +152,7 @@ public class MapNodePositionHolder extends MapNodePositionHolderBase {
         try {
             return Double.parseDouble((String) pObject);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return 0.0;
         }
     }
@@ -168,7 +168,7 @@ public class MapNodePositionHolder extends MapNodePositionHolderBase {
         try {
             return Integer.parseInt((String) pObject);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return 1;
         }
     }
@@ -353,7 +353,7 @@ public class MapNodePositionHolder extends MapNodePositionHolderBase {
                     }
                     imageHtml += "</td>";
                 } catch (IOException e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
             imageHtml += "</tr>";

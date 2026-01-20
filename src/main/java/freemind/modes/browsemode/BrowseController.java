@@ -34,7 +34,7 @@ import freemind.modes.common.plugins.MapNodePositionHolderBase;
 import freemind.modes.common.plugins.NodeNoteBase;
 import freemind.modes.viewmodes.ViewControllerAdapter;
 import freemind.view.mindmapview.MainView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -55,7 +55,7 @@ import static java.lang.String.format;
 
 @SuppressWarnings("serial")
 
-@Log4j2
+@Slf4j
 public class BrowseController extends ViewControllerAdapter {
 
     private JPopupMenu popupmenu;
@@ -71,7 +71,7 @@ public class BrowseController extends ViewControllerAdapter {
     private ImageIcon noteIcon;
     public FollowMapLink followMapLink;
 
-    @Log4j2
+    @Slf4j
     public static class FollowMapLink extends AbstractAction implements MenuItemEnabledListener {
 
         private ViewControllerAdapter modeController;
@@ -104,9 +104,9 @@ public class BrowseController extends ViewControllerAdapter {
                     log.trace("Try to open link " + link);
                     modeController.getFrame().openDocument(new URL(link));
                 } catch (MalformedURLException e1) {
-                    log.error(e1);
+                    log.error(e1.getLocalizedMessage(), e1);
                 } catch (Exception e1) {
-                    log.error(e1);
+                    log.error(e1.getLocalizedMessage(), e1);
                 }
             }
         }
@@ -442,7 +442,7 @@ public class BrowseController extends ViewControllerAdapter {
             urlStreamReader.close();
             return root;
         } catch (Exception ex) {
-            log.error(ex);
+            log.error(ex.getLocalizedMessage(), ex);
             return null;
         }
     }

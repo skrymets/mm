@@ -7,7 +7,7 @@ import freemind.model.NodeAdapter;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapCloud;
 import freemind.preferences.FreemindPropertyListener;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
@@ -18,15 +18,15 @@ import java.awt.dnd.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class represents a single Node of a MindMap (in analogy to
  * TreeCellRenderer).
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class NodeView extends JComponent implements TreeModelListener {
 
     public void setFocusCycleRoot(boolean pFocusCycleRoot) {

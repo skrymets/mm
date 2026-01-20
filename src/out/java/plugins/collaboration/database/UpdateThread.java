@@ -102,16 +102,19 @@ public class UpdateThread extends Thread implements ResultHandler,
     public void run() {
         try {
             mPrepareStatement = mConnection.prepareStatement(QUERY);
+            mPrepareStatement.setLong(1, mPrimaryKey);
         } catch (SQLException e1) {
-            log.error(e1);
+            log.error(e1.getLocalizedMessage(), e1);
             return;
         }
         int counter = 1;
-        while (!mShouldTerminate) {
+
+        while (true) {
+            if (mShouldTerminate) break;
+            // Periodically queries database; updates title; handles exceptions
             try {
                 logger.fine("Looking for updates...");
                 synchronized (mPrimaryKeyMutex) {
-                    mPrepareStatement.setLong(1, mPrimaryKey);
                     logger.fine("Looking for updates... Query");
                     query(mPrepareStatement, this);
                 }
@@ -123,7 +126,7 @@ public class UpdateThread extends Thread implements ResultHandler,
                     mController.getController().setTitle();
                 }
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         mIsTerminated = true;
@@ -137,7 +140,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         if (timeout == 0) {
@@ -156,7 +159,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             mConnection.close();
             mConnection = null;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -189,7 +192,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             }
             rs.close();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -286,7 +289,7 @@ public class UpdateThread extends Thread implements ResultHandler,
         try {
             insertIntoActionTable(expression);
         } catch (SQLException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return pPair;
     }
@@ -369,7 +372,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             // and wait until the others should have shut down.
             Thread.sleep(2000);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -391,7 +394,7 @@ public class UpdateThread extends Thread implements ResultHandler,
             }
             rs.close();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return result;
     }

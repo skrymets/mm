@@ -156,7 +156,7 @@ public class Registration implements HookRegistration, ActorXml,
                     tagFile.delete();
                     imageFile.delete();
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         }
@@ -248,7 +248,7 @@ public class Registration implements HookRegistration, ActorXml,
             try {
                 listener.registerMapNode(pMapNodePositionHolder);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -263,7 +263,7 @@ public class Registration implements HookRegistration, ActorXml,
             try {
                 listener.deregisterMapNode(pMapNodePositionHolder);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -293,7 +293,7 @@ public class Registration implements HookRegistration, ActorXml,
                         / OsmFileCacheTileLoader.FILE_AGE_ONE_DAY + " days.");
                 osmFileCacheTileLoader.setCacheMaxFileAge(maxFileAge);
             } catch (Exception e1) {
-                log.error(e1);
+                log.error(e1.getLocalizedMessage(), e1);
             }
         }
         if (loader == null) {
@@ -496,7 +496,7 @@ public class Registration implements HookRegistration, ActorXml,
             try {
                 listener.nodeVisibilityChanged(pMapNodePositionHolder, pVisible);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }

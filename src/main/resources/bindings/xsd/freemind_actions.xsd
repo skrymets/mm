@@ -1060,15 +1060,17 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="attribute_table_properties">
-        <xs:complexContent>
-            <xs:extension base="xml_action">
-                <xs:sequence>
-                    <xs:element ref="table_column_order" maxOccurs="unbounded" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="attribute_table_properties">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xml_action">
+                    <xs:sequence>
+                        <xs:element ref="table_column_order" maxOccurs="unbounded" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <xs:element name="set_attribute_action">
         <xs:complexType>

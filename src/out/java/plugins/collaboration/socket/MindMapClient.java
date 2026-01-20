@@ -113,7 +113,7 @@ public class MindMapClient extends SocketBasics {
                         try {
                             map.getXml(writer);
                         } catch (IOException e) {
-                            log.error(e);
+                            log.error(e.getLocalizedMessage(), e);
                             return;
                         }
                         publishCommand.setMap(writer.toString());
@@ -135,14 +135,14 @@ public class MindMapClient extends SocketBasics {
             }
             clientCommunication.start();
         } catch (UnknownHostException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             controller.getController().errorMessage(
                     Resources.getInstance().format(
                             UNKNWON_HOST_EXCEPTION_MESSAGE,
                             new Object[]{e.getMessage()}));
             return;
         } catch (ConnectException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             controller.getController().errorMessage(
                     Resources.getInstance().format(
                             CONNECT_EXCEPTION_MESSAGE,
@@ -150,7 +150,7 @@ public class MindMapClient extends SocketBasics {
                                     hostProperty.getValue(), e.getMessage()}));
             return;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             // Need a better message here.
             controller.getController().errorMessage(
                     e.getClass().getName() + ": " + e.getLocalizedMessage());

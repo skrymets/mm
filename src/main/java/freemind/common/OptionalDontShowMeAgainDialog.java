@@ -26,7 +26,7 @@ package freemind.common;
 import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +40,7 @@ import java.awt.event.WindowEvent;
  * @author foltin
  */
 
-@Log4j2
+@Slf4j
 public class OptionalDontShowMeAgainDialog {
     public final static int ONLY_OK_SELECTION_IS_STORED = 0;
     public final static int BOTH_OK_AND_CANCEL_OPTIONS_ARE_STORED = 1;

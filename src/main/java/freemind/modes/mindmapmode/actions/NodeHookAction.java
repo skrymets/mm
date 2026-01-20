@@ -28,14 +28,14 @@ import freemind.extensions.HookFactory;
 import freemind.extensions.HookInstantiationMethod;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class NodeHookAction extends MindmapAction implements HookAction, MenuItemEnabledListener, MenuItemSelectedListener {
     String _hookName;
     MindMapController mMindMapController;

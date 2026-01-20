@@ -117,13 +117,13 @@ public class SignedScriptHandler {
                     + File.separator + ".keystore");
             mKeyStore.load(fis, pPassword);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         } finally {
             if (fis != null) {
                 try {
                     fis.close();
                 } catch (IOException e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         }
@@ -160,7 +160,7 @@ public class SignedScriptHandler {
             // System.out.println("Signed: " +content);
             return content.toString();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             pFrame.getController().errorMessage(e.getLocalizedMessage());
         }
         return content.mScript;
@@ -215,7 +215,7 @@ public class SignedScriptHandler {
                 // System.out.println("Signature result: " + verify);
                 return verify;
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 try {
                     pOutStream.write(e.toString().getBytes());
                     pOutStream.write("\n".getBytes());

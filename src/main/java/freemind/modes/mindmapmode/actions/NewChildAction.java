@@ -27,13 +27,13 @@ import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.EncryptedMindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class NewChildAction extends MindmapAction {
     private final MindMapController c;
 

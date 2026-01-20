@@ -22,11 +22,11 @@ package freemind.modes.mindmapmode.hooks;
 
 import freemind.extensions.ModeControllerHookAdapter;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 
-@Log4j2
+@Slf4j
 public class MindMapHookAdapter extends ModeControllerHookAdapter {
 
     public MindMapHookAdapter() {

@@ -39,7 +39,7 @@ import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import freemind.preferences.FreemindPropertyContributor;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -54,7 +54,7 @@ import java.util.Vector;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 
     private static final String AUTOMATIC_FORMAT_LEVEL = "automaticFormat_level";
@@ -64,7 +64,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
      *
      * @author foltin
      */
-    @Log4j2
+    @Slf4j
     public static class Registration implements HookRegistration {
         private AutomaticLayoutPropertyContributor mAutomaticLayoutPropertyContributor;
 

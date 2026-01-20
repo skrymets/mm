@@ -34,7 +34,7 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame.StylePatternFrameType;
 import freemind.view.mindmapview.MapView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +43,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, KeyListener {
 
     /**
@@ -201,9 +201,9 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                 mMap.setRoot(root);
                 mDemoNode = (MindMapNode) root.getChildAt(0);
             } catch (XMLParseException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
             mDemoFrame = new MapView(mMap, mDemoNodeMapFeedback);
             mDemoFrame.centerNode(mDemoFrame.getNodeView(mDemoNode));

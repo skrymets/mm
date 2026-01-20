@@ -29,7 +29,7 @@ import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -43,7 +43,7 @@ import java.util.Iterator;
  *
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class PermanentNodeHookAdapter extends NodeHookAdapter implements PermanentNodeHook {
 
     public PermanentNodeHookAdapter() {

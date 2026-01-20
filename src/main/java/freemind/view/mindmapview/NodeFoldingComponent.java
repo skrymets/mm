@@ -23,7 +23,7 @@ import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonListener;
@@ -39,7 +39,7 @@ import java.awt.geom.Ellipse2D;
  * @author Foltin
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class NodeFoldingComponent extends JButton {
     private static final int TIMER_DELAY = 50;
     private static final int COLOR_COUNTER_MAX = 15;

@@ -34,14 +34,14 @@ import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ListIterator;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class NodeGeneralAction extends AbstractXmlAction {
     protected final MindMapController modeController;
 

@@ -101,7 +101,7 @@ public class FreeMindTaskTests extends FreeMindTestBase {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         assertEquals(0, task.i);

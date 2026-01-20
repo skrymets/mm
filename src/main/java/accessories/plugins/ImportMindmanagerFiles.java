@@ -24,7 +24,7 @@ import freemind.extensions.ExportHook;
 import freemind.extensions.ModeControllerHookAdapter;
 import freemind.main.XMLParseException;
 import freemind.modes.FreeMindFileDialog;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.xml.transform.Result;
@@ -42,7 +42,7 @@ import java.util.zip.ZipInputStream;
 /**
  * Applies an XSLT to the Document.xml file of MindManager(c) files.
  */
-@Log4j2
+@Slf4j
 public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
 
     public ImportMindmanagerFiles() {
@@ -105,9 +105,9 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
                 break;
             }
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         } catch (XMLParseException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -122,7 +122,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
             Transformer trans = transFact.newTransformer(xsltSource);
             trans.transform(xmlSource, result);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
         return writer.toString();

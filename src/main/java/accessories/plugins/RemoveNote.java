@@ -32,7 +32,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 
@@ -73,7 +73,7 @@ public class RemoveNote extends MindMapNodeHookAdapter {
         getMindMapController().setNoteText(node, null);
     }
 
-    @Log4j2
+    @Slf4j
     public static class Registration implements HookRegistration, MenuItemEnabledListener {
 
         private final MindMapController controller;

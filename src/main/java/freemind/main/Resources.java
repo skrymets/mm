@@ -29,7 +29,7 @@ import freemind.frok.patches.FreeMindMainMock;
 import freemind.modes.FreeMindAwtFileDialog;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.FreeMindJFileDialog;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
 /**
  * @author Dimitri Polivaev 12.07.2005
  */
-@Log4j2
+@Slf4j
 public class Resources implements TextTranslator {
 
     private final FreeMindMain main;

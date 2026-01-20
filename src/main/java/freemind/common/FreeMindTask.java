@@ -20,7 +20,7 @@
 
 package freemind.common;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ import java.awt.event.MouseMotionAdapter;
  * @author foltin
  * @date 08.04.2013
  */
-@Log4j2
+@Slf4j
 public abstract class FreeMindTask extends Thread {
 
     private static final long TIME_TO_DISPLAY_PROGRESS_BAR_IN_MILLIS = 1000;
@@ -116,7 +116,7 @@ public abstract class FreeMindTask extends Thread {
                     again = false;
                 }
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 again = false;
             }
             if (isInterrupted()) {

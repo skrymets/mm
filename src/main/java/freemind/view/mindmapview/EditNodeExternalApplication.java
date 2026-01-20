@@ -25,7 +25,7 @@ package freemind.view.mindmapview;
 
 import freemind.main.Tools;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -35,7 +35,7 @@ import java.text.MessageFormat;
 /**
  * @author Daniel Polansky
  */
-@Log4j2
+@Slf4j
 public class EditNodeExternalApplication extends EditNodeBase {
 
     private KeyEvent firstEvent;
@@ -89,7 +89,7 @@ public class EditNodeExternalApplication extends EditNodeBase {
                     }
                     getEditControl().ok(content);
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                     try {
                         if (writer != null) {
                             writer.close();

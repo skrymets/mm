@@ -29,7 +29,7 @@ import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ import java.awt.event.ActionEvent;
 import java.util.Vector;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class UndoAction extends AbstractXmlAction {
 
     private MindMapController controller;
@@ -138,9 +138,9 @@ public class UndoAction extends AbstractXmlAction {
             // and cut vector, if bigger than given size:
             int maxEntries = 100;
             try {
-                maxEntries = new Integer(controller.getFrame().getProperty("undo_levels"));
+                maxEntries = Integer.parseInt(controller.getFrame().getProperty("undo_levels"));
             } catch (NumberFormatException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
             while (actionPairList.size() > maxEntries) {
                 actionPairList.remove(actionPairList.size() - 1); // remove
@@ -152,13 +152,9 @@ public class UndoAction extends AbstractXmlAction {
     }
 
     private void startActionFrame() {
-        if (actionFrameStarted == false && EventQueue.isDispatchThread()) {
+        if (!actionFrameStarted && EventQueue.isDispatchThread()) {
             actionFrameStarted = true;
-            EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    actionFrameStarted = false;
-                }
-            });
+            EventQueue.invokeLater(() -> actionFrameStarted = false);
         }
     }
 
@@ -170,7 +166,7 @@ public class UndoAction extends AbstractXmlAction {
         log.info("Undo list:");
         int j = 0;
         for (ActionPair pair : actionPairList) {
-            log.info("line " + (j++) + " = " + Tools.printXmlAction(pair.getDoAction()));
+            log.info("line {} = {}", j++, Tools.printXmlAction(pair.getDoAction()));
         }
     }
 }

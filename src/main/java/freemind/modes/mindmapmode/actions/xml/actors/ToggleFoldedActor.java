@@ -30,7 +30,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.common.CommonToggleFoldedAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ListIterator;
 
@@ -38,7 +38,7 @@ import java.util.ListIterator;
  * @author foltin
  * @date 10.04.2014
  */
-@Log4j2
+@Slf4j
 public class ToggleFoldedActor extends XmlActorAdapter {
 
     /**

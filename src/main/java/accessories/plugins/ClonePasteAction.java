@@ -40,7 +40,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.datatransfer.Transferable;
@@ -52,7 +52,7 @@ import java.util.*;
  * @author foltin
  * @date 25.4.2011
  */
-@Log4j2
+@Slf4j
 public class ClonePasteAction extends MindMapNodeHookAdapter {
 
     public ClonePasteAction() {
@@ -60,8 +60,8 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 
     public void invoke(MindMapNode pNode) {
         super.invoke(pNode);
-        Vector<MindMapNode> mindMapNodes = getMindMapNodes();
-        log.trace("Clones for nodes: " + Tools.listToString(mindMapNodes));
+        List<MindMapNode> mindMapNodes = getMindMapNodes();
+        log.trace("Clones for nodes: {}", Tools.listToString(mindMapNodes));
         // now, construct the plugin for those nodes:
         for (MindMapNode copiedNode : mindMapNodes) {
             ClonePlugin clonePlugin = ClonePlugin.getHook(copiedNode);
@@ -84,7 +84,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                         showResult == JOptionPane.OK_OPTION
                                 ? ClonePlugin.CLONE_ITSELF_TRUE
                                 : ClonePlugin.CLONE_ITSELF_FALSE);
-                Vector<MindMapNode> selecteds = Tools.getVectorWithSingleElement(copiedNode);
+                List<MindMapNode> selecteds = Tools.getVectorWithSingleElement(copiedNode);
                 getMindMapController().addHook(copiedNode, selecteds,
                         ClonePlugin.PLUGIN_LABEL, properties);
             }
@@ -113,7 +113,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         getMindMapController().paste(copy, pDestinationNode);
     }
 
-    public Vector<MindMapNode> getMindMapNodes() {
+    public List<MindMapNode> getMindMapNodes() {
         return Tools.getMindMapNodesFromClipboard(getMindMapController());
     }
 
@@ -125,7 +125,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         void propertiesChanged(CloneProperties pCloneProperties);
     }
 
-    @Log4j2
+    @Slf4j
     public static class CloneProperties {
         boolean mCloneItself = false;
         private HashSet<ClonePropertiesObserver> mObserverSet = new HashSet<>();
@@ -219,7 +219,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             String hookName = ((NodeHookAction) pAction).getHookName();
             if (PLUGIN_NAME.equals(hookName)) {
                 // only enabled, if nodes have been copied before.
-                Vector<MindMapNode> mindMapNodes = Tools.getMindMapNodesFromClipboard(controller);
+                List<MindMapNode> mindMapNodes = Tools.getMindMapNodesFromClipboard(controller);
                 // log.warn("Nodes " + Tools.listToString(mindMapNodes));
                 return !mindMapNodes.isEmpty();
             }
@@ -602,15 +602,10 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             return returnValue;
         }
 
-        private void addNodePosition(Vector<Integer> indexVector, MindMapNode child) {
-            indexVector.add(new Integer(child.getParentNode().getChildPosition(
-                    child)));
+        private void addNodePosition(List<Integer> indexVector, MindMapNode child) {
+            indexVector.add(child.getParentNode().getChildPosition(child));
         }
 
-        /**
-         * @param pCloneNode
-         * @return
-         */
         private String printNodeId(MindMapNode pCloneNode) {
             try {
                 return controller.getNodeID(pCloneNode) + ": '"
@@ -620,10 +615,6 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             }
         }
 
-        /**
-         * @param pClones
-         * @return
-         */
         private String printNodeIds(HashSet<MindMapNode> pClones) {
             Vector<String> strings = new Vector<>();
             for (MindMapNode pluginNode : pClones) {
@@ -678,7 +669,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                             shadowNode.getCloneNode());
                 }
             } catch (IllegalArgumentException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
 

@@ -25,13 +25,13 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import freemind.view.mindmapview.MultipleImage;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-@Log4j2
+@Slf4j
 public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implements UndoEventReceiver {
 
     private HashMap<MindMapNode, TreeSet<String>> nodeIconSets = new HashMap<>();

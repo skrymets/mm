@@ -21,7 +21,7 @@
 package freemind.modes.mindmapmode.dialogs;
 
 import freemind.common.ComboProperty;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Vector;
 
@@ -31,7 +31,7 @@ import java.util.Vector;
  * @author foltin
  * @date 26.09.2013
  */
-@Log4j2
+@Slf4j
 public class IntegerComboProperty extends ComboProperty {
 
 
@@ -60,7 +60,7 @@ public class IntegerComboProperty extends ComboProperty {
                     lastMatchedValue = stringValue;
                 }
             } catch (NumberFormatException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         super.setValue(pValue);

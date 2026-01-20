@@ -30,7 +30,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.tree.MutableTreeNode;
@@ -40,7 +40,7 @@ import java.io.Writer;
 import java.util.ListIterator;
 import java.util.Vector;
 
-@Log4j2
+@Slf4j
 public class EncryptedMindMapNode extends MindMapNodeModel {
 
     /**
@@ -131,7 +131,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
                 }
                 isDecrypted = true;
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 setAccessible(false);
             }
         }
@@ -200,7 +200,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
                 setFolded(true);
                 setAccessible(false);
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -350,7 +350,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
             String encrypted = encrypter.encrypt(childXml.toString());
             return encrypted;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         throw new IllegalArgumentException("Can't encrypt the node.");
     }

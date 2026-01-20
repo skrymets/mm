@@ -25,7 +25,7 @@ import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.controller.actions.generated.instance.NodeListMember;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class LastStateStorageManagement {
     public static final int LIST_AMOUNT_LIMIT = 50;
     private MindmapLastStateMapStorage mLastStatesMap = null;
@@ -53,7 +53,7 @@ public class LastStateStorageManagement {
                 }
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
 
         if (mLastStatesMap == null) {
@@ -74,7 +74,7 @@ public class LastStateStorageManagement {
 
     public void changeOrAdd(MindmapLastStateStorage pStore) {
         boolean found = false;
-        for (MindmapLastStateStorage store : mLastStatesMap.getMindmapLastStateStorageList()) {
+        for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
             if (Tools.safeEquals(pStore.getRestorableName(), store.getRestorableName())) {
                 // deep copy
                 store.setLastZoom(pStore.getLastZoom());
@@ -99,7 +99,7 @@ public class LastStateStorageManagement {
         if (mLastStatesMap.sizeMindmapLastStateStorageList() > LIST_AMOUNT_LIMIT) {
             // make map from date to object:
             TreeMap<Long, MindmapLastStateStorage> dateToStoreMap = new TreeMap<>();
-            for (MindmapLastStateStorage store : mLastStatesMap.getMindmapLastStateStorageList()) {
+            for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
                 dateToStoreMap.put(Long.valueOf(-store.getLastChanged()), store);
             }
             // clear list
@@ -122,7 +122,7 @@ public class LastStateStorageManagement {
     }
 
     public MindmapLastStateStorage getStorage(String pRestorableName) {
-        for (MindmapLastStateStorage store : mLastStatesMap.getMindmapLastStateStorageList()) {
+        for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
             if (Tools.safeEquals(pRestorableName, store.getRestorableName())) {
                 setLastChanged(store);
                 return store;

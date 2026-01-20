@@ -25,7 +25,7 @@ package accessories.plugins;
 
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
 import java.util.Iterator;
@@ -33,7 +33,7 @@ import java.util.Iterator;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class CreationModificationPlugin extends PermanentMindMapNodeHookAdapter {
 
     private String tooltipFormat;

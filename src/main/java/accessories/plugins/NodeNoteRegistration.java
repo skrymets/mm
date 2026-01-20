@@ -41,7 +41,7 @@ import freemind.modes.ModeController.NodeSelectionListener;
 import freemind.modes.common.plugins.NodeNoteBase;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -53,7 +53,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 
-@Log4j2
+@Slf4j
 public class NodeNoteRegistration implements HookRegistration,
         MenuItemSelectedListener {
     public static final class SimplyHtmlResources implements TextResources {
@@ -218,7 +218,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 editorPane.setSelectionEnd(selectionEnd);
                 editorPane.setSelectionStart(selectionStart);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
 
@@ -396,7 +396,7 @@ public class NodeNoteRegistration implements HookRegistration,
                     getMindMapController().getFrame().openDocument(
                             new URL(pE.getActionCommand()));
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         });

@@ -27,18 +27,18 @@ import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
-import javax.swing.Timer;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
@@ -46,7 +46,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     public static final String J_SPLIT_PANE_SPLIT_TYPE = "JSplitPane.SPLIT_TYPE";
@@ -230,8 +230,12 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     public FreeMind(Properties defaultPreferences, Properties userPreferences) {
         super("FreeMind");
-        // Focus searcher
-        System.setSecurityManager(new FreeMindSecurityManager());
+        // Focus searcher - SecurityManager is deprecated in Java 17+ and removed in Java 18+
+        try {
+            System.setSecurityManager(new FreeMindSecurityManager());
+        } catch (UnsupportedOperationException e) {
+            log.warn("SecurityManager not supported in this Java version. Script sandboxing will be unavailable.");
+        }
 
         this.defaultPreferences = defaultPreferences;
         this.userPreferences = userPreferences;
@@ -283,7 +287,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             }
             log.info(b.toString());
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage());
         }
     }
 
@@ -466,7 +470,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 //            toBeStored.store(out, null);
 //            out.close();
 //        } catch (Exception ex) {
-//            log.error(ex);
+//            log.error(ex.getLocalizedMessage(), ex);
 //        }
 //        getController().getFilterController().saveConditions();
 //        if (pIsShutdown && editServer != null) {
@@ -614,7 +618,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     static void cantGo(Exception e) {
-        log.error(e);
+        log.error(e.getLocalizedMessage(), e);
         showMessageDialog(
                 null,
                 format("FreeMind can't start: %s", e.getLocalizedMessage()),
@@ -641,7 +645,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                 }
                 SpellChecker.registerDictionaries(url, Locale.getDefault().getLanguage());
             } catch (MalformedURLException | UnsupportedEncodingException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -858,7 +862,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             // the mac class has exactly one constructor with a modeController.
             macClass.getConstructors()[0].newInstance(this);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return ctrl;
     }
@@ -888,7 +892,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     }
                     fileLoaded = true;
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
                 index++;
             }
@@ -932,7 +936,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     controller.getModeController().getView().moveToRoot();
                     fileLoaded = true;
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                     setStatusText("An error occured on opening the file: " + restoreable + ".");
                 }
             }
@@ -995,7 +999,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             getProperties().remove(propertyKey);
             return true;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             setStatusText("An error occured on opening the file: " + filename + ".");
             return false;
         }

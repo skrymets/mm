@@ -26,7 +26,7 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -35,7 +35,7 @@ import java.awt.dnd.*;
 import java.util.List;
 import java.util.ListIterator;
 
-@Log4j2
+@Slf4j
 public class MindMapNodeDropListener implements DropTargetListener {
 
     private final MindMapController mMindMapController;
@@ -223,7 +223,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
             }
         } catch (Exception e) {
             System.err.println("Drop exception:" + e);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             dtde.dropComplete(false);
             return;
         }

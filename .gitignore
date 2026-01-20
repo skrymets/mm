@@ -3,3 +3,5 @@ freemind.iml
 target/
 plugins/jortho/target/
 plugins/SimplyHTML/target/
+/tmpclaude-*
+/**/tmpclaude-*

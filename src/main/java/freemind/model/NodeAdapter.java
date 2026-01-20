@@ -10,7 +10,7 @@ import freemind.main.*;
 import freemind.modes.*;
 import freemind.modes.attributes.Attribute;
 import freemind.preferences.FreemindPropertyListener;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
@@ -22,14 +22,14 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.io.*;
 import java.net.URL;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to
  * its parent and children and to its view.
  */
-@Log4j2
+@Slf4j
 public abstract class NodeAdapter implements MindMapNode {
 
     final static int SHIFT = -2;// height of the vertical shift between node and
@@ -562,7 +562,7 @@ public abstract class NodeAdapter implements MindMapNode {
             copy.setFolded(false);
             return copy;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -895,7 +895,7 @@ public abstract class NodeAdapter implements MindMapNode {
             // FIXME: Do something special here, but in any case, do not add the
             // hook
             // to the activatedHooks:
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return;
         }
         if (hook instanceof PermanentNodeHook) {
@@ -993,7 +993,7 @@ public abstract class NodeAdapter implements MindMapNode {
             try {
                 removeHook(hook);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -1035,7 +1035,7 @@ public abstract class NodeAdapter implements MindMapNode {
                         toolTipChanged = true;
                     }
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         } else {

@@ -21,14 +21,14 @@ package accessories.plugins;
 
 import freemind.main.FreeMind;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class NodeNote extends MindMapNodeHookAdapter {
 
     public final static String NODE_NOTE_PLUGIN = "accessories/plugins/NodeNote.properties";

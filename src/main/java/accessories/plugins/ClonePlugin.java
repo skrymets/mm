@@ -28,12 +28,13 @@ import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.ModeController.NodeLifetimeListener;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
-@Log4j2
+@Slf4j
 public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements NodeLifetimeListener, ClonePropertiesObserver {
 
     public static final String CLONE_ITSELF_FALSE = "false";
@@ -95,9 +96,8 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
     protected void removeHook() {
         // first deactivate cloning for this node (otherwise, the deactivation will be cloned, too!)
         deregisterCloning();
-        Vector<MindMapNode> selecteds = Tools.getVectorWithSingleElement(getNode());
-        getMindMapController()
-                .addHook(getNode(), selecteds, PLUGIN_LABEL, null);
+        List<MindMapNode> selecteds = Tools.getVectorWithSingleElement(getNode());
+        getMindMapController().addHook(getNode(), selecteds, PLUGIN_LABEL, null);
     }
 
     public void save(XMLElement xml) {
@@ -246,10 +246,9 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
             for (Iterator<String> it = mCloneNodeIds.iterator(); it.hasNext(); ) {
                 String cloneId = it.next();
                 try {
-                    mCloneNodes.add(getMindMapController().getNodeFromID(
-                            cloneId));
+                    mCloneNodes.add(getMindMapController().getNodeFromID(cloneId));
                 } catch (IllegalArgumentException e) {
-                    // log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                     it.remove();
                 }
             }
@@ -333,7 +332,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
             ClonePlugin hook = getHook(cloneNode);
             if (hook == null && cloneNode != null) {
                 // add hook to clone partner:
-                Vector<MindMapNode> selecteds = Tools.getVectorWithSingleElement(cloneNode);
+                List<MindMapNode> selecteds = Tools.getVectorWithSingleElement(cloneNode);
                 // Transport the data to the plugin, as this method calls
                 // invoke.
                 Properties hookProperties = new Properties();

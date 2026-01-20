@@ -30,17 +30,17 @@ import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
 import freemind.modes.mindmapmode.actions.ApplyPatternAction.ExternalPatternAction;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.Font;
 import java.io.Writer;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class constructs patterns from files or from nodes and saves them back.
  */
-@Log4j2
+@Slf4j
 public class StylePatternFactory {
     public static final String FALSE_VALUE = "false";
 
@@ -431,7 +431,7 @@ public class StylePatternFactory {
                 try {
                     pNode.setFontSize(Integer.parseInt(nodeFontSize));
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         }

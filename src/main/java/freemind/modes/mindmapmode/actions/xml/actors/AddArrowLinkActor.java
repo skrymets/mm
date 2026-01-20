@@ -28,13 +28,13 @@ import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.MindMapArrowLinkModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author foltin
  * @date 27.03.2014
  */
-@Log4j2
+@Slf4j
 public class AddArrowLinkActor extends XmlActorAdapter {
 
     public AddArrowLinkActor(ExtendedMapFeedback pMapFeedback) {

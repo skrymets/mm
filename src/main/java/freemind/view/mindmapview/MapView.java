@@ -30,7 +30,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindMapArrowLink;
 import freemind.modes.ViewAbstraction;
 import freemind.preferences.FreemindPropertyListener;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,15 +43,15 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.CubicCurve2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
+import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.*;
 
 /**
  * This class represents the view of a whole MindMap (in analogy to class JTree).
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class MapView extends JPanel implements ViewAbstraction, Printable, Autoscroll {
 
     /**
@@ -266,14 +266,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_BACKGROUND_COLOR);
                 standardMapBackgroundColor = Tools.xmlToColor(stdcolor);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
                 standardMapBackgroundColor = Color.WHITE;
             }
             try {
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_NODE_TEXT_COLOR);
                 standardNodeTextColor = Tools.xmlToColor(stdcolor);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
                 standardSelectColor = Color.WHITE;
             }
             // initialize the selectedColor:
@@ -281,7 +281,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_SELECTED_NODE_COLOR);
                 standardSelectColor = Tools.xmlToColor(stdcolor);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
                 standardSelectColor = Color.BLUE.darker();
             }
 
@@ -290,14 +290,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String stdtextcolor = mFeedback.getProperty(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR);
                 standardSelectRectangleColor = Tools.xmlToColor(stdtextcolor);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
                 standardSelectRectangleColor = Color.WHITE;
             }
             try {
                 String drawCircle = mFeedback.getProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION);
                 standardDrawRectangleForSelection = Tools.xmlToBoolean(drawCircle);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
                 standardDrawRectangleForSelection = false;
             }
 
@@ -305,7 +305,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 String printOnWhite = mFeedback.getProperty(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND);
                 printOnWhiteBackground = Tools.xmlToBoolean(printOnWhite);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
                 printOnWhiteBackground = true;
             }
             // only created once:
@@ -469,7 +469,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             try {
                 maxNodeWidth = Integer.parseInt(mFeedback.getProperty("max_node_width"));
             } catch (NumberFormatException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 maxNodeWidth = Integer.parseInt(mFeedback.getProperty("el__max_default_window_width"));
             }
         }
@@ -1405,7 +1405,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             userZoomFactor = Double.parseDouble(mFeedback
                     .getProperty("user_zoom"));
         } catch (Exception e) {
-            // log.error(e);
+             log.error(e.getLocalizedMessage(), e);
         }
         userZoomFactor = Math.max(0, userZoomFactor);
         userZoomFactor = Math.min(2, userZoomFactor);

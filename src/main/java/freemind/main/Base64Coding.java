@@ -7,7 +7,7 @@ GNU Classpath is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2, or (at your option)
 any later version.
- 
+
 GNU Classpath is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -37,7 +37,7 @@ exception statement from your version. */
 
 package freemind.main;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
 
@@ -50,7 +50,7 @@ import java.io.ByteArrayOutputStream;
  * Removed all but base64 coding.
  * @since 1.4
  */
-@Log4j2
+@Slf4j
 public class Base64Coding {
     /**
      * Helper method for decoding a Base64 string as an byte array. Returns null

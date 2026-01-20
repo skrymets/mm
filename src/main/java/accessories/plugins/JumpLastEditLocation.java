@@ -33,7 +33,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.Vector;
  *
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class JumpLastEditLocation extends MindMapNodeHookAdapter {
 
     public JumpLastEditLocation() {
@@ -62,7 +62,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
             log.trace("Selecting " + node + " as last edit location.");
             getMindMapController().select(node, Tools.getVectorWithSingleElement(node));
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -99,7 +99,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                 } catch (IllegalArgumentException e) {
                     // node not found, retry...
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             } while (index > 0);
             return null;
@@ -160,7 +160,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                     log.trace("New last edit location: " + lastLocation
                             + " from " + controller.marshall(doAction));
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                     log.warn("Not able to marshall the action "
                             + doAction.getClass() + " as " + doAction);
                 }

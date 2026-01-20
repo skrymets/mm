@@ -22,7 +22,7 @@ package freemind.modes.common;
 
 import freemind.main.Resources;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -33,7 +33,7 @@ import java.awt.event.KeyListener;
  * (Delete Node). It forwards the requests to NodeController.
  */
 
-@Log4j2
+@Slf4j
 public class CommonNodeKeyListener implements KeyListener {
 
     public interface EditHandler {

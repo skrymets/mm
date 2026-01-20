@@ -40,7 +40,8 @@ import freemind.modes.ModeController.NodeSelectionListener;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.swing.*;
 import javax.swing.RowSorter.SortKey;
@@ -55,10 +56,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
-@Log4j2
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
+@Slf4j
 public class NodeAttributeTableRegistration implements HookRegistration, MenuItemSelectedListener, DocumentListener {
 
     private final class AttributeManager implements NodeSelectionListener, NodeLifetimeListener {
@@ -414,10 +418,12 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         String marshalled = controller.getProperty(ATTRIBUTE_TABLE_PROPERTIES);
         AttributeTableProperties props = (AttributeTableProperties) XmlBindingTools
                 .getInstance().unMarshall(marshalled);
-        Vector<SortKey> keys = new Vector<RowSorter.SortKey>();
-        for (TableColumnOrder setting : props.getTableColumnOrderList()) {
-            keys.add(new SortKey(setting.getColumnIndex(), SortOrder
-                    .valueOf(setting.getColumnSorting())));
+        var keys = new ArrayList<SortKey>();
+        if (props != null) {
+            for (TableColumnOrder setting : emptyIfNull(props.getTableColumnOrderList())) {
+                keys.add(new SortKey(setting.getColumnIndex(), SortOrder
+                        .valueOf(setting.getColumnSorting())));
+            }
         }
         Enumeration<TableColumn> columns = mAttributeTable.getColumnModel().getColumns();
         while (columns.hasMoreElements()) {

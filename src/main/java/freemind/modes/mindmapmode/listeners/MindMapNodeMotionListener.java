@@ -27,7 +27,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ import java.awt.event.MouseEvent;
 /**
  * The MouseMotionListener which belongs to every NodeView
  */
-@Log4j2
+@Slf4j
 public class MindMapNodeMotionListener extends NodeMotionAdapter {
 
     private final MindMapController c;
@@ -108,7 +108,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
                                 e.getYOnScreen() + diffy);
                     }
                 } catch (AWTException e1) {
-                    log.error(e1);
+                    log.error(e1.getLocalizedMessage(), e1);
                 }
                 dragStartingPoint.x += ((node.getHGap() < 0) ? 2 : 1) * diffx;
                 dragStartingPoint.y += ((node.getShiftY() < 0) ? 2 : 1) * diffy;

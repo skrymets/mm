@@ -21,7 +21,7 @@
 package freemind.main;
 
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -42,7 +42,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Log4j2
+@Slf4j
 public class HtmlTools {
 
     public static final String NBSP = "\u00A0";
@@ -88,7 +88,7 @@ public class HtmlTools {
                 return resultXml;
             }
         } catch (IOException | BadLocationException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         // fallback:
         String fallbackText = removeAllTagsFromString(htmlText);
@@ -809,7 +809,7 @@ public class HtmlTools {
                     }
                 }
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
 
@@ -823,7 +823,7 @@ public class HtmlTools {
                     }
                 }
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
 

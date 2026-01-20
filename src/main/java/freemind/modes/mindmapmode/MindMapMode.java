@@ -24,13 +24,13 @@ import freemind.controller.Controller;
 import freemind.main.XMLParseException;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-@Log4j2
+@Slf4j
 public class MindMapMode extends Mode {
 
     private Controller controller;

@@ -22,7 +22,7 @@
 /*$Id: FreeMindCommon.java,v 1.1.2.2.2.39 2009/05/18 19:47:57 christianfoltin Exp $*/
 package freemind.main;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ import static java.lang.String.format;
  * @author foltin
  */
 
-@Log4j2
+@Slf4j
 public class FreeMindCommon {
 
     public static final String FREEMIND_FILE_EXTENSION_WITHOUT_DOT = "mm";
@@ -222,7 +222,7 @@ public class FreeMindCommon {
         try {
             return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return classLoader;
         }
     }
@@ -326,7 +326,7 @@ public class FreeMindCommon {
                 baseDir = file.getCanonicalPath();
                 log.info("Basedir is: " + baseDir);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 throw new IllegalArgumentException("FreeMind base dir can't be determined.");
             }
         }

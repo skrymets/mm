@@ -25,7 +25,7 @@ package freemind.modes.mindmapmode.actions.xml;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class ActionRegistry {
 
     /**
@@ -52,14 +52,15 @@ public class ActionRegistry {
     /**
      * HashMap of Action class -> actor instance.
      */
-    private final HashMap<Class<?>, ActorXml> registeredActors = new HashMap<Class<?>, ActorXml>();
+    private final HashMap<Class<?>, ActorXml> registeredActors = new HashMap<>();
     private UndoActionHandler undoActionHandler;
 
     public ActionRegistry() {
+        // No special action is required
     }
 
     /**
-     * The handler is put in front. Thus it is called before others are called.
+     * The handler is put in front. Thus, it is called before others are called.
      */
     public void registerHandler(ActionHandler newHandler) {
         // if it is present, put it in front:
@@ -134,7 +135,7 @@ public class ActionRegistry {
             try {
                 undoActionHandler.executeAction(pair);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.toString());
                 returnValue = false;
             }
         }
@@ -151,7 +152,7 @@ public class ActionRegistry {
             try {
                 handler.executeAction(filteredPair.getDoAction());
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.toString());
                 returnValue = false;
                 // to break or not to break. this is the question here...
             }

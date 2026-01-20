@@ -22,14 +22,17 @@
 
 package freemind.main;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
 import java.util.Random;
 import java.util.Vector;
 
@@ -61,7 +64,7 @@ import java.util.Vector;
  * @author Slava Pestov
  * @version $Id: EditServer.java 19384 2011-02-23 16:50:37Z k_satoda $
  */
-@Log4j2
+@Slf4j
 public class EditServer extends Thread {
 
     private final FreeMindMain mFrame;
@@ -89,16 +92,12 @@ public class EditServer extends Thread {
             authKey = new Random().nextInt(Integer.MAX_VALUE);
             int port = socket.getLocalPort();
 
-            FileWriter out = new FileWriter(portFile);
-
-            try {
+            try (FileWriter out = new FileWriter(portFile)) {
                 out.write("b\n");
                 out.write(String.valueOf(port));
                 out.write("\n");
                 out.write(String.valueOf(authKey));
                 out.write("\n");
-            } finally {
-                out.close();
             }
 
             ok = true;
@@ -132,7 +131,7 @@ public class EditServer extends Thread {
                 // DoS
                 client.setSoTimeout(1000);
 
-                log.info(client + ": connected");
+                log.info("{}: connected", client);
 
                 DataInputStream in = new DataInputStream(
                         client.getInputStream());
@@ -184,9 +183,6 @@ public class EditServer extends Thread {
     private boolean ok;
     private boolean abort;
 
-    // }}}
-
-    // {{{ handleClient() method
     private boolean handleClient(final Socket client, DataInputStream in)
             throws Exception {
         int key = in.readInt();
@@ -206,19 +202,15 @@ public class EditServer extends Thread {
             final String script = in.readUTF();
             log.info(script);
 
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    try {
-                        Vector<URL> urls = Tools.urlStringToUrls(script);
-                        for (URL urli : urls) {
-                            mFrame.getController().getModeController()
-                                    .load(urli);
-                        }
-                    } catch (MalformedURLException e) {
-                        log.error(e);
-                    } catch (Exception e) {
-                        log.error(e);
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    Vector<URL> urls = Tools.urlStringToUrls(script);
+                    for (URL urli : urls) {
+                        mFrame.getController().getModeController()
+                                .load(urli);
                     }
+                } catch (Exception e) {
+                    log.error(e.getLocalizedMessage(), e);
                 }
             });
             in.close();
@@ -226,7 +218,5 @@ public class EditServer extends Thread {
 
             return true;
         }
-    } // }}}
-
-    // }}}
+    }
 }

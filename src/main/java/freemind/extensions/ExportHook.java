@@ -27,7 +27,7 @@ import freemind.main.Tools;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -40,7 +40,7 @@ import java.text.MessageFormat;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class ExportHook extends ModeControllerHookAdapter {
 
     protected File chooseFile(String type, String description, String nameExtension) {
@@ -180,7 +180,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             log.error("File not found or could not be copied. "
                     + "Was earching for " + prefix + fileName
                     + " and should go to " + destinationDirectory);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
 
     }
@@ -203,7 +203,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             log.error("File not found or could not be copied. "
                     + "Was earching for " + dir + fileName
                     + " and should go to " + destinationDirectory);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
 
     }

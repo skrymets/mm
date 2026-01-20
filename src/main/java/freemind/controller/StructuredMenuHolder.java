@@ -26,7 +26,7 @@ package freemind.controller;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
@@ -39,7 +39,7 @@ import java.util.Vector;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class StructuredMenuHolder {
 
     /**
@@ -516,7 +516,7 @@ public class StructuredMenuHolder {
                         isEnabled = holder.getEnabledListener().isEnabled(
                                 menuItem, action);
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                     }
                     action.setEnabled(isEnabled);
 //					menuItem.setEnabled(isEnabled);
@@ -528,7 +528,7 @@ public class StructuredMenuHolder {
                         selected = holder.getSelectionListener().isSelected(
                                 menuItem, action);
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                     }
                     if (menuItem instanceof JCheckBoxMenuItem) {
                         JCheckBoxMenuItem checkItem = (JCheckBoxMenuItem) menuItem;

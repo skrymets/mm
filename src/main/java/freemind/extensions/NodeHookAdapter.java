@@ -21,14 +21,14 @@ package freemind.extensions;
 
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Straight forward implementation with some helpers.
  *
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public abstract class NodeHookAdapter extends HookAdapter implements NodeHook {
 
     private MindMap map;

@@ -415,7 +415,7 @@ public class MapSharingController {
                  * sw.write(" </map>\n");
                  *
                  * sender.sendMap(sw.getBuffer().toString()); } catch(Exception
-                 * e) { log.error(e); }
+                 * e) { log.error(e.getLocalizedMessage(), e); }
                  */
                 jabberConnectionWizardView.showSharingAcceptedMessage(userName);
             } else {

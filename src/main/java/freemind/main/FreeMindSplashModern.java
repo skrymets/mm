@@ -19,7 +19,7 @@
 package freemind.main;
 
 import freemind.view.ImageFactory;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ import java.text.MessageFormat;
  */
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 
     private static final String FREEMIND_SPLASH = "images/Freemind_Splash_Butterfly_Modern.png";

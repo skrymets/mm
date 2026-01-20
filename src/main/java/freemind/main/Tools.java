@@ -32,7 +32,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -40,8 +40,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-import javax.swing.Timer;
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -66,8 +66,8 @@ import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributes;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.KeySpec;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -83,7 +83,7 @@ import static org.apache.commons.lang3.StringUtils.deleteWhitespace;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class Tools {
 
     public static final String FREEMIND_LIB_FREEMIND_JAR = "lib/freemind.jar";
@@ -400,7 +400,7 @@ public class Tools {
             }
             return relative;
         } catch (MalformedURLException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return input.getAbsolutePath();
     }
@@ -462,7 +462,7 @@ public class Tools {
                     timeOut--;
                 }
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -891,7 +891,7 @@ public class Tools {
                         trans.transform(sr, result);
                         successful = true;
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                         errorMessage = e.toString();
                     }
                 }
@@ -914,7 +914,7 @@ public class Tools {
             successful = transformer.isSuccessful();
             errorMessage = transformer.getErrorMessage();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             errorMessage = e.getLocalizedMessage();
         } finally {
             if (inputStream != null) {
@@ -962,7 +962,7 @@ public class Tools {
         try {
             return getFile(getReaderFromFile(pInputFile));
         } catch (FileNotFoundException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -983,12 +983,12 @@ public class Tools {
             }
             bufferedReader.close();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
                 } catch (Exception ex) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
             return null;
@@ -1434,7 +1434,7 @@ public class Tools {
                 log.warn("Can't wait for event queue, if I'm inside this queue!");
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -1529,8 +1529,8 @@ public class Tools {
     }
 
     @Deprecated
-    public static <T> Vector<T> getVectorWithSingleElement(T obj) {
-        Vector<T> nodes = new Vector<>();
+    public static <T> List<T> getVectorWithSingleElement(T obj) {
+        List<T> nodes = new ArrayList<>();
         nodes.add(obj);
         return nodes;
     }
@@ -1599,7 +1599,7 @@ public class Tools {
                 b.append(fileToUrl(new File(fileName)));
                 b.append('\n');
             } catch (MalformedURLException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         return b.toString();
@@ -1613,7 +1613,7 @@ public class Tools {
             try {
                 ret.add(new URL(url));
             } catch (MalformedURLException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         return ret;
@@ -1649,20 +1649,18 @@ public class Tools {
      * @return a list of MindMapNode s if they are currently contained in the clipboard.
      * An empty list otherwise.
      */
-    public static Vector<MindMapNode> getMindMapNodesFromClipboard(MindMapController pMindMapController) {
+    public static List<MindMapNode> getMindMapNodesFromClipboard(MindMapController pMindMapController) {
         Vector<MindMapNode> mindMapNodes = new Vector<MindMapNode>();
         Transferable clipboardContents = pMindMapController.getClipboardContents();
         if (clipboardContents != null) {
             try {
                 List<String> transferData = (List<String>) clipboardContents.getTransferData(MindMapNodesSelection.copyNodeIdsFlavor);
-                for (Iterator<String> it = transferData.iterator(); it.hasNext(); ) {
-                    String nodeId = it.next();
+                for (String nodeId : transferData) {
                     MindMapNode node = pMindMapController.getNodeFromID(nodeId);
                     mindMapNodes.add(node);
                 }
             } catch (Exception e) {
-                // e.printStackTrace();
-                // log.error(e);
+                 log.error(e.getLocalizedMessage(), e);
             }
         }
         return mindMapNodes;
@@ -1755,7 +1753,7 @@ public class Tools {
             pPaper.setImageableArea(nt(tokenizer), nt(tokenizer),
                     nt(tokenizer), nt(tokenizer));
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -1764,7 +1762,7 @@ public class Tools {
         try {
             return Double.parseDouble(nextToken);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return 0;
     }
@@ -1783,7 +1781,7 @@ public class Tools {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -1902,7 +1900,7 @@ public class Tools {
             }
             in.close();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return new StringBuffer();
         }
         return buffer;
@@ -1957,7 +1955,7 @@ public class Tools {
                 Files.setAttribute(path, "dos:hidden", setHidden);
             }
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

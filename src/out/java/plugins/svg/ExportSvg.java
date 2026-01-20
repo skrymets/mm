@@ -62,7 +62,7 @@ public class ExportSvg extends ExportVectorGraphic {
             bos.flush();
             bos.close();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             JOptionPane.showMessageDialog(getController().getFrame()
                             .getContentPane(), e.getLocalizedMessage(), null,
                     JOptionPane.ERROR_MESSAGE);

@@ -21,7 +21,7 @@
 package freemind.modes;
 
 import freemind.controller.MenuItemEnabledListener;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 
@@ -32,7 +32,7 @@ import javax.swing.*;
  * @date 22.10.2013
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public abstract class FreemindAction extends AbstractAction implements MenuItemEnabledListener {
 
     private final ControllerAdapter pControllerAdapter;

@@ -41,7 +41,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapHookAdapter;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MultipleImage;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -56,8 +56,8 @@ import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
-import java.util.Timer;
 import java.util.*;
+import java.util.Timer;
 import java.util.regex.Pattern;
 
 /**
@@ -66,7 +66,7 @@ import java.util.regex.Pattern;
  *         TODO: - Extract HTML from nodes and notes.
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class TimeList extends MindMapHookAdapter implements MapModuleChangeObserver {
 
     private static final int TYPE_DELAY_TIME = 500;
@@ -506,7 +506,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             mFlatNodeTableFilterModel.resetFilter();
             mFilterTextSearchField.setText("");
         } catch (BadLocationException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
 
     }
@@ -626,7 +626,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                     .getDocument()));
             mFlatNodeTableFilterModel.setFilter(text);
         } catch (BadLocationException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return model;
     }
@@ -754,7 +754,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                             mFlatNodeTableFilterModel.setFilter(text);
                             updateStatistics();
                         } catch (BadLocationException e) {
-                            log.error(e);
+                            log.error(e.getLocalizedMessage(), e);
                             mFlatNodeTableFilterModel.resetFilter();
                         }
                     }

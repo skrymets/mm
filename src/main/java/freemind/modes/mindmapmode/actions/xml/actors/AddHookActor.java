@@ -29,16 +29,16 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.ViewAbstraction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.Map;
 import java.util.*;
+import java.util.Map;
 
 /**
  * @author foltin
  * @date 01.04.2014
  */
-@Log4j2
+@Slf4j
 public class AddHookActor extends XmlActorAdapter {
 
     public AddHookActor(ExtendedMapFeedback pMapFeedback) {

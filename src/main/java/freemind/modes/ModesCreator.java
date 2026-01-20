@@ -21,7 +21,7 @@
 package freemind.modes;
 
 import freemind.controller.Controller;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
@@ -32,7 +32,7 @@ import static java.lang.String.format;
  * simply import it, and create it in getAllModes() (just do the same whats done
  * with MindMapMode). Thats all!
  */
-@Log4j2
+@Slf4j
 public class ModesCreator {
 
     private Controller controller;

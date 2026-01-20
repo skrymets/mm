@@ -23,7 +23,7 @@
 package freemind.modes.viewmodes;
 
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
  * @author foltin
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class CommonToggleChildrenFoldedAction extends AbstractAction {
 
     private ViewControllerAdapter modeController;

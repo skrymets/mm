@@ -26,13 +26,13 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import freemind.main.HtmlTools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-@Log4j2
+@Slf4j
 public class ScriptEditorProperty extends PropertyBean implements PropertyControl, ActionListener {
 
     public interface ScriptEditorStarter extends MindMapControllerPlugin {

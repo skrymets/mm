@@ -20,7 +20,7 @@
  */
 package freemind.common;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ComponentEvent;
@@ -32,7 +32,7 @@ import java.awt.event.ComponentListener;
  * See http://stackoverflow.com/questions/8183949/swing-scale-a-text-font-of-component
  */
 
-@Log4j2
+@Slf4j
 public class ScalableJButton extends JButton implements ComponentListener {
 //	int mCurrentSize = 0;
 //	Font mInitialFont = null;

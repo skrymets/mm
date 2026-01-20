@@ -114,7 +114,7 @@ public class DatabaseStarter extends DatabaseBasics implements
             logger.info("Starting update thread...");
             mUpdateThread.start();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             // TODO: Need a better message here.
             controller.getController().errorMessage(e.getLocalizedMessage());
             if (mUpdateThread != null) {

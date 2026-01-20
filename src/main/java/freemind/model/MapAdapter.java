@@ -31,7 +31,7 @@ import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.MapFeedback;
 import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.XMLElementAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
@@ -46,7 +46,7 @@ import java.net.URL;
 import java.util.*;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     public static final String MAP_INITIAL_START = "<map version=\"";
     public static final String FREEMIND_VERSION_UPDATER_XSLT = "freemind/modes/mindmapmode/freemind_version_updater.xslt";
@@ -111,7 +111,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                             mFileTime = lastModified;
                         }
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                     }
                 }
             }
@@ -489,7 +489,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                 // Issue event here.
                 pMapSourceChangedObserver.mapSourceChanged(this);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         mMapSourceChangedObserverSet.add(pMapSourceChangedObserver);
@@ -601,7 +601,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         } catch (Exception ex) {
             String errorMessage = "Error while parsing file:" + ex;
             System.err.println(errorMessage);
-            log.error(ex);
+            log.error(ex.getLocalizedMessage(), ex);
             NodeAdapter result = createNodeAdapter(this, null);
             result.setText(errorMessage);
             return (MindMapNode) result;

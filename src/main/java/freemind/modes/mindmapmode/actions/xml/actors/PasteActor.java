@@ -33,7 +33,7 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -52,7 +52,7 @@ import static org.apache.commons.lang3.StringUtils.capitalize;
  * @author foltin
  * @date 20.03.2014
  */
-@Log4j2
+@Slf4j
 public class PasteActor extends XmlActorAdapter {
 
     public PasteActor(ExtendedMapFeedback pMapFeedback) {
@@ -248,7 +248,7 @@ public class PasteActor extends XmlActorAdapter {
                         processUnfinishedLinksInHooks(importNode);
                     }
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         }
@@ -412,7 +412,7 @@ public class PasteActor extends XmlActorAdapter {
             File parentFile = mindmapFile.getParentFile();
             String filePrefix = mindmapFile.getName().replace(
                     FreeMindCommon.FREEMIND_FILE_EXTENSION, "_");
-			/* prefix for createTempFile must be at least three characters long. 
+			/* prefix for createTempFile must be at least three characters long.
 			 See  [bugs:#1261] Unable to paste images from clipboard */
             while (filePrefix.length() < 3) {
                 filePrefix += "_";
@@ -469,9 +469,9 @@ public class PasteActor extends XmlActorAdapter {
                             isLeft, t);
                     break;
                 } catch (UnsupportedFlavorException e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 } catch (IOException e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         }
@@ -504,7 +504,7 @@ public class PasteActor extends XmlActorAdapter {
             processUnfinishedLinksInHooks(node);
             return node;
         } catch (IOException ee) {
-            log.error(ee);
+            log.error(ee.getLocalizedMessage(), ee);
             return null;
         }
     }
@@ -737,7 +737,7 @@ public class PasteActor extends XmlActorAdapter {
                         pUndoAction.setNodeAmount(determineAmountOfNewNodes(t));
                         amountAlreadySet = true;
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                         // ok, something went wrong, but this breaks undo, only.
                         pUndoAction.setNodeAmount(1);
                     }
@@ -784,15 +784,15 @@ public class PasteActor extends XmlActorAdapter {
                     }
                 } // getData throws this.
                 catch (UnsupportedFlavorException | IOException e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
 
             }
             return trans;
         } catch (UnsupportedFlavorException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -834,7 +834,7 @@ public class PasteActor extends XmlActorAdapter {
                     newNode.setParent(pParent);
                     return newNode;
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
                 return null;
             }

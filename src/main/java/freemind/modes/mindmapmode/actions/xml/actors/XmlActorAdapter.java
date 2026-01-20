@@ -28,13 +28,13 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
 import freemind.view.mindmapview.ViewFeedback;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author foltin
  * @date 16.03.2014
  */
-@Log4j2
+@Slf4j
 public abstract class XmlActorAdapter implements ActorXml {
 
     protected ExtendedMapFeedback mMapFeedback;

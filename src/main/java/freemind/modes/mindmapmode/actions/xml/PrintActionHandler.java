@@ -25,12 +25,12 @@ package freemind.modes.mindmapmode.actions.xml;
 
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class PrintActionHandler implements ActionHandler {
 
     private MindMapController c;

@@ -22,7 +22,7 @@ package freemind.view.mindmapview;
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ import java.awt.geom.AffineTransform;
  * Base class for all node views.
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public abstract class MainView extends JLabel {
     static Dimension minimumSize = new Dimension(0, 0);
     static Dimension maximumSize = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);

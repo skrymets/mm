@@ -22,7 +22,7 @@
 /*$Id: FreeMindStarter.java,v 1.1.2.11 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.main;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +44,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author skrymets
  */
 
-@Log4j2
+@Slf4j
 public class FreeMindStarter {
 
     private static final String DEFAULT_PREFERENCES_RESOURCE = "freemind.properties";

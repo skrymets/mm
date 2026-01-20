@@ -382,7 +382,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
                             - mScriptTextField
                             .getLineStartOffset(lineOfOffset) + 1));
                 } catch (BadLocationException e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
 
             }
@@ -545,7 +545,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
                 mScriptThread.join();
                 mScriptThread = null;
             } catch (InterruptedException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }

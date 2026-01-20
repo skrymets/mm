@@ -35,7 +35,7 @@ import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +45,7 @@ import java.util.Vector;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class NodeHistory extends MindMapNodeHookAdapter {
 
     /**

@@ -25,7 +25,7 @@
 
 package accessories.plugins.util.xslt;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -41,7 +41,7 @@ import java.io.IOException;
 /**
  * @author joerg
  */
-@Log4j2
+@Slf4j
 public class XmlExporter {
 
     public XmlExporter() {
@@ -65,12 +65,12 @@ public class XmlExporter {
             trans.transform(xmlSource, result);
         } catch (Exception e) {
             // System.err.println("error applying the xslt file "+e);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         } finally {
             try {
                 resultOutputStream.close();
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }

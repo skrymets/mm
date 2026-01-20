@@ -32,7 +32,7 @@ import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.view.ImageFactory;
 import freemind.view.mindmapview.MapView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +40,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 
     /**

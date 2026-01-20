@@ -27,7 +27,7 @@ import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +39,7 @@ import java.net.MalformedURLException;
  *
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class ExportBranchAction extends MindmapAction {
     private final MindMapController mMindMapController;
 
@@ -129,7 +129,7 @@ public class ExportBranchAction extends MindmapAction {
             try {
                 newMap.save(chosenFile);
             } catch (Exception e1) {
-                log.error(e1);
+                log.error(e1.getLocalizedMessage(), e1);
                 // roll back:
                 mMindMapController.insertNodeInto(node, parent);
 
@@ -157,7 +157,7 @@ public class ExportBranchAction extends MindmapAction {
                         // set link again to refresh thumbnail
                         mMindMapController.setLink(newNode, linkString);
                     } catch (Exception e2) {
-                        log.error(e2);
+                        log.error(e2.getLocalizedMessage(), e2);
                     }
                 }
             });

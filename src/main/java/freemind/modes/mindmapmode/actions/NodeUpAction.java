@@ -24,13 +24,13 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class NodeUpAction extends MindmapAction {
     private final MindMapController modeController;
 

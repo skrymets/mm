@@ -36,7 +36,7 @@ import freemind.preferences.layout.OptionPanel;
 import freemind.view.ImageFactory;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -52,8 +52,8 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
@@ -65,7 +65,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * Provides the methods to edit/change a Node.
  * Forwards all messages to MapModel(editing) or MapView(navigation).
  */
-@Log4j2
+@Slf4j
 public class Controller implements MapModuleChangeObserver {
 
     private static final String PAGE_FORMAT_PROPERTY = "page_format";
@@ -965,7 +965,7 @@ public class Controller implements MapModuleChangeObserver {
                     printerJob.print();
                     storePageFormat();
                 } catch (Exception ex) {
-                    log.error(ex);
+                    log.error(ex.getLocalizedMessage(), ex);
                 } finally {
                     frame.setWaitingCursor(false);
                 }
@@ -1110,11 +1110,11 @@ public class Controller implements MapModuleChangeObserver {
                         createNewMode(BrowseMode.MODENAME);
                         controller.getModeController().load(endUrl);
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                     }
                 });
             } catch (MalformedURLException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -1137,7 +1137,7 @@ public class Controller implements MapModuleChangeObserver {
                 log.info("Opening key docs under " + url);
                 controller.getFrame().openDocument(url);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }

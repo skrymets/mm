@@ -489,12 +489,12 @@ public class ClientCommunication extends CommunicationBase {
                 // in between, the socket has been closed.
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         try {
             close();
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

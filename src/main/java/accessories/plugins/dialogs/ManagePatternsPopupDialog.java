@@ -32,7 +32,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame.StylePatternFrameType;
 import freemind.swing.DefaultListModel;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Vector;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class ManagePatternsPopupDialog extends JDialog implements TextTranslator, KeyListener {
     private static Pattern sLastSelectedPattern = null;
 
@@ -117,7 +117,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
         try {
             patternList = StylePatternFactory.loadPatterns(controller.getPatternsXML());
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             JOptionPane.showMessageDialog(this,
                     getDialogTitle(),
                     controller.getText("accessories/plugins/ManagePatterns.not_found"),

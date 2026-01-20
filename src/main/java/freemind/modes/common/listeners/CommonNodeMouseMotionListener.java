@@ -25,7 +25,7 @@ import freemind.main.Tools;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +40,7 @@ import static java.lang.Integer.parseInt;
  * The MouseMotionListener which belongs to every NodeView.
  * Handles delayed selection.
  */
-@Log4j2
+@Slf4j
 public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 
     private final ModeController c;

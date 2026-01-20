@@ -27,7 +27,7 @@ import freemind.controller.Controller;
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.jibx.runtime.*;
 
 import javax.swing.*;
@@ -39,7 +39,7 @@ import java.io.StringWriter;
 /**
  * @author foltin Singleton
  */
-@Log4j2
+@Slf4j
 public class XmlBindingTools {
 
     private static XmlBindingTools instance;
@@ -54,7 +54,7 @@ public class XmlBindingTools {
             try {
                 mBindingFactory = BindingDirectory.getFactory(XmlAction.class);
             } catch (JiBXException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
 
         }
@@ -65,7 +65,7 @@ public class XmlBindingTools {
         try {
             return mBindingFactory.createMarshallingContext();
         } catch (JiBXException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -74,7 +74,7 @@ public class XmlBindingTools {
         try {
             return mBindingFactory.createUnmarshallingContext();
         } catch (JiBXException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -143,7 +143,7 @@ public class XmlBindingTools {
         try {
             m.marshalDocument(action, "UTF-8", null, writer);
         } catch (JiBXException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
         String result = writer.toString();
@@ -162,7 +162,7 @@ public class XmlBindingTools {
             XmlAction doAction = (XmlAction) u.unmarshalDocument(reader, null);
             return doAction;
         } catch (JiBXException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }

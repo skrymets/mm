@@ -25,7 +25,7 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.*;
 import freemind.modes.attributes.Attribute;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-@Log4j2
+@Slf4j
 public class XMLElementAdapter extends XMLElement {
 
     private Object userObject = null;
@@ -236,7 +236,7 @@ public class XMLElementAdapter extends XMLElement {
                     // you know exactly what you are doing.
                     hook.setNode(node);
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                     hook = new PermanentNodeHookSubstituteUnknown(loadName);
                 }
                 hook.loadFrom(xml);

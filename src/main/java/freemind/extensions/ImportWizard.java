@@ -28,7 +28,7 @@
 package freemind.extensions;
 
 import freemind.main.Resources;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +48,7 @@ import static java.lang.String.format;
  * @author Len Trigg (trigg@cs.waikato.ac.nz)
  * @version 1.0 - 6 May 1999
  */
-@Log4j2
+@Slf4j
 public class ImportWizard {
 
     public final String lookFor = ".xml";
@@ -84,7 +84,7 @@ public class ImportWizard {
                 foundPlugins.add(key);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
             if (classPathFile.exists()) {
                 String lowerCaseFileName = classPathEntry.toLowerCase();

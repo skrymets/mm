@@ -30,17 +30,17 @@ import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author foltin
  * @date 07.02.2014
  */
-@Log4j2
+@Slf4j
 public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 
     private HashMap<String, Font> fontMap = new HashMap<String, Font>();

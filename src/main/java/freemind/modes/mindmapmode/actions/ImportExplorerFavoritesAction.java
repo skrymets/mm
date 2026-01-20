@@ -23,7 +23,7 @@ import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +32,7 @@ import java.io.File;
 import java.io.FileReader;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class ImportExplorerFavoritesAction extends MindmapAction {
     private final MindMapController controller;
 
@@ -106,7 +106,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
                         }
 
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                     }
                 }
             }

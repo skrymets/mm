@@ -208,7 +208,7 @@ public class ScriptingRegistration implements HookRegistration,
                 try {
                     executeScript(controller.getRootNode(), scriptString);
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             } else {
                 ScriptingEngine.logger.warning("Starting script not found!");

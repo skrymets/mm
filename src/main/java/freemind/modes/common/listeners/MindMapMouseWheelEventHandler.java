@@ -27,6 +27,7 @@ import freemind.main.FreeMind;
 import freemind.modes.ControllerAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.ViewFeedback.MouseWheelEventHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
@@ -36,6 +37,7 @@ import java.util.Set;
 /**
  * @author foltin
  */
+@Slf4j
 public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 
     private static int SCROLL_SKIPS = 8;
@@ -45,7 +47,6 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
     private static final int ZOOM_MASK = InputEvent.CTRL_MASK;
     // |= oldX >=0 iff we are in the drag
 
-    private static org.slf4j.Logger logger = null;
     private ControllerAdapter mController;
 
     /**
@@ -61,7 +62,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
             }
         });
         SCROLL_SKIPS = controller.getFrame().getIntProperty(FreeMind.RESOURCES_WHEEL_VELOCITY, 8);
-        logger.info("Setting SCROLL_SKIPS to " + SCROLL_SKIPS);
+        log.info("Setting SCROLL_SKIPS to {}", SCROLL_SKIPS);
     }
 
     public void mouseWheelMoved(MouseWheelEvent e) {

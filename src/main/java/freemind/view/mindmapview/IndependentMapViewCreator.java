@@ -30,7 +30,7 @@ import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.MapFeedbackAdapter;
 import freemind.modes.mindmapmode.MindMapMapModel;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -46,7 +46,7 @@ import java.net.URISyntaxException;
  * @author foltin
  * @date 28.09.2011
  */
-@Log4j2
+@Slf4j
 public class IndependentMapViewCreator extends MapFeedbackAdapter {
 
     private MindMapMapModel mMap;
@@ -66,15 +66,15 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
             System.exit(0);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
 
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
 
         }
         System.err.println("Error.");

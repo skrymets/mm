@@ -9,7 +9,7 @@ package freemind.main;
  * This is free software. You can modify and use it at will.
  */
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -27,7 +27,7 @@ import java.io.*;
  *
  * @author Richard "Shred" K�rber
  */
-@Log4j2
+@Slf4j
 public class XHTMLWriter extends FixedHTMLWriter {
     private boolean writeLineSeparatorEnabled = true;
 
@@ -119,7 +119,7 @@ public class XHTMLWriter extends FixedHTMLWriter {
             writer.close();
             reader.close();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

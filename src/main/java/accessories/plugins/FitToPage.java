@@ -25,7 +25,7 @@ package accessories.plugins;
 
 import freemind.extensions.ModeControllerHookAdapter;
 import freemind.view.mindmapview.MapView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ import java.awt.*;
  * @author foltin
  * @author dimitri: Bug fixes.
  */
-@Log4j2
+@Slf4j
 public class FitToPage extends ModeControllerHookAdapter {
 
     private MapView view;

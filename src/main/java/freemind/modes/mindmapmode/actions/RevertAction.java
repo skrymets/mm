@@ -24,7 +24,7 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.model.MindMap;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -45,7 +45,7 @@ import java.io.IOException;
  * @author foltin
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class RevertAction extends MindmapAction {
 
     private final MindMapController mindMapController;
@@ -78,7 +78,7 @@ public class RevertAction extends MindmapAction {
             // FIXME: Make action from MindMapActions out of it.
             mindMapController.getActorFactory().getRevertActor().revertMap(map, file);
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
 
     }

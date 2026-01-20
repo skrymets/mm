@@ -27,7 +27,7 @@ import freemind.controller.actions.generated.instance.PluginClasspath;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -40,7 +40,7 @@ import java.util.Vector;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class HookDescriptorBase {
     public static final String FREEMIND_BASE_DIR_STRING = "${freemind.base.dir}";
 
@@ -155,7 +155,7 @@ public class HookDescriptorBase {
             classLoaderCache.put(key, loader);
             return loader;
         } catch (MalformedURLException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return this.getClass().getClassLoader();
         }
     }

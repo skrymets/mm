@@ -29,7 +29,7 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.undo.CannotRedoException;
@@ -41,7 +41,7 @@ import java.awt.event.*;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class EditNodeTextField extends EditNodeBase {
     final int EDIT = 1;
     final int CANCEL = 2;

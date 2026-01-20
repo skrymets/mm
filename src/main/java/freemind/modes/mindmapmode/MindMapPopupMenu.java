@@ -25,10 +25,10 @@ package freemind.modes.mindmapmode;
 
 import freemind.controller.FreeMindPopupMenu;
 import freemind.controller.StructuredMenuHolder;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class MindMapPopupMenu extends FreeMindPopupMenu {
 
     private static final String MINDMAPMODE_POPUP = "mindmapmode_popup/";

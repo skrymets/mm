@@ -24,7 +24,7 @@ import freemind.main.Tools;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ import java.util.*;
  * maps have a different registry.
  */
 
-@Log4j2
+@Slf4j
 public class MindMapLinkRegistry {
     /**
      * All elements put into this sort of vectors are put into the

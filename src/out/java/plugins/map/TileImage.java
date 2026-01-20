@@ -122,7 +122,7 @@ public class TileImage implements ImageObserver {
             mTilesPresent = false;
             mImageCreated = true;
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -132,7 +132,7 @@ public class TileImage implements ImageObserver {
             mTilesPresent = false;
             mImageCreated = true;
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -143,7 +143,7 @@ public class TileImage implements ImageObserver {
             stream.close();
             return Tools.toBase64(stream.toByteArray());
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return null;
 

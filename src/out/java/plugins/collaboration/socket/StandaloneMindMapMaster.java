@@ -211,7 +211,7 @@ public class StandaloneMindMapMaster extends SocketMaster {
             mMasterThread = new MasterThread();
             mMasterThread.start();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             System.exit(1);
             return;
         }
@@ -255,7 +255,7 @@ public class StandaloneMindMapMaster extends SocketMaster {
         try {
             mServer.close();
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

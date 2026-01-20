@@ -34,7 +34,7 @@ import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -56,7 +56,7 @@ import java.util.Vector;
  * Exports the map using an XSLT script. The parameterization is
  * described in the corresponding Export... .xml-file.
  */
-@Log4j2
+@Slf4j
 public class ExportWithXSLT extends ExportHook {
     private static final String NAME_EXTENSION_PROPERTY = "name_extension";
     /**
@@ -124,7 +124,7 @@ public class ExportWithXSLT extends ExportHook {
                     }
                 }
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 mTransformResultWithoutError = false;
             }
         }
@@ -224,7 +224,7 @@ public class ExportWithXSLT extends ExportHook {
             ImageIO.write(image, "png", out);
             out.close();
         } catch (IOException e1) {
-            log.error(e1);
+            log.error(e1.getLocalizedMessage(), e1);
         }
     }
 
@@ -355,7 +355,7 @@ public class ExportWithXSLT extends ExportHook {
             trans.transform(xmlSource, result);
         } catch (Exception e) {
             // System.err.println("error applying the xslt file "+e);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return false;
         }
         ;

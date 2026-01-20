@@ -31,7 +31,7 @@ import freemind.modes.MapFeedback;
 import freemind.modes.MindIcon;
 import freemind.modes.ModeController;
 import freemind.modes.common.dialogs.EnterPasswordDialog;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -41,7 +41,7 @@ import java.util.HashMap;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class EncryptedBrowseNode extends BrowseNodeModel {
 
     private static ImageIcon encryptedIcon;
@@ -122,10 +122,10 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
                 isDecrypted = true;
                 updateIcon();
             } catch (XMLParseException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 return;
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 return;
             }
         }

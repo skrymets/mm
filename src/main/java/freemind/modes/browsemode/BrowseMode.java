@@ -23,11 +23,11 @@ package freemind.modes.browsemode;
 import freemind.controller.Controller;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
-@Log4j2
+@Slf4j
 public class BrowseMode extends Mode {
 
     private Controller c;
@@ -66,7 +66,7 @@ public class BrowseMode extends Mode {
         } catch (Exception e) {
             c.errorMessage("An error occured on opening the file: "
                     + restoreable + ".");
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

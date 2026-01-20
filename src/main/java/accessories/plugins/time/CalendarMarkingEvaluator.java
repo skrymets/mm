@@ -22,7 +22,7 @@ package accessories.plugins.time;
 
 import freemind.controller.actions.generated.instance.CalendarMarking;
 import freemind.controller.actions.generated.instance.CalendarMarkings;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -34,7 +34,7 @@ import java.util.TreeSet;
  * @author foltin
  * @date 05.07.2015
  */
-@Log4j2
+@Slf4j
 public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {
 
     private CalendarMarkings mCalendarMarkings;

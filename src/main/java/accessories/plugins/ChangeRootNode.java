@@ -35,7 +35,7 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +49,7 @@ import java.util.Vector;
  * @author foltin
  * @date 01.10.2011
  */
-@Log4j2
+@Slf4j
 public class ChangeRootNode extends MindMapNodeHookAdapter {
     private static final String TRANSACTION_NAME = "ChangeRootNode";
 

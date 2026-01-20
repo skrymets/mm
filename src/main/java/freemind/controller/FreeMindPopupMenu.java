@@ -23,7 +23,7 @@
  */
 package freemind.controller;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.MenuListener;
@@ -33,7 +33,7 @@ import java.util.HashSet;
  * @author foltin
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class FreeMindPopupMenu extends JPopupMenu implements StructuredMenuHolder.MenuEventSupplier {
     private HashSet<MenuListener> listeners = new HashSet<>();
 

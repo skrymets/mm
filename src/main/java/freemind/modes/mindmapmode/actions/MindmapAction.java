@@ -26,7 +26,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.modes.FreemindAction;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 
@@ -36,7 +36,7 @@ import javax.swing.*;
  * @author foltin
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public abstract class MindmapAction extends FreemindAction {
 
     private final MindMapController pMindMapController;

@@ -84,7 +84,7 @@ public class ExportPdf extends ExportVectorGraphic {
                 exportAsPdf(nodeExport, selectedNode, chosenFile, transcodingHints);
                 documentsToOpen.add(chosenFile);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 JOptionPane.showMessageDialog(getController().getFrame()
                                 .getContentPane(), e.getLocalizedMessage(), null,
                         JOptionPane.ERROR_MESSAGE);
@@ -100,7 +100,7 @@ public class ExportPdf extends ExportVectorGraphic {
                         Tools.fileToUrl(fileToOpen));
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

@@ -236,11 +236,11 @@ public class ServerCommunication extends CommunicationBase {
                 setCurrentState(STATE_WAIT_FOR_COMMAND);
                 commandHandled = true;
             } catch (UnableToGetLockException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 CollaborationUnableToLock unableToLock = new CollaborationUnableToLock();
                 send(unableToLock);
             } catch (InterruptedException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         if (!commandHandled) {

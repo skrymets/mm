@@ -24,11 +24,11 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapNode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 
-@Log4j2
+@Slf4j
 public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArrowLink {
 
     private static final String ARROW_DEFAULT_UP = "DEFAULT";

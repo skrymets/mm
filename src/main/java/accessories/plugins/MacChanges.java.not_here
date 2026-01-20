@@ -42,7 +42,7 @@ import freemind.main.Tools;
 
 /**
  * This plugin changes some things for mac users.
- * 
+ *
  * @author foltin
  */
 public class MacChanges extends ApplicationAdapter {
@@ -72,7 +72,7 @@ public class MacChanges extends ApplicationAdapter {
 					return Tools.fileToUrl(new File(Tools.getFreeMindBasePath()
 							+ File.separator + link));
 				} catch (UnsupportedEncodingException e) {
-					log.error(e);
+					log.error(e.getLocalizedMessage(), e);
 					return null;
 				}
 			}
@@ -123,7 +123,7 @@ public class MacChanges extends ApplicationAdapter {
 			}
 			event.setHandled(true);
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e.getLocalizedMessage(), e);
 		}
 	}
 

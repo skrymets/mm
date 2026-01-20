@@ -23,7 +23,7 @@ import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.main.*;
 import freemind.view.mindmapview.MapView;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +41,7 @@ import java.util.Vector;
 
 import static freemind.main.VersionInformation.Type.ALPHA;
 
-@Log4j2
+@Slf4j
 public class FreeMindMainMock implements FreeMindMain {
 
     private final Properties mProperties;
@@ -186,7 +186,7 @@ public class FreeMindMainMock implements FreeMindMain {
             return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(
                     getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return classLoader;
         }
     }

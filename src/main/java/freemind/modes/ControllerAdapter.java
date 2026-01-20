@@ -35,7 +35,7 @@ import freemind.view.mindmapview.IndependentMapViewCreator;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
@@ -54,8 +54,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * Derive from this class to implement the Controller for your mode. Overload
@@ -64,7 +64,7 @@ import java.util.*;
  * MindMapController as a sample.
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public abstract class ControllerAdapter extends MapFeedbackAdapter implements ModeController, DirectoryResultListener {
 
     private Mode mode;
@@ -249,13 +249,13 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             try {
                 listener.onFocusNode(getSelectedView());
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
             for (NodeView view : getView().getSelecteds()) {
                 try {
                     listener.onSelectionChange(view, true);
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
             }
         }
@@ -378,10 +378,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         try {
             return load(Tools.fileToUrl(file));
         } catch (XMLParseException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);
         }
     }
@@ -408,7 +408,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 }
                 modeController.select(sel, selected);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 newModeController.getView().moveToRoot();
             }
         } else {
@@ -458,7 +458,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 try {
                     centerNode(getNodeFromID(target));
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                     // give "not found" message
                     getFrame().setStatusText(
                             Tools.expandPlaceholders(getText("link_not_found"),
@@ -511,7 +511,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                         newModeController.centerNode(newModeController
                                 .getNodeFromID(ref));
                     } catch (Exception e) {
-                        log.error(e);
+                        log.error(e.getLocalizedMessage(), e);
                         getFrame().setStatusText(
                                 Tools.expandPlaceholders(
                                         getText("link_not_found"), ref));
@@ -523,11 +523,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 getFrame().openDocument(originalURL);
             }
         } catch (MalformedURLException ex) {
-            log.error(ex);
+            log.error(ex.getLocalizedMessage(), ex);
             getController().errorMessage(getText("url_error") + "\n" + ex);
             return;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         } finally {
             setWaitingCursor(false);
         }
@@ -620,13 +620,13 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 Tools.makeFileHidden(new File(fileName), true);
             }
         } catch (FileNotFoundException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             String message = Tools.expandPlaceholders(getText("save_failed"),
                     file.getName());
             getController().errorMessage(message);
         } catch (Exception e) {
             log.error("Error in MindMapMapModel.save(): ");
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         } finally {
             setWaitingCursor(false);
         }
@@ -775,7 +775,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         } else if (exceptionType.equals("java.io.FileNotFoundException")) {
             getController().errorMessage(ex.getMessage());
         } else {
-            log.error(ex);
+            log.error(ex.getLocalizedMessage(), ex);
             getController().errorMessage(ex);
         }
     }
@@ -1268,9 +1268,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                     getMap().getAsRTF(selectedNodes), getMap().getAsHTML(
                     selectedNodes), null, null, createForNodeIdsFlavor);
         } catch (UnsupportedFlavorException ex) {
-            log.error(ex);
+            log.error(ex.getLocalizedMessage(), ex);
         } catch (IOException ex) {
-            log.error(ex);
+            log.error(ex.getLocalizedMessage(), ex);
         }
         return null;
     }

@@ -25,7 +25,7 @@ package accessories.plugins;
 
 import freemind.extensions.ExportHook;
 import freemind.main.Tools;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -44,7 +44,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class ExportToOoWriter extends ExportHook {
 
     public ExportToOoWriter() {
@@ -67,7 +67,7 @@ public class ExportToOoWriter extends ExportHook {
         try {
             exportToOoWriter(chosenFile);
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         getController().getFrame().setWaitingCursor(false);
     }
@@ -114,7 +114,7 @@ public class ExportToOoWriter extends ExportHook {
             return true;
         } catch (Exception e) {
             // System.err.println("error applying the xslt file "+e);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return false;
         }
     }
@@ -169,7 +169,7 @@ public class ExportToOoWriter extends ExportHook {
             log.error("File not found or could not be copied. "
                     + "Was earching for " + fileName + " and should go to "
                     + out);
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return false;
         }
 

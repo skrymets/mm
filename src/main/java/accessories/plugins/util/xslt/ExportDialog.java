@@ -25,7 +25,7 @@ import accessories.plugins.util.window.WindowClosingAdapter;
 import freemind.main.ExampleFileFilter;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class ExportDialog extends JFrame {
     private static final String ACCESSORIES_PLUGINS_UTIL_XSLT_EXPORT_DIALOG_STORE_TARGET = "accessories.plugins.util.xslt.ExportDialog.store.target"; //$NON-NLS-1$
     private static final String ACCESSORIES_PLUGINS_UTIL_XSLT_EXPORT_DIALOG_STORE_XSLT = "accessories.plugins.util.xslt.ExportDialog.store.xslt"; //$NON-NLS-1$
@@ -64,7 +64,7 @@ public class ExportDialog extends JFrame {
                             new File(parent.fieldXsltFileName.getText()), new File(
                                     parent.fieldTargetFileName.getText()));
                 } catch (FileNotFoundException e1) {
-                    log.error(e1);
+                    log.error(e1.getLocalizedMessage(), e1);
                 }
             }
             // store values in preferences:

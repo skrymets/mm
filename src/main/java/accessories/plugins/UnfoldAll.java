@@ -31,7 +31,7 @@ import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.ViewFeedback.MouseWheelEventHandler;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
@@ -40,7 +40,7 @@ import java.util.Iterator;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class UnfoldAll extends MindMapNodeHookAdapter {
 
     public static class Registration implements HookRegistration,

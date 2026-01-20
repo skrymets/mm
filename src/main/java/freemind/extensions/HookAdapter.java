@@ -25,7 +25,7 @@ package freemind.extensions;
 
 import freemind.modes.MapFeedback;
 import freemind.modes.ModeController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
 import java.util.Properties;
@@ -36,7 +36,7 @@ import java.util.Properties;
  *
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class HookAdapter implements MindMapHook {
 
     private String name;

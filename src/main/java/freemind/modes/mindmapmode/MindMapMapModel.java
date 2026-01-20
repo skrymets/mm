@@ -26,20 +26,20 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.*;
 import freemind.modes.*;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.FileLock;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 import static java.lang.String.format;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class MindMapMapModel extends MapAdapter {
 
     public static final String RESTORE_MODE_MIND_MAP = "MindMap:";
@@ -121,7 +121,7 @@ public class MindMapMapModel extends MapAdapter {
 
             return stringWriter.toString();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -140,7 +140,7 @@ public class MindMapMapModel extends MapAdapter {
             return stringWriter.toString();
 
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -156,7 +156,7 @@ public class MindMapMapModel extends MapAdapter {
 
         } catch (Exception e) {
             System.err.println("Error in MindMapMapModel.saveTXT(): ");
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return false;
         }
     }
@@ -171,7 +171,7 @@ public class MindMapMapModel extends MapAdapter {
 
             return stringWriter.toString();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -213,7 +213,7 @@ public class MindMapMapModel extends MapAdapter {
             fileout.write("}");
             return true;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             return false;
         }
     }
@@ -389,30 +389,26 @@ public class MindMapMapModel extends MapAdapter {
         }
 
         private void writeSemaphoreFile(File inSemaphoreFile) throws Exception {
-            FileOutputStream semaphoreOutputStream = new FileOutputStream(
-                    inSemaphoreFile);
-            FileLock lock = null;
-            try {
-                lock = semaphoreOutputStream.getChannel().tryLock();
-                if (lock == null) {
-                    semaphoreOutputStream.close();
-                    System.err.println("Locking failed.");
-                    throw new Exception();
-                }
-            } // locking failed
-            catch (UnsatisfiedLinkError eUle) {
-            } // This may come with Windows95. We don't insist on detailed
-            // locking in that case.
-            catch (NoClassDefFoundError eDcdf) {
-            } // ^ just like above.
-            // ^ On Windows95, the necessary libraries are missing.
-            semaphoreOutputStream.write(System.getProperty("user.name")
-                    .getBytes());
-            semaphoreOutputStream.write('\n');
-            semaphoreOutputStream.write(String.valueOf(
-                    System.currentTimeMillis()).getBytes());
-            semaphoreOutputStream.close();
-            semaphoreOutputStream = null;
+            FileLock lock;
+            try (FileOutputStream semaphoreOutputStream = new FileOutputStream(inSemaphoreFile)) {
+                lock = null;
+                try {
+                    lock = semaphoreOutputStream.getChannel().tryLock();
+                    if (lock == null) {
+                        semaphoreOutputStream.close();
+                        System.err.println("Locking failed.");
+                        throw new Exception();
+                    }
+                } // locking failed
+                catch (UnsatisfiedLinkError | NoClassDefFoundError ignored) {
+                } // This may come with Windows95. We don't insist on detailed
+                // locking in that case.
+                // ^ just like above.
+                // ^ On Windows95, the necessary libraries are missing.
+                semaphoreOutputStream.write(System.getProperty("user.name").getBytes());
+                semaphoreOutputStream.write('\n');
+                semaphoreOutputStream.write(String.valueOf(System.currentTimeMillis()).getBytes());
+            }
             Tools.setHidden(inSemaphoreFile, true, /* synchro= */false); // Exception
             // free
             if (lock != null)
@@ -425,26 +421,25 @@ public class MindMapMapModel extends MapAdapter {
             // writing.
 
             File semaphoreFile = getSemaphoreFile(file);
-            if (semaphoreFile == lockedSemaphoreFile) {
+            if (semaphoreFile.equals(lockedSemaphoreFile)) {
                 return null;
             }
             try {
-                BufferedReader semaphoreReader = new BufferedReader(
-                        new FileReader(semaphoreFile));
-                String lockingUser = semaphoreReader.readLine();
+                try (BufferedReader semaphoreReader = new BufferedReader(new FileReader(semaphoreFile))) {
+                    String lockingUser = semaphoreReader.readLine();
 
-                long lockTime = new Long(semaphoreReader.readLine())
-                        .longValue();
-                long timeDifference = System.currentTimeMillis() - lockTime;
-                // catch (NumberFormatException enf) {} // This means that the
-                // time was not written at all - lock is corrupt
-                if (timeDifference > lockSafetyPeriod) { // the lock is old
-                    semaphoreReader.close();
-                    lockingUserOfOldLock = lockingUser;
-                    semaphoreFile.delete();
-                } else
-                    return lockingUser;
-            } catch (FileNotFoundException e) {
+                    long lockTime = Long.parseLong(semaphoreReader.readLine());
+                    long timeDifference = System.currentTimeMillis() - lockTime;
+                    // catch (NumberFormatException enf) {} // This means that the
+                    // time was not written at all - lock is corrupt
+                    if (timeDifference > lockSafetyPeriod) { // the lock is old
+                        semaphoreReader.close();
+                        lockingUserOfOldLock = lockingUser;
+                        semaphoreFile.delete();
+                    } else
+                        return lockingUser;
+                }
+            } catch (FileNotFoundException ignored) {
             }
 
             writeSemaphoreFile(semaphoreFile);
@@ -489,7 +484,7 @@ public class MindMapMapModel extends MapAdapter {
 
                 writeSemaphoreFile(lockedSemaphoreFile);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -567,7 +562,7 @@ public class MindMapMapModel extends MapAdapter {
                                 System.err
                                         .println("Error in automatic MindMapMapModel.save(): "
                                                 + e.getMessage());
-                                log.error(e);
+                                log.error(e.getLocalizedMessage(), e);
                                 return;
                             }
                         }
@@ -583,15 +578,15 @@ public class MindMapMapModel extends MapAdapter {
                             System.err
                                     .println("Error in automatic MindMapMapModel.save(): "
                                             + e.getMessage());
-                            log.error(e);
+                            log.error(e.getLocalizedMessage(), e);
                         }
                         tempFileStack.add(tempFile); // add at the back.
                     }
                 });
             } catch (InterruptedException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             } catch (InvocationTargetException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }

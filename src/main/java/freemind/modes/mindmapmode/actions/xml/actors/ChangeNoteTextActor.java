@@ -27,13 +27,13 @@ import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author foltin
  * @date 23.04.2014
  */
-@Log4j2
+@Slf4j
 public class ChangeNoteTextActor extends XmlActorAdapter {
 
     public ChangeNoteTextActor(ExtendedMapFeedback pMapFeedback) {

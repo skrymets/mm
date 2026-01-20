@@ -26,7 +26,7 @@ import freemind.extensions.PermanentNodeHookAdapter;
 import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -38,7 +38,7 @@ import java.util.HashMap;
 /**
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
 
     public static final String PLUGIN_LABEL = "plugins/TimeManagementReminder.xml";

@@ -25,17 +25,18 @@ package freemind.modes.mindmapmode.actions;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.Vector;
+import java.util.List;
+
+import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 /**
  * @author foltin
  */
-@SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class AddLocalLinkAction extends MindmapAction {
 
     private final MindMapController modeController;
@@ -47,8 +48,8 @@ public class AddLocalLinkAction extends MindmapAction {
 
     public void actionPerformed(ActionEvent e) {
         MindMapNode source = modeController.getSelected();
-        Vector<MindMapNode> nodesFromClipboard = Tools.getMindMapNodesFromClipboard(modeController);
-        if (nodesFromClipboard.size() == 0) {
+        List<MindMapNode> nodesFromClipboard = Tools.getMindMapNodesFromClipboard(modeController);
+        if (isNotEmpty(nodesFromClipboard)) {
             modeController.getController().errorMessage(modeController.getText("no_copied_nodes"));
             return;
         }

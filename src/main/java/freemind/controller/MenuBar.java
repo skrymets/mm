@@ -23,7 +23,7 @@ package freemind.controller;
 import freemind.main.FreeMind;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +39,7 @@ import java.util.ListIterator;
  * Moreover, the StructuredMenuHolder of all menus are hold here.
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class MenuBar extends JMenuBar {
 
     public static final String MENU_BAR_PREFIX = "menu_bar/";
@@ -396,7 +396,7 @@ public class MenuBar extends JMenuBar {
             } catch (Exception ex) {
                 c.errorMessage("An error occured on opening the file: "
                         + restoreable + ".");
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
             }
         }
     }

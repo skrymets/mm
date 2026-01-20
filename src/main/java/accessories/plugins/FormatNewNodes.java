@@ -32,7 +32,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +42,7 @@ import java.util.List;
  *
  * @author foltin
  */
-@Log4j2
+@Slf4j
 public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistration {
 
     private MindMapController controller;

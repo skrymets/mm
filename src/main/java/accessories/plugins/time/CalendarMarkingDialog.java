@@ -6,7 +6,7 @@ import freemind.controller.actions.generated.instance.CalendarMarkings;
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.Vector;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class CalendarMarkingDialog extends JDialog implements ActionListener, ChangeListener, PropertyChangeListener {
 
     private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = "CalendarMarkingDialog_WindowPosition";

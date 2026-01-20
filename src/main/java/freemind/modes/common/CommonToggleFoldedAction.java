@@ -24,7 +24,7 @@ package freemind.modes.common;
 
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +35,7 @@ import java.util.ListIterator;
  * @author foltin
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class CommonToggleFoldedAction extends AbstractAction {
 
     private final ControllerAdapter modeController;

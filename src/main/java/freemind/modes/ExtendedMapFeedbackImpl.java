@@ -30,6 +30,7 @@ import java.awt.*;
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -58,13 +59,6 @@ public final class ExtendedMapFeedbackImpl extends ExtendedMapFeedbackAdapter {
         return getFontThroughMap(new Font(fontFamily, fontStyle, fontSize));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.modes.ExtendedMapFeedbackAdapter#copy(freemind.model.MindMapNode
-     * , boolean)
-     */
     @Override
     public Transferable copy(MindMapNode pNode, boolean pSaveInvisible) {
         StringWriter stringWriter = new StringWriter();
@@ -73,7 +67,7 @@ public final class ExtendedMapFeedbackImpl extends ExtendedMapFeedbackAdapter {
                     .getLinkRegistry(), pSaveInvisible, true);
         } catch (IOException e) {
         }
-        Vector<String> nodeList = Tools.getVectorWithSingleElement(getNodeID(pNode));
+        List<String> nodeList = Tools.getVectorWithSingleElement(getNodeID(pNode));
         return new MindMapNodesSelection(stringWriter.toString(), null,
                 null, null, null, null, null, nodeList);
     }

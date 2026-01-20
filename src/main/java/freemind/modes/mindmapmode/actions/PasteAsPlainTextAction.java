@@ -23,7 +23,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.main.HtmlTools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -37,7 +37,7 @@ import java.io.IOException;
  * @date 18.10.2011
  */
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class PasteAsPlainTextAction extends AbstractAction {
 
     private MindMapController mMindMapController;
@@ -70,10 +70,10 @@ public class PasteAsPlainTextAction extends AbstractAction {
                 MindMapNode newNode = mMindMapController.addNewNode(selected, selected.getChildCount(), selected.isLeft());
                 mMindMapController.setNodeText(newNode, plainText);
             } catch (UnsupportedFlavorException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
 
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
 
             }
         } else {

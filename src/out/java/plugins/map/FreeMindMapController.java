@@ -765,7 +765,7 @@ public class FreeMindMapController extends JMapController implements
                 int zoom = Integer.parseInt(splitResult[2]);
                 return new PositionHolder(lat, lon, zoom);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
                 return null;
             }
         }
@@ -1164,7 +1164,7 @@ public class FreeMindMapController extends JMapController implements
                 ImageIO.write(myImage, "png", out);
                 out.close();
             } catch (IOException e1) {
-                log.error(e1);
+                log.error(e1.getLocalizedMessage(), e1);
             }
             map.setZoomContolsVisible(zoomContolsVisible);
             mMindMapController.getFrame().setWaitingCursor(false);
@@ -2153,7 +2153,7 @@ public class FreeMindMapController extends JMapController implements
                 }
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             returnValue = false;
         }
         setCursor(Cursor.DEFAULT_CURSOR, false);
@@ -2176,7 +2176,7 @@ public class FreeMindMapController extends JMapController implements
                     .getInstance().unMarshall(result);
             return reversegeocode;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -2391,7 +2391,7 @@ public class FreeMindMapController extends JMapController implements
         } catch (Exception e) {
             logger.fine("Searching for " + b.toString() + " gave an error");
             final String errorString = e.toString();
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             logger.warning("Result was " + result);
             results.addPlace(getErrorPlace(errorString, "ERROR"));
         }

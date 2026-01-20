@@ -94,7 +94,7 @@ public class DatabaseConnector extends DatabaseBasics {
             mUpdateThread.insertUser();
             mUpdateThread.start();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
             // TODO: Need a better message here.
             controller.getController().errorMessage(e.getLocalizedMessage());
             return;

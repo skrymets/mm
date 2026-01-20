@@ -23,7 +23,7 @@ package freemind.modes.mindmapmode;
 import freemind.main.HtmlTools;
 import freemind.model.MindMap;
 import freemind.model.NodeAdapter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.io.IOException;
@@ -37,7 +37,7 @@ import java.util.ListIterator;
  * This class represents a single Node of a Tree. It contains direct handles to
  * its parent and children and to its view.
  */
-@Log4j2
+@Slf4j
 public class MindMapNodeModel extends NodeAdapter {
 
     public MindMapNodeModel(MindMap pMap) {

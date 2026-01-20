@@ -25,14 +25,14 @@ package freemind.modes.mindmapmode.actions;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-@Log4j2
+@Slf4j
 public class PasteAction extends AbstractAction {
 
     private final MindMapController mMindMapController;
