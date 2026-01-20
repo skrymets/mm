@@ -26,12 +26,10 @@ import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.Vector;
 
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
@@ -65,7 +63,7 @@ public class AddArrowLinkAction extends MindmapAction {
             } else {
                 // give an error afterwards?
                 identicalError = true;
-                log.warn("Can't create a link from the node '" + selected + "' to itself. Skipped.");
+                log.warn("Can't create a link from the node '{}' to itself. Skipped.", selected);
             }
         }
         if (identicalError) {

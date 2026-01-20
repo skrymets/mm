@@ -40,10 +40,10 @@ import freemind.modes.mindmapmode.MindMapNodeModel;
 public class ApplyPatternAction extends NodeGeneralAction implements
         SingleNodeOperation {
     public interface ExternalPatternAction extends MindMapControllerPlugin {
-        public void act(MindMapNode node, Pattern pattern);
+        void act(MindMapNode node, Pattern pattern);
     }
 
-    private Pattern mpattern;
+    private final Pattern mpattern;
 
     public ApplyPatternAction(MindMapController controller, Pattern pattern) {
         super(controller, null /* no text */, null /* = no icon */);

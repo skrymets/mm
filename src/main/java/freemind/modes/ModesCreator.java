@@ -25,8 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
-import static java.lang.String.format;
-
 /**
  * This class creates all the modes that are available. To add your own mode,
  * simply import it, and create it in getAllModes() (just do the same whats done
@@ -35,7 +33,7 @@ import static java.lang.String.format;
 @Slf4j
 public class ModesCreator {
 
-    private Controller controller;
+    private final Controller controller;
 
     /**
      * Contains translated mode name => Mode instances
@@ -66,7 +64,7 @@ public class ModesCreator {
                 mCreatedModes.put(modename, null);
                 modesTranslation.put(modeAlias, modename);
             }
-            log.info("Modes:" + mCreatedModes.keySet());
+            log.info("Modes:{}", mCreatedModes.keySet());
         }
         return modesTranslation.keySet();
     }
@@ -86,12 +84,12 @@ public class ModesCreator {
             try {
                 Mode mode = null;
                 mode = (Mode) Class.forName(modeName).newInstance();
-                log.info("Initializing mode " + modeAlias);
+                log.info("Initializing mode {}", modeAlias);
                 mode.init(controller);
-                log.info("Done: Initializing mode " + modeAlias);
+                log.info("Done: Initializing mode {}", modeAlias);
                 mCreatedModes.put(modeName, mode);
             } catch (Exception e) {
-                log.error(format("Mode %s could not be loaded.", modeName), e);
+                log.error("Mode {} could not be loaded.", modeName, e);
             }
         }
         return mCreatedModes.get(modeName);

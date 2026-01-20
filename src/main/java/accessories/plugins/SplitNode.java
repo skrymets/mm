@@ -86,11 +86,9 @@ public class SplitNode extends MindMapNodeHookAdapter {
             lowerNode.setColor(node.getColor());
             lowerNode.setFont(node.getFont());
             c.setNodeText(lowerNode, part);
-            EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    final MapView mapView = c.getView();
-                    mapView.toggleSelected(mapView.getNodeView(lowerNode));
-                }
+            EventQueue.invokeLater(() -> {
+                final MapView mapView = c.getView();
+                mapView.toggleSelected(mapView.getNodeView(lowerNode));
             });
         }
     }
@@ -116,12 +114,12 @@ public class SplitNode extends MindMapNodeHookAdapter {
                     final int end = current.getEndOffset();
                     final String paragraphText = doc
                             .getText(start, end - start).trim();
-                    if (paragraphText.length() > 0) {
+                    if (!paragraphText.isEmpty()) {
                         StringWriter out = new StringWriter();
                         new FixedHTMLWriter(out, doc, start, end - start)
                                 .write();
                         final String string = out.toString();
-                        if (!string.equals("")) {
+                        if (!string.isEmpty()) {
                             parts[i] = string;
                             notEmptyElementCount++;
                         } else {
@@ -132,9 +130,7 @@ public class SplitNode extends MindMapNodeHookAdapter {
                 if (notEmptyElementCount <= 1) {
                     return null;
                 }
-            } catch (IOException e) {
-                log.error(e.getLocalizedMessage(), e);
-            } catch (BadLocationException e) {
+            } catch (IOException | BadLocationException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
             return parts;

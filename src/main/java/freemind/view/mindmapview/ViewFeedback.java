@@ -113,7 +113,7 @@ public interface ViewFeedback {
      */
     MapMouseWheelListener getMapMouseWheelListener();
 
-    public interface MouseWheelEventHandler {
+    interface MouseWheelEventHandler {
         /**
          * @return true if the event was sucessfully processed and false if the
          * event did not apply.

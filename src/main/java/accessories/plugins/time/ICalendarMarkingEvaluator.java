@@ -27,8 +27,8 @@ import java.util.Calendar;
 
 public interface ICalendarMarkingEvaluator {
 
-    public abstract CalendarMarking isMarked(Calendar pCalendar);
+    CalendarMarking isMarked(Calendar pCalendar);
 
-    public abstract void changeMarkings(CalendarMarkings pMarkings);
+    void changeMarkings(CalendarMarkings pMarkings);
 
 }

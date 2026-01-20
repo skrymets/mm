@@ -41,7 +41,6 @@ import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.swing.*;
 import javax.swing.RowSorter.SortKey;
@@ -53,7 +52,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -196,7 +194,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
 
     private static final String ATTRIBUTE_TABLE_PROPERTIES = "attribute_table_properties";
 
-    public static interface ChangeValueInterface {
+    public interface ChangeValueInterface {
         void addValue(Object pAValue, int pColumnIndex);
 
         void removeValue(int pRowIndex);
@@ -213,7 +211,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
          */
         private final String[] COLUMNS = new String[]{KEY_COLUMN_TEXT,
                 VALUE_COLUMN_TEXT};
-        Vector<AttributeHolder> mData = new Vector<AttributeHolder>();
+        final Vector<AttributeHolder> mData = new Vector<>();
         private final TextTranslator mTextTranslator;
 
         /**
@@ -397,8 +395,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         }
     }
 
-    ;
-
     public void register() {
         mAttributeViewerComponent = new JPanel();
         mAttributeViewerComponent.setLayout(new BorderLayout());
@@ -414,7 +410,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         tableTextField.getDocument().addDocumentListener(this);
         DefaultCellEditor cellEditor = new DefaultCellEditor(tableTextField);
         RowSorter<TableModel> sorter =
-                new TableRowSorter<TableModel>(mAttributeTableModel);
+                new TableRowSorter<>(mAttributeTableModel);
         String marshalled = controller.getProperty(ATTRIBUTE_TABLE_PROPERTIES);
         AttributeTableProperties props = (AttributeTableProperties) XmlBindingTools
                 .getInstance().unMarshall(marshalled);
@@ -442,14 +438,11 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         mPopupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem(controller.getText(DELETE_ROW_TEXT_ID));
         mPopupMenu.add(menuItem);
-        menuItem.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                Component c = (Component) e.getSource();
-                JPopupMenu popup = (JPopupMenu) c.getParent();
-                JTable table = (JTable) popup.getInvoker();
-                mAttributeTableModel.removeAttributeHolder(table.convertRowIndexToModel(table.getSelectedRow()));
-            }
+        menuItem.addActionListener(e -> {
+            Component c = (Component) e.getSource();
+            JPopupMenu popup = (JPopupMenu) c.getParent();
+            JTable table = (JTable) popup.getInvoker();
+            mAttributeTableModel.removeAttributeHolder(table.convertRowIndexToModel(table.getSelectedRow()));
         });
         mAttributeTable.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {

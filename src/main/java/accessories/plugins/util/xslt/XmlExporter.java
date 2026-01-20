@@ -53,25 +53,23 @@ public class XmlExporter {
         Source xsltSource = new StreamSource(xsltFile);
         // System.out.println("set result");
         FileOutputStream resultOutputStream = new FileOutputStream(resultFile);
-        Result result = new StreamResult(resultOutputStream);
 
         // create an instance of TransformerFactory
-        try {
-            // System.out.println("make transform instance");
-            TransformerFactory transFact = TransformerFactory.newInstance();
-
-            Transformer trans = transFact.newTransformer(xsltSource);
-
-            trans.transform(xmlSource, result);
-        } catch (Exception e) {
-            // System.err.println("error applying the xslt file "+e);
-            log.error(e.getLocalizedMessage(), e);
-        } finally {
+        try (resultOutputStream) {
             try {
-                resultOutputStream.close();
-            } catch (IOException e) {
+                Result result = new StreamResult(resultOutputStream);
+                // System.out.println("make transform instance");
+                TransformerFactory transFact = TransformerFactory.newInstance();
+
+                Transformer trans = transFact.newTransformer(xsltSource);
+
+                trans.transform(xmlSource, result);
+            } catch (Exception e) {
+                // System.err.println("error applying the xslt file "+e);
                 log.error(e.getLocalizedMessage(), e);
             }
+        } catch (IOException e) {
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

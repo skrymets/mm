@@ -64,7 +64,7 @@ public class NodeNoteViewer extends NodeNoteBase implements
 
     public void onFocusNode(NodeView pNode) {
         String noteText = pNode.getModel().getNoteText();
-        if (noteText != null && !noteText.equals("")) {
+        if (noteText != null && !noteText.isEmpty()) {
             // logger.info("Panel added");
             mBrowseController.getController().insertComponentIntoSplitPane(
                     getNoteViewerComponent(noteText), SplitComponentType.NOTE_PANEL);

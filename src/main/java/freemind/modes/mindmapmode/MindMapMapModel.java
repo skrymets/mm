@@ -20,12 +20,10 @@
 
 package freemind.modes.mindmapmode;
 
-import freemind.main.FreeMind;
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.*;
 import freemind.model.*;
 import freemind.modes.*;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
@@ -36,16 +34,15 @@ import java.nio.channels.FileLock;
 import java.util.*;
 import java.util.List;
 
-import static java.lang.String.format;
-
 @SuppressWarnings("serial")
 @Slf4j
 public class MindMapMapModel extends MapAdapter {
 
     public static final String RESTORE_MODE_MIND_MAP = "MindMap:";
 
-    LockManager lockManager;
-    private MindMapLinkRegistry linkRegistry;
+    final LockManager lockManager;
+    @Getter
+    private final MindMapLinkRegistry linkRegistry;
     private Timer timerForAutomaticSaving;
 
     //
@@ -71,19 +68,10 @@ public class MindMapMapModel extends MapAdapter {
         setRoot(root);
         readOnly = false;
         // automatic save: start timer after the map is completely loaded
-        EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                scheduleTimerForAutomaticSaving();
-            }
-        });
+        EventQueue.invokeLater(this::scheduleTimerForAutomaticSaving);
     }
 
     //
-
-    public MindMapLinkRegistry getLinkRegistry() {
-        return linkRegistry;
-    }
 
     public String getRestorable() {
         return getFile() == null ? null : RESTORE_MODE_MIND_MAP
@@ -132,8 +120,8 @@ public class MindMapMapModel extends MapAdapter {
             StringWriter stringWriter = new StringWriter();
             BufferedWriter fileout = new BufferedWriter(stringWriter);
 
-            for (ListIterator<MindMapNodeModel> it = mindMapNodes.listIterator(); it.hasNext(); ) {
-                it.next().saveTXT(fileout,/* depth= */0);
+            for (MindMapNodeModel mindMapNode : (Iterable<MindMapNodeModel>) mindMapNodes) {
+                mindMapNode.saveTXT(fileout,/* depth= */0);
             }
 
             fileout.close();
@@ -187,18 +175,17 @@ public class MindMapMapModel extends MapAdapter {
             }
 
             // Prepare table of colors containing indices to color table
-            String colorTableString = "{\\colortbl;\\red0\\green0\\blue255;";
+            StringBuilder colorTableString = new StringBuilder("{\\colortbl;\\red0\\green0\\blue255;");
             // 0 - Automatic, 1 - blue for links
 
             HashMap<Color, Integer> colorTable = new HashMap<>();
             int colorPosition = 2;
             for (Iterator<Color> it = colors.iterator(); it.hasNext(); ++colorPosition) {
                 Color color = it.next();
-                colorTableString += "\\red" + color.getRed() + "\\green"
-                        + color.getGreen() + "\\blue" + color.getBlue() + ";";
+                colorTableString.append("\\red").append(color.getRed()).append("\\green").append(color.getGreen()).append("\\blue").append(color.getBlue()).append(";");
                 colorTable.put(color, new Integer(colorPosition));
             }
-            colorTableString += "}";
+            colorTableString.append("}");
 
             fileout.write("{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fswiss\\fcharset0 Arial;}"
                     + colorTableString
@@ -285,7 +272,7 @@ public class MindMapMapModel extends MapAdapter {
         fileout.write("<map ");
         fileout.write("version=\"" + FreeMind.XML_VERSION + "\"");
         fileout.write(">\n");
-        fileout.write("<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->\n");
+        fileout.write("<!-- To view this file, download free mind mapping software FreeMind from https://freemind.sourceforge.net -->\n");
         pRootNode.save(fileout, this.getLinkRegistry(), saveInvisible, true);
         fileout.write("</map>\n");
         fileout.close();
@@ -369,7 +356,7 @@ public class MindMapMapModel extends MapAdapter {
                 filesShouldBeDeletedAfterShutdown, dirToStore), delay, delay);
     }
 
-    private class LockManager extends TimerTask {
+    private static class LockManager extends TimerTask {
         File lockedSemaphoreFile = null;
         Timer lockTimer = null;
         final long lockUpdatePeriod = 4 * 60 * 1000; // four minutes
@@ -489,12 +476,12 @@ public class MindMapMapModel extends MapAdapter {
         }
     }
 
-    private class DummyLockManager extends LockManager {
+    private static class DummyLockManager extends LockManager {
         public synchronized String popLockingUserOfOldLock() {
             return null;
         }
 
-        public synchronized String tryToLock(File file) throws Exception {
+        public synchronized String tryToLock(File file) {
             return null;
         }
 
@@ -509,11 +496,11 @@ public class MindMapMapModel extends MapAdapter {
     }
 
     static private class DoAutomaticSave extends TimerTask {
-        private MindMapMapModel model;
-        private Vector<File> tempFileStack;
-        private int numberOfFiles;
-        private boolean filesShouldBeDeletedAfterShutdown;
-        private File pathToStore;
+        private final MindMapMapModel model;
+        private final Vector<File> tempFileStack;
+        private final int numberOfFiles;
+        private final boolean filesShouldBeDeletedAfterShutdown;
+        private final File pathToStore;
         /**
          * This value is compared with the result of
          * getNumberOfChangesSinceLastSave(). If the values coincide, no further
@@ -542,50 +529,46 @@ public class MindMapMapModel extends MapAdapter {
             }
             try {
                 cancel();
-                EventQueue.invokeAndWait(new Runnable() {
-                    public void run() {
-                        /* Now, it is dirty, we save it. */
-                        File tempFile;
-                        if (tempFileStack.size() >= numberOfFiles)
-                            tempFile = (File) tempFileStack.remove(0); // pop
-                        else {
-                            try {
-                                tempFile = File.createTempFile(
-                                        "FM_"
-                                                + ((model.toString() == null) ? "unnamed"
-                                                : model.toString()),
-                                        freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION,
-                                        pathToStore);
-                                if (filesShouldBeDeletedAfterShutdown)
-                                    tempFile.deleteOnExit();
-                            } catch (Exception e) {
-                                System.err
-                                        .println("Error in automatic MindMapMapModel.save(): "
-                                                + e.getMessage());
-                                log.error(e.getLocalizedMessage(), e);
-                                return;
-                            }
-                        }
+                EventQueue.invokeAndWait((Runnable) () -> {
+                    /* Now, it is dirty, we save it. */
+                    File tempFile;
+                    if (tempFileStack.size() >= numberOfFiles)
+                        tempFile = tempFileStack.remove(0); // pop
+                    else {
                         try {
-                            model.saveInternal(tempFile, true /* =internal call */);
-                            model.getMapFeedback()
-                                    .out(Resources
-                                            .getInstance()
-                                            .format("automatically_save_message",
-                                                    new Object[]{tempFile
-                                                            .toString()}));
+                            tempFile = File.createTempFile(
+                                    "FM_"
+                                            + ((model.toString() == null) ? "unnamed"
+                                            : model.toString()),
+                                    FreeMindCommon.FREEMIND_FILE_EXTENSION,
+                                    pathToStore);
+                            if (filesShouldBeDeletedAfterShutdown)
+                                tempFile.deleteOnExit();
                         } catch (Exception e) {
                             System.err
                                     .println("Error in automatic MindMapMapModel.save(): "
                                             + e.getMessage());
                             log.error(e.getLocalizedMessage(), e);
+                            return;
                         }
-                        tempFileStack.add(tempFile); // add at the back.
                     }
+                    try {
+                        model.saveInternal(tempFile, true /* =internal call */);
+                        model.getMapFeedback()
+                                .out(Resources
+                                        .getInstance()
+                                        .format("automatically_save_message",
+                                                new Object[]{tempFile
+                                                        .toString()}));
+                    } catch (Exception e) {
+                        System.err
+                                .println("Error in automatic MindMapMapModel.save(): "
+                                        + e.getMessage());
+                        log.error(e.getLocalizedMessage(), e);
+                    }
+                    tempFileStack.add(tempFile); // add at the back.
                 });
-            } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
-            } catch (InvocationTargetException e) {
+            } catch (InterruptedException | InvocationTargetException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
         }
@@ -600,16 +583,16 @@ public class MindMapMapModel extends MapAdapter {
             // construct class loader:
             ClassLoader loader = this.getClass().getClassLoader();
             // constructed.
-            Class nodeJavaClass = Class.forName(nodeClass, true, loader);
+            Class<?> nodeJavaClass = Class.forName(nodeClass, true, loader);
             Class[] constrArgs = new Class[]{Object.class,
                     MindMap.class};
             Object[] constrObjs = new Object[]{null, pMap};
-            Constructor constructor = nodeJavaClass.getConstructor(constrArgs);
+            Constructor<?> constructor = nodeJavaClass.getConstructor(constrArgs);
             NodeAdapter nodeImplementor = (NodeAdapter) constructor
                     .newInstance(constrObjs);
             return nodeImplementor;
         } catch (Exception e) {
-            log.error(format("Error occurred loading node implementor: %s", nodeClass), e);
+            log.error("Error occurred loading node implementor: {}", nodeClass, e);
             // the best we can do is to return the normal class:
             NodeAdapter node = new MindMapNodeModel(pMap);
             return node;

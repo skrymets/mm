@@ -37,18 +37,16 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 @SuppressWarnings("serial")
 public class FileController extends ViewControllerAdapter {
 
-    Action newMap = new NewMapAction(this);
-    Action center = new CenterAction();
-    Action openPath = new OpenPathAction();
+    final Action newMap = new NewMapAction(this);
+    final Action center = new CenterAction();
+    final Action openPath = new OpenPathAction();
 
-    private JPopupMenu popupmenu = new FilePopupMenu(this);
+    private final JPopupMenu popupmenu = new FilePopupMenu(this);
 
     public FileController(Mode mode) {
         super(mode);
@@ -160,7 +158,7 @@ public class FileController extends ViewControllerAdapter {
      */
     @Override
     protected void loadInternally(URL pUrl, MapAdapter pModel)
-            throws URISyntaxException, XMLParseException, IOException {
+            throws XMLParseException {
         // empty on purpose.
     }
 

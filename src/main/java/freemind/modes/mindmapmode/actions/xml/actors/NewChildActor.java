@@ -27,7 +27,6 @@ import freemind.extensions.PermanentNodeHook;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
@@ -70,10 +69,6 @@ public class NewChildActor extends XmlActorAdapter {
             hook.onNewChild(newNode);
         }
         // done.
-    }
-
-    protected MindMapLinkRegistry getLinkRegistry() {
-        return getExMapFeedback().getMap().getLinkRegistry();
     }
 
     /*

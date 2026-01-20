@@ -45,11 +45,11 @@ import java.awt.event.*;
 public class EditNodeTextField extends EditNodeBase {
     final int EDIT = 1;
     final int CANCEL = 2;
-    int cursorWidth = 1;
+    final int cursorWidth = 1;
     int xOffset = 0;
-    int yOffset = -1; // Optimized for Windows style; basically ad hoc
-    int widthAddition = 2 * 0 + cursorWidth + 2;
-    int heightAddition = 2;
+    final int yOffset = -1; // Optimized for Windows style; basically ad hoc
+    final int widthAddition = 2 * 0 + cursorWidth + 2;
+    final int heightAddition = 2;
 
     // minimal width for input field of leaf or folded node (PN)
     final int MINIMAL_LEAF_WIDTH = 150;
@@ -58,7 +58,7 @@ public class EditNodeTextField extends EditNodeBase {
 
     private final KeyEvent firstEvent;
     protected JTextField textfield;
-    protected JComponent mParent;
+    protected final JComponent mParent;
     private final JComponent mFocusListener;
 
     //    private Tools.IntHolder mEventSource;
@@ -154,7 +154,7 @@ public class EditNodeTextField extends EditNodeBase {
                     if (mUndoManager.canUndo()) {
                         mUndoManager.undo();
                     }
-                } catch (CannotUndoException e) {
+                } catch (CannotUndoException ignored) {
                 }
             }
         });
@@ -171,7 +171,7 @@ public class EditNodeTextField extends EditNodeBase {
                     if (mUndoManager.canRedo()) {
                         mUndoManager.redo();
                     }
-                } catch (CannotRedoException e) {
+                } catch (CannotRedoException ignored) {
                 }
             }
         });
@@ -209,13 +209,11 @@ public class EditNodeTextField extends EditNodeBase {
         if (checkSpelling) {
             SpellChecker.register(textfield, false, true, true, true);
         }
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                textfield.requestFocus();
-                // Add listener now, as there are focus changes before.
-                textfield.addFocusListener(textFieldListener);
-                mFocusListener.addComponentListener(textFieldListener);
-            }
+        EventQueue.invokeLater(() -> {
+            textfield.requestFocus();
+            // Add listener now, as there are focus changes before.
+            textfield.addFocusListener(textFieldListener);
+            mFocusListener.addComponentListener(textFieldListener);
         });
     }
 

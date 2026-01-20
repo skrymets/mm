@@ -24,7 +24,6 @@ import freemind.model.MindMapNode;
 
 import java.awt.*;
 
-@SuppressWarnings("serial")
 class BubbleMainView extends MainView {
     final static Stroke DEF_STROKE = new BasicStroke();
 

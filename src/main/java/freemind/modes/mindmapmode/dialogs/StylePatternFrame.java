@@ -39,14 +39,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author foltin
  */
-@SuppressWarnings("serial")
 public class StylePatternFrame extends JPanel implements TextTranslator,
         PropertyChangeListener {
     public static final class StylePatternFrameType {
@@ -54,9 +52,9 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
         }
 
-        public static StylePatternFrameType WITHOUT_NAME_AND_CHILDS = new StylePatternFrameType();
+        public static final StylePatternFrameType WITHOUT_NAME_AND_CHILDS = new StylePatternFrameType();
 
-        public static StylePatternFrameType WITH_NAME_AND_CHILDS = new StylePatternFrameType();
+        public static final StylePatternFrameType WITH_NAME_AND_CHILDS = new StylePatternFrameType();
     }
 
     private static final String[] EDGE_STYLES = new String[]{
@@ -206,7 +204,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
      * Denotes pairs property -> ThreeCheckBoxProperty such that the boolean
      * property can be set, when the format property is changed.
      */
-    private HashMap<ThreeCheckBoxProperty, PropertyControl> mPropertyChangePropagation = new HashMap<>();
+    private final HashMap<ThreeCheckBoxProperty, PropertyControl> mPropertyChangePropagation = new HashMap<>();
 
     private ThreeCheckBoxProperty mClearSetters;
 
@@ -253,17 +251,14 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
                 bean.addPropertyChangeListener(this);
             }
         }
-        mClearSetters.addPropertyChangeListener(new PropertyChangeListener() {
-
-            public void propertyChange(PropertyChangeEvent pEvt) {
-                for (ThreeCheckBoxProperty booleanProp : mPropertyChangePropagation.keySet()) {
-                    booleanProp.setValue(mClearSetters.getValue());
-                }
+        mClearSetters.addPropertyChangeListener(pEvt -> {
+            for (ThreeCheckBoxProperty booleanProp : mPropertyChangePropagation.keySet()) {
+                booleanProp.setValue(mClearSetters.getValue());
             }
         });
     }
 
-    private String[] sizes = new String[]{"2", "4", "6", "8", "10", "12",
+    private final String[] sizes = new String[]{"2", "4", "6", "8", "10", "12",
             "14", "16", "18", "20", "22", "24", "30", "36", "48", "72"};
 
     private List<Pattern> mPatternList;
@@ -336,12 +331,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         mSetNodeFontSize = new ThreeCheckBoxProperty(SET_NODE_FONT_SIZE
                 + ".tooltip", SET_NODE_FONT_SIZE);
         controls.add(mSetNodeFontSize);
-        Vector<String> sizesVector = new Vector<>();
-        for (int i = 0; i < sizes.length; i++) {
-            sizesVector.add(sizes[i]);
-        }
-        mNodeFontSize = new IntegerComboProperty(NODE_FONT_SIZE + ".tooltip",
-                NODE_FONT_SIZE, sizes, sizesVector);
+        List<String> sizesVector = new ArrayList<>(Arrays.asList(sizes));
+        mNodeFontSize = new IntegerComboProperty(NODE_FONT_SIZE + ".tooltip", NODE_FONT_SIZE, sizes, sizesVector);
         controls.add(mNodeFontSize);
         mSetNodeFontBold = new ThreeCheckBoxProperty(SET_NODE_FONT_BOLD
                 + ".tooltip", SET_NODE_FONT_BOLD);
@@ -462,7 +453,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
                 mNodeFontStrikethrough, BooleanProperty.TRUE_VALUE);
         setPatternControls(pattern.getPatternNodeFontItalic(),
                 mSetNodeFontItalic, mNodeFontItalic, BooleanProperty.TRUE_VALUE);
-        MindIcon firstInfo = (MindIcon) mIconInformationVector.get(0);
+        MindIcon firstInfo = mIconInformationVector.get(0);
         setPatternControls(pattern.getPatternIcon(), mSetIcon, mIcon,
                 firstInfo.getName());
         setPatternControls(pattern.getPatternScript(), mSetScriptPattern,
@@ -473,7 +464,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
                     pattern.getPatternChild(),
                     mSetChildPattern,
                     mChildPattern,
-                    (mPatternList.size() > 0) ? ((Pattern) mPatternList.get(0))
+                    (!mPatternList.isEmpty()) ? mPatternList.get(0)
                             .getName() : null);
 
         }
@@ -488,7 +479,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         String transform(String value);
     }
 
-    private final class IdentityTransformer implements ValueTransformator {
+    private static final class IdentityTransformer implements ValueTransformator {
         public String transform(String value) {
             return value;
         }
@@ -542,7 +533,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         int edgeWidth = Tools.edgeWidthStringToInt(pEdgeWidth);
         HashMap<String, Integer> transformator = getEdgeWidthTransformation();
         for (String widthString : transformator.keySet()) {
-            Integer width = (Integer) transformator.get(widthString);
+            Integer width = transformator.get(widthString);
             if (edgeWidth == width.intValue()) {
                 return widthString;
             }
@@ -553,7 +544,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
     private String transformStringToWidth(String value) {
         HashMap<String, Integer> transformator = getEdgeWidthTransformation();
-        int intWidth = ((Integer) transformator.get(value)).intValue();
+        int intWidth = transformator.get(value).intValue();
         return ApplyPatternAction.edgeWidthIntToString(intWidth);
     }
 
@@ -658,11 +649,10 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
             ThreeCheckBoxProperty booleanProp = (ThreeCheckBoxProperty) pEvt
                     .getSource();
             // enable only when set:
-            PropertyControl bean = (PropertyControl) mPropertyChangePropagation
+            PropertyControl bean = mPropertyChangePropagation
                     .get(booleanProp);
             bean.setEnabled(ThreeCheckBoxProperty.TRUE_VALUE.equals(booleanProp
                     .getValue()));
-            return;
         }
     }
 

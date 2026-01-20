@@ -28,7 +28,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 @SuppressWarnings("serial")
 public class RedoAction extends UndoAction {
-    private MindMapController controller;
+    private final MindMapController controller;
 
     public RedoAction(MindMapController controller) {
         super(controller, controller.getText("redo"), freemind.view.ImageFactory.getInstance().createIcon(

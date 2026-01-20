@@ -96,7 +96,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 
     public void addNewClone(MindMapNode originalNode, MindMapNode pDestinationNode, Transferable copy) {
         String originalNodeId = getMindMapController().getNodeID(originalNode);
-        log.trace("Original node " + originalNode + ", id " + originalNodeId);
+        log.trace("Original node {}, id {}", originalNode, originalNodeId);
         if (originalNode.isRoot()) {
             getMindMapController().getController().errorMessage(getMindMapController().getText("clone_plugin_no_root_cloning"));
             return;
@@ -108,7 +108,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         for (MindMapNode node : listOfChilds) {
             String nodeID = getMindMapController().getNodeID(node);
             listOfChildIds.add(nodeID);
-            log.trace("Old child id:" + nodeID);
+            log.trace("Old child id:{}", nodeID);
         }
         getMindMapController().paste(copy, pDestinationNode);
     }
@@ -128,7 +128,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
     @Slf4j
     public static class CloneProperties {
         boolean mCloneItself = false;
-        private HashSet<ClonePropertiesObserver> mObserverSet = new HashSet<>();
+        private final HashSet<ClonePropertiesObserver> mObserverSet = new HashSet<>();
 
         public CloneProperties() {
         }
@@ -138,7 +138,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         }
 
         public void setCloneItself(boolean pCloneItself) {
-            log.trace("Setting mCloneItself to " + pCloneItself);
+            log.trace("Setting mCloneItself to {}", pCloneItself);
             boolean fire = false;
             if (pCloneItself != mCloneItself) {
                 fire = true;
@@ -176,22 +176,22 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         /**
          * Mapping of clone id (String) to a HashSet of {@link MindMapNode}s
          */
-        private HashMap<String, HashSet<MindMapNode>> mCloneIdsMap = new HashMap<>();
+        private final HashMap<String, HashSet<MindMapNode>> mCloneIdsMap = new HashMap<>();
         /**
          * This is the reverse of mCloneIdsMap: {@link MindMapNode} to cloneId.
          */
-        private HashMap<MindMapNode, String> mClonesMap = new HashMap<>();
+        private final HashMap<MindMapNode, String> mClonesMap = new HashMap<>();
 
         /**
          * This is a storage cloneId to clone properties.
          */
-        private HashMap<String, CloneProperties> mClonePropertiesMap = new HashMap<>();
+        private final HashMap<String, CloneProperties> mClonePropertiesMap = new HashMap<>();
 
         private final MindMapController controller;
 
         private final MindMap mMap;
 
-        private Vector<MindMapNode> mLastMarkedNodeViews = new Vector<>();
+        private final Vector<MindMapNode> mLastMarkedNodeViews = new Vector<>();
 
         public Registration(ModeController controller, MindMap map) {
             this.controller = (MindMapController) controller;
@@ -249,9 +249,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                 ClonePlugin otherClone = ClonePlugin.getHook(otherCloneNode);
                 if (otherClone == null) {
                     it.remove();
-                    log.warn("Found clone node "
-                            + controller.getNodeID(otherCloneNode)
-                            + " which isn't a clone any more.");
+                    log.warn("Found clone node {} which isn't a clone any more.", controller.getNodeID(otherCloneNode));
                     continue;
                 }
                 // inform all others
@@ -279,9 +277,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                 ClonePlugin otherClone = ClonePlugin.getHook(otherCloneNode);
                 if (otherClone == null) {
                     it.remove();
-                    log.warn("Found clone node "
-                            + controller.getNodeID(otherCloneNode)
-                            + " which isn't a clone any more.");
+                    log.warn("Found clone node {} which isn't a clone any more.", controller.getNodeID(otherCloneNode));
                     continue;
                 }
                 otherClone.removeClone(node);
@@ -295,7 +291,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 
         public CloneProperties getCloneProperties(String pCloneId) {
             if (mClonePropertiesMap.containsKey(pCloneId)) {
-                return (CloneProperties) mClonePropertiesMap.get(pCloneId);
+                return mClonePropertiesMap.get(pCloneId);
             }
             throw new IllegalArgumentException(
                     "Clone properties not found for " + pCloneId);
@@ -307,7 +303,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                 v = new HashSet<>();
                 mCloneIdsMap.put(pCloneId, v);
             } else {
-                v = (HashSet<MindMapNode>) mCloneIdsMap.get(pCloneId);
+                v = mCloneIdsMap.get(pCloneId);
             }
             return v;
         }
@@ -324,7 +320,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         }
 
         private XmlAction cloneAction(XmlAction doAction) {
-            log.trace("Found do action: " + doAction.getClass().getName());
+            log.trace("Found do action: {}", doAction.getClass().getName());
             if (doAction instanceof NodeAction) {
                 NodeAction nodeAction = (NodeAction) doAction;
                 MindMapNode node = controller.getNodeFromID(nodeAction
@@ -442,7 +438,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             boolean startWithParent = false;
             // Behavior for complete cloning.
             if (mClonesMap.containsKey(node)) {
-                String cloneId = (String) mClonesMap.get(node);
+                String cloneId = mClonesMap.get(node);
                 if (getCloneProperties(cloneId).isCloneItself()) {
                     // Behavior for complete cloning
                     if (nodeAction instanceof MoveNodesAction
@@ -576,20 +572,16 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             }
             Vector<MindMapNodePair> returnValue = new Vector<>();
             MindMapNode originalNode = child;
-            HashSet<MindMapNode> targets = (HashSet<MindMapNode>) mCloneIdsMap.get(mClonesMap.get(child));
+            HashSet<MindMapNode> targets = mCloneIdsMap.get(mClonesMap.get(child));
             CloneLoop:
             for (MindMapNode cloneNode : targets) {
                 MindMapNode target = cloneNode;
                 if (cloneNode == originalNode)
                     continue;
                 for (int i = indexVector.size() - 1; i >= 0; --i) {
-                    int index = ((Integer) indexVector.get(i)).intValue();
+                    int index = indexVector.get(i).intValue();
                     if (target.getChildCount() <= index) {
-                        log.warn("Index " + index
-                                + " in other tree not found from "
-                                + printNodeIds(targets) + " originating from "
-                                + printNodeId(cloneNode) + " start at parent "
-                                + pStartWithParent);
+                        log.warn("Index {} in other tree not found from {} originating from {} start at parent {}", index, printNodeIds(targets), printNodeId(cloneNode), pStartWithParent);
                         // with crossed fingers.
                         continue CloneLoop;
                     }

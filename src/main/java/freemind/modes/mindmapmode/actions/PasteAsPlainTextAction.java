@@ -40,7 +40,7 @@ import java.io.IOException;
 @Slf4j
 public class PasteAsPlainTextAction extends AbstractAction {
 
-    private MindMapController mMindMapController;
+    private final MindMapController mMindMapController;
 
     public PasteAsPlainTextAction(MindMapController pMindMapController) {
         super(pMindMapController.getText("paste_as_plain_text"), null);
@@ -64,21 +64,18 @@ public class PasteAsPlainTextAction extends AbstractAction {
                 String plainText = (String) clipboardContents.getTransferData(DataFlavor.stringFlavor);
                 // sometimes these (for XML illegal) characters occur
                 plainText = HtmlTools.makeValidXml(plainText);
-                log.info("Pasting string " + plainText);
+                log.info("Pasting string {}", plainText);
                 // paste.
                 MindMapNode selected = mMindMapController.getSelected();
                 MindMapNode newNode = mMindMapController.addNewNode(selected, selected.getChildCount(), selected.isLeft());
                 mMindMapController.setNodeText(newNode, plainText);
-            } catch (UnsupportedFlavorException e) {
-                log.error(e.getLocalizedMessage(), e);
-
-            } catch (IOException e) {
+            } catch (UnsupportedFlavorException | IOException e) {
                 log.error(e.getLocalizedMessage(), e);
 
             }
         } else {
             // not supported message.
-            log.warn("String flavor not supported for transferable " + clipboardContents);
+            log.warn("String flavor not supported for transferable {}", clipboardContents);
         }
     }
 

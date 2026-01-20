@@ -129,7 +129,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
         super.loadFrom(pChild);
         mValues = loadNameValuePairs(pChild);
         // if no value stored, the get method returns null.
-        mTooltipLocation = (String) mValues
+        mTooltipLocation = mValues
                 .get(XML_STORAGE_MAP_TOOLTIP_LOCATION);
     }
 
@@ -141,7 +141,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     public String getImageHtml() {
         String imageTag = "<img src=\"file:./" + mTooltipLocation + "\"/>";
         String imageHtml = "<html><body>" + imageTag + "</body></html>";
-        log.trace("Tooltip at " + imageTag);
+        log.trace("Tooltip at {}", imageTag);
         return imageHtml;
     }
 
@@ -162,12 +162,12 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     }
 
     public String[] getBarePosition() {
-        return new String[]{(String) mValues.get(XML_STORAGE_POS_LAT),
-                (String) mValues.get(XML_STORAGE_POS_LON),
-                (String) mValues.get(XML_STORAGE_MAP_LAT),
-                (String) mValues.get(XML_STORAGE_MAP_LON),
-                (String) mValues.get(XML_STORAGE_ZOOM),
-                (String) mValues.get(XML_STORAGE_TILE_SOURCE)};
+        return new String[]{mValues.get(XML_STORAGE_POS_LAT),
+                mValues.get(XML_STORAGE_POS_LON),
+                mValues.get(XML_STORAGE_MAP_LAT),
+                mValues.get(XML_STORAGE_MAP_LON),
+                mValues.get(XML_STORAGE_ZOOM),
+                mValues.get(XML_STORAGE_TILE_SOURCE)};
     }
 
 }

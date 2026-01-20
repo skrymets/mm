@@ -28,12 +28,11 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 
-@SuppressWarnings("serial")
 class Preview extends JComponent {
     private final static int DEFAULT_PREVIEW_SIZE = 300;
     private final static double MINIMUM_ZOOM_FACTOR = 0.1;
     private BufferedImage previewPageImage = null;
-    private PageFormat mPageFormat;
+    private final PageFormat mPageFormat;
 
     public Preview(MapView view, double zoom, PageFormat pPageFormat) {
         this.view = view;
@@ -110,7 +109,7 @@ class Preview extends JComponent {
         return getPreferredSize();
     }
 
-    protected MapView view;
+    protected final MapView view;
     protected int index = 0;
     protected double zoom = 0.0;
 

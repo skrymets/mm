@@ -34,17 +34,22 @@ import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.ListIterator;
 
 @SuppressWarnings("serial")
 @Slf4j
 public class NodeGeneralAction extends AbstractXmlAction {
     protected final MindMapController modeController;
 
+    /**
+     * -- SETTER --
+     *  The singleNodeOperation to set.
+     */
+    @Setter
     SingleNodeOperation singleNodeOperation;
 
     private Class<?> mDoActionClass;
@@ -87,21 +92,13 @@ public class NodeGeneralAction extends AbstractXmlAction {
         addActor(actor);
     }
 
-    /**
-     * The singleNodeOperation to set.
-     */
-    public void setSingleNodeOperation(SingleNodeOperation singleNodeOperation) {
-        this.singleNodeOperation = singleNodeOperation;
-    }
-
     /* (non-Javadoc)
      * @see freemind.modes.mindmapmode.actions.xml.AbstractXmlAction#xmlActionPerformed(java.awt.event.ActionEvent)
      */
     public void xmlActionPerformed(ActionEvent e) {
         if (singleNodeOperation != null) {
-            for (ListIterator it = modeController.getSelecteds().listIterator(); it
-                    .hasNext(); ) {
-                MindMapNodeModel selected = (MindMapNodeModel) it.next();
+            for (freemind.model.MindMapNode mindMapNode : modeController.getSelecteds()) {
+                MindMapNodeModel selected = (MindMapNodeModel) mindMapNode;
                 singleNodeOperation.apply(
                         (MindMapMapModel) this.modeController.getMap(),
                         selected);
@@ -114,8 +111,8 @@ public class NodeGeneralAction extends AbstractXmlAction {
             CompoundAction undo = new CompoundAction();
             // sort selectedNodes list by depth, in order to guarantee that
             // sons are deleted first:
-            for (ListIterator it = modeController.getSelecteds().listIterator(); it.hasNext(); ) {
-                MindMapNodeModel selected = (MindMapNodeModel) it.next();
+            for (freemind.model.MindMapNode mindMapNode : modeController.getSelecteds()) {
+                MindMapNodeModel selected = (MindMapNodeModel) mindMapNode;
                 ActionPair pair = getActionPair(selected);
                 if (pair != null) {
                     CompoundAction.Choice doActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(doAction);

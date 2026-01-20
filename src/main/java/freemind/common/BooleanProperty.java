@@ -24,10 +24,9 @@
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import lombok.Getter;
 
 import javax.swing.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 public class BooleanProperty extends PropertyBean implements PropertyControl {
     static public final String FALSE_VALUE = "false";
@@ -38,11 +37,13 @@ public class BooleanProperty extends PropertyBean implements PropertyControl {
 
     protected String mTrueValue = TRUE_VALUE;
 
-    String description;
+    @Getter
+    final String description;
 
-    String label;
+    @Getter
+    final String label;
 
-    JCheckBox mCheckBox = new JCheckBox();
+    final JCheckBox mCheckBox = new JCheckBox();
 
     /**
      *
@@ -51,20 +52,7 @@ public class BooleanProperty extends PropertyBean implements PropertyControl {
         super();
         this.description = description;
         this.label = label;
-        mCheckBox.addItemListener(new ItemListener() {
-
-            public void itemStateChanged(ItemEvent pE) {
-                firePropertyChangeEvent();
-            }
-        });
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
+        mCheckBox.addItemListener(pE -> firePropertyChangeEvent());
     }
 
     public void setValue(String value) {

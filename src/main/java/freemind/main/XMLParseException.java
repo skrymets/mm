@@ -53,6 +53,8 @@ package freemind.main;
 
 //</insert>
 
+import lombok.Getter;
+
 /**
  * An XMLParseException is thrown when an error occures while parsing an XML
  * string.
@@ -65,6 +67,7 @@ package freemind.main;
  * @version $Name: fm_060405_integration $, $Revision: 1.7.34.3 $
  * @see XMLElement
  */
+@Getter
 @SuppressWarnings("serial")
 public class XMLParseException extends RuntimeException {
 
@@ -85,8 +88,12 @@ public class XMLParseException extends RuntimeException {
      * </ul>
      * </dd>
      * </dl>
+     * -- GETTER --
+     *  Where the error occurred, or <code>NO_LINE</code> if the line number is
+     *  unknown.
+
      */
-    private int lineNr;
+    private final int lineNr;
 
     /**
      * Creates an exception.
@@ -155,14 +162,6 @@ public class XMLParseException extends RuntimeException {
                 : ("a " + name + " element")) + " at line " + lineNr
                 + ": " + message);
         this.lineNr = lineNr;
-    }
-
-    /**
-     * Where the error occurred, or <code>NO_LINE</code> if the line number is
-     * unknown.
-     */
-    public int getLineNr() {
-        return this.lineNr;
     }
 
 }

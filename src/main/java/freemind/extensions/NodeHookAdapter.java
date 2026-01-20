@@ -21,6 +21,8 @@ package freemind.extensions;
 
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -28,11 +30,20 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author foltin
  */
+@Setter
 @Slf4j
 public abstract class NodeHookAdapter extends HookAdapter implements NodeHook {
 
+    /**
+     */
     private MindMap map;
 
+    /**
+     * -- SETTER --
+     *
+
+     */
+    @Getter
     private MindMapNode node;
 
     public NodeHookAdapter() {
@@ -41,20 +52,6 @@ public abstract class NodeHookAdapter extends HookAdapter implements NodeHook {
 
     public void invoke(MindMapNode node) {
         log.trace("invoke(node) called.");
-    }
-
-    /**
-     *
-     */
-    public MindMapNode getNode() {
-        return node;
-    }
-
-    /**
-     *
-     */
-    public void setNode(MindMapNode node) {
-        this.node = node;
     }
 
     /**
@@ -69,13 +66,6 @@ public abstract class NodeHookAdapter extends HookAdapter implements NodeHook {
      */
     protected void nodeChanged(MindMapNode node) {
         getController().nodeChanged(node);
-    }
-
-    /**
-     *
-     */
-    public void setMap(MindMap map) {
-        this.map = map;
     }
 
     public String getNodeId() {

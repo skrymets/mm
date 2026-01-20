@@ -95,7 +95,7 @@ public class DefaultFilter implements Filter {
 
         ListIterator<NodeView> iterator = selectedNodes.listIterator(lastSelectedIndex);
         while (iterator.hasPrevious()) {
-            NodeView previous = (NodeView) iterator.previous();
+            NodeView previous = iterator.previous();
             if (!previous.getModel().isVisible()) {
                 mapView.toggleSelected(previous);
             }
@@ -122,7 +122,7 @@ public class DefaultFilter implements Filter {
         ListIterator<MindMapNode> iterator = parent.childrenUnfolded();
         boolean isDescendantSelected = false;
         while (iterator.hasNext()) {
-            MindMapNode node = (MindMapNode) iterator.next();
+            MindMapNode node = iterator.next();
             isDescendantSelected = applyFilter(node, c, isAncestorSelected, isAncestorEclipsed, isDescendantSelected);
         }
         return isDescendantSelected;

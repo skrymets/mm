@@ -86,7 +86,7 @@ public class ExportHook extends ModeControllerHookAdapter {
     }
 
     public static class ImageFilter extends FileFilter {
-        private String type;
+        private final String type;
         private final String description;
 
         public ImageFilter(String type, String description) {
@@ -164,10 +164,10 @@ public class ExportHook extends ModeControllerHookAdapter {
         // Copies src file to dst file.
         // If the dst file does not exist, it is created
         try {
-            log.trace("searching for " + prefix + fileName);
+            log.trace("searching for {}{}", prefix, fileName);
             URL resource = getResource(prefix + fileName);
             if (resource == null) {
-                log.error("Cannot find resource: " + prefix + fileName);
+                log.error("Cannot find resource: {}{}", prefix, fileName);
                 return;
             }
             InputStream in = resource.openStream();
@@ -177,9 +177,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             // Transfer bytes from in to out
             Tools.copyStream(in, out, true);
         } catch (Exception e) {
-            log.error("File not found or could not be copied. "
-                    + "Was earching for " + prefix + fileName
-                    + " and should go to " + destinationDirectory);
+            log.error("File not found or could not be copied. Was earching for {}{} and should go to {}", prefix, fileName, destinationDirectory);
             log.error(e.getLocalizedMessage(), e);
         }
 
@@ -191,7 +189,7 @@ public class ExportHook extends ModeControllerHookAdapter {
         // Copies src file to dst file.
         // If the dst file does not exist, it is created
         try {
-            log.trace("searching for " + dir + fileName);
+            log.trace("searching for {}{}", dir, fileName);
             File resource = new File(dir, fileName);
             InputStream in = new FileInputStream(resource);
             OutputStream out = new FileOutputStream(destinationDirectory + "/"
@@ -200,9 +198,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             // Transfer bytes from in to out
             Tools.copyStream(in, out, true);
         } catch (Exception e) {
-            log.error("File not found or could not be copied. "
-                    + "Was earching for " + dir + fileName
-                    + " and should go to " + destinationDirectory);
+            log.error("File not found or could not be copied. Was earching for {}{} and should go to {}", dir, fileName, destinationDirectory);
             log.error(e.getLocalizedMessage(), e);
         }
 

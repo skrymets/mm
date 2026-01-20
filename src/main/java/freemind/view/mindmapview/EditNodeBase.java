@@ -29,6 +29,8 @@ import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
@@ -43,17 +45,21 @@ import java.util.LinkedList;
  * @author foltin
  */
 public class EditNodeBase {
-    protected static boolean checkSpelling = Resources.getInstance().
+    protected static final boolean checkSpelling = Resources.getInstance().
             getBoolProperty(FreeMindCommon.CHECK_SPELLING);
-    ;
     protected static final int BUTTON_OK = 0;
     protected static final int BUTTON_CANCEL = 1;
     protected static final int BUTTON_SPLIT = 2;
-    protected NodeView node;
-    private EditControl editControl;
-    private ModeController controller;
+    @Getter
+    protected final NodeView node;
+    @Getter
+    private final EditControl editControl;
+    private final ModeController controller;
+    @Setter
     protected String text;
     // this enables from outside close the edit mode
+    @Setter
+    @Getter
     protected FocusListener textFieldListener = null;
 
     EditNodeBase(final NodeView node, final String text,
@@ -206,7 +212,7 @@ public class EditNodeBase {
 
     protected class EditCopyAction extends AbstractAction {
         private static final long serialVersionUID = 5104219263806454592L;
-        private JTextComponent textComponent;
+        private final JTextComponent textComponent;
 
         public EditCopyAction(JTextComponent textComponent) {
             super(getText("copy"));
@@ -227,7 +233,7 @@ public class EditNodeBase {
         public EditPopupMenu(JTextComponent textComponent) {
             EditCopyAction editCopyAction = new EditCopyAction(textComponent);
             String selectedText = textComponent.getSelectedText();
-            if (selectedText == null || selectedText.equals("")) {
+            if (selectedText == null || selectedText.isEmpty()) {
                 editCopyAction.setEnabled(false);
             }
             this.add(editCopyAction);
@@ -248,26 +254,6 @@ public class EditNodeBase {
         return Tools.getClipboard();
     }
 
-    public EditControl getEditControl() {
-        return editControl;
-    }
-
-    public NodeView getNode() {
-        return node;
-    }
-
-    public FocusListener getTextFieldListener() {
-        return textFieldListener;
-    }
-
-    public void setText(String string) {
-        text = string;
-    }
-
-    public void setTextFieldListener(FocusListener listener) {
-        textFieldListener = listener;
-    }
-
     protected void redispatchKeyEvents(final JTextComponent textComponent,
                                        KeyEvent firstKeyEvent) {
         if (textComponent.hasFocus()) {
@@ -276,7 +262,7 @@ public class EditNodeBase {
         final KeyboardFocusManager currentKeyboardFocusManager =
                 KeyboardFocusManager.getCurrentKeyboardFocusManager();
         class KeyEventQueue implements KeyEventDispatcher, FocusListener {
-            LinkedList<KeyEvent> events = new LinkedList<>();
+            final LinkedList<KeyEvent> events = new LinkedList<>();
 
             public boolean dispatchKeyEvent(KeyEvent e) {
                 events.add(e);
@@ -288,7 +274,7 @@ public class EditNodeBase {
                 currentKeyboardFocusManager.removeKeyEventDispatcher(this);
                 final Iterator<KeyEvent> iterator = events.iterator();
                 while (iterator.hasNext()) {
-                    final KeyEvent ke = (KeyEvent) iterator.next();
+                    final KeyEvent ke = iterator.next();
                     ke.setSource(textComponent);
                     textComponent.dispatchEvent(ke);
                 }
@@ -297,7 +283,6 @@ public class EditNodeBase {
             public void focusLost(FocusEvent e) {
             }
         }
-        ;
         final KeyEventQueue keyEventDispatcher = new KeyEventQueue();
         currentKeyboardFocusManager.addKeyEventDispatcher(keyEventDispatcher);
         textComponent.addFocusListener(keyEventDispatcher);

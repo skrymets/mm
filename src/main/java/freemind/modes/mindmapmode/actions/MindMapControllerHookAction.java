@@ -32,8 +32,8 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class MindMapControllerHookAction extends AbstractAction implements
         HookAction, MenuItemEnabledListener {
-    String mHookName;
-    MindMapController mindMapController;
+    final String mHookName;
+    final MindMapController mindMapController;
 
     public MindMapControllerHookAction(String hookName,
                                        MindMapController mindMapController) {

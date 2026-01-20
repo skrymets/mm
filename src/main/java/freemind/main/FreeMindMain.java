@@ -69,7 +69,7 @@ public interface FreeMindMain {
      * Open url in WWW browser. This method hides some differences between
      * operating systems.
      */
-    void openDocument(URL location) throws Exception;
+    void openDocument(URL location);
 
     /**
      * remove this!
@@ -166,5 +166,12 @@ public interface FreeMindMain {
     JScrollPane getScrollPane();
 
     void registerStartupDoneListener(StartupDoneListener pStartupDoneListener);
+
+    /**
+     * @return false for desktop application, true if running as applet (legacy support)
+     */
+    default boolean isApplet() {
+        return false;
+    }
 
 }

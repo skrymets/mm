@@ -47,7 +47,7 @@ class StdFormatter extends SimpleFormatter {
 
     // Line separator string. This is the value of the line.separator
     // property at the moment that the SimpleFormatter was created.
-    private String lineSeparator = System.getProperty("line.separator");
+    private final String lineSeparator = System.getProperty("line.separator");
 
     /**
      * Format the given LogRecord.

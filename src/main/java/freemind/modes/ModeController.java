@@ -49,7 +49,7 @@ import java.util.List;
 
 public interface ModeController extends TextTranslator, MapFeedback, ViewFeedback {
 
-    public static final String NODESEPARATOR = "<nodeseparator>";
+    String NODESEPARATOR = "<nodeseparator>";
 
     /**
      * @param file Nowadays this is an URL to unify the behaviour of the browser
@@ -66,7 +66,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      * This is the same as load(URL) for those points where you have a file
      * instead of an url (conversion is difficult between them...).
      */
-    MapFeedback load(File file) throws FileNotFoundException, IOException;
+    MapFeedback load(File file) throws IOException;
 
     /**
      * Opens a link in * the opened map * another map * another file.
@@ -127,15 +127,15 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      * Single selection: the node is the only one selected after calling this
      * method.
      */
-    public void select(NodeView node);
+    void select(NodeView node);
 
     /**
      * Multiple selection. All MindMapNode s from the selecteds list are
      * selected, and the focused is moreover focused.
      */
-    public void select(MindMapNode focused, List<MindMapNode> selecteds);
+    void select(MindMapNode focused, List<MindMapNode> selecteds);
 
-    public void selectBranch(NodeView selected, boolean extend);
+    void selectBranch(NodeView selected, boolean extend);
 
     MindMapNode getSelected();
 
@@ -157,7 +157,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      *
      * @param inPlaceList the given list is sorted by reference.
      */
-    public void sortNodesByDepth(List<MindMapNode> inPlaceList);
+    void sortNodesByDepth(List<MindMapNode> inPlaceList);
 
     /**
      * This extends the currently selected nodes.
@@ -176,7 +176,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      * @param pIsClean true: the map is saved, false: the map model has been changed,
      *                 and the map must be saved.
      */
-    public void setSaved(boolean pIsClean);
+    void setSaved(boolean pIsClean);
 
     /**
      * Is called when a node is deselected.
@@ -195,7 +195,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
     /**
      *
      */
-    public interface NodeSelectionListener {
+    interface NodeSelectionListener {
 
         /**
          * Sent, if a node is changed
@@ -251,7 +251,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
     /**
      *
      */
-    public interface NodeLifetimeListener {
+    interface NodeLifetimeListener {
 
         /**
          * Sent, if a node is created (on map startup or during operations).
@@ -307,19 +307,19 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
 
     String getLinkShortText(MindMapNode node);
 
-    public JToolBar getModeToolBar();
+    JToolBar getModeToolBar();
 
     /**
      * For the toolbar on the left hand side of the window.
      */
-    public Component getLeftToolBar();
+    Component getLeftToolBar();
 
     /**
      * Use this method to get menus to the screen.
      */
-    public void updateMenus(StructuredMenuHolder holder);
+    void updateMenus(StructuredMenuHolder holder);
 
-    public void updatePopupMenu(StructuredMenuHolder holder);
+    void updatePopupMenu(StructuredMenuHolder holder);
 
     JPopupMenu getPopupMenu();
 
@@ -371,7 +371,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
 
     Transferable copySingle();
 
-    public Transferable copy(List<MindMapNode> selectedNodes, boolean copyInvisible);
+    Transferable copy(List<MindMapNode> selectedNodes, boolean copyInvisible);
 
     FreeMindFileDialog getFileChooser(FileFilter filter);
 
@@ -389,6 +389,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      *              tooltip can be displayed.
      * @param value null if you want to delete this tooltip.
      */
-    public void setToolTip(MindMapNode node, String key, String value);
+    void setToolTip(MindMapNode node, String key, String value);
 
 }

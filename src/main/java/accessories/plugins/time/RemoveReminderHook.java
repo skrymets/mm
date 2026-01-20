@@ -46,7 +46,7 @@ public class RemoveReminderHook extends MindMapNodeHookAdapter {
         super.invoke(node);
         ReminderHookBase hook = TimeManagementOrganizer.getHook(node);
         if (hook != null) {
-            List<MindMapNode> selected = Arrays.asList(new MindMapNode[]{node});
+            List<MindMapNode> selected = Arrays.asList(node);
             // adding the hook the second time, it is removed.
             getMindMapController().addHook(node, selected, TimeManagement.REMINDER_HOOK_NAME, null);
         }

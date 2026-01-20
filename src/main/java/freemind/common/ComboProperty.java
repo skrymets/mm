@@ -23,20 +23,21 @@
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import lombok.Getter;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 public class ComboProperty extends PropertyBean implements PropertyControl {
-    String description;
+    @Getter
+    final String description;
 
-    String label;
+    @Getter
+    final String label;
 
-    protected JComboBox<String> mComboBox = new JComboBox<>();
+    protected final JComboBox<String> mComboBox = new JComboBox<>();
 
     protected Vector<String> possibleValues;
 
@@ -58,12 +59,7 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
     }
 
     protected void addActionListener() {
-        mComboBox.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent pE) {
-                firePropertyChangeEvent();
-            }
-        });
+        mComboBox.addActionListener(pE -> firePropertyChangeEvent());
     }
 
     public ComboProperty(String description, String label, String[] possibles,
@@ -71,7 +67,7 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
         this.description = description;
         this.label = label;
         fillPossibleValues(possibles);
-        mComboBox.setModel(new DefaultComboBoxModel<String>(new Vector<String>(
+        mComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(
                 possibleTranslations)));
         addActionListener();
     }
@@ -81,7 +77,7 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
         this.description = description;
         this.label = label;
         fillPossibleValues(possibles);
-        mComboBox.setModel(new DefaultComboBoxModel<String>(new Vector<String>(
+        mComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(
                 possibleTranslations)));
     }
 
@@ -107,20 +103,12 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
      * setValue.
      */
     public void updateComboBoxEntries(List<String> possibles, List<String> possibleTranslations) {
-        mComboBox.setModel(new DefaultComboBoxModel<String>(new Vector<String>(
+        mComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(
                 possibleTranslations)));
         fillPossibleValues(possibles);
-        if (possibles.size() > 0) {
+        if (!possibles.isEmpty()) {
             mComboBox.setSelectedIndex(0);
         }
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public void setValue(String value) {
@@ -137,7 +125,7 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
     }
 
     public String getValue() {
-        return (String) possibleValues.get(mComboBox.getSelectedIndex());
+        return possibleValues.get(mComboBox.getSelectedIndex());
     }
 
     public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {

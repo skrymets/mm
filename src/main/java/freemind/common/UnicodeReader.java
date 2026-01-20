@@ -29,9 +29,9 @@ import java.io.*;
  * to be used. If BOM is not found then use a given default or system encoding.
  */
 public class UnicodeReader extends Reader {
-    PushbackInputStream internalIn;
+    final PushbackInputStream internalIn;
     InputStreamReader internalIn2 = null;
-    String defaultEnc;
+    final String defaultEnc;
 
     private static final int BOM_SIZE = 4;
 

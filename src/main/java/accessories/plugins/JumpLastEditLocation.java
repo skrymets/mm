@@ -59,7 +59,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
             if (node == null) {
                 return;
             }
-            log.trace("Selecting " + node + " as last edit location.");
+            log.trace("Selecting {} as last edit location.", node);
             getMindMapController().select(node, Tools.getVectorWithSingleElement(node));
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
@@ -70,9 +70,9 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
 
         private static final String PLUGIN_NAME = "accessories/plugins/JumpLastEditLocation.properties";
 
-        private MindMapController controller;
+        private final MindMapController controller;
 
-        private Vector<String> mLastEditLocations = new Vector<>();
+        private final Vector<String> mLastEditLocations = new Vector<>();
 
         public MindMapNode getLastEditLocation(MindMapNode pCurrentNode) {
             int size = mLastEditLocations.size();
@@ -92,7 +92,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                         index = 0;
                     }
                 }
-                id = (String) mLastEditLocations.elementAt(index);
+                id = mLastEditLocations.elementAt(index);
                 try {
                     pCurrentNode = controller.getNodeFromID(id);
                     return pCurrentNode;
@@ -147,7 +147,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                     lastLocation = newNodeAction.getNewId();
                 }
                 // prevent double entries
-                if (mLastEditLocations.size() > 0
+                if (!mLastEditLocations.isEmpty()
                         && Tools.safeEquals(lastLocation,
                         mLastEditLocations.lastElement())) {
                     return;
@@ -157,12 +157,10 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                     mLastEditLocations.remove(0);
                 }
                 try {
-                    log.trace("New last edit location: " + lastLocation
-                            + " from " + controller.marshall(doAction));
+                    log.trace("New last edit location: {} from {}", lastLocation, controller.marshall(doAction));
                 } catch (Exception e) {
                     log.error(e.getLocalizedMessage(), e);
-                    log.warn("Not able to marshall the action "
-                            + doAction.getClass() + " as " + doAction);
+                    log.warn("Not able to marshall the action {} as {}", doAction.getClass(), doAction);
                 }
             }
 

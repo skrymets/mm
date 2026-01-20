@@ -78,7 +78,7 @@ public interface MindMapHook {
      * created during the map's creation time but the registrations are
      * underdone on ModeController's startup method later.
      */
-    public interface PluginBaseClassSearcher {
+    interface PluginBaseClassSearcher {
         /**
          * @return the plugin base object {@link HookRegistration}.
          */

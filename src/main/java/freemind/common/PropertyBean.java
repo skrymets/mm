@@ -28,7 +28,7 @@ import java.util.Vector;
 
 public abstract class PropertyBean {
 
-    private Vector<PropertyChangeListener> mPropertyChangeListeners = new Vector<>();
+    private final Vector<PropertyChangeListener> mPropertyChangeListeners = new Vector<>();
 
     /**
      * The key of the property.

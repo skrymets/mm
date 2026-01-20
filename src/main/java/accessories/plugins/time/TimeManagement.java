@@ -104,40 +104,27 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
 
     private class AppendDateAction extends AppendDateAbstractAction {
         public AppendDateAction() {
-            init(new NodeFactory() {
-
-                public MindMapNode getNode(MindMapNode pNode) {
-                    return pNode;
-                }
-            }, "plugins/TimeManagement.xml_appendButton");
+            init(pNode -> pNode, "plugins/TimeManagement.xml_appendButton");
         }
 
     }
 
     private class AppendDateToChildAction extends AppendDateAbstractAction {
         public AppendDateToChildAction() {
-            init(new NodeFactory() {
-
-                public MindMapNode getNode(MindMapNode pNode) {
-                    return getMindMapController().addNewNode(pNode,
-                            pNode.getChildCount(), pNode.isLeft());
-                }
-            }, "plugins/TimeManagement.xml_appendAsNewButton");
+            init(pNode -> getMindMapController().addNewNode(pNode,
+                    pNode.getChildCount(), pNode.isLeft()), "plugins/TimeManagement.xml_appendAsNewButton");
         }
     }
 
     private class AppendDateToSiblingAction extends AppendDateAbstractAction {
         public AppendDateToSiblingAction() {
-            init(new NodeFactory() {
-
-                public MindMapNode getNode(MindMapNode pNode) {
-                    MindMapNode parent = pNode;
-                    if (!pNode.isRoot()) {
-                        parent = pNode.getParentNode();
-                    }
-                    return getMindMapController().addNewNode(parent,
-                            parent.getIndex(pNode) + 1, parent.isLeft());
+            init(pNode -> {
+                MindMapNode parent = pNode;
+                if (!pNode.isRoot()) {
+                    parent = pNode.getParentNode();
                 }
+                return getMindMapController().addNewNode(parent,
+                        parent.getIndex(pNode) + 1, parent.isLeft());
             }, "plugins/TimeManagement.xml_appendAsNewSiblingButton");
         }
     }
@@ -408,8 +395,8 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                 gb2.gridy = 0;
                 gb2.fill = GridBagConstraints.HORIZONTAL;
                 minuteField = new JTextField(2);
-                String minuteString = new Integer(Calendar.getInstance().get(
-                        Calendar.MINUTE)).toString();
+                String minuteString = Integer.toString(Calendar.getInstance().get(
+                        Calendar.MINUTE));
                 // padding with "0"
                 if (minuteString.length() < 2) {
                     minuteString = "0" + minuteString;
@@ -442,7 +429,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                                 .getText(
                                         "plugins/TimeManagement.xml_reminderNode_onlyOneDate"));
                 String message = formatter.format(messageArguments);
-                log.info(messageArguments.length + ", " + message);
+                log.info("{}, {}", messageArguments.length, message);
                 int result = JOptionPane.showConfirmDialog(
                         getMindMapController().getFrame().getJFrame(), message,
                         "FreeMind", JOptionPane.YES_NO_OPTION);
@@ -473,7 +460,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
         Properties properties = new Properties();
         if (pRemindAt != 0L) {
             properties.put(ReminderHookBase.REMINDUSERAT,
-                    new Long(pRemindAt).toString());
+                    Long.toString(pRemindAt));
         }
         getMindMapController().addHook(node,
                 Tools.getVectorWithSingleElement(node), REMINDER_HOOK_NAME,
@@ -506,7 +493,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
             value = Integer.parseInt(minuteField.getText());
             cal.set(Calendar.MINUTE, value);
             cal.set(Calendar.SECOND, 0);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return cal.getTime();
     }

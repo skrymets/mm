@@ -24,13 +24,13 @@ import javax.swing.*;
 
 public interface IFreeMindSplash {
 
-    public abstract FeedBack getFeedBack();
+    FeedBack getFeedBack();
 
-    public abstract void close();
+    void close();
 
-    public abstract void setVisible(boolean pB);
+    void setVisible(boolean pB);
 
-    public abstract ImageIcon getWindowIcon();
+    ImageIcon getWindowIcon();
 
 }
 // private static org.slf4j.Logger logger =

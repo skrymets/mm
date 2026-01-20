@@ -22,20 +22,32 @@ package freemind.model;
 
 import freemind.main.Tools;
 import freemind.modes.MapFeedback;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 
 public abstract class LineAdapter implements MindMapLine {
 
-    protected MapFeedback mMapFeedback;
+    protected final MapFeedback mMapFeedback;
+    /**
+     * -- GETTER --
+     *  I see no reason to hide the node, the line belongs to, to the public,
+     *  but... fc.
+     */
+    @Setter
+    @Getter
     protected MindMapNode target;
 
     public static final int DEFAULT_WIDTH = -1;
     protected int NORMAL_WIDTH = 1;
 
     // recursive attributes. may be accessed directly by the save() method.
+    @Setter
     protected Color color;
+    @Setter
     protected String style;
+    @Setter
     protected int width;
 
     //
@@ -88,10 +100,6 @@ public abstract class LineAdapter implements MindMapLine {
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public int getWidth() {
         if (width == DEFAULT_WIDTH)
             return NORMAL_WIDTH;
@@ -105,10 +113,6 @@ public abstract class LineAdapter implements MindMapLine {
         return getWidth();
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public String getStyle() {
         if (style == null) {
             return getStandardStyle();
@@ -116,29 +120,13 @@ public abstract class LineAdapter implements MindMapLine {
         return style;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
     public String toString() {
         return "";
-    }
-
-    public void setTarget(MindMapNode target) {
-        this.target = target;
     }
 
     // /////////
     // Private Methods
     // ///////
-
-    /**
-     * I see no reason to hide the node, the line belongs to, to the public,
-     * but... fc.
-     */
-    public MindMapNode getTarget() {
-        return target;
-    }
 
     public Object clone() {
         try {

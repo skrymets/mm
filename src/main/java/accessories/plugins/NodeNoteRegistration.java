@@ -49,7 +49,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 
@@ -108,10 +107,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 // now test, if different:
                 String documentText = normalizeString(getDocumentText());
                 String noteText = normalizeString(mNode.getNoteText());
-                log.trace("Old doc =\n'" + noteText
-                        + "', Current document: \n'" + documentText
-                        + "'. Comparison: '"
-                        + Tools.compareText(noteText, documentText) + "'.");
+                log.trace("Old doc =\n'{}', Current document: \n'{}'. Comparison: '{}'.", noteText, documentText, Tools.compareText(noteText, documentText));
                 if (!Tools.safeEquals(noteText, documentText)) {
                     log.trace("Making map dirty.");
                     // make map dirty in order to enable automatic save on note
@@ -165,7 +161,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 // Notes view)
                 // => the old method File.toURL() must be used again.
                 document.setBase(node.getMap().getFile().toURI().toURL());
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
 
             String note = node.getNoteText();
@@ -204,7 +200,7 @@ public class NodeNoteRegistration implements HookRegistration,
 
             if (noteViewerComponent.needsSaving()) {
                 if (editorContentEmpty) {
-                    controller.setNoteText(node, (String) null);
+                    controller.setNoteText(node, null);
                 } else {
                     controller.setNoteText(node, documentText);
                 }
@@ -237,7 +233,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 getHtmlEditorPanel().setCurrentDocumentContent(
                         newText == null ? "" : newText);
             }
-            setStateIcon(node, !(newText == null || newText.equals("")));
+            setStateIcon(node, !(newText == null || newText.isEmpty()));
         }
 
         public void onPreDeleteNode(MindMapNode node) {
@@ -253,7 +249,7 @@ public class NodeNoteRegistration implements HookRegistration,
     private static SHTMLPanel htmlEditorPanel;
 
     /**
-     * Indicates, whether or not the main panel has to be refreshed with new
+     * Indicates, whether the main panel has to be refreshed with new
      * content. The typical content will be empty, so this state is saved here.
      */
     private static boolean mLastContentEmpty = true;
@@ -389,15 +385,12 @@ public class NodeNoteRegistration implements HookRegistration,
             getDocument().getStyleSheet().addRule(rule);
             // done setting default font.
         }
-        noteViewerComponent.setOpenHyperlinkHandler(new ActionListener() {
-
-            public void actionPerformed(ActionEvent pE) {
-                try {
-                    getMindMapController().getFrame().openDocument(
-                            new URL(pE.getActionCommand()));
-                } catch (Exception e) {
-                    log.error(e.getLocalizedMessage(), e);
-                }
+        noteViewerComponent.setOpenHyperlinkHandler(pE -> {
+            try {
+                getMindMapController().getFrame().openDocument(
+                        new URL(pE.getActionCommand()));
+            } catch (Exception e) {
+                log.error(e.getLocalizedMessage(), e);
             }
         });
         controller.getController().insertComponentIntoSplitPane(

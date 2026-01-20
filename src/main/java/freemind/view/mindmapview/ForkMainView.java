@@ -27,7 +27,6 @@ import freemind.model.MindMapNode;
 import java.awt.*;
 import java.util.Iterator;
 
-@SuppressWarnings("serial")
 class ForkMainView extends MainView {
     public void paint(Graphics graphics) {
         Graphics2D g = (Graphics2D) graphics;

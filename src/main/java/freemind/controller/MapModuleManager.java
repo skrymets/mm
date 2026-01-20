@@ -29,6 +29,7 @@ import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import lombok.Getter;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -48,7 +49,7 @@ import static java.util.Collections.swap;
  */
 public class MapModuleManager {
 
-    MapModuleChangeObserverCompound listener = new MapModuleChangeObserverCompound();
+    final MapModuleChangeObserverCompound listener = new MapModuleChangeObserverCompound();
 
     public void addListener(MapModuleChangeObserver pListener) {
         listener.addListener(pListener);
@@ -72,6 +73,7 @@ public class MapModuleManager {
     /**
      * reference to the current mapmodule; null is allowed, too.
      */
+    @Getter
     private MapModule mapModule;
     /**
      * Reference to the current mode as the mapModule may be null.
@@ -107,10 +109,6 @@ public class MapModuleManager {
             returnValue.add(module.getDisplayName());
         }
         return Collections.unmodifiableList(returnValue);
-    }
-
-    public MapModule getMapModule() {
-        return mapModule;
     }
 
     public void newMapModule(MindMap map, ModeController modeController) {

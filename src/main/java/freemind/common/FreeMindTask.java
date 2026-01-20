@@ -44,11 +44,11 @@ public abstract class FreeMindTask extends Thread {
     private FreeMindProgressMonitor mProgressMonitor = null;
     private int mRounds;
     protected ProgressDescription mProgressDescription;
-    private RootPaneContainer mFrame;
-    private JPanel mGlass;
-    private Component mOldGlassPane;
+    private final RootPaneContainer mFrame;
+    private final JPanel mGlass;
+    private final Component mOldGlassPane;
 
-    protected class ProgressDescription {
+    protected static class ProgressDescription {
         /**
          * @param pProgressString
          * @param pProgressParameters
@@ -60,11 +60,11 @@ public abstract class FreeMindTask extends Thread {
             mProgressParameters = pProgressParameters;
         }
 
-        public String mProgressString;
+        public final String mProgressString;
         /**
          * To be inserted into mProgressString;
          */
-        public Object[] mProgressParameters;
+        public final Object[] mProgressParameters;
     }
 
     public FreeMindTask(RootPaneContainer pRootPaneContainer, int pAmountOfSteps, String pName) {
@@ -124,11 +124,7 @@ public abstract class FreeMindTask extends Thread {
             }
             if (System.currentTimeMillis() - startTime > TIME_TO_DISPLAY_PROGRESS_BAR_IN_MILLIS) {
                 // mProgressMonitor.setModal(true);
-                EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                        mProgressMonitor.setVisible(true);
-                    }
-                });
+                EventQueue.invokeLater(() -> mProgressMonitor.setVisible(true));
             }
             if (mProgressMonitor.isVisible()) {
                 ProgressDescription progressDescription = mProgressDescription;
@@ -147,12 +143,10 @@ public abstract class FreeMindTask extends Thread {
             }
         }
         setFinished(true);
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                mGlass.setVisible(false);
-                mFrame.setGlassPane(mOldGlassPane);
-                mProgressMonitor.dismiss();
-            }
+        EventQueue.invokeLater(() -> {
+            mGlass.setVisible(false);
+            mFrame.setGlassPane(mOldGlassPane);
+            mProgressMonitor.dismiss();
         });
     }
 
@@ -163,7 +157,7 @@ public abstract class FreeMindTask extends Thread {
      *
      * @return true, if further actions follow. False, if done.
      */
-    protected abstract boolean processAction() throws Exception;
+    protected abstract boolean processAction();
 
     public boolean isInterrupted() {
         return mInterrupted;

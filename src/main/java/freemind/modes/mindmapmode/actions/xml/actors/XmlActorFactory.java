@@ -30,88 +30,88 @@ import freemind.modes.ExtendedMapFeedback;
  */
 public class XmlActorFactory {
 
-    private ItalicNodeActor mActionActor;
-    private BoldNodeActor mBoldActor;
-    private StrikethroughNodeActor mStrikethroughActor;
-    private NewChildActor mNewChildActor;
-    private DeleteChildActor mDeleteChildActor;
-    private PasteActor mPasteActor;
-    private RemoveAllIconsActor mRemoveAllIconsActor;
-    private AddIconActor mAddIconActor;
-    private RemoveIconActor mRemoveIconActor;
-    private CloudActor mCloudActor;
-    private EdgeStyleActor mEdgeStyleActor;
-    private EdgeWidthActor mEdgeWidthActor;
-    private FontFamilyActor mFontFamilyActor;
-    private FontSizeActor mFontSizeActor;
-    private MoveNodeActor mMoveNodeActor;
-    private NodeStyleActor mNodeStyleActor;
-    private UnderlineActor mUnderlineActor;
-    private AddArrowLinkActor mAddArrowLinkActor;
-    private RemoveArrowLinkActor mRemoveArrowLinkActor;
-    private ChangeArrowLinkEndPointsActor mChangeArrowLinkEndPointsActor;
-    private ChangeArrowsInArrowLinkActor mChangeArrowsInArrowLinkActor;
-    private CloudColorActor mCloudColorActor;
-    private ColorArrowLinkActor mColorArrowLinkActor;
-    private EdgeColorActor mEdgeColorActor;
-    private EditActor mEditActor;
-    private NodeBackgroundColorActor mNodeBackgroundColorActor;
-    private NodeColorActor mNodeColorActor;
-    private AddHookActor mAddHookActor;
-    private NodeUpActor mNodeUpActor;
-    private RevertActor mRevertActor;
-    private ToggleFoldedActor mToggleFoldedActor;
-    private SetLinkActor mSetLinkActor;
-    private AddAttributeActor mAddAttributeActor;
-    private InsertAttributeActor mInsertAttributeActor;
-    private RemoveAttributeActor mRemoveAttributeActor;
-    private SetAttributeActor mSetAttributeActor;
-    private CutActor mCutActor;
-    private CompoundActor mCompoundActor;
-    private UndoPasteActor mUndoPasteActor;
-    private ChangeNoteTextActor mChangeNoteTextActor;
+    private final ItalicNodeActor mActionActor;
+    private final BoldNodeActor mBoldActor;
+    private final StrikethroughNodeActor mStrikethroughActor;
+    private final NewChildActor mNewChildActor;
+    private final DeleteChildActor mDeleteChildActor;
+    private final PasteActor mPasteActor;
+    private final RemoveAllIconsActor mRemoveAllIconsActor;
+    private final AddIconActor mAddIconActor;
+    private final RemoveIconActor mRemoveIconActor;
+    private final CloudActor mCloudActor;
+    private final EdgeStyleActor mEdgeStyleActor;
+    private final EdgeWidthActor mEdgeWidthActor;
+    private final FontFamilyActor mFontFamilyActor;
+    private final FontSizeActor mFontSizeActor;
+    private final MoveNodeActor mMoveNodeActor;
+    private final NodeStyleActor mNodeStyleActor;
+    private final UnderlineActor mUnderlineActor;
+    private final AddArrowLinkActor mAddArrowLinkActor;
+    private final RemoveArrowLinkActor mRemoveArrowLinkActor;
+    private final ChangeArrowLinkEndPointsActor mChangeArrowLinkEndPointsActor;
+    private final ChangeArrowsInArrowLinkActor mChangeArrowsInArrowLinkActor;
+    private final CloudColorActor mCloudColorActor;
+    private final ColorArrowLinkActor mColorArrowLinkActor;
+    private final EdgeColorActor mEdgeColorActor;
+    private final EditActor mEditActor;
+    private final NodeBackgroundColorActor mNodeBackgroundColorActor;
+    private final NodeColorActor mNodeColorActor;
+    private final AddHookActor mAddHookActor;
+    private final NodeUpActor mNodeUpActor;
+    private final RevertActor mRevertActor;
+    private final ToggleFoldedActor mToggleFoldedActor;
+    private final SetLinkActor mSetLinkActor;
+    private final AddAttributeActor mAddAttributeActor;
+    private final InsertAttributeActor mInsertAttributeActor;
+    private final RemoveAttributeActor mRemoveAttributeActor;
+    private final SetAttributeActor mSetAttributeActor;
+    private final CutActor mCutActor;
+    private final CompoundActor mCompoundActor;
+    private final UndoPasteActor mUndoPasteActor;
+    private final ChangeNoteTextActor mChangeNoteTextActor;
 
-    public XmlActorFactory(ExtendedMapFeedback pMapFeedback) {
-        mActionActor = new ItalicNodeActor(pMapFeedback);
-        mBoldActor = new BoldNodeActor(pMapFeedback);
-        mStrikethroughActor = new StrikethroughNodeActor(pMapFeedback);
-        mNewChildActor = new NewChildActor(pMapFeedback);
-        mDeleteChildActor = new DeleteChildActor(pMapFeedback);
-        mPasteActor = new PasteActor(pMapFeedback);
-        mRemoveAllIconsActor = new RemoveAllIconsActor(pMapFeedback);
-        mAddIconActor = new AddIconActor(pMapFeedback);
-        mRemoveIconActor = new RemoveIconActor(pMapFeedback);
-        mCloudActor = new CloudActor(pMapFeedback);
-        mEdgeStyleActor = new EdgeStyleActor(pMapFeedback);
-        mEdgeWidthActor = new EdgeWidthActor(pMapFeedback);
-        mFontFamilyActor = new FontFamilyActor(pMapFeedback);
-        mFontSizeActor = new FontSizeActor(pMapFeedback);
-        mMoveNodeActor = new MoveNodeActor(pMapFeedback);
-        mNodeStyleActor = new NodeStyleActor(pMapFeedback);
-        mUnderlineActor = new UnderlineActor(pMapFeedback);
-        mAddArrowLinkActor = new AddArrowLinkActor(pMapFeedback);
-        mRemoveArrowLinkActor = new RemoveArrowLinkActor(pMapFeedback);
-        mChangeArrowLinkEndPointsActor = new ChangeArrowLinkEndPointsActor(pMapFeedback);
-        mChangeArrowsInArrowLinkActor = new ChangeArrowsInArrowLinkActor(pMapFeedback);
-        mCloudColorActor = new CloudColorActor(pMapFeedback);
-        mColorArrowLinkActor = new ColorArrowLinkActor(pMapFeedback);
-        mEdgeColorActor = new EdgeColorActor(pMapFeedback);
-        mEditActor = new EditActor(pMapFeedback);
-        mNodeBackgroundColorActor = new NodeBackgroundColorActor(pMapFeedback);
-        mNodeColorActor = new NodeColorActor(pMapFeedback);
-        mAddHookActor = new AddHookActor(pMapFeedback);
-        mNodeUpActor = new NodeUpActor(pMapFeedback);
-        mRevertActor = new RevertActor(pMapFeedback);
-        mToggleFoldedActor = new ToggleFoldedActor(pMapFeedback);
-        mSetLinkActor = new SetLinkActor(pMapFeedback);
-        mAddAttributeActor = new AddAttributeActor(pMapFeedback);
-        mInsertAttributeActor = new InsertAttributeActor(pMapFeedback);
-        mRemoveAttributeActor = new RemoveAttributeActor(pMapFeedback);
-        mSetAttributeActor = new SetAttributeActor(pMapFeedback);
-        mCompoundActor = new CompoundActor(pMapFeedback);
-        mCutActor = new CutActor(pMapFeedback);
-        mUndoPasteActor = new UndoPasteActor(pMapFeedback);
-        mChangeNoteTextActor = new ChangeNoteTextActor(pMapFeedback);
+    public XmlActorFactory(ExtendedMapFeedback mapFeedback) {
+        mActionActor = new ItalicNodeActor(mapFeedback);
+        mBoldActor = new BoldNodeActor(mapFeedback);
+        mStrikethroughActor = new StrikethroughNodeActor(mapFeedback);
+        mNewChildActor = new NewChildActor(mapFeedback);
+        mDeleteChildActor = new DeleteChildActor(mapFeedback);
+        mPasteActor = new PasteActor(mapFeedback);
+        mRemoveAllIconsActor = new RemoveAllIconsActor(mapFeedback);
+        mAddIconActor = new AddIconActor(mapFeedback);
+        mRemoveIconActor = new RemoveIconActor(mapFeedback);
+        mCloudActor = new CloudActor(mapFeedback);
+        mEdgeStyleActor = new EdgeStyleActor(mapFeedback);
+        mEdgeWidthActor = new EdgeWidthActor(mapFeedback);
+        mFontFamilyActor = new FontFamilyActor(mapFeedback);
+        mFontSizeActor = new FontSizeActor(mapFeedback);
+        mMoveNodeActor = new MoveNodeActor(mapFeedback);
+        mNodeStyleActor = new NodeStyleActor(mapFeedback);
+        mUnderlineActor = new UnderlineActor(mapFeedback);
+        mAddArrowLinkActor = new AddArrowLinkActor(mapFeedback);
+        mRemoveArrowLinkActor = new RemoveArrowLinkActor(mapFeedback);
+        mChangeArrowLinkEndPointsActor = new ChangeArrowLinkEndPointsActor(mapFeedback);
+        mChangeArrowsInArrowLinkActor = new ChangeArrowsInArrowLinkActor(mapFeedback);
+        mCloudColorActor = new CloudColorActor(mapFeedback);
+        mColorArrowLinkActor = new ColorArrowLinkActor(mapFeedback);
+        mEdgeColorActor = new EdgeColorActor(mapFeedback);
+        mEditActor = new EditActor(mapFeedback);
+        mNodeBackgroundColorActor = new NodeBackgroundColorActor(mapFeedback);
+        mNodeColorActor = new NodeColorActor(mapFeedback);
+        mAddHookActor = new AddHookActor(mapFeedback);
+        mNodeUpActor = new NodeUpActor(mapFeedback);
+        mRevertActor = new RevertActor(mapFeedback);
+        mToggleFoldedActor = new ToggleFoldedActor(mapFeedback);
+        mSetLinkActor = new SetLinkActor(mapFeedback);
+        mAddAttributeActor = new AddAttributeActor(mapFeedback);
+        mInsertAttributeActor = new InsertAttributeActor(mapFeedback);
+        mRemoveAttributeActor = new RemoveAttributeActor(mapFeedback);
+        mSetAttributeActor = new SetAttributeActor(mapFeedback);
+        mCompoundActor = new CompoundActor(mapFeedback);
+        mCutActor = new CutActor(mapFeedback);
+        mUndoPasteActor = new UndoPasteActor(mapFeedback);
+        mChangeNoteTextActor = new ChangeNoteTextActor(mapFeedback);
     }
 
     public ItalicNodeActor getItalicActor() {
@@ -124,10 +124,6 @@ public class XmlActorFactory {
 
     public StrikethroughNodeActor getStrikethroughActor() {
         return mStrikethroughActor;
-    }
-
-    public void setStrikethroughActor(StrikethroughNodeActor pStrikethroughActor) {
-        mStrikethroughActor = pStrikethroughActor;
     }
 
     public NewChildActor getNewChildActor() {

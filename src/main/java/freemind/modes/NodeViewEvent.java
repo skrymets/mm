@@ -29,7 +29,7 @@ import freemind.model.MindMapNode;
  * @author Dimitri Polivaev 31.10.2005
  */
 public class NodeViewEvent {
-    MindMapNode node;
+    final MindMapNode node;
 
     public NodeViewEvent(MindMapNode node) {
         super();

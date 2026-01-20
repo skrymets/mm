@@ -58,10 +58,10 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
 
     private ActionPair apply(MindMapNode selected) {
         List<MindIcon> icons = selected.getIcons();
-        if (icons.size() == 0)
+        if (icons.isEmpty())
             return null;
         AddIconAction undoAction = getXmlActorFactory().getAddIconActor().createAddIconAction(selected,
-                (MindIcon) icons.get(icons.size() - 1), MindIcon.LAST);
+                icons.get(icons.size() - 1), MindIcon.LAST);
         return new ActionPair(
                 createRemoveIconXmlAction(selected, MindIcon.LAST), undoAction);
     }

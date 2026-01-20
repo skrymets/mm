@@ -27,6 +27,7 @@ import freemind.main.FreeMindMain;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
 import freemind.modes.common.dialogs.IconSelectionPopupDialog;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,11 +36,13 @@ import java.util.Vector;
 
 public class IconProperty extends PropertyBean implements PropertyControl,
         ActionListener {
-    String description;
+    @Getter
+    final String description;
 
-    String label;
+    @Getter
+    final String label;
 
-    JButton mButton;
+    final JButton mButton;
 
     private final FreeMindMain mFreeMindMain;
 
@@ -59,14 +62,6 @@ public class IconProperty extends PropertyBean implements PropertyControl,
         this.mIcons = icons;
         mButton = new JButton();
         mButton.addActionListener(this);
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public void setValue(String value) {
@@ -106,7 +101,7 @@ public class IconProperty extends PropertyBean implements PropertyControl,
         dialog.setVisible(true);
         int result = dialog.getResult();
         if (result >= 0) {
-            MindIcon icon = (MindIcon) mIcons.get(result);
+            MindIcon icon = mIcons.get(result);
             setValue(icon.getName());
             firePropertyChangeEvent();
         }

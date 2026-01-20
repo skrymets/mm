@@ -88,7 +88,7 @@ public class ExportToOoWriter extends ExportHook {
                                   Result result) throws IOException {
         URL xsltUrl = getResource(xsltFileName);
         if (xsltUrl == null) {
-            log.error("Can't find " + xsltFileName + " as resource.");
+            log.error("Can't find {} as resource.", xsltFileName);
             throw new IllegalArgumentException("Can't find " + xsltFileName
                     + " as resource.");
         }
@@ -133,12 +133,10 @@ public class ExportToOoWriter extends ExportHook {
                 ZipEntry entry = new ZipEntry(files[1]);
                 zipout.putNextEntry(entry);
                 if (files[0].endsWith(".xsl")) {
-                    log.info("Transforming with xslt " + files[0]
-                            + " to file " + files[1]);
+                    log.info("Transforming with xslt {} to file {}", files[0], files[1]);
                     resultValue &= applyXsltFile(files[0], writer, result);
                 } else {
-                    log.info("Copying resource from " + files[0]
-                            + " to file " + files[1]);
+                    log.info("Copying resource from {} to file {}", files[0], files[1]);
                     resultValue &= copyFromResource(files[0], zipout);
                 }
                 zipout.closeEntry();
@@ -156,19 +154,17 @@ public class ExportToOoWriter extends ExportHook {
         // Copies src file to dst file.
         // If the dst file does not exist, it is created
         try {
-            log.trace("searching for " + fileName);
+            log.trace("searching for {}", fileName);
             URL resource = getResource(fileName);
             if (resource == null) {
-                log.error("Cannot find resource: " + fileName);
+                log.error("Cannot find resource: {}", fileName);
                 return false;
             }
             InputStream in = resource.openStream();
             Tools.copyStream(in, out, false);
             return true;
         } catch (Exception e) {
-            log.error("File not found or could not be copied. "
-                    + "Was earching for " + fileName + " and should go to "
-                    + out);
+            log.error("File not found or could not be copied. Was earching for {} and should go to {}", fileName, out);
             log.error(e.getLocalizedMessage(), e);
             return false;
         }

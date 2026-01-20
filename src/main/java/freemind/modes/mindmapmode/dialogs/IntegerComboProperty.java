@@ -23,7 +23,7 @@ package freemind.modes.mindmapmode.dialogs;
 import freemind.common.ComboProperty;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Adjusts string values of integers to the nearest integer as string.
@@ -38,7 +38,7 @@ public class IntegerComboProperty extends ComboProperty {
     public IntegerComboProperty(String pDescription,
                                 String pLabel,
                                 String[] pPossibles,
-                                Vector<String> pSizesVector) {
+                                List<String> pSizesVector) {
         super(pDescription, pLabel, pPossibles, pSizesVector);
     }
 

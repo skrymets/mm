@@ -32,9 +32,9 @@ import java.awt.geom.Point2D;
  */
 public class SharpBezierEdgeView extends EdgeView {
 
-    CubicCurve2D.Float line1 = new CubicCurve2D.Float();
-    CubicCurve2D.Float line2 = new CubicCurve2D.Float();
-    GeneralPath graph = new GeneralPath();
+    final CubicCurve2D.Float line1 = new CubicCurve2D.Float();
+    final CubicCurve2D.Float line2 = new CubicCurve2D.Float();
+    final GeneralPath graph = new GeneralPath();
     Point2D.Float one, two;
     private int deltaX;
     private int deltaY;

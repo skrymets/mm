@@ -42,7 +42,7 @@ public interface ActionFilter {
      * @author foltin This is a marker interface. Final Action Filter are always
      * called last and *should* not alter the action pair.
      */
-    public interface FinalActionFilter extends ActionFilter {
+    interface FinalActionFilter extends ActionFilter {
 
     }
 
@@ -50,7 +50,7 @@ public interface ActionFilter {
      * @author foltin This is a marker interface. FirstActionFilter are always
      * called first and *should* not alter the action pair.
      */
-    public interface FirstActionFilter extends ActionFilter {
+    interface FirstActionFilter extends ActionFilter {
 
     }
 }

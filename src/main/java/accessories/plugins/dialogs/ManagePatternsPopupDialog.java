@@ -32,6 +32,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame.StylePatternFrameType;
 import freemind.swing.DefaultListModel;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -84,11 +85,17 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
 
     public static final int STAY = 2;
 
+    /**
+     * -- GETTER --
+     *
+     * @return Returns the result.
+     */
+    @Getter
     private int result = CANCEL;
 
     private javax.swing.JPanel jContentPane = null;
 
-    private MindMapController mController;
+    private final MindMapController mController;
 
     private JButton jCancelButton;
 
@@ -203,7 +210,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
             mList = new JList<>();
             ListTransferHandler mListHandler = new ListTransferHandler();
             mList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            mPatternListModel = new DefaultListModel<Pattern>();
+            mPatternListModel = new DefaultListModel<>();
             mPatternListModel.addAll(patternList);
             mList.setModel(mPatternListModel);
             mList.setTransferHandler(mListHandler);
@@ -225,21 +232,9 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
                 }
             });
             /* Some common action listeners */
-            ActionListener addPatternActionListener = new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    addPattern(actionEvent);
-                }
-            };
-            ActionListener fromNodesActionListener = new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    insertPatternFromNode(actionEvent);
-                }
-            };
-            ActionListener applyActionListener = new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    applyToNode(actionEvent);
-                }
-            };
+            ActionListener addPatternActionListener = this::addPattern;
+            ActionListener fromNodesActionListener = this::insertPatternFromNode;
+            ActionListener applyActionListener = this::applyToNode;
             /** Menu **/
             JMenuBar menu = new JMenuBar();
             StructuredMenuHolder menuHolder = new StructuredMenuHolder();
@@ -270,11 +265,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
             JMenuItem menuItemDuplicate = new JMenuItem(
                     mController.getText("ManagePatternsPopupDialog.duplicate"));
             menuHolder.addMenuItem(menuItemDuplicate, "popup/duplicate");
-            menuItemDuplicate.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    duplicatePattern(actionEvent);
-                }
-            });
+            menuItemDuplicate.addActionListener(this::duplicatePattern);
             JMenuItem menuItemFromNodes = new JMenuItem(
                     mController.getText("ManagePatternsPopupDialog.from_nodes"));
             menuHolder.addMenuItem(menuItemFromNodes, "popup/from_nodes");
@@ -282,11 +273,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
             menuHolder.addSeparator("popup/sep");
             JMenuItem menuItemRemove = new JMenuItem(
                     mController.getText("ManagePatternsPopupDialog.remove"));
-            menuItemRemove.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    removePattern(actionEvent);
-                }
-            });
+            menuItemRemove.addActionListener(this::removePattern);
             menuHolder.addMenuItem(menuItemRemove, "popup/remove");
             menuHolder.updateMenus(popupMenu, "popup/");
             mList.addMouseListener(new MouseAdapter() {
@@ -465,13 +452,6 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
         return jCancelButton;
     }
 
-    /**
-     * @return Returns the result.
-     */
-    public int getResult() {
-        return result;
-    }
-
     public String getText(String pKey) {
         return mController.getText(pKey);
     }
@@ -489,7 +469,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
             String oldPatternName = pattern.getName();
             String newPatternName = resultPatternCopy.getName();
             if (!(oldPatternName.equals(newPatternName))) {
-                // now, let's check, whether or not it is still unique:
+                // now, let's check, whether it is still unique:
                 for (Pattern otherPattern : mPatternListModel.unmodifiableList()) {
                     if (otherPattern == pattern) {
                         // myself is not regarded:

@@ -31,7 +31,6 @@ import java.awt.*;
  *
  * @date 11.03.2015
  */
-@SuppressWarnings("serial")
 public class NewLineTable extends ScalableJTable {
 
     @Override
@@ -75,14 +74,10 @@ public class NewLineTable extends ScalableJTable {
             }
             final int position = ((AttributeTableModel) getModel()).addAttributeHolder(attribute, true);
             // fix selection after sorting
-            EventQueue.invokeLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    NewLineTable table = NewLineTable.this;
-                    int selRow = table.convertRowIndexToView(position);
-                    table.getSelectionModel().setSelectionInterval(selRow, selRow);
-                }
+            EventQueue.invokeLater(() -> {
+                NewLineTable table = NewLineTable.this;
+                int selRow = table.convertRowIndexToView(position);
+                table.getSelectionModel().setSelectionInterval(selRow, selRow);
             });
         }
     }

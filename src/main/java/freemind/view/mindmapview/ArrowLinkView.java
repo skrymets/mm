@@ -31,8 +31,9 @@ import java.awt.geom.*;
  * This class represents a ArrowLink around a node.
  */
 public class ArrowLinkView {
-    protected MindMapArrowLink arrowLinkModel;
-    protected NodeView source, target;
+    protected final MindMapArrowLink arrowLinkModel;
+    protected final NodeView source;
+    protected final NodeView target;
     protected int iterativeLevel;
     protected CubicCurve2D arrowLinkCurve;
     static final Stroke DEF_STROKE = new BasicStroke(1);
@@ -194,12 +195,12 @@ public class ArrowLinkView {
         // 7.12.2003.
         double width = .5f;
         Polygon p = new Polygon();
-        p.addPoint((int) (p1.x), (int) (p1.y));
+        p.addPoint(p1.x, p1.y);
         p.addPoint((int) (p1.x + dxn + width * dyn), (int) (p1.y + dyn - width
                 * dxn));
         p.addPoint((int) (p1.x + dxn - width * dyn), (int) (p1.y + dyn + width
                 * dxn));
-        p.addPoint((int) (p1.x), (int) (p1.y));
+        p.addPoint(p1.x, p1.y);
         g.fillPolygon(p);
     }
 
@@ -209,7 +210,7 @@ public class ArrowLinkView {
     private final int MAXIMAL_RECTANGLE_SIZE_FOR_COLLISION_DETECTION = 16;
 
     /**
-     * Determines, whether or not a given point p is in an epsilon-neighbourhood
+     * Determines whether a given point p is in an epsilon-neighbourhood
      * for the cubic curve.
      */
     public boolean detectCollision(Point p) {
@@ -281,7 +282,7 @@ public class ArrowLinkView {
      */
     public int getRealWidth() {
         int width = getWidth();
-        return (width < 1) ? 1 : width;
+        return Math.max(width, 1);
     }
 
     protected MapView getMap() {

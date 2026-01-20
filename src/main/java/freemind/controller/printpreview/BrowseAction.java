@@ -26,18 +26,14 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 class BrowseAction extends AbstractAction {
-    private JLabel pageNumber;
+    private final JLabel pageNumber;
 
     public BrowseAction(Preview preview, JLabel pageNumber, int pageStep) {
         super();
         this.preview = preview;
         this.pageStep = pageStep;
         this.pageNumber = pageNumber;
-        pageIndexPainter = new Runnable() {
-            public void run() {
-                paintPageIndex();
-            }
-        };
+        pageIndexPainter = this::paintPageIndex;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -54,10 +50,10 @@ class BrowseAction extends AbstractAction {
     }
 
     private String getPageIndexText() {
-        return "- " + String.valueOf(1 + preview.getPageIndex()) + " -";
+        return "- " + (1 + preview.getPageIndex()) + " -";
     }
 
-    protected Preview preview;
-    protected int pageStep;
+    protected final Preview preview;
+    protected final int pageStep;
     private final Runnable pageIndexPainter;
 }

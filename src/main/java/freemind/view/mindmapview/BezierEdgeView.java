@@ -28,7 +28,7 @@ import java.awt.geom.CubicCurve2D;
  */
 public class BezierEdgeView extends EdgeView {
 
-    CubicCurve2D.Float graph = new CubicCurve2D.Float();
+    final CubicCurve2D.Float graph = new CubicCurve2D.Float();
     private static final int XCTRL = 12;// the distance between endpoint and
     // controlpoint
     private static final int CHILD_XCTRL = 20; // -||- at the child's end

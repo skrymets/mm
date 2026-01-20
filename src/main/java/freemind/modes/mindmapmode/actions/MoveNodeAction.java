@@ -33,7 +33,7 @@ public class MoveNodeAction extends NodeGeneralAction {
      *
      */
     public MoveNodeAction(MindMapController modeController) {
-        super(modeController, "reset_node_position", (String) null);
+        super(modeController, "reset_node_position", null);
         setDoActionClass(MoveNodeXmlAction.class);
     }
 

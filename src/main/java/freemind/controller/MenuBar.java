@@ -23,6 +23,7 @@ package freemind.controller;
 import freemind.main.FreeMind;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -38,7 +39,6 @@ import java.util.ListIterator;
  * This is the menu bar for FreeMind. Actions are defined in MenuListener.
  * Moreover, the StructuredMenuHolder of all menus are hold here.
  */
-@SuppressWarnings("serial")
 @Slf4j
 public class MenuBar extends JMenuBar {
 
@@ -61,11 +61,14 @@ public class MenuBar extends JMenuBar {
     public static final String FORMAT_MENU = MENU_BAR_PREFIX + "format/";
     public static final String EXTRAS_MENU = MENU_BAR_PREFIX + "extras/";
 
+    /**
+     */
+    @Getter
     private StructuredMenuHolder menuHolder;
 
     JPopupMenu mapsPopupMenu;
-    Controller c;
-    ActionListener mapsMenuActionListener = new MapsMenuActionListener();
+    final Controller c;
+    final ActionListener mapsMenuActionListener = new MapsMenuActionListener();
 
     public MenuBar(Controller controller) {
         this.c = controller;
@@ -372,12 +375,8 @@ public class MenuBar extends JMenuBar {
 
     private class MapsMenuActionListener implements ActionListener {
         public void actionPerformed(final ActionEvent e) {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    c.getMapModuleManager().changeToMapModule(
-                            e.getActionCommand());
-                }
-            });
+            SwingUtilities.invokeLater(() -> c.getMapModuleManager().changeToMapModule(
+                    e.getActionCommand()));
         }
     }
 
@@ -403,19 +402,8 @@ public class MenuBar extends JMenuBar {
 
     private class ModesMenuActionListener implements ActionListener {
         public void actionPerformed(final ActionEvent e) {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    c.createNewMode(e.getActionCommand());
-                }
-            });
+            SwingUtilities.invokeLater(() -> c.createNewMode(e.getActionCommand()));
         }
-    }
-
-    /**
-     *
-     */
-    public StructuredMenuHolder getMenuHolder() {
-        return menuHolder;
     }
 
     /*

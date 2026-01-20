@@ -23,14 +23,22 @@
  */
 package freemind.controller.filter.util;
 
+import lombok.Getter;
+
 import javax.swing.*;
 
 /**
  * @author Dimitri Polivaev 10.07.2005
  */
+@Getter
 @SuppressWarnings("serial")
 public class SortedComboBoxModel extends SortedMapListModel implements
         SortedListModel, ComboBoxModel {
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.swing.ComboBoxModel#getSelectedItem()
+     */
     private Object selectedItem;
 
     /*
@@ -43,12 +51,4 @@ public class SortedComboBoxModel extends SortedMapListModel implements
         fireContentsChanged(this, -1, -1);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.ComboBoxModel#getSelectedItem()
-     */
-    public Object getSelectedItem() {
-        return selectedItem;
-    }
 }

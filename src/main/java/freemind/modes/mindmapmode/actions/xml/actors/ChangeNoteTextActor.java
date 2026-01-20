@@ -60,7 +60,7 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
     public EditNoteToNodeAction createEditNoteToNodeAction(MindMapNode node, String text) {
         EditNoteToNodeAction nodeAction = new EditNoteToNodeAction();
         nodeAction.setNode(getNodeID(node));
-        if (text != null && (HtmlTools.htmlToPlain(text).length() != 0 || text.indexOf("<img") >= 0)) {
+        if (text != null && (!HtmlTools.htmlToPlain(text).isEmpty() || text.indexOf("<img") >= 0)) {
             nodeAction.setText(text);
         } else {
             nodeAction.setText(null);
@@ -74,7 +74,7 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
             // they are equal.
             return;
         }
-        log.trace("Old Note Text:'" + oldNoteText + ", new:'" + text + "'.");
+        log.trace("Old Note Text:'{}, new:'{}'.", oldNoteText, text);
         log.trace(Tools.compareText(oldNoteText, text));
         EditNoteToNodeAction doAction = createEditNoteToNodeAction(node, text);
         EditNoteToNodeAction undoAction = createEditNoteToNodeAction(node,

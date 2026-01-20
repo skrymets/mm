@@ -22,19 +22,22 @@
 /*$Id: StructuredMenuItemHolder.java,v 1.1.4.1.16.1 2008/01/13 20:55:34 christianfoltin Exp $*/
 package freemind.controller;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.*;
 
+@Getter
 public class StructuredMenuItemHolder {
+    @Setter
     private JMenuItem menuItem;
-    private Action action;
+    @Setter
     private MenuItemEnabledListener enabledListener;
+    @Setter
     private MenuItemSelectedListener selectionListener;
+    private Action action;
 
     public StructuredMenuItemHolder() {
-    }
-
-    public Action getAction() {
-        return action;
     }
 
     public void setAction(Action action) {
@@ -45,31 +48,7 @@ public class StructuredMenuItemHolder {
         }
         if (action instanceof MenuItemSelectedListener) {
             MenuItemSelectedListener listener = (MenuItemSelectedListener) action;
-            setSelectedListener(listener);
+            setSelectionListener(listener);
         }
-    }
-
-    public MenuItemEnabledListener getEnabledListener() {
-        return enabledListener;
-    }
-
-    public void setEnabledListener(MenuItemEnabledListener enabledListener) {
-        this.enabledListener = enabledListener;
-    }
-
-    public JMenuItem getMenuItem() {
-        return menuItem;
-    }
-
-    public void setMenuItem(JMenuItem menuItem) {
-        this.menuItem = menuItem;
-    }
-
-    public MenuItemSelectedListener getSelectionListener() {
-        return selectionListener;
-    }
-
-    public void setSelectedListener(MenuItemSelectedListener selectionListener) {
-        this.selectionListener = selectionListener;
     }
 }

@@ -25,10 +25,8 @@ package freemind.modes.common.dialogs;
 import freemind.modes.ModeController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-@SuppressWarnings("serial")
 public class PersistentEditableComboBox extends JComboBox {
     private ActionListener actionListener = null;
 
@@ -48,19 +46,16 @@ public class PersistentEditableComboBox extends JComboBox {
         String storedUrls = mModeController.getFrame().getProperty(pStorageKey);
         if (storedUrls != null) {
             String[] array = storedUrls.split("\t");
-            for (int i = 0; i < array.length; i++) {
-                String string = array[i];
+            for (String string : array) {
                 addUrl(string, false);
             }
         }
         setSelectedIndex(0);
-        super.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                addUrl(getText(), false);
-                // notification only if a new string is entered.
-                if (sendExternalEvents && actionListener != null) {
-                    actionListener.actionPerformed(arg0);
-                }
+        super.addActionListener(arg0 -> {
+            addUrl(getText(), false);
+            // notification only if a new string is entered.
+            if (sendExternalEvents && actionListener != null) {
+                actionListener.actionPerformed(arg0);
             }
         });
     }
@@ -94,8 +89,6 @@ public class PersistentEditableComboBox extends JComboBox {
         }
         return true;
     }
-
-    ;
 
     public String getText() {
         return getSelectedItem().toString();

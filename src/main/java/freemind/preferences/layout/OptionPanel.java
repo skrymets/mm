@@ -40,6 +40,8 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.IconAction;
 import freemind.preferences.FreemindPropertyContributor;
 import freemind.preferences.layout.GrabKeyDialog.KeyBinding;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -48,8 +50,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author foltin
@@ -79,8 +81,8 @@ public class OptionPanel implements TextTranslator {
 
     private final JDialog frame;
 
-    private HashMap<String, JButton> tabButtonMap = new HashMap<>();
-    private HashMap<String, ChangeTabAction> tabActionMap = new HashMap<>();
+    private final HashMap<String, JButton> tabButtonMap = new HashMap<>();
+    private final HashMap<String, ChangeTabAction> tabActionMap = new HashMap<>();
     private String selectedPanel = null;
 
     private final OptionPanelFeedback feedback;
@@ -90,7 +92,7 @@ public class OptionPanel implements TextTranslator {
     private static final String PREFERENCE_STORAGE_PROPERTY = "OptionPanel_Window_Properties";
     private static final String DEFAULT_LAYOUT_FORMAT = "right:max(40dlu;p), 4dlu, 120dlu, 7dlu";
 
-    private Vector<KeyBinding> allBindings;
+    private final Vector<KeyBinding> allBindings;
 
     /**
      * @throws IOException
@@ -106,12 +108,11 @@ public class OptionPanel implements TextTranslator {
         WindowConfigurationStorage storage = XmlBindingTools.getInstance()
                 .decorateDialog(fm.getController(), frame,
                         PREFERENCE_STORAGE_PROPERTY);
-        if (storage != null
-                && storage instanceof OptionPanelWindowConfigurationStorage) {
+        if (storage instanceof OptionPanelWindowConfigurationStorage) {
             OptionPanelWindowConfigurationStorage oWindowSettings = (OptionPanelWindowConfigurationStorage) storage;
             selectedPanel = oWindowSettings.getPanel();
         }
-        allBindings = new Vector<KeyBinding>();
+        allBindings = new Vector<>();
     }
 
     public interface OptionPanelFeedback {
@@ -123,8 +124,7 @@ public class OptionPanel implements TextTranslator {
      *
      */
     public void setProperties() {
-        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext(); ) {
-            PropertyControl control = i.next();
+        for (PropertyControl control : controls) {
             if (control instanceof PropertyBean) {
                 PropertyBean bean = (PropertyBean) control;
                 // System.out.println("grep -n -e \""+bean.getLabel()+"\" -r * |
@@ -140,8 +140,7 @@ public class OptionPanel implements TextTranslator {
 
     private Properties getOptionProperties() {
         Properties p = new Properties();
-        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext(); ) {
-            PropertyControl control = i.next();
+        for (PropertyControl control : controls) {
             if (control instanceof PropertyBean) {
                 PropertyBean bean = (PropertyBean) control;
                 final String value = bean.getValue();
@@ -166,8 +165,7 @@ public class OptionPanel implements TextTranslator {
         String lastTabName = null;
 
         controls = getControls();
-        for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext(); ) {
-            PropertyControl control = i.next();
+        for (PropertyControl control : controls) {
             // System.out.println("layouting : " + control.getLabel());
 
             if (control instanceof NewTabProperty) {
@@ -195,7 +193,7 @@ public class OptionPanel implements TextTranslator {
         rightStack.add(rightBuilder.getPanel(), lastTabName);
         // select one panel:
         if (selectedPanel != null && tabActionMap.containsKey(selectedPanel)) {
-            ((ChangeTabAction) tabActionMap.get(selectedPanel))
+            tabActionMap.get(selectedPanel)
                     .actionPerformed(null);
         }
         JScrollPane rightScrollPane = new JScrollPane(rightStack);
@@ -204,20 +202,11 @@ public class OptionPanel implements TextTranslator {
                 leftBuilder.getPanel(), rightScrollPane);
         frame.getContentPane().add(centralPanel, BorderLayout.CENTER);
         JButton cancelButton = new JButton(getText("Cancel"));
-        cancelButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-                closeWindow();
-            }
-        });
+        cancelButton.addActionListener(arg0 -> closeWindow());
         JButton okButton = new JButton(getText("OK"));
-        okButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-                feedback.writeProperties(getOptionProperties());
-                closeWindow();
-            }
-
+        okButton.addActionListener(arg0 -> {
+            feedback.writeProperties(getOptionProperties());
+            closeWindow();
         });
         frame.getRootPane().setDefaultButton(okButton);
         frame.getContentPane().add(
@@ -256,7 +245,7 @@ public class OptionPanel implements TextTranslator {
     }
 
     private JButton getTabButton(String name) {
-        return (JButton) tabButtonMap.get(name);
+        return tabButtonMap.get(name);
     }
 
     private Collection<JButton> getAllButtons() {
@@ -265,11 +254,11 @@ public class OptionPanel implements TextTranslator {
 
     private final class ChangeTabAction implements ActionListener {
 
-        private CardLayout cardLayout;
+        private final CardLayout cardLayout;
 
-        private JPanel centralPanel;
+        private final JPanel centralPanel;
 
-        private String tabName;
+        private final String tabName;
 
         private ChangeTabAction(CardLayout cardLayout, JPanel centralPanel,
                                 String tabName) {
@@ -293,8 +282,9 @@ public class OptionPanel implements TextTranslator {
 
     public static class NewTabProperty implements PropertyControl {
 
-        private String label;
-        private String layoutFormat;
+        @Getter
+        private final String label;
+        private final String layoutFormat;
 
         public NewTabProperty(String label) {
             this(label, DEFAULT_LAYOUT_FORMAT);
@@ -308,10 +298,6 @@ public class OptionPanel implements TextTranslator {
 
         public String getDescription() {
             return layoutFormat;
-        }
-
-        public String getLabel() {
-            return label;
         }
 
         public void layout(DefaultFormBuilder builder,
@@ -329,16 +315,19 @@ public class OptionPanel implements TextTranslator {
             PropertyControl {
 
         private int modifierMask = 0;
-        String description;
+        @Getter
+        final String description;
 
-        String label;
+        @Getter
+        final String label;
 
-        JButton mButton = new JButton();
+        final JButton mButton = new JButton();
+        @Setter
         private String labelText;
         private ImageIcon icon;
 
         private RowSpec rowSpec;
-        GrabKeyDialog.KeyBinding kb;
+        final GrabKeyDialog.KeyBinding kb;
 
         /**
          *
@@ -348,37 +337,26 @@ public class OptionPanel implements TextTranslator {
             this.description = description;
             this.label = label;
             kb = createBinding(getText(label), label, fmMain.getAdjustableProperty(label), this);
-            mButton.addActionListener(new ActionListener() {
+            mButton.addActionListener(arg0 -> {
 
-                public void actionPerformed(ActionEvent arg0) {
-
-                    GrabKeyDialog dialog = new GrabKeyDialog(fmMain, frame,
-                            new GrabKeyDialog.KeyBinding(getLabel(), getLabel(), getValue(), false),
-                            allBindings, null, modifierMask);
-                    if (dialog.isOK()) {
-                        if (dialog.bindingReset != null) {
-                            KeyProperty k = findControlByKB(dialog.bindingReset);
-                            if (k != null) {
-                                k.setValue("");
-                            }
+                GrabKeyDialog dialog = new GrabKeyDialog(fmMain, frame,
+                        new KeyBinding(getLabel(), getLabel(), getValue(), false),
+                        allBindings, null, modifierMask);
+                if (dialog.isOK()) {
+                    if (dialog.bindingReset != null) {
+                        KeyProperty k = findControlByKB(dialog.bindingReset);
+                        if (k != null) {
+                            k.setValue("");
                         }
-                        setValue(dialog.getShortcut());
-                        firePropertyChangeEvent();
                     }
+                    setValue(dialog.getShortcut());
+                    firePropertyChangeEvent();
                 }
             });
         }
 
         public void disableModifiers() {
             modifierMask = KeyEvent.ALT_MASK | KeyEvent.CTRL_MASK;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getLabel() {
-            return label;
         }
 
         public void setValue(String value) {
@@ -417,10 +395,6 @@ public class OptionPanel implements TextTranslator {
             mButton.setEnabled(pEnabled);
         }
 
-        public void setLabelText(String labelText) {
-            this.labelText = labelText;
-        }
-
         public void setImageIcon(ImageIcon icon) {
             this.icon = icon;
 
@@ -429,7 +403,7 @@ public class OptionPanel implements TextTranslator {
 
     //
     private Vector<PropertyControl> getControls() {
-        Vector<PropertyControl> controls = new Vector<PropertyControl>();
+        Vector<PropertyControl> controls = new Vector<>();
         /**
          * *********************************************************************
          * Language
@@ -449,13 +423,10 @@ public class OptionPanel implements TextTranslator {
                         "it", "ja", "ko", "lt", "nl", "nn", "nb", "pl",
                         "pt_BR", "pt_PT", "ro", "ru", "sk", "se", "sl", "sr",
                         "tr", "uk_UA", "vi", "zh_TW", "zh_CN"},
-                new TextTranslator() {
-
-                    public String getText(String pKey) {
-                        // decorator, that removes "TranslateMe" comments.
-                        return Tools.removeTranslateComment(OptionPanel.this
-                                .getText(pKey));
-                    }
+                pKey -> {
+                    // decorator, that removes "TranslateMe" comments.
+                    return Tools.removeTranslateComment(OptionPanel.this
+                            .getText(pKey));
                 })); // automatic
 
         controls.add(new BooleanProperty(FreeMindCommon.CHECK_SPELLING
@@ -1134,8 +1105,7 @@ public class OptionPanel implements TextTranslator {
         if (modeController instanceof MindMapController) {
             MindMapController controller = (MindMapController) modeController;
             List<IconAction> iconActions = controller.iconActions;
-            Vector<IconInformation> actions = new Vector<>();
-            actions.addAll(iconActions);
+            List<IconInformation> actions = new ArrayList<>(iconActions);
             actions.add(controller.removeLastIconAction);
             actions.add(controller.removeAllIconsAction);
             controls.add(new NextLineProperty());
@@ -1300,8 +1270,7 @@ public class OptionPanel implements TextTranslator {
         controls.add(new BooleanProperty("export_icons_in_html.tooltip",
                 "export_icons_in_html")); // false
 
-        for (Iterator<FreemindPropertyContributor> iter = sContributors.iterator(); iter.hasNext(); ) {
-            FreemindPropertyContributor contributor = iter.next();
+        for (FreemindPropertyContributor contributor : sContributors) {
             controls.addAll(contributor.getControls(this));
         }
         return controls;
@@ -1317,7 +1286,7 @@ public class OptionPanel implements TextTranslator {
         frame.dispose();
     }
 
-    private static Set<FreemindPropertyContributor> sContributors = new HashSet<FreemindPropertyContributor>();
+    private static final Set<FreemindPropertyContributor> sContributors = new HashSet<>();
 
     public static void addContributor(FreemindPropertyContributor contributor) {
         sContributors.add(contributor);

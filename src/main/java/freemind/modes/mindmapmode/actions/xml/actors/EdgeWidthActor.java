@@ -61,7 +61,7 @@ public class EdgeWidthActor extends XmlActorAdapter {
     }
 
     public int getWidth(MindMapNode selected) {
-        return ((EdgeAdapter) selected.getEdge()).getRealWidth();
+        return selected.getEdge().getRealWidth();
     }
 
     private EdgeWidthFormatAction createEdgeWidthFormatAction(

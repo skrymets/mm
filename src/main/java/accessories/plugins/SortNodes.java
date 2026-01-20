@@ -28,17 +28,14 @@ import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 
 import java.awt.datatransfer.Transferable;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * @author foltin
  */
 public class SortNodes extends MindMapNodeHookAdapter {
 
-    private final class NodeTextComparator implements Comparator<MindMapNode> {
+    private static final class NodeTextComparator implements Comparator<MindMapNode> {
         private boolean mNegative = false;
 
         public int compare(MindMapNode node1, MindMapNode node2) {
@@ -73,9 +70,8 @@ public class SortNodes extends MindMapNodeHookAdapter {
      */
     public void invoke(MindMapNode node) {
         // we want to sort the children of the node:
-        Vector<MindMapNode> sortVector = new Vector<>();
         // put in all children of the node
-        sortVector.addAll(node.getChildren());
+        List<MindMapNode> sortVector = new ArrayList<>(node.getChildren());
         NodeTextComparator comparator = new NodeTextComparator();
         MindMapNode last = null;
         boolean isOrdered = true;
@@ -91,7 +87,7 @@ public class SortNodes extends MindMapNodeHookAdapter {
         if (isOrdered) {
             comparator.setNegative();
         }
-        Collections.sort(sortVector, comparator);
+        sortVector.sort(comparator);
         // now, as it is sorted. we cut the children
         for (MindMapNode child : sortVector) {
             List<MindMapNode> childList = Tools.getVectorWithSingleElement(child);

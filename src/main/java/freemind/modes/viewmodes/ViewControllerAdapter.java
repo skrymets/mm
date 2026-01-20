@@ -28,7 +28,6 @@ import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.Mode;
 import freemind.modes.common.CommonNodeKeyListener;
-import freemind.modes.common.CommonNodeKeyListener.EditHandler;
 import freemind.modes.common.CommonToggleFoldedAction;
 import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
@@ -37,7 +36,6 @@ import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 /**
@@ -145,12 +143,8 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
         getMapMouseMotionListener().register(
                 new CommonMouseMotionManager(this));
         getNodeKeyListener().register(
-                new CommonNodeKeyListener(this, new EditHandler() {
-
-                    public void edit(KeyEvent e, boolean addNew,
-                                     boolean editLong) {
-                        // no edit.
-                    }
+                new CommonNodeKeyListener(this, (e, addNew, editLong) -> {
+                    // no edit.
                 }));
 
     }

@@ -24,9 +24,7 @@ import freemind.main.XMLParseException;
 import freemind.view.MapModule;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -37,22 +35,22 @@ import java.util.*;
  */
 @Slf4j
 public class LastOpenedList {
-    private Controller mController;
+    private final Controller mController;
     private int maxEntries = 25; // is rewritten from property anyway
     /**
      * Contains Restore strings.
      */
-    private List<String> mlastOpenedList = new LinkedList<>();
+    private final List<String> mlastOpenedList = new LinkedList<>();
     /**
      * Contains Restore string => map name (map.toString()).
      */
-    private Map<String, String> mRestorableToMapName = new HashMap<>();
+    private final Map<String, String> mRestorableToMapName = new HashMap<>();
 
     public LastOpenedList(Controller c, String restored) {
         this.mController = c;
         try {
-            maxEntries = new Integer(c.getFrame().getProperty(
-                    "last_opened_list_length")).intValue();
+            maxEntries = Integer.parseInt(c.getFrame().getProperty(
+                    "last_opened_list_length"));
         } catch (NumberFormatException e) {
             log.error(e.getLocalizedMessage(), e);
         }
@@ -73,9 +71,7 @@ public class LastOpenedList {
     public void add(String restoreString, String name) {
         if (restoreString == null)
             return;
-        if (mlastOpenedList.contains(restoreString)) {
-            mlastOpenedList.remove(restoreString);
-        }
+        mlastOpenedList.remove(restoreString);
         mlastOpenedList.add(0, restoreString);
         mRestorableToMapName.put(restoreString, name);
 
@@ -93,7 +89,7 @@ public class LastOpenedList {
      * fc, 8.8.2004: This method returns a string representation of this class.
      */
     public String save() {
-        String str = new String();
+        String str = "";
         for (ListIterator<String> it = listIterator(); it.hasNext(); ) {
             str = str.concat(it.next() + ";");
         }
@@ -112,12 +108,12 @@ public class LastOpenedList {
         }
     }
 
-    public boolean open(String restoreable) throws FileNotFoundException,
-            XMLParseException, MalformedURLException, IOException,
+    public boolean open(String restoreable) throws
+            XMLParseException, IOException,
             URISyntaxException {
         boolean changedToMapModule = mController.getMapModuleManager()
                 .tryToChangeToMapModule(
-                        (String) mRestorableToMapName.get(restoreable));
+                        mRestorableToMapName.get(restoreable));
         if ((restoreable != null) && !(changedToMapModule)) {
             String mode = Tools.getModeFromRestorable(restoreable);
             String fileName = Tools.getFileNameFromRestorable(restoreable);

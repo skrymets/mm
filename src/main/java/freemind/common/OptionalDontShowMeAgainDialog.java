@@ -73,7 +73,7 @@ public class OptionalDontShowMeAgainDialog {
     public static class StandardPropertyHandler implements
             DontShowPropertyHandler {
         private final Controller mController;
-        private String mPropertyName;
+        private final String mPropertyName;
 
         public StandardPropertyHandler(Controller pController,
                                        String pPropertyName) {

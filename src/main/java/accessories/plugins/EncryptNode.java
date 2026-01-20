@@ -33,7 +33,6 @@ import freemind.modes.ModeController;
 import freemind.modes.common.dialogs.EnterPasswordDialog;
 import freemind.modes.mindmapmode.EncryptedMindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.MindMapController.NewNodeCreator;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
@@ -115,21 +114,22 @@ public class EncryptNode extends MindMapNodeHookAdapter {
     public void invoke(MindMapNode node) {
         super.invoke(node);
         String actionType = getResourceString("action");
-        if (actionType.equals("encrypt")) {
-            encrypt(node);
-            getController().nodeRefresh(node);
-            return;
-        } else if (actionType.equals("toggleCryptState")) {
-            toggleCryptState(node);
-            getController().nodeRefresh(node);
-            return;
-        } else if (actionType.equals("encrypted_map")) {
-            // new map
-            newEncryptedMap();
-            return;
-        } else {
-            throw new IllegalArgumentException("Unknown action type:"
-                    + actionType);
+        switch (actionType) {
+            case "encrypt":
+                encrypt(node);
+                getController().nodeRefresh(node);
+                return;
+            case "toggleCryptState":
+                toggleCryptState(node);
+                getController().nodeRefresh(node);
+                return;
+            case "encrypted_map":
+                // new map
+                newEncryptedMap();
+                return;
+            default:
+                throw new IllegalArgumentException("Unknown action type:"
+                        + actionType);
         }
     }
 
@@ -165,21 +165,18 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         if (password == null) {
             return;
         }
-        MindMapController mindmapcontroller = (MindMapController) getMindMapController();
+        MindMapController mindmapcontroller = getMindMapController();
         // FIXME: not multithreading safe
-        mindmapcontroller.setNewNodeCreator(new NewNodeCreator() {
-
-            public MindMapNode createNode(Object userObject, MindMap map) {
-                EncryptedMindMapNode encryptedMindMapNode = new EncryptedMindMapNode(
-                        userObject, map);
-                encryptedMindMapNode.setPassword(password);
-                return encryptedMindMapNode;
-            }
+        mindmapcontroller.setNewNodeCreator((userObject, map) -> {
+            EncryptedMindMapNode encryptedMindMapNode = new EncryptedMindMapNode(
+                    userObject, map);
+            encryptedMindMapNode.setPassword(password);
+            return encryptedMindMapNode;
         });
         try {
             getMindMapController().addNewNode(node, 0,
                     node.isLeft());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         // normal value:
         mindmapcontroller.setNewNodeCreator(null);

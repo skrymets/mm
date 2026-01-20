@@ -21,8 +21,6 @@ package accessories.plugins;
 
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
-import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.NodeViewVisitor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,7 +62,7 @@ public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
     // MindMapNode newNode=((ControllerAdapter)getController()).newNode();
     // ((MapAdapter) getMap()).insertNodeInto(newNode, getNode(), 0);
 
-    static Vector<Color> colors = new Vector<>();
+    static final Vector<Color> colors = new Vector<>();
 
     protected class TimerColorChanger extends TimerTask {
         TimerColorChanger() {
@@ -80,29 +78,24 @@ public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
          * TimerTask method to enable the selection after a given time.
          */
         public void run() {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    if (getNode() == null || getController().isBlocked())
+            SwingUtilities.invokeLater(() -> {
+                if (getNode() == null || getController().isBlocked())
+                    return;
+                getController().getView().acceptViewVisitor(getNode(), view -> {
+                    if (!view.isVisible()) {
                         return;
-                    getController().getView().acceptViewVisitor(getNode(), new NodeViewVisitor() {
-                        public void visit(NodeView view) {
-                            if (!view.isVisible()) {
-                                return;
-                            }
-                            Color col = view.getMainView().getForeground();
-                            int index = -1;
-                            if (col != null && colors.contains(col)) {
-                                index = colors.indexOf(col);
-                            }
-                            index++;
-                            if (index >= colors.size())
-                                index = 0;
-                            view.getMainView().setForeground(
-                                    colors.get(index));
-                        }
-
-                    });
-                }
+                    }
+                    Color col = view.getMainView().getForeground();
+                    int index = -1;
+                    if (col != null && colors.contains(col)) {
+                        index = colors.indexOf(col);
+                    }
+                    index++;
+                    if (index >= colors.size())
+                        index = 0;
+                    view.getMainView().setForeground(
+                            colors.get(index));
+                });
             });
         }
     }

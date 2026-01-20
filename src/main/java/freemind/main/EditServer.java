@@ -102,9 +102,8 @@ public class EditServer extends Thread {
 
             ok = true;
 
-            log.info("FreeMind server started on port "
-                    + socket.getLocalPort());
-            log.info("Authorization key is " + authKey);
+            log.info("FreeMind server started on port {}", socket.getLocalPort());
+            log.info("Authorization key is {}", authKey);
         } catch (IOException io) {
             /*
              * on some Windows versions, connections to localhost fail if the
@@ -112,7 +111,7 @@ public class EditServer extends Thread {
              * error messages, log errors that occur while starting the server
              * as NOTICE, not ERROR
              */
-            log.info("" + io);
+            log.info("{}", String.valueOf(io));
         }
     } // }}}
 
@@ -140,7 +139,7 @@ public class EditServer extends Thread {
                     abort = true;
             } catch (Exception e) {
                 if (!abort)
-                    log.info("" + e);
+                    log.info("{}", String.valueOf(e));
                 abort = true;
             } finally {
                 /*
@@ -168,7 +167,7 @@ public class EditServer extends Thread {
         abort = true;
         try {
             socket.close();
-        } catch (IOException io) {
+        } catch (IOException ignored) {
         }
 
         new File(portFile).delete();
@@ -177,7 +176,7 @@ public class EditServer extends Thread {
     // {{{ Private members
 
     // {{{ Instance variables
-    private String portFile;
+    private final String portFile;
     private ServerSocket socket;
     private int authKey;
     private boolean ok;
@@ -187,8 +186,7 @@ public class EditServer extends Thread {
             throws Exception {
         int key = in.readInt();
         if (key != authKey) {
-            log.info(client + ": wrong" + " authorization key (got " + key
-                    + ", expected " + authKey + ")");
+            log.info("{}: wrong authorization key (got {}, expected {})", client, key, authKey);
             in.close();
             client.close();
 
@@ -197,7 +195,7 @@ public class EditServer extends Thread {
             // Reset the timeout
             client.setSoTimeout(0);
 
-            log.info(client + ": authenticated" + " successfully");
+            log.info("{}: authenticated successfully", client);
 
             final String script = in.readUTF();
             log.info(script);

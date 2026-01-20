@@ -30,7 +30,7 @@ import freemind.controller.actions.generated.instance.XmlAction;
  */
 public interface ActorXml {
 
-    public void act(XmlAction action);
+    void act(XmlAction action);
 
     /**
      *

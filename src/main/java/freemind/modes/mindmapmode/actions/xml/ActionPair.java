@@ -24,12 +24,20 @@
 package freemind.modes.mindmapmode.actions.xml;
 
 import freemind.controller.actions.generated.instance.XmlAction;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author foltin
  */
+@Setter
+@Getter
 public class ActionPair {
+    /**
+     */
     private XmlAction doAction;
+    /**
+     */
     private XmlAction undoAction;
 
     /**
@@ -37,28 +45,6 @@ public class ActionPair {
      */
     public ActionPair(XmlAction doAction, XmlAction undoAction) {
         this.doAction = doAction;
-        this.undoAction = undoAction;
-    }
-
-    /**
-     *
-     */
-    public XmlAction getDoAction() {
-        return doAction;
-    }
-
-    /**
-     *
-     */
-    public XmlAction getUndoAction() {
-        return undoAction;
-    }
-
-    public void setDoAction(XmlAction doAction) {
-        this.doAction = doAction;
-    }
-
-    public void setUndoAction(XmlAction undoAction) {
         this.undoAction = undoAction;
     }
 

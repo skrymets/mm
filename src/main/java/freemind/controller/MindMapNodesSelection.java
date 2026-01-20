@@ -31,14 +31,14 @@ import java.util.List;
 @Slf4j
 public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 
-    private String nodesContent;
-    private String stringContent;
-    private String imageContent;
-    private String rtfContent;
-    private String htmlContent;
+    private final String nodesContent;
+    private final String stringContent;
+    private final String imageContent;
+    private final String rtfContent;
+    private final String htmlContent;
     private String dropActionContent;
     private final List fileList;
-    private List<String> nodeIdsContent;
+    private final List<String> nodeIdsContent;
     public static DataFlavor mindMapNodesFlavor = null;
     public static DataFlavor rtfFlavor = null;
     public static DataFlavor htmlFlavor = null;
@@ -140,7 +140,7 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
             return true;
         }
         if (flavor.equals(fileListFlavor) && (fileList != null)
-                && fileList.size() > 0) {
+                && !fileList.isEmpty()) {
             return true;
         }
         if (flavor.equals(copyNodeIdsFlavor) && nodeIdsContent != null) {

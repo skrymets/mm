@@ -74,7 +74,7 @@ public class ToggleFoldedActor extends XmlActorAdapter {
                 }
             }
         }
-        log.trace("Compound contains " + comp.sizeChoiceList() + " elements.");
+        log.trace("Compound contains {} elements.", comp.sizeChoiceList());
         return comp;
     }
 

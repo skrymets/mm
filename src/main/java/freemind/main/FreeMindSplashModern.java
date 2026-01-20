@@ -29,7 +29,6 @@ import java.text.MessageFormat;
  * Class to put a splash during launching the application.
  */
 
-@SuppressWarnings("serial")
 @Slf4j
 public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 
@@ -55,24 +54,20 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
             long timeDifference = System.currentTimeMillis() - mActualTimeStamp;
             mActualTimeStamp = System.currentTimeMillis();
             mTotalTime += timeDifference;
-            log.trace("Task: " + lastTaskId + " (" + act + ") last "
-                    + (timeDifference) / 1000.0 + " seconds.\nTotal: "
-                    + mTotalTime / 1000.0 + "\n");
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    mProgressBar.setValue(act);
-                    double percent = act * 1.0 / mProgressBar.getMaximum();
-                    mProgressBar.setString(progressString);
-                    if (mImageJLabel != null) {
-                        mImageJLabel.putClientProperty("progressString",
-                                progressString);
-                        mImageJLabel.putClientProperty("progressPercent",
-                                new Double(percent));
-                        mImageJLabel.repaint();
-                    }
+            log.trace("Task: {} ({}) last {} seconds.\nTotal: {}\n", lastTaskId, act, (timeDifference) / 1000.0, mTotalTime / 1000.0);
+            SwingUtilities.invokeLater(() -> {
+                mProgressBar.setValue(act);
+                double percent = act * 1.0 / mProgressBar.getMaximum();
+                mProgressBar.setString(progressString);
+                if (mImageJLabel != null) {
+                    mImageJLabel.putClientProperty("progressString",
+                            progressString);
+                    mImageJLabel.putClientProperty("progressPercent",
+                            new Double(percent));
+                    mImageJLabel.repaint();
                 }
             });
-            log.trace("Beginnig task:" + messageId);
+            log.trace("Beginnig task:{}", messageId);
             lastTaskId = messageId;
             // this is not nice, as other windows are probably more important!
 //			// make it the top most window.
@@ -99,8 +94,8 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 
     private final FreeMindMain frame;
     private final FeedBackImpl feedBack; // !
-    private JProgressBar mProgressBar;
-    private ImageIcon mIcon;
+    private final JProgressBar mProgressBar;
+    private final ImageIcon mIcon;
 
     public FeedBack getFeedBack() {
         return feedBack;
@@ -127,7 +122,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
         JLabel splashImageLabel = new JLabel(splashImage) {
             private Integer mWidth = null;
             private final Font progressFont = new Font("SansSerif", Font.PLAIN, 10);
-            private Font versionTextFont = Tools.isAvailableFontFamily("Century Gothic") ? new Font("Century Gothic", Font.BOLD, 14) : new Font("Arial", Font.BOLD, 12);
+            private final Font versionTextFont = Tools.isAvailableFontFamily("Century Gothic") ? new Font("Century Gothic", Font.BOLD, 14) : new Font("Arial", Font.BOLD, 12);
 
             private int calcYRelative(int y) {
                 return (int) (((float) y) / SPLASH_HEIGHT * splashImage.getIconHeight());

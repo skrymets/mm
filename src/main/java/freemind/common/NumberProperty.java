@@ -23,18 +23,19 @@
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 @Slf4j
 public class NumberProperty extends PropertyBean implements PropertyControl {
-    String description;
+    @Getter
+    final String description;
     // JSlider slider;
-    String label;
-    private JSpinner spinner;
+    @Getter
+    final String label;
+    private final JSpinner spinner;
     private final int min;
     private final int max;
     private final int step;
@@ -52,21 +53,8 @@ public class NumberProperty extends PropertyBean implements PropertyControl {
 
         this.description = description;
         this.label = label;
-        spinner.addChangeListener(new ChangeListener() {
+        spinner.addChangeListener(pE -> firePropertyChangeEvent());
 
-            public void stateChanged(ChangeEvent pE) {
-                firePropertyChangeEvent();
-            }
-        });
-
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public void setValue(String value) {

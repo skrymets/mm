@@ -42,7 +42,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
@@ -58,23 +57,23 @@ import static java.lang.String.format;
 @Slf4j
 public class BrowseController extends ViewControllerAdapter {
 
-    private JPopupMenu popupmenu;
-    private JToolBar toolbar;
+    private final JPopupMenu popupmenu;
+    private final JToolBar toolbar;
 
-    Action followLink;
+    final Action followLink;
 
     Action nodeUp;
 
     Action nodeDown;
 
-    private HookFactory mBrowseHookFactory;
+    private final HookFactory mBrowseHookFactory;
     private ImageIcon noteIcon;
-    public FollowMapLink followMapLink;
+    public final FollowMapLink followMapLink;
 
     @Slf4j
     public static class FollowMapLink extends AbstractAction implements MenuItemEnabledListener {
 
-        private ViewControllerAdapter modeController;
+        private final ViewControllerAdapter modeController;
 
         public FollowMapLink(ViewControllerAdapter controller) {
             super(controller.getText("follow_map_link"), getMapLocationIcon());
@@ -94,17 +93,15 @@ public class BrowseController extends ViewControllerAdapter {
                     tileSources.put(TILE_SOURCE_TRANSPORT_MAP, SHORT_TRANSPORT_MAP);
                     tileSources.put(TILE_SOURCE_MAP_QUEST_OPEN_MAP, SHORT_MAP_QUEST_OPEN_MAP);
 
-                    String link = format("http://www.openstreetmap.org/?mlat=%s&mlon=%s&lat=%s&lon=%s&zoom=%s&layers=%s",
+                    String link = format("https://www.openstreetmap.org/?mlat=%s&mlon=%s&lat=%s&lon=%s&zoom=%s&layers=%s",
                             barePositions[0],
                             barePositions[1],
                             barePositions[2],
                             barePositions[3],
                             barePositions[4],
                             tileSources.get(barePositions[5]));
-                    log.trace("Try to open link " + link);
+                    log.trace("Try to open link {}", link);
                     modeController.getFrame().openDocument(new URL(link));
-                } catch (MalformedURLException e1) {
-                    log.error(e1.getLocalizedMessage(), e1);
                 } catch (Exception e1) {
                     log.error(e1.getLocalizedMessage(), e1);
                 }
@@ -143,7 +140,7 @@ public class BrowseController extends ViewControllerAdapter {
 
     public void startupController() {
         super.startupController();
-        invokeHooksRecursively((NodeAdapter) getRootNode(), getMap());
+        invokeHooksRecursively(getRootNode(), getMap());
     }
 
     protected void restoreMapsLastState(ModeController pNewModeController,
@@ -238,9 +235,8 @@ public class BrowseController extends ViewControllerAdapter {
             nodeAlreadyVisited.add(link.getTarget());
             Vector<MindMapLink> links = getModel().getLinkRegistry().getAllLinks(link.getSource());
             links.addAll(getModel().getLinkRegistry().getAllLinks(link.getTarget()));
-            for (int i = 0; i < links.size(); ++i) {
-                BrowseArrowLinkModel foreign_link = (BrowseArrowLinkModel) links
-                        .get(i);
+            for (MindMapLink mindMapLink : links) {
+                BrowseArrowLinkModel foreign_link = (BrowseArrowLinkModel) mindMapLink;
                 if (nodeAlreadyVisited.add(foreign_link.getTarget())) {
                     arrowLinkPopup.add(getGotoLinkNodeAction(foreign_link
                             .getTarget()));
@@ -343,7 +339,7 @@ public class BrowseController extends ViewControllerAdapter {
 
     private void setNoteIcon(MindMapNode node) {
         String noteText = node.getNoteText();
-        if (noteText != null && !noteText.equals("")) {
+        if (noteText != null && !noteText.isEmpty()) {
             // icon
             if (noteIcon == null) {
                 noteIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(getController().getResource(
@@ -353,7 +349,7 @@ public class BrowseController extends ViewControllerAdapter {
         }
         ListIterator<MindMapNode> children = node.childrenUnfolded();
         while (children.hasNext()) {
-            setNoteIcon((MindMapNode) children.next());
+            setNoteIcon(children.next());
         }
 
     }
@@ -411,7 +407,7 @@ public class BrowseController extends ViewControllerAdapter {
      */
     @Override
     protected void loadInternally(URL url, MapAdapter pModel)
-            throws URISyntaxException, XMLParseException, IOException {
+            throws XMLParseException, IOException {
         ((BrowseMapModel) pModel).setURL(url);
         BrowseNodeModel root = loadTree(url);
         if (root != null) {

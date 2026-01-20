@@ -28,8 +28,9 @@ import freemind.extensions.ModeControllerHookAdapter;
 import freemind.view.MapModule;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * @author foltin
@@ -50,12 +51,10 @@ public class SaveAll extends ModeControllerHookAdapter {
         MapModule initialMapModule = mainController.getMapModule();
         Map<String, MapModule> modules = getMapModules();
         // to prevent concurrent modification:
-        Vector<MapModule> v = new Vector<>();
-        v.addAll(modules.values());
+        List<MapModule> v = new ArrayList<>(modules.values());
         for (MapModule module : v) {
             // change to module to display map properly.
-            mainController.getMapModuleManager().changeToMapModule(
-                    module.toString());
+            mainController.getMapModuleManager().changeToMapModule(module.toString());
             if (!module.getModeController().save()) {
                 // if not successfully, break the action.
                 JOptionPane

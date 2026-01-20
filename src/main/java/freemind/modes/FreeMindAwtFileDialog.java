@@ -37,7 +37,6 @@ import java.io.IOException;
  * @author foltin
  * @date 23.02.2012
  */
-@SuppressWarnings("serial")
 @Slf4j
 public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDialog {
 
@@ -61,7 +60,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
 
     }
 
-    private final class DirFilter extends FileFilter {
+    private static final class DirFilter extends FileFilter {
 
         public boolean accept(File pF) {
             return pF.isDirectory();
@@ -76,7 +75,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
 
     }
 
-    private final class FileOnlyFilter extends FileFilter {
+    private static final class FileOnlyFilter extends FileFilter {
 
         public boolean accept(File pF) {
             return pF.isFile();
@@ -91,7 +90,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
 
     }
 
-    private final class FileAndDirFilter extends FileFilter {
+    private static final class FileAndDirFilter extends FileFilter {
 
         public boolean accept(File pF) {
             return pF.isFile() || pF.isDirectory();
@@ -109,7 +108,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
      * @author foltin
      * @date 27.02.2012
      */
-    private final class FreeMindFilenameFilter implements FilenameFilter {
+    private static final class FreeMindFilenameFilter implements FilenameFilter {
 
         private FileFilter mCustomFilter = new NullFilter();
         /**
@@ -221,7 +220,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
         if (pDir == null) {
             return;
         }
-        log.info("Setting dir to " + pDir);
+        log.info("Setting dir to {}", pDir);
         super.setDirectory(pDir.getAbsolutePath());
     }
 

@@ -35,7 +35,7 @@ import java.awt.event.ActionEvent;
 @Slf4j
 public class CommonToggleChildrenFoldedAction extends AbstractAction {
 
-    private ViewControllerAdapter modeController;
+    private final ViewControllerAdapter modeController;
 
     public CommonToggleChildrenFoldedAction(ViewControllerAdapter controller) {
         super(controller.getText("toggle_children_folded"));

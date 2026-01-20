@@ -70,14 +70,14 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
         if (folder.isDirectory()) {
             File[] list = folder.listFiles();
             // Go recursively to subfolders
-            for (int i = 0; i < list.length; i++) {
-                if (list[i].isDirectory()) {
+            for (File value : list) {
+                if (value.isDirectory()) {
                     // Insert a new node
-                    String nodeContent = list[i].getName();
+                    String nodeContent = value.getName();
                     MindMapNode node = addNode(target, nodeContent);
                     //
                     boolean favoritesFoundInSubfolder = importExplorerFavorites(
-                            list[i], node, false);
+                            value, node, false);
                     if (favoritesFoundInSubfolder) {
                         favoritesFound = true;
                     } else {
@@ -87,16 +87,16 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
             }
 
             // For each .url file: add it
-            for (int i = 0; i < list.length; i++) {
-                if (!list[i].isDirectory()
-                        && Tools.getExtension(list[i]).equals("url")) {
+            for (File file : list) {
+                if (!file.isDirectory()
+                        && Tools.getExtension(file).equals("url")) {
                     favoritesFound = true;
                     try {
                         MindMapNode node = addNode(target,
-                                Tools.removeExtension(list[i].getName()));
+                                Tools.removeExtension(file.getName()));
                         // For each line: Is it URL? => Set it as link
                         BufferedReader in = new BufferedReader(new FileReader(
-                                list[i]));
+                                file));
                         while (in.ready()) {
                             String line = in.readLine();
                             if (line.startsWith("URL=")) {

@@ -45,9 +45,9 @@ import java.util.List;
 @Slf4j
 public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistration {
 
-    private MindMapController controller;
+    private final MindMapController controller;
 
-    private HashMap<String, XmlAction> formatActions;
+    private final HashMap<String, XmlAction> formatActions;
 
     public FormatNewNodes(ModeController controller, MindMap map) {
         this.controller = (MindMapController) controller;

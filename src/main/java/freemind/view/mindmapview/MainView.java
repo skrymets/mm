@@ -31,11 +31,10 @@ import java.awt.geom.AffineTransform;
 /**
  * Base class for all node views.
  */
-@SuppressWarnings("serial")
 @Slf4j
 public abstract class MainView extends JLabel {
-    static Dimension minimumSize = new Dimension(0, 0);
-    static Dimension maximumSize = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    static final Dimension minimumSize = new Dimension(0, 0);
+    static final Dimension maximumSize = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
     private static final int MIN_HOR_NODE_SIZE = 10;
 
@@ -72,9 +71,9 @@ public abstract class MainView extends JLabel {
      */
     public Dimension getPreferredSize() {
         final String text = getText();
-        boolean isEmpty = text.length() == 0
+        boolean isEmpty = text.isEmpty()
                 || (HtmlTools.isHtmlNode(text) && text.indexOf("<img") < 0 && HtmlTools
-                .htmlToPlain(text).length() == 0);
+                .htmlToPlain(text).isEmpty());
         if (isEmpty) {
             setText("!");
         }
@@ -128,10 +127,6 @@ public abstract class MainView extends JLabel {
     private float getZoom() {
         float zoom = getNodeView().getMap().getZoom();
         return zoom;
-    }
-
-    protected void printComponent(Graphics g) {
-        super.paintComponent(g);
     }
 
     public void paintSelected(Graphics2D graphics) {

@@ -30,7 +30,7 @@ import java.awt.event.MouseMotionListener;
 public class NodeMouseMotionListener implements MouseMotionListener,
         MouseListener {
 
-    public static interface NodeMouseMotionObserver extends
+    public interface NodeMouseMotionObserver extends
             MouseMotionListener, MouseListener {
 
         void updateSelectionMethod();

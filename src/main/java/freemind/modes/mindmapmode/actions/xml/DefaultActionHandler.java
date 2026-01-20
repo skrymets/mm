@@ -30,7 +30,7 @@ import freemind.controller.actions.generated.instance.XmlAction;
  */
 public class DefaultActionHandler implements ActionHandler {
 
-    private ActionRegistry factory;
+    private final ActionRegistry factory;
 
     public DefaultActionHandler(ActionRegistry factory) {
         this.factory = factory;

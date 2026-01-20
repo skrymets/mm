@@ -23,6 +23,7 @@ package freemind.modes.filemode;
 import freemind.controller.Controller;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
+import lombok.Getter;
 
 import javax.swing.*;
 
@@ -30,6 +31,7 @@ public class FileMode extends Mode {
 
     private Controller c;
     private FileController modecontroller;
+    @Getter
     private JToolBar toolbar;
     private static final String MODENAME = "File";
     private static boolean isRunning = false;
@@ -41,10 +43,6 @@ public class FileMode extends Mode {
         this.c = c;
         modecontroller = new FileController(this);
         toolbar = new FileToolBar(modecontroller);
-    }
-
-    public JToolBar getToolbar() {
-        return toolbar;
     }
 
     public String toString() {

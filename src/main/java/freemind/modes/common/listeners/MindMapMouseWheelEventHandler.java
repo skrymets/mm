@@ -47,7 +47,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
     private static final int ZOOM_MASK = InputEvent.CTRL_MASK;
     // |= oldX >=0 iff we are in the drag
 
-    private ControllerAdapter mController;
+    private final ControllerAdapter mController;
 
     /**
      *

@@ -137,9 +137,9 @@ public class ExampleFileFilter extends FileFilter {
      */
     public ExampleFileFilter(String[] filters, String description) {
         this();
-        for (int i = 0; i < filters.length; i++) {
+        for (String filter : filters) {
             // add filters one by one
-            addExtension(filters[i]);
+            addExtension(filter);
         }
         if (description != null)
             setDescription(description);
@@ -160,7 +160,6 @@ public class ExampleFileFilter extends FileFilter {
             if (extension != null && filters.get(getExtension(f)) != null) {
                 return true;
             }
-            ;
         }
         return false;
     }
@@ -175,7 +174,6 @@ public class ExampleFileFilter extends FileFilter {
             if (i > 0 && i < filename.length() - 1) {
                 return filename.substring(i + 1).toLowerCase();
             }
-            ;
         }
         return null;
     }
@@ -211,10 +209,10 @@ public class ExampleFileFilter extends FileFilter {
                 // build the description from the extension list
                 Enumeration<String> extensions = filters.keys();
                 if (extensions != null) {
-                    fullDescription += "." + (String) extensions.nextElement();
+                    fullDescription += "." + extensions.nextElement();
                     while (extensions.hasMoreElements()) {
                         fullDescription += ", ."
-                                + (String) extensions.nextElement();
+                                + extensions.nextElement();
                     }
                 }
                 fullDescription += ")";

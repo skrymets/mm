@@ -24,7 +24,6 @@ import freemind.controller.Controller;
 import freemind.main.XMLParseException;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 public abstract class Mode {
 
@@ -34,7 +33,7 @@ public abstract class Mode {
 
     public abstract void activate();
 
-    public abstract void restore(String restorable) throws XMLParseException, IOException, URISyntaxException;
+    public abstract void restore(String restorable) throws XMLParseException, IOException;
 
     /**
      * Creates a new mode controller and returns it.

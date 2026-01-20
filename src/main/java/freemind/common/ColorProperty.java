@@ -25,6 +25,7 @@ package freemind.common;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import freemind.controller.Controller;
 import freemind.main.Tools;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,13 +36,15 @@ import java.awt.event.MouseEvent;
 
 public class ColorProperty extends PropertyBean implements PropertyControl,
         ActionListener {
-    String description;
+    @Getter
+    final String description;
 
-    String label;
+    @Getter
+    final String label;
 
     Color color;
 
-    JButton mButton;
+    final JButton mButton;
     final JPopupMenu menu = new JPopupMenu();
 
     private final String defaultColor;
@@ -64,14 +67,6 @@ public class ColorProperty extends PropertyBean implements PropertyControl,
         color = Color.BLACK;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
     public void setValue(String value) {
         setColorValue(Tools.xmlToColor(value));
     }
@@ -88,12 +83,7 @@ public class ColorProperty extends PropertyBean implements PropertyControl,
         // Create and add a menu item
         JMenuItem item = new JMenuItem(
                 mTranslator.getText("ColorProperty.ResetColor"));
-        item.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                setValue(defaultColor);
-            }
-        });
+        item.addActionListener(e -> setValue(defaultColor));
         menu.add(item);
 
         // Set the component to show the popup menu

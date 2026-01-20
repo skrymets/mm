@@ -78,7 +78,7 @@ public class CommonToggleFoldedAction extends AbstractAction {
      */
     public static boolean getFoldingState(ListIterator<MindMapNode> iterator) {
         /*
-         * Retrieve the information whether or not all nodes have the same
+         * Retrieve the information whether all nodes have the same
          * folding state.
          */
         Boolean state = null;

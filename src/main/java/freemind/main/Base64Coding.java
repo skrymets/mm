@@ -55,7 +55,7 @@ public class Base64Coding {
     /**
      * Helper method for decoding a Base64 string as an byte array. Returns null
      * on encoding error. This method does not allow any other characters
-     * present in the string then the 65 special base64 chars.
+     * present in the string than the 65 special base64 chars.
      */
     public static byte[] decode64(String s) {
         ByteArrayOutputStream bs = new ByteArrayOutputStream(
@@ -79,7 +79,7 @@ public class Base64Coding {
             } else if (c[j] == '=') {
                 endchar = j;
             } else {
-                log.error("Found illegal character in base64 coding: '" + c[j] + "'");
+                log.error("Found illegal character in base64 coding: '{}'", c[j]);
                 return null; // encoding exception
             }
         }
@@ -119,7 +119,7 @@ public class Base64Coding {
      * Helper method for encoding an array of bytes as a Base64 String.
      */
     public static String encode64(byte[] b) {
-        StringBuffer sb = new StringBuffer((b.length / 3) * 4);
+        StringBuilder sb = new StringBuilder((b.length / 3) * 4);
 
         int i = 0;
         int remaining = b.length;

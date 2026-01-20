@@ -8,7 +8,7 @@ import freemind.extensions.PermanentNodeHook;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import freemind.modes.MindIcon;
+import freemind.model.MindMapNode;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 class MindMapHTMLWriter {
-    private Writer fileout;
-    private static String el = System.getProperty("line.separator");
+    private final Writer fileout;
+    private static final String el = System.getProperty("line.separator");
     private boolean writeFoldingCode;
-    private boolean basedOnHeadings;
+    private final boolean basedOnHeadings;
 
 
     MindMapHTMLWriter(Writer fileout) {
@@ -75,7 +75,7 @@ class MindMapHTMLWriter {
                 cvt = "&szlig;";
                 break;
             default:
-                cvt = "&#" + Integer.toString((int) c) + ";";
+                cvt = "&#" + (int) c + ";";
                 break;
         }
 
@@ -91,7 +91,7 @@ class MindMapHTMLWriter {
         boolean spaceOccured = false;
         for (int i = 0; i < len; ++i) {
             myChar = text.charAt(i);
-            intValue = (int) text.charAt(i);
+            intValue = text.charAt(i);
             if (intValue >= 128) {
                 result.append(convertSpecialChar(myChar));
             } else {
@@ -132,7 +132,7 @@ class MindMapHTMLWriter {
         fileout.write(el + "</head>" + el + "<body>" + el);
         Iterator<MindMapNodeModel> iterator = mindMapNodes.iterator();
         while (iterator.hasNext()) {
-            MindMapNodeModel node = (MindMapNodeModel) iterator.next();
+            MindMapNodeModel node = iterator.next();
             saveHTML(node, "1", 0, /* isRoot */true, true, /* depth */1);
         }
         fileout.write("</body>" + el);
@@ -194,15 +194,13 @@ class MindMapHTMLWriter {
     }
 
     private void writeJavaScript() throws IOException {
-        fileout.write(""
-                + el
+        fileout.write(el
                 + "<script type=\"text/javascript\">"
                 + el
                 + "   // Here we implement folding. It works fine with MSIE5.5, MSIE6.0 and"
                 + el
                 + "   // Mozilla 0.9.6."
                 + el
-                + ""
                 + el
                 + "   if (document.layers) {"
                 + el
@@ -228,7 +226,6 @@ class MindMapHTMLWriter {
                 + el
                 + "      post = '.style'; }"
                 + el
-                + ""
                 + el
                 + "function layer_exists(layer) {"
                 + el
@@ -242,7 +239,6 @@ class MindMapHTMLWriter {
                 + el
                 + "      return false; }}"
                 + el
-                + ""
                 + el
                 + "function show_layer(layer) {"
                 + el
@@ -250,7 +246,6 @@ class MindMapHTMLWriter {
                 + el
                 + "   eval(pre + layer + post).visibility = 'visible'; }"
                 + el
-                + ""
                 + el
                 + "function hide_layer(layer) {"
                 + el
@@ -258,7 +253,6 @@ class MindMapHTMLWriter {
                 + el
                 + "   eval(pre + layer + post).position = 'absolute'; }"
                 + el
-                + ""
                 + el
                 + "function hide_folder(folder) {"
                 + el
@@ -266,19 +260,16 @@ class MindMapHTMLWriter {
                 + el
                 + "    show_layer('show'+folder);"
                 + el
-                + ""
                 + el
                 + "    scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)"
                 + el
                 + "}"
                 + el
-                + ""
                 + el
                 + "function show_folder(folder) {"
                 + el
                 + "    // Precondition: all subfolders are folded"
                 + el
-                + ""
                 + el
                 + "    show_layer('hide'+folder);"
                 + el
@@ -286,11 +277,9 @@ class MindMapHTMLWriter {
                 + el
                 + "    show_layer('fold'+folder);"
                 + el
-                + ""
                 + el
                 + "    scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)"
                 + el
-                + ""
                 + el
                 + "    var i;"
                 + el
@@ -300,12 +289,10 @@ class MindMapHTMLWriter {
                 + el
                 + "}"
                 + el
-                + ""
                 + "function show_folder_completely(folder) {"
                 + el
                 + "    // Precondition: all subfolders are folded"
                 + el
-                + ""
                 + el
                 + "    show_layer('hide'+folder);"
                 + el
@@ -313,11 +300,9 @@ class MindMapHTMLWriter {
                 + el
                 + "    show_layer('fold'+folder);"
                 + el
-                + ""
                 + el
                 + "    scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)"
                 + el
-                + ""
                 + el
                 + "    var i;"
                 + el
@@ -327,11 +312,8 @@ class MindMapHTMLWriter {
                 + el
                 + "}"
                 + el
-                + ""
                 + el
-                + ""
                 + el
-                + ""
                 + el
                 + "function hide_folding_layer(folder) {"
                 + el
@@ -341,7 +323,6 @@ class MindMapHTMLWriter {
                 + el
                 + "       hide_folding_layer(folder+'_'+i); }"
                 + el
-                + ""
                 + el
                 + "   hide_layer('hide'+folder);"
                 + el
@@ -349,18 +330,16 @@ class MindMapHTMLWriter {
                 + el
                 + "   hide_layer('fold'+folder);"
                 + el
-                + ""
                 + el
                 + "   scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)"
-                + el + "}" + el + "" + el + "function fold_document() {" + el
+                + el + "}" + el + el + "function fold_document() {" + el
                 + "   var i;" + el + "   var folder = '1';" + el
                 + "   for (i=1; layer_exists('fold'+folder+'_'+i); ++i) {" + el
-                + "       hide_folder(folder+'_'+i); }" + el + "}" + el + ""
-                + el + "function unfold_document() {" + el + "   var i;" + el
+                + "       hide_folder(folder+'_'+i); }" + el + "}" + el + el + "function unfold_document() {" + el + "   var i;" + el
                 + "   var folder = '1';" + el
                 + "   for (i=1; layer_exists('fold'+folder+'_'+i); ++i) {" + el
                 + "       show_folder_completely(folder+'_'+i); }" + el + "}"
-                + el + "" + el + "</script>" + el);
+                + el + el + "</script>" + el);
     }
 
     private void writeStyle() throws IOException {
@@ -377,9 +356,7 @@ class MindMapHTMLWriter {
                     + el
                     + "    cursor:pointer; }"
                     + el
-                    + ""
                     + el
-                    + ""
                     + el
                     + "    span.foldclosed { color: #666666; font-size: xx-small;"
                     + el
@@ -389,7 +366,6 @@ class MindMapHTMLWriter {
                     + el
                     + "    cursor:pointer; }"
                     + el
-                    + ""
                     + el
                     + "    span.foldspecial { color: #666666; font-size: xx-small; border-style: none solid solid none;"
                     + el
@@ -399,7 +375,6 @@ class MindMapHTMLWriter {
         fileout.write(el
                 + "    span.l { color: red; font-weight: bold; }"
                 + el
-                + ""
                 + el
                 + "    a.mapnode:link {text-decoration: none; color: black; }"
                 + el
@@ -409,7 +384,6 @@ class MindMapHTMLWriter {
                 + el
                 + "    a.mapnode:hover {text-decoration: none; color: black; background: #eeeee0; }"
                 + el
-                + ""
                 + el
                 + "</style>"
                 + el
@@ -465,7 +439,7 @@ class MindMapHTMLWriter {
         }
 
         String fontStyle = fontStyle(model);
-        if (!fontStyle.equals("")) {
+        if (!fontStyle.isEmpty()) {
             fileout.write("<span style=\"" + fontStyle + "\">");
         }
 
@@ -491,8 +465,8 @@ class MindMapHTMLWriter {
         // Are the children to be treated as paragraphs?
 
         boolean treatChildrenAsParagraph = false;
-        for (ListIterator e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
-            if (((MindMapNodeModel) e.next()).toString().length() > 100) { // TODO:
+        for (ListIterator<MindMapNode> e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
+            if (e.next().toString().length() > 100) { // TODO:
                 // replace
                 // heuristic
                 // constant
@@ -507,7 +481,7 @@ class MindMapHTMLWriter {
 
         if (getProperty("html_export_folding").equals(
                 "html_export_based_on_headings")) {
-            for (ListIterator e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
+            for (ListIterator<MindMapNode> e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
                 MindMapNodeModel child = (MindMapNodeModel) e.next();
                 lastChildNumber = saveHTML(child, parentID, lastChildNumber,/*
                          * isRoot
@@ -523,7 +497,7 @@ class MindMapHTMLWriter {
         if (model.hasChildren()) {
             if (getProperty("html_export_folding").equals(
                     "html_export_based_on_headings")) {
-                for (ListIterator e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
+                for (ListIterator<MindMapNode> e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
                     MindMapNodeModel child = (MindMapNodeModel) e.next();
                     lastChildNumber = saveHTML(child, parentID,
                             lastChildNumber,/* isRoot= */false,
@@ -537,7 +511,7 @@ class MindMapHTMLWriter {
                     fileout.write("<li>");
                 }
                 int localLastChildNumber = 0;
-                for (ListIterator e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
+                for (ListIterator<MindMapNode> e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
                     MindMapNodeModel child = (MindMapNodeModel) e.next();
                     localLastChildNumber = saveHTML(child, localParentID,
                             localLastChildNumber,/* isRoot= */false,
@@ -548,7 +522,7 @@ class MindMapHTMLWriter {
                 if (treatChildrenAsParagraph) {
                     fileout.write("<li>");
                 }
-                for (ListIterator e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
+                for (ListIterator<MindMapNode> e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
                     MindMapNodeModel child = (MindMapNodeModel) e.next();
                     lastChildNumber = saveHTML(child, parentID,
                             lastChildNumber,/* isRoot= */false,
@@ -571,7 +545,7 @@ class MindMapHTMLWriter {
         return lastChildNumber;
     }
 
-    private String fontStyle(MindMapNodeModel model) throws IOException {
+    private String fontStyle(MindMapNodeModel model) {
         String fontStyle = "";
 
         if (model.getColor() != null) {
@@ -581,7 +555,7 @@ class MindMapHTMLWriter {
         if (model.getFont() != null && model.getFont().getSize() != 0) {
             int defaultFontSize = Integer
                     .parseInt(getProperty("defaultfontsize"));
-            int procentSize = (int) (model.getFont().getSize() * 100 / defaultFontSize);
+            int procentSize = model.getFont().getSize() * 100 / defaultFontSize;
             if (procentSize != 100) {
                 fontStyle += "font-size: " + procentSize + "%;";
             }
@@ -631,9 +605,9 @@ class MindMapHTMLWriter {
     private void writeIcons(MindMapNodeModel model) throws IOException {
         for (int i = 0; i < model.getIcons().size(); ++i) {
             fileout.write("<img src=\""
-                    + ((MindIcon) model.getIcons().get(i)).getIconFileName()
+                    + model.getIcons().get(i).getIconFileName()
                     + "\" alt=\""
-                    + ((MindIcon) model.getIcons().get(i)).getDescription()
+                    + model.getIcons().get(i).getDescription()
                     + "\">");
         }
     }

@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class XmlActorAdapter implements ActorXml {
 
-    protected ExtendedMapFeedback mMapFeedback;
+    protected final ExtendedMapFeedback mMapFeedback;
 
     public XmlActorAdapter(ExtendedMapFeedback pMapFeedback) {
         mMapFeedback = pMapFeedback;

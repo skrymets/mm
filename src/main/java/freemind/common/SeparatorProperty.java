@@ -23,10 +23,12 @@
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import lombok.Getter;
 
+@Getter
 public class SeparatorProperty implements PropertyControl {
 
-    String label;
+    final String label;
 
     public SeparatorProperty(String label) {
         super();
@@ -35,10 +37,6 @@ public class SeparatorProperty implements PropertyControl {
 
     public String getDescription() {
         return null;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {

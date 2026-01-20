@@ -34,7 +34,7 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class EdgeStyleAction extends NodeGeneralAction implements MenuItemSelectedListener {
-    private String mStyle;
+    private final String mStyle;
 
     public EdgeStyleAction(MindMapController controller, String style) {
         super(controller, null, null);

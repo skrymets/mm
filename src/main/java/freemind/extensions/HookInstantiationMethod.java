@@ -24,6 +24,7 @@ package freemind.extensions;
 
 import freemind.model.MindMapNode;
 import freemind.modes.MapFeedback;
+import lombok.Getter;
 
 import java.util.*;
 
@@ -47,7 +48,7 @@ public class HookInstantiationMethod {
 
     private static class RootDestinationNodesGetter implements DestinationNodesGetter {
         public Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
-            Vector<MindMapNode> returnValue = new Vector<MindMapNode>();
+            Vector<MindMapNode> returnValue = new Vector<>();
             returnValue.add(controller.getMap().getRootNode());
             return returnValue;
         }
@@ -68,7 +69,7 @@ public class HookInstantiationMethod {
         }
 
         public Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
-            Vector<MindMapNode> returnValue = new Vector<MindMapNode>();
+            Vector<MindMapNode> returnValue = new Vector<>();
             addChilds(controller.getMap().getRootNode(), returnValue);
             return returnValue;
         }
@@ -79,21 +80,20 @@ public class HookInstantiationMethod {
 
     }
 
+    @Getter
     private final boolean isSingleton;
     private final DestinationNodesGetter getter;
-    private final boolean isPermanent;
-    private final boolean isUndoable;
-
-    public boolean isSingleton() {
-        return isSingleton;
-    }
-
     /**
+     * -- GETTER --
+     *
      * @return Returns the isPermanent.
      */
-    public boolean isPermanent() {
-        return isPermanent;
-    }
+    @Getter
+    private final boolean isPermanent;
+    /**
+     */
+    @Getter
+    private final boolean isUndoable;
 
     private HookInstantiationMethod(boolean isPermanent, boolean isSingleton,
                                     DestinationNodesGetter getter, boolean isUndoable) {
@@ -152,8 +152,7 @@ public class HookInstantiationMethod {
      *
      */
     public boolean isAlreadyPresent(String hookName, MindMapNode focussed) {
-        for (Iterator<PermanentNodeHook> i = focussed.getActivatedHooks().iterator(); i.hasNext(); ) {
-            PermanentNodeHook hook = i.next();
+        for (PermanentNodeHook hook : focussed.getActivatedHooks()) {
             if (hookName.equals(hook.getName())) {
                 return true;
             }
@@ -169,10 +168,4 @@ public class HookInstantiationMethod {
         return getter.getCenterNode(controller, focussed, selecteds);
     }
 
-    /**
-     *
-     */
-    public boolean isUndoable() {
-        return isUndoable;
-    }
 }

@@ -37,7 +37,7 @@ public interface MindMapCloud extends MindMapLine {
      * Describes the color of the exterior of the cloud. Normally, this color is
      * derived from the interior color.
      */
-    public Color getExteriorColor();
+    Color getExteriorColor();
 
     /**
      * gets iterative level which is required for painting and layout.
@@ -45,7 +45,7 @@ public interface MindMapCloud extends MindMapLine {
      * Cloud iterative level is kept in CloudAdapter object. It is automatically
      * calculated during the first call of this Method (delayed initialisation).
      */
-    public int getIterativeLevel();
+    int getIterativeLevel();
 
     /**
      * changes the iterative level.
@@ -53,7 +53,7 @@ public interface MindMapCloud extends MindMapLine {
      * When some parent node gets or loses its cloud, it should call this
      * Method, with deltaLevel equal to 1 or -1.
      */
-    public void changeIterativeLevel(int deltaLevel);
+    void changeIterativeLevel(int deltaLevel);
 
-    public XMLElement save();
+    XMLElement save();
 }

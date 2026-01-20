@@ -22,7 +22,6 @@ package freemind.modes.filemode;
 
 import javax.swing.*;
 
-@SuppressWarnings("serial")
 public class FileToolBar extends JToolBar {
 
     public FileToolBar(FileController controller) {

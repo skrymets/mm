@@ -47,7 +47,7 @@ public class AddArrowLinkActor extends XmlActorAdapter {
             MindMapNode source = getNodeFromID(arrowAction.getNode());
             MindMapNode target = getNodeFromID(arrowAction.getDestination());
             if (source == target) {
-                log.warn("Can't create link between itself. (" + source + ").");
+                log.warn("Can't create link between itself. ({}).", source);
                 return;
             }
             String proposedId = arrowAction.getNewId();

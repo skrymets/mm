@@ -76,7 +76,7 @@ public class HtmlTools {
             return null;
         }
 
-        log.trace("Enter toXhtml with " + htmlText);
+        log.trace("Enter toXhtml with {}", htmlText);
         StringReader reader = new StringReader(htmlText);
         StringWriter writer = new StringWriter();
         try {
@@ -84,7 +84,7 @@ public class HtmlTools {
             String resultXml = writer.toString();
             // for safety:
             if (isWellformedXml(resultXml)) {
-                log.trace("Leave toXhtml with " + resultXml);
+                log.trace("Leave toXhtml with {}", resultXml);
                 return resultXml;
             }
         } catch (IOException | BadLocationException e) {
@@ -92,7 +92,7 @@ public class HtmlTools {
         }
         // fallback:
         String fallbackText = removeAllTagsFromString(htmlText);
-        log.trace("Leave toXhtml with fallback " + fallbackText);
+        log.trace("Leave toXhtml with fallback {}", fallbackText);
         return fallbackText;
     }
 
@@ -102,11 +102,11 @@ public class HtmlTools {
     }
 
     public static class IndexPair {
-        public int originalStart;
-        public int originalEnd;
-        public int replacedStart;
-        public int replacedEnd;
-        public boolean mIsTag;
+        public final int originalStart;
+        public final int originalEnd;
+        public final int replacedStart;
+        public final int replacedEnd;
+        public final boolean mIsTag;
         public boolean mIsAlreadyAppended = false;
 
         /**
@@ -128,26 +128,24 @@ public class HtmlTools {
          */
 
         public String toString() {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("[IndexPair:");
-            buffer.append(" originalStart: ");
-            buffer.append(originalStart);
-            buffer.append(" originalEnd: ");
-            buffer.append(originalEnd);
-            buffer.append(" replacedStart: ");
-            buffer.append(replacedStart);
-            buffer.append(" replacedEnd: ");
-            buffer.append(replacedEnd);
-            buffer.append(" is a tag: ");
-            buffer.append(mIsTag);
-            buffer.append("]");
-            return buffer.toString();
+            return "[IndexPair:" +
+                    " originalStart: " +
+                    originalStart +
+                    " originalEnd: " +
+                    originalEnd +
+                    " replacedStart: " +
+                    replacedStart +
+                    " replacedEnd: " +
+                    replacedEnd +
+                    " is a tag: " +
+                    mIsTag +
+                    "]";
         }
     }
 
     /**
      * Replaces text in node content without replacing tags. fc, 19.12.06: This
-     * method is very difficult. If you have a simplier method, please supply
+     * method is very challenging. If you have a simplier method, please supply
      * it. But look that it complies with FindTextTests!!!
      */
     public String getReplaceResult(Pattern pattern, String replacement,
@@ -165,7 +163,7 @@ public class HtmlTools {
                 int replStart = sb.length();
                 matcher.appendReplacement(sb, "$1");
                 IndexPair indexPair;
-                if (textWithoutTag.length() > 0) {
+                if (!textWithoutTag.isEmpty()) {
                     indexPair = new IndexPair(lastMatchEnd, matcher.end(1),
                             replStart, sb.length(), false);
                     lastMatchEnd = matcher.end(1);
@@ -206,8 +204,8 @@ public class HtmlTools {
         // }
 
         /**
-         * For each pair which is not a tag we find concurrences and replace
-         * them, if pair is a tag then we just append
+         * For each pair that is not a tag we find concurrences and replace
+         * them, if a pair is a tag then we just append
          */
         StringBuffer sbResult = new StringBuffer();
         for (IndexPair pair : splittedStringList) {
@@ -228,8 +226,8 @@ public class HtmlTools {
                     append(sbResult, text, pair.originalStart + mEndOld,
                             pair.originalStart + mStart);
                     /**
-                     * If it's a first iteration then we append text between
-                     * start and first concurrence, and when it's not first
+                     * If it's a first iteration, then we append text between
+                     * start and first concurrence, and when it's not the first
                      * iteration (mEndOld != 0) we append text between two
                      * concurrences
                      */
@@ -560,9 +558,7 @@ public class HtmlTools {
                     new DefaultHandler());
             return true;
         } catch (SAXParseException e) {
-            log.info(
-                    "XmlParseError on line " + e.getLineNumber() + " of " + xml,
-                    e);
+            log.info("XmlParseError on line {} of {}", e.getLineNumber(), xml, e);
         } catch (Exception e) {
             log.info("XmlParseError", e);
         }
@@ -732,7 +728,7 @@ public class HtmlTools {
      * @author foltin
      * @date 10.12.2014
      */
-    private final class HtmlNodeVisitor implements NodeVisitor {
+    private static final class HtmlNodeVisitor implements NodeVisitor {
         boolean isNewline = true;
         int mLevel = 0;
         private MindMapNode mParentNode;

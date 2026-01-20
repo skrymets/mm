@@ -32,11 +32,11 @@ public class MapMouseMotionListener implements MouseMotionListener,
         MouseListener {
 
     public interface MapMouseMotionReceiver {
-        public void mouseDragged(MouseEvent e);
+        void mouseDragged(MouseEvent e);
 
-        public void mousePressed(MouseEvent e);
+        void mousePressed(MouseEvent e);
 
-        public void mouseReleased(MouseEvent e);
+        void mouseReleased(MouseEvent e);
     }
 
     private MapMouseMotionReceiver mReceiver;

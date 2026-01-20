@@ -26,6 +26,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import freemind.main.HtmlTools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -39,10 +40,12 @@ public class ScriptEditorProperty extends PropertyBean implements PropertyContro
         String startEditor(String scriptInput);
     }
 
-    String description;
-    String label;
+    @Getter
+    final String description;
+    @Getter
+    final String label;
     String script;
-    JButton mButton;
+    final JButton mButton;
 
     final JPopupMenu menu = new JPopupMenu();
 
@@ -57,14 +60,6 @@ public class ScriptEditorProperty extends PropertyBean implements PropertyContro
         mButton = new JButton();
         mButton.addActionListener(this);
         script = "";
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public void setValue(String value) {
@@ -99,7 +94,7 @@ public class ScriptEditorProperty extends PropertyBean implements PropertyContro
             result = "";
         }
         script = HtmlTools.toXMLUnescapedText(HtmlTools.unescapeHTMLUnicodeEntity(result));
-        log.trace("Setting script to " + script);
+        log.trace("Setting script to {}", script);
         mButton.setText(script);
     }
 

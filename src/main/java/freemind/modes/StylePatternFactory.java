@@ -35,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.awt.Font;
 import java.io.Writer;
 import java.util.*;
-import java.util.List;
 
 /**
  * This class constructs patterns from files or from nodes and saves them back.
@@ -69,9 +68,8 @@ public class StylePatternFactory {
                 pattern.setName(translatedName);
                 // store original name to be able to translate back
                 pattern.setOriginalName(originalName);
-                // look, whether or not the string occurs in other situations:
-                for (Iterator<Pattern> it = patterns.getPatternList().iterator(); it.hasNext(); ) {
-                    Pattern otherPattern = it.next();
+                // look, whether the string occurs in other situations:
+                for (Pattern otherPattern : patterns.getPatternList()) {
                     PatternChild child = otherPattern.getPatternChild();
                     if (child != null) {
                         if (Tools.safeEquals(originalName, child.getValue())) {
@@ -86,7 +84,7 @@ public class StylePatternFactory {
     }
 
     /**
-     * the result is written to, and it is closed afterwards List of Pattern
+     * the result is written to, and it is closed afterward List of Pattern
      * elements.
      *
      * @throws Exception
@@ -107,7 +105,7 @@ public class StylePatternFactory {
             PatternChild patternChild = pattern.getPatternChild();
             if (patternChild != null
                     && nameToPattern.containsKey(patternChild.getValue())) {
-                Pattern childPattern = (Pattern) nameToPattern.get(patternChild
+                Pattern childPattern = nameToPattern.get(patternChild
                         .getValue());
                 patternChild.setValue(childPattern.getName());
             }
@@ -159,7 +157,7 @@ public class StylePatternFactory {
 
         if (node.getIcons().size() == 1) {
             PatternIcon iconPattern = new PatternIcon();
-            iconPattern.setValue(((MindIcon) node.getIcons().get(0)).getName());
+            iconPattern.setValue(node.getIcons().get(0).getName());
             pattern.setPatternIcon(iconPattern);
         }
         if (node.getEdge().getColor() != null) {
@@ -241,7 +239,7 @@ public class StylePatternFactory {
     }
 
     private static String addSeparatorIfNecessary(String result) {
-        if (result.length() > 0) {
+        if (!result.isEmpty()) {
             result += ", ";
         }
         return result;
@@ -393,7 +391,7 @@ public class StylePatternFactory {
         if (pattern.getPatternIcon() != null) {
             String iconName = pattern.getPatternIcon().getValue();
             if (iconName == null) {
-                while (pNode.getIcons().size() > 0 && pNode.removeIcon(0) > 0) {
+                while (!pNode.getIcons().isEmpty() && pNode.removeIcon(0) > 0) {
                 }
             } else {
                 // check if icon is already present:
@@ -519,7 +517,7 @@ public class StylePatternFactory {
             if (nodeFontSize == null) {
                 nodeFontSize = "" + pMapFeedback.getDefaultFont().getSize();
             }
-            pMapFeedback.setFontSize(node, String.valueOf(nodeFontSize));
+            pMapFeedback.setFontSize(node, nodeFontSize);
         }
         if (pattern.getPatternNodeFontItalic() != null) {
             pMapFeedback.setItalic(node, TRUE_VALUE.equals(pattern
@@ -560,7 +558,7 @@ public class StylePatternFactory {
             String searchedPatternName = pattern.getPatternChild().getValue();
             for (Pattern otherPattern : pPatternList) {
                 if (otherPattern.getName().equals(searchedPatternName)) {
-                    for (ListIterator j = node.childrenUnfolded(); j.hasNext(); ) {
+                    for (ListIterator<MindMapNode> j = node.childrenUnfolded(); j.hasNext(); ) {
                         NodeAdapter child = (NodeAdapter) j.next();
                         applyPattern(child, otherPattern, pPatternList, pPlugins, pMapFeedback);
                     }

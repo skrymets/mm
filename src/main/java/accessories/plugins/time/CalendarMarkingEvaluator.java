@@ -38,9 +38,9 @@ import java.util.TreeSet;
 public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {
 
     private CalendarMarkings mCalendarMarkings;
-    private HashMap<Long, CalendarMarking> mCache = new HashMap<>();
+    private final HashMap<Long, CalendarMarking> mCache = new HashMap<>();
 
-    private static interface RepetitionHandler {
+    private interface RepetitionHandler {
 
         Calendar getFirst(Calendar pStartDate, CalendarMarking pMarking);
 
@@ -313,7 +313,7 @@ public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {
             firstDay.setTimeInMillis(marking.getStartDate());
             String repeatType = marking.getRepeatType().xmlValue();
             if (!sHandlerMap.containsKey(repeatType)) {
-                log.error("Repeat type " + repeatType + " unknown.");
+                log.error("Repeat type {} unknown.", repeatType);
                 continue;
             }
             RepetitionHandler handler = sHandlerMap

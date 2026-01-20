@@ -22,6 +22,7 @@ package freemind.modes.common.dialogs;
 
 import freemind.common.TextTranslator;
 import freemind.main.Tools;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,6 +40,12 @@ public class EnterPasswordDialog extends JDialog {
 
     public static final int OK = 1;
 
+    /**
+     * -- GETTER --
+     *
+     * @return Returns the result.
+     */
+    @Getter
     private int result = CANCEL;
 
     private javax.swing.JPanel jContentPane = null;
@@ -51,6 +58,12 @@ public class EnterPasswordDialog extends JDialog {
 
     private JButton jCancelButton = null;
 
+    /**
+     * -- GETTER --
+     *
+     * @return Returns the password.
+     */
+    @Getter
     private StringBuffer password = null;
 
     private boolean enterTwoPasswords = true;
@@ -282,17 +295,4 @@ public class EnterPasswordDialog extends JDialog {
         return jCancelButton;
     }
 
-    /**
-     * @return Returns the result.
-     */
-    public int getResult() {
-        return result;
-    }
-
-    /**
-     * @return Returns the password.
-     */
-    public StringBuffer getPassword() {
-        return password;
-    }
 }

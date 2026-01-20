@@ -34,7 +34,7 @@ import java.util.TreeSet;
 @Slf4j
 public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implements UndoEventReceiver {
 
-    private HashMap<MindMapNode, TreeSet<String>> nodeIconSets = new HashMap<>();
+    private final HashMap<MindMapNode, TreeSet<String>> nodeIconSets = new HashMap<>();
 
     public void shutdownMapHook() {
         // remove all icons:
@@ -70,7 +70,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
         TreeSet<String> iconSet = new TreeSet<>();
         for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
             MindMapNode child = i.next();
-            addAccumulatedIconsToTreeSet(child, iconSet, (TreeSet<String>) nodeIconSets.get(child));
+            addAccumulatedIconsToTreeSet(child, iconSet, nodeIconSets.get(child));
         }
         // remove my icons from the treeset:
         for (MindIcon icon : node.getIcons()) {
@@ -87,7 +87,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
         nodeIconSets.put(node, iconSet);
 
         if (dirty) {
-            if (iconSet.size() > 0) {
+            if (!iconSet.isEmpty()) {
                 // create multiple image:
                 MultipleImage image = new MultipleImage(0.75f);
                 for (String iconName : iconSet) {
@@ -112,19 +112,17 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
         }
         if (childsTreeSet == null)
             return;
-        for (String iconName : childsTreeSet) {
-            iconSet.add(iconName);
-        }
+        iconSet.addAll(childsTreeSet);
     }
 
     public void onAddChildren(MindMapNode newChildNode) {
-        log.trace("onAddChildren " + newChildNode);
+        log.trace("onAddChildren {}", newChildNode);
         super.onAddChild(newChildNode);
         setStyleRecursive(newChildNode);
     }
 
     public void onRemoveChildren(MindMapNode removedChild, MindMapNode oldDad) {
-        log.trace("onRemoveChildren " + removedChild);
+        log.trace("onRemoveChildren {}", removedChild);
         super.onRemoveChildren(removedChild, oldDad);
         setStyleRecursive(oldDad);
     }

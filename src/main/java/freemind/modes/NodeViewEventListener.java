@@ -33,11 +33,11 @@ public interface NodeViewEventListener extends EventListener {
     /**
      *
      */
-    public void nodeViewCreated(NodeViewEvent nodeViewEvent);
+    void nodeViewCreated(NodeViewEvent nodeViewEvent);
 
     /**
      *
      */
-    public void nodeViewRemoved(NodeViewEvent nodeViewEvent);
+    void nodeViewRemoved(NodeViewEvent nodeViewEvent);
 
 }

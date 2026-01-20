@@ -30,7 +30,6 @@ import freemind.view.mindmapview.MapView;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.datatransfer.Transferable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -86,8 +85,8 @@ public class NewParentNode extends MindMapNodeHookAdapter {
                  */
                 MindMapNode rootCopy = null;
                 boolean found = false;
-                for (Iterator<MindMapNode> it = childrenNew.iterator(); it.hasNext(); ) {
-                    rootCopy = it.next();
+                for (MindMapNode mindMapNode : childrenNew) {
+                    rootCopy = mindMapNode;
                     if (!children.contains(rootCopy)) {
                         found = true;
                         break;
@@ -134,7 +133,7 @@ public class NewParentNode extends MindMapNodeHookAdapter {
 
     private MindMapNode moveToOtherNode(MindMapNode rootNode,
                                         List<MindMapNode> nodesToBeMoved, MindMapNode selectedParent, MindMapNode newNode) {
-        if (nodesToBeMoved.size() == 0) {
+        if (nodesToBeMoved.isEmpty()) {
             // nothing to do.
             return newNode;
         }

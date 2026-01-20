@@ -32,12 +32,10 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
+import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 import javax.swing.*;
@@ -53,7 +51,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.print.Paper;
 import java.io.*;
@@ -64,7 +61,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributes;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.*;
 import java.util.List;
@@ -111,7 +112,7 @@ public class Tools {
     private static String[] sEnvFonts = null;
 
     // bug fix from Dimitri.
-    public static Random ran = new Random();
+    public static final Random ran = new Random();
 
     public static boolean executableByExtension(String file) {
         return executableExtensions.contains(getExtension(file));
@@ -521,7 +522,7 @@ public class Tools {
                 (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03};
 
         // Iteration count
-        int iterationCount = 19;
+        final int iterationCount = 19;
 
         private final char[] passPhrase;
         private final String mAlgorithm;
@@ -556,11 +557,8 @@ public class Tools {
                     // Create the ciphers
                     ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
                     dcipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
-                } catch (java.security.InvalidAlgorithmParameterException e) {
-                } catch (java.security.spec.InvalidKeySpecException e) {
-                } catch (javax.crypto.NoSuchPaddingException e) {
-                } catch (java.security.NoSuchAlgorithmException e) {
-                } catch (java.security.InvalidKeyException e) {
+                } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException |
+                         NoSuchPaddingException | InvalidKeySpecException ignored) {
                 }
             }
         }
@@ -582,8 +580,7 @@ public class Tools {
                 // Encode bytes to base64 to get a string
                 return Tools.toBase64(newSalt) + SALT_PRESENT_INDICATOR
                         + Tools.toBase64(enc);
-            } catch (javax.crypto.BadPaddingException e) {
-            } catch (IllegalBlockSizeException e) {
+            } catch (BadPaddingException | IllegalBlockSizeException ignored) {
             }
             return null;
         }
@@ -611,8 +608,7 @@ public class Tools {
 
                 // Decode using utf-8
                 return new String(utf8, StandardCharsets.UTF_8);
-            } catch (javax.crypto.BadPaddingException e) {
-            } catch (IllegalBlockSizeException e) {
+            } catch (BadPaddingException | IllegalBlockSizeException ignored) {
             }
             return null;
         }
@@ -679,7 +675,7 @@ public class Tools {
         }
         try {
             bos.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         // Get the compressed data
@@ -710,7 +706,7 @@ public class Tools {
         }
         try {
             bos.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         // Get the decompressed data
@@ -841,8 +837,7 @@ public class Tools {
         StringWriter writer = null;
         InputStream inputStream = null;
 
-        log.info("Updating the reader " + pReader
-                + " to the current version.");
+        log.info("Updating the reader {} to the current version.", pReader);
         boolean successful = false;
         String errorMessage = null;
         try {
@@ -860,13 +855,11 @@ public class Tools {
 
             String fileContents = getFile(pReader);
             if (fileContents.length() > 10) {
-                log.info("File start before UTF8 replacement: '"
-                        + fileContents.substring(0, 9) + "'");
+                log.info("File start before UTF8 replacement: '{}'", fileContents.substring(0, 9));
             }
             fileContents = replaceUtf8AndIllegalXmlChars(fileContents);
             if (fileContents.length() > 10) {
-                log.info("File start after UTF8 replacement: '"
-                        + fileContents.substring(0, 9) + "'");
+                log.info("File start after UTF8 replacement: '{}'", fileContents.substring(0, 9));
             }
             final StreamSource sr = new StreamSource(new StringReader(
                     fileContents));
@@ -874,6 +867,7 @@ public class Tools {
             // after the XSLT transformation
             // everything should run in own thread. Only after the thread dies
             // the resources are released.
+            @Getter
             class TransformerRunnable implements Runnable {
 
                 private boolean successful = false;
@@ -883,8 +877,7 @@ public class Tools {
                     // create an instance of TransformerFactory
                     TransformerFactory transFact = TransformerFactory
                             .newInstance();
-                    log.info("TransformerFactory class: "
-                            + transFact.getClass());
+                    log.info("TransformerFactory class: {}", transFact.getClass());
                     Transformer trans;
                     try {
                         trans = transFact.newTransformer(xsltSource);
@@ -896,20 +889,12 @@ public class Tools {
                     }
                 }
 
-                public boolean isSuccessful() {
-                    return successful;
-                }
-
-                public String getErrorMessage() {
-                    return errorMessage;
-                }
             }
             final TransformerRunnable transformer = new TransformerRunnable();
             Thread transformerThread = new Thread(transformer, "XSLT");
             transformerThread.start();
             transformerThread.join();
-            log.info("Updating the reader " + pReader
-                    + " to the current version. Done."); // +
+            log.info("Updating the reader {} to the current version. Done.", pReader); // +
             // writer.getBuffer().toString());
             successful = transformer.isSuccessful();
             errorMessage = transformer.getErrorMessage();
@@ -944,10 +929,8 @@ public class Tools {
     /**
      * Creates a default reader that just reads the given file.
      *
-     * @throws FileNotFoundException
      */
-    public static Reader getActualReader(Reader pReader)
-            throws FileNotFoundException {
+    public static Reader getActualReader(Reader pReader) {
         return new BufferedReader(pReader);
     }
 
@@ -1000,14 +983,14 @@ public class Tools {
         System.err.println();
         System.err.println("BEGIN OF Transferable:\t" + t);
         DataFlavor[] dataFlavors = t.getTransferDataFlavors();
-        for (int i = 0; i < dataFlavors.length; i++) {
-            System.out.println("  Flavor:\t" + dataFlavors[i]);
+        for (DataFlavor dataFlavor : dataFlavors) {
+            System.out.println("  Flavor:\t" + dataFlavor);
             System.out.println("    Supported:\t"
-                    + t.isDataFlavorSupported(dataFlavors[i]));
+                    + t.isDataFlavorSupported(dataFlavor));
             try {
                 System.out.println("    Content:\t"
-                        + t.getTransferData(dataFlavors[i]));
-            } catch (Exception e) {
+                        + t.getTransferData(dataFlavor));
+            } catch (Exception ignored) {
             }
         }
         System.err.println("END OF Transferable");
@@ -1246,9 +1229,9 @@ public class Tools {
 
     public static class MindMapNodePair {
 
-        MindMapNode first;
+        final MindMapNode first;
 
-        MindMapNode second;
+        final MindMapNode second;
 
         public MindMapNodePair(MindMapNode first, MindMapNode second) {
             this.first = first;
@@ -1289,7 +1272,7 @@ public class Tools {
             mString = pString;
         }
 
-        public Reader createReader() throws FileNotFoundException {
+        public Reader createReader() {
             return new StringReader(mString);
         }
 
@@ -1422,13 +1405,10 @@ public class Tools {
             // wait until AWT thread starts
             // final Exception e = new IllegalArgumentException("HERE");
             if (!EventQueue.isDispatchThread()) {
-                EventQueue.invokeAndWait(new Runnable() {
-                                             public void run() {
-                                                 // log.info("Waited for event queue.");
-                                                 // e.printStackTrace();
-                                             }
-
-                                         }
+                EventQueue.invokeAndWait((Runnable) () -> {
+                    // log.info("Waited for event queue.");
+                    // e.printStackTrace();
+                }
                 );
             } else {
                 log.warn("Can't wait for event queue, if I'm inside this queue!");
@@ -1447,14 +1427,14 @@ public class Tools {
      * with the correct scale.
      */
     public static Font updateFontSize(Font font, float zoom, int normalFontSize) {
-        if (font != null) {
-            float oldFontSize = font.getSize2D();
-            float newFontSize = normalFontSize * zoom;
-            if (oldFontSize != newFontSize) {
-                font = font.deriveFont(newFontSize);
-            }
+        if (font == null) {
+            return null;
         }
-        return font;
+
+        float oldFontSize = font.getSize2D();
+        float newFontSize = normalFontSize * zoom;
+
+        return oldFontSize == newFontSize ? font : font.deriveFont(newFontSize);
     }
 
     public static String compareText(String pText1, String pText2) {
@@ -1463,17 +1443,14 @@ public class Tools {
         }
         StringBuffer b = new StringBuffer();
         if (pText1.length() > pText2.length()) {
-            b.append("First string is longer :"
-                    + pText1.substring(pText2.length()) + "\n");
+            b.append("First string is longer :").append(pText1.substring(pText2.length())).append("\n");
         }
         if (pText1.length() < pText2.length()) {
-            b.append("Second string is longer :"
-                    + pText2.substring(pText1.length()) + "\n");
+            b.append("Second string is longer :").append(pText2.substring(pText1.length())).append("\n");
         }
         for (int i = 0; i < Math.min(pText1.length(), pText2.length()); i++) {
             if (pText1.charAt(i) != pText2.charAt(i)) {
-                b.append("Difference at " + i + ": " + pText1.charAt(i) + "!="
-                        + pText2.charAt(i) + "\n");
+                b.append("Difference at ").append(i).append(": ").append(pText1.charAt(i)).append("!=").append(pText2.charAt(i)).append("\n");
             }
 
         }
@@ -1485,7 +1462,7 @@ public class Tools {
         try {
             InetAddress addr = InetAddress.getLocalHost();
             hostname = addr.getHostName();
-        } catch (UnknownHostException e) {
+        } catch (UnknownHostException ignored) {
         }
         return hostname;
     }
@@ -1538,8 +1515,7 @@ public class Tools {
     public static Object getField(Object[] pObjects, String pField)
             throws IllegalArgumentException, SecurityException,
             IllegalAccessException, NoSuchFieldException {
-        for (int i = 0; i < pObjects.length; i++) {
-            Object object = pObjects[i];
+        for (Object object : pObjects) {
             for (int j = 0; j < object.getClass().getFields().length; j++) {
                 Field f = object.getClass().getFields()[j];
                 if (Tools.safeEquals(pField, f.getName())) {
@@ -1585,7 +1561,7 @@ public class Tools {
                 // Catch Throwable here rather than Exception.
                 // Kaffe's implementation of Runtime.exec throws
                 // java.lang.InternalError.
-                catch (Throwable t) {
+                catch (Throwable ignored) {
                 }
             }
         }
@@ -1593,8 +1569,7 @@ public class Tools {
 
     public static String arrayToUrls(String[] pArgs) {
         StringBuffer b = new StringBuffer();
-        for (int i = 0; i < pArgs.length; i++) {
-            String fileName = pArgs[i];
+        for (String fileName : pArgs) {
             try {
                 b.append(fileToUrl(new File(fileName)));
                 b.append('\n');
@@ -1608,8 +1583,7 @@ public class Tools {
     public static Vector<URL> urlStringToUrls(String pUrls) {
         String[] urls = pUrls.split("\n");
         Vector<URL> ret = new Vector<>();
-        for (int i = 0; i < urls.length; i++) {
-            String url = urls[i];
+        for (String url : urls) {
             try {
                 ret.add(new URL(url));
             } catch (MalformedURLException e) {
@@ -1667,17 +1641,9 @@ public class Tools {
     }
 
     public static void addFocusPrintTimer() {
-        Timer timer = new Timer(1000, new ActionListener() {
-
-            public void actionPerformed(ActionEvent pE) {
-                log.info("Component: "
-                        + KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                        .getFocusOwner()
-                        + ", Window: "
-                        + KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                        .getFocusedWindow());
-            }
-        });
+        Timer timer = new Timer(1000, pE -> log.info("Component: {}, Window: {}", KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .getFocusOwner(), KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .getFocusedWindow()));
         timer.start();
 
     }
@@ -1696,8 +1662,7 @@ public class Tools {
         // on purpose without shift.
         int modifiersMask = KeyEvent.ALT_MASK | KeyEvent.CTRL_MASK
                 | KeyEvent.META_MASK;
-        for (int i = 0; i < specialKeyActions.length; i++) {
-            Action specialKeyAction = specialKeyActions[i];
+        for (Action specialKeyAction : specialKeyActions) {
             KeyStroke actionKeyStroke = (KeyStroke) specialKeyAction
                     .getValue(Action.ACCELERATOR_KEY);
             if (pEvent.getKeyChar() == actionKeyStroke.getKeyChar()
@@ -1745,8 +1710,7 @@ public class Tools {
             StringTokenizer tokenizer = new StringTokenizer(
                     pPageFormatProperty, ";");
             if (tokenizer.countTokens() != 6) {
-                log.warn("Page format property has not the correct format:"
-                        + pPageFormatProperty);
+                log.warn("Page format property has not the correct format:{}", pPageFormatProperty);
                 return;
             }
             pPaper.setSize(nt(tokenizer), nt(tokenizer));
@@ -1795,11 +1759,11 @@ public class Tools {
 
             StringBuilder buf = new StringBuilder("[");
 
-            for (Iterator<XmlAction> it = xmlActions.iterator(); it.hasNext(); ) {
+            for (XmlAction xmlAction : xmlActions) {
                 if (buf.length() > 1) {
                     buf.append(',');
                 }
-                XmlAction subAction = it.next();
+                XmlAction subAction = xmlAction;
                 buf.append(printXmlAction(subAction));
             }
             buf.append(']');
@@ -1852,27 +1816,26 @@ public class Tools {
         }
     }
 
-    public static String getFreeMindBasePath()
-            throws UnsupportedEncodingException {
+    public static String getFreeMindBasePath() {
         String path = FreeMindStarter.class.getProtectionDomain()
                 .getCodeSource().getLocation().getPath();
-        String decodedPath = URLDecoder.decode(path, "UTF-8");
-        log.info("Path: " + decodedPath);
+        String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
+        log.info("Path: {}", decodedPath);
         if (decodedPath.endsWith(CONTENTS_JAVA_FREEMIND_JAR)) {
             decodedPath = decodedPath.substring(0, decodedPath.length() - CONTENTS_JAVA_FREEMIND_JAR.length());
             decodedPath = decodedPath + FREE_MIND_APP_CONTENTS_RESOURCES_JAVA;
-            log.info("macPath: " + decodedPath);
+            log.info("macPath: {}", decodedPath);
         } else if (decodedPath.endsWith(FREEMIND_LIB_FREEMIND_JAR)) {
             decodedPath = decodedPath.substring(0, decodedPath.length() - FREEMIND_LIB_FREEMIND_JAR.length());
-            log.info("reducded Path: " + decodedPath);
+            log.info("reducded Path: {}", decodedPath);
         }
         return decodedPath + "dictionaries/";
     }
 
     public static Properties copyChangedProperties(Properties props2, Properties defProps2) {
         Properties toBeStored = new Properties();
-        for (Iterator it = props2.keySet().iterator(); it.hasNext(); ) {
-            String key = (String) it.next();
+        for (Object o : props2.keySet()) {
+            String key = (String) o;
             if (!safeEquals(props2.get(key), defProps2.get(key))) {
                 toBeStored.put(key, props2.get(key));
             }

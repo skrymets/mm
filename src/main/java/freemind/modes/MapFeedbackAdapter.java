@@ -43,7 +43,7 @@ import java.util.List;
 @Slf4j
 public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 
-    private HashMap<String, Font> fontMap = new HashMap<String, Font>();
+    private final HashMap<String, Font> fontMap = new HashMap<>();
 
     public MapFeedbackAdapter() {
     }
@@ -113,7 +113,7 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
         if (!fontMap.containsKey(font.toString())) {
             fontMap.put(font.toString(), font);
         }
-        return (Font) fontMap.get(font.toString());
+        return fontMap.get(font.toString());
     }
 
     @Override
@@ -126,7 +126,7 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 
     @Override
     public void invokeHooksRecursively(MindMapNode pNode, MindMap pModel) {
-        for (Iterator i = pNode.childrenUnfolded(); i.hasNext(); ) {
+        for (Iterator<MindMapNode> i = pNode.childrenUnfolded(); i.hasNext(); ) {
             NodeAdapter child = (NodeAdapter) i.next();
             invokeHooksRecursively(child, getMap());
         }
@@ -243,8 +243,8 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
     }
 
     public void sortNodesByDepth(List<MindMapNode> inPlaceList) {
-        Collections.sort(inPlaceList, new NodesDepthComparator());
-        log.trace("Sort result: " + inPlaceList);
+        inPlaceList.sort(new NodesDepthComparator());
+        log.trace("Sort result: {}", inPlaceList);
     }
 
     @Override

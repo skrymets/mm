@@ -10,6 +10,8 @@ import freemind.main.*;
 import freemind.modes.*;
 import freemind.modes.attributes.Attribute;
 import freemind.preferences.FreemindPropertyListener;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -46,6 +48,7 @@ public abstract class NodeAdapter implements MindMapNode {
     private List<PermanentNodeHook> hooks;
     protected Object userObject = "no text";
     private String xmlText = "no text";
+    @Getter
     private String link = null; // Change this to vector in future for full
     // graph support
     private static final String TOOLTIP_PREVIEW_KEY = "preview";
@@ -57,6 +60,7 @@ public abstract class NodeAdapter implements MindMapNode {
     // smaller and looks better.
     // (if the default is used, it is not stored) Look at mindmapmode for an
     // example.
+    @Setter
     protected String style;
     /**
      * stores the icons associated with this node.
@@ -70,24 +74,53 @@ public abstract class NodeAdapter implements MindMapNode {
     /**
      * parameters of an eventually associated cloud
      */
+    @Getter
     protected MindMapCloud cloud;
 
+    /**
+     * -- GETTER --
+     *  The Foreground/Font Color
+     */
+    @Setter
+    @Getter
     protected Color color;
+    // fc, 24.2.2004: background color:
+    @Setter
+    @Getter
     protected Color backgroundColor;
+    @Setter
+    @Getter
     protected boolean folded;
     private int position = UNKNOWN_POSITION;
 
+    @Getter
     private int vGap = VGAP;
+    // hGap = Math.max(HGAP, gap);
+    @Setter
+    @Getter
     private int hGap = HGAP;
+    /**
+     * -- SETTER --
+     *
+     * @param shiftY The shiftY to set.
+     */
+    @Setter
+    @Getter
     private int shiftY = 0;
 
     protected List<MindMapNode> children;
     private MindMapNode preferredChild;
 
+    @Setter
+    @Getter
     protected Font font;
+    // not implemented
+    @Setter
+    @Getter
     protected boolean underlined = false;
 
-    private FilterInfo filterInfo = new FilterInfo();
+    @Getter
+    private final FilterInfo filterInfo = new FilterInfo();
 
     private MindMapNode parent;
     /**
@@ -95,10 +128,18 @@ public abstract class NodeAdapter implements MindMapNode {
      * hold more than one view, maybe with a Vector in which the index specifies
      * the MapView which contains the NodeViews
      */
+    @Setter
+    @Getter
     private MindMapEdge edge;
 
     private static final boolean ALLOWSCHILDREN = true;
+    @Setter
+    @Getter
     private HistoryInformation historyInformation = null;
+    /**
+     */
+    @Setter
+    @Getter
     private MindMap map = null;
     private String noteText;
     private String xmlNoteText;
@@ -115,24 +156,14 @@ public abstract class NodeAdapter implements MindMapNode {
         // create creation time:
         setHistoryInformation(new HistoryInformation());
         if (sSaveIdPropertyChangeListener == null) {
-            sSaveIdPropertyChangeListener = new FreemindPropertyListener() {
-
-                public void propertyChanged(String propertyName, String newValue, String oldValue) {
-                    if (propertyName.equals(FreeMindCommon.SAVE_ONLY_INTRISICALLY_NEEDED_IDS)) {
-                        sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(newValue).booleanValue();
-                    }
+            sSaveIdPropertyChangeListener = (propertyName, newValue, oldValue) -> {
+                if (propertyName.equals(FreeMindCommon.SAVE_ONLY_INTRISICALLY_NEEDED_IDS)) {
+                    sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(newValue).booleanValue();
                 }
             };
             Controller.addPropertyChangeListenerAndPropagate(sSaveIdPropertyChangeListener);
         }
 
-    }
-
-    /**
-     *
-     */
-    public void setMap(MindMap pMap) {
-        this.map = pMap;
     }
 
     public String getText() {
@@ -201,10 +232,6 @@ public abstract class NodeAdapter implements MindMapNode {
         return toString();
     }
 
-    public String getLink() {
-        return link;
-    }
-
     public String getShortText(ModeController controller) {
         String adaptedText = getPlainTextContent();
         // adaptedText = adaptedText.replaceAll("<html>", "");
@@ -219,10 +246,6 @@ public abstract class NodeAdapter implements MindMapNode {
                     link.substring(1));
         }
         this.link = link;
-    }
-
-    public FilterInfo getFilterInfo() {
-        return filterInfo;
     }
 
     //
@@ -242,18 +265,6 @@ public abstract class NodeAdapter implements MindMapNode {
         this.addToPathVector(pathVector);
         treePath = new TreePath(pathVector.toArray());
         return treePath;
-    }
-
-    public MindMapEdge getEdge() {
-        return edge;
-    }
-
-    public void setEdge(MindMapEdge edge) {
-        this.edge = edge;
-    }
-
-    public MindMapCloud getCloud() {
-        return cloud;
     }
 
     public void setCloud(MindMapCloud cloud) {
@@ -325,38 +336,10 @@ public abstract class NodeAdapter implements MindMapNode {
         return style != null;
     }
 
-    /**
-     * The Foreground/Font Color
-     */
-    public Color getColor() {
-        return color;
-    }
-
     // ////
     // The set methods. I'm not sure if they should be here or in the
     // implementing class.
     // ///
-
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    // fc, 24.2.2004: background color:
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    ;
-
-    public void setBackgroundColor(Color color) {
-        this.backgroundColor = color;
-    }
-
-    ;
 
     //
     // font handling
@@ -388,7 +371,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
     public void toggleStrikethrough() {
         establishOwnFont();
-        Map attributes = font.getAttributes();
+        Map<TextAttribute, ?> attributes = font.getAttributes();
         if (attributes.containsKey(TextAttribute.STRIKETHROUGH) && attributes.get(TextAttribute.STRIKETHROUGH) == TextAttribute.STRIKETHROUGH_ON) {
             attributes.remove(TextAttribute.STRIKETHROUGH);
         } else {
@@ -413,14 +396,6 @@ public abstract class NodeAdapter implements MindMapNode {
         setFont(getMapFeedback().getFontThroughMap(font.deriveFont(font.getStyle() ^ Font.ITALIC)));
     }
 
-    public void setUnderlined(boolean underlined) {
-        this.underlined = underlined;
-    }
-
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
     public MindMapNode getParentNode() {
         return parent;
     }
@@ -431,13 +406,9 @@ public abstract class NodeAdapter implements MindMapNode {
                 font.deriveFont((float) fontSize)));
     }
 
-    public Font getFont() {
-        return font;
-    }
-
     public String getFontSize() {
         if (getFont() != null) {
-            return new Integer(getFont().getSize()).toString();
+            return Integer.toString(getFont().getSize());
         } else {
             return getMapFeedback().getProperty("defaultfontsize");
         }
@@ -459,10 +430,6 @@ public abstract class NodeAdapter implements MindMapNode {
         return font != null ? font.isItalic() : false;
     }
 
-    public boolean isUnderlined() { // not implemented
-        return underlined;
-    }
-
     public boolean isStrikethrough() {
         if (font != null) {
             Map<TextAttribute, ?> attr = font.getAttributes();
@@ -473,19 +440,11 @@ public abstract class NodeAdapter implements MindMapNode {
         return false;
     }
 
-    public boolean isFolded() {
-        return folded;
-    }
-
     // fc, 24.9.2003:
     public List<MindIcon> getIcons() {
         if (icons == null)
             return Collections.emptyList();
         return icons;
-    }
-
-    public MindMap getMap() {
-        return map;
     }
 
     public void addIcon(MindIcon _icon, int position) {
@@ -512,8 +471,6 @@ public abstract class NodeAdapter implements MindMapNode {
         }
         return returnSize;
     }
-
-    ;
 
     // end, fc, 24.9.2003
 
@@ -545,10 +502,6 @@ public abstract class NodeAdapter implements MindMapNode {
             return true;
         }
         return getParentNode().hasFoldedParents();
-    }
-
-    public void setFolded(boolean folded) {
-        this.folded = folded;
     }
 
     public MindMapNode shallowCopy() {
@@ -634,11 +587,11 @@ public abstract class NodeAdapter implements MindMapNode {
          * Using this stable sort, we assure that the left nodes came in front
          * of the right ones.
          */
-        Collections.sort(sorted, new Comparator<MindMapNode>() {
+        sorted.sort(new Comparator<>() {
 
             public int compare(MindMapNode pO1, MindMapNode pO2) {
-                return comp(((MindMapNode) pO2).isLeft(),
-                        ((MindMapNode) pO1).isLeft());
+                return comp(pO2.isLeft(),
+                        pO1.isLeft());
             }
 
             private int comp(boolean pLeft, boolean pLeft2) {
@@ -663,7 +616,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
     public List<MindMapNode> getChildren() {
         return Collections.unmodifiableList((children != null) ? children
-                : Collections.<MindMapNode>emptyList());
+                : Collections.emptyList());
     }
 
     //
@@ -690,7 +643,7 @@ public abstract class NodeAdapter implements MindMapNode {
         // if (isFolded()) {
         // return null;
         // }
-        return (TreeNode) children.get(childIndex);
+        return children.get(childIndex);
     }
 
     public int getChildCount() {
@@ -764,7 +717,7 @@ public abstract class NodeAdapter implements MindMapNode {
     // other)?
 
     public void insert(MutableTreeNode child, int index) {
-        log.trace("Insert at " + index + " the node " + child);
+        log.trace("Insert at {} the node {}", index, child);
         final MindMapNode childNode = (MindMapNode) child;
         if (index < 0) { // add to the end (used in xml load) (PN)
             index = getChildCount();
@@ -778,7 +731,7 @@ public abstract class NodeAdapter implements MindMapNode {
     }
 
     public void remove(int index) {
-        MutableTreeNode node = (MutableTreeNode) children.get(index);
+        MutableTreeNode node = children.get(index);
         remove(node);
     }
 
@@ -786,10 +739,10 @@ public abstract class NodeAdapter implements MindMapNode {
         if (node == this.preferredChild) { // mind preferred child :-) (PN)
             int index = children.indexOf(node);
             if (children.size() > index + 1) {
-                this.preferredChild = (MindMapNode) (children.get(index + 1));
+                this.preferredChild = children.get(index + 1);
             } else {
-                this.preferredChild = (index > 0) ? (MindMapNode) (children
-                        .get(index - 1)) : null;
+                this.preferredChild = (index > 0) ? children
+                        .get(index - 1) : null;
             }
         }
         node.setParent(null);
@@ -802,7 +755,7 @@ public abstract class NodeAdapter implements MindMapNode {
                                           MindMapNode addedChild) {
         // Tell any node hooks that the node is added:
         if (node instanceof MindMapNode) {
-            for (PermanentNodeHook hook : ((MindMapNode) node).getActivatedHooks()) {
+            for (PermanentNodeHook hook : node.getActivatedHooks()) {
                 if (addedChild.getParentNode() == node) {
                     hook.onAddChild(addedChild);
                 }
@@ -974,22 +927,22 @@ public abstract class NodeAdapter implements MindMapNode {
         createActivatedHooks();
         if (activatedHooks.contains(hook)) {
             activatedHooks.remove(hook);
-            if (activatedHooks.size() == 0) {
+            if (activatedHooks.isEmpty()) {
                 activatedHooks = null;
             }
             hook.shutdownMapHook();
         }
         createHooks();
         hooks.remove(hook);
-        if (hooks.size() == 0)
+        if (hooks.isEmpty())
             hooks = null;
-        log.trace("Removed hook " + name + " at " + hook + ".");
+        log.trace("Removed hook {} at {}.", name, hook);
     }
 
     public void removeAllHooks() {
         int timeout = getHooks().size() * 2;
-        while (getHooks().size() > 0 && timeout-- > 0) {
-            PermanentNodeHook hook = (PermanentNodeHook) getHooks().get(0);
+        while (!getHooks().isEmpty() && timeout-- > 0) {
+            PermanentNodeHook hook = getHooks().get(0);
             try {
                 removeHook(hook);
             } catch (Exception e) {
@@ -1018,7 +971,7 @@ public abstract class NodeAdapter implements MindMapNode {
             // this should be done only once per link, so we have to prevent doing that every time again.
             if (result.containsKey(TOOLTIP_PREVIEW_KEY)) {
                 // check, if the contained link belongs to the same file (ie. hasn't change in between)
-                String prev = (String) result.get(TOOLTIP_PREVIEW_KEY);
+                String prev = result.get(TOOLTIP_PREVIEW_KEY);
                 if (prev != null && prev.contains(linkHtmlPart)) {
                     addIt = false;
                 }
@@ -1030,7 +983,7 @@ public abstract class NodeAdapter implements MindMapNode {
                     if (new File(thumbnailFileName).exists()) {
                         URL thumbUrl = Tools.fileToUrl(new File(thumbnailFileName));
                         String imgHtml = "<img src=\"" + thumbUrl + "\" " + linkHtmlPart + "/>";
-                        log.info("Adding new tooltip: " + imgHtml);
+                        log.info("Adding new tooltip: {}", imgHtml);
                         result.put(TOOLTIP_PREVIEW_KEY, imgHtml);
                         toolTipChanged = true;
                     }
@@ -1046,7 +999,7 @@ public abstract class NodeAdapter implements MindMapNode {
         }
         if (toolTipChanged) {
             // write back, if changed
-            if (result.size() == 0) {
+            if (result.isEmpty()) {
                 toolTip = null;
             } else {
                 toolTip = result;
@@ -1061,10 +1014,8 @@ public abstract class NodeAdapter implements MindMapNode {
     public void setToolTip(String key, String string) {
         createToolTip();
         if (string == null) {
-            if (toolTip.containsKey(key)) {
-                toolTip.remove(key);
-            }
-            if (toolTip.size() == 0)
+            toolTip.remove(key);
+            if (toolTip.isEmpty())
                 toolTip = null;
         } else {
             toolTip.put(key, string);
@@ -1135,20 +1086,18 @@ public abstract class NodeAdapter implements MindMapNode {
         }
 
         Vector<MindMapLink> linkVector = registry.getAllLinksFromMe(this);
-        for (int i = 0; i < linkVector.size(); ++i) {
-            if (linkVector.get(i) instanceof ArrowLinkAdapter) {
-                XMLElement arrowLinkElement = ((ArrowLinkAdapter) linkVector
-                        .get(i)).save();
+        for (MindMapLink mapLink : linkVector) {
+            if (mapLink instanceof ArrowLinkAdapter) {
+                XMLElement arrowLinkElement = ((ArrowLinkAdapter) mapLink).save();
                 node.addChild(arrowLinkElement);
             }
         }
 
         // virtual link targets:
         Vector<MindMapLink> targetVector = registry.getAllLinksIntoMe(this);
-        for (int i = 0; i < targetVector.size(); ++i) {
-            if (targetVector.get(i) instanceof ArrowLinkAdapter) {
-                XMLElement arrowLinkTargetElement = ((ArrowLinkAdapter) targetVector
-                        .get(i)).createArrowLinkTarget(registry).save();
+        for (MindMapLink mindMapLink : targetVector) {
+            if (mindMapLink instanceof ArrowLinkAdapter) {
+                XMLElement arrowLinkTargetElement = ((ArrowLinkAdapter) mindMapLink).createArrowLinkTarget(registry).save();
                 node.addChild(arrowLinkTargetElement);
             }
         }
@@ -1167,8 +1116,8 @@ public abstract class NodeAdapter implements MindMapNode {
         // real link.
         String label = registry.getLabel(this);
         if (!sSaveOnlyIntrinsicallyNeededIds
-                || (registry.isTargetOfLocalHyperlinks(label) || (registry
-                .getAllLinksIntoMe(this).size() > 0))) {
+                || (registry.isTargetOfLocalHyperlinks(label) || (!registry
+                .getAllLinksIntoMe(this).isEmpty()))) {
             if (label != null) {
                 node.setAttribute("ID", label);
             }
@@ -1245,7 +1194,7 @@ public abstract class NodeAdapter implements MindMapNode {
             XMLElement iconElement = new XMLElement();
             iconElement.setName("icon");
             iconElement.setAttribute("BUILTIN",
-                    ((MindIcon) getIcons().get(i)).getName());
+                    getIcons().get(i).getName());
             node.addChild(iconElement);
         }
 
@@ -1259,10 +1208,10 @@ public abstract class NodeAdapter implements MindMapNode {
             node.addChild(hookElement);
         }
         if (mAttributeVector != null) {
-            for (int i = 0; i < mAttributeVector.size(); i++) {
+            for (Attribute attribute : mAttributeVector) {
                 XMLElement attributeElement = new XMLElement();
                 attributeElement.setName(XMLElementAdapter.XML_NODE_ATTRIBUTE);
-                Attribute attr = mAttributeVector.get(i);
+                Attribute attr = attribute;
                 attributeElement.setAttribute("NAME", attr.getName());
                 attributeElement.setAttribute("VALUE", attr.getValue());
                 node.addChild(attributeElement);
@@ -1296,10 +1245,6 @@ public abstract class NodeAdapter implements MindMapNode {
         }
     }
 
-    public int getShiftY() {
-        return shiftY;
-    }
-
     public boolean hasExactlyOneVisibleChild() {
         int count = 0;
         for (ListIterator<MindMapNode> i = childrenUnfolded(); i.hasNext(); ) {
@@ -1330,13 +1275,6 @@ public abstract class NodeAdapter implements MindMapNode {
     }
 
     /**
-     * @param shiftY The shiftY to set.
-     */
-    public void setShiftY(int shiftY) {
-        this.shiftY = shiftY;
-    }
-
-    /**
      *
      */
 
@@ -1355,10 +1293,8 @@ public abstract class NodeAdapter implements MindMapNode {
         createStateIcons();
         if (icon != null) {
             stateIcons.put(key, icon);
-        } else if (stateIcons.containsKey(key)) {
-            stateIcons.remove(key);
-        }
-        if (stateIcons.size() == 0)
+        } else stateIcons.remove(key);
+        if (stateIcons.isEmpty())
             stateIcons = null;
     }
 
@@ -1366,27 +1302,6 @@ public abstract class NodeAdapter implements MindMapNode {
         if (stateIcons == null)
             return Collections.emptyMap();
         return Collections.unmodifiableSortedMap(stateIcons);
-    }
-
-    public HistoryInformation getHistoryInformation() {
-        return historyInformation;
-    }
-
-    public void setHistoryInformation(HistoryInformation historyInformation) {
-        this.historyInformation = historyInformation;
-    }
-
-    public int getHGap() {
-        return hGap;
-    }
-
-    public void setHGap(int gap) {
-        // hGap = Math.max(HGAP, gap);
-        hGap = gap;
-    }
-
-    public int getVGap() {
-        return vGap;
     }
 
     public void setVGap(int gap) {
@@ -1398,7 +1313,7 @@ public abstract class NodeAdapter implements MindMapNode {
         return filter == null || filter.isVisible(this);
     }
 
-    EventListenerList listenerList = new EventListenerList();
+    final EventListenerList listenerList = new EventListenerList();
 
     public void addTreeModelListener(TreeModelListener l) {
         listenerList.add(TreeModelListener.class, l);
@@ -1519,7 +1434,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
     private Vector<Attribute> getAttributeVector() {
         if (mAttributeVector == null) {
-            mAttributeVector = new Vector<Attribute>();
+            mAttributeVector = new Vector<>();
         }
         return mAttributeVector;
     }

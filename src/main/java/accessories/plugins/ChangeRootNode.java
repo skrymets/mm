@@ -117,8 +117,8 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
                 nodes.add(focussed);
                 MapView view = controller.getView();
                 while (!nodes.isEmpty()) {
-                    MindMapNode child = (MindMapNode) nodes.firstElement();
-                    log.trace("Removing viewers for " + child);
+                    MindMapNode child = nodes.firstElement();
+                    log.trace("Removing viewers for {}", child);
                     nodes.remove(0);
                     nodes.addAll(child.getChildren());
                     Collection<NodeView> viewers = new Vector<>(view.getViewers(child));

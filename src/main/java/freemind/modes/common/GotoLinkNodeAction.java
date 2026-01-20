@@ -34,7 +34,7 @@ import java.awt.event.ActionEvent;
  */
 @SuppressWarnings("serial")
 public class GotoLinkNodeAction extends AbstractAction {
-    MindMapNode source;
+    final MindMapNode source;
 
     private final ModeController controller;
 

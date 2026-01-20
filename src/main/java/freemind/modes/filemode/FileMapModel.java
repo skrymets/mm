@@ -23,15 +23,19 @@ package freemind.modes.filemode;
 import freemind.main.FreeMindMain;
 import freemind.model.*;
 import freemind.modes.*;
+import lombok.Getter;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Writer;
 
+@Getter
 @SuppressWarnings("serial")
 public class FileMapModel extends MapAdapter {
 
-    private MindMapLinkRegistry linkRegistry;
+    //
+    // Other methods
+    //
+    private final MindMapLinkRegistry linkRegistry;
 
     //
     // Constructors
@@ -47,13 +51,6 @@ public class FileMapModel extends MapAdapter {
         setRoot(new FileNodeModel(root, this));
         getRootNode().setFolded(false);
         linkRegistry = new MindMapLinkRegistry();
-    }
-
-    //
-    // Other methods
-    //
-    public MindMapLinkRegistry getLinkRegistry() {
-        return linkRegistry;
     }
 
     //
@@ -110,7 +107,7 @@ public class FileMapModel extends MapAdapter {
      *
      * @see freemind.model.MindMap#getXml(java.io.Writer)
      */
-    public void getXml(Writer fileout) throws IOException {
+    public void getXml(Writer fileout) {
         // nothing.
         // FIXME: Implement me if you need me.
         throw new RuntimeException("Unimplemented method called.");
@@ -121,7 +118,7 @@ public class FileMapModel extends MapAdapter {
      *
      * @see freemind.model.MindMap#getFilteredXml(java.io.Writer)
      */
-    public void getFilteredXml(Writer fileout) throws IOException {
+    public void getFilteredXml(Writer fileout) {
         // nothing.
         // FIXME: Implement me if you need me.
         throw new RuntimeException("Unimplemented method called.");

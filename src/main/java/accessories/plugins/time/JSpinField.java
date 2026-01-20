@@ -21,6 +21,8 @@
 
 package accessories.plugins.time;
 
+import lombok.Getter;
+
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -45,16 +47,23 @@ public class JSpinField extends JPanel implements ChangeListener,
         CaretListener, ActionListener, FocusListener {
     private static final long serialVersionUID = 1694904792717740650L;
 
-    protected JSpinner spinner;
+    protected final JSpinner spinner;
 
     /**
      * the text (number) field
      */
-    protected JTextField textField;
+    protected final JTextField textField;
     protected int min;
     protected int max;
+    /**
+     * -- GETTER --
+     *  Returns the value.
+     *
+     * @return the value value
+     */
+    @Getter
     protected int value;
-    protected Color darkGreen;
+    protected final Color darkGreen;
 
     /**
      * Default JSpinField constructor. The valid value range is between
@@ -92,7 +101,7 @@ public class JSpinField extends JPanel implements ChangeListener,
         textField.addFocusListener(this);
         spinner = new JSpinner() {
             private static final long serialVersionUID = -6287709243342021172L;
-            private JTextField textField = new JTextField();
+            private final JTextField textField = new JTextField();
 
             public Dimension getPreferredSize() {
                 Dimension size = super.getPreferredSize();
@@ -136,11 +145,7 @@ public class JSpinField extends JPanel implements ChangeListener,
         int oldValue = value;
         if (newValue < min) {
             value = min;
-        } else if (newValue > max) {
-            value = max;
-        } else {
-            value = newValue;
-        }
+        } else value = Math.min(newValue, max);
 
         if (updateTextField) {
             textField.setText(Integer.toString(value));
@@ -161,15 +166,6 @@ public class JSpinField extends JPanel implements ChangeListener,
     public void setValue(int newValue) {
         setValue(newValue, true, true);
         spinner.setValue(new Integer(value));
-    }
-
-    /**
-     * Returns the value.
-     *
-     * @return the value value
-     */
-    public int getValue() {
-        return value;
     }
 
     /**

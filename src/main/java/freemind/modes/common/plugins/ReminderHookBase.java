@@ -26,6 +26,8 @@ import freemind.extensions.PermanentNodeHookAdapter;
 import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -53,6 +55,8 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
 
     private static final int BLINK_INTERVAL_IN_MILLIES = 3000;
 
+    @Setter
+    @Getter
     private long remindUserAt = 0;
 
     private Timer timer;
@@ -76,8 +80,8 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
         super.loadFrom(child);
         HashMap<String, String> hash = loadNameValuePairs(child);
         if (hash.containsKey(REMINDUSERAT)) {
-            String remindAt = (String) hash.get(REMINDUSERAT);
-            setRemindUserAt(new Long(remindAt).longValue());
+            String remindAt = hash.get(REMINDUSERAT);
+            setRemindUserAt(Long.parseLong(remindAt));
         }
 
     }
@@ -113,7 +117,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
             setToolTip(node, getName(), message);
             displayState(CLOCK_VISIBLE, getNode(), false);
         }
-        log.info("Invoke for node: " + node.getObjectId(getController()));
+        log.info("Invoke for node: {}", node.getObjectId(getController()));
     }
 
     /**
@@ -208,10 +212,6 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
     protected abstract void setToolTip(MindMapNode node, String key,
                                        String value);
 
-    public long getRemindUserAt() {
-        return remindUserAt;
-    }
-
     public int getRemindUserAtAsSecondsFromNow() {
         long timeDiff = remindUserAt - System.currentTimeMillis();
         if (timeDiff > Integer.MAX_VALUE) {
@@ -221,10 +221,6 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
             return Integer.MIN_VALUE;
         }
         return (int) timeDiff;
-    }
-
-    public void setRemindUserAt(long remindUserAt) {
-        this.remindUserAt = remindUserAt;
     }
 
     private final String STATE_TOOLTIP = TimerBlinkTask.class.getName()

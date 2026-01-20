@@ -40,7 +40,7 @@ public class MindMapHookAdapter extends ModeControllerHookAdapter {
     public JMenuItem addAccelerator(JMenuItem menuItem, String key) {
         String keyProp = getMindMapController().getFrame().getProperty(key);
         if (keyProp == null) {
-            log.warn("Keystroke to " + key + " not found.");
+            log.warn("Keystroke to {} not found.", key);
         }
         KeyStroke keyStroke = KeyStroke.getKeyStroke(keyProp);
         menuItem.setAccelerator(keyStroke);

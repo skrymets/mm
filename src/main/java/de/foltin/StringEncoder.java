@@ -143,6 +143,6 @@ public final class StringEncoder {
      * Specification</a>
      */
     public static boolean isValidXMLChar(char ch) {
-        return (ch >= '\u0020' && ch <= '\ud7ff') || (ch >= '\ue000' && ch <= '\ufffd');
+        return (ch >= ' ' && ch <= '\ud7ff') || (ch >= '\ue000' && ch <= '\ufffd');
     }
 }

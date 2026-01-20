@@ -72,26 +72,26 @@ public class ImportFolderStructureAction extends MindmapAction {
     }
 
     public void importFolderStructure(File folder, MindMapNode target, boolean redisplay) throws MalformedURLException {
-        log.trace("Entering folder: " + folder);
+        log.trace("Entering folder: {}", folder);
 
         if (folder.isDirectory()) {
             getFrame().setStatusText(folder.getName());
             File[] list = folder.listFiles();
             if (list != null) {
                 // Go recursively to subfolders
-                for (int i = 0; i < list.length; i++) {
-                    if (list[i].isDirectory()) {
+                for (File value : list) {
+                    if (value.isDirectory()) {
                         // Insert a new node
-                        MindMapNode node = addNode(target, list[i].getName(),
-                                Tools.fileToUrl(list[i]).toString());
-                        importFolderStructure(list[i], node, false);
+                        MindMapNode node = addNode(target, value.getName(),
+                                Tools.fileToUrl(value).toString());
+                        importFolderStructure(value, node, false);
                     }
                 }
                 // For each file: add it
-                for (int i = 0; i < list.length; i++) {
-                    if (!list[i].isDirectory()) {
-                        addNode(target, list[i].getName(),
-                                Tools.fileToUrl(list[i]).toString());
+                for (File file : list) {
+                    if (!file.isDirectory()) {
+                        addNode(target, file.getName(),
+                                Tools.fileToUrl(file).toString());
                     }
                 }
             }

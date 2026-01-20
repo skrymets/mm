@@ -34,11 +34,11 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class ChangeArrowsInArrowLinkAction extends MindmapAction {
-    MindMapArrowLinkModel arrowLink;
+    final MindMapArrowLinkModel arrowLink;
 
-    boolean hasStartArrow;
+    final boolean hasStartArrow;
 
-    boolean hasEndArrow;
+    final boolean hasEndArrow;
 
     private final MindMapController controller;
 

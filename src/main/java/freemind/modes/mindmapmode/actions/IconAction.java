@@ -36,7 +36,7 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class IconAction extends MindmapAction implements IconInformation {
-    public MindIcon icon;
+    public final MindIcon icon;
     private final MindMapController modeController;
 
     public IconAction(MindMapController controller, MindIcon _icon,
@@ -69,7 +69,6 @@ public class IconAction extends MindmapAction implements IconInformation {
         }
         if ((e.getModifiers() & ~ActionEvent.SHIFT_MASK & ActionEvent.CTRL_MASK & ~ActionEvent.ALT_MASK) != 0) {
             removeIcon(true);
-            return;
         }
     }
 
@@ -87,7 +86,7 @@ public class IconAction extends MindmapAction implements IconInformation {
 
     private void removeAllIcons() {
         for (MindMapNode selected : modeController.getSelecteds()) {
-            if (selected.getIcons().size() > 0) {
+            if (!selected.getIcons().isEmpty()) {
                 modeController.removeAllIcons(selected);
             }
         }

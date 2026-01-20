@@ -41,6 +41,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapHookAdapter;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MultipleImage;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -334,19 +335,17 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
         // table selection listeners to enable/disable menu actions:
         ListSelectionModel rowSM = mTimeTable.getSelectionModel();
-        rowSM.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                // Ignore extra messages.
-                if (e.getValueIsAdjusting())
-                    return;
+        rowSM.addListSelectionListener(e -> {
+            // Ignore extra messages.
+            if (e.getValueIsAdjusting())
+                return;
 
-                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                boolean enable = !(lsm.isSelectionEmpty());
-                replaceSelectedMenuItem.setEnabled(enable);
-                selectMenuItem.setEnabled(enable);
-                gotoMenuItem.setEnabled(enable);
-                exportMenuItem.setEnabled(enable);
-            }
+            ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+            boolean enable = !(lsm.isSelectionEmpty());
+            replaceSelectedMenuItem.setEnabled(enable);
+            selectMenuItem.setEnabled(enable);
+            gotoMenuItem.setEnabled(enable);
+            exportMenuItem.setEnabled(enable);
         });
         // table selection listener to display the history of the selected nodes
         rowSM.addListSelectionListener(new ListSelectionListener() {
@@ -418,8 +417,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
     protected void exportSelectedRowsAndClose() {
         int[] selectedRows = mTimeTable.getSelectedRows();
         Vector<MindMapNode> selectedNodes = new Vector<>();
-        for (int i = 0; i < selectedRows.length; i++) {
-            int row = selectedRows[i];
+        for (int row : selectedRows) {
             selectedNodes.add(getMindMapNode(row));
         }
         // create new map:
@@ -439,7 +437,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
      * @author foltin
      * @date 25.04.2012
      */
-    private final class MindmapTableModel extends DefaultTableModel {
+    private static final class MindmapTableModel extends DefaultTableModel {
         /*
          * (non-Javadoc)
          *
@@ -574,8 +572,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             MindMapNode focussedNode = getMindMapNode(focussedRow);
             // getController().centerNode(focussedNode);
             Vector<MindMapNode> selectedNodes = new Vector<>();
-            for (int i = 0; i < selectedRows.length; i++) {
-                int row = selectedRows[i];
+            for (int row : selectedRows) {
                 selectedNodes.add(getMindMapNode(row));
             }
             getMindMapController().select(focussedNode, selectedNodes);
@@ -621,13 +618,9 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         if (storage != null) {
             setTableConfiguration(storage);
         }
-        try {
-            String text = getRegularExpression(getText(mFilterTextSearchField
-                    .getDocument()));
-            mFlatNodeTableFilterModel.setFilter(text);
-        } catch (BadLocationException e) {
-            log.error(e.getLocalizedMessage(), e);
-        }
+        String text = getRegularExpression(getText(mFilterTextSearchField
+                .getDocument()));
+        mFlatNodeTableFilterModel.setFilter(text);
         return model;
     }
 
@@ -746,18 +739,11 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             }
 
             public void run() {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        try {
-                            Document document = event.getDocument();
-                            String text = getRegularExpression(getText(document));
-                            mFlatNodeTableFilterModel.setFilter(text);
-                            updateStatistics();
-                        } catch (BadLocationException e) {
-                            log.error(e.getLocalizedMessage(), e);
-                            mFlatNodeTableFilterModel.resetFilter();
-                        }
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    Document document = event.getDocument();
+                    String text = getRegularExpression(getText(document));
+                    mFlatNodeTableFilterModel.setFilter(text);
+                    updateStatistics();
                 });
             }
         }
@@ -816,8 +802,8 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                 EventListener[] el = super.getListeners(KeyListener.class);
                 if (e.getID() != KeyEvent.KEY_RELEASED)
                     return;
-                for (int i = 0; i < el.length; i++) {
-                    KeyListener kl = (KeyListener) el[i];
+                for (EventListener eventListener : el) {
+                    KeyListener kl = (KeyListener) eventListener;
                     kl.keyReleased(e);
                 }
                 return;
@@ -889,6 +875,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
      * removes html in nodes before comparison.
      */
     public static class NodeHolder implements Comparable<NodeHolder> {
+        @Getter
         private final MindMapNode node;
         private String untaggedNodeText = null;
         /**
@@ -926,10 +913,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                         .replaceAll("\\s+", " ");
             }
             return untaggedNodeText;
-        }
-
-        public MindMapNode getNode() {
-            return node;
         }
 
     }
@@ -977,7 +960,8 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
     }
 
     static class IconsHolder implements Comparable<IconsHolder> {
-        Vector<MindIcon> icons = new Vector<>();
+        @Getter
+        final Vector<MindIcon> icons = new Vector<>();
 
         private final Vector<String> iconNames;
 
@@ -996,19 +980,15 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             return toString().compareTo(compareToObject.toString());
         }
 
-        public Vector<MindIcon> getIcons() {
-            return icons;
-        }
-
         /**
          * Returns a sorted list of icon names.
          */
         public String toString() {
-            String result = "";
+            StringBuilder result = new StringBuilder();
             for (String name : iconNames) {
-                result += name + " ";
+                result.append(name).append(" ");
             }
-            return result;
+            return result.toString();
         }
     }
 

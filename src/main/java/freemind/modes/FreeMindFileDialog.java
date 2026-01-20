@@ -48,7 +48,7 @@ public interface FreeMindFileDialog {
     void addChoosableFileFilterAsDefault(FileFilter pFilter);
 
     /**
-     * Adds a further file filter for optional use. It is not selected by default, but this is UI dependent.
+     * Adds a file filter for optional use. It is not selected by default, but this is UI dependent.
      *
      * @see #addChoosableFileFilterAsDefault(FileFilter)
      */

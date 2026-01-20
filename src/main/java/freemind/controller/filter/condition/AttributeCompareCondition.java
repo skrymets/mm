@@ -37,9 +37,9 @@ public class AttributeCompareCondition extends CompareConditionAdapter {
     static final String ATTRIBUTE = "attribute";
     static final String NAME = "attribute_compare_condition";
     static final String SUCCEED = "succeed";
-    private String attribute;
-    private int comparationResult;
-    private boolean succeed;
+    private final String attribute;
+    private final int comparationResult;
+    private final boolean succeed;
 
     /**
      *
@@ -64,10 +64,9 @@ public class AttributeCompareCondition extends CompareConditionAdapter {
             try {
                 Attribute attribute2 = node.getAttribute(i);
                 if (attribute2.getName().equals(attribute)
-                        && succeed == (compareTo(attribute2.getValue()
-                        .toString()) == comparationResult))
+                        && succeed == (compareTo(attribute2.getValue()) == comparationResult))
                     return true;
-            } catch (NumberFormatException fne) {
+            } catch (NumberFormatException ignored) {
             }
         }
         return false;

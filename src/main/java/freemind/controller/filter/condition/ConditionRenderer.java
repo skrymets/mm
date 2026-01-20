@@ -29,8 +29,6 @@ import freemind.modes.MindIcon;
 import javax.swing.*;
 import java.awt.*;
 
-;
-
 /**
  * @author dimitri 06.05.2005
  */

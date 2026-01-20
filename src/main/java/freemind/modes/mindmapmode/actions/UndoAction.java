@@ -29,6 +29,7 @@ import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -41,8 +42,9 @@ import java.util.Vector;
 public class UndoAction extends AbstractXmlAction {
 
     private MindMapController controller;
+    @Getter
     private boolean isUndoAction;
-    protected Vector<ActionPair> actionPairList = new Vector<>();
+    protected final Vector<ActionPair> actionPairList = new Vector<>();
     private long timeOfLastAdd = 0;
     private boolean actionFrameStarted = false;
     private static final long TIME_TO_BEGIN_NEW_ACTION = 100;
@@ -61,18 +63,14 @@ public class UndoAction extends AbstractXmlAction {
         isUndoAction = false;
     }
 
-    public boolean isUndoAction() {
-        return isUndoAction;
-    }
-
     protected void xmlActionPerformed(ActionEvent arg0) {
-        if (actionPairList.size() > 0) {
-            ActionPair pair = (ActionPair) actionPairList.get(0);
+        if (!actionPairList.isEmpty()) {
+            ActionPair pair = actionPairList.get(0);
             informUndoPartner(pair);
             actionPairList.remove(0);
             undoDoAction(pair);
         }
-        if (actionPairList.size() == 0) {
+        if (actionPairList.isEmpty()) {
             // disable undo
             this.setEnabled(false);
         }
@@ -93,7 +91,7 @@ public class UndoAction extends AbstractXmlAction {
 
     public void setEnabled(boolean enabled) {
         if (enabled) {
-            super.setEnabled(actionPairList.size() != 0);
+            super.setEnabled(!actionPairList.isEmpty());
         } else {
             super.setEnabled(false);
         }
@@ -108,9 +106,9 @@ public class UndoAction extends AbstractXmlAction {
 
         long currentTime = System.currentTimeMillis();
 
-        if ((actionPairList.size() > 0) && (actionFrameStarted || currentTime - timeOfLastAdd < TIME_TO_BEGIN_NEW_ACTION)) {
+        if ((!actionPairList.isEmpty()) && (actionFrameStarted || currentTime - timeOfLastAdd < TIME_TO_BEGIN_NEW_ACTION)) {
             // the actions are gathered in one compound action.
-            ActionPair firstPair = (ActionPair) actionPairList.get(0);
+            ActionPair firstPair = actionPairList.get(0);
             CompoundAction action;
             CompoundAction remedia;
             if (!(firstPair.getDoAction() instanceof CompoundAction) || !(firstPair.getUndoAction() instanceof CompoundAction)) {
@@ -124,7 +122,7 @@ public class UndoAction extends AbstractXmlAction {
                 remedia.addChoice(remediaChoice);
                 actionPairList.remove(0);
                 actionPairList.add(0, new ActionPair(action, remedia));
-                firstPair = (ActionPair) actionPairList.get(0);
+                firstPair = actionPairList.get(0);
             } else {
                 action = (CompoundAction) firstPair.getDoAction();
                 remedia = (CompoundAction) firstPair.getUndoAction();

@@ -29,7 +29,6 @@ import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.view.mindmapview.NodeView;
 
-import java.io.IOException;
 import java.io.Writer;
 
 /**
@@ -120,7 +119,6 @@ public interface PermanentNodeHook extends NodeHook {
      * Can be used to contribute to the standard html export.
      *
      * @param pFileout
-     * @throws IOException
      */
-    void saveHtml(Writer pFileout) throws IOException;
+    void saveHtml(Writer pFileout);
 }

@@ -27,6 +27,7 @@ import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
@@ -45,7 +46,6 @@ import static java.lang.String.format;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
-@SuppressWarnings("serial")
 @Slf4j
 public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
@@ -201,8 +201,10 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private Timer statusMessageDisplayTimer;
 
+    @Getter
     private String patternsXML;
 
+    @Getter
     Controller controller;// the one and only controller
 
     private final FreeMindCommon freeMindCommon;
@@ -212,10 +214,12 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     /**
      * The main map's scroll pane.
      */
+    @Getter
     private JScrollPane scrollPane = null;
 
     private JSplitPane splitPane;
 
+    @Getter
     private JComponent contentComponent = null;
 
     private JTabbedPane tabbedPane = null;
@@ -258,9 +262,9 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         try (InputStream stream = versionUrl.openStream()) {
             Properties buildNumberPros = new Properties();
             buildNumberPros.load(stream);
-            info.append("\nBuild: " + buildNumberPros.getProperty("build.number") + "\n");
+            info.append("\nBuild: ").append(buildNumberPros.getProperty("build.number")).append("\n");
         } catch (Exception e) {
-            info.append("Problems reading build number file: " + e);
+            info.append("Problems reading build number file: ").append(e);
         }
 
         info.append("\njava_version = ");
@@ -282,7 +286,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             Collections.sort(list);
             for (String key : list) {
                 if (key.startsWith("java") || key.startsWith("sun")) {
-                    b.append("Environment key " + key + " = " + properties.getProperty(key) + "\n");
+                    b.append("Environment key ").append(key).append(" = ").append(properties.getProperty(key)).append("\n");
                 }
             }
             log.info(b.toString());
@@ -379,17 +383,13 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                 // we assume class name
             } else {
                 // default.
-                log.info("Default (System) Look & Feel: " + UIManager.getSystemLookAndFeelClassName());
+                log.info("Default (System) Look & Feel: {}", UIManager.getSystemLookAndFeelClassName());
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             }
         } catch (Exception ex) {
             System.err.println("Unable to set Look & Feel.");
         }
         freeMindCommon.loadUIProperties(defaultPreferences);
-    }
-
-    public String getPatternsXML() {
-        return patternsXML;
     }
 
     public VersionInformation getFreemindVersion() {
@@ -478,10 +478,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         return controller.getView();
     }
 
-    public Controller getController() {
-        return controller;
-    }
-
     public void setView(MapView view) {
         scrollPane.setViewportView(view);
     }
@@ -516,7 +512,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
      * @param url a url pointing to where the browser should open
      * @see URL
      */
-    public void openDocument(URL url) throws Exception {
+    public void openDocument(URL url) {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
@@ -524,7 +520,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                 URI uri = new URI(url.toString().replaceAll("^file:////", "file://"));
                 desktop.browse(uri);
             } catch (Exception e) {
-                log.error("Caught: " + e);
+                log.error("Caught: {}", String.valueOf(e));
             }
         }
     }
@@ -640,7 +636,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     url = new URL("file", null, decodedPath);
                 }
                 SpellChecker.registerDictionaries(url, Locale.getDefault().getLanguage());
-            } catch (MalformedURLException | UnsupportedEncodingException e) {
+            } catch (MalformedURLException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
         }
@@ -700,7 +696,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     // block until its closed
                     try {
                         socket.getInputStream().read();
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
 
                     in.close();
@@ -710,12 +706,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             System.exit(0);
         } catch (Exception e) {
             // ok, this one seems to confuse newbies endlessly, so log it as NOTICE, not ERROR
-            log.info("An error occurred"
-                    + " while connecting to the FreeMind server instance."
-                    + " This probably means that"
-                    + " FreeMind crashed and/or exited abnormally"
-                    + " the last time it was run." + " If you don't"
-                    + " know what this means, don't worry. Exception: " + e);
+            log.info("An error occurred while connecting to the FreeMind server instance. This probably means that FreeMind crashed and/or exited abnormally the last time it was run. If you don't know what this means, don't worry. Exception: {}", String.valueOf(e));
         }
 
     }
@@ -853,7 +844,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         ModeController ctrl = controller.getModeController();
         // try to load mac module:
         try {
-            Class macClass = Class.forName("accessories.plugins.MacChanges");
+            Class<?> macClass = Class.forName("accessories.plugins.MacChanges");
             // lazy programming.
             // the mac class has exactly one constructor with a modeController.
             macClass.getConstructors()[0].newInstance(this);
@@ -911,7 +902,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     pModeController.load(new File(fileArgument));
                     fileLoaded = true;
                 } catch (Exception ex) {
-                    log.error(format("File %s not found error", fileArgument));
+                    log.error("File {} not found error", fileArgument);
                 }
             }
         }
@@ -924,7 +915,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             String restoreable = getProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED);
             if (Tools
                     .isPreferenceTrue(getProperty(FreeMindCommon.LOAD_LAST_MAP))
-                    && restoreable != null && restoreable.length() > 0) {
+                    && restoreable != null && !restoreable.isEmpty()) {
                 pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME,
                         new Object[]{restoreable.replaceAll(".*/", "")});
                 try {
@@ -1030,7 +1021,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         } else if (Tools.safeEquals(splitProperty, VERTICAL_SPLIT_BELOW)) {
             // default
         } else {
-            log.warn("Split type not known: " + splitProperty);
+            log.warn("Split type not known: {}", splitProperty);
         }
         splitPane = new JSplitPane(splitType, scrollPane, pMindMapComponent);
         splitPane.setContinuousLayout(true);
@@ -1101,14 +1092,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                 tabbedPane.setComponentAt(tabbedPane.getSelectedIndex(), contentComponent);
             }
         }
-    }
-
-    public JScrollPane getScrollPane() {
-        return scrollPane;
-    }
-
-    public JComponent getContentComponent() {
-        return contentComponent;
     }
 
     public void registerStartupDoneListener(StartupDoneListener pStartupDoneListener) {

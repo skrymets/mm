@@ -21,6 +21,7 @@ package freemind.view.mindmapview;
 
 import freemind.main.Resources;
 import freemind.main.Tools;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ import java.awt.*;
  *
  * @author Dimitri
  */
-@SuppressWarnings("serial")
+@Getter
 @Slf4j
 public class NodeMotionListenerView extends JComponent {
 
@@ -49,12 +50,8 @@ public class NodeMotionListenerView extends JComponent {
         this.setToolTipText(helpMsg);
     }
 
-    private NodeView movedView;
+    private final NodeView movedView;
     private boolean isMouseEntered;
-
-    public NodeView getMovedView() {
-        return movedView;
-    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -76,10 +73,6 @@ public class NodeMotionListenerView extends JComponent {
             g2.setColor(color);
             Tools.restoreAntialiasing(g2, renderingHint);
         }
-    }
-
-    public boolean isMouseEntered() {
-        return isMouseEntered;
     }
 
     public void setMouseEntered() {

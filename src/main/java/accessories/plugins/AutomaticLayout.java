@@ -39,6 +39,7 @@ import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import freemind.preferences.FreemindPropertyContributor;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -86,8 +87,6 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
             }
         }
 
-        ;
-
         public void register() {
             // add listener:
             if (listener == null) {
@@ -130,13 +129,15 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
     public static class StylePatternProperty extends PropertyBean implements
             PropertyControl, ActionListener {
 
-        String description;
+        @Getter
+        final String description;
 
-        String label;
+        @Getter
+        final String label;
 
         String pattern;
 
-        JButton mButton;
+        final JButton mButton;
 
         private final MindMapController mindMapController;
 
@@ -149,14 +150,6 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
             mButton = new JButton();
             mButton.addActionListener(this);
             pattern = null;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getLabel() {
-            return label;
         }
 
         public void setValue(String value) {
@@ -214,13 +207,15 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
     public static class StylePatternListProperty extends PropertyBean implements
             PropertyControl, ListSelectionListener {
 
-        String description;
+        @Getter
+        final String description;
 
-        String label;
+        @Getter
+        final String label;
 
         String patterns;
 
-        JList<String> mList;
+        final JList<String> mList;
 
         boolean mDialogIsShown = false;
 
@@ -228,7 +223,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 
         private final MindMapController mindMapController;
 
-        private DefaultListModel<String> mDefaultListModel;
+        private final DefaultListModel<String> mDefaultListModel;
 
         public StylePatternListProperty(String description, String label,
                                         TextTranslator pTranslator, MindMapController pController) {
@@ -243,14 +238,6 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
             mList.setModel(mDefaultListModel);
             mList.addListSelectionListener(this);
             patterns = null;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getLabel() {
-            return label;
         }
 
         public void setValue(String value) {
@@ -296,7 +283,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
             JList<String> source = (JList<String>) e.getSource();
             if (source.getSelectedIndex() < 0)
                 return;
-            final Pattern choice = (Pattern) pat.getPattern(source
+            final Pattern choice = pat.getPattern(source
                     .getSelectedIndex());
             final ChooseFormatPopupDialog formatDialog = new ChooseFormatPopupDialog(
                     mindMapController.getFrame().getJFrame(),
@@ -304,27 +291,24 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
                     "accessories/plugins/AutomaticLayout.properties_StyleDialogTitle",
                     choice, null);
             // FIXME: What's that? (fc, 8,4,2008).
-            EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    if (mDialogIsShown)
-                        return;
-                    mDialogIsShown = true;
-                    try {
-                        formatDialog.setModal(true);
-                        formatDialog.setVisible(true);
-                        // process result:
-                        if (formatDialog.getResult() == ChooseFormatPopupDialog.OK) {
-                            formatDialog.getPattern(choice);
-                            patterns = XmlBindingTools.getInstance().marshall(
-                                    pat);
-                            setValue(patterns);
-                            firePropertyChangeEvent();
-                        }
-                    } finally {
-                        mDialogIsShown = false;
+            EventQueue.invokeLater(() -> {
+                if (mDialogIsShown)
+                    return;
+                mDialogIsShown = true;
+                try {
+                    formatDialog.setModal(true);
+                    formatDialog.setVisible(true);
+                    // process result:
+                    if (formatDialog.getResult() == ChooseFormatPopupDialog.OK) {
+                        formatDialog.getPattern(choice);
+                        patterns = XmlBindingTools.getInstance().marshall(
+                                pat);
+                        setValue(patterns);
+                        firePropertyChangeEvent();
                     }
+                } finally {
+                    mDialogIsShown = false;
                 }
-
             });
         }
 
@@ -363,16 +347,14 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
     }
 
     private void setStyle(MindMapNode node) {
-        log.trace("updating node id="
-                + node.getObjectId(getMindMapController()) + " and text:"
-                + node);
+        log.trace("updating node id={} and text:{}", node.getObjectId(getMindMapController()), node);
         int depth = depth(node);
-        log.trace("COLOR, depth=" + (depth));
+        log.trace("COLOR, depth={}", depth);
         reloadPatterns();
         int myIndex = patterns.sizePatternList() - 1;
         if (depth < patterns.sizePatternList())
             myIndex = depth;
-        Pattern p = (Pattern) patterns.getPattern(myIndex);
+        Pattern p = patterns.getPattern(myIndex);
         getMindMapController().applyPattern(node, p);
     }
 
@@ -390,7 +372,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
      * )
      */
     public void onAddChildren(MindMapNode newChildNode) {
-        log.trace("onAddChildren " + newChildNode);
+        log.trace("onAddChildren {}", newChildNode);
         super.onAddChild(newChildNode);
         setStyleRecursive(newChildNode);
     }
@@ -442,7 +424,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
      *
      */
     private void setStyleRecursive(MindMapNode node) {
-        log.trace("setStyle " + node);
+        log.trace("setStyle {}", node);
         setStyle(node);
         // recurse:
         for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {

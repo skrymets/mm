@@ -49,12 +49,8 @@ public class ShowCloneNodes extends MindMapNodeHookAdapter {
             newSelecteds.remove(node);
         }
         if (!newSelecteds.isEmpty()) {
-            EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    mindMapController.select(
-                            (MindMapNode) newSelecteds.get(0), newSelecteds);
-                }
-            });
+            EventQueue.invokeLater(() -> mindMapController.select(
+                    newSelecteds.get(0), newSelecteds));
         }
     }
 

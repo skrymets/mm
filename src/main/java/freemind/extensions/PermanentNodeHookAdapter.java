@@ -31,9 +31,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.view.mindmapview.NodeView;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -106,7 +104,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements Permane
         if (xml.getChildren().isEmpty()) {
             return result;
         }
-        XMLElement child = (XMLElement) xml.getChildren().get(0);
+        XMLElement child = xml.getChildren().get(0);
         if (child != null && PARAMETERS.equals(child.getName())) {
             for (Iterator<String> i = child.enumerateAttributeNames(); i.hasNext(); ) {
                 String name = i.next();
@@ -146,8 +144,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements Permane
         getController().setToolTip(node, key, value);
     }
 
-    protected void executeTransaction(final ActionPair pair)
-            throws InterruptedException, InvocationTargetException {
+    protected void executeTransaction(final ActionPair pair) {
     }
 
     public void registerFilter() {
@@ -163,7 +160,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements Permane
     public void processUnfinishedLinks() {
     }
 
-    public void saveHtml(Writer pFileout) throws IOException {
+    public void saveHtml(Writer pFileout) {
     }
 
 

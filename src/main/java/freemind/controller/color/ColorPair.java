@@ -38,7 +38,7 @@ public class ColorPair {
         displayName = pDisplayName;
     }
 
-    public Color color;
-    public String name;
-    public String displayName;
+    public final Color color;
+    public final String name;
+    public final String displayName;
 }

@@ -40,7 +40,6 @@ import java.util.HashMap;
  * Formerly, it has only three calendar widgets at once.
  * Now, it has 9 in total, but we keep the naming.
  */
-@SuppressWarnings("serial")
 public class JTripleCalendar extends JPanel implements PropertyChangeListener {
 
     private static final int AMOUNT_OF_ROWS = 3;
@@ -48,7 +47,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
     /**
      * Contains a mapping info panel -> month distance of the panel to upper left corner.
      */
-    private HashMap<JSwitchableCalendar, Integer> mInfoPanels = new HashMap<JTripleCalendar.JSwitchableCalendar, Integer>();
+    private final HashMap<JSwitchableCalendar, Integer> mInfoPanels = new HashMap<>();
     private int mCurrentMonthPosition;
     private JSwitchableCalendar mCurrentlyActivePanel;
     private Calendar mCurrentDate;
@@ -166,9 +165,9 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
                         // no color selection
                         selectedColor = oldDayBackgroundColor;
                     }
-                    for (short i = 0; i < days.length; i++) {
-                        if (days[i] != null) {
-                            days[i].setFocusable(pEnabled);
+                    for (JButton jButton : days) {
+                        if (jButton != null) {
+                            jButton.setFocusable(pEnabled);
                         }
                     }
 
@@ -177,8 +176,6 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
 
             };
         }
-
-        ;
 
         /**
          * Returns the calendar property.

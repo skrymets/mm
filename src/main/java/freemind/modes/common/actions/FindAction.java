@@ -26,6 +26,7 @@ import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.FreemindAction;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,20 +46,16 @@ public class FindAction extends FreemindAction {
 
     private MindMapNode findFromNode;
 
+    @Getter
     private String searchTerm;
 
-    private Collection<String> subterms;
-
     /**
+     * -- GETTER --
+     *
      * @return Returns the subterms.
      */
-    public Collection<String> getSubterms() {
-        return subterms;
-    }
-
-    public String getSearchTerm() {
-        return searchTerm;
-    }
+    @Getter
+    private Collection<String> subterms;
 
     public String getFindFromText() {
         String plainNodeText = HtmlTools.htmlToPlain(findFromNode.toString())
@@ -95,7 +92,7 @@ public class FindAction extends FreemindAction {
             return;
         }
         String what = mSearchField.getText();
-        if (what == null || what.equals("")) {
+        if (what == null || what.isEmpty()) {
             return;
         }
         Collection<String> subterms = breakSearchTermIntoSubterms(what);
@@ -276,7 +273,7 @@ public class FindAction extends FreemindAction {
                 MindMapNode node = i.previous();
                 try {
                     controller.setFolded(node, true);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
             findNodesUnfoldedByLastFind = new ArrayList<>();
@@ -284,7 +281,7 @@ public class FindAction extends FreemindAction {
 
         // We implement width-first search.
         while (!nodes.isEmpty()) {
-            MindMapNode node = (MindMapNode) nodes.removeFirst();
+            MindMapNode node = nodes.removeFirst();
             // Add children to the queue
             for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
                 nodes.addLast(i.next());
@@ -394,7 +391,7 @@ public class FindAction extends FreemindAction {
     public void displayNode(MindMapNode node, ArrayList<MindMapNode> nodesUnfoldedByDisplay) {
         // Unfold the path to the node
         Object[] path = controller.getMap().getPathToRoot(node);
-        // Iterate the path with the exception of the last node
+        // Iterate the path except the last node
         for (int i = 0; i < path.length - 1; i++) {
             MindMapNode nodeOnPath = (MindMapNode) path[i];
             // System.out.println(nodeOnPath);

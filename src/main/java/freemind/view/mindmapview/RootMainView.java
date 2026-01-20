@@ -25,7 +25,6 @@ import freemind.main.Tools;
 
 import java.awt.*;
 
-@SuppressWarnings("serial")
 class RootMainView extends MainView {
 
     public Dimension getPreferredSize() {

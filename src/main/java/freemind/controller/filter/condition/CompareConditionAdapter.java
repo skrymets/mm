@@ -31,8 +31,8 @@ abstract class CompareConditionAdapter extends NodeCondition {
 
     static final String IGNORE_CASE = "ignore_case";
     static final String VALUE = "value";
-    private String conditionValue;
-    private boolean ignoreCase;
+    private final String conditionValue;
+    private final boolean ignoreCase;
 
     CompareConditionAdapter(String value, boolean ignoreCase) {
         super();
@@ -45,7 +45,7 @@ abstract class CompareConditionAdapter extends NodeCondition {
             int i2 = Integer.parseInt(conditionValue);
             int i1 = Integer.parseInt(nodeValue);
             return i1 < i2 ? -1 : (i1 == i2 ? 0 : 1);
-        } catch (NumberFormatException fne) {
+        } catch (NumberFormatException ignored) {
         }
         double d2;
         try {

@@ -25,7 +25,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class WindowClosingAdapter extends WindowAdapter {
-    private boolean exitSystem;
+    private final boolean exitSystem;
 
     /**
      * Erzeugt einen WindowClosingAdapter zum Schliessen des Fensters. Ist

@@ -117,7 +117,7 @@ public class FreeMindStarter {
             try {
                 createDirectories(DEFAULT_HOME_DIRECTORY);
             } catch (IOException e) {
-                log.error("Cannot create folder for user properties and logging: {}", DEFAULT_HOME_DIRECTORY.toString());
+                log.error("Cannot create folder for user properties and logging: {}", DEFAULT_HOME_DIRECTORY);
             }
         }
     }

@@ -36,6 +36,6 @@ class ZoomAction extends AbstractAction {
         preview.repaint();
     }
 
-    protected Preview preview;
-    protected double zoomStep;
+    protected final Preview preview;
+    protected final double zoomStep;
 }

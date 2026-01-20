@@ -62,22 +62,22 @@ public class FixedHTMLWriter extends HTMLWriter {
         if (from == null) {
             return;
         }
-        Enumeration keys = from.getAttributeNames();
-        String value = "";
+        Enumeration<?> keys = from.getAttributeNames();
+        StringBuilder value = new StringBuilder();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             if (key instanceof CSS.Attribute) {
                 // default is to store in a HTML style attribute
                 if (value.length() > 0) {
-                    value = value + "; ";
+                    value.append("; ");
                 }
-                value = value + key + ": " + from.getAttribute(key);
+                value.append(key).append(": ").append(from.getAttribute(key));
             } else {
                 to.addAttribute(key, from.getAttribute(key));
             }
         }
         if (value.length() > 0) {
-            to.addAttribute(HTML.Attribute.STYLE, value);
+            to.addAttribute(HTML.Attribute.STYLE, value.toString());
         }
     }
 
@@ -99,7 +99,7 @@ public class FixedHTMLWriter extends HTMLWriter {
         convAttr.removeAttributes(convAttr);
         convertToHTML(attr, convAttr);
 
-        Enumeration names = convAttr.getAttributeNames();
+        Enumeration<?> names = convAttr.getAttributeNames();
         while (names.hasMoreElements()) {
             Object name = names.nextElement();
             if (name instanceof HTML.Tag || name instanceof StyleConstants

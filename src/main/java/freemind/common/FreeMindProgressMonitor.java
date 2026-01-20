@@ -27,22 +27,19 @@ import freemind.main.Tools;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author foltin
  * @date 01.04.2013
  */
-@SuppressWarnings("serial")
 public class FreeMindProgressMonitor extends JDialog {
 
     /**
      *
      */
     private static final String PROGRESS_MONITOR_WINDOW_CONFIGURATION_STORAGE = "progress_monitor_window_configuration_storage";
-    private JLabel mLabel;
-    private JProgressBar mProgressBar;
+    private final JLabel mLabel;
+    private final JProgressBar mProgressBar;
     protected boolean mCanceled = false;
 
     /**
@@ -54,12 +51,7 @@ public class FreeMindProgressMonitor extends JDialog {
         mProgressBar = new JProgressBar();
         JButton mCancelButton = new JButton();
         Tools.setLabelAndMnemonic(mCancelButton, getString(("cancel")));
-        mCancelButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent pE) {
-                mCanceled = true;
-            }
-        });
+        mCancelButton.addActionListener(pE -> mCanceled = true);
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints(0, 0,
                 GridBagConstraints.REMAINDER, 1, 1.0, 1.0,
@@ -96,30 +88,18 @@ public class FreeMindProgressMonitor extends JDialog {
      */
     public boolean showProgress(int pCurrent, final int pMax, String pName,
                                 Object[] pParameters) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                mProgressBar.setMaximum(pMax);
-            }
-        });
+        EventQueue.invokeLater(() -> mProgressBar.setMaximum(pMax));
         return showProgress(pCurrent, pName, pParameters);
     }
 
     public boolean showProgress(int pCurrent, String pName, Object[] pParameters) {
         final String format = Resources.getInstance().format(pName, pParameters);
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                mLabel.setText(format);
-            }
-        });
+        EventQueue.invokeLater(() -> mLabel.setText(format));
         return setProgress(pCurrent);
     }
 
     public boolean setProgress(final int pCurrent) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                mProgressBar.setValue(pCurrent);
-            }
-        });
+        EventQueue.invokeLater(() -> mProgressBar.setValue(pCurrent));
         return mCanceled;
     }
 

@@ -23,13 +23,13 @@ import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonListener;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -38,7 +38,6 @@ import java.awt.geom.Ellipse2D;
 /**
  * @author Foltin
  */
-@SuppressWarnings("serial")
 @Slf4j
 public class NodeFoldingComponent extends JButton {
     private static final int TIMER_DELAY = 50;
@@ -47,7 +46,8 @@ public class NodeFoldingComponent extends JButton {
 
     private boolean mIsEntered;
     private int mColorCounter = 0;
-    private NodeView nodeView;
+    @Getter
+    private final NodeView nodeView;
     private Timer mTimer = null;
 
     public NodeFoldingComponent(NodeView view) {
@@ -89,21 +89,19 @@ public class NodeFoldingComponent extends JButton {
                 }
             });
             int delay = TIMER_DELAY;
-            ActionListener taskPerformer = new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (mIsEntered && mColorCounter < COLOR_COUNTER_MAX) {
-                        mColorCounter++;
-                        repaint();
-                    }
-                    if (!mIsEntered && mColorCounter > 0) {
-                        mColorCounter--;
-                        if (mColorCounter == 0) {
-                            stopTimer();
-                        }
-                        repaint();
-                    }
-
+            ActionListener taskPerformer = evt -> {
+                if (mIsEntered && mColorCounter < COLOR_COUNTER_MAX) {
+                    mColorCounter++;
+                    repaint();
                 }
+                if (!mIsEntered && mColorCounter > 0) {
+                    mColorCounter--;
+                    if (mColorCounter == 0) {
+                        stopTimer();
+                    }
+                    repaint();
+                }
+
             };
             mTimer = new Timer(delay, taskPerformer);
         }
@@ -250,8 +248,8 @@ public class NodeFoldingComponent extends JButton {
             Color color = nodeView.getModel().getEdge().getColor();
 
             int col = 16 * mColorCounter;
-            return new Color((int) (color.getRed()), (int) (color.getGreen()),
-                    (int) (color.getBlue()), col);
+            return new Color(color.getRed(), color.getGreen(),
+                    color.getBlue(), col);
         }
 
         public Dimension getPreferredSize(JComponent c) {
@@ -270,17 +268,13 @@ public class NodeFoldingComponent extends JButton {
         }
     }
 
-    public NodeView getNodeView() {
-        return nodeView;
-    }
-
     public void setCorrectedLocation(Point p) {
         int zoomedCircleRadius = getZoomedCircleRadius();
         boolean left = nodeView.getModel().isLeft();
         int xCorrection = (int) (zoomedCircleRadius * (SIZE_FACTOR_ON_MOUSE_OVER + ((left) ? +1f
                 : -1f)));
-        setLocation(p.x - xCorrection, (int) (p.y - zoomedCircleRadius
-                * SIZE_FACTOR_ON_MOUSE_OVER));
+        setLocation(p.x - xCorrection, p.y - zoomedCircleRadius
+                * SIZE_FACTOR_ON_MOUSE_OVER);
     }
 
     public void dispose() {

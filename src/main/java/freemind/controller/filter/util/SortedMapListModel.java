@@ -29,7 +29,7 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class SortedMapListModel extends AbstractListModel implements
         SortedListModel {
-    SortedSet model;
+    final SortedSet model;
 
     public SortedMapListModel() {
         model = new TreeSet<>();
@@ -50,7 +50,7 @@ public class SortedMapListModel extends AbstractListModel implements
     }
 
     public void addAll(Object[] elements) {
-        Collection c = Arrays.asList(elements);
+        Collection<Object> c = Arrays.asList(elements);
         model.addAll(c);
         fireContentsChanged(this, 0, getSize());
     }

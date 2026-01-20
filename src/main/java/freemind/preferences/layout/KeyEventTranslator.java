@@ -192,7 +192,7 @@ public class KeyEventTranslator {
         String key = keyStroke.substring(index + 1);
         if (key.length() == 1) {
             return new Key(modifiersToString(modifiers), 0, key.charAt(0));
-        } else if (key.length() == 0) {
+        } else if (key.isEmpty()) {
             // Log.log(Log.ERROR,DefaultInputHandler.class,
             // "Invalid key stroke: " + keyStroke);
             return null;
@@ -356,7 +356,7 @@ public class KeyEventTranslator {
     static int c, a, m, s;
 
     // {{{ Private members
-    private static Map<Key, Key> transMap = new HashMap<>();
+    private static final Map<Key, Key> transMap = new HashMap<>();
 
     static {
         if (Tools.isMacOsX()) {
@@ -373,9 +373,9 @@ public class KeyEventTranslator {
 
     // {{{ Key class
     public static class Key {
-        public String modifiers;
-        public int key;
-        public char input;
+        public final String modifiers;
+        public final int key;
+        public final char input;
 
         public Key(String modifiers, int key, char input) {
             this.modifiers = modifiers;

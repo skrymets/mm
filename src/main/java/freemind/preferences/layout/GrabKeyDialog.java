@@ -26,6 +26,7 @@ package freemind.preferences.layout;
 
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;
+import lombok.Getter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -40,7 +41,6 @@ import java.util.Vector;
 /**
  * A dialog for getting shortcut keys.
  */
-@SuppressWarnings("serial")
 public class GrabKeyDialog extends JDialog {
     private final FreeMindMain fmMain;
 
@@ -152,15 +152,6 @@ public class GrabKeyDialog extends JDialog {
 
     // {{{ isOK() method
 
-    /**
-     * Returns true, if the dialog has not been cancelled.
-     *
-     * @since jEdit 3.2pre9
-     */
-    public boolean isOK() {
-        return isOK;
-    } // }}}
-
     // {{{ isManagingFocus() method
 
     /**
@@ -196,12 +187,18 @@ public class GrabKeyDialog extends JDialog {
     private JButton remove;
     private JButton cancel;
     private JButton clear;
+    /**
+     * -- GETTER --
+     *  Returns true, if the dialog has not been cancelled.
+     *
+     */ // }}}
+    @Getter
     private boolean isOK;
     private KeyBinding binding;
     KeyBinding bindingReset;
     private Vector<KeyBinding> allBindings;
     private Buffer debugBuffer;
-    private int modifierMask;
+    private final int modifierMask;
     // }}}
     public final static String MODIFIER_SEPARATOR = " ";
 
@@ -307,8 +304,7 @@ public class GrabKeyDialog extends JDialog {
 
         try {
             Field[] fields = KeyEvent.class.getFields();
-            for (int i = 0; i < fields.length; i++) {
-                Field field = fields[i];
+            for (Field field : fields) {
                 String name = field.getName();
                 if (name.startsWith("VK_") && field.getInt(null) == keyCode) {
                     return name.substring(3);
@@ -345,14 +341,14 @@ public class GrabKeyDialog extends JDialog {
 
     // {{{ getKeyBinding() method
     private KeyBinding getKeyBinding(String shortcut) {
-        if (shortcut == null || shortcut.length() == 0)
+        if (shortcut == null || shortcut.isEmpty())
             return null;
 
         String spacedShortcut = shortcut + " ";
         Enumeration<KeyBinding> e = allBindings.elements();
 
         while (e.hasMoreElements()) {
-            KeyBinding kb = (KeyBinding) e.nextElement();
+            KeyBinding kb = e.nextElement();
 
             if (!kb.isAssigned())
                 continue;
@@ -392,13 +388,13 @@ public class GrabKeyDialog extends JDialog {
             this.isPrefix = isPrefix;
         }
 
-        public String name;
-        public String label;
+        public final String name;
+        public final String label;
         public String shortcut;
-        public boolean isPrefix;
+        public final boolean isPrefix;
 
         public boolean isAssigned() {
-            return shortcut != null && shortcut.length() > 0;
+            return shortcut != null && !shortcut.isEmpty();
         }
     } // }}}
 
@@ -502,7 +498,7 @@ public class GrabKeyDialog extends JDialog {
         // {{{ canClose() method
         private boolean canClose() {
             String shortcutString = shortcut.getText();
-            if (shortcutString.length() == 0 && binding.isAssigned()) {
+            if (shortcutString.isEmpty() && binding.isAssigned()) {
                 // ask whether to remove the old shortcut
                 int answer = JOptionPane
                         .showConfirmDialog(GrabKeyDialog.this,

@@ -44,15 +44,15 @@ import java.util.Iterator;
 
 @SuppressWarnings("serial")
 class FilterToolbar extends FreeMindToolBar {
-    private FilterController mFilterController;
+    private final FilterController mFilterController;
     private FilterComposerDialog filterDialog = null;
-    private JComboBox<Condition> activeFilterConditionComboBox;
-    private JCheckBox showAncestors;
-    private JCheckBox showDescendants;
+    private final JComboBox<Condition> activeFilterConditionComboBox;
+    private final JCheckBox showAncestors;
+    private final JCheckBox showDescendants;
     private Filter activeFilter;
-    private Controller c;
-    private String pathToFilterFile;
-    private FilterChangeListener filterChangeListener;
+    private final Controller c;
+    private final String pathToFilterFile;
+    private final FilterChangeListener filterChangeListener;
 
     private class FilterChangeListener extends AbstractAction implements
             ItemListener, PropertyChangeListener {
@@ -184,7 +184,7 @@ class FilterToolbar extends FreeMindToolBar {
                 + " "));
 
         activeFilter = null;
-        activeFilterConditionComboBox = new JComboBox<Condition>() {
+        activeFilterConditionComboBox = new JComboBox<>() {
             public Dimension getMaximumSize() {
                 return getPreferredSize();
             }
@@ -229,7 +229,7 @@ class FilterToolbar extends FreeMindToolBar {
         try {
             mFilterController.loadConditions(mFilterController.getFilterConditionModel(), pathToFilterFile);
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         addStandardConditions();
         activeFilterConditionComboBox.setSelectedIndex(0);
@@ -302,7 +302,7 @@ class FilterToolbar extends FreeMindToolBar {
     void saveConditions() {
         try {
             mFilterController.saveConditions(mFilterController.getFilterConditionModel(), pathToFilterFile);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 

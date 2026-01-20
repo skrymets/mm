@@ -38,8 +38,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import static java.lang.String.format;
-
 /**
  * Manages the hook available from the class path.
  *
@@ -83,7 +81,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
         for (String label : allPlugins) {
             HookDescriptorPluginAction descriptor = getHookDescriptor(label);
             try {
-                log.trace("Loading: " + label);
+                log.trace("Loading: {}", label);
                 if (baseClass.isAssignableFrom(Class.forName(descriptor.getBaseClass()))) {
                     // the plugin inherits from the baseClass, we carry on to look for the mode
                     for (String pmode : descriptor.getModes()) {
@@ -121,7 +119,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                     // unmarshal xml:
                     Plugin plugin;
                     try {
-                        log.trace("Reading: " + xmlPluginFile + " from " + pluginURL);
+                        log.trace("Reading: {} from {}", xmlPluginFile, pluginURL);
                         InputStream in = pluginURL.openStream();
                         plugin = (Plugin) unmarshaller.unmarshalDocument(in, null);
                     } catch (Exception e) {
@@ -157,7 +155,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
         try {
             // constructed.
             ClassLoader loader = descriptor.getPluginClassLoader();
-            Class hookClass = Class.forName(descriptor.getClassName(), true, loader);
+            Class<?> hookClass = Class.forName(descriptor.getClassName(), true, loader);
             MindMapHook hook = (MindMapHook) hookClass.newInstance();
             decorateHook(hookName, descriptor, hook);
             return hook;
@@ -166,7 +164,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
             for (PluginClasspath plPath : descriptor.getPluginClasspath()) {
                 path += plPath.getJar() + ";";
 
-                log.error(format("Error occurred loading hook: %s\nClasspath: %s\nException:", descriptor.getClassName(), path), e);
+                log.error("Error occurred loading hook: {}\nClasspath: {}\nException:", descriptor.getClassName(), path, e);
             }
             return null;
         }
@@ -177,7 +175,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
      * instead.
      */
     public NodeHook createNodeHook(String hookName) {
-        log.trace("CreateNodeHook: " + hookName);
+        log.trace("CreateNodeHook: {}", hookName);
         HookDescriptorPluginAction descriptor = getHookDescriptor(hookName);
         return (NodeHook) createJavaHook(hookName, descriptor);
     }
@@ -265,7 +263,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
             try {
                 Plugin plugin = descriptor.getPluginBase();
                 ClassLoader loader = descriptor.getPluginClassLoader();
-                Class hookRegistrationClass = Class.forName(descriptor.getClassName(), true, loader);
+                Class<?> hookRegistrationClass = Class.forName(descriptor.getClassName(), true, loader);
                 RegistrationContainer container = new RegistrationContainer();
                 container.hookRegistrationClass = hookRegistrationClass;
                 container.correspondingPlugin = plugin;
@@ -286,7 +284,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
      * @return the base class if declared and successfully instanciated or NULL.
      */
     public Object getPluginBaseClass(String hookName) {
-        log.trace("getPluginBaseClass: " + hookName);
+        log.trace("getPluginBaseClass: {}", hookName);
         HookDescriptorPluginAction descriptor = getHookDescriptor(hookName);
         return getPluginBaseClass(descriptor);
     }

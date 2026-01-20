@@ -34,6 +34,7 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame;
 import freemind.modes.mindmapmode.dialogs.StylePatternFrame.StylePatternFrameType;
 import freemind.view.mindmapview.MapView;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -71,6 +72,12 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
     private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = "accessories.plugins.dialogs.ChooseFormatPopupDialog.window_storage";
 
+    /**
+     * -- GETTER --
+     *
+     * @return Returns the result.
+     */
+    @Getter
     private int result = CANCEL;
 
     private JPanel jContentPane = null;
@@ -200,9 +207,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                         MapAdapter.sDontAskInstance);
                 mMap.setRoot(root);
                 mDemoNode = (MindMapNode) root.getChildAt(0);
-            } catch (XMLParseException e) {
-                log.error(e.getLocalizedMessage(), e);
-            } catch (IOException e) {
+            } catch (XMLParseException | IOException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
             mDemoFrame = new MapView(mMap, mDemoNodeMapFeedback);
@@ -276,13 +281,6 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                     mController.getText(("cancel")));
         }
         return jCancelButton;
-    }
-
-    /**
-     * @return Returns the result.
-     */
-    public int getResult() {
-        return result;
     }
 
     public String getText(String pKey) {

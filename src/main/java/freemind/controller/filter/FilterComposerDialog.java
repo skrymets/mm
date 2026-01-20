@@ -50,7 +50,6 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -229,13 +228,11 @@ public class FilterComposerDialog extends JDialog {
                 btnAnd.setEnabled(false);
                 btnOr.setEnabled(false);
                 btnDelete.setEnabled(false);
-                return;
             } else if (conditionList.getMinSelectionIndex() == conditionList.getMaxSelectionIndex()) {
                 btnNot.setEnabled(true);
                 btnAnd.setEnabled(false);
                 btnOr.setEnabled(false);
                 btnDelete.setEnabled(true);
-                return;
             } else {
                 btnNot.setEnabled(false);
                 btnAnd.setEnabled(true);
@@ -280,7 +277,7 @@ public class FilterComposerDialog extends JDialog {
     }
 
     static private class MindMapFilterFileFilter extends FileFilter {
-        static FileFilter filter = new MindMapFilterFileFilter();
+        static final FileFilter filter = new MindMapFilterFileFilter();
 
         public boolean accept(File f) {
             if (f.isDirectory())
@@ -431,7 +428,6 @@ public class FilterComposerDialog extends JDialog {
                     }
                     values.setEditable(true);
                     simpleCondition.setEnabled(true);
-                    return;
                 }
             }
         }
@@ -632,8 +628,7 @@ public class FilterComposerDialog extends JDialog {
         for (String key : pNode.getAttributeKeyList()) {
             pAttributesInMap.add(key);
         }
-        for (Iterator it = pNode.getChildren().iterator(); it.hasNext(); ) {
-            MindMapNode child = (MindMapNode) it.next();
+        for (MindMapNode child : pNode.getChildren()) {
             addAttributeKeysRecursively(child, pAttributesInMap);
         }
     }
@@ -644,8 +639,7 @@ public class FilterComposerDialog extends JDialog {
                 pAttributesInMap.add(attr.getValue());
             }
         }
-        for (Iterator it = pNode.getChildren().iterator(); it.hasNext(); ) {
-            MindMapNode child = (MindMapNode) it.next();
+        for (MindMapNode child : pNode.getChildren()) {
             addAttributeValuesRecursively(pKey, child, pAttributesInMap);
         }
     }
@@ -710,7 +704,7 @@ public class FilterComposerDialog extends JDialog {
     }
 
     private void initInternalConditionModel() {
-        ComboBoxModel externalConditionsModel = mFilterController.getFilterConditionModel();
+        ComboBoxModel<Condition> externalConditionsModel = mFilterController.getFilterConditionModel();
         if (internalConditionsModel == null) {
             internalConditionsModel = new DefaultComboBoxModel<>();
             internalConditionsModel.addListDataListener(conditionListListener);

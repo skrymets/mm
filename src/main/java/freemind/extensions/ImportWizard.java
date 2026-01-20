@@ -39,8 +39,6 @@ import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import static java.lang.String.format;
-
 /**
  * Converts an unqualified class name to import statements by scanning through
  * the classpath.
@@ -55,7 +53,7 @@ public class ImportWizard {
     /**
      * Stores the list of all classes in the classpath
      */
-    public Vector<String> CLASS_LIST = new Vector<>(500);
+    public final Vector<String> CLASS_LIST = new Vector<>(500);
 
     public ImportWizard() {
     }
@@ -69,7 +67,7 @@ public class ImportWizard {
         // add the current dir to find more plugins
         classPath = Resources.getInstance().getFreemindBaseDir() + classPathSeparator
                 + classPath;
-        log.info("Classpath for plugins:" + classPath);
+        log.info("Classpath for plugins:{}", classPath);
         // to remove duplicates
         HashSet<String> foundPlugins = new HashSet<>();
         StringTokenizer st = new StringTokenizer(classPath, classPathSeparator);
@@ -80,7 +78,7 @@ public class ImportWizard {
                 String key = classPathFile.getCanonicalPath();
                 if (foundPlugins.contains(key))
                     continue;
-                log.trace("looking for plugins in " + key);
+                log.trace("looking for plugins in {}", key);
                 foundPlugins.add(key);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -89,13 +87,13 @@ public class ImportWizard {
             if (classPathFile.exists()) {
                 String lowerCaseFileName = classPathEntry.toLowerCase();
                 if (lowerCaseFileName.endsWith(".jar")) {
-                    log.trace("searching for plugins in: " + classPathEntry);
+                    log.trace("searching for plugins in: {}", classPathEntry);
                     addClassesFromZip(CLASS_LIST, classPathFile);
                 } else if (lowerCaseFileName.endsWith(".zip")) {
-                    log.trace("searching for plugins in: " + classPathEntry);
+                    log.trace("searching for plugins in: {}", classPathEntry);
                     addClassesFromZip(CLASS_LIST, classPathFile);
                 } else if (classPathFile.isDirectory()) {
-                    log.trace("searching for plugins in: " + classPathEntry);
+                    log.trace("searching for plugins in: {}", classPathEntry);
                     addClassesFromDir(CLASS_LIST, classPathFile, classPathFile,
                             0);
                 }
@@ -115,9 +113,9 @@ public class ImportWizard {
 
         try {
             ZipFile zipFile = new ZipFile(classPathFile);
-            Enumeration enumeration = zipFile.entries();
+            Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
             while (enumeration.hasMoreElements()) {
-                ZipEntry zipEntry = (ZipEntry) enumeration.nextElement();
+                ZipEntry zipEntry = enumeration.nextElement();
                 String current = zipEntry.getName();
                 if (isInteresting(current)) {
                     current = current.substring(0,
@@ -126,7 +124,7 @@ public class ImportWizard {
                 }
             }
         } catch (Exception ex) {
-            log.error(format("Problem opening %s with zip.", classPathFile), ex);
+            log.error("Problem opening {} with zip.", classPathFile, ex);
         }
     }
 
@@ -158,25 +156,21 @@ public class ImportWizard {
         }
         String[] files = currentDir.list();
         if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-                String current = files[i];
-                log.trace("looking at: " + current);
+            for (String file : files) {
+                String current = file;
+                log.trace("looking at: {}", current);
                 if (isInteresting(current)) {
                     String rootPath = rootDir.getPath();
                     String currentPath = currentDir.getPath();
                     if (!currentPath.startsWith(rootPath)) {
-                        log.error("currentPath doesn't start with rootPath!\n"
-                                + "rootPath: "
-                                + rootPath
-                                + "\n"
-                                + "currentPath: " + currentPath + "\n");
+                        log.error("currentPath doesn't start with rootPath!\nrootPath: {}\ncurrentPath: {}\n", rootPath, currentPath);
                     } else {
                         current = current.substring(0, current.length()
                                 - lookFor.length());
                         String packageName = currentPath.substring(rootPath
                                 .length());
                         String fileName;
-                        if (packageName.length() > 0) {
+                        if (!packageName.isEmpty()) {
                             // Not the current directory
                             fileName = packageName.substring(1)
                                     + File.separator + current;
@@ -185,7 +179,7 @@ public class ImportWizard {
                             fileName = current;
                         }
                         classList.addElement(fileName);
-                        log.info("Found: " + fileName);
+                        log.info("Found: {}", fileName);
                     }
                 } else {
                     // Check if it's a directory to recurse into

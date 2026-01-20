@@ -32,9 +32,6 @@ import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
 
 import java.awt.datatransfer.Transferable;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -114,8 +111,8 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     /**
      * @param pFile loads a file into a new map.
      */
-    MapFeedback load(File pFile) throws FileNotFoundException,
-            IOException, XMLParseException, URISyntaxException;
+    MapFeedback load(File pFile) throws
+            XMLParseException;
 
     /**
      * Closes the actual map.

@@ -27,10 +27,11 @@ import freemind.controller.filter.util.SortedMapListModel;
 import freemind.main.FreeMind;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
-import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.MapFeedback;
 import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.XMLElementAdapter;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.event.EventListenerList;
@@ -64,13 +65,23 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      * zero, such that new models are not to be saved.
      */
     protected int changesPerformedSinceLastSave = 0;
+    @Setter
+    @Getter
     protected boolean readOnly = true;
+    /**
+     * -- GETTER --
+     *  Change this to always return null if your model doesn't support files.
+     */
+    @Setter
+    @Getter
     private File file;
     private long mFileTime = 0;
+    @Setter
+    @Getter
     private Filter filter = null;
-    private HashSet<MapSourceChangedObserver> mMapSourceChangedObserverSet = new HashSet<>();
-    private Timer mTimerForFileChangeObservation;
-    protected MapFeedback mMapFeedback;
+    private final HashSet<MapSourceChangedObserver> mMapSourceChangedObserverSet = new HashSet<>();
+    private final Timer mTimerForFileChangeObservation;
+    protected final MapFeedback mMapFeedback;
 
     public MapAdapter(MapFeedback mapFeedback) {
         super(null);
@@ -99,9 +110,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             }
             if (shouldFire) {
                 for (MapSourceChangedObserver observer : mMapSourceChangedObserverSet) {
-                    log.info("File " + getFile()
-                            + " changed on disk as it was last modified at "
-                            + new Date(lastModified));
+                    log.info("File {} changed on disk as it was last modified at {}", getFile(), new Date(lastModified));
                     try {
                         boolean changeAccepted = observer.mapSourceChanged(MapAdapter.this);
                         if (!changeAccepted) {
@@ -194,14 +203,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         return (changesPerformedSinceLastSave == 0);
     }
 
-    public boolean isReadOnly() {
-        return readOnly;
-    }
-
-    public void setReadOnly(boolean pIsReadOnly) {
-        readOnly = pIsReadOnly;
-    }
-
     /**
      * Counts the amount of actions performed.
      *
@@ -251,8 +252,8 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             node = parent;
         }
         // bind all parents to a new chain:
-        for (Iterator<MindMapNode> it = parents.iterator(); it.hasNext(); ) {
-            node = it.next();
+        for (MindMapNode mindMapNode : parents) {
+            node = mindMapNode;
             MindMapNode parent = node.getParentNode();
             // remove parent
             node.removeFromParent();
@@ -271,21 +272,10 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     }
 
     /**
-     * Change this to always return null if your model doesn't support files.
-     */
-    public File getFile() {
-        return file;
-    }
-
-    /**
      * Return URL of the map (whether as local file or a web location)
      */
     public URL getURL() throws MalformedURLException {
         return getFile() != null ? Tools.fileToUrl(getFile()) : null;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 
     protected String getText(String textId) {
@@ -324,7 +314,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                                MindMapNode pParent, int pIndex) {
         super.insertNodeInto(pNewChild, pParent, pIndex);
         // call hooks
-        mMapFeedback.fireRecursiveNodeCreateEvent((MindMapNode) pNewChild);
+        mMapFeedback.fireRecursiveNodeCreateEvent(pNewChild);
 
     }
 
@@ -472,14 +462,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         return e;
     }
 
-    public Filter getFilter() {
-        return filter;
-    }
-
-    public void setFilter(Filter filter) {
-        this.filter = filter;
-    }
-
     public void registerMapSourceChangedObserver(
             MapSourceChangedObserver pMapSourceChangedObserver,
             long pGetEventIfChangedAfterThisTimeInMillies) {
@@ -523,7 +505,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         pMapIcons.addAll(pNode.getIcons());
         ListIterator<MindMapNode> iterator = pNode.childrenUnfolded();
         while (iterator.hasNext()) {
-            MindMapNode node = (MindMapNode) iterator.next();
+            MindMapNode node = iterator.next();
             addIcons(pMapIcons, node);
         }
     }
@@ -534,14 +516,14 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      */
     @Override
     public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException, IOException {
-        XMLElementAdapter xmlAdapter = new XMLElementAdapter(mMapFeedback, new Vector<ArrowLinkAdapter>(), pIDToTarget);
+        XMLElementAdapter xmlAdapter = new XMLElementAdapter(mMapFeedback, new Vector<>(), pIDToTarget);
         xmlAdapter.parseFromReader(pReader);
         xmlAdapter.processUnfinishedLinks(getLinkRegistry());
         MindMapNode node = xmlAdapter.getMapChild();
         return node;
     }
 
-    public static DontAskUserBeforeUpdateAdapter sDontAskInstance = new DontAskUserBeforeUpdateAdapter();
+    public static final DontAskUserBeforeUpdateAdapter sDontAskInstance = new DontAskUserBeforeUpdateAdapter();
 
     public static class DontAskUserBeforeUpdateAdapter implements AskUserBeforeUpdateCallback {
 
@@ -565,13 +547,13 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                 versionInfoLength);
         // the resulting file is accessed by the reader:
         Reader reader = null;
-        for (int i = 0; i < EXPECTED_START_STRINGS.length; i++) {
-            versionInfoLength = EXPECTED_START_STRINGS[i].length();
+        for (String expectedStartString : EXPECTED_START_STRINGS) {
+            versionInfoLength = expectedStartString.length();
             String mapStart = "";
             if (buffer.length() >= versionInfoLength) {
                 mapStart = buffer.substring(0, versionInfoLength);
             }
-            if (mapStart.startsWith(EXPECTED_START_STRINGS[i])) {
+            if (mapStart.startsWith(expectedStartString)) {
                 // actual version:
                 reader = Tools.getActualReader(pReaderCreator.createReader());
                 break;
@@ -596,7 +578,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         }
         try {
             HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();
-            return (MindMapNode) createNodeTreeFromXml(
+            return createNodeTreeFromXml(
                     reader, IDToTarget);
         } catch (Exception ex) {
             String errorMessage = "Error while parsing file:" + ex;
@@ -604,7 +586,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             log.error(ex.getLocalizedMessage(), ex);
             NodeAdapter result = createNodeAdapter(this, null);
             result.setText(errorMessage);
-            return (MindMapNode) result;
+            return result;
         } finally {
             if (reader != null) {
                 reader.close();

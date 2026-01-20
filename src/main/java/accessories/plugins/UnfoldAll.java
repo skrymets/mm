@@ -48,7 +48,7 @@ public class UnfoldAll extends MindMapNodeHookAdapter {
 
         private final MindMapController controller;
         private final MindMap mMap;
-        private UnfoldAll hookInstance;
+        private final UnfoldAll hookInstance;
 
         public Registration(ModeController controller, MindMap map) {
             this.controller = (MindMapController) controller;

@@ -28,7 +28,7 @@ import java.util.Vector;
 
 @SuppressWarnings("serial")
 public class MultipleImage extends ImageIcon {
-    private Vector<ImageIcon> mImages = new Vector<>();
+    private final Vector<ImageIcon> mImages = new Vector<>();
     private double zoomFactor = 1;
     private boolean isDirty;
 
@@ -37,21 +37,15 @@ public class MultipleImage extends ImageIcon {
         isDirty = true;
     }
 
-    ;
-
     public int getImageCount() {
         return mImages.size();
     }
-
-    ;
 
     public void addImage(ImageIcon image) {
         mImages.add(image);
         setImage(image.getImage());
         isDirty = true;
     }
-
-    ;
 
     public Image getImage() {
         if (!isDirty)
@@ -116,8 +110,8 @@ public class MultipleImage extends ImageIcon {
 
     public int getIconWidth() {
         int myX = 0;
-        for (int i = 0; i < mImages.size(); i++) {
-            myX += ((ImageIcon) mImages.get(i)).getIconWidth();
+        for (ImageIcon mImage : mImages) {
+            myX += mImage.getIconWidth();
         }
         // System.out.println("width: "+myX);
         return (int) (myX * zoomFactor);
@@ -125,8 +119,8 @@ public class MultipleImage extends ImageIcon {
 
     public int getIconHeight() {
         int myY = 0;
-        for (int i = 0; i < mImages.size(); i++) {
-            int otherHeight = ((ImageIcon) mImages.get(i)).getIconHeight();
+        for (ImageIcon mImage : mImages) {
+            int otherHeight = mImage.getIconHeight();
             if (otherHeight > myY)
                 myY = otherHeight;
         }
@@ -134,4 +128,4 @@ public class MultipleImage extends ImageIcon {
         return (int) (myY * zoomFactor);
     }
 
-};
+}

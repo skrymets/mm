@@ -49,8 +49,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
 
     public JColorCombo() {
         ColorPair[] colorList = sColorList;
-        for (int i = 0; i < colorList.length; i++) {
-            ColorPair colorPair = colorList[i];
+        for (ColorPair colorPair : colorList) {
             addItem(colorPair);
         }
         ComboBoxRenderer renderer = new ComboBoxRenderer();
@@ -62,7 +61,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
         return getPreferredSize();
     }
 
-    public class ComboBoxRenderer extends JLabel implements ListCellRenderer<ColorPair> {
+    public static class ComboBoxRenderer extends JLabel implements ListCellRenderer<ColorPair> {
         public ComboBoxRenderer() {
             setOpaque(true);
             setHorizontalAlignment(LEFT);
@@ -104,7 +103,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
         frame.setVisible(true);
     }
 
-    public static ColorPair[] sColorList = new ColorPair[]{
+    public static final ColorPair[] sColorList = new ColorPair[]{
             // taken from http://wiki.selfhtml.org/wiki/Grafik/Farbpaletten#Farbnamen
             // default 16bit colors
             new ColorPair(new Color(0x000000), "black"),

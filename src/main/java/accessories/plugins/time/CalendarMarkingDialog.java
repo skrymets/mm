@@ -6,6 +6,7 @@ import freemind.controller.actions.generated.instance.CalendarMarkings;
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -32,10 +33,16 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 
     public static final int OK = 1;
 
-    private MindMapController mController;
+    private final MindMapController mController;
     private JPanel jContentPane;
     private JButton jOKButton;
     private JButton jCancelButton;
+    /**
+     * -- GETTER --
+     *
+     * @return Returns the result.
+     */
+    @Getter
     private int result = CANCEL;
     private JSwitchableCalendar startDate;
     private JSwitchableCalendar endDate;
@@ -121,10 +128,8 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             layout.setAutoCreateContainerGaps(true);
 
             JLabel nameLabel = getLabel("Name");
-            ;
             nameField = new JTextField(80);
             JLabel repetitionTypeLabel = getLabel("Repetition_Type");
-            ;
             mRepetitionTypesList = new Vector<>();
             mRepetitionTypesList.add(("never"));
             mRepetitionTypesList.add(("yearly"));
@@ -141,22 +146,18 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             for (String xmlName : mRepetitionTypesList) {
                 items.add(getText(xmlName));
             }
-            repetitionType = new JComboBox<String>(items);
+            repetitionType = new JComboBox<>(items);
             JLabel repeatEachNOccurenceLabel = getLabel("Repeat_Each_N_Occurence");
-            ;
 
             mRepeatEachNOccurenceModel = new SpinnerNumberModel(1, 1, 100, 1);
             JSpinner repeatEachNOccurence = new JSpinner(mRepeatEachNOccurenceModel);
             JLabel firstOccurenceLabel = getLabel("First_Occurence");
-            ;
             mFirstOccurenceModel = new SpinnerNumberModel(0, 0, 100, 1);
             JSpinner firstOccurence = new JSpinner(mFirstOccurenceModel);
             JLabel startDateLabel = getLabel("Start_Date");
-            ;
             startDate = new JSwitchableCalendar();
             startDate.setEnabled(true);
             JLabel endDateLabel = getLabel("End_Date");
-            ;
             endDate = new JSwitchableCalendar();
             endDate.setEnabled(true);
             JLabel markerColorLabel = getLabel("Background_Color");
@@ -229,7 +230,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
         marking.setRepeatEachNOccurence(mRepeatEachNOccurenceModel.getNumber().intValue());
         int selectedIndex = repetitionType.getSelectedIndex();
         if (selectedIndex < 0 || selectedIndex >= mRepetitionTypesList.size()) {
-            log.error("Selected combo box index out of range: " + selectedIndex);
+            log.error("Selected combo box index out of range: {}", selectedIndex);
         } else {
             marking.setRepeatType(CalendarMarking.RepeatType.convert(mRepetitionTypesList.get(selectedIndex)));
         }
@@ -250,7 +251,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
         if (mRepetitionTypesList.contains(repeatTypeString)) {
             repetitionType.setSelectedIndex(mRepetitionTypesList.indexOf(repeatTypeString));
         } else {
-            log.error("Repetition type " + repeatTypeString + " not found.");
+            log.error("Repetition type {} not found.", repeatTypeString);
             repetitionType.setSelectedIndex(0);
         }
     }
@@ -304,13 +305,6 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
         return jCancelButton;
     }
 
-    /**
-     * @return Returns the result.
-     */
-    public int getResult() {
-        return result;
-    }
-
     @Override
     public void actionPerformed(ActionEvent pE) {
         showExamples();
@@ -347,11 +341,11 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
         container.addCalendarMarking(marking);
         CalendarMarkingEvaluator evaluator = new CalendarMarkingEvaluator(container);
         Set<Calendar> nEntries = evaluator.getAtLeastTheFirstNEntries(10);
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for (Calendar calendar : nEntries) {
-            text += DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime()) + "\n";
+            text.append(DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime())).append("\n");
         }
-        mTextArea.setText(text);
+        mTextArea.setText(text.toString());
     }
 
     /**

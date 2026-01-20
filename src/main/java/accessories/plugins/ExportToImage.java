@@ -109,7 +109,6 @@ public class ExportToImage extends ExportHook {
             // System.err.println("error applying the xslt file "+e);
             log.error(e.getLocalizedMessage(), e);
         }
-        return;
     }
 
 }

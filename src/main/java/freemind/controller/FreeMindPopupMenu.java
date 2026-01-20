@@ -32,10 +32,9 @@ import java.util.HashSet;
 /**
  * @author foltin
  */
-@SuppressWarnings("serial")
 @Slf4j
 public class FreeMindPopupMenu extends JPopupMenu implements StructuredMenuHolder.MenuEventSupplier {
-    private HashSet<MenuListener> listeners = new HashSet<>();
+    private final HashSet<MenuListener> listeners = new HashSet<>();
 
     public FreeMindPopupMenu() {
     }

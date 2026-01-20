@@ -176,12 +176,12 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
     protected void handlePopupMenu(MouseEvent e) {
         // first stop the timer and select the node:
         stopTimerForDelayedSelection();
-        log.trace("Extending selection for " + e);
+        log.trace("Extending selection for {}", e);
         c.extendSelection(e);
         // Right mouse <i>press</i> is <i>not</i> a popup trigger for Windows.
         // Only Right mouse release is a popup trigger!
         // OK, but Right mouse <i>press</i> <i>is</i> a popup trigger on Linux.
-        log.trace("Looking for popup for " + e);
+        log.trace("Looking for popup for {}", e);
         c.showPopupMenu(e);
     }
 
@@ -213,7 +213,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
         controlRegionForDelayedSelection = null;
     }
 
-    protected class timeDelayedSelection extends TimerTask {
+    protected static class timeDelayedSelection extends TimerTask {
         private final ModeController c;
 
         private final MouseEvent e;

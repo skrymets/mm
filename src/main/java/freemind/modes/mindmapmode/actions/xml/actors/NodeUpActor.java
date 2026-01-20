@@ -49,16 +49,12 @@ public class NodeUpActor extends XmlActorAdapter {
     }
 
     private void _moveNodes(MindMapNode selected, List<MindMapNode> selecteds, int direction) {
-        Comparator<Integer> comparator = (direction == -1) ? null : new Comparator<Integer>() {
-            public int compare(Integer i1, Integer i2) {
-                return i2 - i1;
-            }
-        };
+        Comparator<Integer> comparator = (direction == -1) ? null : (i1, i2) -> i2 - i1;
         if (!selected.isRoot()) {
             MindMapNode parent = selected.getParentNode();
             // multiple move:
             Vector<MindMapNode> sortedChildren = getSortedSiblings(parent);
-            TreeSet<Integer> range = new TreeSet<Integer>(comparator);
+            TreeSet<Integer> range = new TreeSet<>(comparator);
             for (MindMapNode node : selecteds) {
                 if (node.getParent() != parent) {
                     log.warn("Not all selected nodes (here: {}) have the same parent {}.", node.getText(), parent.getText());
@@ -67,7 +63,7 @@ public class NodeUpActor extends XmlActorAdapter {
                 range.add(new Integer(sortedChildren.indexOf(node)));
             }
             // test range for adjacent nodes:
-            Integer last = (Integer) range.iterator().next();
+            Integer last = range.iterator().next();
             for (Integer newInt : range) {
                 if (Math.abs(newInt.intValue() - last.intValue()) > 1) {
                     log.warn("Not adjacent nodes. Skipped. ");
@@ -77,7 +73,7 @@ public class NodeUpActor extends XmlActorAdapter {
             }
             for (Integer position : range) {
                 // from above:
-                MindMapNode node = (MindMapNode) sortedChildren.get(position.intValue());
+                MindMapNode node = sortedChildren.get(position.intValue());
                 moveNodeTo(node, parent, direction);
             }
         }
@@ -119,13 +115,10 @@ public class NodeUpActor extends XmlActorAdapter {
         for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
             nodes.add(i.next());
         }
-        Collections.sort(nodes, new Comparator<MindMapNode>() {
-
-            public int compare(MindMapNode n1, MindMapNode n2) {
-                int b1 = n1.isLeft() ? 0 : 1;
-                int b2 = n2.isLeft() ? 0 : 1;
-                return b1 - b2;
-            }
+        nodes.sort((n1, n2) -> {
+            int b1 = n1.isLeft() ? 0 : 1;
+            int b2 = n2.isLeft() ? 0 : 1;
+            return b1 - b2;
         });
         // logger.trace("Sorted nodes "+ nodes);
         return nodes;

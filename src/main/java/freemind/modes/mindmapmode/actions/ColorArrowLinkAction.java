@@ -38,7 +38,7 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class ColorArrowLinkAction extends MindmapAction {
 
-    MindMapArrowLinkModel arrowLink;
+    final MindMapArrowLinkModel arrowLink;
 
     private final MindMapController controller;
 

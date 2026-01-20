@@ -37,8 +37,8 @@ import java.util.List;
 @SuppressWarnings("serial")
 @Slf4j
 public class NodeHookAction extends MindmapAction implements HookAction, MenuItemEnabledListener, MenuItemSelectedListener {
-    String _hookName;
-    MindMapController mMindMapController;
+    final String _hookName;
+    final MindMapController mMindMapController;
 
     public MindMapController getController() {
         return mMindMapController;

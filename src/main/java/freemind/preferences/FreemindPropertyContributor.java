@@ -34,6 +34,6 @@ import java.util.List;
  */
 public interface FreemindPropertyContributor {
 
-    public List<PropertyControl> getControls(TextTranslator pTextTranslator);
+    List<PropertyControl> getControls(TextTranslator pTextTranslator);
 
 }

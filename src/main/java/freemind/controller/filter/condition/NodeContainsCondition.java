@@ -30,7 +30,7 @@ import freemind.model.MindMapNode;
 class NodeContainsCondition extends NodeCondition {
     static final String VALUE = "value";
     static final String NAME = "node_contains_condition";
-    private String value;
+    private final String value;
 
     NodeContainsCondition(String value) {
         super();

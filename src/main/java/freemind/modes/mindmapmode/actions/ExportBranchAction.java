@@ -148,17 +148,15 @@ public class ExportBranchAction extends MindmapAction {
             mMindMapController.setLink(newNode, linkString);
             mMindMapController.newMap(newMap, newModeController);
             // old map should not be saved automatically!!
-            EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    try {
-                        // save new map again to create thumbnail...
-                        newModeController.setSaved(false);
-                        newModeController.save();
-                        // set link again to refresh thumbnail
-                        mMindMapController.setLink(newNode, linkString);
-                    } catch (Exception e2) {
-                        log.error(e2.getLocalizedMessage(), e2);
-                    }
+            EventQueue.invokeLater(() -> {
+                try {
+                    // save new map again to create thumbnail...
+                    newModeController.setSaved(false);
+                    newModeController.save();
+                    // set link again to refresh thumbnail
+                    mMindMapController.setLink(newNode, linkString);
+                } catch (Exception e2) {
+                    log.error(e2.getLocalizedMessage(), e2);
                 }
             });
         }

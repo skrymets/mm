@@ -24,6 +24,8 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapNode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
@@ -35,10 +37,14 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArr
     private static final String ARROW_NONE_UC = "NONE";
 
     /* the zero is the start point of the line */
+    @Setter
     protected Point startInclination;
     /* the zero is the end point of the line */
+    @Setter
     protected Point endInclination;
+    @Getter
     protected String startArrow;
+    @Getter
     protected String endArrow;
     protected boolean showControlPointsFlag;
 
@@ -58,22 +64,6 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArr
         if (endInclination == null)
             return null;
         return new Point(endInclination);
-    }
-
-    public String getStartArrow() {
-        return startArrow;
-    }
-
-    public String getEndArrow() {
-        return endArrow;
-    }
-
-    public void setStartInclination(Point startInclination) {
-        this.startInclination = startInclination;
-    }
-
-    public void setEndInclination(Point endInclination) {
-        this.endInclination = endInclination;
     }
 
     public void setStartArrow(String startArrow) {

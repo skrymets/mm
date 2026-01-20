@@ -35,6 +35,8 @@ import freemind.view.mindmapview.IndependentMapViewCreator;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -67,8 +69,12 @@ import java.util.List;
 @Slf4j
 public abstract class ControllerAdapter extends MapFeedbackAdapter implements ModeController, DirectoryResultListener {
 
+    @Getter
     private Mode mode;
 
+    /**
+     */
+    @Getter
     private final Color selectionColor = new Color(200, 220, 200);
     /**
      * The model, this controller belongs to. It may be null, if it is the
@@ -138,8 +144,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     private void nodeRefresh(MindMapNode node, boolean isUpdate) {
-        log.trace("nodeChanged called for node " + node + " parent="
-                + node.getParentNode());
+        log.trace("nodeChanged called for node {} parent={}", node, node.getParentNode());
         if (isUpdate) {
             // update modification times:
             if (node.getHistoryInformation() != null) {
@@ -377,10 +382,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             IOException {
         try {
             return load(Tools.fileToUrl(file));
-        } catch (XMLParseException e) {
-            log.error(e.getLocalizedMessage(), e);
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+        } catch (XMLParseException | URISyntaxException e) {
             log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);
         }
@@ -428,7 +430,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     public void loadURL(String relative) {
         try {
-            log.info("Trying to open " + relative);
+            log.info("Trying to open {}", relative);
             URL absolute = null;
             if (Tools.isAbsolutePath(relative)) {
                 // Protocol can be identified by rexep pattern "[a-zA-Z]://.*".
@@ -453,7 +455,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 absolute = Tools.fileToUrl(new File(relative));
             } else if (relative.startsWith("#")) {
                 // inner map link, fc, 12.10.2004
-                log.trace("found relative link to " + relative);
+                log.trace("found relative link to {}", relative);
                 String target = relative.substring(1);
                 try {
                     centerNode(getNodeFromID(target));
@@ -487,7 +489,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 // Open
                 // Mind
                 // Map
-                log.info("Trying to open mind map " + absolute);
+                log.info("Trying to open mind map {}", absolute);
                 MapModuleManager mapModuleManager = getController()
                         .getMapModuleManager();
                 /*
@@ -515,7 +517,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                         getFrame().setStatusText(
                                 Tools.expandPlaceholders(
                                         getText("link_not_found"), ref));
-                        return;
                     }
                 }
             } else {
@@ -525,7 +526,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         } catch (MalformedURLException ex) {
             log.error(ex.getLocalizedMessage(), ex);
             getController().errorMessage(getText("url_error") + "\n" + ex);
-            return;
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
         } finally {
@@ -574,8 +574,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         if (focussedNodeView != null) {
             getView().selectAsTheOnlyOneSelected(focussedNodeView);
             getView().scrollNodeToVisible(focussedNodeView);
-            for (Iterator<MindMapNode> i = selecteds.iterator(); i.hasNext(); ) {
-                MindMapNode node = i.next();
+            for (MindMapNode node : selecteds) {
                 NodeView nodeView = getNodeView(node);
                 if (nodeView != null) {
                     getView().makeTheSelected(nodeView);
@@ -655,7 +654,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         JMenuItem item = holder.addAction(action, category);
         if (keystroke != null) {
             String keyProperty = getFrame().getAdjustableProperty(keystroke);
-            log.trace("Found key stroke: " + keyProperty);
+            log.trace("Found key stroke: {}", keyProperty);
             item.setAccelerator(KeyStroke.getKeyStroke(keyProperty));
         }
         return item;
@@ -709,8 +708,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             } else {
                 selectedFiles = new File[]{chooser.getSelectedFile()};
             }
-            for (int i = 0; i < selectedFiles.length; i++) {
-                File theFile = selectedFiles[i];
+            for (File theFile : selectedFiles) {
                 try {
                     lastCurrentDir = theFile.getParentFile();
                     load(theFile);
@@ -1006,25 +1004,15 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     // status, currently: default, blocked (PN)
     // (blocked to protect against particular events e.g. in edit mode)
+    @Setter
+    @Getter
     private boolean isBlocked = false;
 
     private MapView mView;
 
-    public boolean isBlocked() {
-        return this.isBlocked;
-    }
-
-    public void setBlocked(boolean isBlocked) {
-        this.isBlocked = isBlocked;
-    }
-
     //
     // Convenience methods
     //
-
-    public Mode getMode() {
-        return mode;
-    }
 
     protected void setMode(Mode mode) {
         this.mode = mode;
@@ -1116,7 +1104,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 
     public class OpenAction extends AbstractAction {
-        ControllerAdapter mc;
+        final ControllerAdapter mc;
 
         public OpenAction(ControllerAdapter modeController) {
             super(getText("open"), freemind.view.ImageFactory.getInstance().createIcon(
@@ -1168,8 +1156,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         private boolean isDragAcceptable(DropTargetDragEvent event) {
             // check if there is at least one File Type in the list
             DataFlavor[] flavors = event.getCurrentDataFlavors();
-            for (int i = 0; i < flavors.length; i++) {
-                if (flavors[i].isFlavorJavaFileListType()) {
+            for (DataFlavor flavor : flavors) {
+                if (flavor.isFlavorJavaFileListType()) {
                     // event.acceptDrag(DnDConstants.ACTION_COPY);
                     return true;
                 }
@@ -1181,8 +1169,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         private boolean isDropAcceptable(DropTargetDropEvent event) {
             // check if there is at least one File Type in the list
             DataFlavor[] flavors = event.getCurrentDataFlavors();
-            for (int i = 0; i < flavors.length; i++) {
-                if (flavors[i].isFlavorJavaFileListType()) {
+            for (DataFlavor flavor : flavors) {
+                if (flavor.isFlavorJavaFileListType()) {
                     return true;
                 }
             }
@@ -1225,7 +1213,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         public void dragEnter(DropTargetDragEvent dtde) {
             if (!isDragAcceptable(dtde)) {
                 dtde.rejectDrag();
-                return;
             }
         }
 
@@ -1267,9 +1254,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             return new MindMapNodesSelection(forNodesFlavor, null, plainText,
                     getMap().getAsRTF(selectedNodes), getMap().getAsHTML(
                     selectedNodes), null, null, createForNodeIdsFlavor);
-        } catch (UnsupportedFlavorException ex) {
-            log.error(ex.getLocalizedMessage(), ex);
-        } catch (IOException ex) {
+        } catch (UnsupportedFlavorException | IOException ex) {
             log.error(ex.getLocalizedMessage(), ex);
         }
         return null;
@@ -1277,36 +1262,28 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     public String createForNodesFlavor(List<MindMapNode> selectedNodes, boolean copyInvisible)
             throws UnsupportedFlavorException, IOException {
-        String forNodesFlavor = "";
+        StringBuilder forNodesFlavor = new StringBuilder();
         boolean firstLoop = true;
         for (MindMapNode tmpNode : selectedNodes) {
             if (firstLoop) {
                 firstLoop = false;
             } else {
-                forNodesFlavor += NODESEPARATOR;
+                forNodesFlavor.append(NODESEPARATOR);
             }
 
-            forNodesFlavor += copy(tmpNode, copyInvisible).getTransferData(
-                    MindMapNodesSelection.mindMapNodesFlavor);
+            forNodesFlavor.append(copy(tmpNode, copyInvisible).getTransferData(
+                    MindMapNodesSelection.mindMapNodesFlavor));
         }
-        return forNodesFlavor;
+        return forNodesFlavor.toString();
     }
 
-    public List<String> createForNodeIdsFlavor(List<MindMapNode> selectedNodes, boolean copyInvisible)
-            throws UnsupportedFlavorException, IOException {
+    public List<String> createForNodeIdsFlavor(List<MindMapNode> selectedNodes, boolean copyInvisible) {
         Vector<String> forNodesFlavor = new Vector<>();
 
         for (MindMapNode tmpNode : selectedNodes) {
             forNodesFlavor.add(getNodeID(tmpNode));
         }
         return forNodesFlavor;
-    }
-
-    /**
-     *
-     */
-    public Color getSelectionColor() {
-        return selectionColor;
     }
 
     /*

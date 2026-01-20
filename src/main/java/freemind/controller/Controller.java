@@ -36,6 +36,8 @@ import freemind.preferences.layout.OptionPanel;
 import freemind.view.ImageFactory;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -55,7 +57,6 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
 
-import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Collections.swap;
 import static java.util.stream.IntStream.range;
@@ -83,6 +84,7 @@ public class Controller implements MapModuleChangeObserver {
     private LastOpenedList lastOpened; // A list of the path names of all the maps
 
     // that were opened in the last time
+    @Getter
     private MapModuleManager mapModuleManager;
 
     /**
@@ -90,24 +92,35 @@ public class Controller implements MapModuleChangeObserver {
      */
     private Mode mMode;
 
+    @Setter
+    @Getter
     private FreeMindMain frame;
 
     private MainToolBar toolbar;
 
+    @Getter
     private NodeMouseMotionListener nodeMouseMotionListener;
+    @Getter
     private NodeMotionListener nodeMotionListener;
+    @Getter
     private NodeKeyListener nodeKeyListener;
+    @Getter
     private NodeDragListener nodeDragListener;
+    @Getter
     private NodeDropListener nodeDropListener;
+    @Getter
     private MapMouseMotionListener mapMouseMotionListener;
+    @Getter
     private MapMouseWheelListener mapMouseWheelListener;
 
     private final ModesCreator modesCreator = new ModesCreator(this);
 
+    @Getter
     private PageFormat pageFormat = null;
     private PrinterJob printerJob = null;
     private final Map<String, Font> fontMap = new HashMap<>();
 
+    @Getter
     private FilterController filterController;
 
     boolean isPrintingAllowed = true;
@@ -248,7 +261,7 @@ public class Controller implements MapModuleChangeObserver {
         final String defaultFont = getProperty(DEFAULT_FONT_PROPERTY);
 
         if (!Tools.isAvailableFontFamily(defaultFont)) {
-            log.warn("The font you have set as standard - " + defaultFont + " - is not available.");
+            log.warn("The font you have set as standard - {} - is not available.", defaultFont);
             frame.setProperty(DEFAULT_FONT_PROPERTY, "SansSerif");
         }
     }
@@ -273,10 +286,6 @@ public class Controller implements MapModuleChangeObserver {
                 listener.propertyChanged(property, value, oldValue);
             }
         }
-    }
-
-    public FreeMindMain getFrame() {
-        return frame;
     }
 
     public JFrame getJFrame() {
@@ -339,10 +348,6 @@ public class Controller implements MapModuleChangeObserver {
             zooms[i] = (int) (val * 100f) + "%";
         }
         return zooms;
-    }
-
-    public MapModuleManager getMapModuleManager() {
-        return mapModuleManager;
     }
 
     public LastOpenedList getLastOpenedList() {
@@ -415,7 +420,8 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     private static class ColorTracker implements ActionListener, Serializable {
-        JColorChooser chooser;
+        final JColorChooser chooser;
+        @Getter
         Color color;
 
         public ColorTracker(JColorChooser c) {
@@ -426,9 +432,6 @@ public class Controller implements MapModuleChangeObserver {
             color = chooser.getColor();
         }
 
-        public Color getColor() {
-            return color;
-        }
     }
 
     static class Closer extends WindowAdapter implements Serializable {
@@ -547,7 +550,7 @@ public class Controller implements MapModuleChangeObserver {
     public void numberOfOpenMapInformation(int number, int pIndex) {
         navigationPreviousMap.setEnabled(number > 0);
         navigationNextMap.setEnabled(number > 0);
-        log.info("number " + number + ", pIndex " + pIndex);
+        log.info("number {}, pIndex {}", number, pIndex);
         navigationMoveMapLeftAction.setEnabled(number > 1 && pIndex > 0);
         navigationMoveMapRightAction.setEnabled(number > 1 && pIndex < number - 1);
     }
@@ -613,38 +616,6 @@ public class Controller implements MapModuleChangeObserver {
         }
     }
 
-    public NodeKeyListener getNodeKeyListener() {
-        return nodeKeyListener;
-    }
-
-    public NodeMouseMotionListener getNodeMouseMotionListener() {
-        return nodeMouseMotionListener;
-    }
-
-    public NodeMotionListener getNodeMotionListener() {
-        return nodeMotionListener;
-    }
-
-    public MapMouseMotionListener getMapMouseMotionListener() {
-        return mapMouseMotionListener;
-    }
-
-    public MapMouseWheelListener getMapMouseWheelListener() {
-        return mapMouseWheelListener;
-    }
-
-    public NodeDragListener getNodeDragListener() {
-        return nodeDragListener;
-    }
-
-    public NodeDropListener getNodeDropListener() {
-        return nodeDropListener;
-    }
-
-    public void setFrame(FreeMindMain frame) {
-        this.frame = frame;
-    }
-
     void moveToRoot() {
         if (getMapModule() != null) {
             getView().moveToRoot();
@@ -698,7 +669,7 @@ public class Controller implements MapModuleChangeObserver {
             log.info("No view present. No focus!");
             getFrame().getFreeMindMenuBar().requestFocus();
         } else { // is null if the last map was closed.
-            log.trace("Requesting Focus for " + getView() + " in model " + getView().getModel());
+            log.trace("Requesting Focus for {} in model {}", getView(), getView().getModel());
             getView().requestFocusInWindow();
         }
     }
@@ -792,19 +763,18 @@ public class Controller implements MapModuleChangeObserver {
     //
 
     private void quit() {
-        String currentMapRestorable = (getModel() != null) ? getModel()
-                .getRestorable() : null;
+        String currentMapRestorable = (getModel() != null) ? getModel().getRestorable() : null;
         storeOptionSplitPanePosition();
         // collect all maps:
         List<String> restorables = new ArrayList<>();
         // move to first map in the window.
         List<MapModule> mapModuleList = getMapModuleManager().getMapModuleList();
-        if (mapModuleList.size() > 0) {
+        if (!mapModuleList.isEmpty()) {
             String displayName = mapModuleList.get(0)
                     .getDisplayName();
             getMapModuleManager().changeToMapModule(displayName);
         }
-        while (mapModuleList.size() > 0) {
+        while (!mapModuleList.isEmpty()) {
             if (getMapModule() != null) {
                 StringBuffer restorableBuffer = new StringBuffer();
                 boolean closingNotCancelled = getMapModuleManager().close(
@@ -814,7 +784,7 @@ public class Controller implements MapModuleChangeObserver {
                 }
                 if (restorableBuffer.length() != 0) {
                     String restorableString = restorableBuffer.toString();
-                    log.info("Closed the map " + restorableString);
+                    log.info("Closed the map {}", restorableString);
                     restorables.add(restorableString);
                 }
             } else {
@@ -823,7 +793,7 @@ public class Controller implements MapModuleChangeObserver {
                 getMapModuleManager().nextMapModule();
             }
         }
-        // store last tab session:
+        // store the last tab session:
         int index = 0;
 
         String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
@@ -852,16 +822,14 @@ public class Controller implements MapModuleChangeObserver {
         // shortcuts
         setProperty("toolbarVisible", toolbarVisible ? "true" : "false");
         setProperty("leftToolbarVisible", leftToolbarVisible ? "true" : "false");
-        if (!getFrame().isApplet()) {
-            final int winState = getFrame().getWinState();
-            if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {
-                setProperty("appwindow_x", valueOf(getFrame().getWinX()));
-                setProperty("appwindow_y", valueOf(getFrame().getWinY()));
-                setProperty("appwindow_width", valueOf(getFrame().getWinWidth()));
-                setProperty("appwindow_height", valueOf(getFrame().getWinHeight()));
-            }
-            setProperty("appwindow_state", valueOf(winState));
+        final int winState = getFrame().getWinState();
+        if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {
+            setProperty("appwindow_x", valueOf(getFrame().getWinX()));
+            setProperty("appwindow_y", valueOf(getFrame().getWinY()));
+            setProperty("appwindow_width", valueOf(getFrame().getWinWidth()));
+            setProperty("appwindow_height", valueOf(getFrame().getWinHeight()));
         }
+        setProperty("appwindow_state", valueOf(winState));
         // Stop edit server!
         getFrame().saveProperties(true);
         // save to properties
@@ -891,7 +859,7 @@ public class Controller implements MapModuleChangeObserver {
         }
         String pageFormatProperty = getProperty(PAGE_FORMAT_PROPERTY);
         if (!pageFormatProperty.isEmpty()) {
-            log.info("Page format (stored): " + pageFormatProperty);
+            log.info("Page format (stored): {}", pageFormatProperty);
             final Paper storedPaper = new Paper();
             Tools.setPageFormatFromString(storedPaper, pageFormatProperty);
             pageFormat.setPaper(storedPaper);
@@ -940,7 +908,7 @@ public class Controller implements MapModuleChangeObserver {
 
     private class PrintAction extends AbstractAction {
 
-        boolean isDlg;
+        final boolean isDlg;
 
         PrintAction(Controller controller, boolean isDlg) {
             super(isDlg ? controller.getResourceString("print_dialog")
@@ -972,7 +940,7 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     private class PrintPreviewAction extends AbstractAction {
-        Controller controller;
+        final Controller controller;
 
         PrintPreviewAction(Controller controller) {
             super(controller.getResourceString("print_preview"));
@@ -1084,7 +1052,7 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     private class DocumentationAction extends AbstractAction {
-        Controller controller;
+        final Controller controller;
 
         DocumentationAction(Controller controller) {
             super(controller.getResourceString("documentation"));
@@ -1118,7 +1086,7 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     private static class KeyDocumentationAction extends AbstractAction {
-        Controller controller;
+        final Controller controller;
 
         KeyDocumentationAction(Controller controller) {
             super(controller.getResourceString("KeyDoc"));
@@ -1132,7 +1100,7 @@ public class Controller implements MapModuleChangeObserver {
             urlText = Tools.removeTranslateComment(urlText);
             try {
                 URL url = urlText != null && urlText.startsWith(".") ? localDocumentationLinkConverter.convertLocalLink(urlText) : Tools.fileToUrl(new File(urlText));
-                log.info("Opening key docs under " + url);
+                log.info("Opening key docs under {}", url);
                 controller.getFrame().openDocument(url);
             } catch (Exception e) {
                 log.error(e.getLocalizedMessage(), e);
@@ -1141,7 +1109,7 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     private class AboutAction extends AbstractAction {
-        Controller controller;
+        final Controller controller;
 
         AboutAction(Controller controller) {
             super(controller.getResourceString("about"));
@@ -1157,7 +1125,7 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     private class LicenseAction extends AbstractAction {
-        Controller controller;
+        final Controller controller;
 
         LicenseAction(Controller controller) {
             super(controller.getResourceString("license"));
@@ -1344,8 +1312,7 @@ public class Controller implements MapModuleChangeObserver {
         public void actionPerformed(ActionEvent e) {
             // log.info("ZoomInAction actionPerformed");
             float currentZoom = getView().getZoom();
-            for (int i = 0; i < zoomValues.length; i++) {
-                float val = zoomValues[i];
+            for (float val : zoomValues) {
                 if (val > currentZoom) {
                     setZoom(val);
                     return;
@@ -1464,8 +1431,7 @@ public class Controller implements MapModuleChangeObserver {
             dialog.setUndecorated(false);
             final OptionPanel options = new OptionPanel((FreeMind) getFrame(),
                     dialog, props -> {
-                List<String> sortedKeys = new ArrayList<>();
-                sortedKeys.addAll(props.stringPropertyNames());
+                List<String> sortedKeys = new ArrayList<>(props.stringPropertyNames());
                 Collections.sort(sortedKeys);
                 boolean propertiesChanged = false;
                 for (String key : sortedKeys) {
@@ -1537,7 +1503,7 @@ public class Controller implements MapModuleChangeObserver {
     // switch auto properties for selection mechanism fc, 7.12.2003.
     private class OptionSelectionMechanismAction extends AbstractAction
             implements FreemindPropertyListener {
-        Controller c;
+        final Controller c;
 
         OptionSelectionMechanismAction(Controller controller) {
             c = controller;
@@ -1571,7 +1537,7 @@ public class Controller implements MapModuleChangeObserver {
 
     // open faq url from freeminds page:
     private static class OpenURLAction extends AbstractAction {
-        Controller c;
+        final Controller c;
         private final String url;
 
         OpenURLAction(Controller controller, String description, String url) {
@@ -1584,20 +1550,10 @@ public class Controller implements MapModuleChangeObserver {
         public void actionPerformed(ActionEvent e) {
             try {
                 c.getFrame().openDocument(new URL(url));
-            } catch (MalformedURLException ex) {
-                c.errorMessage(c.getResourceString("url_error") + "\n" + ex);
             } catch (Exception ex) {
                 c.errorMessage(ex);
             }
         }
-    }
-
-    public FilterController getFilterController() {
-        return filterController;
-    }
-
-    public PageFormat getPageFormat() {
-        return pageFormat;
     }
 
     public void addTabbedPane(JTabbedPane pTabbedPane) {
@@ -1647,7 +1603,7 @@ public class Controller implements MapModuleChangeObserver {
             public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
                 for (int i = 0; i < tabbedPaneMapModules.size(); ++i) {
                     if (tabbedPaneMapModules.get(i) == pOldMapModule) {
-                        log.trace(format("Remove tab:%d with title:%s", i, tabbedPane.getTitleAt(i)));
+                        log.trace("Remove tab:{} with title:{}", i, tabbedPane.getTitleAt(i));
                         mTabbedPaneSelectionUpdate = false;
                         tabbedPane.removeTabAt(i);
                         tabbedPaneMapModules.remove(i);
@@ -1680,7 +1636,7 @@ public class Controller implements MapModuleChangeObserver {
             return;
         }
         MapModule module = tabbedPaneMapModules.get(selectedIndex);
-        log.trace("Selected index of tab is now: " + selectedIndex + " with title:" + module.toString());
+        log.trace("Selected index of tab is now: {} with title:{}", selectedIndex, module.toString());
         if (module != getMapModule()) {
             // we have to change the active map actively:
             getMapModuleManager().changeToMapModule(module.toString());

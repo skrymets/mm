@@ -22,10 +22,9 @@ package freemind.modes.filemode;
 
 import javax.swing.*;
 
-@SuppressWarnings("serial")
 public class FilePopupMenu extends JPopupMenu {
 
-    private FileController c;
+    private final FileController c;
 
     protected void add(Action action, String keystroke) {
         JMenuItem item = add(action);

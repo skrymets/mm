@@ -27,8 +27,6 @@ package freemind.modes.mindmapmode.actions;
 import freemind.controller.Controller;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.MindMapMapModel;
-import freemind.modes.mindmapmode.MindMapNodeModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -60,13 +58,8 @@ public class NodeBackgroundColorAction extends MindmapAction {
 
         public RemoveNodeBackgroundColorAction(
                 final MindMapController controller) {
-            super(controller, "remove_node_background_color", (String) null);
-            setSingleNodeOperation(new SingleNodeOperation() {
-
-                public void apply(MindMapMapModel map, MindMapNodeModel node) {
-                    controller.setNodeBackgroundColor(node, null);
-                }
-            });
+            super(controller, "remove_node_background_color", null);
+            setSingleNodeOperation((map, node) -> controller.setNodeBackgroundColor(node, null));
         }
 
     }

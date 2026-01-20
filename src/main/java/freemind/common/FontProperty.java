@@ -23,22 +23,23 @@
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FontProperty extends PropertyBean implements PropertyControl {
-    String description;
+    @Getter
+    final String description;
 
-    String label;
+    @Getter
+    final String label;
 
     Font font = null;
 
-    JComboBox<String> mFontComboBox = new JComboBox<>();
+    final JComboBox<String> mFontComboBox = new JComboBox<>();
 
-    private String[] mAvailableFontFamilyNames;
+    private final String[] mAvailableFontFamilyNames;
 
     /**
      * TODO TODO
@@ -52,20 +53,7 @@ public class FontProperty extends PropertyBean implements PropertyControl {
                 .getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         mFontComboBox.setModel(new DefaultComboBoxModel<>(
                 mAvailableFontFamilyNames));
-        mFontComboBox.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent pE) {
-                firePropertyChangeEvent();
-            }
-        });
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
+        mFontComboBox.addActionListener(pE -> firePropertyChangeEvent());
     }
 
     public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {

@@ -29,14 +29,13 @@ import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,12 +46,18 @@ import java.net.URL;
 @Slf4j
 public class EditNodeWYSIWYG extends EditNodeBase {
 
-    private KeyEvent firstEvent;
+    private final KeyEvent firstEvent;
 
     private static HTMLDialog htmlEditorWindow;
 
+    @Getter
     private static class HTMLDialog extends EditDialog {
         private static final long serialVersionUID = 2862979626489782521L;
+        /**
+         * -- GETTER --
+         *
+         * @return Returns the htmlEditorPanel.
+         */
         private SHTMLPanel htmlEditorPanel;
 
         HTMLDialog(EditNodeBase base) throws Exception {
@@ -68,23 +73,11 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             Tools.setLabelAndMnemonic(cancelButton, base.getText("cancel"));
             Tools.setLabelAndMnemonic(splitButton, base.getText("split"));
 
-            okButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    submit();
-                }
-            });
+            okButton.addActionListener(e -> submit());
 
-            cancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    cancel();
-                }
-            });
+            cancelButton.addActionListener(e -> cancel());
 
-            splitButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    split();
-                }
-            });
+            splitButton.addActionListener(e -> split());
 
             Tools.addKeyActionToDialog(this, new SubmitAction(), "alt ENTER",
                     "submit");
@@ -96,14 +89,12 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             buttonPane.add(splitButton);
             buttonPane.setMaximumSize(new Dimension(1000, 20));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
-            htmlEditorPanel.setOpenHyperlinkHandler(new ActionListener() {
-                public void actionPerformed(ActionEvent pE) {
-                    try {
-                        getBase().getController().getFrame()
-                                .openDocument(new URL(pE.getActionCommand()));
-                    } catch (Exception e) {
-                        log.error(e.getLocalizedMessage(), e);
-                    }
+            htmlEditorPanel.setOpenHyperlinkHandler(pE -> {
+                try {
+                    getBase().getController().getFrame()
+                            .openDocument(new URL(pE.getActionCommand()));
+                } catch (Exception e) {
+                    log.error(e.getLocalizedMessage(), e);
                 }
             });
 
@@ -112,7 +103,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             }
         }
 
-        private SHTMLPanel createEditorPanel() throws Exception {
+        private SHTMLPanel createEditorPanel() {
             if (htmlEditorPanel == null) {
                 SHTMLPanel.setResources(new SimplyHtmlResources());
                 htmlEditorPanel = SHTMLPanel.createSHTMLPanel();
@@ -141,13 +132,6 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 //					}
 //				});
             }
-            return htmlEditorPanel;
-        }
-
-        /**
-         * @return Returns the htmlEditorPanel.
-         */
-        public SHTMLPanel getHtmlEditorPanel() {
             return htmlEditorPanel;
         }
 
@@ -225,7 +209,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
                 htmlEditorWindow = new HTMLDialog(this);
             }
             htmlEditorWindow.setBase(this);
-            final SHTMLPanel htmlEditorPanel = ((HTMLDialog) htmlEditorWindow)
+            final SHTMLPanel htmlEditorPanel = htmlEditorWindow
                     .getHtmlEditorPanel();
             String rule = "BODY {";
             Font font = node.getTextFont();
@@ -265,7 +249,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             document.getStyleSheet().addRule(rule);
             try {
                 document.setBase(node.getMap().getModel().getURL());
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException ignored) {
             }
 
             // { -- Set size (can be refactored to share code with long node
@@ -294,7 +278,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             }
             htmlEditorPanel.setCurrentDocumentContent(content);
             if (firstEvent instanceof KeyEvent) {
-                final KeyEvent firstKeyEvent = (KeyEvent) firstEvent;
+                final KeyEvent firstKeyEvent = firstEvent;
                 final JTextComponent currentPane = htmlEditorPanel
                         .getEditorPane();
                 if (currentPane == htmlEditorPanel.getMostRecentFocusOwner()) {

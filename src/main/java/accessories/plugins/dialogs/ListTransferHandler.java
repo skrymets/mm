@@ -86,7 +86,7 @@ public class ListTransferHandler extends TransferHandler {
             }
         }
 
-        DefaultListModel listModel = (DefaultListModel<?>) target.getModel();
+        DefaultListModel<?> listModel = (DefaultListModel<?>) target.getModel();
         int max = listModel.getSize();
         if (index < 0) {
             index = max;
@@ -107,7 +107,7 @@ public class ListTransferHandler extends TransferHandler {
     @Override
     protected void exportDone(JComponent c, Transferable data, int action) {
         if ((action == MOVE) && (indices != null)) {
-            DefaultListModel model = (DefaultListModel<?>) source.getModel();
+            DefaultListModel<?> model = (DefaultListModel<?>) source.getModel();
 
             // If we are moving items around in the same list, we
             // need to adjust the indices accordingly since those
@@ -128,8 +128,8 @@ public class ListTransferHandler extends TransferHandler {
     }
 
     private boolean hasLocalListFlavor(DataFlavor[] flavors) {
-        for (int i = 0; i < flavors.length; i++) {
-            if (flavors[i].equals(localListFlavor)) {
+        for (DataFlavor flavor : flavors) {
+            if (flavor.equals(localListFlavor)) {
                 return true;
             }
         }
@@ -159,8 +159,8 @@ public class ListTransferHandler extends TransferHandler {
         return COPY_OR_MOVE;
     }
 
-    public class ListTransferable implements Transferable {
-        private List<?> data;
+    public static class ListTransferable implements Transferable {
+        private final List<?> data;
 
         public ListTransferable(List<?> list) {
             data = list;

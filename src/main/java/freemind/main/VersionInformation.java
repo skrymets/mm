@@ -3,10 +3,10 @@ package freemind.main;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import static java.lang.Integer.parseInt;
-import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 import static org.apache.commons.lang3.StringUtils.split;
 
@@ -29,8 +29,7 @@ public class VersionInformation {
         }
 
         static Type fromLabel(String label) {
-            return asList(Type.values())
-                    .stream()
+            return Arrays.stream(Type.values())
                     .filter(type -> defaultString(label).toLowerCase(Locale.ROOT).equals(type.label))
                     .findFirst()
                     .orElse(OTHER);

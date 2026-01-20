@@ -49,7 +49,7 @@ public class FreeMindMainMock implements FreeMindMain {
     public FreeMindMainMock() {
         super();
         try {
-            mProperties = new FreeMindStarter().loadDefaultPreferences();
+            mProperties = FreeMindStarter.loadDefaultPreferences();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -59,10 +59,6 @@ public class FreeMindMainMock implements FreeMindMain {
 
     public JFrame getJFrame() {
         return null;
-    }
-
-    public boolean isApplet() {
-        return false;
     }
 
     public MapView getView() {
@@ -109,7 +105,7 @@ public class FreeMindMainMock implements FreeMindMain {
     public void err(String msg) {
     }
 
-    public void openDocument(URL location) throws Exception {
+    public void openDocument(URL location) {
     }
 
     public void repaint() {

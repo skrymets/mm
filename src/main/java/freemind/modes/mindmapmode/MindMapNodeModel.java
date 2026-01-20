@@ -22,6 +22,7 @@ package freemind.modes.mindmapmode;
 
 import freemind.main.HtmlTools;
 import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -98,7 +99,7 @@ public class MindMapNodeModel extends NodeAdapter {
     }
 
     private void saveChildrenText(Writer fileout, int depth) throws IOException {
-        for (ListIterator e = sortedChildrenUnfolded(); e.hasNext(); ) {
+        for (ListIterator<MindMapNode> e = sortedChildrenUnfolded(); e.hasNext(); ) {
             final MindMapNodeModel child = (MindMapNodeModel) e.next();
             if (child.isVisible()) {
                 child.saveTXT(fileout, depth + 1);
@@ -124,7 +125,7 @@ public class MindMapNodeModel extends NodeAdapter {
         char myChar;
         for (int i = 0; i < len; ++i) {
             myChar = text.charAt(i);
-            intValue = (int) text.charAt(i);
+            intValue = text.charAt(i);
             if (intValue > 128) {
                 result.append("\\u").append(intValue).append("?");
             } else {
@@ -207,7 +208,7 @@ public class MindMapNodeModel extends NodeAdapter {
 
     private void saveChildrenRTF(Writer fileout, int depth, HashMap<Color, Integer> colorTable)
             throws IOException {
-        for (ListIterator e = sortedChildrenUnfolded(); e.hasNext(); ) {
+        for (ListIterator<MindMapNode> e = sortedChildrenUnfolded(); e.hasNext(); ) {
             final MindMapNodeModel child = (MindMapNodeModel) e.next();
             if (child.isVisible()) {
                 child.saveRTF(fileout, depth + 1, colorTable);

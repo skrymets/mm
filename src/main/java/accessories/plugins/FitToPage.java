@@ -50,11 +50,7 @@ public class FitToPage extends ModeControllerHookAdapter {
             return;
 
         zoom();
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                scroll();
-            }
-        });
+        EventQueue.invokeLater(this::scroll);
     }
 
     private int shift(int coord1, int size1, int coord2, int size2) {
@@ -73,14 +69,13 @@ public class FitToPage extends ModeControllerHookAdapter {
         double oldZoom = getController().getView().getZoom();
         JViewport viewPort = (JViewport) view.getParent();
         Dimension viewer = viewPort.getExtentSize();
-        log.info("Found viewer rect=" + viewer.height + "/" + rect.height
-                + ", " + viewer.width + "/" + rect.width);
+        log.info("Found viewer rect={}/{}, {}/{}", viewer.height, rect.height, viewer.width, rect.width);
         double newZoom = viewer.width * oldZoom / (rect.width + 0.0);
         double heightZoom = viewer.height * oldZoom / (rect.height + 0.0);
         if (heightZoom < newZoom) {
             newZoom = heightZoom;
         }
-        log.info("Calculated new zoom " + (newZoom));
+        log.info("Calculated new zoom {}", newZoom);
         getController().getController().setZoom((float) (newZoom));
     }
 

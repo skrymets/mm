@@ -47,11 +47,11 @@ import java.util.Properties;
  * @author foltin see MindMapController
  */
 public interface MindMapActions {
-    public static final int NEW_CHILD_WITHOUT_FOCUS = 1; // old model of
+    int NEW_CHILD_WITHOUT_FOCUS = 1; // old model of
     // insertion
-    public static final int NEW_CHILD = 2;
-    public static final int NEW_SIBLING_BEHIND = 3;
-    public static final int NEW_SIBLING_BEFORE = 4;
+    int NEW_CHILD = 2;
+    int NEW_SIBLING_BEHIND = 3;
+    int NEW_SIBLING_BEFORE = 4;
 
     /**
      * The following modes are present: public final int NEW_CHILD_WITHOUT_FOCUS
@@ -59,11 +59,11 @@ public interface MindMapActions {
      * final int NEW_SIBLING_BEHIND = 3; public final int NEW_SIBLING_BEFORE =
      * 4; see MindMapController
      */
-    public void edit(KeyEvent e, boolean addNew, boolean editLong);
+    void edit(KeyEvent e, boolean addNew, boolean editLong);
 
-    public void setNodeText(MindMapNode selected, String newText);
+    void setNodeText(MindMapNode selected, String newText);
 
-    public void setNoteText(MindMapNode selected, String newText);
+    void setNoteText(MindMapNode selected, String newText);
 
     /**
      * Another variant of addNew. If the index of the new node as a child of
@@ -77,15 +77,15 @@ public interface MindMapActions {
      */
     MindMapNode addNewNode(MindMapNode parent, int index, boolean newNodeIsLeft);
 
-    public void deleteNode(MindMapNode selectedNode);
+    void deleteNode(MindMapNode selectedNode);
 
-    public Transferable cut();
+    Transferable cut();
 
     /**
      * @param nodeList a list of MindMapNode elements
      * @return the result of the cut operation.
      */
-    public Transferable cut(List<MindMapNode> nodeList);
+    Transferable cut(List<MindMapNode> nodeList);
 
     /**
      * moves selected and selecteds (if they are child of the same parent and
@@ -105,48 +105,48 @@ public interface MindMapActions {
      */
     void toggleFolded();
 
-    public void setBold(MindMapNode node, boolean bolded);
+    void setBold(MindMapNode node, boolean bolded);
 
-    public void setStrikethrough(MindMapNode node, boolean strikethrough);
+    void setStrikethrough(MindMapNode node, boolean strikethrough);
 
-    public void setItalic(MindMapNode node, boolean isItalic);
+    void setItalic(MindMapNode node, boolean isItalic);
 
-    public void setNodeColor(MindMapNode node, Color color);
+    void setNodeColor(MindMapNode node, Color color);
 
-    public void setNodeBackgroundColor(MindMapNode node, Color color);
+    void setNodeBackgroundColor(MindMapNode node, Color color);
 
-    public void blendNodeColor(MindMapNode node);
+    void blendNodeColor(MindMapNode node);
 
-    public void setFontFamily(MindMapNode node, String fontFamily);
+    void setFontFamily(MindMapNode node, String fontFamily);
 
-    public void setFontSize(MindMapNode node, String fontSizeValue);
+    void setFontSize(MindMapNode node, String fontSizeValue);
 
     /**
      * This method is nice, but how to get a MindIcon ? see
      * freemind.modes.MindIcon.factory(String)
      */
-    public void addIcon(MindMapNode node, MindIcon icon);
+    void addIcon(MindMapNode node, MindIcon icon);
 
-    public int removeLastIcon(MindMapNode node);
+    int removeLastIcon(MindMapNode node);
 
-    public void removeAllIcons(MindMapNode node);
+    void removeAllIcons(MindMapNode node);
 
-    public void applyPattern(MindMapNode node, Pattern pattern);
+    void applyPattern(MindMapNode node, Pattern pattern);
 
-    public void setNodeStyle(MindMapNode node, String style);
+    void setNodeStyle(MindMapNode node, String style);
 
-    public void setEdgeColor(MindMapNode node, Color color);
+    void setEdgeColor(MindMapNode node, Color color);
 
     /**
      * The widths range from -1 (for equal to parent) to 0 (thin), 1, 2, 4, 8.
      */
-    public void setEdgeWidth(MindMapNode node, int width);
+    void setEdgeWidth(MindMapNode node, int width);
 
-    public void setEdgeStyle(MindMapNode node, String style);
+    void setEdgeStyle(MindMapNode node, String style);
 
-    public void setCloud(MindMapNode node, boolean enable);
+    void setCloud(MindMapNode node, boolean enable);
 
-    public void setCloudColor(MindMapNode node, Color color);
+    void setCloudColor(MindMapNode node, Color color);
 
     // public void setCloudWidth(MindMapNode node, int width);
     // public void setCloudStyle(MindMapNode node, String style);
@@ -155,44 +155,44 @@ public interface MindMapActions {
      * Source holds the MindMapArrowLinkModel and points to the id placed in
      * target.
      */
-    public void addLink(MindMapNode source, MindMapNode target);
+    void addLink(MindMapNode source, MindMapNode target);
 
-    public void removeReference(MindMapLink arrowLink);
+    void removeReference(MindMapLink arrowLink);
 
-    public void changeArrowsOfArrowLink(MindMapArrowLink arrowLink,
-                                        boolean hasStartArrow, boolean hasEndArrow);
+    void changeArrowsOfArrowLink(MindMapArrowLink arrowLink,
+                                 boolean hasStartArrow, boolean hasEndArrow);
 
-    public void setArrowLinkColor(MindMapLink arrowLink, Color color);
+    void setArrowLinkColor(MindMapLink arrowLink, Color color);
 
-    public void setArrowLinkEndPoints(MindMapArrowLink link, Point startPoint,
-                                      Point endPoint);
+    void setArrowLinkEndPoints(MindMapArrowLink link, Point startPoint,
+                               Point endPoint);
 
     /**
      * Adds a textual hyperlink to a node (e.g. http:/freemind.sourceforge.net)
      */
-    public void setLink(MindMapNode node, String link);
+    void setLink(MindMapNode node, String link);
 
     /**
      * @param t         the content to be pasted
      * @param target    destination node
      * @param asSibling true: the past will be a direct sibling of target, otherwise it will become a child
-     * @param isLeft    determines, whether or not the node is placed on the left or
+     * @param isLeft    determines, whether the node is placed on the left or
      *                  right.
      * @return true, if successfully.
      */
-    public boolean paste(Transferable t, MindMapNode target, boolean asSibling,
-                         boolean isLeft);
+    boolean paste(Transferable t, MindMapNode target, boolean asSibling,
+                  boolean isLeft);
 
-    public void paste(MindMapNode node, MindMapNode parent);
+    void paste(MindMapNode node, MindMapNode parent);
 
     // hooks, fc 28.2.2004:
-    public void addHook(MindMapNode focussed, List<MindMapNode> selecteds, String hookName, Properties pHookProperties);
+    void addHook(MindMapNode focussed, List<MindMapNode> selecteds, String hookName, Properties pHookProperties);
 
-    public void removeHook(MindMapNode focussed, List<MindMapNode> selecteds, String hookName);
+    void removeHook(MindMapNode focussed, List<MindMapNode> selecteds, String hookName);
 
     /**
      * This is the only way to instanciate new Hooks. THEY HAVE TO BE INVOKED
-     * AFTERWARDS! The hook is equipped with the map and controller information.
+     * AFTERWARD! The hook is equipped with the map and controller information.
      * Furthermore, the hook is added to the node, if it is an instance of the
      * PermanentNodeHook. If the hook policy specifies, that only one instance
      * may exist per node, it returns this instance if it already exists.
@@ -206,8 +206,8 @@ public interface MindMapActions {
     /**
      * Moves the node to a new position.
      */
-    public void moveNodePosition(MindMapNode node, int vGap, int hGap,
-                                 int shiftY);
+    void moveNodePosition(MindMapNode node, int vGap, int hGap,
+                          int shiftY);
 
     void setAttribute(MindMapNode node, int pPosition, Attribute pAttribute);
 

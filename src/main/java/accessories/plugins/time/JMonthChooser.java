@@ -20,6 +20,9 @@
  */
 package accessories.plugins.time;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
@@ -46,22 +49,52 @@ public class JMonthChooser extends JPanel implements ItemListener,
     /**
      * true, if the month chooser has a spinner component
      */
-    protected boolean hasSpinner;
+    protected final boolean hasSpinner;
 
+    /**
+     * -- GETTER --
+     *  Returns the locale.
+     *
+     * @return the locale value
+     *
+     */
+    @Getter
     private Locale locale;
 
+    /**
+     * -- GETTER --
+     *  Returns the month.
+     *
+     * @return the month value
+     */
+    @Getter
     private int month;
 
+    /**
+     * -- SETTER --
+     *  Convenience method set a day chooser.
+     *
+     * @param dayChooser the day chooser
+     */
     // needed for comparison
+    @Setter
     private JDayChooser dayChooser;
 
+    /**
+     * -- SETTER --
+     *  Convenience method set a year chooser. If set, the spin for the month
+     *  buttons will spin the year as well
+     *
+     * @param yearChooser the new yearChooser value
+     */
+    @Setter
     private JYearChooser yearChooser;
 
-    private JComboBox<String> comboBox;
+    private final JComboBox<String> comboBox;
 
     private JSpinner spinner;
 
-    private boolean initialized;
+    private final boolean initialized;
 
     private boolean localInitialize;
 
@@ -95,7 +128,7 @@ public class JMonthChooser extends JPanel implements ItemListener,
             spinner = new JSpinner() {
                 private static final long serialVersionUID = 1L;
 
-                private JTextField textField = new JTextField();
+                private final JTextField textField = new JTextField();
 
                 public Dimension getPreferredSize() {
                     Dimension size = super.getPreferredSize();
@@ -237,49 +270,7 @@ public class JMonthChooser extends JPanel implements ItemListener,
     public void setMonth(int newMonth) {
         if (newMonth < 0) {
             setMonth(0, true);
-        } else if (newMonth > 11) {
-            setMonth(11, true);
-        } else {
-            setMonth(newMonth, true);
-        }
-    }
-
-    /**
-     * Returns the month.
-     *
-     * @return the month value
-     */
-    public int getMonth() {
-        return month;
-    }
-
-    /**
-     * Convenience method set a day chooser.
-     *
-     * @param dayChooser the day chooser
-     */
-    public void setDayChooser(JDayChooser dayChooser) {
-        this.dayChooser = dayChooser;
-    }
-
-    /**
-     * Convenience method set a year chooser. If set, the spin for the month
-     * buttons will spin the year as well
-     *
-     * @param yearChooser the new yearChooser value
-     */
-    public void setYearChooser(JYearChooser yearChooser) {
-        this.yearChooser = yearChooser;
-    }
-
-    /**
-     * Returns the locale.
-     *
-     * @return the locale value
-     * @see #setLocale
-     */
-    public Locale getLocale() {
-        return locale;
+        } else setMonth(Math.min(newMonth, 11), true);
     }
 
     /**

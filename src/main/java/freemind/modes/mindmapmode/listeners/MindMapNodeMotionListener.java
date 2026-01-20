@@ -46,9 +46,6 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
         c = controller;
     }
 
-    public void mouseMoved(MouseEvent e) {
-    }
-
     private Point dragStartingPoint = null;
     private int originalParentVGap;
     private int originalHGap;
@@ -157,7 +154,6 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
                 MindMapNode node = nodeV.getModel();
                 c.moveNodePosition(node, NodeAdapter.VGAP, node.getHGap(),
                         node.getShiftY());
-                return;
             }
         }
     }

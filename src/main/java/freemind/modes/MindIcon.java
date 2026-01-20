@@ -21,6 +21,7 @@ package freemind.modes;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.view.ScalableImageIcon;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.io.File;
@@ -36,6 +37,28 @@ import java.util.Vector;
 public class MindIcon implements Comparable<MindIcon>, IconInformation {
 
     public static final String PROPERTY_STRING_ICONS_LIST = "icons.list";
+    /**
+     * -- SETTER --
+     *  Set the value of name.
+     *
+     * @param name Value to assign to name.
+     */ /* here, we must check, whether the name is allowed. */ // DanPolansky: I suggest to avoid any checking. If the icon with the
+    // name
+    // does not exist, let's keep the name and save it again anyway. Let us
+    // imagine the set of icons expanding and changing in the future.
+    // Vector allIconNames = getAllIconNames();
+    // for(int i = 0; i < allIconNames.size(); ++i) {
+    // if(((String) allIconNames.get(i)).equals(v)) {
+    // //System.out.println("Icon name: " + v);
+    // this.name = v;
+    // return;
+    // }
+    // }
+    // throw new IllegalArgumentException("'"+v+"' is not a known icon.");
+    // DanPolansky: we want to parse the file though. Not existent icon is
+    // not
+    // that a big tragedy.
+    @Setter
     private String name;
     private int number = UNKNOWN;
     /**
@@ -47,7 +70,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     /**
      * Set of all created icons. Name -> MindIcon
      */
-    private static HashMap<String, MindIcon> createdIcons = new HashMap<>();
+    private static final HashMap<String, MindIcon> createdIcons = new HashMap<>();
     private static final int UNKNOWN = -1;
     public static final int LAST = UNKNOWN;
     static int nextNumber = UNKNOWN - 1;
@@ -81,37 +104,8 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
         return name == null ? "notfound" : name;
     }
 
-    /**
-     * Set the value of name.
-     *
-     * @param name Value to assign to name.
-     */
-    public void setName(String name) {
-
-        this.name = name;
-        return;
-
-        /* here, we must check, whether the name is allowed. */
-        // DanPolansky: I suggest to avoid any checking. If the icon with the
-        // name
-        // does not exist, let's keep the name and save it again anyway. Let us
-        // imagine the set of icons expanding and changing in the future.
-        // Vector allIconNames = getAllIconNames();
-        // for(int i = 0; i < allIconNames.size(); ++i) {
-        // if(((String) allIconNames.get(i)).equals(v)) {
-        // //System.out.println("Icon name: " + v);
-        // this.name = v;
-        // return;
-        // }
-        // }
-        // throw new IllegalArgumentException("'"+v+"' is not a known icon.");
-        // DanPolansky: we want to parse the file though. Not existent icon is
-        // not
-        // that a big tragedy.
-    }
-
     public String getDescription() {
-        String resource = new String("icon_" + getName());
+        String resource = "icon_" + getName();
         return Resources.getInstance().getResourceString(resource, resource);
     }
 
@@ -148,7 +142,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
                     if (file.canRead()) {
                         imageURL = Tools.fileToUrl(file);
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
             ImageIcon icon = imageURL == null ? iconNotFound : freemind.view.ImageFactory.getInstance().createIcon(
@@ -194,7 +188,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
 
     public static MindIcon factory(String iconName) {
         if (createdIcons.containsKey(iconName)) {
-            return (MindIcon) createdIcons.get(iconName);
+            return createdIcons.get(iconName);
         }
         MindIcon icon = new MindIcon(iconName);
         createdIcons.put(iconName, icon);
@@ -206,7 +200,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
      */
     public static MindIcon factory(String iconName, ImageIcon icon) {
         if (createdIcons.containsKey(iconName)) {
-            return (MindIcon) createdIcons.get(iconName);
+            return createdIcons.get(iconName);
         }
         MindIcon mindIcon = new MindIcon(iconName, icon);
         getAllIconNames().add(iconName);

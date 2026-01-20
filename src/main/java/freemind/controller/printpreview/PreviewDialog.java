@@ -31,7 +31,6 @@ import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
 import java.net.URL;
 
-@SuppressWarnings("serial")
 public class PreviewDialog extends JDialog implements ActionListener {
     private final static double DEFAULT_ZOOM_FACTOR_STEP = 0.1;
 
@@ -98,5 +97,5 @@ public class PreviewDialog extends JDialog implements ActionListener {
         dispose();
     }
 
-    protected MapView view;
+    protected final MapView view;
 }

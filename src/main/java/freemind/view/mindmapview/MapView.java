@@ -30,6 +30,8 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindMapArrowLink;
 import freemind.modes.ViewAbstraction;
 import freemind.preferences.FreemindPropertyListener;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -50,7 +52,6 @@ import java.util.Timer;
 /**
  * This class represents the view of a whole MindMap (in analogy to class JTree).
  */
-@SuppressWarnings("serial")
 @Slf4j
 public class MapView extends JPanel implements ViewAbstraction, Printable, Autoscroll {
 
@@ -158,7 +159,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             }
             mySelected.remove(node);
             changeSelection(node, false);
-            log.trace("Removed focused " + node);
+            log.trace("Removed focused {}", node);
         }
 
         public void add(NodeView node) {
@@ -168,7 +169,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             mySelected.add(0, node);
             addFocusForHooks(node);
             changeSelection(node, true);
-            log.trace("Added focused " + node + "\nAll=" + mySelected);
+            log.trace("Added focused {}\nAll={}", node, mySelected);
         }
 
         private void removeFocusForHooks(NodeView node) {
@@ -206,16 +207,19 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 add(newSelected);
             }
             addFocusForHooks(newSelected);
-            log.trace("MovedToFront selected " + newSelected + "\nAll="
-                    + mySelected);
+            log.trace("MovedToFront selected {}\nAll={}", newSelected, mySelected);
         }
     }
 
+    @Getter
     private final MindMap model;
     private NodeView rootView = null;
     private final Selected selected = new Selected();
+    @Getter
     private float zoom = 1F;
     private boolean disableMoveCursor = true;
+    @Setter
+    @Getter
     private int siblingMaxLevel;
     private boolean isPrinting = false; // use for remove selection from print
     private NodeView shiftSelectionOrigin = null;
@@ -248,7 +252,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
     private boolean selectedsValid = true;
 
-    static boolean NEED_PREF_SIZE_BUG_FIX = System.getProperty("java.version").compareTo("1.5.0") < 0;
+    static final boolean NEED_PREF_SIZE_BUG_FIX = System.getProperty("java.version").compareTo("1.5.0") < 0;
 
     private final ViewFeedback mFeedback;
     private static boolean antialiasEdges = false;
@@ -348,7 +352,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
             public Component getDefaultComponent(Container pAContainer) {
                 Component defaultComponent = getSelected();
-                log.trace("Focus traversal to: " + defaultComponent);
+                log.trace("Focus traversal to: {}", defaultComponent);
                 return defaultComponent;
             }
 
@@ -380,36 +384,44 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
         propertyChangeListener = (propertyName, newValue, oldValue) -> {
 
-            if (propertyName.equals(FreeMind.RESOURCES_NODE_TEXT_COLOR)) {
-                standardNodeTextColor = Tools.xmlToColor(newValue);
-                MapView.this.getRoot().updateAll();
-            } else if (propertyName.equals(FreeMind.RESOURCES_BACKGROUND_COLOR)) {
-                standardMapBackgroundColor = Tools.xmlToColor(newValue);
-                MapView.this.setBackground(standardMapBackgroundColor);
-            } else if (propertyName.equals(FreeMind.RESOURCES_SELECTED_NODE_COLOR)) {
-                standardSelectColor = Tools.xmlToColor(newValue);
-                MapView.this.repaintSelecteds();
-            } else if (propertyName.equals(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR)) {
-                standardSelectRectangleColor = Tools.xmlToColor(newValue);
-                MapView.this.repaintSelecteds();
-            } else if (propertyName.equals(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION)) {
-                standardDrawRectangleForSelection = Tools.xmlToBoolean(newValue);
-                MapView.this.repaintSelecteds();
-            } else if (propertyName.equals(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND)) {
-                printOnWhiteBackground = Tools.xmlToBoolean(newValue);
-            } else if (propertyName.equals(FreeMindCommon.RESOURCE_ANTIALIAS)) {
-                if ("antialias_none".equals(newValue)) {
-                    setAntialiasEdges(false);
-                    setAntialiasAll(false);
-                }
-                if ("antialias_edges".equals(newValue)) {
-                    setAntialiasEdges(true);
-                    setAntialiasAll(false);
-                }
-                if ("antialias_all".equals(newValue)) {
-                    setAntialiasEdges(true);
-                    setAntialiasAll(true);
-                }
+            switch (propertyName) {
+                case FreeMind.RESOURCES_NODE_TEXT_COLOR:
+                    standardNodeTextColor = Tools.xmlToColor(newValue);
+                    MapView.this.getRoot().updateAll();
+                    break;
+                case FreeMind.RESOURCES_BACKGROUND_COLOR:
+                    standardMapBackgroundColor = Tools.xmlToColor(newValue);
+                    MapView.this.setBackground(standardMapBackgroundColor);
+                    break;
+                case FreeMind.RESOURCES_SELECTED_NODE_COLOR:
+                    standardSelectColor = Tools.xmlToColor(newValue);
+                    MapView.this.repaintSelecteds();
+                    break;
+                case FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR:
+                    standardSelectRectangleColor = Tools.xmlToColor(newValue);
+                    MapView.this.repaintSelecteds();
+                    break;
+                case FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION:
+                    standardDrawRectangleForSelection = Tools.xmlToBoolean(newValue);
+                    MapView.this.repaintSelecteds();
+                    break;
+                case FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND:
+                    printOnWhiteBackground = Tools.xmlToBoolean(newValue);
+                    break;
+                case FreeMindCommon.RESOURCE_ANTIALIAS:
+                    if ("antialias_none".equals(newValue)) {
+                        setAntialiasEdges(false);
+                        setAntialiasAll(false);
+                    }
+                    if ("antialias_edges".equals(newValue)) {
+                        setAntialiasEdges(true);
+                        setAntialiasAll(false);
+                    }
+                    if ("antialias_all".equals(newValue)) {
+                        setAntialiasEdges(true);
+                        setAntialiasAll(true);
+                    }
+                    break;
             }
 
         };
@@ -481,7 +493,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     //
 
     class CheckLaterForCenterNodeTask extends TimerTask {
-        NodeView mNode;
+        final NodeView mNode;
 
         public CheckLaterForCenterNodeTask(NodeView pNode) {
             super();
@@ -517,7 +529,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 d.width,
                 d.height
         );
-        log.trace("Scroll to " + rect + ", " + this.getPreferredSize());
+        log.trace("Scroll to {}, {}", rect, this.getPreferredSize());
 
         // One call of scrollRectToVisible suffices
         // after patching the FreeMind.java
@@ -661,7 +673,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
     private NodeView getVisibleNeighbour(int directionCode) {
         NodeView oldSelected = getSelected();
-        log.trace("Old selected: " + oldSelected);
+        log.trace("Old selected: {}", oldSelected);
         NodeView newSelected = null;
 
         switch (directionCode) {
@@ -700,7 +712,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
     public void move(KeyEvent e) {
         NodeView newSelected = getVisibleNeighbour(e.getKeyCode());
-        log.trace("New selected: " + newSelected);
+        log.trace("New selected: {}", newSelected);
         if (newSelected != null) {
             if (!(newSelected == getSelected())) {
                 extendSelectionWithKeyMove(newSelected, e);
@@ -990,10 +1002,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     // get/set methods
     //
 
-    public MindMap getModel() {
-        return model;
-    }
-
     // e.g. for dragging cursor (PN)
     public void setMoveCursor(boolean isHand) {
         int requiredCursor = (isHand && !disableMoveCursor) ? Cursor.MOVE_CURSOR
@@ -1039,7 +1047,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     @Override
     public LinkedList<NodeView> getSelecteds() {
         // return an ArrayList of NodeViews.
-        LinkedList<NodeView> result = new LinkedList<NodeView>();
+        LinkedList<NodeView> result = new LinkedList<>();
         for (int i = 0; i < selected.size(); i++) {
             result.add(getSelected(i));
         }
@@ -1072,18 +1080,16 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             pointNodePairs.add(new Pair(new Integer(point.y), node));
         }
         // do the sorting:
-        Collections.sort(pointNodePairs, new Comparator<Pair>() {
-            public int compare(Pair pair0, Pair pair1) {
-                Integer int0 = (Integer) pair0.getFirst();
-                Integer int1 = (Integer) pair1.getFirst();
-                return int0.compareTo(int1);
+        pointNodePairs.sort((pair0, pair1) -> {
+            Integer int0 = (Integer) pair0.getFirst();
+            Integer int1 = (Integer) pair1.getFirst();
+            return int0.compareTo(int1);
 
-            }
         });
 
         ArrayList<MindMapNode> selectedNodes = new ArrayList<>();
-        for (Iterator<Pair> it = pointNodePairs.iterator(); it.hasNext(); ) {
-            selectedNodes.add((MindMapNode) it.next().getSecond());
+        for (Pair pointNodePair : pointNodePairs) {
+            selectedNodes.add((MindMapNode) pointNodePair.getSecond());
         }
 
         // log.trace("Cutting #" + selectedNodes.size());
@@ -1112,10 +1118,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         if (isPrinting)
             return false;
         return selected.contains(n);
-    }
-
-    public float getZoom() {
-        return zoom;
     }
 
     public int getZoomed(int number) {
@@ -1215,9 +1217,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         long localTime = System.currentTimeMillis() - startMilli;
         mPaintingAmount++;
         mPaintingTime += localTime;
-        log.trace("End paint of " + getModel().getRestorable() + " in "
-                + localTime + ". Mean time:"
-                + (mPaintingTime / mPaintingAmount));
+        log.trace("End paint of {} in {}. Mean time:{}", getModel().getRestorable(), localTime, mPaintingTime / mPaintingAmount);
     }
 
     public void paintChildren(Graphics graphics) {
@@ -1293,8 +1293,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         // paint own labels:
         List<MindMapLink> vec = getModel().getLinkRegistry()
                 .getAllLinks(source.getModel());
-        for (int i = 0; i < vec.size(); ++i) {
-            MindMapLink ref = vec.get(i);
+        for (MindMapLink ref : vec) {
             if (LinkAlreadyVisited.add(ref)) {
                 // determine type of link
                 if (ref instanceof MindMapArrowLink) {
@@ -1325,8 +1324,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     public MindMapArrowLink detectCollision(Point p) {
         if (mArrowLinkViews == null)
             return null;
-        for (int i = 0; i < mArrowLinkViews.size(); ++i) {
-            ArrowLinkView arrowView = mArrowLinkViews.get(i);
+        for (ArrowLinkView arrowView : mArrowLinkViews) {
             if (arrowView.detectCollision(p))
                 return arrowView.getModel();
         }
@@ -1491,8 +1489,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         innerBounds.x += getRoot().getX();
         innerBounds.y += getRoot().getY();
         final Rectangle maxBounds = new Rectangle(0, 0, getWidth(), getHeight());
-        for (int i = 0; i < mArrowLinkViews.size(); ++i) {
-            ArrowLinkView arrowView = mArrowLinkViews.get(i);
+        for (ArrowLinkView arrowView : mArrowLinkViews) {
             final CubicCurve2D arrowLinkCurve = arrowView.arrowLinkCurve;
             if (arrowLinkCurve == null) {
                 continue;
@@ -1514,14 +1511,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     // this property is used when the user navigates up/down using cursor keys
     // (PN)
     // it will keep the level of nodes that are understand as "siblings"
-
-    public int getSiblingMaxLevel() {
-        return this.siblingMaxLevel;
-    }
-
-    public void setSiblingMaxLevel(int level) {
-        this.siblingMaxLevel = level;
-    }
 
     private static final int margin = 20;
     private final Timer mCenterNodeTimer;
@@ -1686,7 +1675,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     }
 
     public void acceptViewVisitor(MindMapNode mindMapNode, NodeViewVisitor visitor) {
-        getViewers(mindMapNode).forEach(nodeView -> visitor.visit(nodeView));
+        getViewers(mindMapNode).forEach(visitor::visit);
     }
 
 

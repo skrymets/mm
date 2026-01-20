@@ -24,15 +24,16 @@ import freemind.controller.Controller;
 import freemind.main.XMLParseException;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 @Slf4j
 public class MindMapMode extends Mode {
 
+    @Getter
     private Controller controller;
     private MindMapController mindMapController;
     private boolean isRunning = false;
@@ -64,12 +65,8 @@ public class MindMapMode extends Mode {
         }
     }
 
-    public void restore(String restorable) throws XMLParseException, IOException, URISyntaxException {
+    public void restore(String restorable) throws XMLParseException, IOException {
         getDefaultModeController().load(new File(restorable));
-    }
-
-    public Controller getController() {
-        return controller;
     }
 
     public ModeController getDefaultModeController() {

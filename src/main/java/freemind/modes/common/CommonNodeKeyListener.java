@@ -40,7 +40,7 @@ public class CommonNodeKeyListener implements KeyListener {
         void edit(KeyEvent e, boolean addNew, boolean editLong);
     }
 
-    private ModeController c;
+    private final ModeController c;
 
     private String up, down, left, right;
 
@@ -48,13 +48,13 @@ public class CommonNodeKeyListener implements KeyListener {
 
     private boolean keyTypeAddsNew = false;
 
-    private KeyStroke keyStrokeUp;
+    private final KeyStroke keyStrokeUp;
 
-    private KeyStroke keyStrokeDown;
+    private final KeyStroke keyStrokeDown;
 
-    private KeyStroke keyStrokeLeft;
+    private final KeyStroke keyStrokeLeft;
 
-    private KeyStroke keyStrokeRight;
+    private final KeyStroke keyStrokeRight;
 
     private final EditHandler editHandler;
 
@@ -156,7 +156,6 @@ public class CommonNodeKeyListener implements KeyListener {
         if (doMove) {
             c.getView().move(e);
             e.consume();
-            return;
         }
     }
 

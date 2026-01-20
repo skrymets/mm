@@ -27,6 +27,7 @@ import freemind.controller.actions.generated.instance.PluginClasspath;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -44,6 +45,7 @@ import java.util.Vector;
 public class HookDescriptorBase {
     public static final String FREEMIND_BASE_DIR_STRING = "${freemind.base.dir}";
 
+    @Getter
     protected final Plugin pluginBase;
 
     protected final String mXmlPluginFile;
@@ -86,10 +88,6 @@ public class HookDescriptorBase {
                 + new File(mXmlPluginFile).getParent();
     }
 
-    public Plugin getPluginBase() {
-        return pluginBase;
-    }
-
     public List<PluginClasspath> getPluginClasspath() {
         Vector<PluginClasspath> returnValue = new Vector<>();
         List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(pluginBase);
@@ -109,17 +107,17 @@ public class HookDescriptorBase {
         return loader;
     }
 
-    private static HashMap<String, ClassLoader> classLoaderCache = new HashMap<>();
+    private static final HashMap<String, ClassLoader> classLoaderCache = new HashMap<>();
 
     /**
      * This string is used to identify known classloaders as they are cached.
      */
     private String createPluginClasspathString(List<PluginClasspath> pluginClasspathList) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (PluginClasspath type : pluginClasspathList) {
-            result += type.getJar() + ",";
+            result.append(type.getJar()).append(",");
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -128,7 +126,7 @@ public class HookDescriptorBase {
     private ClassLoader getClassLoader(List<PluginClasspath> pluginClasspathList) {
         String key = createPluginClasspathString(pluginClasspathList);
         if (classLoaderCache.containsKey(key))
-            return (ClassLoader) classLoaderCache.get(key);
+            return classLoaderCache.get(key);
         try {
             URL[] urls = new URL[pluginClasspathList.size()];
             int j = 0;
@@ -146,8 +144,7 @@ public class HookDescriptorBase {
                     file = new File(getPluginDirectory(), jarString);
                 }
                 // end new version by ewl.
-                log.info("file " + Tools.fileToUrl(file) + " exists = "
-                        + file.exists());
+                log.info("file {} exists = {}", Tools.fileToUrl(file), file.exists());
                 urls[j++] = Tools.fileToUrl(file);
             }
             ClassLoader loader = new URLClassLoader(urls,

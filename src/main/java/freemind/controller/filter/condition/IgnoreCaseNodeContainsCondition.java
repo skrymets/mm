@@ -31,7 +31,7 @@ class IgnoreCaseNodeContainsCondition extends NodeCondition {
 
     static final String VALUE = "value";
     static final String NAME = "ignore_case_node_contains_condition";
-    private String value;
+    private final String value;
 
     IgnoreCaseNodeContainsCondition(String value) {
         super();

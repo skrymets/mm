@@ -87,7 +87,6 @@ public class FontSizeActor extends XmlActorAdapter {
                     getExMapFeedback().nodeChanged(node);
                 }
             } catch (NumberFormatException e) {
-                return;
             }
         }
     }

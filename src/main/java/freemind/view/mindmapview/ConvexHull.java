@@ -17,7 +17,7 @@
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 // ConvexHull.java (c) fc
-// 
+//
 // Adapted from Sedgewick, Algorithms
 //
 package freemind.view.mindmapview;
@@ -26,7 +26,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ListIterator;
 
 import static java.lang.Math.abs;
 
@@ -50,8 +49,8 @@ public class ConvexHull {
         return 1;
     }
 
-    protected class ThetaComparator implements Comparator<Point> {
-        Point p0;
+    protected static class ThetaComparator implements Comparator<Point> {
+        final Point p0;
 
         public ThetaComparator(Point p0) {
             this.p0 = new Point(p0);
@@ -143,13 +142,8 @@ public class ConvexHull {
     }
 
     public List<Point> calculateHull(List<Point> coordinates) {
-        List<Point> q = new ArrayList<>();
-        ListIterator<Point> coordinates_it = coordinates.listIterator();
-        while (coordinates_it.hasNext()) {
-            q.add(coordinates_it.next());
-        }
-        List<Point> res = doGraham(q);
-        return res;
+        List<Point> q = new ArrayList<>(coordinates);
+        return doGraham(q);
     }
 
 }

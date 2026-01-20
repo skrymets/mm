@@ -31,8 +31,8 @@ import java.util.Vector;
  */
 public class SortedMapVector {
     private static class MapElement {
-        private Comparable key;
-        private Object value;
+        private final Comparable key;
+        private final Object value;
 
         public MapElement(Comparable key, Object value) {
             super();
@@ -49,7 +49,7 @@ public class SortedMapVector {
         }
     }
 
-    private Vector<MapElement> elements;
+    private final Vector<MapElement> elements;
     private static final int ELEMENT_NOT_FOUND_FLAG = 1 << 31;
     private static final int CAPACITY_INCREMENT = 10;
 
@@ -75,18 +75,18 @@ public class SortedMapVector {
     }
 
     public Object getValue(int index) {
-        return ((MapElement) elements.get(index)).getValue();
+        return elements.get(index).getValue();
     }
 
     public Object getValue(Comparable key) {
         int index = findElement(key);
         if ((index & ELEMENT_NOT_FOUND_FLAG) == 0)
-            return ((MapElement) elements.get(index)).getValue();
+            return elements.get(index).getValue();
         throw new NoSuchElementException();
     }
 
     public Comparable getKey(int index) {
-        return ((MapElement) elements.get(index)).getKey();
+        return elements.get(index).getKey();
     }
 
     public boolean containsKey(Comparable key) {

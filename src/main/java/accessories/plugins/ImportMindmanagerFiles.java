@@ -84,8 +84,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
                 String xsltFileName = "accessories/mindmanager2mm.xsl";
                 URL xsltUrl = getResource(xsltFileName);
                 if (xsltUrl == null) {
-                    log.error("Can't find " + xsltFileName
-                            + " as resource.");
+                    log.error("Can't find {} as resource.", xsltFileName);
                     throw new IllegalArgumentException("Can't find " + xsltFileName + " as resource.");
                 }
                 InputStream xsltFile = xsltUrl.openStream();
@@ -104,9 +103,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
                 }
                 break;
             }
-        } catch (IOException e) {
-            log.error(e.getLocalizedMessage(), e);
-        } catch (XMLParseException e) {
+        } catch (IOException | XMLParseException e) {
             log.error(e.getLocalizedMessage(), e);
         }
     }

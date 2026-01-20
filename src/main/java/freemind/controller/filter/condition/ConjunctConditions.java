@@ -60,7 +60,7 @@ public class ConjunctConditions implements Condition {
 
         String text = format(" %s ", Tools.removeMnemonic(Resources.getInstance().getResourceString("filter_and")));
 
-        conditions.stream().forEachOrdered(condition -> {
+        conditions.forEach(condition -> {
             component.add(new JLabel(text));
             JComponent rendererComponent = condition.getListCellRendererComponent();
             rendererComponent.setOpaque(false);

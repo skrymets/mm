@@ -55,7 +55,7 @@ public class RemoveAllIconsActor extends NodeXmlActorAdapter {
             RemoveAllIconsXmlAction removeAction = (RemoveAllIconsXmlAction) action;
             MindMapNode node = getNodeFromID(removeAction
                     .getNode());
-            while (node.getIcons().size() > 0) {
+            while (!node.getIcons().isEmpty()) {
                 node.removeIcon(MindIcon.LAST);
             }
             getExMapFeedback().nodeChanged(node);

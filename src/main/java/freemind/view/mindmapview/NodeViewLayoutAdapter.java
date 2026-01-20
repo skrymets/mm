@@ -34,7 +34,7 @@ import java.awt.*;
 abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
     protected final int LISTENER_VIEW_WIDTH = 10;
 
-    protected Point location = new Point();
+    protected final Point location = new Point();
     private static Dimension minDimension;
     private NodeView view;
     private MindMapNode model;

@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static java.lang.String.format;
@@ -106,7 +107,7 @@ public class FreeMindCommon {
                     // private string, only translate on demand
                     return key;
                 } else {
-                    log.error("Warning - resource string not found:\n" + key);
+                    log.error("Warning - resource string not found:\n{}", key);
                     return defaultResources.getString(key) + POSTFIX_TRANSLATE_ME;
                 }
             }
@@ -241,7 +242,7 @@ public class FreeMindCommon {
             // Basedir
             if (lastpos == -1) {
                 baseDir = System.getProperty("user.dir");
-                log.info("Basedir is user.dir: " + baseDir);
+                log.info("Basedir is user.dir: {}", baseDir);
                 return baseDir;
             }
             /*
@@ -251,13 +252,13 @@ public class FreeMindCommon {
             firstpos = classPath.lastIndexOf(File.pathSeparator, lastpos) + 1;
             lastpos -= 1;
             if (lastpos > firstpos) {
-                log.info(format("First %d and last %d and string %s", firstpos, lastpos, classPath));
+                log.info("First {} and last {} and string {}", firstpos, lastpos, classPath);
                 baseDir = classPath.substring(firstpos, lastpos);
             } else
                 baseDir = "";
             final File basePath = new File(baseDir);
             baseDir = basePath.getAbsolutePath();
-            log.info("First basedir is: " + baseDir);
+            log.info("First basedir is: {}", baseDir);
             /*
              * I suppose, that here, the freemind.jar is removed together with
              * the last path. Example: /home/foltin/freemindapp/lib/freemind.jar
@@ -266,7 +267,7 @@ public class FreeMindCommon {
             lastpos = baseDir.lastIndexOf(File.separator);
             if (lastpos > -1)
                 baseDir = baseDir.substring(0, lastpos);
-            log.info("Basedir is: " + baseDir);
+            log.info("Basedir is: {}", baseDir);
         }
         return baseDir;
     }
@@ -300,7 +301,7 @@ public class FreeMindCommon {
                             url.getPath()
                                     .replaceFirst("^(file:|jar:)+", "")
                                     .replaceFirst("!.*$", "")
-                                    .replaceFirst(classname.replace('.', '/') + ".class$", ""), "UTF-8"));
+                                    .replaceFirst(classname.replace('.', '/') + ".class$", ""), StandardCharsets.UTF_8));
                     // if it's a file, we take its parent, a dir
                     if (file.isFile())
                         file = file.getParentFile();
@@ -324,7 +325,7 @@ public class FreeMindCommon {
                 }
                 // set the member variable
                 baseDir = file.getCanonicalPath();
-                log.info("Basedir is: " + baseDir);
+                log.info("Basedir is: {}", baseDir);
             } catch (Exception e) {
                 log.error(e.getLocalizedMessage(), e);
                 throw new IllegalArgumentException("FreeMind base dir can't be determined.");

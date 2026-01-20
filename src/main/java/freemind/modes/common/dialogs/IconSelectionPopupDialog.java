@@ -24,30 +24,30 @@ package freemind.modes.common.dialogs;
 
 import freemind.main.FreeMindMain;
 import freemind.modes.IconInformation;
+import lombok.Getter;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
+import java.util.List;
 
-@SuppressWarnings("serial")
 public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         MouseListener {
-    private Vector<IconInformation> icons;
+    private final List<IconInformation> icons;
+    @Getter
     private int result;
-    private JLabel[] iconLabels;
-    private JLabel descriptionLabel;
-    private int numOfIcons;
-    private int xDimension;
-    private int yDimension;
+    private final JLabel[] iconLabels;
+    private final JLabel descriptionLabel;
+    private final int numOfIcons;
+    private final int xDimension;
+    private final int yDimension;
     private Position selected = new Position(0, 0);
     private static Position lastPosition = new Position(0, 0);
-    private FreeMindMain freeMindMain;
+    private final FreeMindMain freeMindMain;
     private int mModifiers;
 
-    public IconSelectionPopupDialog(JFrame caller, Vector<IconInformation> icons,
-                                    FreeMindMain freeMindMain) {
+    public IconSelectionPopupDialog(JFrame caller, List<IconInformation> icons, FreeMindMain freeMindMain) {
 
         super(caller, freeMindMain.getResourceString("select_icon"));
         getContentPane().setLayout(new BorderLayout());
@@ -63,7 +63,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 
         // we will build a button-matrix which is closest to quadratical
         numOfIcons = icons.size();
-        xDimension = new Double(Math.ceil(Math.sqrt(numOfIcons))).intValue();
+        xDimension = Double.valueOf(Math.ceil(Math.sqrt(numOfIcons))).intValue();
         if (numOfIcons <= xDimension * (xDimension - 1))
             yDimension = xDimension - 1;
         else
@@ -77,7 +77,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 
         iconLabels = new JLabel[numOfIcons];
         for (int i = 0; i < numOfIcons; ++i) {
-            final IconInformation icon = (IconInformation) icons.get(i);
+            final IconInformation icon = icons.get(i);
             iconPanel.add(iconLabels[i] = new JLabel(icon.getIcon()));
             iconLabels[i].setBorder(BorderFactory
                     .createBevelBorder(BevelBorder.RAISED));
@@ -85,7 +85,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         }
 
         int perIconSize = 27;
-        if (icons.size() > 0) {
+        if (!icons.isEmpty()) {
             // assume, that all icons are of the same size
             perIconSize = (int) (icons.get(0).getIcon().getIconWidth() * 1.7f);
         }
@@ -144,7 +144,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         setSelectedPosition(position);
         highlight(position);
         final int index = calculateIndex(position);
-        final IconInformation iconInformation = (IconInformation) icons
+        final IconInformation iconInformation = icons
                 .get(index);
         final String keyStroke = freeMindMain
                 .getAdjustableProperty(iconInformation
@@ -199,10 +199,6 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         result = calculateIndex(getSelectedPosition());
         mModifiers = pModifiers;
         this.dispose();
-    }
-
-    public int getResult() {
-        return result;
     }
 
     /**
@@ -265,7 +261,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 
     private int findIndexByKeyEvent(KeyEvent keyEvent) {
         for (int i = 0; i < icons.size(); i++) {
-            IconInformation info = (IconInformation) icons.get(i);
+            IconInformation info = icons.get(i);
             final KeyStroke iconKeyStroke = info.getKeyStroke();
             if (iconKeyStroke != null
                     && (keyEvent.getKeyCode() == iconKeyStroke.getKeyCode()
@@ -346,26 +342,24 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
     public void mouseReleased(MouseEvent arg0) {
     }
 
+    @Getter
     static class Position {
-        private int x, y;
+        /**
+         * -- GETTER --
+         *
+         * @return Returns the x.
+         */
+        private final int x;
+        /**
+         * -- GETTER --
+         *
+         * @return Returns the y.
+         */
+        private final int y;
 
         public Position(int x, int y) {
             this.x = x;
             this.y = y;
-        }
-
-        /**
-         * @return Returns the x.
-         */
-        public int getX() {
-            return x;
-        }
-
-        /**
-         * @return Returns the y.
-         */
-        public int getY() {
-            return y;
         }
 
         public String toString() {

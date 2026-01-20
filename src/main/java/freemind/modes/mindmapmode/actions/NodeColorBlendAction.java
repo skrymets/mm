@@ -24,8 +24,6 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.MindMapMapModel;
-import freemind.modes.mindmapmode.MindMapNodeModel;
 
 /**
  * @author foltin
@@ -36,12 +34,7 @@ public class NodeColorBlendAction extends NodeGeneralAction {
      *
      */
     public NodeColorBlendAction(final MindMapController modeController) {
-        super(modeController, "blend_color", null, new SingleNodeOperation() {
-
-            public void apply(MindMapMapModel map, MindMapNodeModel node) {
-                modeController.blendNodeColor(node);
-            }
-        });
+        super(modeController, "blend_color", null, (map, node) -> modeController.blendNodeColor(node));
     }
 
 }

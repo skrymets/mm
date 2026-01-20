@@ -21,6 +21,8 @@
 
 package accessories.plugins.time;
 
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -42,11 +44,24 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
 
     public static final String CALENDAR_PROPERTY = "calendar";
 
+    /**
+     * -- GETTER --
+     *  Returns the calendar property.
+     *
+     * @return the value of the calendar property.
+     */
+    @Getter
     private Calendar calendar;
 
     /**
      * the day chooser
+     * -- GETTER --
+     *  Gets the dayChooser attribute of the JCalendar object
+     *
+     * @return the dayChooser value
+
      */
+    @Getter
     protected JDayChooser dayChooser;
     private boolean initialized = false;
 
@@ -57,17 +72,36 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
 
     /**
      * the locale
+     * -- GETTER --
+     *  Returns the locale.
+     *
+     * @return the value of the locale property.
+     *
+
      */
+    @Getter
     protected Locale locale;
 
     /**
      * the month chooser
+     * -- GETTER --
+     *  Gets the monthChooser attribute of the JCalendar object
+     *
+     * @return the monthChooser value
+
      */
+    @Getter
     protected JMonthChooser monthChooser;
 
     /**
      * the year chhoser
+     * -- GETTER --
+     *  Gets the yearChooser attribute of the JCalendar object
+     *
+     * @return the yearChooser value
+
      */
+    @Getter
     protected JYearChooser yearChooser;
 
     protected Date minSelectableDate;
@@ -229,52 +263,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
     }
 
     /**
-     * Returns the calendar property.
-     *
-     * @return the value of the calendar property.
-     */
-    public Calendar getCalendar() {
-        return calendar;
-    }
-
-    /**
-     * Gets the dayChooser attribute of the JCalendar object
-     *
-     * @return the dayChooser value
-     */
-    public JDayChooser getDayChooser() {
-        return dayChooser;
-    }
-
-    /**
-     * Returns the locale.
-     *
-     * @return the value of the locale property.
-     * @see #setLocale
-     */
-    public Locale getLocale() {
-        return locale;
-    }
-
-    /**
-     * Gets the monthChooser attribute of the JCalendar object
-     *
-     * @return the monthChooser value
-     */
-    public JMonthChooser getMonthChooser() {
-        return monthChooser;
-    }
-
-    /**
-     * Gets the yearChooser attribute of the JCalendar object
-     *
-     * @return the yearChooser value
-     */
-    public JYearChooser getYearChooser() {
-        return yearChooser;
-    }
-
-    /**
      * Indicates if the weeks of year are visible..
      *
      * @return boolean true, if weeks of year are visible
@@ -301,19 +289,23 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
             if (calendar != null) {
                 Calendar c = (Calendar) calendar.clone();
 
-                if (evt.getPropertyName().equals(JDayChooser.DAY_PROPERTY)) {
-                    c = (Calendar) evt.getNewValue();
-                    firePropertyChange(CALENDAR_PROPERTY, 0, c);
-                } else if (evt.getPropertyName().equals(
-                        JMonthChooser.MONTH_PROPERTY)) {
-                    c.set(Calendar.MONTH, ((Integer) evt.getNewValue()).intValue());
-                    firePropertyChange(CALENDAR_PROPERTY, 0, c);
-                } else if (evt.getPropertyName().equals(JYearChooser.YEAR_PROPERTY)) {
-                    c.set(Calendar.YEAR, ((Integer) evt.getNewValue()).intValue());
-                    firePropertyChange(CALENDAR_PROPERTY, 0, c);
-                } else if (evt.getPropertyName().equals(DATE_PROPERTY)) {
-                    c.setTime((Date) evt.getNewValue());
-                    firePropertyChange(CALENDAR_PROPERTY, 0, c);
+                switch (evt.getPropertyName()) {
+                    case JDayChooser.DAY_PROPERTY:
+                        c = (Calendar) evt.getNewValue();
+                        firePropertyChange(CALENDAR_PROPERTY, 0, c);
+                        break;
+                    case JMonthChooser.MONTH_PROPERTY:
+                        c.set(Calendar.MONTH, ((Integer) evt.getNewValue()).intValue());
+                        firePropertyChange(CALENDAR_PROPERTY, 0, c);
+                        break;
+                    case JYearChooser.YEAR_PROPERTY:
+                        c.set(Calendar.YEAR, ((Integer) evt.getNewValue()).intValue());
+                        firePropertyChange(CALENDAR_PROPERTY, 0, c);
+                        break;
+                    case DATE_PROPERTY:
+                        c.setTime((Date) evt.getNewValue());
+                        firePropertyChange(CALENDAR_PROPERTY, 0, c);
+                        break;
                 }
             }
         } finally {
@@ -586,8 +578,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
     public void setSelectableDateRange(Date min, Date max) {
         dayChooser.setSelectableDateRange(min, max);
     }
-
-    ;
 
     /**
      * Gets the minimum selectable date.

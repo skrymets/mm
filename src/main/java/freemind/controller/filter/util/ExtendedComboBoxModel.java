@@ -78,7 +78,7 @@ public class ExtendedComboBoxModel extends DefaultComboBoxModel {
     }
 
     private SortedListModel extension = null;
-    private ExtensionDataListener extensionDataListener = new ExtensionDataListener();
+    private final ExtensionDataListener extensionDataListener = new ExtensionDataListener();
 
     /**
      *

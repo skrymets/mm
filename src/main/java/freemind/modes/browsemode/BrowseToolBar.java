@@ -25,17 +25,14 @@ import freemind.modes.common.dialogs.PersistentEditableComboBox;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
 
-@SuppressWarnings("serial")
 @Slf4j
 public class BrowseToolBar extends JToolBar {
 
     public static final String BROWSE_URL_STORAGE_KEY = "browse_url_storage";
 
-    private ControllerAdapter c;
+    private final ControllerAdapter c;
     private PersistentEditableComboBox urlfield = null;
 
     public BrowseToolBar(ControllerAdapter controller) {
@@ -46,19 +43,17 @@ public class BrowseToolBar extends JToolBar {
         urlfield = new PersistentEditableComboBox(controller,
                 BROWSE_URL_STORAGE_KEY);
 
-        urlfield.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String urlText = urlfield.getText();
-                if ("".equals(urlText)
-                        || e.getActionCommand().equals("comboBoxEdited"))
-                    return;
-                try {
-                    c.load(new URL(urlText));
-                } catch (Exception e1) {
-                    log.error(e1.getLocalizedMessage(), e1);
-                    // FIXME: Give a good error message.
-                    c.getController().errorMessage(e1);
-                }
+        urlfield.addActionListener(e -> {
+            String urlText = urlfield.getText();
+            if ("".equals(urlText)
+                    || e.getActionCommand().equals("comboBoxEdited"))
+                return;
+            try {
+                c.load(new URL(urlText));
+            } catch (Exception e1) {
+                log.error(e1.getLocalizedMessage(), e1);
+                // FIXME: Give a good error message.
+                c.getController().errorMessage(e1);
             }
         });
 

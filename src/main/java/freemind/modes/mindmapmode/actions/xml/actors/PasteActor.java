@@ -89,7 +89,7 @@ public class PasteActor extends XmlActorAdapter {
             pUndoAction.setIsLeft(coord.isLeft);
             if (log.isTraceEnabled()) {
                 String s = Tools.marshall(pUndoAction);
-                log.trace("Undo action: " + s);
+                log.trace("Undo action: {}", s);
             }
         }
         return pasteAction;
@@ -136,9 +136,9 @@ public class PasteActor extends XmlActorAdapter {
 
     public static class NodeCoordinate {
 
-        public MindMapNode target;
-        public boolean asSibling;
-        public boolean isLeft;
+        public final MindMapNode target;
+        public final boolean asSibling;
+        public final boolean isLeft;
 
         public NodeCoordinate(MindMapNode target, boolean asSibling,
                               boolean isLeft) {
@@ -153,8 +153,7 @@ public class PasteActor extends XmlActorAdapter {
                 return (MindMapNode) parentNode.getChildAt(parentNode
                         .getChildPosition(target) - 1);
             } else {
-                log.trace("getChildCount = " + target.getChildCount()
-                        + ", target = " + target);
+                log.trace("getChildCount = {}, target = {}", target.getChildCount(), target);
                 return (MindMapNode) target
                         .getChildAt(target.getChildCount() - 1);
             }
@@ -218,31 +217,31 @@ public class PasteActor extends XmlActorAdapter {
                     setWaitingCursor(true);
                 }
                 // and now? paste it:
-                String mapContent = MapAdapter.MAP_INITIAL_START
-                        + FreeMind.XML_VERSION + "\"><node TEXT=\"DUMMY\">";
-                for (int j = 0; j < textLines.length; j++) {
-                    mapContent += textLines[j];
+                StringBuilder mapContent = new StringBuilder(MapAdapter.MAP_INITIAL_START
+                        + FreeMind.XML_VERSION + "\"><node TEXT=\"DUMMY\">");
+                for (String textLine : textLines) {
+                    mapContent.append(textLine);
                 }
-                mapContent += "</node></map>";
+                mapContent.append("</node></map>");
                 // log.info("Pasting " + mapContent);
                 try {
                     MindMapNode node = getExMapFeedback().getMap().loadTree(
                             new Tools.StringReaderCreator(
-                                    mapContent), MapAdapter.sDontAskInstance);
-                    for (ListIterator i = node.childrenUnfolded(); i.hasNext(); ) {
+                                    mapContent.toString()), MapAdapter.sDontAskInstance);
+                    for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
                         MindMapNodeModel importNode = (MindMapNodeModel) i
                                 .next();
                         insertNodeInto(importNode, target, asSibling, isLeft,
                                 true);
                         // addUndoAction(importNode);
                     }
-                    for (ListIterator i = node.childrenUnfolded(); i.hasNext(); ) {
+                    for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
                         MindMapNodeModel importNode = (MindMapNodeModel) i
                                 .next();
                         getExMapFeedback().invokeHooksRecursively(importNode,
                                 getExMapFeedback().getMap());
                     }
-                    for (ListIterator i = node.childrenUnfolded(); i.hasNext(); ) {
+                    for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
                         MindMapNodeModel importNode = (MindMapNodeModel) i
                                 .next();
                         processUnfinishedLinksInHooks(importNode);
@@ -303,8 +302,7 @@ public class PasteActor extends XmlActorAdapter {
         }
 
         public void paste(Object transferData, MindMapNode target,
-                          boolean asSibling, boolean isLeft, Transferable t)
-                throws UnsupportedFlavorException, IOException {
+                          boolean asSibling, boolean isLeft, Transferable t) {
             String textFromClipboard = (String) transferData;
             // workaround for java decoding bug
             // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6740877
@@ -317,7 +315,7 @@ public class PasteActor extends XmlActorAdapter {
             // why.
             // { Alternative pasting of HTML
             setWaitingCursor(true);
-            log.trace("directHtmlFlavor (original): " + textFromClipboard);
+            log.trace("directHtmlFlavor (original): {}", textFromClipboard);
             textFromClipboard = textFromClipboard
                     .replaceAll("(?i)(?s)<meta[^>]*>", "")
                     .replaceAll("(?i)(?s)<head>.*?</head>", "")
@@ -339,7 +337,7 @@ public class PasteActor extends XmlActorAdapter {
                     // <o> tag.
                             replaceAll("(?i)(?s)</?o[^>]*>", "");
             textFromClipboard = "<html><body>" + textFromClipboard + "</body></html>";
-            log.trace("directHtmlFlavor: " + textFromClipboard);
+            log.trace("directHtmlFlavor: {}", textFromClipboard);
             if (Resources.getInstance().getBoolProperty(
                     FreeMind.RESOURCES_PASTE_HTML_STRUCTURE)) {
                 HtmlTools.getInstance().insertHtmlIntoNodes(textFromClipboard,
@@ -395,7 +393,7 @@ public class PasteActor extends XmlActorAdapter {
 
         public void paste(Object transferData, MindMapNode target,
                           boolean asSibling, boolean isLeft, Transferable t)
-                throws UnsupportedFlavorException, IOException {
+                throws IOException {
             log.info("imageFlavor");
 
             setWaitingCursor(true);
@@ -410,22 +408,22 @@ public class PasteActor extends XmlActorAdapter {
                 return;
             }
             File parentFile = mindmapFile.getParentFile();
-            String filePrefix = mindmapFile.getName().replace(
-                    FreeMindCommon.FREEMIND_FILE_EXTENSION, "_");
+            StringBuilder filePrefix = new StringBuilder(mindmapFile.getName().replace(
+                    FreeMindCommon.FREEMIND_FILE_EXTENSION, "_"));
 			/* prefix for createTempFile must be at least three characters long.
 			 See  [bugs:#1261] Unable to paste images from clipboard */
             while (filePrefix.length() < 3) {
-                filePrefix += "_";
+                filePrefix.append("_");
             }
             File tempFile = File
-                    .createTempFile(filePrefix, ".jpeg", parentFile);
+                    .createTempFile(filePrefix.toString(), ".jpeg", parentFile);
             FileOutputStream fos = new FileOutputStream(tempFile);
             fos.write(Tools.fromBase64(transferData.toString()));
             fos.close();
 
             // Absolute, if not in the correct directory!
             imgfile = tempFile.getName();
-            log.info("Writing image to " + imgfile);
+            log.info("Writing image to {}", imgfile);
 
             String strText = "<html><body><img src=\"" + imgfile
                     + "\"/></body></html>";
@@ -460,17 +458,14 @@ public class PasteActor extends XmlActorAdapter {
          * fl.length; i++) { System.out.println(fl[i]); }
          */
         DataFlavorHandler[] dataFlavorHandlerList = getFlavorHandlers();
-        for (int i = 0; i < dataFlavorHandlerList.length; i++) {
-            DataFlavorHandler handler = dataFlavorHandlerList[i];
+        for (DataFlavorHandler handler : dataFlavorHandlerList) {
             DataFlavor flavor = handler.getDataFlavor();
             if (t.isDataFlavorSupported(flavor)) {
                 try {
                     handler.paste(t.getTransferData(flavor), target, asSibling,
                             isLeft, t);
                     break;
-                } catch (UnsupportedFlavorException e) {
-                    log.error(e.getLocalizedMessage(), e);
-                } catch (IOException e) {
+                } catch (UnsupportedFlavorException | IOException e) {
                     log.error(e.getLocalizedMessage(), e);
                 }
             }
@@ -494,7 +489,7 @@ public class PasteActor extends XmlActorAdapter {
                                                      MindMapNode target, boolean asSibling, boolean changeSide,
                                                      boolean isLeft, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException {
         // Call nodeStructureChanged(target) after this function.
-        log.trace("Pasting " + pasted + " to " + target);
+        log.trace("Pasting {} to {}", pasted, target);
         try {
             MindMapNodeModel node = (MindMapNodeModel) getExMapFeedback().getMap()
                     .createNodeTreeFromXml(new StringReader(pasted), pIDToTarget);
@@ -573,12 +568,12 @@ public class PasteActor extends XmlActorAdapter {
         parentNodes.add(parent);
         parentNodesDepths.add(-1);
 
-        String[] linkPrefixes = {"http://", "ftp://", "https://"};
+        String[] linkPrefixes = {"ftp://", "https://"};
 
         MindMapNode pastedNode = null;
 
-        for (int i = 0; i < textLines.length; ++i) {
-            String text = textLines[i];
+        for (String textLine : textLines) {
+            String text = textLine;
 //			System.out.println("Text to paste: "+text);
             text = text.replaceAll("\t", "        ");
             if (text.matches(" *")) {
@@ -589,7 +584,7 @@ public class PasteActor extends XmlActorAdapter {
             while (depth < text.length() && text.charAt(depth) == ' ') {
                 ++depth;
             }
-            String visibleText = text.trim();
+            StringBuilder visibleText = new StringBuilder(text.trim());
 
             // If the text is a recognizable link (e.g.
             // http://www.google.com/index.html),
@@ -597,24 +592,24 @@ public class PasteActor extends XmlActorAdapter {
             // and other
             // transforamtions.
 
-            if (visibleText.matches("^http://(www\\.)?[^ ]*$")) {
-                visibleText = visibleText.replaceAll("^http://(www\\.)?", "")
+            if (visibleText.toString().matches("^http://(www\\.)?[^ ]*$")) {
+                visibleText = new StringBuilder(visibleText.toString().replaceAll("^http://(www\\.)?", "")
                         .replaceAll("(/|\\.[^\\./\\?]*)$", "")
                         .replaceAll("((\\.[^\\./]*\\?)|\\?)[^/]*$", " ? ...")
-                        .replaceAll("_|%20", " ");
-                String[] textParts = visibleText.split("/");
-                visibleText = "";
+                        .replaceAll("_|%20", " "));
+                String[] textParts = visibleText.toString().split("/");
+                visibleText = new StringBuilder();
                 for (int textPartIdx = 0; textPartIdx < textParts.length; textPartIdx++) {
                     if (textPartIdx > 0) {
-                        visibleText += " > ";
+                        visibleText.append(" > ");
                     }
-                    visibleText += textPartIdx == 0 ? textParts[textPartIdx]
+                    visibleText.append(textPartIdx == 0 ? textParts[textPartIdx]
                             : capitalize(textParts[textPartIdx]
-                            .replaceAll("^~*", ""));
+                            .replaceAll("^~*", "")));
                 }
             }
 
-            MindMapNode node = getExMapFeedback().newNode(visibleText,
+            MindMapNode node = getExMapFeedback().newNode(visibleText.toString(),
                     parent.getMap());
             if (textLines.length == 1) {
                 pastedNode = node;
@@ -622,7 +617,7 @@ public class PasteActor extends XmlActorAdapter {
 
             // Heuristically determine, if there is a mail.
 
-            Matcher mailMatcher = mailPattern.matcher(visibleText);
+            Matcher mailMatcher = mailPattern.matcher(visibleText.toString());
             if (mailMatcher.find()) {
                 node.setLink("mailto:" + mailMatcher.group());
             }
@@ -631,8 +626,8 @@ public class PasteActor extends XmlActorAdapter {
             // heuristic, it is probable that it can be improved to include
             // some matches or exclude some matches.
 
-            for (int j = 0; j < linkPrefixes.length; j++) {
-                int linkStart = text.indexOf(linkPrefixes[j]);
+            for (String linkPrefix : linkPrefixes) {
+                int linkStart = text.indexOf(linkPrefix);
                 if (linkStart != -1) {
                     int linkEnd = linkStart;
                     while (linkEnd < text.length()
@@ -668,8 +663,7 @@ public class PasteActor extends XmlActorAdapter {
             }
         }
 
-        for (int k = 0; k < parentNodes.size(); ++k) {
-            MindMapNode n = parentNodes.get(k);
+        for (MindMapNode n : parentNodes) {
             if (n.getParentNode() == parent) {
                 // addUndoAction(n);
             }
@@ -700,8 +694,7 @@ public class PasteActor extends XmlActorAdapter {
                  * get the fileList, clear it, and then set it to the new value.
                  */
                 List<File> fileList = (List<File>) t.getTransferData(MindMapNodesSelection.fileListFlavor);
-                for (Iterator<File> iter = fileList.iterator(); iter.hasNext(); ) {
-                    File fileName = iter.next();
+                for (File fileName : fileList) {
                     TransferableFile transferableFile = new TransferableFile();
                     transferableFile.setFileName(fileName.getAbsolutePath());
                     trans.addTransferableFile(transferableFile);
@@ -771,7 +764,7 @@ public class PasteActor extends XmlActorAdapter {
                     BufferedImage image = (BufferedImage) t
                             .getTransferData(DataFlavor.imageFlavor);
 
-                    log.info("Starting to write clipboard image " + image);
+                    log.info("Starting to write clipboard image {}", image);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ImageIO.write(image, "jpg", baos);
                     String base64String = Tools.toBase64(baos.toByteArray());
@@ -789,9 +782,7 @@ public class PasteActor extends XmlActorAdapter {
 
             }
             return trans;
-        } catch (UnsupportedFlavorException e) {
-            log.error(e.getLocalizedMessage(), e);
-        } catch (IOException e) {
+        } catch (UnsupportedFlavorException | IOException e) {
             log.error(e.getLocalizedMessage(), e);
         }
         return null;

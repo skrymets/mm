@@ -31,7 +31,6 @@ import java.awt.datatransfer.Transferable;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author foltin
@@ -63,9 +62,9 @@ public final class ExtendedMapFeedbackImpl extends ExtendedMapFeedbackAdapter {
     public Transferable copy(MindMapNode pNode, boolean pSaveInvisible) {
         StringWriter stringWriter = new StringWriter();
         try {
-            ((MindMapNodeModel) pNode).save(stringWriter, getMap()
+            pNode.save(stringWriter, getMap()
                     .getLinkRegistry(), pSaveInvisible, true);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         List<String> nodeList = Tools.getVectorWithSingleElement(getNodeID(pNode));
         return new MindMapNodesSelection(stringWriter.toString(), null,

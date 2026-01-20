@@ -29,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -101,15 +100,13 @@ public class ActionRegistry {
     }
 
     private void startTransaction(String name) {
-        for (Iterator<ActionHandler> i = registeredHandler.iterator(); i.hasNext(); ) {
-            ActionHandler handler = i.next();
+        for (ActionHandler handler : registeredHandler) {
             handler.startTransaction(name);
         }
     }
 
     private void endTransaction(String name) {
-        for (Iterator<ActionHandler> i = registeredHandler.iterator(); i.hasNext(); ) {
-            ActionHandler handler = i.next();
+        for (ActionHandler handler : registeredHandler) {
             handler.endTransaction(name);
         }
     }
@@ -175,8 +172,7 @@ public class ActionRegistry {
     }
 
     public ActorXml getActor(XmlAction action) {
-        for (Iterator<Class<?>> i = registeredActors.keySet().iterator(); i.hasNext(); ) {
-            Class<?> actorClass = i.next();
+        for (Class<?> actorClass : registeredActors.keySet()) {
             if (actorClass.isInstance(action)) {
                 return registeredActors.get(actorClass);
             }

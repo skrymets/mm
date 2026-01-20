@@ -24,6 +24,8 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -31,7 +33,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 // Daniel: this seems like a description of what pattern should do rather
@@ -46,28 +47,184 @@ import java.util.List;
  * applied to all nodes that contain the String saved in "text".
  */
 public class StylePattern {
+    /**
+     * -- GETTER --
+     *  Get the value of name.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of name.
+     *
+     @return Value of name.
+      * @param v Value to assign to name.
+     */
+    @Setter
+    @Getter
     private String name;
     /**
      * NOT USED: The idea of recursive is redundant. You have a possibility to
      * select all nodes in a branch easily.
+     * -- SETTER --
+     *  Set the value of recursive.
+     *
+     * @param v Value to assign to recursive.
+
      */
+    @Setter
     private boolean recursive;
 
+    /**
+     * -- GETTER --
+     *  Get the value of text.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of text.
+     *
+     @return Value of text.
+      * @param v Value to assign to text.
+     */
+    @Setter
+    @Getter
     private String text;
 
+    /**
+     * -- GETTER --
+     *  Get the value of nodeColor.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of nodeColor.
+     *
+     @return Value of nodeColor.
+      * @param v Value to assign to nodeColor.
+     */
+    @Setter
+    @Getter
     private Color nodeColor;
+    @Setter
+    @Getter
     private Color nodeBackgroundColor;
+    /**
+     * -- GETTER --
+     *  Get the value of nodeStyle.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of nodeStyle.
+     *
+     @return Value of nodeStyle.
+      * @param nodeStyle Value to assign to nodeStyle.
+     */
+    @Setter
+    @Getter
     private String nodeStyle;
 
+    /**
+     * -- GETTER --
+     *
+     *
+     * -- SETTER --
+     *
+     @return Returns the nodeFontFamily.
+      * @param nodeFontFamily The nodeFontFamily to set.
+     */
+    @Setter
+    @Getter
     private String nodeFontFamily = null;
+    /**
+     * -- GETTER --
+     *
+     *
+     * -- SETTER --
+     *
+     @return Returns the nodeFontSize.
+      * @param nodeFontSize The nodeFontSize to set.
+     */
+    @Setter
+    @Getter
     private Integer nodeFontSize = null;
+    /**
+     * -- GETTER --
+     *
+     *
+     * -- SETTER --
+     *
+     @return Returns the nodeFontBold.
+      * @param nodeFontBold The nodeFontBold to set.
+     */
+    @Setter
+    @Getter
     private Boolean nodeFontBold = null;
+    /**
+     * -- GETTER --
+     *
+     *
+     * -- SETTER --
+     *
+     @return Returns the nodeFontItalic.
+      * @param nodeFontItalic The nodeFontItalic to set.
+     */
+    @Setter
+    @Getter
     private Boolean nodeFontItalic = null;
 
+    /**
+     * -- GETTER --
+     *  Get the value of icon.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of icon.
+     *
+     @return Value of icon.
+      * @param nodeIcon Value to assign to icon.
+     */
+    @Setter
+    @Getter
     private MindIcon nodeIcon;
 
+    /**
+     * -- GETTER --
+     *  Get the value of edgeColor.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of edgeColor.
+     *
+     @return Value of edgeColor.
+      * @param edgeColor Value to assign to edgeColor.
+     */
+    @Setter
+    @Getter
     private Color edgeColor;
+    /**
+     * -- GETTER --
+     *  Get the value of edgeStyle.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of edgeStyle.
+     *
+     @return Value of edgeStyle.
+      * @param edgeStyle Value to assign to edgeStyle.
+     */
+    @Setter
+    @Getter
     private String edgeStyle;
+    /**
+     * -- GETTER --
+     *  Get the value of edgeWidth.
+     *
+     *
+     * -- SETTER --
+     *  Set the value of edgeWidth.
+     *
+     @return Value of edgeWidth.
+      * @param edgeWidth Value to assign to edgeWidth.
+     */
+    @Setter
+    @Getter
     private Integer edgeWidth;
 
     /**
@@ -93,8 +250,8 @@ public class StylePattern {
         nodeBackgroundColor = node.getBackgroundColor();
         nodeStyle = node.getStyle();
 
-        nodeFontBold = new Boolean(node.isBold());
-        nodeFontItalic = new Boolean(node.isItalic());
+        nodeFontBold = Boolean.valueOf(node.isBold());
+        nodeFontItalic = Boolean.valueOf(node.isItalic());
         nodeFontSize = node.getFontSize() == null ? null : Integer.valueOf(node
                 .getFontSize());
         nodeFontFamily = node.getFontFamilyName();
@@ -140,24 +297,6 @@ public class StylePattern {
     }
 
     /**
-     * Get the value of name.
-     *
-     * @return Value of name.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Set the value of name.
-     *
-     * @param v Value to assign to name.
-     */
-    public void setName(String v) {
-        this.name = v;
-    }
-
-    /**
      * Determine if the properies of this pattern, of course except the "text"
      * attribute, apply to all the child nodes of this node.
      *
@@ -165,177 +304,6 @@ public class StylePattern {
      */
     public boolean getRecursive() {
         return recursive;
-    }
-
-    /**
-     * Set the value of recursive.
-     *
-     * @param v Value to assign to recursive.
-     */
-    public void setRecursive(boolean v) {
-        this.recursive = v;
-    }
-
-    /**
-     * Get the value of text.
-     *
-     * @return Value of text.
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * Set the value of text.
-     *
-     * @param v Value to assign to text.
-     */
-    public void setText(String v) {
-        this.text = v;
-    }
-
-    /**
-     * Get the value of nodeColor.
-     *
-     * @return Value of nodeColor.
-     */
-    public Color getNodeColor() {
-        return nodeColor;
-    }
-
-    /**
-     * Set the value of nodeColor.
-     *
-     * @param v Value to assign to nodeColor.
-     */
-    public void setNodeColor(Color v) {
-        this.nodeColor = v;
-    }
-
-    public Color getNodeBackgroundColor() {
-        return nodeBackgroundColor;
-    }
-
-    public void setNodeBackgroundColor(Color nodeBackgroundColor) {
-        this.nodeBackgroundColor = nodeBackgroundColor;
-    }
-
-    /**
-     * Get the value of nodeStyle.
-     *
-     * @return Value of nodeStyle.
-     */
-    public String getNodeStyle() {
-        return nodeStyle;
-    }
-
-    /**
-     * Set the value of nodeStyle.
-     *
-     * @param nodeStyle Value to assign to nodeStyle.
-     */
-    public void setNodeStyle(String nodeStyle) {
-        this.nodeStyle = nodeStyle;
-    }
-
-    /**
-     * @return Returns the nodeFontFamily.
-     */
-    public String getNodeFontFamily() {
-        return nodeFontFamily;
-    }
-
-    /**
-     * @param nodeFontFamily The nodeFontFamily to set.
-     */
-    public void setNodeFontFamily(String nodeFontFamily) {
-        this.nodeFontFamily = nodeFontFamily;
-    }
-
-    /**
-     * @return Returns the nodeFontSize.
-     */
-    public Integer getNodeFontSize() {
-        return nodeFontSize;
-    }
-
-    /**
-     * @param nodeFontSize The nodeFontSize to set.
-     */
-    public void setNodeFontSize(Integer nodeFontSize) {
-        this.nodeFontSize = nodeFontSize;
-    }
-
-    /**
-     * Get the value of icon.
-     *
-     * @return Value of icon.
-     */
-    public MindIcon getNodeIcon() {
-        return nodeIcon;
-    }
-
-    /**
-     * Set the value of icon.
-     *
-     * @param nodeIcon Value to assign to icon.
-     */
-    public void setNodeIcon(MindIcon nodeIcon) {
-        this.nodeIcon = nodeIcon;
-    }
-
-    /**
-     * Get the value of edgeColor.
-     *
-     * @return Value of edgeColor.
-     */
-    public Color getEdgeColor() {
-        return edgeColor;
-    }
-
-    /**
-     * Set the value of edgeColor.
-     *
-     * @param edgeColor Value to assign to edgeColor.
-     */
-    public void setEdgeColor(Color edgeColor) {
-        this.edgeColor = edgeColor;
-    }
-
-    /**
-     * Get the value of edgeStyle.
-     *
-     * @return Value of edgeStyle.
-     */
-    public String getEdgeStyle() {
-        return edgeStyle;
-    }
-
-    /**
-     * Set the value of edgeStyle.
-     *
-     * @param edgeStyle Value to assign to edgeStyle.
-     */
-    public void setEdgeStyle(String edgeStyle) {
-        this.edgeStyle = edgeStyle;
-    }
-
-    /**
-     * Get the value of edgeWidth.
-     *
-     * @return Value of edgeWidth.
-     */
-    public Integer getEdgeWidth() {
-        return edgeWidth;
-    }
-
-    /**
-     * Set the value of edgeWidth.
-     *
-     * @param edgeWidth Value to assign to edgeWidth.
-     */
-    public void setEdgeWidth(Integer edgeWidth) {
-        this.edgeWidth = edgeWidth;
     }
 
     /**
@@ -380,10 +348,9 @@ public class StylePattern {
             setRecursive(true);
         }
 
-        for (Iterator<XMLElement> i = pattern.getChildren().iterator(); i.hasNext(); ) {
+        for (XMLElement child : pattern.getChildren()) {
             // this has to be improved!
             // NODE
-            XMLElement child = i.next();
             if (child.getName().equals("node")) {
                 if (child.getStringAttribute("color") != null
                         && child.getStringAttribute("color").length() == 7) {
@@ -406,8 +373,7 @@ public class StylePattern {
                 }
                 setText(child.getStringAttribute("text"));
 
-                for (Iterator<XMLElement> j = child.getChildren().iterator(); j.hasNext(); ) {
-                    XMLElement nodeChild = j.next();
+                for (XMLElement nodeChild : child.getChildren()) {
                     // FONT
                     if (nodeChild.getName().equals("font")) {
 
@@ -479,34 +445,6 @@ public class StylePattern {
                 }
             }
         }
-    }
-
-    /**
-     * @return Returns the nodeFontBold.
-     */
-    public Boolean getNodeFontBold() {
-        return nodeFontBold;
-    }
-
-    /**
-     * @param nodeFontBold The nodeFontBold to set.
-     */
-    public void setNodeFontBold(Boolean nodeFontBold) {
-        this.nodeFontBold = nodeFontBold;
-    }
-
-    /**
-     * @return Returns the nodeFontItalic.
-     */
-    public Boolean getNodeFontItalic() {
-        return nodeFontItalic;
-    }
-
-    /**
-     * @param nodeFontItalic The nodeFontItalic to set.
-     */
-    public void setNodeFontItalic(Boolean nodeFontItalic) {
-        this.nodeFontItalic = nodeFontItalic;
     }
 
 }

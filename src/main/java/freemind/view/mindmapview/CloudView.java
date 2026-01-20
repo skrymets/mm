@@ -77,8 +77,7 @@ public class CloudView {
         // getZoom()):0 /* = additionalDistanceForConvexHull */);
         List<Point> res = hull.calculateHull(coordinates);
         Polygon p = new Polygon();
-        for (int i = 0; i < res.size(); ++i) {
-            Point pt = res.get(i);
+        for (Point pt : res) {
             p.addPoint(pt.x, pt.y);
         }
         g.fillPolygon(p);
@@ -184,7 +183,7 @@ public class CloudView {
      */
     public int getRealWidth() {
         int width = getWidth();
-        return (width < 1) ? 1 : width;
+        return Math.max(width, 1);
     }
 
     private double getDistanceToConvexHull() {

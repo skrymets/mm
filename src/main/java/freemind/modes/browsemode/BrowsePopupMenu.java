@@ -24,10 +24,9 @@ import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
-@SuppressWarnings("serial")
 public class BrowsePopupMenu extends JPopupMenu implements PopupMenuListener {
 
-    private BrowseController c;
+    private final BrowseController c;
 
     protected void add(Action action, String keystroke) {
         JMenuItem item = add(action);

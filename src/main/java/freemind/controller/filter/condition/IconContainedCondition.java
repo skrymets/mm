@@ -36,7 +36,7 @@ import java.util.Set;
 public class IconContainedCondition implements Condition {
     static final String ICON = "icon";
     static final String NAME = "icon_contained_condition";
-    private String iconName;
+    private final String iconName;
 
     public IconContainedCondition(String iconName) {
         this.iconName = iconName;

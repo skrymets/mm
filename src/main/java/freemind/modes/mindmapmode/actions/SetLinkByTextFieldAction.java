@@ -46,7 +46,7 @@ public class SetLinkByTextFieldAction extends MindmapAction {
                         .getSelected(), controller.getText("edit_link_manually"),
                 controller.getSelected().getLink());
         if (inputValue != null) {
-            if (inputValue.equals("")) {
+            if (inputValue.isEmpty()) {
                 inputValue = null; // In case of no entry unset link
             }
             controller.setLink(controller.getSelected(), inputValue);

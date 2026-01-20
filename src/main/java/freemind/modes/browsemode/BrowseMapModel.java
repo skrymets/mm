@@ -25,11 +25,12 @@ import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.NodeAdapter;
 import freemind.modes.*;
+import lombok.Getter;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Writer;
 import java.net.URL;
+import java.util.Objects;
 
 @SuppressWarnings("serial")
 public class BrowseMapModel extends MapAdapter {
@@ -37,24 +38,18 @@ public class BrowseMapModel extends MapAdapter {
     private static final String ENCRYPTED_BROWSE_NODE = EncryptedBrowseNode.class
             .getName();
     private URL url;
-    private MindMapLinkRegistry linkRegistry;
-
-    public BrowseMapModel(BrowseNodeModel root, ModeController modeController) {
-        super(modeController);
-        if (root != null)
-            setRoot(root);
-        else
-            setRoot(new BrowseNodeModel(modeController.getResourceString(
-                    "new_mindmap"), this));
-        // register new LinkRegistryAdapter
-        linkRegistry = new MindMapLinkRegistry();
-    }
-
     //
     // Other methods
     //
-    public MindMapLinkRegistry getLinkRegistry() {
-        return linkRegistry;
+    @Getter
+    private final MindMapLinkRegistry linkRegistry;
+
+    public BrowseMapModel(BrowseNodeModel root, ModeController modeController) {
+        super(modeController);
+        setRoot(Objects.requireNonNullElseGet(root, () -> new BrowseNodeModel(modeController.getResourceString(
+                "new_mindmap"), this)));
+        // register new LinkRegistryAdapter
+        linkRegistry = new MindMapLinkRegistry();
     }
 
     public String toString() {
@@ -111,7 +106,7 @@ public class BrowseMapModel extends MapAdapter {
      *
      * @see freemind.model.MindMap#getXml(java.io.Writer)
      */
-    public void getXml(Writer fileout) throws IOException {
+    public void getXml(Writer fileout) {
         // nothing.
         // FIXME: Implement me if you need me.
         throw new RuntimeException("Unimplemented method called.");
@@ -122,7 +117,7 @@ public class BrowseMapModel extends MapAdapter {
      *
      * @see freemind.model.MindMap#getFilteredXml(java.io.Writer)
      */
-    public void getFilteredXml(Writer fileout) throws IOException {
+    public void getFilteredXml(Writer fileout) {
         // nothing.
         // FIXME: Implement me if you need me.
         throw new RuntimeException("Unimplemented method called.");

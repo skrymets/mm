@@ -183,7 +183,7 @@ public class ConditionFactory {
                                             String value, boolean ignoreCase) {
         if (ignoreCase) {
             if (simpleCondition.equals(FILTER_CONTAINS)) {
-                if (value.equals(""))
+                if (value.isEmpty())
                     return null;
                 return new IgnoreCaseNodeContainsCondition(value);
             }
@@ -201,7 +201,7 @@ public class ConditionFactory {
                 return new NodeCompareCondition(value, true, 1, false);
         } else {
             if (simpleCondition.equals(FILTER_CONTAINS)) {
-                if (value.equals(""))
+                if (value.isEmpty())
                     return null;
                 return new NodeContainsCondition(value);
             }

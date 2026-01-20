@@ -36,8 +36,8 @@ import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 public interface MindMapNode extends MutableTreeNode {
 
@@ -127,7 +127,7 @@ public interface MindMapNode extends MutableTreeNode {
 
     boolean hasChildren();
 
-    public FilterInfo getFilterInfo();
+    FilterInfo getFilterInfo();
 
     /**
      * @return -1 if the argument childNode is not a child.
@@ -296,7 +296,7 @@ public interface MindMapNode extends MutableTreeNode {
      *
      * @param node
      */
-    public void removeAllHooks();
+    void removeAllHooks();
 
     // end hooks
 
@@ -318,7 +318,7 @@ public interface MindMapNode extends MutableTreeNode {
      *
      * @see MindMapNode.setAdditionalInfo(String)
      */
-    public String getAdditionalInfo();
+    String getAdditionalInfo();
 
     /**
      * @return a flat copy of this node including all extras like notes, etc.
@@ -330,8 +330,8 @@ public interface MindMapNode extends MutableTreeNode {
      * @param saveHidden   TODO: Seems not to be used. Remove or fill with live.
      * @param saveChildren if true, the save recurses to all of the nodes children.
      */
-    public XMLElement save(Writer writer, MindMapLinkRegistry registry,
-                           boolean saveHidden, boolean saveChildren) throws IOException;
+    XMLElement save(Writer writer, MindMapLinkRegistry registry,
+                    boolean saveHidden, boolean saveChildren) throws IOException;
 
     // fc, 10.2.2005:
 
@@ -431,9 +431,9 @@ public interface MindMapNode extends MutableTreeNode {
      */
     void removeAttribute(int pPosition);
 
-    public void addTreeModelListener(TreeModelListener l);
+    void addTreeModelListener(TreeModelListener l);
 
-    public void removeTreeModelListener(TreeModelListener l);
+    void removeTreeModelListener(TreeModelListener l);
 
     EventListenerList getListeners();
 

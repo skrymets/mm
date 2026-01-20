@@ -29,7 +29,8 @@ import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import freemind.preferences.FreemindPropertyListener;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -53,7 +54,6 @@ import java.util.Locale;
 public class JDayChooser extends JPanel implements ActionListener, KeyListener,
         FocusListener {
 
-    @SuppressWarnings("serial")
     public static class ChangeAwareButton extends ScalableJButton {
         /**
          * @param pString
@@ -96,74 +96,168 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
 
     private static final long serialVersionUID = 5876398337018781820L;
 
-    protected JButton[] days;
+    protected final JButton[] days;
 
-    protected JButton[] weeks;
+    protected final JButton[] weeks;
 
+    @Getter
     protected JButton selectedDay;
 
-    protected JPanel weekPanel;
+    protected final JPanel weekPanel;
 
-    protected JPanel dayPanel;
+    /**
+     * -- GETTER --
+     *  Returns the day panel.
+     *
+     * @return the day panel
+     */
+    @Getter
+    protected final JPanel dayPanel;
 
+    /**
+     * -- GETTER --
+     *  Returns the selected day.
+     *
+     * @return the day value
+     *
+     */
+    @Getter
     protected int day;
 
     protected Color oldDayBackgroundColor;
 
     protected Color selectedColor;
 
+    /**
+     * -- GETTER --
+     *  Returns the Sunday foreground.
+     *
+     * @return Color the Sunday foreground.
+     */
+    @Getter
     protected Color sundayForeground;
 
+    /**
+     * -- GETTER --
+     *  Returns the weekday foreground.
+     *
+     * @return Color the weekday foreground.
+     */
+    @Getter
     protected Color weekdayForeground;
 
+    /**
+     * -- GETTER --
+     *  Returns the color of the decoration (day names and weeks).
+     *
+     * @return the color of the decoration (day names and weeks).
+     */
+    @Getter
     protected Color decorationBackgroundColor;
 
     protected String[] dayNames;
 
     protected Calendar calendar;
 
-    protected Calendar today;
+    protected final Calendar today;
 
+    /**
+     * -- GETTER --
+     *  Returns the locale.
+     *
+     * @return the locale value
+     *
+     */
+    @Getter
     protected Locale locale;
 
-    protected boolean initialized;
+    protected final boolean initialized;
 
+    /**
+     * -- GETTER --
+     *  In some Countries it is often usefull to know in which week of the year a
+     *  date is.
+     *
+     * @return boolean true, if the weeks of the year is shown
+     */
+    @Getter
     protected boolean weekOfYearVisible;
 
+    /**
+     * -- GETTER --
+     *  The decoration background is the background color of the day titles and
+     *  the weeks of the year.
+     *
+     * @return Returns true, if the decoration background is painted.
+     */
+    @Getter
     protected boolean decorationBackgroundVisible = true;
 
+    /**
+     * -- GETTER --
+     *  The decoration border is the button border of the day titles and the
+     *  weeks of the year.
+     *
+     * @return Returns true, if the decoration border is painted.
+     */
+    @Getter
     protected boolean decorationBordersVisible;
 
+    @Getter
     protected boolean dayBordersVisible;
 
+    /**
+     * -- SETTER --
+     *  this is needed for JDateChooser.
+     *
+     * @param alwaysFire true, if day property shall be fired every time a day is
+     *                   chosen.
+     */
+    @Setter
     private boolean alwaysFireDayProperty;
 
+    /**
+     * -- GETTER --
+     *  Gets the minimum selectable date.
+     *
+     * @return the minimum selectable date
+     */
+    @Getter
     protected Date minSelectableDate;
 
+    /**
+     * -- GETTER --
+     *  Gets the maximum selectable date.
+     *
+     * @return the maximum selectable date
+     */
+    @Getter
     protected Date maxSelectableDate;
 
-    protected Date defaultMinSelectableDate;
+    protected final Date defaultMinSelectableDate;
 
-    protected Date defaultMaxSelectableDate;
+    protected final Date defaultMaxSelectableDate;
 
+    /**
+     * -- GETTER --
+     *  Gets the maximum number of characters of a day name or 0. If 0 is
+     *  returned, dateFormatSymbols.getShortWeekdays() will be used.
+     *
+     * @return the maximum number of characters of a day name or 0.
+     */
+    @Getter
     protected int maxDayCharacters;
 
     private static final Border NullBorder = BorderFactory.createLineBorder(Color.BLACK, 0);
     Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
 
+    @Setter
     protected JMonthChooser monthChooser = null;
+    @Setter
     protected JYearChooser yearChooser = null;
 
 
     private ICalendarMarkingEvaluator mCalendarMarkingEvaluator;
-
-    public void setMonthChooser(JMonthChooser monthChooser) {
-        this.monthChooser = monthChooser;
-    }
-
-    public void setYearChooser(JYearChooser yearChooser) {
-        this.yearChooser = yearChooser;
-    }
 
     /**
      * Default JDayChooser constructor.
@@ -193,15 +287,11 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
                 markings = new CalendarMarkings();
             }
             mCalendarMarkingEvaluator = new CalendarMarkingEvaluator(markings);
-            Controller.addPropertyChangeListener(new FreemindPropertyListener() {
-
-                @Override
-                public void propertyChanged(String pPropertyName, String pNewValue, String pOldValue) {
-                    if (FreeMindCommon.TIME_MANAGEMENT_MARKING_XML.equals(pPropertyName)) {
-                        CalendarMarkings markings = (CalendarMarkings) XmlBindingTools.getInstance()
-                                .unMarshall(pNewValue);
-                        mCalendarMarkingEvaluator.changeMarkings(markings);
-                    }
+            Controller.addPropertyChangeListener((pPropertyName, pNewValue, pOldValue) -> {
+                if (FreeMindCommon.TIME_MANAGEMENT_MARKING_XML.equals(pPropertyName)) {
+                    CalendarMarkings markings1 = (CalendarMarkings) XmlBindingTools.getInstance()
+                            .unMarshall(pNewValue);
+                    mCalendarMarkingEvaluator.changeMarkings(markings1);
                 }
             });
         }
@@ -510,16 +600,6 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     }
 
     /**
-     * Returns the locale.
-     *
-     * @return the locale value
-     * @see #setLocale
-     */
-    public Locale getLocale() {
-        return locale;
-    }
-
-    /**
      * Sets the locale.
      *
      * @param locale the new locale value
@@ -568,26 +648,6 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
         }
         setFocus();
 
-    }
-
-    /**
-     * this is needed for JDateChooser.
-     *
-     * @param alwaysFire true, if day property shall be fired every time a day is
-     *                   chosen.
-     */
-    public void setAlwaysFireDayProperty(boolean alwaysFire) {
-        alwaysFireDayProperty = alwaysFire;
-    }
-
-    /**
-     * Returns the selected day.
-     *
-     * @return the day value
-     * @see #setDay
-     */
-    public int getDay() {
-        return day;
     }
 
     /**
@@ -691,7 +751,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
         String buttonText = button.getText();
-        int day = new Integer(buttonText).intValue();
+        int day = Integer.parseInt(buttonText);
         fire(day);
     }
 
@@ -810,27 +870,17 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
 
-        for (short i = 0; i < days.length; i++) {
-            if (days[i] != null) {
-                days[i].setEnabled(enabled);
+        for (JButton jButton : days) {
+            if (jButton != null) {
+                jButton.setEnabled(enabled);
             }
         }
 
-        for (short i = 0; i < weeks.length; i++) {
-            if (weeks[i] != null) {
-                weeks[i].setEnabled(enabled);
+        for (JButton week : weeks) {
+            if (week != null) {
+                week.setEnabled(enabled);
             }
         }
-    }
-
-    /**
-     * In some Countries it is often usefull to know in which week of the year a
-     * date is.
-     *
-     * @return boolean true, if the weeks of the year is shown
-     */
-    public boolean isWeekOfYearVisible() {
-        return weekOfYearVisible;
     }
 
     /**
@@ -854,24 +904,6 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     }
 
     /**
-     * Returns the day panel.
-     *
-     * @return the day panel
-     */
-    public JPanel getDayPanel() {
-        return dayPanel;
-    }
-
-    /**
-     * Returns the color of the decoration (day names and weeks).
-     *
-     * @return the color of the decoration (day names and weeks).
-     */
-    public Color getDecorationBackgroundColor() {
-        return decorationBackgroundColor;
-    }
-
-    /**
      * Sets the background of days and weeks of year buttons.
      *
      * @param decorationBackgroundColor The background to set
@@ -890,24 +922,6 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
                 weeks[i].setBackground(decorationBackgroundColor);
             }
         }
-    }
-
-    /**
-     * Returns the Sunday foreground.
-     *
-     * @return Color the Sunday foreground.
-     */
-    public Color getSundayForeground() {
-        return sundayForeground;
-    }
-
-    /**
-     * Returns the weekday foreground.
-     *
-     * @return Color the weekday foreground.
-     */
-    public Color getWeekdayForeground() {
-        return weekdayForeground;
     }
 
     /**
@@ -945,36 +959,12 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
      * The decoration background is the background color of the day titles and
      * the weeks of the year.
      *
-     * @return Returns true, if the decoration background is painted.
-     */
-    public boolean isDecorationBackgroundVisible() {
-        return decorationBackgroundVisible;
-    }
-
-    /**
-     * The decoration background is the background color of the day titles and
-     * the weeks of the year.
-     *
      * @param decorationBackgroundVisible true, if the decoration background shall be painted.
      */
     public void setDecorationBackgroundVisible(
             boolean decorationBackgroundVisible) {
         this.decorationBackgroundVisible = decorationBackgroundVisible;
         initDecorations();
-    }
-
-    /**
-     * The decoration border is the button border of the day titles and the
-     * weeks of the year.
-     *
-     * @return Returns true, if the decoration border is painted.
-     */
-    public boolean isDecorationBordersVisible() {
-        return decorationBordersVisible;
-    }
-
-    public boolean isDayBordersVisible() {
-        return dayBordersVisible;
     }
 
     /**
@@ -1094,34 +1084,6 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     }
 
     /**
-     * Gets the maximum selectable date.
-     *
-     * @return the maximum selectable date
-     */
-    public Date getMaxSelectableDate() {
-        return maxSelectableDate;
-    }
-
-    /**
-     * Gets the minimum selectable date.
-     *
-     * @return the minimum selectable date
-     */
-    public Date getMinSelectableDate() {
-        return minSelectableDate;
-    }
-
-    /**
-     * Gets the maximum number of characters of a day name or 0. If 0 is
-     * returned, dateFormatSymbols.getShortWeekdays() will be used.
-     *
-     * @return the maximum number of characters of a day name or 0.
-     */
-    public int getMaxDayCharacters() {
-        return maxDayCharacters;
-    }
-
-    /**
      * Sets the maximum number of characters per day in the day bar. Valid
      * values are 0-4. If set to 0, dateFormatSymbols.getShortWeekdays() will be
      * used, otherwise theses strings will be reduced to the maximum number of
@@ -1192,10 +1154,6 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
             }
             super.paint(g);
         }
-    }
-
-    public JButton getSelectedDay() {
-        return selectedDay;
     }
 
 }

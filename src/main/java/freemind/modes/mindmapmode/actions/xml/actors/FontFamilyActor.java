@@ -79,10 +79,10 @@ public class FontFamilyActor extends XmlActorAdapter {
     public void act(XmlAction action) {
         if (action instanceof FontNodeAction) {
             FontNodeAction fontFamilyAction = (FontNodeAction) action;
-            MindMapNode node = getNodeFromID(fontFamilyAction.getNode());
+            NodeAdapter node = getNodeFromID(fontFamilyAction.getNode());
             String fontFamily = fontFamilyAction.getFont();
             if (!Tools.safeEquals(node.getFontFamilyName(), fontFamily)) {
-                ((NodeAdapter) node).establishOwnFont();
+                node.establishOwnFont();
                 node.setFont(getExMapFeedback().getFontThroughMap(
                         new Font(fontFamily, node.getFont().getStyle(), node
                                 .getFont().getSize())));

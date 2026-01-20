@@ -81,11 +81,9 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
         mDisabled = true;
         getMindMapController().getController().errorMessage(
                 getMindMapController().getText("clone_plugin_impossible"));
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                if (getHook(getNode()) != null) {
-                    removeHook();
-                }
+        EventQueue.invokeLater(() -> {
+            if (getHook(getNode()) != null) {
+                removeHook();
             }
         });
     }
@@ -107,7 +105,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
         values.put(XML_STORAGE_CLONE_ID, mCloneId);
         String cloneItselfValue = getCloneItselfValue();
         values.put(XML_STORAGE_CLONE_ITSELF, cloneItselfValue);
-        log.trace("Saved mCloneItself to " + cloneItselfValue);
+        log.trace("Saved mCloneItself to {}", cloneItselfValue);
         saveNameValuePairs(values, xml);
         log.trace("Saved clone plugin");
     }
@@ -132,7 +130,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
         mCloneNodes = null;
         mCloneNodeIds = new HashSet<>();
         HashMap<String, String> values = loadNameValuePairs(child);
-        String cloneIds = (String) values.get(XML_STORAGE_CLONES);
+        String cloneIds = values.get(XML_STORAGE_CLONES);
         if (cloneIds != null) {
             StringTokenizer st = new StringTokenizer(cloneIds, ",");
             while (st.hasMoreTokens()) {
@@ -140,14 +138,14 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
                 mCloneNodeIds.add(cloneId);
             }
         }
-        mCloneId = (String) values.get(XML_STORAGE_CLONE_ID);
+        mCloneId = values.get(XML_STORAGE_CLONE_ID);
         if (values.containsKey(XML_STORAGE_CLONE_ITSELF)) {
             mCloneItself = Boolean.valueOf(Tools.safeEquals(CLONE_ITSELF_TRUE,
                     values.get(XML_STORAGE_CLONE_ITSELF)));
         } else {
             mCloneItself = Boolean.FALSE;
         }
-        log.trace("Loaded mCloneItself to " + mCloneItself);
+        log.trace("Loaded mCloneItself to {}", mCloneItself);
     }
 
     public void shutdownMapHook() {
@@ -166,9 +164,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
          */
         MindMapNode originalNode = getNode();
         HashSet<MindMapNode> cloneNodes = getCloneNodes();
-        log.trace("Invoke shadow class with orig: "
-                + printNodeId(originalNode) + " and clones "
-                + printNodeIds(cloneNodes));
+        log.trace("Invoke shadow class with orig: {} and clones {}", printNodeId(originalNode), printNodeIds(cloneNodes));
         // check for error case that clones are descendant of one another.
         for (MindMapNode cloneNode : cloneNodes) {
             if (originalNode != null && originalNode.isDescendantOf(cloneNode)) {
@@ -298,7 +294,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
                 || (mCloneNodeIds.size() == 1 && mCloneNodeIds
                 .contains(getNodeId()))) {
             // remove myself
-            log.info("I'm the last clone " + nodeID);
+            log.info("I'm the last clone {}", nodeID);
             removeHook();
         }
     }

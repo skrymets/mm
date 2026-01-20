@@ -22,7 +22,6 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
-import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.PermanentNodeHook;
 import freemind.model.MindMap;
@@ -82,7 +81,7 @@ public class DeleteChildActor extends XmlActorAdapter {
         if (view != null) {
             NodeView nodeView = view.getNodeView(selectedNode);
             view.deselect(nodeView);
-            if (view.getSelecteds().size() == 0) {
+            if (view.getSelecteds().isEmpty()) {
                 NodeView newSelectedView;
                 int childIndex = parent.getChildPosition(selectedNode);
                 if (parent.getChildCount() > childIndex + 1) {
@@ -110,9 +109,9 @@ public class DeleteChildActor extends XmlActorAdapter {
         }
         long currentRun = 0;
         // determine timeout:
-        long timeout = selectedNode.getActivatedHooks().size() * 2 + 2;
-        while (selectedNode.getActivatedHooks().size() > 0) {
-            PermanentNodeHook hook = (PermanentNodeHook) selectedNode
+        long timeout = selectedNode.getActivatedHooks().size() * 2L + 2;
+        while (!selectedNode.getActivatedHooks().isEmpty()) {
+            PermanentNodeHook hook = selectedNode
                     .getActivatedHooks().iterator().next();
             selectedNode.removeHook(hook);
             if (currentRun++ > timeout) {
@@ -144,7 +143,7 @@ public class DeleteChildActor extends XmlActorAdapter {
         PasteNodeAction pasteNodeAction = null;
         pasteNodeAction = getExMapFeedback().getActorFactory().
                 getPasteActor().getPasteNodeAction(copy,
-                        coord, (UndoPasteNodeAction) null);
+                        coord, null);
 
         DeleteNodeAction deleteAction = getDeleteNodeAction(newId);
         getExMapFeedback().doTransaction(getDoActionClass().getName(),

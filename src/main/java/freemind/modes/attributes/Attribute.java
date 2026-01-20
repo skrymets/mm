@@ -23,9 +23,14 @@
  */
 package freemind.modes.attributes;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author Dimitri Polivaev 18.06.2005
  */
+@Setter
+@Getter
 public class Attribute {
     private String name;
     private String value;
@@ -49,22 +54,6 @@ public class Attribute {
     public Attribute(Attribute pAttribute) {
         this.name = pAttribute.name;
         this.value = pAttribute.value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public String toString() {

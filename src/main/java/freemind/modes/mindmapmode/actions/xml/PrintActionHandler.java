@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PrintActionHandler implements ActionHandler {
 
-    private MindMapController c;
+    private final MindMapController c;
 
     public PrintActionHandler(MindMapController c) {
         super();

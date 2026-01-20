@@ -30,5 +30,5 @@ public interface ZoomListener {
      *
      * @param f the effective zoom value (1.25 means 125%)
      */
-    public void setZoom(float f);
+    void setZoom(float f);
 }

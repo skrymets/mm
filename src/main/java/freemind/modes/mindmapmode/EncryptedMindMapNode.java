@@ -30,6 +30,8 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.ModeController;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -45,12 +47,20 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 
     /**
      * Is used to hide all children (when false)
+     * -- GETTER --
+     *
+     * @return Returns the isAccessible (ie. if the node is decrypted
+     * (isAccessible==true) or not).
+
      */
+    @Getter
     private boolean isAccessible = true;
 
     /**
      * Is used to store the child nodes (when true).
      */
+    @Setter
+    @Getter
     private boolean isStoringEncryptedContent = false;
 
     /**
@@ -63,6 +73,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
      * password have to be stored in a StringBuffer as Strings cannot be deleted
      * or overwritten.
      */
+    @Setter
     private StringBuffer password = null;
 
     private String encryptedContent;
@@ -71,6 +82,16 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 
     private static ImageIcon decryptedIcon;
 
+    /**
+     * -- SETTER --
+     *  isShuttingDown is used to fold an encrypted node properly. If it is
+     *  encrypted, it has no children. Thus, the formely existing children can't
+     *  be removed. Thus, this flag postpones the childlessness of a node until it
+     *  tree structure is updated.
+     *
+     * @param isShuttingDown The isShuttingDown to set.
+     */
+    @Setter
     private boolean isShuttingDown = false;
 
     /**
@@ -115,14 +136,13 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
                             .split(ModeController.NODESEPARATOR);
                     // and now? paste it:
                     // make a 0.8.0 map out of it:
-                    String mapContent = MapAdapter.MAP_INITIAL_START
-                            + "0.8.0\"><node TEXT=\"DUMMY\">";
-                    for (int j = 0; j < childs.length; j++) {
-                        String nodeContent = childs[j];
-                        mapContent += nodeContent;
+                    StringBuilder mapContent = new StringBuilder(MapAdapter.MAP_INITIAL_START
+                            + "0.8.0\"><node TEXT=\"DUMMY\">");
+                    for (String nodeContent : childs) {
+                        mapContent.append(nodeContent);
                     }
-                    mapContent += "</node></map>";
-                    node = getNodeFromXml(mapContent);
+                    mapContent.append("</node></map>");
+                    node = getNodeFromXml(mapContent.toString());
                 }
                 int index = 0;
                 for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
@@ -248,10 +268,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         }
     }
 
-    public void setPassword(StringBuffer password) {
-        this.password = password;
-    }
-
     /**
      *
      */
@@ -375,31 +391,11 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     }
 
     /**
-     * isShuttingDown is used to fold an encrypted node properly. If it is
-     * encrypted, it has no children. Thus, the formely existing children can't
-     * be removed. Thus, this flag postpones the childlessness of a node until it
-     * tree structure is updated.
-     *
-     * @param isShuttingDown The isShuttingDown to set.
-     */
-    public void setShuttingDown(boolean isShuttingDown) {
-        this.isShuttingDown = isShuttingDown;
-    }
-
-    /**
      * @param isAccessible The isAccessible to set.
      */
     private void setAccessible(boolean isAccessible) {
         this.isAccessible = isAccessible;
         updateIcon();
-    }
-
-    /**
-     * @return Returns the isAccessible (ie. if the node is decrypted
-     * (isAccessible==true) or not).
-     */
-    public boolean isAccessible() {
-        return isAccessible;
     }
 
     public void insert(MutableTreeNode pChild, int pIndex) {
@@ -414,14 +410,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 
     public boolean isWriteable() {
         return isAccessible() && super.isWriteable();
-    }
-
-    public boolean isStoringEncryptedContent() {
-        return isStoringEncryptedContent;
-    }
-
-    public void setStoringEncryptedContent(boolean pIsStoringEncryptedContent) {
-        isStoringEncryptedContent = pIsStoringEncryptedContent;
     }
 
 }

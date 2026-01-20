@@ -33,7 +33,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
 import java.util.List;
-import java.util.ListIterator;
 
 @Slf4j
 public class MindMapNodeDropListener implements DropTargetListener {
@@ -163,16 +162,15 @@ public class MindMapNodeDropListener implements DropTargetListener {
                                             .getContentPane(),
                                     mMindMapController
                                             .getText("lots_of_links_warning"),
-                                    Integer.toString(mMindMapController
-                                            .getView().getSelecteds().size())
+                                    mMindMapController
+                                            .getView().getSelecteds().size()
                                             + " links to the same node",
                                     JOptionPane.YES_NO_OPTION);
                 }
                 if (yesorno == JOptionPane.YES_OPTION) {
-                    for (ListIterator it = mMindMapController.getView()
-                            .getSelecteds().listIterator(); it.hasNext(); ) {
-                        MindMapNodeModel selectedNodeModel = (MindMapNodeModel) ((NodeView) it
-                                .next()).getModel();
+                    for (NodeView nodeView : mMindMapController.getView()
+                            .getSelecteds()) {
+                        MindMapNodeModel selectedNodeModel = (MindMapNodeModel) nodeView.getModel();
                         // mindMapMapModel.setNodeColor(selectedNodeModel,targetNode.getColor());
                         // mindMapMapModel.setNodeFont(selectedNodeModel,targetNode.getFont());
                         mMindMapController.addLink(selectedNodeModel,
@@ -190,7 +188,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
                 }
                 Transferable trans = null;
                 // if move, verify, that the target is not a son of the sources.
-                List selecteds = mMindMapController.getSelecteds();
+                List<MindMapNode> selecteds = mMindMapController.getSelecteds();
                 if (DnDConstants.ACTION_MOVE == dropAction) {
                     MindMapNode actualNode = targetNode;
                     do {

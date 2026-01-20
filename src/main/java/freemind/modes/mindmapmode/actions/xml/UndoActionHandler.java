@@ -27,7 +27,7 @@ import freemind.modes.mindmapmode.actions.RedoAction;
 import freemind.modes.mindmapmode.actions.UndoAction;
 
 public class UndoActionHandler {
-    private MindMapController controller;
+    private final MindMapController controller;
     private final UndoAction undo;
     private final RedoAction redo;
 

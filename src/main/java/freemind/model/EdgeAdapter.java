@@ -98,10 +98,6 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public String getStyle() {
         if (style == null) {
             if (getTarget().isRoot()) {

@@ -24,6 +24,7 @@ package freemind.extensions;
 
 import freemind.controller.actions.generated.instance.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
+import lombok.Getter;
 
 import java.util.*;
 
@@ -41,6 +42,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class HookDescriptorPluginAction extends HookDescriptorBase {
 
+    @Getter
     private final Properties properties = new Properties();
     public final List<String> menuPositions = new ArrayList<>();
     private final List<String> modes = new ArrayList<>();
@@ -118,18 +120,14 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
         return getFromPropertiesIfNecessary(pluginAction.getKeyStroke());
     }
 
-    public Properties getProperties() {
-        return properties;
-    }
-
     /**
-     * @return whether or not the plugin can be on/off and this should be
+     * @return whether the plugin can be on/off and this should be
      * displayed in the menus.
      */
     public boolean isSelectable() {
         try {
             return pluginAction.getIsSelectable();
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
         return false;
     }

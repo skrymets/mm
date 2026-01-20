@@ -34,7 +34,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-@SuppressWarnings("serial")
 @Slf4j
 public class ExportDialog extends JFrame {
     private static final String ACCESSORIES_PLUGINS_UTIL_XSLT_EXPORT_DIALOG_STORE_TARGET = "accessories.plugins.util.xslt.ExportDialog.store.target"; //$NON-NLS-1$
@@ -204,10 +203,10 @@ public class ExportDialog extends JFrame {
 
     class FileChooseListener implements ActionListener {
 
-        private Component parent;
-        private JTextField jtf;
-        private int kind;
-        private String WindowTitle;
+        private final Component parent;
+        private final JTextField jtf;
+        private final int kind;
+        private final String WindowTitle;
 
         public FileChooseListener(int wit, JTextField jt, Component c, File mmFile) {
             parent = c;

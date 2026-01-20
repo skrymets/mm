@@ -36,6 +36,7 @@ import freemind.modes.MindIcon;
 import freemind.modes.Mode;
 import freemind.modes.common.plugins.NodeNoteBase;
 import freemind.view.MapModule;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.io.*;
@@ -46,9 +47,13 @@ import java.io.*;
 public class FilterController implements MapModuleChangeObserver {
     private final Controller c;
     private FilterToolbar filterToolbar;
+    @Getter
     private DefaultComboBoxModel<Condition> filterConditionModel;
     static private ConditionRenderer conditionRenderer = null;
     static private ConditionFactory conditionFactory;
+    /**
+     */
+    @Getter
     private MindMap map;
     static final String FREEMIND_FILTER_EXTENSION_WITHOUT_DOT = "mmfilter";
     private static Filter inactiveFilter;
@@ -117,13 +122,6 @@ public class FilterController implements MapModuleChangeObserver {
         return conditionFactory;
     }
 
-    /**
-     *
-     */
-    public MindMap getMap() {
-        return map;
-    }
-
     public boolean isMapModuleChangeAllowed(MapModule oldMapModule,
                                             Mode oldMode, MapModule newMapModule, Mode newMode) {
         return true;
@@ -162,10 +160,6 @@ public class FilterController implements MapModuleChangeObserver {
         if (filterToolbar != null) {
             filterToolbar.saveConditions();
         }
-    }
-
-    public DefaultComboBoxModel<Condition> getFilterConditionModel() {
-        return filterConditionModel;
     }
 
     public void setFilterConditionModel(DefaultComboBoxModel<Condition> filterConditionModel) {

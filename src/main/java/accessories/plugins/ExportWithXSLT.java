@@ -97,9 +97,8 @@ public class ExportWithXSLT extends ExportHook {
             if ((model.getFile() == null) || model.isReadOnly()) {
                 if (mc.save()) {
                     export(model.getFile());
-                    return;
-                } else
-                    return;
+                } else {
+                }
             } else
                 export(model.getFile());
         } else {
@@ -233,8 +232,8 @@ public class ExportWithXSLT extends ExportHook {
      */
     private void copyIconsToDirectory(String directoryName2) {
         Vector<String> iconNames = MindIcon.getAllIconNames();
-        for (int i = 0; i < iconNames.size(); ++i) {
-            String iconName = ((String) iconNames.get(i));
+        for (String s : iconNames) {
+            String iconName = s;
             MindIcon myIcon = MindIcon.factory(iconName);
             copyFromResource(MindIcon.getIconsPath(),
                     myIcon.getIconBaseFileName(), directoryName2);
@@ -242,13 +241,8 @@ public class ExportWithXSLT extends ExportHook {
         File iconDir = new File(Resources.getInstance().getFreemindDirectory(),
                 "icons");
         if (iconDir.exists()) {
-            String[] userIconArray = iconDir.list(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
-                    return name.matches(".*\\.png");
-                }
-            });
-            for (int i = 0; i < userIconArray.length; ++i) {
-                String iconName = userIconArray[i];
+            String[] userIconArray = iconDir.list((dir, name) -> name.matches(".*\\.png"));
+            for (String iconName : userIconArray) {
                 if (iconName.length() == 4) {
                     continue;
                 }
@@ -293,7 +287,7 @@ public class ExportWithXSLT extends ExportHook {
         // search for xslt file:
         URL xsltUrl = getResource(xsltFileName);
         if (xsltUrl == null) {
-            log.error("Can't find " + xsltFileName + " as resource.");
+            log.error("Can't find {} as resource.", xsltFileName);
             throw new IllegalArgumentException("Can't find " + xsltFileName
                     + " as resource.");
         }
@@ -358,7 +352,6 @@ public class ExportWithXSLT extends ExportHook {
             log.error(e.getLocalizedMessage(), e);
             return false;
         }
-        ;
         return true;
     }
 

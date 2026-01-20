@@ -38,8 +38,8 @@ import freemind.view.mindmapview.NodeView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author adapted to the plugin mechanism by ganzer
@@ -56,10 +56,9 @@ public class IconSelectionPlugin extends MindMapNodeHookAdapter {
     public void invoke(MindMapNode rootNode) {
         // we dont need node.
         NodeView focussed = getController().getSelectedView();
-        Vector<IconInformation> actions = new Vector<>();
         MindMapController controller = getMindMapController();
         List<IconAction> iconActions = controller.iconActions;
-        actions.addAll(iconActions);
+        ArrayList<IconInformation> actions = new ArrayList<>(iconActions);
         actions.add(controller.removeLastIconAction);
         actions.add(controller.removeAllIconsAction);
 

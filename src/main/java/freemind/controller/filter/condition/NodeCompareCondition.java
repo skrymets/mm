@@ -34,8 +34,8 @@ class NodeCompareCondition extends CompareConditionAdapter {
     static final String VALUE = "value";
     static final String NAME = "node_compare_condition";
     static final String SUCCEED = "succeed";
-    private int comparationResult;
-    private boolean succeed;
+    private final int comparationResult;
+    private final boolean succeed;
 
     NodeCompareCondition(String value, boolean ignoreCase,
                          int comparationResult, boolean succeed) {

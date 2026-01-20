@@ -25,6 +25,7 @@ package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
 import freemind.main.Resources;
+import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
@@ -48,24 +49,11 @@ public class IconNotContainedCondition implements Condition {
     }
 
     static public int iconFirstIndex(MindMapNode node, String iconName) {
-        List<MindIcon> icons = node.getIcons();
-        for (ListIterator<MindIcon> i = icons.listIterator(); i.hasNext(); ) {
-            MindIcon nextIcon = i.next();
-            if (iconName.equals(nextIcon.getName())) return i.previousIndex();
-        }
-        return -1;
-
+        return Tools.iconFirstIndex(node, iconName);
     }
 
     static public int iconLastIndex(MindMapNode node, String iconName) {
-        List<MindIcon> icons = node.getIcons();
-        ListIterator<MindIcon> i = icons.listIterator(icons.size());
-        while (i.hasPrevious()) {
-            MindIcon nextIcon = (MindIcon) i.previous();
-            if (iconName.equals(nextIcon.getName())) return i.nextIndex();
-        }
-        return -1;
-
+        return Tools.iconLastIndex(node, iconName);
     }
 
     private static boolean isStateIconContained(MindMapNode node, String iconName) {

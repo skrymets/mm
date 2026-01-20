@@ -27,13 +27,12 @@ import freemind.controller.FreeMindPopupMenu;
 import freemind.controller.StructuredMenuHolder;
 import lombok.extern.slf4j.Slf4j;
 
-@SuppressWarnings("serial")
 @Slf4j
 public class MindMapPopupMenu extends FreeMindPopupMenu {
 
     private static final String MINDMAPMODE_POPUP = "mindmapmode_popup/";
 
-    private MindMapController controller;
+    private final MindMapController controller;
 
     public MindMapPopupMenu(MindMapController controller) {
         super();

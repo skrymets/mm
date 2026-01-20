@@ -35,7 +35,7 @@ import freemind.modes.attributes.Attribute;
 public class AttributeNotExistsCondition extends NodeCondition {
     static final String ATTRIBUTE = "attribute";
     static final String NAME = "attribute_not_exists_condition";
-    private String attribute;
+    private final String attribute;
 
     /**
      *

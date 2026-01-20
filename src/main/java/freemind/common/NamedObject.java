@@ -23,11 +23,14 @@
  */
 package freemind.common;
 
+import lombok.Getter;
+
 /**
  * Utility Class for displaying local object names in GUI components.
  *
  * @author Dimitri Polivaev 18.01.2007
  */
+@Getter
 public class NamedObject {
     private String name;
     private Object object;
@@ -57,14 +60,6 @@ public class NamedObject {
     }
 
     public String toString() {
-        return name;
-    }
-
-    public Object getObject() {
-        return object;
-    }
-
-    public String getName() {
         return name;
     }
 

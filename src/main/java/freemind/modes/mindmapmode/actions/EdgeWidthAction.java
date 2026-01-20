@@ -34,7 +34,7 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class EdgeWidthAction extends NodeGeneralAction implements MenuItemSelectedListener {
-    private int mWidth;
+    private final int mWidth;
 
     public EdgeWidthAction(MindMapController controller, int width) {
         super(controller, null, null);

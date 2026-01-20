@@ -31,42 +31,42 @@ public interface MindMapArrowLink extends MindMapLink {
     /**
      * Means: yes, it has the default arrow
      */
-    public static final String ARROW_DEFAULT = "Default";
+    String ARROW_DEFAULT = "Default";
     /**
      * Means: no, it hasn't an arrow at this side.
      */
-    public static final String ARROW_NONE = "None";
+    String ARROW_NONE = "None";
 
     /* for arrows: */
-    public Point getStartInclination(); // the zero is the start point of the
+    Point getStartInclination(); // the zero is the start point of the
     // line;
 
-    public Point getEndInclination(); // the zero is the end point of the line;
+    Point getEndInclination(); // the zero is the end point of the line;
 
-    public void setStartInclination(Point startInclination);
+    void setStartInclination(Point startInclination);
 
-    public void setEndInclination(Point endInclination);
+    void setEndInclination(Point endInclination);
 
     /**
      * the type of the start arrow: currently "None" and "Default".
      */
-    public String getStartArrow();
+    String getStartArrow();
 
     /**
      * the type of the end arrow: currently "None" and "Default".
      */
-    public String getEndArrow();
+    String getEndArrow();
 
     /**
      * @param map TODO
      */
-    public void changeInclination(MapView map, int originX, int originY,
-                                  int deltaX, int deltaY);
+    void changeInclination(MapView map, int originX, int originY,
+                           int deltaX, int deltaY);
 
-    public void showControlPoints(boolean bShowControlPointsFlag);
+    void showControlPoints(boolean bShowControlPointsFlag);
 
-    public boolean getShowControlPointsFlag();
+    boolean getShowControlPointsFlag();
 
-    public XMLElement save();
+    XMLElement save();
 
 }

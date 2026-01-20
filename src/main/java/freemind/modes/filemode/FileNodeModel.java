@@ -39,7 +39,7 @@ import java.util.ListIterator;
  */
 @Slf4j
 public class FileNodeModel extends NodeAdapter {
-    private File file;
+    private final File file;
     private Color color;
 
     //
@@ -100,7 +100,7 @@ public class FileNodeModel extends NodeAdapter {
 
     public String toString() {
         String name = file.getName();
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             name = "Root";
         }
         return name;
@@ -138,8 +138,8 @@ public class FileNodeModel extends NodeAdapter {
                 children = new LinkedList<>();
 
                 String path = file.getPath();
-                for (int i = 0; i < files.length; i++) {
-                    File childFile = new File(path, files[i]);
+                for (String s : files) {
+                    File childFile = new File(path, s);
                     if (!childFile.isHidden()) {
                         final FileNodeModel fileNodeModel = new FileNodeModel(
                                 childFile, getMap());
@@ -148,10 +148,10 @@ public class FileNodeModel extends NodeAdapter {
                     }
                 }
             }
-        } catch (SecurityException se) {
+        } catch (SecurityException ignored) {
         }
         // return children.listIterator();
-        return children != null ? children.listIterator() : Collections.<MindMapNode>emptyListIterator();
+        return children != null ? children.listIterator() : Collections.emptyListIterator();
     }
 
     public boolean isLeaf() {

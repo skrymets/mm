@@ -22,7 +22,6 @@
 
 package freemind.modes.browsemode;
 
-import freemind.common.TextTranslator;
 import freemind.main.Tools.SingleDesEncrypter;
 import freemind.main.XMLParseException;
 import freemind.model.MindMap;
@@ -82,12 +81,7 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
         }
         // get password:
         final EnterPasswordDialog pwdDialog = new EnterPasswordDialog(null,
-                new TextTranslator() {
-                    @Override
-                    public String getText(String pKey) {
-                        return mMapFeedback.getResourceString(pKey);
-                    }
-                }, false);
+                mMapFeedback::getResourceString, false);
         pwdDialog.setModal(true);
         pwdDialog.setVisible(true);
         if (pwdDialog.getResult() == EnterPasswordDialog.CANCEL) {
@@ -104,9 +98,9 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
         // and now? paste it:
         for (int i = childs.length - 1; i >= 0; i--) {
             String string = childs[i];
-            log.trace("Decrypted '" + string + "'.");
+            log.trace("Decrypted '{}'.", string);
             // if the encrypted node is empty, we skip the insert.
-            if (string.length() == 0)
+            if (string.isEmpty())
                 continue;
             try {
                 NodeAdapter node = (NodeAdapter) getMap()
@@ -121,10 +115,7 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
                 //mMapFeedback.nodeStructureChanged(this);
                 isDecrypted = true;
                 updateIcon();
-            } catch (XMLParseException e) {
-                log.error(e.getLocalizedMessage(), e);
-                return;
-            } catch (IOException e) {
+            } catch (XMLParseException | IOException e) {
                 log.error(e.getLocalizedMessage(), e);
                 return;
             }

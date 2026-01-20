@@ -32,7 +32,7 @@ import javax.swing.*;
 public interface Condition {
     boolean checkNode(Controller c, MindMapNode node);
 
-    public JComponent getListCellRendererComponent();
+    JComponent getListCellRendererComponent();
 
     void save(XMLElement element);
 }

@@ -16,7 +16,7 @@
  *
  */
 
-var FlashObject = function (swf, id, w, h, ver, c) {
+const FlashObject = function (swf, id, w, h, ver, c) {
     this.swf = swf;
     this.id = id;
     this.width = w;
@@ -34,9 +34,9 @@ var FlashObject = function (swf, id, w, h, ver, c) {
     if (c) this.color = this.addParam('bgcolor', c);
     this.addParam('quality', 'high'); // default to high
     this.doDetect = getQueryParamValue('detectflash');
-}
+};
 
-var FOP = FlashObject.prototype;
+const FOP = FlashObject.prototype;
 
 FOP.addParam = function (name, value) {
     this.params[name] = value;
@@ -63,18 +63,18 @@ FOP.getVariables = function () {
 }
 
 FOP.getParamTags = function () {
-    var paramTags = "";
-    for (var param in this.getParams()) {
+    let paramTags = "";
+    for (let param in this.getParams()) {
         paramTags += '<param name="' + param + '" value="' + this.getParam(param) + '" />';
     }
     return (paramTags == "") ? false : paramTags;
 }
 
 FOP.getHTML = function () {
-    var flashHTML = "";
+    let flashHTML = "";
     if (navigator.plugins && navigator.mimeTypes.length) { // netscape plugin architecture
         flashHTML += '<embed type="application/x-shockwave-flash" src="' + this.swf + '" width="' + this.width + '" height="' + this.height + '" id="' + this.id + '" align="' + this.align + '"';
-        for (var param in this.getParams()) {
+        for (let param in this.getParams()) {
             flashHTML += ' ' + param + '="' + this.getParam(param) + '"';
         }
         if (this.getVariablePairs()) {
@@ -96,8 +96,8 @@ FOP.getHTML = function () {
 }
 
 FOP.getVariablePairs = function () {
-    var variablePairs = new Array();
-    for (var name in this.getVariables()) {
+    const variablePairs = new Array();
+    for (let name in this.getVariables()) {
         variablePairs.push(name + "=" + escape(this.getVariable(name)));
     }
     return (variablePairs.length > 0) ? variablePairs.join("&") : false;
@@ -125,18 +125,18 @@ FOP.write = function (elementId) {
 
 /* ---- detection functions ---- */
 function getFlashVersion() {
-    var flashversion = 0;
+    let flashversion = 0;
     if (navigator.plugins && navigator.mimeTypes.length) {
-        var x = navigator.plugins["Shockwave Flash"];
+        const x = navigator.plugins["Shockwave Flash"];
         if (x && x.description) {
-            var y = x.description;
+            const y = x.description;
             flashversion = y.charAt(y.indexOf('.') - 1);
-            var aux = y.charAt(y.indexOf('.') - 2);
+            const aux = y.charAt(y.indexOf('.') - 2);
             if ("0123456789".indexOf(aux) != -1) flashversion = aux + flashversion;
         }
     } else {
         result = false;
-        for (var i = 15; i >= 3 && result != true; i--) {
+        for (let i = 15; i >= 3 && result != true; i--) {
             execScript('on error resume next: result = IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.' + i + '"))', 'VBScript');
             flashversion = i;
         }
@@ -145,15 +145,15 @@ function getFlashVersion() {
 }
 
 function detectFlash(ver) {
-    return (getFlashVersion() >= ver) ? true : false;
+    return (getFlashVersion() >= ver);
 }
 
 // get value of query string param
 function getQueryParamValue(param) {
-    var q = document.location.search || document.location.href.split("#")[1];
+    const q = document.location.search || document.location.href.split("#")[1];
     if (q) {
-        var detectIndex = q.indexOf(param + "=");
-        var endIndex = (q.indexOf("&", detectIndex) > -1) ? q.indexOf("&", detectIndex) : q.length;
+        const detectIndex = q.indexOf(param + "=");
+        const endIndex = (q.indexOf("&", detectIndex) > -1) ? q.indexOf("&", detectIndex) : q.length;
         if (q.length > 1 && detectIndex > -1) {
             return q.substring(q.indexOf("=", detectIndex) + 1, endIndex);
         } else {

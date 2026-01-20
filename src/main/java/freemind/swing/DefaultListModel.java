@@ -6,7 +6,7 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class DefaultListModel<E> extends AbstractListModel<E> {
-    private Vector<E> delegate = new Vector<E>();
+    private final Vector<E> delegate = new Vector<>();
 
     /**
      * Returns the number of components in this list.
@@ -375,7 +375,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      */
 
     /**
-     * Returns an array containing all of the elements in this list in the
+     * Returns an array containing all the elements in this list in the
      * correct order.
      *
      * @return an array containing the elements of the list
@@ -453,7 +453,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
     }
 
     /**
-     * Removes all of the elements from this list.  The list will
+     * Removes all the elements from this list.  The list will
      * be empty after this call returns (unless it throws an exception).
      */
     public void clear() {

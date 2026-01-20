@@ -52,6 +52,9 @@
 
 package freemind.main;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -210,7 +213,29 @@ public class XMLElement {
      * </ul>
      * </dd>
      * </dl>
+     * -- GETTER --
+     *  Returns the name of the element.
+     *
+     * -- SETTER --
+     *  Changes the name of the element.
+     *  <p>
+     *  The new name.
+     *  </dl>
+     *  <dl>
+     *  <dt><b>Preconditions:</b></dt>
+     *  <dd>
+     *  <ul>
+     *  <li><code>name != null</code>
+     *  <li><code>name</code> is a valid XML identifier
+     *  </ul>
+     *  </dd>
+     *  </dl>
+     *
+
+
      */
+    @Setter
+    @Getter
     private String name;
 
     /**
@@ -265,14 +290,27 @@ public class XMLElement {
      * </ul>
      * </dd>
      * </dl>
+     * -- GETTER --
+     *  Returns the line nr in the source data on which the element is found.
+     *  This method returns <code>0</code> there is no associated source data.
+     *  <dl>
+     *  <dt><b>Postconditions:</b></dt>
+     *  <dd>
+     *  <ul>
+     *  <li><code>result >= 0</code>
+     *  </ul>
+     *  </dd>
+     *  </dl>
+
      */
+    @Getter
     private final int lineNr;
 
     /**
      * <code>true</code> if the case of the element and attribute names are case
      * insensitive.
      */
-    protected boolean ignoreCase;
+    protected final boolean ignoreCase;
 
     /**
      * <code>true</code> if the leading and trailing whitespace of #PCDATA
@@ -943,23 +981,6 @@ public class XMLElement {
     }
 
     /**
-     * Returns the line nr in the source data on which the element is found.
-     * This method returns <code>0</code> there is no associated source data.
-     *
-     * <dl>
-     * <dt><b>Postconditions:</b></dt>
-     * <dd>
-     * <ul>
-     * <li><code>result >= 0</code>
-     * </ul>
-     * </dd>
-     * </dl>
-     */
-    public int getLineNr() {
-        return this.lineNr;
-    }
-
-    /**
      * Returns an attribute of the element. If the attribute doesn't exist,
      * <code>null</code> is returned.
      *
@@ -1072,7 +1093,7 @@ public class XMLElement {
         if (this.ignoreCase) {
             name = name.toUpperCase(Locale.ENGLISH);
         }
-        Object key = this.attributes.get(name);
+        String key = this.attributes.get(name);
         Object result;
         if (key == null) {
             key = defaultKey;
@@ -1082,7 +1103,7 @@ public class XMLElement {
             if (allowLiterals) {
                 result = key;
             } else {
-                throw this.invalidValue(name, (String) key);
+                throw this.invalidValue(name, key);
             }
         }
         return result;
@@ -1312,7 +1333,7 @@ public class XMLElement {
         if (this.ignoreCase) {
             name = name.toUpperCase(Locale.ENGLISH);
         }
-        Object key = this.attributes.get(name);
+        String key = this.attributes.get(name);
         Integer result;
         if (key == null) {
             key = defaultKey;
@@ -1324,12 +1345,12 @@ public class XMLElement {
         }
         if (result == null) {
             if (!allowLiteralNumbers) {
-                throw this.invalidValue(name, (String) key);
+                throw this.invalidValue(name, key);
             }
             try {
-                result = Integer.valueOf((String) key);
+                result = Integer.valueOf(key);
             } catch (NumberFormatException e) {
-                throw this.invalidValue(name, (String) key);
+                throw this.invalidValue(name, key);
             }
         }
         return result.intValue();
@@ -1452,7 +1473,7 @@ public class XMLElement {
         if (this.ignoreCase) {
             name = name.toUpperCase(Locale.ENGLISH);
         }
-        Object key = this.attributes.get(name);
+        String key = this.attributes.get(name);
         Double result;
         if (key == null) {
             key = defaultKey;
@@ -1464,12 +1485,12 @@ public class XMLElement {
         }
         if (result == null) {
             if (!allowLiteralNumbers) {
-                throw this.invalidValue(name, (String) key);
+                throw this.invalidValue(name, key);
             }
             try {
-                result = Double.valueOf((String) key);
+                result = Double.valueOf(key);
             } catch (NumberFormatException e) {
-                throw this.invalidValue(name, (String) key);
+                throw this.invalidValue(name, key);
             }
         }
         return result.doubleValue();
@@ -1513,7 +1534,7 @@ public class XMLElement {
         if (this.ignoreCase) {
             name = name.toUpperCase(Locale.ENGLISH);
         }
-        Object value = this.attributes.get(name);
+        String value = this.attributes.get(name);
         if (value == null) {
             return defaultValue;
         } else if (value.equals(trueValue)) {
@@ -1521,17 +1542,8 @@ public class XMLElement {
         } else if (value.equals(falseValue)) {
             return false;
         } else {
-            throw this.invalidValue(name, (String) value);
+            throw this.invalidValue(name, value);
         }
-    }
-
-    /**
-     * Returns the name of the element.
-     *
-     * @see freemind.main.XMLElement#setName(java.lang.String) setName(String)
-     */
-    public String getName() {
-        return this.name;
     }
 
     /**
@@ -2042,28 +2054,6 @@ public class XMLElement {
     }
 
     /**
-     * Changes the name of the element.
-     * <p>
-     * The new name.
-     *
-     * </dl>
-     * <dl>
-     * <dt><b>Preconditions:</b></dt>
-     * <dd>
-     * <ul>
-     * <li><code>name != null</code>
-     * <li><code>name</code> is a valid XML identifier
-     * </ul>
-     * </dd>
-     * </dl>
-     *
-     * @see freemind.main.XMLElement#getName()
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Writes the XML element to a string.
      *
      * @see freemind.main.XMLElement#write(java.io.Writer) write(Writer)
@@ -2140,7 +2130,7 @@ public class XMLElement {
                 writer.write('"');
             }
         }
-        if ((this.contents != null) && (this.contents.length() > 0)) {
+        if ((this.contents != null) && (!this.contents.isEmpty())) {
             writer.write('>');
             // writer.write('\n');
             // fc, 17.5.06: support encoded contents
@@ -2283,7 +2273,7 @@ public class XMLElement {
             char ch = this.readChar();
             if (((ch < 'A') || (ch > 'Z')) && ((ch < 'a') || (ch > 'z'))
                     && ((ch < '0') || (ch > '9')) && (ch != '_') && (ch != '.')
-                    && (ch != ':') && (ch != '-') && (ch <= '\u007E')) {
+                    && (ch != ':') && (ch != '-') && (ch <= '~')) {
                 this.unreadChar(ch);
                 return;
             }
@@ -2449,9 +2439,7 @@ public class XMLElement {
                         break;
                     case '>':
                         if (delimiterCharsSkipped < 2) {
-                            for (int i = 0; i < delimiterCharsSkipped; i++) {
-                                buf.append(']');
-                            }
+                            buf.append("]".repeat(Math.max(0, delimiterCharsSkipped)));
                             delimiterCharsSkipped = 0;
                             buf.append('>');
                         } else {
@@ -2459,9 +2447,7 @@ public class XMLElement {
                         }
                         break;
                     default:
-                        for (int i = 0; i < delimiterCharsSkipped; i += 1) {
-                            buf.append(']');
-                        }
+                        buf.append("]".repeat(Math.max(0, delimiterCharsSkipped)));
                         buf.append(ch);
                         delimiterCharsSkipped = 0;
                 }

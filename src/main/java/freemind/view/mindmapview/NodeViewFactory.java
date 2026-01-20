@@ -27,9 +27,8 @@ import java.awt.*;
 
 class NodeViewFactory {
 
-    @SuppressWarnings("serial")
     private static class ContentPane extends JComponent {
-        static private LayoutManager layoutManager = new ContentPaneLayout();
+        static private final LayoutManager layoutManager = new ContentPaneLayout();
 
         ContentPane() {
             setLayout(layoutManager);

@@ -202,8 +202,7 @@ public class AddHookActor extends XmlActorAdapter {
         // test if hook already present
         if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
             // remove the hook:
-            for (Iterator<MindMapNode> i = destinationNodes.iterator(); i.hasNext(); ) {
-                MindMapNode currentDestinationNode = i.next();
+            for (MindMapNode currentDestinationNode : destinationNodes) {
                 // find the hook ini the current node, if present:
                 for (PermanentNodeHook hook : currentDestinationNode.getActivatedHooks()) {
                     if (hook.getName().equals(hookName)) {
@@ -224,7 +223,7 @@ public class AddHookActor extends XmlActorAdapter {
             // add the hook
             for (MindMapNode currentDestinationNode : destinationNodes) {
                 NodeHook hook = getExMapFeedback().createNodeHook(hookName, currentDestinationNode);
-                log.trace("created hook " + hookName);
+                log.trace("created hook {}", hookName);
                 // set parameters, if present
                 if (pXmlParent != null && hook instanceof PermanentNodeHook) {
                     ((PermanentNodeHook) hook).loadFrom(pXmlParent);
@@ -233,7 +232,7 @@ public class AddHookActor extends XmlActorAdapter {
                 currentDestinationNode.invokeHook(hook);
                 if (hook instanceof PermanentNodeHook) {
                     PermanentNodeHook permHook = (PermanentNodeHook) hook;
-                    log.trace("This is a permanent hook " + hookName);
+                    log.trace("This is a permanent hook {}", hookName);
                     // the focused receives the focus:
                     if (currentDestinationNode == adaptedFocussedNode) {
                         permHook.onFocusNode(getNodeView(currentDestinationNode));
@@ -274,7 +273,7 @@ public class AddHookActor extends XmlActorAdapter {
      */
     private void finishInvocation(MindMapNode focussed, List<MindMapNode> selecteds, MindMapNode adaptedFocussedNode, Collection<MindMapNode> destinationNodes) {
         // restore selection only, if nothing selected.
-        if (getViewAbstraction().getSelecteds().size() == 0) {
+        if (getViewAbstraction().getSelecteds().isEmpty()) {
             // select all destination nodes:
             getExMapFeedback().select(focussed, selecteds);
         }

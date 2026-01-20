@@ -48,7 +48,7 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
      * The column that contains the NodeHolder items
      */
     private final int mNodeTextColumn;
-    private int mNoteTextColumn;
+    private final int mNoteTextColumn;
 
     /**
      * @param node_text_column

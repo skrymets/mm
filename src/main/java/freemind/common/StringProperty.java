@@ -23,15 +23,18 @@
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class StringProperty extends PropertyBean implements PropertyControl {
-    String description;
+    @Getter
+    final String description;
 
-    String label;
+    @Getter
+    final String label;
 
     JTextField mTextField;
 
@@ -63,14 +66,6 @@ public class StringProperty extends PropertyBean implements PropertyControl {
      */
     protected void initializeTextfield() {
         mTextField = new JTextField();
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public void setValue(String value) {

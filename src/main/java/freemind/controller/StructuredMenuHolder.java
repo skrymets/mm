@@ -48,12 +48,12 @@ public class StructuredMenuHolder {
     public static final String AMOUNT_OF_VISIBLE_MENU_ITEMS = "AMOUNT_OF_VISIBLE_MENU_ITEMS";
     public static final int ICON_SIZE = 16;
     private String mOutputString;
-    private static Icon blindIcon = new BlindIcon(ICON_SIZE);
+    private static final Icon blindIcon = new BlindIcon(ICON_SIZE);
     private static final String SELECTED_ICON_PATH = "images/button_ok.png";
 
     private static final String SEPARATOR_TEXT = "000";
     private static final String ORDER_NAME = "/order";
-    Map<String, Vector<String>> menuMap;
+    final Map<String, Vector<String>> menuMap;
 
     private int mIndent;
     private static ImageIcon sSelectedIcon;
@@ -126,8 +126,7 @@ public class StructuredMenuHolder {
             if (toolTipText != null) {
                 String toolTipTextWithoutTags = HtmlTools
                         .removeHtmlTagsFromString(toolTipText);
-                log.trace("Old tool tip: " + toolTipText
-                        + ", New tool tip: " + toolTipTextWithoutTags);
+                log.trace("Old tool tip: {}, New tool tip: {}", toolTipText, toolTipTextWithoutTags);
                 holder.getMenuItem().setToolTipText(toolTipTextWithoutTags);
             }
         }
@@ -181,10 +180,10 @@ public class StructuredMenuHolder {
         }
     }
 
-    private class MapTokenPair {
-        Map map;
-        String token;
-        Vector<String> order;
+    private static class MapTokenPair {
+        final Map map;
+        final String token;
+        final Vector<String> order;
 
         MapTokenPair(Map map, String token, Vector<String> order) {
             this.map = map;
@@ -198,8 +197,8 @@ public class StructuredMenuHolder {
             String nextToken = tokens.nextToken();
             if (tokens.hasMoreTokens()) {
                 if (!thisMap.containsKey(nextToken)) {
-                    Map newMap = new HashMap<>();
-                    Vector newOrder = new Vector<>();
+                    Map<Object, Object> newMap = new HashMap<>();
+                    Vector<Object> newOrder = new Vector<>();
                     newMap.put(ORDER_NAME, newOrder);
                     thisMap.put(nextToken, newMap);
                 }
@@ -249,7 +248,7 @@ public class StructuredMenuHolder {
         Map myMap = (Map) pair.map.get(pair.token);
         updateMenus(new MenuAdder() {
 
-            StructuredMenuListener listener = new StructuredMenuListener();
+            final StructuredMenuListener listener = new StructuredMenuListener();
 
             public void addMenuItem(StructuredMenuItemHolder holder) {
                 Tools.setLabelAndMnemonic(holder.getMenuItem(), null);
@@ -326,11 +325,11 @@ public class StructuredMenuHolder {
         private int mItemCounter = 0;
         private int mMenuCounter = 0;
 
-        private JMenu mBaseMenuItem;
+        private final JMenu mBaseMenuItem;
 
         private JMenu myMenuItem;
 
-        private StructuredMenuListener listener;
+        private final StructuredMenuListener listener;
 
         public MenuItemAdder(JMenu pMenuItem) {
             this.myMenuItem = pMenuItem;
@@ -394,7 +393,7 @@ public class StructuredMenuHolder {
         MenuAdder createAdder(JMenu baseObject);
     }
 
-    private class DefaultMenuAdderCreator implements MenuAdderCreator {
+    private static class DefaultMenuAdderCreator implements MenuAdderCreator {
 
         /*
          * (non-Javadoc)
@@ -408,7 +407,7 @@ public class StructuredMenuHolder {
         }
     }
 
-    private class SeparatorHolder {
+    private static class SeparatorHolder {
         public SeparatorHolder() {
         }
     }
@@ -417,7 +416,7 @@ public class StructuredMenuHolder {
                              MenuAdderCreator factory) {
         // System.out.println(thisMap);
         // iterate through maps and do the changes:
-        Vector<String> myVector = (Vector<String>) thisMap.get(ORDER_NAME);
+        Vector<String> myVector = thisMap.get(ORDER_NAME);
         for (String category : myVector) {
             // The "." target was handled earlier.
             if (category.equals("."))
@@ -500,7 +499,7 @@ public class StructuredMenuHolder {
 
     public static class StructuredMenuListener implements
             javax.swing.event.MenuListener {
-        private Vector<StructuredMenuItemHolder> menuItemHolder = new Vector<>();
+        private final Vector<StructuredMenuItemHolder> menuItemHolder = new Vector<>();
 
         public StructuredMenuListener() {
         }

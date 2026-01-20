@@ -26,16 +26,15 @@ package freemind.common;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import freemind.controller.BlindIcon;
 import freemind.main.Resources;
+import lombok.Getter;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ThreeCheckBoxProperty extends PropertyBean implements
         PropertyControl {
-    protected String mFalseValue = "false";
+    protected final String mFalseValue = "false";
 
-    protected String mTrueValue = "true";
+    protected final String mTrueValue = "true";
 
     protected String mDontTouchValue = "don_t_touch";
 
@@ -59,13 +58,15 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
 
     private static final Icon NO_IMAGE = new BlindIcon(15);
 
-    String description;
+    @Getter
+    final String description;
 
-    String label;
+    @Getter
+    final String label;
 
     int state = 0;
 
-    JButton mButton = new JButton();
+    final JButton mButton = new JButton();
 
     /**
      *
@@ -75,13 +76,9 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
         this.description = description;
         this.label = label;
         // setState(0);
-        mButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                setState((getState() + 1) % 3);
-                firePropertyChangeEvent();
-            }
-
+        mButton.addActionListener(e -> {
+            setState((getState() + 1) % 3);
+            firePropertyChangeEvent();
         });
     }
 
@@ -89,18 +86,10 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
         return state;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
     public void setValue(String value) {
         if (value == null
-                || !(value.toLowerCase().equals(mTrueValue)
-                || value.toLowerCase().equals(mFalseValue) || value
+                || !(value.equalsIgnoreCase(mTrueValue)
+                || value.equalsIgnoreCase(mFalseValue) || value
                 .toLowerCase().equals(mDontTouchValue))) {
             throw new IllegalArgumentException("Cannot set a boolean to "
                     + value);
@@ -112,10 +101,10 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
         if (string == null) {
             return DON_T_TOUCH_VALUE_INT;
         }
-        if (string.toLowerCase().equals(mTrueValue)) {
+        if (string.equalsIgnoreCase(mTrueValue)) {
             return TRUE_VALUE_INT;
         }
-        if (string.toLowerCase().equals(mFalseValue)) {
+        if (string.equalsIgnoreCase(mFalseValue)) {
             return FALSE_VALUE_INT;
         }
         return DON_T_TOUCH_VALUE_INT;

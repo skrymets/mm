@@ -25,9 +25,13 @@ import freemind.main.FreeMind;
 import freemind.main.Tools;
 import freemind.modes.MapFeedback;
 import freemind.preferences.FreemindPropertyListener;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 
+@Setter
+@Getter
 public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
     public static final String RESOURCES_STANDARDLINKSTYLE = "standardlinkstyle";
     private static Color standardColor = null;
@@ -36,6 +40,15 @@ public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
     String destinationLabel;
     String referenceText;
     protected MindMapNode source;
+    /**
+     * -- GETTER --
+     *
+     *
+     * -- SETTER --
+     *
+     @return Returns the uniqueId.
+      * @param uniqueId The uniqueID to set.
+     */
     private String uniqueId;
 
     public LinkAdapter(MindMapNode source, MindMapNode target, MapFeedback pMapFeedback) {
@@ -49,30 +62,6 @@ public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
         }
     }
 
-    public String getDestinationLabel() {
-        return destinationLabel;
-    }
-
-    public String getReferenceText() {
-        return referenceText;
-    }
-
-    public MindMapNode getSource() {
-        return source;
-    }
-
-    public void setSource(MindMapNode source) {
-        this.source = source;
-    }
-
-    public void setDestinationLabel(String destinationLabel) {
-        this.destinationLabel = destinationLabel;
-    }
-
-    public void setReferenceText(String referenceText) {
-        this.referenceText = referenceText;
-    }
-
     // public Object clone() {
     // try {
     // return super.clone();
@@ -80,20 +69,6 @@ public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
     // return null;
     // }
     // }
-
-    /**
-     * @return Returns the uniqueId.
-     */
-    public String getUniqueId() {
-        return uniqueId;
-    }
-
-    /**
-     * @param uniqueId The uniqueID to set.
-     */
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
-    }
 
     protected Color getStandardColor() {
         return standardColor;

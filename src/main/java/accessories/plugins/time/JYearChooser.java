@@ -20,6 +20,8 @@
  */
 package accessories.plugins.time;
 
+import lombok.Setter;
+
 import javax.swing.*;
 import java.util.Calendar;
 
@@ -31,6 +33,13 @@ import java.util.Calendar;
 public class JYearChooser extends JSpinField {
     public static final String YEAR_PROPERTY = "year";
     private static final long serialVersionUID = 2648810220491090064L;
+    /**
+     * -- SETTER --
+     *  Convenience method set a day chooser that might be updated directly.
+     *
+     * @param dayChooser the day chooser
+     */
+    @Setter
     protected JDayChooser dayChooser;
     protected int oldYear;
     protected int startYear;
@@ -82,15 +91,6 @@ public class JYearChooser extends JSpinField {
      */
     public int getYear() {
         return super.getValue();
-    }
-
-    /**
-     * Convenience method set a day chooser that might be updated directly.
-     *
-     * @param dayChooser the day chooser
-     */
-    public void setDayChooser(JDayChooser dayChooser) {
-        this.dayChooser = dayChooser;
     }
 
     /**

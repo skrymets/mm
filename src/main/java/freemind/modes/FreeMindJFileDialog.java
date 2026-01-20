@@ -33,7 +33,6 @@ import java.awt.*;
  * @author foltin
  * @date 23.02.2012
  */
-@SuppressWarnings("serial")
 @Slf4j
 public class FreeMindJFileDialog extends JFileChooser implements FreeMindFileDialog {
 

@@ -70,7 +70,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
 
     public boolean isEnabled(JMenuItem pItem, Action pAction) {
         boolean result = pControllerAdapter != null && pControllerAdapter.getMap() != null;
-        log.trace("isEnabled " + pAction.getValue(AbstractAction.NAME) + "=" + result + " from " + pControllerAdapter);
+        log.trace("isEnabled {}={} from {}", pAction.getValue(AbstractAction.NAME), result, pControllerAdapter);
         return result;
     }
 

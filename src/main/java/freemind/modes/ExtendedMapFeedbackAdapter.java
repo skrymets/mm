@@ -28,7 +28,6 @@ import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.attributes.Attribute;
-import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
 import freemind.modes.mindmapmode.actions.xml.DefaultActionHandler;
@@ -41,9 +40,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -61,7 +57,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
      * @author foltin
      * @date 11.04.2014
      */
-    private final class DummyTransferable implements Transferable {
+    private static final class DummyTransferable implements Transferable {
         @Override
         public boolean isDataFlavorSupported(DataFlavor pFlavor) {
             return false;
@@ -74,14 +70,14 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
 
         @Override
         public Object getTransferData(DataFlavor pFlavor)
-                throws UnsupportedFlavorException, IOException {
+                throws UnsupportedFlavorException {
             throw new UnsupportedFlavorException(pFlavor);
         }
     }
 
-    protected ActionRegistry mActionRegistry;
+    protected final ActionRegistry mActionRegistry;
     private MindMapNode mSelectedNode;
-    protected XmlActorFactory mActorFactory;
+    protected final XmlActorFactory mActorFactory;
     private MindMapHookFactory mNodeHookFactory;
 
     /**
@@ -142,7 +138,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
         nodeChanged(node);
         final ListIterator<MindMapNode> childrenFolded = node.childrenFolded();
         while (childrenFolded.hasNext()) {
-            MindMapNode child = (MindMapNode) childrenFolded.next();
+            MindMapNode child = childrenFolded.next();
             if (!(child.hasStyle() && child.getEdge().hasStyle())) {
                 nodeStyleChanged(child);
             }
@@ -201,8 +197,8 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
      * @see freemind.modes.ExtendedMapFeedback#load(java.io.File)
      */
     @Override
-    public MapFeedback load(File pFile) throws FileNotFoundException,
-            IOException, XMLParseException, URISyntaxException {
+    public MapFeedback load(File pFile) throws
+            XMLParseException {
         return this;
     }
 
@@ -320,7 +316,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
 
     @Override
     public void applyPattern(MindMapNode pNode, Pattern pPattern) {
-        StylePatternFactory.applyPattern(pNode, pPattern, Collections.<Pattern>emptyList(), Collections.<MindMapControllerPlugin>emptySet(), this);
+        StylePatternFactory.applyPattern(pNode, pPattern, Collections.emptyList(), Collections.emptySet(), this);
     }
 
     @Override

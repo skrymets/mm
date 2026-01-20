@@ -51,7 +51,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
 
     private MindMapMapModel mMap;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.setProperty("java.awt.headless", "true");
         if (args.length != 2) {
             System.out.println("Export map to png.\nUsage:\n java -jar lib/freemind.jar freemind.view.mindmapview.IndependentMapViewCreator <map_path>.mm <picture_path>.png");
@@ -64,15 +64,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
             creator.exportFileToPng(args[0], outputFileName, freeMindMain);
             System.out.println("Export to " + outputFileName + " done.");
             System.exit(0);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            log.error(e.getLocalizedMessage(), e);
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            log.error(e.getLocalizedMessage(), e);
-
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | IOException e) {
             // TODO Auto-generated catch block
             log.error(e.getLocalizedMessage(), e);
 
@@ -83,7 +75,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
 
     public MapView createMapViewForFile(String inputFileName, JPanel parent,
                                         FreeMindMain pFreeMindMain) throws
-            IOException, URISyntaxException {
+            IOException {
         mMap = new MindMapMapModel(this);
         Tools.FileReaderCreator readerCreator = new Tools.FileReaderCreator(new File(inputFileName));
         MindMapNode node = mMap.loadTree(readerCreator, MapAdapter.sDontAskInstance);

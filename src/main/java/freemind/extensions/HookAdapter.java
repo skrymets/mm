@@ -25,6 +25,8 @@ package freemind.extensions;
 
 import freemind.modes.MapFeedback;
 import freemind.modes.ModeController;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
@@ -39,7 +41,17 @@ import java.util.Properties;
 @Slf4j
 public class HookAdapter implements MindMapHook {
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see freemind.modes.NodeHook#getName()
+     */
+    @Setter
+    @Getter
     private String name;
+    /**
+     */
+    @Setter
     private Properties properties;
     private ModeController controller;
 
@@ -55,19 +67,6 @@ public class HookAdapter implements MindMapHook {
      */
     public HookAdapter() {
         baseClass = null;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.modes.NodeHook#getName()
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     /*
@@ -106,13 +105,6 @@ public class HookAdapter implements MindMapHook {
     /**
      *
      */
-    public void setProperties(Properties properties) {
-        this.properties = properties;
-    }
-
-    /**
-     *
-     */
     public void setController(MapFeedback controller) {
         this.mapFeedback = controller;
         if (controller instanceof ModeController) {
@@ -131,7 +123,7 @@ public class HookAdapter implements MindMapHook {
             result = getController().getText(property);
         }
         if (result == null) {
-            log.warn("The following property was not found:" + property);
+            log.warn("The following property was not found:{}", property);
         }
         return result;
     }

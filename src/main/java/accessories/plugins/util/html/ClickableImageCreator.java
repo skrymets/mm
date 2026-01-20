@@ -42,7 +42,7 @@ public class ClickableImageCreator {
         // <area shape="rect" href="#id47708" alt="Screenshots cross-red coming
         // soon." title="Screenshots cross-red coming soon."
         // coords="699,143,835,168" />
-        String shape = "rect";
+        final String shape = "rect";
 
         String href;
 
@@ -50,7 +50,7 @@ public class ClickableImageCreator {
 
         String title;
 
-        Rectangle coordinates = new Rectangle();
+        final Rectangle coordinates = new Rectangle();
 
         /**
          * Optionally holds the link (URL) of a node.
@@ -59,17 +59,17 @@ public class ClickableImageCreator {
 
     }
 
-    Vector<AreaHolder> area = new Vector<>();
+    final Vector<AreaHolder> area = new Vector<>();
 
     private final MindMapNode root;
 
     private final ModeController modeController;
 
-    private Rectangle innerBounds;
+    private final Rectangle innerBounds;
 
     private final String linkFormatter;
 
-    private MapView mapView;
+    private final MapView mapView;
 
     /**
      * @param linkFormatter if for example the link abc must be replaced with FMabcFM,
@@ -93,21 +93,13 @@ public class ClickableImageCreator {
 
     public String generateHtml() {
         StringBuffer htmlArea = new StringBuffer();
-        for (Iterator<AreaHolder> i = area.iterator(); i.hasNext(); ) {
-            AreaHolder holder = i.next();
+        for (AreaHolder holder : area) {
             MessageFormat formatter = new MessageFormat(linkFormatter);
             String replacement = formatter.format(new Object[]{holder.href, holder.link});
             if (replacement.isEmpty()) {
                 continue;
             }
-            htmlArea.append("<area shape=\"" + holder.shape + "\" href=\""
-                    + replacement + "\" alt=\""
-                    + HtmlTools.toXMLEscapedText(holder.alt) + "\" title=\""
-                    + HtmlTools.toXMLEscapedText(holder.title) + "\" coords=\""
-                    + holder.coordinates.x + "," + holder.coordinates.y + ","
-                    + (holder.coordinates.width + holder.coordinates.x) + ","
-                    + +(holder.coordinates.height + holder.coordinates.y)
-                    + "\" />");
+            htmlArea.append("<area shape=\"").append(holder.shape).append("\" href=\"").append(replacement).append("\" alt=\"").append(HtmlTools.toXMLEscapedText(holder.alt)).append("\" title=\"").append(HtmlTools.toXMLEscapedText(holder.title)).append("\" coords=\"").append(holder.coordinates.x).append(",").append(holder.coordinates.y).append(",").append(holder.coordinates.width + holder.coordinates.x).append(",").append(+(holder.coordinates.height + holder.coordinates.y)).append("\" />");
         }
         return htmlArea.toString();
     }

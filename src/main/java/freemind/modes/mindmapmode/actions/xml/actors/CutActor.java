@@ -21,7 +21,6 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.CutNodeAction;
-import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.model.MindMapNode;
@@ -30,7 +29,6 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.actors.PasteActor.NodeCoordinate;
 
 import java.awt.datatransfer.Transferable;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -61,8 +59,7 @@ public class CutActor extends XmlActorAdapter {
         CompoundAction undo = new CompoundAction();
         // sort selectedNodes list by depth, in order to guarantee that sons are
         // deleted first:
-        for (Iterator<MindMapNode> i = nodeList.iterator(); i.hasNext(); ) {
-            MindMapNode node = i.next();
+        for (MindMapNode node : nodeList) {
             if (node.getParentNode() == null) {
                 continue;
             }
@@ -74,7 +71,7 @@ public class CutActor extends XmlActorAdapter {
             NodeCoordinate coord = new NodeCoordinate(node, node.isLeft());
             Transferable copy = getExMapFeedback().copy(node, true);
             XmlAction pasteNodeAction = getXmlActorFactory().getPasteActor()
-                    .getPasteNodeAction(copy, coord, (UndoPasteNodeAction) null);
+                    .getPasteNodeAction(copy, coord, null);
             // The paste actions are reversed because of the strange
             // coordinates.
             CompoundAction.Choice undoActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(pasteNodeAction);

@@ -38,7 +38,7 @@ public class NodeAttributeTable extends MindMapNodeHookAdapter {
         super.startupMapHook();
         String foldingType = getResourceString("command");
         // get registration:
-        log.info("processing command " + foldingType);
+        log.info("processing command {}", foldingType);
         if (foldingType.equals("jump")) {
             // jump to the notes:
             getSplitPaneToScreen();

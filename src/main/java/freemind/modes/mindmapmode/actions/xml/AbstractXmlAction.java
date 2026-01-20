@@ -25,6 +25,7 @@ package freemind.modes.mindmapmode.actions.xml;
 
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.MindmapAction;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,9 +36,12 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public abstract class AbstractXmlAction extends MindmapAction {
 
+    /**
+     */
+    @Getter
     private ActorXml actor;
 
-    private MindMapController controller;
+    private final MindMapController controller;
 
     protected AbstractXmlAction(String name, Icon icon, MindMapController controller) {
         super(name, icon, controller);
@@ -71,13 +75,6 @@ public abstract class AbstractXmlAction extends MindmapAction {
             getMindMapController().getActionRegistry().registerActor(actor,
                     actor.getDoActionClass());
         }
-    }
-
-    /**
-     *
-     */
-    public ActorXml getActor() {
-        return actor;
     }
 
 }
