@@ -20,7 +20,7 @@
  * Created on 22.06.2011
  */
 
-/** 
+/**
  * To use this script, call 
  * java -Dstartup_groovy_script=accessories\ExportToHtml.groovy -jar lib\freemind.jar
  */
@@ -32,9 +32,11 @@ def ex = c.getHookFactory().createModeControllerHook("accessories/plugins/Export
 ex.setController(c)
 // calculate file name
 def file = c.getMap().getFile().getAbsolutePath().replaceFirst(
-                    "\\.[^.]*?\$", "") + ".html"
+        "\\.[^.]*?\$", "") + ".html"
 try {
-	ex.transform(new File(file));
-	} catch(e) { print e; }
+    ex.transform(new File(file));
+} catch (e) {
+    print e;
+}
 System.exit(0);
 return 0;

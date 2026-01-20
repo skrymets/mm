@@ -25,24 +25,25 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import freemind.controller.MenuItemSelectedListener;
 import freemind.controller.actions.generated.instance.BoldNodeAction;
 import freemind.modes.mindmapmode.MindMapController;
 
+import javax.swing.*;
+
 @SuppressWarnings("serial")
 public class BoldAction extends NodeGeneralAction implements
-		MenuItemSelectedListener {
-	/**
-	 */
-	public BoldAction(MindMapController modeController) {
-		super(modeController, "bold", "images/Bold16.gif");
-		setDoActionClass(BoldNodeAction.class);
-	}
-	public boolean isSelected(JMenuItem item, Action action) {
-		return modeController.getSelected().isBold();
-	}
+        MenuItemSelectedListener {
+    /**
+     *
+     */
+    public BoldAction(MindMapController modeController) {
+        super(modeController, "bold", "images/Bold16.gif");
+        setDoActionClass(BoldNodeAction.class);
+    }
+
+    public boolean isSelected(JMenuItem item, Action action) {
+        return modeController.getSelected().isBold();
+    }
 
 }

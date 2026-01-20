@@ -42,11 +42,9 @@ import javax.swing.text.html.CSS;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionListener {
     private final Object attributeKey;
@@ -61,7 +59,7 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
     private boolean allowNegative = false;
     public static final String UNIT_PT = "pt";
     public static final String UNIT_PERCENT = "%";
-    public static final String[] UNIT_VALUES = { UNIT_PT, UNIT_PERCENT };
+    public static final String[] UNIT_VALUES = {UNIT_PT, UNIT_PERCENT};
     public static final int UNIT_TYPE_PT = 0;
     public static final int UNIT_TYPE_PERCENT = 1;
     public static final int TYPE_NONE = 0;
@@ -72,10 +70,10 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
      * construct a basic SizeSelectorPanel with a
      * JSpinner to select a value
      *
-     * @param key  the attribute key this instance of SizeSelectionPanel
-     *      represents
-     * @param allowNegative  true, if negative values are to be allowed in the
-     *      panel, false if not
+     * @param key           the attribute key this instance of SizeSelectionPanel
+     *                      represents
+     * @param allowNegative true, if negative values are to be allowed in the
+     *                      panel, false if not
      */
     public SizeSelectorPanel(final Object key, final Object htmlKey, final boolean allowNegative) {
         super(new FlowLayout());
@@ -95,12 +93,12 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
      * JSpinner to select a value and either a JComboBox to select a given
      * unit for the selection value or a JLabel showing a fixed unit.
      *
-     * @param key  the attribute key this instance of SizeSelectionPanel
-     *      represents
-     * @param allowNegative  true, if negative values are to be allowed in the
-     *      panel, false if not
-     * @param type  the type of unit indicator, one of TYPE_LABEL and
-     *      TYPE_COMBO
+     * @param key           the attribute key this instance of SizeSelectionPanel
+     *                      represents
+     * @param allowNegative true, if negative values are to be allowed in the
+     *                      panel, false if not
+     * @param type          the type of unit indicator, one of TYPE_LABEL and
+     *                      TYPE_COMBO
      */
     public SizeSelectorPanel(final Object key, final Object htmlKey, final boolean allowNegative, final int type) {
         this(key, htmlKey, allowNegative);
@@ -141,8 +139,7 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
         if (unitSelector != null) {
             //System.out.println("SizeSelectorPanel setValue setting combo");
             unitSelector.setSelectedItem(unit);
-        }
-        else if (unitName != null) {
+        } else if (unitName != null) {
             //System.out.println("SizeSelectorPanel setValue setting label");
             unitName.setText(unit);
         }
@@ -166,11 +163,10 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
     /**
      * set the value of this <code>AttributeComponent</code>
      *
-     * @param a  the set of attributes possibly having an
+     * @param a the set of attributes possibly having an
      *          attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute,
-     *            false if not
+     * false if not
      */
     public boolean setValue(final AttributeSet a) {
         boolean success = false;
@@ -180,8 +176,7 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
             //System.out.println("SizeSelectorPanel CSS valObj=" + valObj);
             setValue(valObj.toString());
             success = true;
-        }
-        else {
+        } else {
             if (htmlAttrKey != null) {
                 valObj = a.getAttribute(htmlAttrKey);
                 if (valObj != null) {
@@ -209,8 +204,7 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
             //System.out.println("adjustMinMax percent");
             model.setMinimum(new Integer(minVal));
             model.setMaximum(new Integer(100));
-        }
-        else {
+        } else {
             //System.out.println("adjustMinMax pt");
             model.setMinimum(new Integer(minVal));
             model.setMaximum(new Integer(Integer.MAX_VALUE));
@@ -227,11 +221,9 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
         String unit = "";
         if (unitSelector != null) {
             unit = unitSelector.getSelectedItem().toString();
-        }
-        else if (unitName != null) {
+        } else if (unitName != null) {
             unit = unitName.getText();
-        }
-        else {
+        } else {
             unit = UNIT_PT;
         }
         if (unit.equalsIgnoreCase(UNIT_PT)) {
@@ -268,8 +260,7 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
             if (attributeKey instanceof CSS.Attribute) {
                 //a.addAttribute(attributeKey, value.toString() + unit);
                 Util.styleSheet().addCSSAttribute(a, (CSS.Attribute) attributeKey, value.toString() + unit);
-            }
-            else {
+            } else {
                 a.addAttribute(attributeKey, value.toString());
                 if (htmlAttrKey != null) {
                     a.addAttribute(htmlAttrKey, value.toString());
@@ -288,8 +279,7 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
             if (attributeKey instanceof CSS.Attribute) {
                 //a.addAttribute(attributeKey, value.toString() + unit);
                 Util.styleSheet().addCSSAttribute(a, (CSS.Attribute) attributeKey, value.toString() + unit);
-            }
-            else {
+            } else {
                 a.addAttribute(attributeKey, value.toString());
                 if (htmlAttrKey != null) {
                     a.addAttribute(htmlAttrKey, value.toString());
@@ -297,8 +287,7 @@ class SizeSelectorPanel extends JPanel implements AttributeComponent, ActionList
             }
             //System.out.println("SizeSelectorPanel getValue()='" + a + "'");
             return a;
-        }
-        else {
+        } else {
             return getValue();
         }
     }

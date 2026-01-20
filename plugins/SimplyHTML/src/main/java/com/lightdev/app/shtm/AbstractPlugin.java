@@ -45,9 +45,6 @@ import javax.swing.JMenuItem;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the GNU General Public License, for details see file gpl.txt in the distribution package of this software
- *
- *
- *
  * @see com.lightdev.app.shtm.DynamicResource
  */
 public abstract class AbstractPlugin implements SHTMLPlugin {
@@ -69,7 +66,7 @@ public abstract class AbstractPlugin implements SHTMLPlugin {
 
     /**
      * init the plug-in
-     *
+     * <p>
      * this is called by the PluginManager directly after instantiating the plug-in
      */
     public void initPlugin(final SHTMLPanelImpl owner) {
@@ -115,7 +112,7 @@ public abstract class AbstractPlugin implements SHTMLPlugin {
      * create, show or hide frame as needed, depending on a given dock location
      *
      * @param location the dock location of the plug-in, one of DOCK_LOCATION_TOP, DOCK_LOCATION_BOTTOM, DOCK_LOCATION.LEFT, DOCK_LOCATION_RIGHT or
-     * DOCK_LOCATION_NONE, if the component shall not dock.
+     *                 DOCK_LOCATION_NONE, if the component shall not dock.
      */
     protected void createFrameAsNeeded(final int location) {
         if (location == SHTMLPlugin.DOCK_LOCATION_NONE) {
@@ -133,16 +130,17 @@ public abstract class AbstractPlugin implements SHTMLPlugin {
     }
 
     /* ----------- SimplyHTML plugin interface implementation start --------- */
+
     /**
      * initialize the plugin
      *
-     * @param owner the owner of this plug-in
+     * @param owner        the owner of this plug-in
      * @param internalName the internal name this plug-in shall have
      * @param pluginMenuId the id of the plug-in menu in the TextResources, or null if no plugin-in menu is to be created
-     * @param helpMenuId the id of the help menu for this plug-in in the TextResources, or null if no help menu is to be created
+     * @param helpMenuId   the id of the help menu for this plug-in in the TextResources, or null if no help menu is to be created
      */
     public void initPlugin(final SHTMLPanel owner, final String internalName, final String pluginMenuId,
-            final String helpMenuId) {
+                           final String helpMenuId) {
         this.owner = (SHTMLPanelImpl) owner;
         this.internalName = internalName;
         this.pluginMenuId = pluginMenuId;
@@ -213,7 +211,7 @@ public abstract class AbstractPlugin implements SHTMLPlugin {
      * set the location the component returned by getDockComponent() shall be docked at. Persistently store setting in a preferences file.
      *
      * @param location the dock location, one of DOCK_LOCATION_TOP, DOCK_LOCATION_BOTTOM, DOCK_LOCATION.LEFT, DOCK_LOCATION_RIGHT or DOCK_LOCATION_NONE, if the
-     * component shall not dock.
+     *                 component shall not dock.
      */
     public void setDockLocation(final int location) {
         dockLocation = location;
@@ -300,7 +298,6 @@ public abstract class AbstractPlugin implements SHTMLPlugin {
      * get a string from the resource bundle of the owner of this plug-in
      *
      * @param nm the name of the string resource to get
-     *
      * @return the string with the given name or null, if none is found
      */
     public String getOwnerResString(final String nm) {
@@ -311,7 +308,6 @@ public abstract class AbstractPlugin implements SHTMLPlugin {
      * get an action from the resource bundle of the owner of this plug-in
      *
      * @param cmd the name of the action to get
-     *
      * @return the action with the given name or null, if none is found
      */
     public Action getOwnerAction(final String cmd) {

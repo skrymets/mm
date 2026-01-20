@@ -30,11 +30,9 @@ import javax.swing.KeyStroke;
  *
  * @author Dimitri Polivaev
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class SHTMLMenuBar extends JMenuBar {
     /* (non-Javadoc)

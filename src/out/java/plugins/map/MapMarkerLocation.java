@@ -20,60 +20,60 @@
 package plugins.map;
 
 
-
 import freemind.modes.MindMapNode;
 
 @SuppressWarnings("serial")
 public class MapMarkerLocation extends MapMarkerBase {
 
-	private final MapNodePositionHolder mNodePositionHolder;
-	/**
-	 * @param pNodePositionHolder
-	 * @param pMapDialog 
-	 */
-	public MapMarkerLocation(MapNodePositionHolder pNodePositionHolder, MapDialog pMapDialog) {
-		super(pMapDialog);
-		mNodePositionHolder = pNodePositionHolder;
-		update();
-	}
+    private final MapNodePositionHolder mNodePositionHolder;
 
-	/**
-	 * Either start or when something changes on the node, this method is called.
-	 */
-	public void update() {
-		MindMapNode node = mNodePositionHolder.getNode();
-		setText(node.getText());
-		setForeground(node.getColor());
-		setSize(getPreferredSize());
-	}
+    /**
+     * @param pNodePositionHolder
+     * @param pMapDialog
+     */
+    public MapMarkerLocation(MapNodePositionHolder pNodePositionHolder, MapDialog pMapDialog) {
+        super(pMapDialog);
+        mNodePositionHolder = pNodePositionHolder;
+        update();
+    }
 
-	public double getLat() {
-		return mNodePositionHolder.getPosition().getLat();
-	}
+    /**
+     * Either start or when something changes on the node, this method is called.
+     */
+    public void update() {
+        MindMapNode node = mNodePositionHolder.getNode();
+        setText(node.getText());
+        setForeground(node.getColor());
+        setSize(getPreferredSize());
+    }
 
-	public double getLon() {
-		return mNodePositionHolder.getPosition().getLon();
-	}
+    public double getLat() {
+        return mNodePositionHolder.getPosition().getLat();
+    }
 
-	public String toString() {
-		return "MapMarkerLocation for node "
-				+ mNodePositionHolder.getNode().getText() + " at " + getLat()
-				+ " " + getLon();
-	}
+    public double getLon() {
+        return mNodePositionHolder.getPosition().getLon();
+    }
 
-	public MapNodePositionHolder getNodePositionHolder() {
-		return mNodePositionHolder;
-	}
+    public String toString() {
+        return "MapMarkerLocation for node "
+                + mNodePositionHolder.getNode().getText() + " at " + getLat()
+                + " " + getLon();
+    }
 
-	@Override
-	public void setLat(double pLat) {
-		mNodePositionHolder.getPosition().setLat(pLat);
-	}
+    public MapNodePositionHolder getNodePositionHolder() {
+        return mNodePositionHolder;
+    }
 
-	@Override
-	public void setLon(double pLon) {
-		mNodePositionHolder.getPosition().setLon(pLon);
-	}
+    @Override
+    public void setLat(double pLat) {
+        mNodePositionHolder.getPosition().setLat(pLat);
+    }
+
+    @Override
+    public void setLon(double pLon) {
+        mNodePositionHolder.getPosition().setLon(pLon);
+    }
 
 
 }

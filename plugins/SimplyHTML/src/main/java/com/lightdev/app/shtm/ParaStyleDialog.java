@@ -62,38 +62,60 @@ import javax.swing.text.html.StyleSheet;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionListener, ListSelectionListener,
         ChangeListener {
     private final String standardStyleName = Util.getResourceString("standardStyleName");
-    /** mode to edit named styles with this dialog */
+    /**
+     * mode to edit named styles with this dialog
+     */
     private static int MODE_NAMED_STYLES = 1;
-    /** mode to set a paragraph style with this dialog */
+    /**
+     * mode to set a paragraph style with this dialog
+     */
     private static int MODE_PARAGRAPH_STYLE = 2;
-    /** button to save a named style */
+    /**
+     * button to save a named style
+     */
     private JButton saveStyleBtn;
-    /** button to save a named style under a different name */
+    /**
+     * button to save a named style under a different name
+     */
     private JButton saveStyleAsBtn;
-    /** button to delete a named style */
+    /**
+     * button to delete a named style
+     */
     private JButton deleteStyleBtn;
-    /** the mode this dialog was created in */
+    /**
+     * the mode this dialog was created in
+     */
     private final int mode;
-    /** the AttributeComponents in this dialog */
+    /**
+     * the AttributeComponents in this dialog
+     */
     private final Vector components = new Vector();
-    /** the FontPanel for the paragraph font settings */
+    /**
+     * the FontPanel for the paragraph font settings
+     */
     private final FontPanel fp;
-    /** list of styles available in style sheet */
+    /**
+     * list of styles available in style sheet
+     */
     private JList styleList;
-    /** style sheet to use in MODE_NAMED_STYLES */
+    /**
+     * style sheet to use in MODE_NAMED_STYLES
+     */
     private StyleSheet styles;
-    /** the document this dialog is operating on when in MODE_NAMED_STYLES */
+    /**
+     * the document this dialog is operating on when in MODE_NAMED_STYLES
+     */
     private final Document doc;
-    /** set of attributes for mapping discrepancies between HTML and Java */
+    /**
+     * set of attributes for mapping discrepancies between HTML and Java
+     */
     private AttributeSet mapSet;
     /**
      * panel for setting paragraph styles (needed in the change listener
@@ -105,16 +127,20 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
      * of the list of named styles)
      */
     private final MarginPanel mp;
-    /** table to map between HTML tags and 'content types' */
+    /**
+     * table to map between HTML tags and 'content types'
+     */
     static private NamedObject[] cTypes = null;
-    /** selector for content type */
+    /**
+     * selector for content type
+     */
     private JComboBox cType;
 
     /**
      * create a <code>ParaStyleDialog</code> to manipulate
      * the format of a paragraph
      *
-     * @param parent  the parent frame of this dialog
+     * @param parent the parent frame of this dialog
      * @param title  the text to be shown as title for this dialog
      */
     public ParaStyleDialog(final Frame parent, final String title) {
@@ -125,9 +151,9 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
      * create a <code>ParaStyleDialog</code> to edit named
      * styles of a given document
      *
-     * @param parent  the parent frame of this dialog
-     * @param title the text to be shown as title for this dialog
-     * @param doc  the document having the style sheet to edit named styles from
+     * @param parent the parent frame of this dialog
+     * @param title  the text to be shown as title for this dialog
+     * @param doc    the document having the style sheet to edit named styles from
      */
     public ParaStyleDialog(final Frame parent, final String title, final Document doc) {
         this(parent, title, doc, MODE_NAMED_STYLES);
@@ -136,9 +162,9 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
     /**
      * construct a <code>ParaStyleDialog</code>
      *
-     * @param parent  the parent frame for this dialog
+     * @param parent the parent frame for this dialog
      * @param title  the text to be shown as title for this dialog
-     * @param mode  the mode this dialog is to be created, one of MODE_NAMED_STYLES or MODE_PARAGRAPH_STYLE
+     * @param mode   the mode this dialog is to be created, one of MODE_NAMED_STYLES or MODE_PARAGRAPH_STYLE
      */
     private ParaStyleDialog(final Frame parent, final String title, final Document doc, final int mode) {
         super(parent, title);
@@ -158,7 +184,7 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
         mp = new MarginPanel();
         components.add(mp);
         mp.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("cellMarginTabLabel")));
+                .getResourceString("cellMarginTabLabel")));
         if (mode == MODE_NAMED_STYLES) {
             styles = ((SHTMLDocument) doc).getStyleSheet();
             // create a combo box for content type
@@ -194,15 +220,14 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
             nsPanel.add(new JScrollPane(styleList), BorderLayout.CENTER);
             nsPanel.add(hPanel, BorderLayout.EAST);
             nsPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-                .getResourceString("stylePanelLabel")));
+                    .getResourceString("stylePanelLabel")));
             nsPanel.setVisible(mode == MODE_NAMED_STYLES);
             // use a helper panel for placement of style and named styles panels
             hPanel = new JPanel(new BorderLayout());
             hPanel.add(sp, BorderLayout.NORTH);
             hPanel.add(nsPanel, BorderLayout.CENTER);
             okButton.setText(Util.getResourceString("closeLabel"));
-        }
-        else {
+        } else {
             hPanel = new JPanel(new BorderLayout());
             hPanel.add(sp, BorderLayout.NORTH);
         }
@@ -287,8 +312,7 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
             }
             attributes.addAttributes(fp.getAttributes(includeUnchanged));
             return attributes;
-        }
-        else {
+        } else {
             return getValue();
         }
     }
@@ -296,11 +320,10 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
     /**
      * set the value of this <code>AttributeComponent</code>
      *
-     * @param a  the set of attributes possibly having an
+     * @param a the set of attributes possibly having an
      *          attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute,
-     *            false if not
+     * false if not
      */
     public boolean setValue(final AttributeSet a) {
         boolean result = true;
@@ -342,8 +365,7 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
                 final String className = styleList.getSelectedValue().toString();
                 if (className.equalsIgnoreCase(standardStyleName)) {
                     styleName = getContentType();
-                }
-                else {
+                } else {
                     styleName = getContentType() + Util.CLASS_SEPARATOR + className;
                 }
                 //Style style = styles.getStyle(styleName);
@@ -352,8 +374,8 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
                     style = new SimpleAttributeSet();
                 }
                 final MutableAttributeSet allStyles = (MutableAttributeSet) SHTMLPanelImpl.getMaxAttributes(
-                    ((SHTMLDocument) doc).getCharacterElement(doc.getEndPosition().getOffset()),
-                    ((SHTMLDocument) doc).getStyleSheet());
+                        ((SHTMLDocument) doc).getCharacterElement(doc.getEndPosition().getOffset()),
+                        ((SHTMLDocument) doc).getStyleSheet());
                 allStyles.addAttributes(style);
                 //mapSet = new AttributeMapper(Util.resolveAttributes(style)).getMappedAttributes(AttributeMapper.toJava);
                 //setValue(style);
@@ -405,14 +427,13 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
             initialName = Util.getResourceString("newStyleDefaultName");
         }
         final String newStyleName = Util.nameInput(null, initialName, "\\w[\\w ]*", "styleNameInputTitle",
-            "styleNameInputText").trim();
+                "styleNameInputText").trim();
         if (newStyleName != null) {
             if (styleNameExists(newStyleName) || newStyleName.equalsIgnoreCase(standardStyleName)) {
                 if (Util.msg(JOptionPane.YES_NO_OPTION, "confirmSaveAs", "fileExistsQuery", newStyleName, " ")) {
                     saveStyleAs(newStyleName);
                 }
-            }
-            else {
+            } else {
                 saveStyleAs(newStyleName);
             }
         }
@@ -434,7 +455,7 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
     /**
      * save a style under a given name
      *
-     * @param newStyleName  the name the style has to be saved under
+     * @param newStyleName the name the style has to be saved under
      */
     private void saveStyleAs(final String newStyleName) {
         try {
@@ -466,8 +487,7 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
                     sd.insertStyleRef();
                 }
             }
-        }
-        catch (final Exception ex) {
+        } catch (final Exception ex) {
             Util.errMsg(this, ex.getMessage(), ex);
         }
     }
@@ -485,10 +505,9 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
      * check whether or not a named style already exists in the style sheet
      * associated to this dialog
      *
-     * @param styleName  the name of the style to be looked for
-     *
+     * @param styleName the name of the style to be looked for
      * @return true, if the given style name alread is used in the style sheet,
-     *    false if not
+     * false if not
      */
     private boolean styleNameExists(final String styleName) {
         final Vector styleNames = Util.getStyleNamesForTag(styles, getContentType() /*HTML.Tag.P.toString()*/);
@@ -515,7 +534,7 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
         final Object src = e.getSource();
         if (src instanceof StyleContext.NamedStyle) {
             final Vector styleNames = Util
-                .getStyleNamesForTag((AttributeSet) src, getContentType() /*HTML.Tag.P.toString()*/);
+                    .getStyleNamesForTag((AttributeSet) src, getContentType() /*HTML.Tag.P.toString()*/);
             styleNames.insertElementAt(standardStyleName, 0);
             styleList.setModel(new DefaultComboBoxModel(styleNames));
         }
@@ -529,18 +548,14 @@ class ParaStyleDialog extends DialogShell implements AttributeComponent, ActionL
         final Object src = e.getSource();
         if (src.equals(saveStyleBtn)) {
             doSaveStyle();
-        }
-        else if (src.equals(saveStyleAsBtn)) {
+        } else if (src.equals(saveStyleAsBtn)) {
             doSaveStyleAs();
-        }
-        else if (src.equals(deleteStyleBtn)) {
+        } else if (src.equals(deleteStyleBtn)) {
             doDeleteStyle();
-        }
-        else if (src.equals(cType)) {
+        } else if (src.equals(cType)) {
             // update list of named styles
             updateStyleList();
-        }
-        else {
+        } else {
             super.actionPerformed(e);
         }
     }

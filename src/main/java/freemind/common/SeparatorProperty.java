@@ -26,27 +26,27 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 
 public class SeparatorProperty implements PropertyControl {
 
-	String label;
+    String label;
 
-	public SeparatorProperty(String label) {
-		super();
-		this.label = label;
-	}
+    public SeparatorProperty(String label) {
+        super();
+        this.label = label;
+    }
 
-	public String getDescription() {
-		return null;
-	}
+    public String getDescription() {
+        return null;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
-		builder.appendSeparator(pTranslator.getText("separator." + getLabel()));
-	}
+    public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
+        builder.appendSeparator(pTranslator.getText("separator." + getLabel()));
+    }
 
-	public void setEnabled(boolean pEnabled) {
+    public void setEnabled(boolean pEnabled) {
 
-	}
+    }
 
 }

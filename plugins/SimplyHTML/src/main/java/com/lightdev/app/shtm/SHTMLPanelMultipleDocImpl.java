@@ -35,11 +35,17 @@ class SHTMLPanelMultipleDocImpl extends SHTMLPanelImpl implements ChangeListener
     public static final String closeAllAction = "closeAll";
     public static final String saveAction = "save";
     public static final String saveAsAction = "saveAs";
-    /** the tabbed pane for adding documents to show to */
+    /**
+     * the tabbed pane for adding documents to show to
+     */
     private JTabbedPane jtpDocs;
-    /** tool bar selector for styles */
+    /**
+     * tool bar selector for styles
+     */
     private StyleSelector styleSelector;
-    /** number of currently active tab */
+    /**
+     * number of currently active tab
+     */
     private int activeTabNo;
 
     public SHTMLPanelMultipleDocImpl() {
@@ -90,8 +96,7 @@ class SHTMLPanelMultipleDocImpl extends SHTMLPanelImpl implements ChangeListener
             styleSelector.setMaximumSize(comboBoxSize);
             jtpDocs.addChangeListener(styleSelector);
             toolBar.add(styleSelector);
-        }
-        else {
+        } else {
             super.createToolbarItem(toolBar, itemKey);
         }
     }
@@ -138,8 +143,7 @@ class SHTMLPanelMultipleDocImpl extends SHTMLPanelImpl implements ChangeListener
             if (!ignoreActivateDoc) {
                 getDocumentPane().fireActivated();
             }
-        }
-        else {
+        } else {
             setDocumentPane(null);
             setEditorPane(null);
             doc = null;

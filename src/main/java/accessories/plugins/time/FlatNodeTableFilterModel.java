@@ -22,127 +22,122 @@
 /*$Id: FlatNodeTableFilterModel.java,v 1.1.2.2 2008/11/01 21:11:42 christianfoltin Exp $*/
 package accessories.plugins.time;
 
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import accessories.plugins.time.TimeList.NodeHolder;
+import accessories.plugins.time.TimeList.NotesHolder;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
-
-import accessories.plugins.time.TimeList.NodeHolder;
-import accessories.plugins.time.TimeList.NotesHolder;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
 public class FlatNodeTableFilterModel extends AbstractTableModel {
 
-	private final TableModel mTableModel;
-	private String mFilterRegexp;
-	/**
-	 * Contains indices or rows matching the filter criteria.
-	 */
-	private ArrayList<Integer> mIndexArray;
-	private Pattern mPattern;
-	/**
-	 * The column that contains the NodeHolder items
-	 */
-	private final int mNodeTextColumn;
-	private int mNoteTextColumn;
+    private final TableModel mTableModel;
+    /**
+     * Contains indices or rows matching the filter criteria.
+     */
+    private ArrayList<Integer> mIndexArray;
+    private Pattern mPattern;
+    /**
+     * The column that contains the NodeHolder items
+     */
+    private final int mNodeTextColumn;
+    private int mNoteTextColumn;
 
-	/**
-	 * @param node_text_column
-	 * @param note_text_column TODO
-	 * 
-	 */
-	public FlatNodeTableFilterModel(TableModel tableModel, int node_text_column, int note_text_column) {
-		super();
-		this.mTableModel = tableModel;
-		this.mNodeTextColumn = node_text_column;
-		mNoteTextColumn = note_text_column;
-		tableModel.addTableModelListener(new TableModelHandler());
-		resetFilter();
-	}
+    /**
+     * @param node_text_column
+     * @param note_text_column TODO
+     */
+    public FlatNodeTableFilterModel(TableModel tableModel, int node_text_column, int note_text_column) {
+        super();
+        this.mTableModel = tableModel;
+        this.mNodeTextColumn = node_text_column;
+        mNoteTextColumn = note_text_column;
+        tableModel.addTableModelListener(new TableModelHandler());
+        resetFilter();
+    }
 
-	public void resetFilter() {
-		setFilter(".*");
-	}
+    public void resetFilter() {
+        setFilter(".*");
+    }
 
-	public void setFilter(String filterRegexp) {
-		this.mFilterRegexp = filterRegexp;
-		// System.out.println("Setting filter to '"+mFilterRegexp+"'");
-		mPattern = Pattern.compile(mFilterRegexp, Pattern.CASE_INSENSITIVE);
-		updateIndexArray();
-		fireTableDataChanged();
-	}
+    public void setFilter(String filterRegexp) {
+        // System.out.println("Setting filter to '"+mFilterRegexp+"'");
+        mPattern = Pattern.compile(filterRegexp, Pattern.CASE_INSENSITIVE);
+        updateIndexArray();
+        fireTableDataChanged();
+    }
 
-	private void updateIndexArray() {
-		ArrayList<Integer> newIndexArray = new ArrayList<>();
-		for (int i = 0; i < mTableModel.getRowCount(); i++) {
-			NodeHolder nodeContent = (NodeHolder) mTableModel.getValueAt(i, mNodeTextColumn);
-			if (mPattern.matcher(nodeContent.toString()).matches()) {
-				// add index to array:
-				newIndexArray.add(i);
-			} else {
-				// only check notes, when not already a hit.
-				NotesHolder noteContent = (NotesHolder) mTableModel.getValueAt(i,
-						mNoteTextColumn);
-				if (mPattern.matcher(noteContent.toString()).matches()) {
-					// add index to array:
-					newIndexArray.add(new Integer(i));
-				}
-			}
-		}
-		mIndexArray = newIndexArray;
-	}
+    private void updateIndexArray() {
+        ArrayList<Integer> newIndexArray = new ArrayList<>();
+        for (int i = 0; i < mTableModel.getRowCount(); i++) {
+            NodeHolder nodeContent = (NodeHolder) mTableModel.getValueAt(i, mNodeTextColumn);
+            if (mPattern.matcher(nodeContent.toString()).matches()) {
+                // add index to array:
+                newIndexArray.add(i);
+            } else {
+                // only check notes, when not already a hit.
+                NotesHolder noteContent = (NotesHolder) mTableModel.getValueAt(i,
+                        mNoteTextColumn);
+                if (mPattern.matcher(noteContent.toString()).matches()) {
+                    // add index to array:
+                    newIndexArray.add(new Integer(i));
+                }
+            }
+        }
+        mIndexArray = newIndexArray;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.table.TableModel#getRowCount()
-	 */
-	public int getRowCount() {
-		return mIndexArray.size();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.swing.table.TableModel#getRowCount()
+     */
+    public int getRowCount() {
+        return mIndexArray.size();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.table.TableModel#getColumnCount()
-	 */
-	public int getColumnCount() {
-		return mTableModel.getColumnCount();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.swing.table.TableModel#getColumnCount()
+     */
+    public int getColumnCount() {
+        return mTableModel.getColumnCount();
+    }
 
-	public String getColumnName(int pColumnIndex) {
-		return mTableModel.getColumnName(pColumnIndex);
-	}
+    public String getColumnName(int pColumnIndex) {
+        return mTableModel.getColumnName(pColumnIndex);
+    }
 
-	public Class getColumnClass(int arg0) {
-		return mTableModel.getColumnClass(arg0);
-	}
+    public Class getColumnClass(int arg0) {
+        return mTableModel.getColumnClass(arg0);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.table.TableModel#getValueAt(int, int)
-	 */
-	public Object getValueAt(int row, int column) {
-		if (row < 0 || row >= getRowCount()) {
-			throw new IllegalArgumentException("Illegal Row specified: " + row);
-		}
-		int origRow = mIndexArray.get(row);
-		return mTableModel.getValueAt(origRow, column);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.swing.table.TableModel#getValueAt(int, int)
+     */
+    public Object getValueAt(int row, int column) {
+        if (row < 0 || row >= getRowCount()) {
+            throw new IllegalArgumentException("Illegal Row specified: " + row);
+        }
+        int origRow = mIndexArray.get(row);
+        return mTableModel.getValueAt(origRow, column);
+    }
 
-	private class TableModelHandler implements TableModelListener {
+    private class TableModelHandler implements TableModelListener {
 
-		public void tableChanged(TableModelEvent arg0) {
+        public void tableChanged(TableModelEvent arg0) {
 //			updateIndexArray();
-			fireTableDataChanged();
-		}
-	}
+            fireTableDataChanged();
+        }
+    }
 }

@@ -37,8 +37,6 @@ import javax.swing.text.SimpleAttributeSet;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the GNU General Public License, for details see file gpl.txt in the distribution package of this software
- *
- *
  */
 abstract class AttributePanel extends JPanel implements AttributeComponent, ContainerListener {
 
@@ -60,7 +58,6 @@ abstract class AttributePanel extends JPanel implements AttributeComponent, Cont
      * <code>AttributeComponent</code>
      *
      * @param a the set of attributes possibly having an attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute, false if not
      */
     public boolean setValue(final AttributeSet a) {

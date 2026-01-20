@@ -22,132 +22,127 @@
 /*$Id: ColorProperty.java,v 1.1.2.4.2.2 2008/07/24 03:10:36 christianfoltin Exp $*/
 package freemind.common;
 
-import java.awt.Color;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import freemind.controller.Controller;
+import freemind.main.Tools;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-
-import freemind.controller.Controller;
-import freemind.main.Tools;
-
 public class ColorProperty extends PropertyBean implements PropertyControl,
-		ActionListener {
-	String description;
+        ActionListener {
+    String description;
 
-	String label;
+    String label;
 
-	Color color;
+    Color color;
 
-	JButton mButton;
-	final JPopupMenu menu = new JPopupMenu();
+    JButton mButton;
+    final JPopupMenu menu = new JPopupMenu();
 
-	private final String defaultColor;
+    private final String defaultColor;
 
-	private final TextTranslator mTranslator;
+    private final TextTranslator mTranslator;
 
-	/**
-	 * @param defaultColor
-	 *            TODO
-	 * @param pTranslator
-	 *            TODO
-	 */
-	public ColorProperty(String description, String label, String defaultColor,
-			TextTranslator pTranslator) {
-		super();
-		this.description = description;
-		this.label = label;
-		this.defaultColor = defaultColor;
-		mTranslator = pTranslator;
-		mButton = new JButton();
-		mButton.addActionListener(this);
-		color = Color.BLACK;
-	}
+    /**
+     * @param defaultColor TODO
+     * @param pTranslator  TODO
+     */
+    public ColorProperty(String description, String label, String defaultColor,
+                         TextTranslator pTranslator) {
+        super();
+        this.description = description;
+        this.label = label;
+        this.defaultColor = defaultColor;
+        mTranslator = pTranslator;
+        mButton = new JButton();
+        mButton.addActionListener(this);
+        color = Color.BLACK;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setValue(String value) {
-		setColorValue(Tools.xmlToColor(value));
-	}
+    public void setValue(String value) {
+        setColorValue(Tools.xmlToColor(value));
+    }
 
-	public String getValue() {
-		return Tools.colorToXml(getColorValue());
-	}
+    public String getValue() {
+        return Tools.colorToXml(getColorValue());
+    }
 
-	public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
-		JLabel label = builder.append(pTranslator.getText(getLabel()), mButton);
-		label.setToolTipText(pTranslator.getText(getDescription()));
-		// add "reset to standard" popup:
+    public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
+        JLabel label = builder.append(pTranslator.getText(getLabel()), mButton);
+        label.setToolTipText(pTranslator.getText(getDescription()));
+        // add "reset to standard" popup:
 
-		// Create and add a menu item
-		JMenuItem item = new JMenuItem(
-				mTranslator.getText("ColorProperty.ResetColor"));
-		item.addActionListener(new ActionListener() {
+        // Create and add a menu item
+        JMenuItem item = new JMenuItem(
+                mTranslator.getText("ColorProperty.ResetColor"));
+        item.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) {
-				setValue(defaultColor);
-			}
-		});
-		menu.add(item);
+            public void actionPerformed(ActionEvent e) {
+                setValue(defaultColor);
+            }
+        });
+        menu.add(item);
 
-		// Set the component to show the popup menu
-		mButton.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent evt) {
-				if (evt.isPopupTrigger()) {
-					menu.show(evt.getComponent(), evt.getX(), evt.getY());
-				}
-			}
+        // Set the component to show the popup menu
+        mButton.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.isPopupTrigger()) {
+                    menu.show(evt.getComponent(), evt.getX(), evt.getY());
+                }
+            }
 
-			public void mouseReleased(MouseEvent evt) {
-				if (evt.isPopupTrigger()) {
-					menu.show(evt.getComponent(), evt.getX(), evt.getY());
-				}
-			}
-		});
-	}
+            public void mouseReleased(MouseEvent evt) {
+                if (evt.isPopupTrigger()) {
+                    menu.show(evt.getComponent(), evt.getX(), evt.getY());
+                }
+            }
+        });
+    }
 
-	public void actionPerformed(ActionEvent arg0) {
-		Color result = Controller.showCommonJColorChooserDialog(
-				mButton.getRootPane(), mTranslator.getText(getLabel()),
-				getColorValue());
-		if (result != null) {
-			setColorValue(result);
-			firePropertyChangeEvent();
-		}
-	}
+    public void actionPerformed(ActionEvent arg0) {
+        Color result = Controller.showCommonJColorChooserDialog(
+                mButton.getRootPane(), mTranslator.getText(getLabel()),
+                getColorValue());
+        if (result != null) {
+            setColorValue(result);
+            firePropertyChangeEvent();
+        }
+    }
 
-	/**
-	 */
-	private void setColorValue(Color result) {
-		color = result;
-		if (result == null) {
-			result = Color.WHITE;
-		}
-		mButton.setBackground(result);
-		mButton.setText(Tools.colorToXml(result));
-	}
+    /**
+     *
+     */
+    private void setColorValue(Color result) {
+        color = result;
+        if (result == null) {
+            result = Color.WHITE;
+        }
+        mButton.setBackground(result);
+        mButton.setText(Tools.colorToXml(result));
+    }
 
-	/**
-	 */
-	private Color getColorValue() {
-		return color;
-	}
+    /**
+     *
+     */
+    private Color getColorValue() {
+        return color;
+    }
 
-	public void setEnabled(boolean pEnabled) {
-		mButton.setEnabled(pEnabled);
-	}
+    public void setEnabled(boolean pEnabled) {
+        mButton.setEnabled(pEnabled);
+    }
 
 }

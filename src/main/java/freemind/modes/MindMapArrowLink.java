@@ -28,42 +28,45 @@ import java.awt.*;
 
 public interface MindMapArrowLink extends MindMapLink {
 
-	/**
-	 * Means: yes, it has the default arrow 
-	 */
-	public static final String ARROW_DEFAULT = "Default";
-	/**
-	 * Means: no, it hasn't an arrow at this side.
-	 */
-	public static final String ARROW_NONE = "None";
+    /**
+     * Means: yes, it has the default arrow
+     */
+    public static final String ARROW_DEFAULT = "Default";
+    /**
+     * Means: no, it hasn't an arrow at this side.
+     */
+    public static final String ARROW_NONE = "None";
 
-	/* for arrows: */
-	public Point getStartInclination(); // the zero is the start point of the
-										// line;
+    /* for arrows: */
+    public Point getStartInclination(); // the zero is the start point of the
+    // line;
 
-	public Point getEndInclination(); // the zero is the end point of the line;
+    public Point getEndInclination(); // the zero is the end point of the line;
 
-	public void setStartInclination(Point startInclination);
+    public void setStartInclination(Point startInclination);
 
-	public void setEndInclination(Point endInclination);
+    public void setEndInclination(Point endInclination);
 
-	/** the type of the start arrow: currently "None" and "Default". */
-	public String getStartArrow();
+    /**
+     * the type of the start arrow: currently "None" and "Default".
+     */
+    public String getStartArrow();
 
-	/** the type of the end arrow: currently "None" and "Default". */
-	public String getEndArrow();
+    /**
+     * the type of the end arrow: currently "None" and "Default".
+     */
+    public String getEndArrow();
 
-	/**
-	 * @param map
-	 *            TODO
-	 */
-	public void changeInclination(MapView map, int originX, int originY,
-			int deltaX, int deltaY);
+    /**
+     * @param map TODO
+     */
+    public void changeInclination(MapView map, int originX, int originY,
+                                  int deltaX, int deltaY);
 
-	public void showControlPoints(boolean bShowControlPointsFlag);
+    public void showControlPoints(boolean bShowControlPointsFlag);
 
-	public boolean getShowControlPointsFlag();
+    public boolean getShowControlPointsFlag();
 
-	public XMLElement save();
+    public XMLElement save();
 
 }

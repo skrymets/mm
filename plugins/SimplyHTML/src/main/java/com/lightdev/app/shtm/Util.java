@@ -53,11 +53,9 @@ import javax.swing.text.html.StyleSheet;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 public class Util {
     /* some constants */
@@ -77,12 +75,16 @@ public class Util {
     public static final String pct = "%";
     public static final String pt = "pt";
     public static final String px = "px";
-    /** the default block size in bytes for file operations */
+    /**
+     * the default block size in bytes for file operations
+     */
     private static int blockSize = 1024;
     private static Vector startTimes = new Vector();
     private static final String ERR_TITLE = "Error";
     private static String unit = "";
-    /** a style sheet instanciated once for access to its utility methods */
+    /**
+     * a style sheet instanciated once for access to its utility methods
+     */
     private static StyleSheet s = new StyleSheet();
     /* CSS Attribute constants */
     public static final String CSS_ATTRIBUTE_NORMAL = "normal";
@@ -99,9 +101,8 @@ public class Util {
     /**
      * rename a file to have a given extension
      *
-     * @param from  the file to rename
-     * @param newExt  the new extension the file shall have
-     *
+     * @param from   the file to rename
+     * @param newExt the new extension the file shall have
      * @return the renamed file
      */
     public static File renameFile(final File from, final String newExt) {
@@ -116,8 +117,7 @@ public class Util {
      * find the next link attribute from a given element upwards
      * through the element hierarchy
      *
-     * @param elem  the element to start looking at
-     *
+     * @param elem the element to start looking at
      * @return the link attribute found, or null, if none was found
      */
     public static Object findLinkUp(Element elem) {
@@ -133,8 +133,7 @@ public class Util {
         }
         if (linkAttr != null && href != null) {
             return linkAttr;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -142,8 +141,7 @@ public class Util {
     /**
      * remove the extension from a file name
      *
-     * @param  fileName  the file name to remove the extension from
-     *
+     * @param fileName the file name to remove the extension from
      * @return the file name without extension
      */
     public static String removeExtension(final String fileName) {
@@ -158,7 +156,7 @@ public class Util {
     /**
      * resolve sets of attributes that are recursively stored in each other
      *
-     * @param style  the set of attributes containing other sets of attributes
+     * @param style the set of attributes containing other sets of attributes
      */
     public static AttributeSet resolveAttributes(final AttributeSet style) {
         final SimpleAttributeSet set = new SimpleAttributeSet();
@@ -174,8 +172,7 @@ public class Util {
                 if ((!key.equals(StyleConstants.NameAttribute)) && (!key.equals(StyleConstants.ResolveAttribute))
                         && (!key.equals(AttributeSet.ResolveAttribute)) && (!key.equals(AttributeSet.NameAttribute))) {
                     set.addAttribute(key, value);
-                }
-                else {
+                } else {
                     if (key.equals(StyleConstants.ResolveAttribute) || key.equals(AttributeSet.ResolveAttribute)) {
                         //System.out.println("Util resolveAttributes resolving key=" + key);
                         set.addAttributes(Util.resolveAttributes((AttributeSet) value));
@@ -191,10 +188,9 @@ public class Util {
      *
      * <p>Wrapper for JOptionPane with I18N support</p>
      *
-     * @param initialName  the name initially shown in option pane
-     * @param title  the title to be shown in the option pane
-     * @param text  the text to be shown in the option pane
-     *
+     * @param initialName the name initially shown in option pane
+     * @param title       the title to be shown in the option pane
+     * @param text        the text to be shown in the option pane
      * @return the entered name or null if action was cancelled
      */
     public static String nameInput(final Frame parent, final String initialName, final String regex,
@@ -202,7 +198,7 @@ public class Util {
         String name;
         do {
             final Object input = JOptionPane.showInputDialog(null, Util.getResourceString(text),
-                Util.getResourceString(title), JOptionPane.QUESTION_MESSAGE, null, null, initialName);
+                    Util.getResourceString(title), JOptionPane.QUESTION_MESSAGE, null, null, initialName);
             name = input == null ? null : input.toString();
         } while (name != null && !name.matches(regex));
         return name;
@@ -213,19 +209,18 @@ public class Util {
      *
      * <p>Wrapper for JOptionPane with I18N support</p>
      *
-     * @param options  the options to be shown in the dialog
-     * @param title  the title to be shown in the dialog
-     * @param msg  the message to be shown in the dialog
-     * @param item  a variable part to be shown before msg
-     * @param sep  a separator for msg and item (return or blank etc.)
-     *
+     * @param options the options to be shown in the dialog
+     * @param title   the title to be shown in the dialog
+     * @param msg     the message to be shown in the dialog
+     * @param item    a variable part to be shown before msg
+     * @param sep     a separator for msg and item (return or blank etc.)
      * @return the choice
      */
     public static int msgChoice(final int options, final String title, final String msg, final String item,
                                 final String sep) {
         final String message = item + sep + Util.getResourceString(msg);
         return JOptionPane.showConfirmDialog(null, message, Util.getResourceString(title), options,
-            JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.QUESTION_MESSAGE);
     }
 
     /**
@@ -233,12 +228,11 @@ public class Util {
      *
      * <p>Wrapper for JOptionPane with I18N support</p>
      *
-     * @param options  the options to be shown in the dialog
-     * @param title  the title to be shown in the dialog
-     * @param msg  the message to be shown in the dialog
-     * @param item  a variable part to be shown before msg
-     * @param sep  a separator for msg and item (return or blank etc.)
-     *
+     * @param options the options to be shown in the dialog
+     * @param title   the title to be shown in the dialog
+     * @param msg     the message to be shown in the dialog
+     * @param item    a variable part to be shown before msg
+     * @param sep     a separator for msg and item (return or blank etc.)
      * @return true, if YES was chosen, false if not
      */
     public static boolean msg(final int options, final String title, final String msg, final String item,
@@ -249,9 +243,8 @@ public class Util {
     /**
      * get names of all styles for a given tag
      *
-     * @param styles  the style sheet to look for style names
-     * @param tag  the tag to find style names for
-     *
+     * @param styles the style sheet to look for style names
+     * @param tag    the tag to find style names for
      * @return a Vector with all style names found
      */
     public static Vector getStyleNamesForTag(final StyleSheet styles, final String tag) {
@@ -261,9 +254,8 @@ public class Util {
     /**
      * get names of all styles for a given tag
      *
-     * @param styles  the style sheet to look for style names
-     * @param tag  the tag to find style names for
-     *
+     * @param styles the style sheet to look for style names
+     * @param tag    the tag to find style names for
      * @return a Vector with all style names found
      */
     public static Vector getStyleNamesForTag(final AttributeSet styles, final String tag) {
@@ -286,8 +278,7 @@ public class Util {
     /**
      * get the names of all styles found in a given StyleSheet
      *
-     * @param styles  the StyleSheet to look for style names
-     *
+     * @param styles the StyleSheet to look for style names
      * @return a Vector with all names found
      */
     public static Vector getStyleNames(final StyleSheet styles) {
@@ -297,8 +288,7 @@ public class Util {
             while (rules.hasMoreElements()) {
                 styleNames.addElement(rules.nextElement());
             }
-        }
-        catch (final Exception ee) {
+        } catch (final Exception ee) {
             Util.errMsg(null, ee.getMessage(), ee);
         }
         return styleNames;
@@ -318,8 +308,7 @@ public class Util {
             for (int i = 0; i < list.length; i++) {
                 if (list[i].isDirectory()) {
                     Util.deleteDir(list[i]);
-                }
-                else {
+                } else {
                     list[i].delete();
                 }
             }
@@ -334,8 +323,8 @@ public class Util {
      * the method does nothing. The complete destination path will be
      * created before copying, if necessary.</p>
      *
-     * @param srcFile   the file to copy from
-     * @param destFile  the file to copy to
+     * @param srcFile  the file to copy from
+     * @param destFile the file to copy to
      */
     public static void copyFile(final File srcFile, final File destFile) throws FileNotFoundException, IOException {
         if (!srcFile.toString().equals(destFile.toString())) {
@@ -363,7 +352,7 @@ public class Util {
     /**
      * get the index of a given element in the list of its parents elements.
      *
-     * @param elem  the element to get the index number for
+     * @param elem the element to get the index number for
      * @return the index of the given element
      */
     public static int getElementIndex(final Element elem) {
@@ -389,10 +378,9 @@ public class Util {
      * the application in question, not in a separate library
      * for instance.</p>
      *
-     * @param cls  the class to get the path for
-     *
+     * @param cls the class to get the path for
      * @return the path of this class file or the path of the JAR file this class
-     *      file resides in, whatever applies
+     * file resides in, whatever applies
      */
     public static String getClassFilePath(final Class cls) {
         int end = 0;
@@ -411,15 +399,13 @@ public class Util {
             if (pos > -1) {
                 urlStr = urlStr.substring(0, pos);
                 end = urlStr.lastIndexOf(URL_SEPARATOR) + 1;
-            }
-            else {
+            } else {
                 end = urlStr.length() - clsNameLen;
             }
             pos = urlStr.lastIndexOf(FILE_PREFIX);
             if (pos > -1) {
                 pos += FILE_PREFIX.length() + 1;
-            }
-            else {
+            } else {
                 pos = 0;
             }
             urlStr = urlStr.substring(pos, end);
@@ -432,8 +418,7 @@ public class Util {
      * quick hack for getting the point value from an attribute value string
      * (needs to be refined and consolidated with length value)
      *
-     * @param valStr  the attribute value string to get the point size for
-     *
+     * @param valStr the attribute value string to get the point size for
      * @return the point size from the given attribute value
      */
     public static float getPtValue(String valStr) {
@@ -443,15 +428,13 @@ public class Util {
             unit = pt;
             valStr = valStr.substring(0, pos);
             len = Float.valueOf(valStr).floatValue();
-        }
-        else {
+        } else {
             pos = valStr.indexOf(px);
             if (pos > -1) {
                 unit = px;
                 valStr = valStr.substring(0, pos);
                 len = Float.valueOf(valStr).floatValue() * 1.3f;
-            }
-            else {
+            } else {
                 pos = valStr.indexOf(pct);
                 if (pos > -1) {
                     unit = pct;
@@ -459,8 +442,7 @@ public class Util {
                     //System.out.println("Util.getPtValue valStr=" + valStr);
                     len = Float.valueOf(valStr).floatValue() / 100f;
                     //System.out.println("Util.getPtValue len=" + len);
-                }
-                else {
+                } else {
                     // assume relative value 1 .. 6
                     try {
                         len = Float.valueOf(valStr).floatValue();
@@ -490,8 +472,7 @@ public class Util {
                             break;
                         }
                         */
-                    }
-                    catch (final Exception e) {
+                    } catch (final Exception e) {
                         // unsupported number format (em ex, etc.)
                     }
                 }
@@ -513,9 +494,8 @@ public class Util {
     /**
      * get the numerical value for an attribute object
      *
-     * @param attr  the attribute to get the value from
-     *
-     * @return  the numerical value
+     * @param attr the attribute to get the value from
+     * @return the numerical value
      */
     public static float getAttrValue(final Object attr) {
         float val = -1;
@@ -529,8 +509,7 @@ public class Util {
     /**
      * get the absolute value of an attribute
      *
-     * @param attr  the attribute to get the value from
-     *
+     * @param attr the attribute to get the value from
      * @return the absolute numerical value
      */
     public static float getAbsoluteAttrVal(final Object attr) {
@@ -549,15 +528,13 @@ public class Util {
             if (pos > -1) {
                 valStr = valStr.substring(0, pos);
                 return Float.valueOf(valStr).floatValue();
-            }
-            else {
+            } else {
                 unit = "";
             }
         }
         try {
             return Float.valueOf(valStr).floatValue();
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             // unsupported number format (em ex, etc.)
             return 0f;
         }
@@ -566,8 +543,7 @@ public class Util {
     /**
      * get the row index for a given table cell
      *
-     * @param cell  the cell element to get the row index for
-     *
+     * @param cell the cell element to get the row index for
      * @return the row index of the given cell element
      */
     public static int getRowIndex(final Element cell) {
@@ -599,7 +575,7 @@ public class Util {
      * String[2]="help"
      * </p>
      *
-     * @param input  the string to transform into a string array
+     * @param input the string to transform into a string array
      * @return the resulting string array
      */
     public static String[] tokenize(final String input, final String delim) {
@@ -630,9 +606,8 @@ public class Util {
      * find the first occurrence of an <code>Element</code> in the
      * element tree above a given <code>Element</code>
      *
-     * @param name the name of the <code>Element</code> to search for
+     * @param name  the name of the <code>Element</code> to search for
      * @param start the <code>Element</code> to start looking
-     *
      * @return the found <code>Element</code> or null if none is found
      */
     public static Element findElementUp(final String name, final Element start) {
@@ -650,7 +625,6 @@ public class Util {
      * @param name1 the primary name of the <code>Element</code> to search for
      * @param name2 an alternative name for the <code>Element</code> to search for
      * @param start the <code>Element</code> to start looking
-     *
      * @return the found <code>Element</code> or null if none is found
      */
     public static Element findElementUp(final String name1, final String name2, final Element start) {
@@ -665,9 +639,8 @@ public class Util {
      * find the first occurrence of an <code>Element</code> in the
      * element tree below a given <code>Element</code>
      *
-     * @param name the name of the <code>Element</code> to search for
+     * @param name   the name of the <code>Element</code> to search for
      * @param parent the <code>Element</code> to start looking
-     *
      * @return the found <code>Element</code> or null if none is found
      */
     public static Element findElementDown(final String name, final Element parent) {
@@ -687,13 +660,13 @@ public class Util {
      * convenience method for adding a component to a container
      * layed out by a GridBagLayout
      *
-     * @param container  the container to add a component to
-     * @param comp  the component to add to container
-     * @param g  the GridBagLayout associated with container
-     * @param c  the GridBagConstraints to use
-     * @param gx  the value to use for GridBagConstraints.gridx
-     * @param gy  the value to use for GridBagConstraints.gridy
-     * @param a  the value to use for GridBagConstraints.anchor
+     * @param container the container to add a component to
+     * @param comp      the component to add to container
+     * @param g         the GridBagLayout associated with container
+     * @param c         the GridBagConstraints to use
+     * @param gx        the value to use for GridBagConstraints.gridx
+     * @param gy        the value to use for GridBagConstraints.gridy
+     * @param a         the value to use for GridBagConstraints.anchor
      */
     public static void addGridBagComponent(final JComponent container, final JComponent comp, final GridBagLayout g,
                                            final GridBagConstraints c, final int gx, final int gy, final int a) {
@@ -714,15 +687,15 @@ public class Util {
      * convenience method for adding a component to a container
      * layed out by a GridBagLayout
      *
-     * @param container  the container to add a component to
-     * @param comp  the component to add to container
-     * @param g  the GridBagLayout associated with container
-     * @param c  the GridBagConstraints to use
-     * @param gx  the value to use for GridBagConstraints.gridx
-     * @param gy  the value to use for GridBagConstraints.gridy
-     * @param a  the value to use for GridBagConstraints.anchor
-     * @param gw  the value to use for GridBagConstraints.gridwidth
-     * @param gh  teh value to use for GridBagConstraints.gridheight
+     * @param container the container to add a component to
+     * @param comp      the component to add to container
+     * @param g         the GridBagLayout associated with container
+     * @param c         the GridBagConstraints to use
+     * @param gx        the value to use for GridBagConstraints.gridx
+     * @param gy        the value to use for GridBagConstraints.gridy
+     * @param a         the value to use for GridBagConstraints.anchor
+     * @param gw        the value to use for GridBagConstraints.gridwidth
+     * @param gh        teh value to use for GridBagConstraints.gridheight
      */
     public static void addGridBagComponent(final JComponent container, final JComponent comp, final GridBagLayout g,
                                            final GridBagConstraints c, final int gx, final int gy, final int a,
@@ -734,16 +707,16 @@ public class Util {
      * convenience method for adding a component to a container
      * layed out by a GridBagLayout
      *
-     * @param container  the container to add a component to
-     * @param comp  the component to add to container
-     * @param g  the GridBagLayout associated with container
-     * @param c  the GridBagConstraints to use
-     * @param gx  the value to use for GridBagConstraints.gridx
-     * @param gy  the value to use for GridBagConstraints.gridy
-     * @param a  the value to use for GridBagConstraints.anchor
-     * @param gw  the value to use for GridBagConstraints.gridwidth
-     * @param gh  teh value to use for GridBagConstraints.gridheight
-     * @param f  the value to use for GridBagConstraints.fill
+     * @param container the container to add a component to
+     * @param comp      the component to add to container
+     * @param g         the GridBagLayout associated with container
+     * @param c         the GridBagConstraints to use
+     * @param gx        the value to use for GridBagConstraints.gridx
+     * @param gy        the value to use for GridBagConstraints.gridy
+     * @param a         the value to use for GridBagConstraints.anchor
+     * @param gw        the value to use for GridBagConstraints.gridwidth
+     * @param gh        teh value to use for GridBagConstraints.gridheight
+     * @param f         the value to use for GridBagConstraints.fill
      */
     public static void addGridBagComponent(final JComponent container, final JComponent comp, final GridBagLayout g,
                                            final GridBagConstraints c, final int gx, final int gy, final int a,
@@ -755,18 +728,18 @@ public class Util {
      * convenience method for adding a component to a container
      * layed out by a GridBagLayout
      *
-     * @param container  the container to add a component to
-     * @param comp  the component to add to container
-     * @param g  the GridBagLayout associated with container
-     * @param c  the GridBagConstraints to use
-     * @param gx  the value to use for GridBagConstraints.gridx
-     * @param gy  the value to use for GridBagConstraints.gridy
-     * @param a  the value to use for GridBagConstraints.anchor
-     * @param gw  the value to use for GridBagConstraints.gridwidth
-     * @param gh  teh value to use for GridBagConstraints.gridheight
-     * @param f  the value to use for GridBagConstraints.fill
-     * @param wx  the value to use for GridBagConstraints.weightx
-     * @param wy  the value to use for GridBagConstraints.weighty
+     * @param container the container to add a component to
+     * @param comp      the component to add to container
+     * @param g         the GridBagLayout associated with container
+     * @param c         the GridBagConstraints to use
+     * @param gx        the value to use for GridBagConstraints.gridx
+     * @param gy        the value to use for GridBagConstraints.gridy
+     * @param a         the value to use for GridBagConstraints.anchor
+     * @param gw        the value to use for GridBagConstraints.gridwidth
+     * @param gh        teh value to use for GridBagConstraints.gridheight
+     * @param f         the value to use for GridBagConstraints.fill
+     * @param wx        the value to use for GridBagConstraints.weightx
+     * @param wy        the value to use for GridBagConstraints.weighty
      */
     public static void addGridBagComponent(final JComponent container, final JComponent comp, final GridBagLayout g,
                                            final GridBagConstraints c, final int gx, final int gy, final int a,
@@ -799,11 +772,10 @@ public class Util {
      *   result:         file:/d:/eigene dateien/images/test.jpg
      * </pre>
      *
-     * @param relPath  the relative URL string to resolve
-     * @param absPath  the absolute URL string to start at
-     *
+     * @param relPath the relative URL string to resolve
+     * @param absPath the absolute URL string to start at
      * @return the absolute URL string resulting from resolving relPath
-     *    against absPath
+     * against absPath
      */
     public static String resolveRelativePath(final String relPath, final String absPath) {
         String newAbsPath = absPath;
@@ -819,8 +791,7 @@ public class Util {
         }
         if (newRelPath.startsWith(URL_SEPARATOR)) {
             return newAbsPath + newRelPath;
-        }
-        else {
+        } else {
             return newAbsPath + URL_SEPARATOR + newRelPath;
         }
     }
@@ -828,9 +799,8 @@ public class Util {
     /**
      * get the path to a given file relative to a given directory
      *
-     * @param fromDir  the directory having the file from which the link refers
+     * @param fromDir the directory having the file from which the link refers
      * @param toFile  the file to which a link refers
-     *
      * @return the relative path
      */
     public static String getRelativePath(final File fromDir, final File toFile) {
@@ -871,8 +841,8 @@ public class Util {
      * in development mode (DEV_MODE = true)
      *
      * @param owner the owner of the message, or null
-     * @param msg the message to display, or null
-     * @param e the exception object describing the error, or null
+     * @param msg   the message to display, or null
+     * @param e     the exception object describing the error, or null
      */
     public static void errMsg(final Component owner, final String msg, final Throwable e) {
         if (e != null) {
@@ -887,10 +857,9 @@ public class Util {
      * center a <code>Component</code> relative to
      * another <code>Component</code>.
      *
-     * @param parent  the <code>Component</code> to be used as the
-     *                  basis for centering
-     * @param comp  the <code>Component</code> to be centered within parent
-     *
+     * @param parent the <code>Component</code> to be used as the
+     *               basis for centering
+     * @param comp   the <code>Component</code> to be centered within parent
      */
     public static void center(final Component parent, final Component comp) {
         final Dimension cSize = comp.getPreferredSize();
@@ -910,8 +879,7 @@ public class Util {
      * remove all occurrences of a given char from a given string
      *
      * @param src the string to remove from
-     * @param c  the char to remove
-     *
+     * @param c   the char to remove
      * @return a string copy of src with all occurrences of c removed
      */
     public static String removeChar(final String src, final char c) {
@@ -937,8 +905,8 @@ public class Util {
     /**
      * get a string from the resources file
      *
-     * @param resources  the TextResources to get the string from
-     * @param nm  the key of the string
+     * @param resources the TextResources to get the string from
+     * @param nm        the key of the string
      * @return the string for the given key or null if not found
      */
     static public String getResourceString(final TextResources resources, final String nm) {
@@ -959,8 +927,7 @@ public class Util {
         try {
             final Preferences prefs = Preferences.userNodeForPackage(PrefsDialog.class);
             paramValue = prefs.get(key, paramValue);
-        }
-        catch (final Exception ex) {
+        } catch (final Exception ex) {
         }
         return paramValue;
     }
@@ -977,9 +944,11 @@ public class Util {
         return Util.getPreference(PrefsDialog.PREFS_USE_STD_STYLE_SHEET, "false").equalsIgnoreCase("true");
     }
 
-    /** Tells whether the user should be able to switch between the WYSIWYG editor pane and the HTML source
-     *  editor pane using the UI element of tab, shown below the editing panes. If false, switching
-     *  between editor panes is still possible, albeit not using the tabs. */
+    /**
+     * Tells whether the user should be able to switch between the WYSIWYG editor pane and the HTML source
+     * editor pane using the UI element of tab, shown below the editing panes. If false, switching
+     * between editor panes is still possible, albeit not using the tabs.
+     */
     static boolean showViewsInTabs() {
         return Util.preferenceIsTrue("showViewsInTabs", "true");
     }

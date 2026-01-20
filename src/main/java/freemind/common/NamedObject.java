@@ -25,48 +25,48 @@ package freemind.common;
 
 /**
  * Utility Class for displaying local object names in GUI components.
- * 
+ *
  * @author Dimitri Polivaev 18.01.2007
  */
 public class NamedObject {
-	private String name;
-	private Object object;
+    private String name;
+    private Object object;
 
-	private NamedObject() {
-	}
+    private NamedObject() {
+    }
 
-	public NamedObject(Object object, String name) {
-		this.object = object;
-		this.name = name;
+    public NamedObject(Object object, String name) {
+        this.object = object;
+        this.name = name;
 
-	}
+    }
 
-	static public NamedObject literal(String literal) {
-		NamedObject result = new NamedObject();
-		result.object = literal;
-		result.name = literal;
-		return result;
-	}
+    static public NamedObject literal(String literal) {
+        NamedObject result = new NamedObject();
+        result.object = literal;
+        result.name = literal;
+        return result;
+    }
 
-	public boolean equals(Object o) {
-		if (o instanceof NamedObject) {
-			NamedObject ts = (NamedObject) o;
-			return object.equals(ts.object);
-		}
-		return object.equals(o);
-	}
+    public boolean equals(Object o) {
+        if (o instanceof NamedObject) {
+            NamedObject ts = (NamedObject) o;
+            return object.equals(ts.object);
+        }
+        return object.equals(o);
+    }
 
-	public String toString() {
-		return name;
-	}
+    public String toString() {
+        return name;
+    }
 
-	public Object getObject() {
-		return object;
-	}
+    public Object getObject() {
+        return object;
+    }
 
-	public String getName() {
-		return name;
-	}
-	
-	
+    public String getName() {
+        return name;
+    }
+
+
 }

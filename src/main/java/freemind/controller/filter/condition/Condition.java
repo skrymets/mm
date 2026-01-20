@@ -30,9 +30,9 @@ import freemind.model.MindMapNode;
 import javax.swing.*;
 
 public interface Condition {
-	boolean checkNode(Controller c, MindMapNode node);
+    boolean checkNode(Controller c, MindMapNode node);
 
-	public JComponent getListCellRendererComponent();
+    public JComponent getListCellRendererComponent();
 
-	void save(XMLElement element);
+    void save(XMLElement element);
 }

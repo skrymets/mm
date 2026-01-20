@@ -25,91 +25,76 @@ package freemind.extensions;
 import freemind.controller.actions.generated.instance.Plugin;
 import freemind.model.MindMapNode;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 public interface HookFactory {
 
-	public static class RegistrationContainer {
-		public Class hookRegistrationClass;
+    class RegistrationContainer {
+        public Class hookRegistrationClass;
 
-		public boolean isPluginBase;
+        public boolean isPluginBase;
 
-		public Plugin correspondingPlugin;
+        public Plugin correspondingPlugin;
 
-		public RegistrationContainer() {
-		}
-	}
+        public RegistrationContainer() {
+        }
+    }
 
-	/**
-	 * @return a string vector with representatives for plugins.
-	 */
-	public abstract Vector<String> getPossibleNodeHooks();
+    List<String> getPossibleNodeHooks();
 
-	/**
-	 * @return a string vector with representatives for plugins.
-	 */
-	public abstract Vector<String> getPossibleModeControllerHooks();
+    Collection<String> getPossibleModeControllerHooks();
 
-	public abstract ModeControllerHook createModeControllerHook(String hookName);
+    ModeControllerHook createModeControllerHook(String hookName);
 
-	/**
-	 * Do not call this method directly. Call ModeController.createNodeHook
-	 * instead.
-	 */
-	public abstract NodeHook createNodeHook(String hookName);
+    /**
+     * Do not call this method directly. Call ModeController.createNodeHook instead.
+     */
+    NodeHook createNodeHook(String hookName);
 
-	/**
-	 * @return null if not present, the hook otherwise.
-	 */
-	public abstract PermanentNodeHook getHookInNode(MindMapNode node,
-			String hookName);
+    /**
+     * @return null if not present, the hook otherwise.
+     */
+    PermanentNodeHook getHookInNode(MindMapNode node, String hookName);
 
-	/**
-	 * @return returns a list of menu position strings for the
-	 *         StructuredMenuHolder.
-	 */
-	public abstract List<String> getHookMenuPositions(String hookName);
+    /**
+     * @return returns a list of menu position strings for the StructuredMenuHolder.
+     */
+    List<String> getHookMenuPositions(String hookName);
 
-	/**
-	 */
-	public abstract HookInstanciationMethod getInstanciationMethod(
-			String hookName);
+    HookInstantiationMethod getInstantiationMethod(String hookName);
 
-	/**
-	 * Each Plugin can have a list of HookRegistrations that are called after
-	 * the corresponding mode is enabled. (Like singletons.) One of these can
-	 * operate as the pluginBase that is accessible to every normal
-	 * plugin_action via the getPluginBaseClass method.
-	 * 
-	 * @return A list of RegistrationContainer elements. The field
-	 *         hookRegistrationClass of RegistrationContainer is a class that is
-	 *         (probably) of HookRegistration type. You have to register every
-	 *         registration via the registerRegistrationContainer method when
-	 *         instanciated (this is typically done in the ModeController).
-	 */
-	public abstract List<RegistrationContainer> getRegistrations();
+    /**
+     * Each Plugin can have a list of HookRegistrations that are called after
+     * the corresponding mode is enabled. (Like singletons.) One of these can
+     * operate as the pluginBase that is accessible to every normal
+     * plugin_action via the getPluginBaseClass method.
+     *
+     * @return A list of RegistrationContainer elements. The field
+     * hookRegistrationClass of RegistrationContainer is a class that is
+     * (probably) of HookRegistration type. You have to register every
+     * registration via the registerRegistrationContainer method when
+     * instanciated (this is typically done in the ModeController).
+     */
+    List<RegistrationContainer> getRegistrations();
 
-	/**
-	 * See getRegistrations. The registration makes sense for the factory, as
-	 * the factory observes every object creation. <br>
-	 * Moreover, the factory can tell other hooks it creates, who is its base
-	 * plugin.
-	 * 
-	 */
-	public abstract void registerRegistrationContainer(
-			HookFactory.RegistrationContainer container,
-			HookRegistration instanciatedRegistrationObject);
+    /**
+     * See getRegistrations. The registration makes sense for the factory, as
+     * the factory observes every object creation. <br>
+     * Moreover, the factory can tell other hooks it creates, who is its base
+     * plugin.
+     */
+    void registerRegistrationContainer(HookFactory.RegistrationContainer container, HookRegistration registrationObject);
 
-	public abstract void deregisterAllRegistrationContainer();
+    void deregisterAllRegistrationContainer();
 
-	/**
-	 * A plugin base class is a common registration class of multiple plugins.
-	 * It is useful to embrace several related plugins (example: EncryptedNote
-	 * -> Registration).
-	 * 
-	 * @return the base class if declared and successfully instanciated or NULL.
-	 */
-	public abstract Object getPluginBaseClass(String hookName);
+    /**
+     * A plugin base class is a common registration class of multiple plugins.
+     * It is useful to embrace several related plugins (example: EncryptedNote
+     * -> Registration).
+     *
+     * @return the base class if declared and successfully instanciated or NULL.
+     */
+    Object getPluginBaseClass(String hookName);
 
 }

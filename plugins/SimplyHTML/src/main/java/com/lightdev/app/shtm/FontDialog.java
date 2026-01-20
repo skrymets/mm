@@ -32,22 +32,22 @@ import javax.swing.text.AttributeSet;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class FontDialog extends DialogShell {
-    /** the font panel to use in this dialog */
+    /**
+     * the font panel to use in this dialog
+     */
     private final FontPanel fontPanel;
 
     /**
      * constructor
      *
-     * @param parent  the main frame having the TextResources
+     * @param parent the main frame having the TextResources
      * @param title  the title for this dialog
-     * @param a  the set of attributes to show and manipulate
+     * @param a      the set of attributes to show and manipulate
      */
     public FontDialog(final Frame parent, final String title, final AttributeSet a) {
         super(parent, title);

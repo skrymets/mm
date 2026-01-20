@@ -22,101 +22,98 @@
 /*$Id: IconProperty.java,v 1.1.2.1.2.4 2007/08/05 22:15:21 dpolivaev Exp $*/
 package freemind.common;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-
 import freemind.main.FreeMindMain;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
 import freemind.modes.common.dialogs.IconSelectionPopupDialog;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+
 public class IconProperty extends PropertyBean implements PropertyControl,
-		ActionListener {
-	String description;
+        ActionListener {
+    String description;
 
-	String label;
+    String label;
 
-	JButton mButton;
+    JButton mButton;
 
-	private final FreeMindMain mFreeMindMain;
+    private final FreeMindMain mFreeMindMain;
 
-	/**
-	 * Of IconInformation s.
-	 */
-	private final Vector<MindIcon> mIcons;
+    /**
+     * Of IconInformation s.
+     */
+    private final Vector<MindIcon> mIcons;
 
-	private MindIcon mActualIcon = null;
+    private MindIcon mActualIcon = null;
 
-	public IconProperty(String description, String label, FreeMindMain frame,
-			Vector<MindIcon> icons) {
-		super();
-		this.description = description;
-		this.label = label;
-		this.mFreeMindMain = frame;
-		this.mIcons = icons;
-		mButton = new JButton();
-		mButton.addActionListener(this);
-	}
+    public IconProperty(String description, String label, FreeMindMain frame,
+                        Vector<MindIcon> icons) {
+        super();
+        this.description = description;
+        this.label = label;
+        this.mFreeMindMain = frame;
+        this.mIcons = icons;
+        mButton = new JButton();
+        mButton.addActionListener(this);
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setValue(String value) {
-		for (MindIcon icon : mIcons) {
-			if (icon.getName().equals(value)) {
-				mActualIcon = icon;
-				setIcon(mActualIcon);
-			}
-		}
-	}
+    public void setValue(String value) {
+        for (MindIcon icon : mIcons) {
+            if (icon.getName().equals(value)) {
+                mActualIcon = icon;
+                setIcon(mActualIcon);
+            }
+        }
+    }
 
-	private void setIcon(MindIcon actualIcon) {
-		mButton.setIcon(actualIcon.getIcon());
-		mButton.setToolTipText(actualIcon.getDescription());
-	}
+    private void setIcon(MindIcon actualIcon) {
+        mButton.setIcon(actualIcon.getIcon());
+        mButton.setToolTipText(actualIcon.getDescription());
+    }
 
-	public String getValue() {
-		return mActualIcon.getName();
-	}
+    public String getValue() {
+        return mActualIcon.getName();
+    }
 
-	public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
-		JLabel label = builder.append(pTranslator.getText(getLabel()), mButton);
-		label.setToolTipText(pTranslator.getText(getDescription()));
-	}
+    public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
+        JLabel label = builder.append(pTranslator.getText(getLabel()), mButton);
+        label.setToolTipText(pTranslator.getText(getDescription()));
+    }
 
-	public void actionPerformed(ActionEvent arg0) {
-		Vector<IconInformation> icons = new Vector<>();
-		Vector<String> descriptions = new Vector<>();
-		for (MindIcon icon : mIcons) {
-			icons.add(icon);
-			descriptions.add(icon.getDescription());
-		}
-		IconSelectionPopupDialog dialog = new IconSelectionPopupDialog(
-				mFreeMindMain.getJFrame(), icons, mFreeMindMain);
-		dialog.setLocationRelativeTo(mFreeMindMain.getJFrame());
-		dialog.setModal(true);
-		dialog.setVisible(true);
-		int result = dialog.getResult();
-		if (result >= 0) {
-			MindIcon icon = (MindIcon) mIcons.get(result);
-			setValue(icon.getName());
-			firePropertyChangeEvent();
-		}
-	}
+    public void actionPerformed(ActionEvent arg0) {
+        Vector<IconInformation> icons = new Vector<>();
+        Vector<String> descriptions = new Vector<>();
+        for (MindIcon icon : mIcons) {
+            icons.add(icon);
+            descriptions.add(icon.getDescription());
+        }
+        IconSelectionPopupDialog dialog = new IconSelectionPopupDialog(
+                mFreeMindMain.getJFrame(), icons, mFreeMindMain);
+        dialog.setLocationRelativeTo(mFreeMindMain.getJFrame());
+        dialog.setModal(true);
+        dialog.setVisible(true);
+        int result = dialog.getResult();
+        if (result >= 0) {
+            MindIcon icon = (MindIcon) mIcons.get(result);
+            setValue(icon.getName());
+            firePropertyChangeEvent();
+        }
+    }
 
-	public void setEnabled(boolean pEnabled) {
-		mButton.setEnabled(pEnabled);
-	}
+    public void setEnabled(boolean pEnabled) {
+        mButton.setEnabled(pEnabled);
+    }
 
 }

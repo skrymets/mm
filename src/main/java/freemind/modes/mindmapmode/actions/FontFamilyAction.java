@@ -29,31 +29,33 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * 
  */
 @SuppressWarnings("serial")
-public class FontFamilyAction extends NodeGeneralAction  {
-	/** This action is used for all fonts, which have to be set first. */
-	private String actionFont;
-
-	/**
+public class FontFamilyAction extends NodeGeneralAction {
+    /**
+     * This action is used for all fonts, which have to be set first.
      */
-	public FontFamilyAction(MindMapController modeController) {
-		super(modeController, "font_family", null, (NodeActorXml) null);
-		// default value:
-		actionFont = modeController.getFrame().getProperty("defaultfont");
-	}
+    private String actionFont;
 
-	public void actionPerformed(String font) {
-		this.actionFont = font;
-		super.actionPerformed(null);
-	}
+    /**
+     *
+     */
+    public FontFamilyAction(MindMapController modeController) {
+        super(modeController, "font_family", null, (NodeActorXml) null);
+        // default value:
+        actionFont = modeController.getFrame().getProperty("defaultfont");
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.NodeGeneralAction#getActionPair(freemind.modes.mindmapmode.MindMapNodeModel)
-	 */
-	@Override
-	protected ActionPair getActionPair(MindMapNodeModel pSelected) {
-		return getMindMapController().getActorFactory().getFontFamilyActor().getActionPair(pSelected, actionFont);
-	}
+    public void actionPerformed(String font) {
+        this.actionFont = font;
+        super.actionPerformed(null);
+    }
+
+    /* (non-Javadoc)
+     * @see freemind.modes.mindmapmode.actions.NodeGeneralAction#getActionPair(freemind.modes.mindmapmode.MindMapNodeModel)
+     */
+    @Override
+    protected ActionPair getActionPair(MindMapNodeModel pSelected) {
+        return getMindMapController().getActorFactory().getFontFamilyActor().getActionPair(pSelected, actionFont);
+    }
 }

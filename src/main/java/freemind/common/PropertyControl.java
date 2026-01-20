@@ -26,11 +26,11 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 
 public interface PropertyControl {
 
-	String getDescription();
+    String getDescription();
 
-	String getLabel();
+    String getLabel();
 
-	void layout(DefaultFormBuilder builder, TextTranslator pTranslator);
+    void layout(DefaultFormBuilder builder, TextTranslator pTranslator);
 
-	void setEnabled(boolean pEnabled);
+    void setEnabled(boolean pEnabled);
 }

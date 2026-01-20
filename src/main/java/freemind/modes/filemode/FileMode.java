@@ -20,63 +20,63 @@
 
 package freemind.modes.filemode;
 
-import javax.swing.JToolBar;
-
 import freemind.controller.Controller;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 
+import javax.swing.*;
+
 public class FileMode extends Mode {
 
-	private Controller c;
-	private FileController modecontroller;
-	private JToolBar toolbar;
-	private static final String MODENAME = "File";
-	private static boolean isRunning = false;
+    private Controller c;
+    private FileController modecontroller;
+    private JToolBar toolbar;
+    private static final String MODENAME = "File";
+    private static boolean isRunning = false;
 
-	public FileMode() {
-	}
+    public FileMode() {
+    }
 
-	public void init(Controller c) {
-		this.c = c;
-		modecontroller = new FileController(this);
-		toolbar = new FileToolBar(modecontroller);
-	}
+    public void init(Controller c) {
+        this.c = c;
+        modecontroller = new FileController(this);
+        toolbar = new FileToolBar(modecontroller);
+    }
 
-	public JToolBar getToolbar() {
-		return toolbar;
-	}
+    public JToolBar getToolbar() {
+        return toolbar;
+    }
 
-	public String toString() {
-		return MODENAME;
-	}
+    public String toString() {
+        return MODENAME;
+    }
 
-	/**
-	 * Called whenever this mode is chosen in the program. (updates Actions
-	 * etc.)
-	 */
-	public void activate() {
-		getDefaultModeController().newMap();
-		c.getMapModuleManager().changeToMapOfMode(this);
-		if (!isRunning) {
-			isRunning = true;
-		} else {
-		}
-	}
+    /**
+     * Called whenever this mode is chosen in the program. (updates Actions
+     * etc.)
+     */
+    public void activate() {
+        getDefaultModeController().newMap();
+        c.getMapModuleManager().changeToMapOfMode(this);
+        if (!isRunning) {
+            isRunning = true;
+        } else {
+        }
+    }
 
-	public void restore(String restoreable) {
-	}
+    public void restore(String restoreable) {
+    }
 
-	public Controller getController() {
-		return c;
-	}
+    public Controller getController() {
+        return c;
+    }
 
-	public ModeController getDefaultModeController() {
-		return modecontroller;
-	}
+    public ModeController getDefaultModeController() {
+        return modecontroller;
+    }
 
-	public ModeController createModeController() {
-		return new FileController(this);
-	}
+    public ModeController createModeController() {
+        return new FileController(this);
+    }
 
 }

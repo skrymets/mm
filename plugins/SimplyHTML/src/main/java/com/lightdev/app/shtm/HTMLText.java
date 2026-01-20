@@ -41,20 +41,26 @@ import javax.swing.text.html.HTMLDocument;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class HTMLText {
-    /** the HTML representation of the text */
+    /**
+     * the HTML representation of the text
+     */
     private String htmlText;
-    /** the plain text representation of the text */
+    /**
+     * the plain text representation of the text
+     */
     private String plainText;
-    /** holds the copied plain text chunks */
+    /**
+     * holds the copied plain text chunks
+     */
     private final Vector clipText = new Vector(0);
-    /** holds the copied character attributes mapping to clipText */
+    /**
+     * holds the copied character attributes mapping to clipText
+     */
     private final Vector clipAttr = new Vector(0);
     /**
      * indicates whether or not the html represented by this
@@ -79,12 +85,10 @@ class HTMLText {
      * copy an HTML string representation of a content portion from the
      * given editor pane.
      *
-     * @param  src  the <code>SHTMLEditorPane</code> to copy from
-     * @param  start  the position to start copying at
-     * @param  length  the length of the content portion to copy
-     *
+     * @param src    the <code>SHTMLEditorPane</code> to copy from
+     * @param start  the position to start copying at
+     * @param length the length of the content portion to copy
      * @return an HTML string representation of the copied portion of content
-     *
      * @see com.lightdev.app.shtm.SHTMLEditorPane
      */
     public void copyHTML(final SHTMLEditorPane src, final int start, final int length) throws BadLocationException,
@@ -94,8 +98,7 @@ class HTMLText {
             stringRepresentation = false;
             clearStyledText();
             copyStyledText(src);
-        }
-        else {
+        } else {
             stringRepresentation = true;
             final StringWriter sw = new StringWriter();
             final SHTMLWriter w = new SHTMLWriter(sw, doc, start, length);
@@ -110,8 +113,8 @@ class HTMLText {
     /**
      * insert this <code>HTMLText<code> into a <code>Document</code>.
      *
-     * @param  document  the document to insert into
-     * @param  position  the text position to insert at
+     * @param document the document to insert into
+     * @param position the text position to insert at
      */
     public void pasteHTML(final Document document, int position) throws BadLocationException, IOException {
         /**
@@ -135,11 +138,11 @@ class HTMLText {
      * Determines the HTML string resulting from pasting the given HTML string at the given
      * position within the given paragraph element.
      *
-     * @param doc  the document to insert to
-     * @param characterElement  the character element to split
-     * @param paragraphElement  the paragraph element to split
-     * @param targetPosition  the text position inside the document where to split
-     * @param pastedHtml  the html text to insert at pos
+     * @param doc              the document to insert to
+     * @param characterElement the character element to split
+     * @param paragraphElement the paragraph element to split
+     * @param targetPosition   the text position inside the document where to split
+     * @param pastedHtml       the html text to insert at pos
      */
     public String splitPaste(final SHTMLDocument doc, final Element characterElement, final Element paragraphElement,
                              final int targetPosition, final String pastedHtml, final boolean pastedHTMLHasParagraphTags) {
@@ -164,7 +167,7 @@ class HTMLText {
                     //  w.writeStartTag(paragraphElementAdjustedName, paragraphElement.getAttributes());
                     //Write first part of the splitted text.
                     final SHTMLWriter htmlStartWriter = new SHTMLWriter(sw, doc, element.getStartOffset(),
-                        targetPosition - element.getStartOffset());
+                            targetPosition - element.getStartOffset());
                     htmlStartWriter.write(element);
                     if (pastedHTMLHasParagraphTags) {
                         w.writeEndTag(paragraphElementAdjustedName);
@@ -181,16 +184,14 @@ class HTMLText {
                     // Why the following?
                     //if(elementIdx > 0) 
                     //  w.writeEndTag(paragraphElementAdjustedName);
-                }
-                else {
+                } else {
                     w.write(element);
                 }
             }
             if (!impliedParagraph || pastedHTMLHasParagraphTags) {
                 w.writeEndTag(paragraphElementAdjustedName);
             }
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return sw.getBuffer().toString();
@@ -201,7 +202,7 @@ class HTMLText {
      * i.e. chunks of plain text strings with an AttributeSet associated
      * to each of them.
      *
-     * @param src  the SHTMLEditorPane to copy from
+     * @param src the SHTMLEditorPane to copy from
      */
     private void copyStyledText(final SHTMLEditorPane src) throws BadLocationException {
         final Document doc = src.getDocument();
@@ -220,15 +221,12 @@ class HTMLText {
                     if (eStart < selStart) {
                         if (eEnd > selEnd) { // both ends of elem outside selection
                             clipText.addElement(src.getText(selStart, selEnd - selStart));
-                        }
-                        else { // only first part of elem outside selection
+                        } else { // only first part of elem outside selection
                             clipText.addElement(src.getText(selStart, eEnd - selStart));
                         }
-                    }
-                    else if (eEnd > selEnd) { // only last part of elem outside selection
+                    } else if (eEnd > selEnd) { // only last part of elem outside selection
                         clipText.addElement(src.getText(eStart, selEnd - eStart));
-                    }
-                    else { // whole element inside selection
+                    } else { // whole element inside selection
                         clipText.addElement(src.getText(eStart, eEnd - eStart));
                     }
                 }
@@ -237,7 +235,9 @@ class HTMLText {
         }
     }
 
-    /** Gets the number of text chunks in this <code>StyledText</code> object. */
+    /**
+     * Gets the number of text chunks in this <code>StyledText</code> object.
+     */
     private int getClipTextSize() {
         return clipText.size();
     }
@@ -262,7 +262,9 @@ class HTMLText {
         return (String) clipText.elementAt(chunkNo);
     }
 
-    /** clear all styled text contents of this <code>HTMLText</code> object */
+    /**
+     * clear all styled text contents of this <code>HTMLText</code> object
+     */
     private void clearStyledText() {
         clipText.clear();
         clipAttr.clear();
@@ -277,8 +279,7 @@ class HTMLText {
         final StringBuffer text = new StringBuffer();
         if (stringRepresentation) {
             text.append(plainText);
-        }
-        else {
+        } else {
             int i;
             for (i = 0; i < clipText.size(); i++) {
                 text.append((String) clipText.elementAt(i));
@@ -287,14 +288,18 @@ class HTMLText {
         return text.toString();
     }
 
-    /** (See also isParagraphTag.) */
+    /**
+     * (See also isParagraphTag.)
+     */
     public static boolean containsParagraphTags(final String htmlText) {
         //An simplistic heuristic. Does not handle tags in comments, for instance.
         return htmlText
-            .matches("(?ims).*<(blockquote|dir|div|dl|dt|frameset|h1|h2|h3|h4|h5|h6|hr|li|menu|ol|p|pre|table|td|th|tr|ul).*?>.*");
+                .matches("(?ims).*<(blockquote|dir|div|dl|dt|frameset|h1|h2|h3|h4|h5|h6|hr|li|menu|ol|p|pre|table|td|th|tr|ul).*?>.*");
     }
 
-    /** Determines whether the text has a table with exactly one cell and one row. */
+    /**
+     * Determines whether the text has a table with exactly one cell and one row.
+     */
     public boolean isOneCellInOneRow() {
         //return false;
         if (htmlText.matches("(?ims).*</td>.*<td.*")) {

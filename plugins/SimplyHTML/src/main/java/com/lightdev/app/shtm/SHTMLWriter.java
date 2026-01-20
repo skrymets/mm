@@ -39,8 +39,6 @@ import javax.swing.text.html.HTMLWriter;
 
 /**
  * FixedHTMLWriter
- *
- * 
  */
 public class SHTMLWriter extends HTMLWriter {
     private Element element;
@@ -56,8 +54,10 @@ public class SHTMLWriter extends HTMLWriter {
         writer = w;
     }
 
-    /** Constructs the SHTMLWriter with a new StringWriter. See also the method
-     * getWrittenString. */
+    /**
+     * Constructs the SHTMLWriter with a new StringWriter. See also the method
+     * getWrittenString.
+     */
     public SHTMLWriter(final HTMLDocument doc) {
         this(new StringWriter(), doc, 0, doc.getLength());
     }
@@ -144,21 +144,18 @@ public class SHTMLWriter extends HTMLWriter {
      * Element tree and controls the writing out of
      * all the tags and its attributes.
      *
-     * @exception IOException on any I/O error
-     * @exception BadLocationException if pos represents an invalid
-     *            location within the document.
-     *
+     * @throws IOException          on any I/O error
+     * @throws BadLocationException if pos represents an invalid
+     *                              location within the document.
      */
     synchronized void write(Element element) throws IOException, BadLocationException {
         this.element = element;
         try {
             write();
-        }
-        catch (final BadLocationException e) {
+        } catch (final BadLocationException e) {
             element = null;
             throw e;
-        }
-        catch (final IOException e) {
+        } catch (final IOException e) {
             element = null;
             throw e;
         }
@@ -167,7 +164,7 @@ public class SHTMLWriter extends HTMLWriter {
     /**
      * invoke HTML creation for all children of a given element.
      *
-     * @param elem  the element which children are to be written as HTML
+     * @param elem the element which children are to be written as HTML
      */
     public void writeChildElements(final Element parentElement) throws IOException, BadLocationException {
         Element childElement; //Not necessarily a paragraph element.
@@ -193,7 +190,7 @@ public class SHTMLWriter extends HTMLWriter {
     }
 
     /**
-     * Create an older style of HTML attributes.  This will 
+     * Create an older style of HTML attributes.  This will
      * convert character level attributes that have a StyleConstants
      * mapping over to an HTML tag/attribute.  Other CSS attributes
      * will be placed in an HTML style attribute.
@@ -212,8 +209,7 @@ public class SHTMLWriter extends HTMLWriter {
                     value += "; ";
                 }
                 value += sourceAttributeName + ": " + source.getAttribute(sourceAttributeName);
-            }
-            else {
+            } else {
                 target.addAttribute(sourceAttributeName, source.getAttribute(sourceAttributeName));
             }
         }
@@ -258,15 +254,14 @@ public class SHTMLWriter extends HTMLWriter {
      * writing stops with this element. If the end element is a leaf,
      * it is written as the last element, otherwise it is not written.
      *
-     * @param e  the element to write including its children (if any)
-     * @param end  the last leaf element to write or the branch element
-     * to stop writing at (whatever applies)
+     * @param e   the element to write including its children (if any)
+     * @param end the last leaf element to write or the branch element
+     *            to stop writing at (whatever applies)
      */
     private void writeElementsUntil(final Element e, final Element end) throws IOException, BadLocationException {
         if (e.isLeaf()) {
             write(e);
-        }
-        else {
+        } else {
             if (e != end) {
                 startTag(e);
                 final int childCount = e.getElementCount();
@@ -286,8 +281,8 @@ public class SHTMLWriter extends HTMLWriter {
      * The end element is written as the last element,
      * if it is a leaf element.
      *
-     * @param startElement  the element to start writing with
-     * @param endElement  the last element to write
+     * @param startElement the element to start writing with
+     * @param endElement   the last element to write
      */
     void write(final Element startElement, final Element endElement) throws IOException, BadLocationException {
         final Element parentElement = startElement.getParentElement();
@@ -342,8 +337,7 @@ public class SHTMLWriter extends HTMLWriter {
     public void write(final String string) {
         try {
             writer.write(string);
-        }
-        catch (final IOException ex) {
+        } catch (final IOException ex) {
         }
     }
 
@@ -355,7 +349,9 @@ public class SHTMLWriter extends HTMLWriter {
         return super.toString();
     }
 
-    /** Gets the written string if the writer is a StringWriter, null otherwise. */
+    /**
+     * Gets the written string if the writer is a StringWriter, null otherwise.
+     */
     String getWrittenString() {
         if (writer instanceof StringWriter) {
             final StringWriter stringWriter = (StringWriter) writer;

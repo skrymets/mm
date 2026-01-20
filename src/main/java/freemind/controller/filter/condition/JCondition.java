@@ -23,8 +23,7 @@
  */
 package freemind.controller.filter.condition;
 
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * @author Dimitri Polivaev 06.11.2005
@@ -32,12 +31,13 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class JCondition extends JPanel {
 
-	/**
+    /**
+     *
      */
-	public JCondition() {
-		super();
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		setOpaque(false);
-	}
+    public JCondition() {
+        super();
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setOpaque(false);
+    }
 
 }

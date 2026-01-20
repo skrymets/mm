@@ -23,37 +23,37 @@
  */
 package freemind.controller.filter.condition;
 
-import javax.swing.JComponent;
-
 import freemind.main.XMLElement;
+
+import javax.swing.*;
 
 /**
  * @author dimitri 15.05.2005
  */
 public abstract class NodeCondition implements Condition {
-	private JComponent renderer;
-	private String description;
+    private JComponent renderer;
+    private String description;
 
-	protected NodeCondition() {
-	}
+    protected NodeCondition() {
+    }
 
-	public JComponent getListCellRendererComponent() {
-		if (renderer == null) {
-			renderer = ConditionFactory.createCellRendererComponent(toString());
-		}
-		return renderer;
-	}
+    public JComponent getListCellRendererComponent() {
+        if (renderer == null) {
+            renderer = ConditionFactory.createCellRendererComponent(toString());
+        }
+        return renderer;
+    }
 
-	public String toString() {
-		if (description == null) {
-			description = createDesctiption();
-		}
-		return description;
-	}
+    public String toString() {
+        if (description == null) {
+            description = createDesctiption();
+        }
+        return description;
+    }
 
-	abstract protected String createDesctiption();
+    abstract protected String createDesctiption();
 
-	public void saveAttributes(XMLElement child) {
-	}
+    public void saveAttributes(XMLElement child) {
+    }
 
 }

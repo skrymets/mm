@@ -44,11 +44,11 @@ import javax.swing.event.ListSelectionListener;
  * A pick list typically being used in font dialogs, consisting
  * of a list title, a text field for the currently selected
  * value and the actual pick list containing all possible values.
- *
+ * <p>
  * As three different lists are needed in our font panel for
  * family, style and size, its quite handy to have the code
  * making up such a component in a separate class only once.
- *
+ * <p>
  * As well in a separate class it is easier to implement the
  * special 'behaviour', i.e. when list is clicked, the value
  * of the text field is set accordingly and when a value is
@@ -60,24 +60,26 @@ import javax.swing.event.ListSelectionListener;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class TitledPickList extends JPanel implements ListSelectionListener, CaretListener, FocusListener, KeyListener {
-    /** the chosen list entry */
+    /**
+     * the chosen list entry
+     */
     private final JTextField choice;
     boolean ignoreTextChanges = false;
-    /** the list having all possible entries */
+    /**
+     * the list having all possible entries
+     */
     private final JList optionsList;
 
     /**
      * constructor
      *
-     * @param options  the options to be selectable in this list
-     * @param titleText  the title for the pick list
+     * @param options   the options to be selectable in this list
+     * @param titleText the title for the pick list
      */
     public TitledPickList(final String[] options, final String titleText) {
         super(new BorderLayout());
@@ -123,7 +125,9 @@ class TitledPickList extends JPanel implements ListSelectionListener, CaretListe
         }
     }
 
-    /** for FocusListener implementation, but unused here */
+    /**
+     * for FocusListener implementation, but unused here
+     */
     public void focusGained(final FocusEvent e) {
     }
 
@@ -145,15 +149,21 @@ class TitledPickList extends JPanel implements ListSelectionListener, CaretListe
         }
     }
 
-    /** for KeyListener implementation, but unused here */
+    /**
+     * for KeyListener implementation, but unused here
+     */
     public void keyReleased(final KeyEvent e) {
     }
 
-    /** for KeyListener implementation, but unused here */
+    /**
+     * for KeyListener implementation, but unused here
+     */
     public void keyTyped(final KeyEvent e) {
     }
 
-    /** put selected value into text field */
+    /**
+     * put selected value into text field
+     */
     private void updateTextFromList() {
         final Object value = optionsList.getSelectedValue();
         if (value != null) {
@@ -173,7 +183,7 @@ class TitledPickList extends JPanel implements ListSelectionListener, CaretListe
     /**
      * set the value selected in the pick list
      *
-     * @param value  the value to be selected in the list
+     * @param value the value to be selected in the list
      */
     public void setSelection(final Object value) {
         optionsList.setSelectedValue(value.toString(), true);
@@ -183,7 +193,7 @@ class TitledPickList extends JPanel implements ListSelectionListener, CaretListe
     /**
      * set the selected index in the pick list
      *
-     * @param index  the index of the value to be selected in the list
+     * @param index the index of the value to be selected in the list
      */
     public void setSelection(final int index) {
         optionsList.setSelectedIndex(index);
@@ -212,13 +222,15 @@ class TitledPickList extends JPanel implements ListSelectionListener, CaretListe
     }
 
     /* ------------- event handling start ------------ */
-    /** the listeners for TitledPickkListEvents */
+    /**
+     * the listeners for TitledPickkListEvents
+     */
     private final Vector listeners = new Vector(0);
 
     /**
      * add an event listener.
      *
-     * @param  listener  the event listener to add
+     * @param listener the event listener to add
      */
     public void addTitledPickListListener(final TitledPickListListener listener) {
         listeners.addElement(listener);
@@ -227,13 +239,15 @@ class TitledPickList extends JPanel implements ListSelectionListener, CaretListe
     /**
      * remove an event listener.
      *
-     * @param  listener  the event listener to remove
+     * @param listener the event listener to remove
      */
     public void removeTitledPickListListener(final TitledPickListListener listener) {
         listeners.removeElement(listener);
     }
 
-    /** fire a value changed event to all registered listeners */
+    /**
+     * fire a value changed event to all registered listeners
+     */
     void fireValueChanged() {
         final Enumeration listenerList = listeners.elements();
         while (listenerList.hasMoreElements()) {
@@ -241,14 +255,18 @@ class TitledPickList extends JPanel implements ListSelectionListener, CaretListe
         }
     }
 
-    /** the event object definition for ColorPanels */
+    /**
+     * the event object definition for ColorPanels
+     */
     class TitledPickListEvent extends EventObject {
         public TitledPickListEvent(final Object source) {
             super(source);
         }
     }
 
-    /** the event listener definition for ColorPanels */
+    /**
+     * the event listener definition for ColorPanels
+     */
     interface TitledPickListListener extends EventListener {
         public void valueChanged(TitledPickListEvent e);
     }

@@ -20,46 +20,44 @@
  */
 package freemind.controller.printpreview;
 
-import java.awt.EventQueue;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 class BrowseAction extends AbstractAction {
-	private JLabel pageNumber;
+    private JLabel pageNumber;
 
-	public BrowseAction(Preview preview, JLabel pageNumber, int pageStep) {
-		super();
-		this.preview = preview;
-		this.pageStep = pageStep;
-		this.pageNumber = pageNumber;
-		pageIndexPainter = new Runnable() {
-			public void run() {
-				paintPageIndex();
-			}
-		};
-	}
+    public BrowseAction(Preview preview, JLabel pageNumber, int pageStep) {
+        super();
+        this.preview = preview;
+        this.pageStep = pageStep;
+        this.pageNumber = pageNumber;
+        pageIndexPainter = new Runnable() {
+            public void run() {
+                paintPageIndex();
+            }
+        };
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		preview.moveIndex(pageStep);
-		paintPageIndex();
-		preview.repaint();
-		EventQueue.invokeLater(pageIndexPainter);
-	}
+    public void actionPerformed(ActionEvent e) {
+        preview.moveIndex(pageStep);
+        paintPageIndex();
+        preview.repaint();
+        EventQueue.invokeLater(pageIndexPainter);
+    }
 
-	private void paintPageIndex() {
-		pageNumber.setText(getPageIndexText());
-		pageNumber.paintImmediately(0, 0, pageNumber.getWidth(),
-				pageNumber.getHeight());
-	}
+    private void paintPageIndex() {
+        pageNumber.setText(getPageIndexText());
+        pageNumber.paintImmediately(0, 0, pageNumber.getWidth(),
+                pageNumber.getHeight());
+    }
 
-	private String getPageIndexText() {
-		return "- " + String.valueOf(1 + preview.getPageIndex()) + " -";
-	}
+    private String getPageIndexText() {
+        return "- " + String.valueOf(1 + preview.getPageIndex()) + " -";
+    }
 
-	protected Preview preview;
-	protected int pageStep;
-	private final Runnable pageIndexPainter;
+    protected Preview preview;
+    protected int pageStep;
+    private final Runnable pageIndexPainter;
 }

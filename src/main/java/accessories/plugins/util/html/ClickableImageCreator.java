@@ -31,115 +31,117 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Vector;
 
-/** */
+/**
+ *
+ */
 public class ClickableImageCreator {
 
-	public static class AreaHolder {
-		// <area shape="rect" href="#id47808" alt="Import/Export of parts of a
-		// map" title="Import/Export of parts of a map" coords="" />
-		// <area shape="rect" href="#id47708" alt="Screenshots cross-red coming
-		// soon." title="Screenshots cross-red coming soon."
-		// coords="699,143,835,168" />
-		String shape = "rect";
+    public static class AreaHolder {
+        // <area shape="rect" href="#id47808" alt="Import/Export of parts of a
+        // map" title="Import/Export of parts of a map" coords="" />
+        // <area shape="rect" href="#id47708" alt="Screenshots cross-red coming
+        // soon." title="Screenshots cross-red coming soon."
+        // coords="699,143,835,168" />
+        String shape = "rect";
 
-		String href;
+        String href;
 
-		String alt;
+        String alt;
 
-		String title;
+        String title;
 
-		Rectangle coordinates = new Rectangle();
+        Rectangle coordinates = new Rectangle();
 
-		/**
-		 * Optionally holds the link (URL) of a node.
-		 */
-		public String link;
+        /**
+         * Optionally holds the link (URL) of a node.
+         */
+        public String link;
 
-	}
+    }
 
-	Vector<AreaHolder> area = new Vector<>();
+    Vector<AreaHolder> area = new Vector<>();
 
-	private final MindMapNode root;
+    private final MindMapNode root;
 
-	private final ModeController modeController;
+    private final ModeController modeController;
 
-	private Rectangle innerBounds;
+    private Rectangle innerBounds;
 
-	private final String linkFormatter;
+    private final String linkFormatter;
 
-	private MapView mapView;
+    private MapView mapView;
 
-	/**
-	 * @param linkFormatter
-	 *            if for example the link abc must be replaced with FMabcFM,
-	 *            then this string has to be FM$1FM.
-	 */
-	public ClickableImageCreator(MindMapNode root,
-			ModeController modeController, String linkFormatter) {
-		super();
-		this.root = root;
-		this.linkFormatter = linkFormatter;
-		mapView = modeController.getView();
-		if (mapView != null) {
-			innerBounds = mapView.getInnerBounds();
-		} else {
-			// test case: give any bounds:
-			innerBounds = new Rectangle(0, 0, 100, 100);
-		}
-		this.modeController = modeController;
-		createArea();
-	}
-
-	public String generateHtml() {
-		StringBuffer htmlArea = new StringBuffer();
-		for (Iterator<AreaHolder> i = area.iterator(); i.hasNext();) {
-			AreaHolder holder = i.next();
-			MessageFormat formatter = new MessageFormat(linkFormatter);
-			String replacement = formatter.format(new Object[] { holder.href, holder.link });
-			if(replacement.isEmpty()) {
-				continue;
-			}
-			htmlArea.append("<area shape=\"" + holder.shape + "\" href=\""
-					+ replacement + "\" alt=\""
-					+ HtmlTools.toXMLEscapedText(holder.alt) + "\" title=\""
-					+ HtmlTools.toXMLEscapedText(holder.title) + "\" coords=\""
-					+ holder.coordinates.x + "," + holder.coordinates.y + ","
-					+ (holder.coordinates.width + holder.coordinates.x) + ","
-					+ +(holder.coordinates.height + holder.coordinates.y)
-					+ "\" />");
-		}
-		return htmlArea.toString();
-	}
-
-	private void createArea() {
-		createArea(root);
-	}
-
-	/**
+    /**
+     * @param linkFormatter if for example the link abc must be replaced with FMabcFM,
+     *                      then this string has to be FM$1FM.
      */
-	private void createArea(MindMapNode node) {
-		if (mapView == null) {
-			return;
-		}
-		final NodeView nodeView = mapView.getNodeView(node);
-		if (nodeView != null) {
-			AreaHolder holder = new AreaHolder();
-			holder.title = node.getShortText(modeController);
-			holder.alt = node.getShortText(modeController);
-			holder.href = node.getObjectId(modeController);
-			holder.link = node.getLink()!=null?node.getLink():"";
-			Point contentXY = mapView.getNodeContentLocation(nodeView);
-			final JComponent content = nodeView.getContent();
-			holder.coordinates.x = (int) (contentXY.x - innerBounds.getMinX());
-			holder.coordinates.y = (int) (contentXY.y - innerBounds.getMinY());
-			holder.coordinates.width = content.getWidth();
-			holder.coordinates.height = content.getHeight();
-			area.add(holder);
-			for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext();) {
-				MindMapNode child = i.next();
-				createArea(child);
-			}
-		}
-	}
+    public ClickableImageCreator(MindMapNode root,
+                                 ModeController modeController, String linkFormatter) {
+        super();
+        this.root = root;
+        this.linkFormatter = linkFormatter;
+        mapView = modeController.getView();
+        if (mapView != null) {
+            innerBounds = mapView.getInnerBounds();
+        } else {
+            // test case: give any bounds:
+            innerBounds = new Rectangle(0, 0, 100, 100);
+        }
+        this.modeController = modeController;
+        createArea();
+    }
+
+    public String generateHtml() {
+        StringBuffer htmlArea = new StringBuffer();
+        for (Iterator<AreaHolder> i = area.iterator(); i.hasNext(); ) {
+            AreaHolder holder = i.next();
+            MessageFormat formatter = new MessageFormat(linkFormatter);
+            String replacement = formatter.format(new Object[]{holder.href, holder.link});
+            if (replacement.isEmpty()) {
+                continue;
+            }
+            htmlArea.append("<area shape=\"" + holder.shape + "\" href=\""
+                    + replacement + "\" alt=\""
+                    + HtmlTools.toXMLEscapedText(holder.alt) + "\" title=\""
+                    + HtmlTools.toXMLEscapedText(holder.title) + "\" coords=\""
+                    + holder.coordinates.x + "," + holder.coordinates.y + ","
+                    + (holder.coordinates.width + holder.coordinates.x) + ","
+                    + +(holder.coordinates.height + holder.coordinates.y)
+                    + "\" />");
+        }
+        return htmlArea.toString();
+    }
+
+    private void createArea() {
+        createArea(root);
+    }
+
+    /**
+     *
+     */
+    private void createArea(MindMapNode node) {
+        if (mapView == null) {
+            return;
+        }
+        final NodeView nodeView = mapView.getNodeView(node);
+        if (nodeView != null) {
+            AreaHolder holder = new AreaHolder();
+            holder.title = node.getShortText(modeController);
+            holder.alt = node.getShortText(modeController);
+            holder.href = node.getObjectId(modeController);
+            holder.link = node.getLink() != null ? node.getLink() : "";
+            Point contentXY = mapView.getNodeContentLocation(nodeView);
+            final JComponent content = nodeView.getContent();
+            holder.coordinates.x = (int) (contentXY.x - innerBounds.getMinX());
+            holder.coordinates.y = (int) (contentXY.y - innerBounds.getMinY());
+            holder.coordinates.width = content.getWidth();
+            holder.coordinates.height = content.getHeight();
+            area.add(holder);
+            for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
+                MindMapNode child = i.next();
+                createArea(child);
+            }
+        }
+    }
 
 }

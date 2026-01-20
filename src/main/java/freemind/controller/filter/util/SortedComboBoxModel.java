@@ -23,32 +23,32 @@
  */
 package freemind.controller.filter.util;
 
-import javax.swing.ComboBoxModel;
+import javax.swing.*;
 
 /**
  * @author Dimitri Polivaev 10.07.2005
  */
 @SuppressWarnings("serial")
 public class SortedComboBoxModel extends SortedMapListModel implements
-		SortedListModel, ComboBoxModel {
-	private Object selectedItem;
+        SortedListModel, ComboBoxModel {
+    private Object selectedItem;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
-	 */
-	public void setSelectedItem(Object o) {
-		selectedItem = o;
-		fireContentsChanged(this, -1, -1);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
+     */
+    public void setSelectedItem(Object o) {
+        selectedItem = o;
+        fireContentsChanged(this, -1, -1);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.ComboBoxModel#getSelectedItem()
-	 */
-	public Object getSelectedItem() {
-		return selectedItem;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.swing.ComboBoxModel#getSelectedItem()
+     */
+    public Object getSelectedItem() {
+        return selectedItem;
+    }
 }

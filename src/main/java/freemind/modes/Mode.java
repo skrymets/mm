@@ -49,6 +49,6 @@ public abstract class Mode {
     public abstract Controller getController();
 
     public String toLocalizedString() {
-        return getController().getResourceString("mode_" + toString());
+        return getController().getResourceString("mode_" + this);
     }
 }

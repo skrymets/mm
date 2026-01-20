@@ -50,16 +50,18 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class FontPanel extends JPanel implements TitledPickList.TitledPickListListener, ColorPanel.ColorPanelListener {
-    /** a text field to show a sample of the selected font attributes */
+    /**
+     * a text field to show a sample of the selected font attributes
+     */
     JTextField sample = new JTextField();
-    /** table for automatic font component value read/write */
+    /**
+     * table for automatic font component value read/write
+     */
     private final Vector fontComponents = new Vector(0);
 
     public FontPanel(final boolean pickBgColor) {
@@ -73,14 +75,14 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         final JPanel previewPanel = new JPanel(new BorderLayout());
         previewPanel.add(sample, BorderLayout.CENTER);
         previewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("previewLabel")));
+                .getResourceString("previewLabel")));
         /**
          * create a pick list for family filled with
          * available font family names
          */
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final FamilyPickList family = new FamilyPickList(ge.getAvailableFontFamilyNames(),
-            Util.getResourceString("familyLabel"));
+                Util.getResourceString("familyLabel"));
         family.addTitledPickListListener(this);
         fontComponents.add(family);
         /** create a pick list for font size */
@@ -94,9 +96,9 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /** create a panel to put font parts family, size and stlye in */
         final JPanel fontPartsPanel = new JPanel(new BorderLayout(5, 5));
         fontPartsPanel.add(familySizePanel, BorderLayout.CENTER);
-        final String[] fontStyles = new String[] { Util.getResourceString("plainName"),
+        final String[] fontStyles = new String[]{Util.getResourceString("plainName"),
                 Util.getResourceString("boldName"), Util.getResourceString("italicName"),
-                Util.getResourceString("boldItalicName") };
+                Util.getResourceString("boldItalicName")};
         final StylePickList style = new StylePickList(fontStyles, Util.getResourceString("styleLabel"));
         style.addTitledPickListListener(this);
         fontPartsPanel.add(style, BorderLayout.EAST);
@@ -107,16 +109,16 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /** create a panel for color choices */
         final JPanel colorPanel = new JPanel(new GridLayout(2, 1, 3, 3));
         colorPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("colorLabel")));
+                .getResourceString("colorLabel")));
         final ColorPanel fCol = new ColorPanel(Util.getResourceString("foregroundLabel"), Color.black,
-            CSS.Attribute.COLOR);
+                CSS.Attribute.COLOR);
         fCol.addColorPanelListener(this);
         fontComponents.add(fCol);
         colorPanel.add(fCol);
         sample.setForeground(Color.black);
         if (pickBgColor) {
             final ColorPanel bCol = new ColorPanel(Util.getResourceString("backgroundLabel"), Color.white,
-                CSS.Attribute.BACKGROUND_COLOR);
+                    CSS.Attribute.BACKGROUND_COLOR);
             bCol.addColorPanelListener(this);
             fontComponents.add(bCol);
             colorPanel.add(bCol);
@@ -137,8 +139,8 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
     /**
      * construct a FontPanel and display a set of attributes
      *
-     * @param frame  the main frame having the TextResources
-     * @param a  the set of attributes to display
+     * @param frame the main frame having the TextResources
+     * @param a     the set of attributes to display
      */
     public FontPanel(final AttributeSet a, final boolean pickBgColor) {
         this(pickBgColor);
@@ -149,14 +151,13 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
     /**
      * handle ColorChangeEvents from one of our color panels
      *
-     * @param e  the ColorPanelEvent to handle
+     * @param e the ColorPanelEvent to handle
      */
     public void colorChanged(final ColorPanel.ColorPanelEvent e) {
         final ColorPanel source = (ColorPanel) e.getSource();
         if (source.getAttributeKey() == CSS.Attribute.COLOR) {
             sample.setForeground(source.getColor());
-        }
-        else if (source.getAttributeKey() == CSS.Attribute.BACKGROUND_COLOR) {
+        } else if (source.getAttributeKey() == CSS.Attribute.BACKGROUND_COLOR) {
             sample.setBackground(source.getColor());
         }
     }
@@ -165,7 +166,7 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
      * set all components of this FontPanel to reflect a set of
      * attributes.
      *
-     * @param a  the set of attributes to show
+     * @param a the set of attributes to show
      */
     public void setAttributes(final AttributeSet a) {
         final Enumeration components = fontComponents.elements();
@@ -197,8 +198,7 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
                 attributes.addAttributes(((AttributeComponent) components.nextElement()).getValue(includeUnchanged));
             }
             return attributes;
-        }
-        else {
+        } else {
             return getAttributes();
         }
     }
@@ -209,11 +209,9 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
             c = fontComponents.get(i);
             if (c instanceof FamilyPickList) {
                 ((FamilyPickList) c).reset();
-            }
-            else if (c instanceof SizePickList) {
+            } else if (c instanceof SizePickList) {
                 ((SizePickList) c).reset();
-            }
-            else if (c instanceof StylePickList) {
+            } else if (c instanceof StylePickList) {
                 ((StylePickList) c).reset();
             }
         }
@@ -228,13 +226,11 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         final Font saveFont = sample.getFont();
         if (source instanceof FamilyPickList) {
             sample.setFont(new Font(((FamilyPickList) source).getFamily(), saveFont.getStyle(), saveFont.getSize()));
-        }
-        else if (source instanceof SizePickList) {
+        } else if (source instanceof SizePickList) {
             sample.setFont(new Font(saveFont.getFamily(), saveFont.getStyle(), Integer
-                .parseInt((String) ((SizePickList) source).getSelection())));
+                    .parseInt((String) ((SizePickList) source).getSelection())));
             /*adjustFontSize(Integer.parseInt((String) ((SizePickList) source).getSelection()))));*/
-        }
-        else if (source instanceof StylePickList) {
+        } else if (source instanceof StylePickList) {
             sample.setFont(new Font(saveFont.getFamily(), ((StylePickList) source).getFontStyle(), saveFont.getSize()));
         }
     }
@@ -243,6 +239,7 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
      * fix for bug id 4765271
      * (see http://developer.java.sun.com/developer/bugParade/bugs/4765271.html)
      */
+
     /**
      * extend <code>TitledPickList</code> with a way to set values
      * special to font family values
@@ -254,8 +251,8 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /**
          * constructor
          *
-         * @param options  the options to be selectable in this list
-         * @param titleText  the title for the pick list
+         * @param options   the options to be selectable in this list
+         * @param titleText the title for the pick list
          */
         FamilyPickList(final String[] options, final String titleText) {
             super(options, titleText);
@@ -264,11 +261,10 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /**
          * set the value of this <code>TitledPickList</code>
          *
-         * @param a  the set of attributes possibly having a
+         * @param a the set of attributes possibly having a
          *          font family attribute this pick list could display
-         *
          * @return true, if the set of attributes had a font family attribute,
-         *            false if not
+         * false if not
          */
         public boolean setValue(final AttributeSet a) {
             ignoreTextChanges = true;
@@ -287,7 +283,7 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
             if (includeUnchanged
                     || ((originalValue == null) && (value != null))
                     || ((originalValue != null) && (value != null) && (!originalValue.toString().equalsIgnoreCase(
-                        value.toString())))) {
+                    value.toString())))) {
                 Util.styleSheet().addCSSAttribute(set, CSS.Attribute.FONT_FAMILY, value.toString());
                 set.addAttribute(HTML.Attribute.FACE, value.toString());
             }
@@ -319,8 +315,8 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /**
          * constructor
          *
-         * @param options  the options to be selectable in this list
-         * @param titleText  the title for the pick list
+         * @param options   the options to be selectable in this list
+         * @param titleText the title for the pick list
          */
         SizePickList(final String[] options, final String titleText) {
             super(options, titleText);
@@ -329,11 +325,10 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /**
          * set the value of this <code>TitledPickList</code>
          *
-         * @param a  the set of attributes possibly having a
+         * @param a the set of attributes possibly having a
          *          font size attribute this pick list could display
-         *
          * @return true, if the set of attributes had a font size attribute,
-         *            false if not
+         * false if not
          */
         public boolean setValue(final AttributeSet a) {
             ignoreTextChanges = true;
@@ -379,8 +374,8 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /**
          * constructor
          *
-         * @param options  the options to be selectable in this list
-         * @param titleText  the title for the pick list
+         * @param options   the options to be selectable in this list
+         * @param titleText the title for the pick list
          */
         StylePickList(final String[] options, final String titleText) {
             super(options, titleText);
@@ -389,11 +384,10 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
         /**
          * set the value of this <code>TitledPickList</code>
          *
-         * @param a  the set of attributes possibly having a
+         * @param a the set of attributes possibly having a
          *          font style attribute this pick list could display
-         *
          * @return true, if the set of attributes had a font style attribute,
-         *            false if not
+         * false if not
          */
         public boolean setValue(final AttributeSet a) {
             ignoreTextChanges = true;
@@ -455,22 +449,21 @@ class FontPanel extends JPanel implements TitledPickList.TitledPickListListener,
                         break;
                     case 1:
                         Util.styleSheet().addCSSAttribute(set, CSS.Attribute.FONT_WEIGHT,
-                            StyleConstants.Bold.toString());
+                                StyleConstants.Bold.toString());
                         break;
                     case 2:
                         Util.styleSheet().addCSSAttribute(set, CSS.Attribute.FONT_STYLE,
-                            StyleConstants.Italic.toString());
+                                StyleConstants.Italic.toString());
                         break;
                     case 3:
                         Util.styleSheet().addCSSAttribute(set, CSS.Attribute.FONT_WEIGHT,
-                            StyleConstants.Bold.toString());
+                                StyleConstants.Bold.toString());
                         Util.styleSheet().addCSSAttribute(set, CSS.Attribute.FONT_STYLE,
-                            StyleConstants.Italic.toString());
+                                StyleConstants.Italic.toString());
                         break;
                 }
                 return set;
-            }
-            else {
+            } else {
                 return getValue();
             }
         }

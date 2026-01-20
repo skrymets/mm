@@ -34,33 +34,40 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class AttributeComboBox extends JComboBox implements AttributeComponent {
-    /** CSS attribute key associated with this component */
+    /**
+     * CSS attribute key associated with this component
+     */
     private final Object attributeKey;
-    /** HTML attribute key associated with this component */
+    /**
+     * HTML attribute key associated with this component
+     */
     private final Object htmlAttributeKey;
-    /** attribute names associated with the items of this component */
+    /**
+     * attribute names associated with the items of this component
+     */
     private final String[] names;
-    /** indicates wether or not a call to setValue is the initial one */
+    /**
+     * indicates wether or not a call to setValue is the initial one
+     */
     private int setValCount = 0;
-    /** stores the initial value for tracking changes */
+    /**
+     * stores the initial value for tracking changes
+     */
     private int originalIndex = -2;
 
     /**
      * construct an <code>AttributeComboBox</code>
      *
-     * @param items  the items to appear in the list of this component
-     * @param names  the attributes to associate with items
-     *        (in the same order)
-     * @param key  the CSS attribute key this component represents
-     * @param htmlKey  the HTL attribute key this component represents
-     *
+     * @param items   the items to appear in the list of this component
+     * @param names   the attributes to associate with items
+     *                (in the same order)
+     * @param key     the CSS attribute key this component represents
+     * @param htmlKey the HTL attribute key this component represents
      * @see getValue
      */
     public AttributeComboBox(final String[] items, final String[] names, final Object key, final Object htmlKey) {
@@ -73,11 +80,10 @@ class AttributeComboBox extends JComboBox implements AttributeComponent {
     /**
      * set the value of this <code>AttributeComponent</code>
      *
-     * @param a  the set of attributes possibly having an
+     * @param a the set of attributes possibly having an
      *          attribute this component can display
-     *
      * @return true, if the set of attributes had a matching attribute,
-     *            false if not
+     * false if not
      */
     public boolean setValue(final AttributeSet a) {
         //System.out.println("AttributeComboBox setValue");
@@ -90,7 +96,7 @@ class AttributeComboBox extends JComboBox implements AttributeComponent {
             if (valObj == null && htmlAttributeKey != null) {
                 valObj = a.getAttribute(htmlAttributeKey);
                 if (valObj != null) {
-                	success = setValue(valObj);
+                    success = setValue(valObj);
                 }
             }
             /*
@@ -99,15 +105,14 @@ class AttributeComboBox extends JComboBox implements AttributeComponent {
             else if (valObj == null && attributeKey.equals(CSS.Attribute.LIST_STYLE_TYPE)) {
                 final Object name = a.getAttribute(StyleConstants.NameAttribute);
                 if (name != null && name.toString().equalsIgnoreCase(HTML.Tag.UL.toString())) {
-                	success = setValue("disc");
-                }
-                else if (name != null && name.toString().equalsIgnoreCase(HTML.Tag.OL.toString())) {
-                	success = setValue("decimal");
+                    success = setValue("disc");
+                } else if (name != null && name.toString().equalsIgnoreCase(HTML.Tag.OL.toString())) {
+                    success = setValue("decimal");
                 }
             }
             if (valObj == null && htmlAttributeKey != null) {
                 if (htmlAttributeKey.equals(HTML.Attribute.ALIGN) || htmlAttributeKey.equals(HTML.Attribute.VALIGN)) {
-                	success = setValue(names[0]);
+                    success = setValue(names[0]);
                 }
             }
             /*
@@ -115,14 +120,13 @@ class AttributeComboBox extends JComboBox implements AttributeComponent {
              */
             else {
                 //System.out.println("AttributeComboBox setValue value=" + valObj);
-            	success = setValue(valObj);
+                success = setValue(valObj);
             }
-        }
-        else {
+        } else {
             if (htmlAttributeKey != null) {
                 valObj = a.getAttribute(htmlAttributeKey);
                 if (valObj != null) {
-                	success = setValue(valObj);
+                    success = setValue(valObj);
                 }
             }
         }
@@ -140,8 +144,8 @@ class AttributeComboBox extends JComboBox implements AttributeComponent {
             int i = 0;
             while (!valStr.equalsIgnoreCase(names[i])) {
                 i++;
-                if(i >= names.length)
-                	return false;
+                if (i >= names.length)
+                    return false;
             }
             setSelectedIndex(i);
             if (++setValCount < 2) {
@@ -193,8 +197,7 @@ class AttributeComboBox extends JComboBox implements AttributeComponent {
                 a.addAttribute(htmlAttributeKey, names[value]);
             }
             return a;
-        }
-        else {
+        } else {
             return getValue();
         }
     }

@@ -28,19 +28,20 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 @SuppressWarnings("serial")
 public class RedoAction extends UndoAction {
-	private MindMapController controller;
+    private MindMapController controller;
 
-	public RedoAction(MindMapController controller) {
-		super(controller, controller.getText("redo"), freemind.view.ImageFactory.getInstance().createIcon(
-				controller.getResource("images/redo.png")), controller);
-		this.controller = controller;
-	}
+    public RedoAction(MindMapController controller) {
+        super(controller, controller.getText("redo"), freemind.view.ImageFactory.getInstance().createIcon(
+                controller.getResource("images/redo.png")), controller);
+        this.controller = controller;
+    }
 
-	/**
+    /**
+     *
      */
-	protected void informUndoPartner(ActionPair pair) {
-		this.controller.undo.add(pair.reverse());
-		this.controller.undo.setEnabled(true);
-	}
+    protected void informUndoPartner(ActionPair pair) {
+        this.controller.undo.add(pair.reverse());
+        this.controller.undo.setEnabled(true);
+    }
 
 }

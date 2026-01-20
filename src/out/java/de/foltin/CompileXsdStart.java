@@ -19,7 +19,7 @@
  *
  * Created on 16.06.2009
  */
- /*$Id: CompileXsdStart.java,v 1.1.2.1 2009/07/17 19:17:41 christianfoltin Exp $*/
+/*$Id: CompileXsdStart.java,v 1.1.2.1 2009/07/17 19:17:41 christianfoltin Exp $*/
 package de.foltin;
 
 import java.io.BufferedInputStream;
@@ -42,7 +42,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author foltin
- *
  */
 public class CompileXsdStart extends DefaultHandler {
 
@@ -89,7 +88,9 @@ public class CompileXsdStart extends DefaultHandler {
         public int getId() {
             return mEnumerationId;
         }
-    };
+    }
+
+    ;
 
     public final int Schema_Id = 0;
     public final int ComplexType_Id = 1;
@@ -299,7 +300,7 @@ public class CompileXsdStart extends DefaultHandler {
                     break;
                 default:
                     nextHandler = new XsdHandler(this);
-                // throw new IllegalArgumentException("Wrong type " + pName);
+                    // throw new IllegalArgumentException("Wrong type " + pName);
             }
             mCurrentHandler = nextHandler;
             nextHandler.startElement(pName, pAttributes);
@@ -378,34 +379,34 @@ public class CompileXsdStart extends DefaultHandler {
                 appendToClassMap(
                         KEY_CLASS_SINGLE_CHOICE,
                         "  public void addChoice(Object choice) {\n"
-                        + "    choiceList.add(choice);\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public void addAtChoice(int position, Object choice) {\n"
-                        + "    choiceList.add(position, choice);\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public void setAtChoice(int position, Object choice) {\n"
-                        + "    choiceList.set(position, choice);\n"
-                        + "  }\n"
-                        + "  public Object getChoice(int index) {\n"
-                        + "    return (Object)choiceList.get( index );\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public int sizeChoiceList() {\n"
-                        + "    return choiceList.size();\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public void clearChoiceList() {\n"
-                        + "    choiceList.clear();\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public java.util.List getListChoiceList() {\n"
-                        + "    return java.util.Collections.unmodifiableList(choiceList);\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  protected ArrayList choiceList = new ArrayList();\n"
-                        + "\n" + "");
+                                + "    choiceList.add(choice);\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public void addAtChoice(int position, Object choice) {\n"
+                                + "    choiceList.add(position, choice);\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public void setAtChoice(int position, Object choice) {\n"
+                                + "    choiceList.set(position, choice);\n"
+                                + "  }\n"
+                                + "  public Object getChoice(int index) {\n"
+                                + "    return (Object)choiceList.get( index );\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public int sizeChoiceList() {\n"
+                                + "    return choiceList.size();\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public void clearChoiceList() {\n"
+                                + "    choiceList.clear();\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public java.util.List getListChoiceList() {\n"
+                                + "    return java.util.Collections.unmodifiableList(choiceList);\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  protected ArrayList choiceList = new ArrayList();\n"
+                                + "\n" + "");
                 addArrayListImport();
                 mBindingXml.append("    <collection field='choiceList' ordered='false'>\n");
             }
@@ -455,13 +456,13 @@ public class CompileXsdStart extends DefaultHandler {
             );
             appendToClassMap(KEY_CLASS_MULTIPLE_CHOICES_SETGET,
                     "  public " + name + " get" + name + "() {\n"
-                    + "    return this." + memberName + ";\n"
-                    + "  }\n\n"
+                            + "    return this." + memberName + ";\n"
+                            + "  }\n\n"
             );
             appendToClassMap(KEY_CLASS_MULTIPLE_CHOICES_SETGET,
                     "  public void set" + name + "(" + name + " value){\n"
-                    + "    this." + memberName + " = value;\n"
-                    + "  }\n\n");
+                            + "    this." + memberName + " = value;\n"
+                            + "  }\n\n");
             mBindingXml.append("    <structure field=\"").append(memberName).append("\" usage=\"" + "optional" + "\" map-as=\"" + FREEMIND_PACKAGE + ".").append(name).append("\"/>\n");
         }
 
@@ -475,7 +476,7 @@ public class CompileXsdStart extends DefaultHandler {
 
         @Override
         public void startElement(String arg0, String arg1, String arg2,
-                Attributes arg3) throws SAXException {
+                                 Attributes arg3) throws SAXException {
             // super.startElement(arg0, arg1, arg2, arg3);
             // omit the output.
             mCurrentHandler = new GroupHandler(this);
@@ -527,12 +528,12 @@ public class CompileXsdStart extends DefaultHandler {
                         "  protected " + type + " " + memberName + ";\n\n");
                 appendToClassMap(KEY_CLASS_MULTIPLE_CHOICES_SETGET,
                         "  public " + type + " get" + name + "() {\n"
-                        + "    return this." + memberName + ";\n"
-                        + "  }\n\n");
+                                + "    return this." + memberName + ";\n"
+                                + "  }\n\n");
                 appendToClassMap(KEY_CLASS_MULTIPLE_CHOICES_SETGET,
                         "  public void set" + name + "(" + type + " value){\n"
-                        + "    this." + memberName + " = value;\n"
-                        + "  }\n\n");
+                                + "    this." + memberName + " = value;\n"
+                                + "  }\n\n");
                 String optReq = "optional";
                 if (minOccurs != null && minOccurs.trim().equals("1")) {
                     optReq = "required";
@@ -547,35 +548,35 @@ public class CompileXsdStart extends DefaultHandler {
                 // list ref:
                 appendToClassMap(KEY_CLASS_SEQUENCE,
                         "  public void add" + name + "(" + name + " " + memberName + ") {\n"
-                        + "    " + memberName + "List.add(" + memberName + ");\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public void addAt" + name + "(int position, " + name + " " + memberName + ") {\n"
-                        + "    " + memberName + "List.add(position, " + memberName + ");\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public " + name + " get" + name + "(int index) {\n"
-                        + "    return (" + name + ")" + memberName
-                        + "List.get( index );\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public void removeFrom" + name + "ElementAt(int index) {\n"
-                        + "    " + memberName + "List.remove( index );\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public int size" + name + "List() {\n"
-                        + "    return " + memberName + "List.size();\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public void clear" + name + "List() {\n"
-                        + "    " + memberName + "List.clear();\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  public java.util.List getList" + name + "List() {\n"
-                        + "    return java.util.Collections.unmodifiableList(" + memberName + "List);\n"
-                        + "  }\n"
-                        + "\n"
-                        + "  protected ArrayList " + memberName + "List = new ArrayList();\n\n"
+                                + "    " + memberName + "List.add(" + memberName + ");\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public void addAt" + name + "(int position, " + name + " " + memberName + ") {\n"
+                                + "    " + memberName + "List.add(position, " + memberName + ");\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public " + name + " get" + name + "(int index) {\n"
+                                + "    return (" + name + ")" + memberName
+                                + "List.get( index );\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public void removeFrom" + name + "ElementAt(int index) {\n"
+                                + "    " + memberName + "List.remove( index );\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public int size" + name + "List() {\n"
+                                + "    return " + memberName + "List.size();\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public void clear" + name + "List() {\n"
+                                + "    " + memberName + "List.clear();\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  public java.util.List getList" + name + "List() {\n"
+                                + "    return java.util.Collections.unmodifiableList(" + memberName + "List);\n"
+                                + "  }\n"
+                                + "\n"
+                                + "  protected ArrayList " + memberName + "List = new ArrayList();\n\n"
                 );
                 addArrayListImport();
                 mBindingXml.append("    <collection field=\"").append(memberName).append("List\">\n" + "      <structure map-as=\"" + FREEMIND_PACKAGE + ".").append(name).append("\"/>\n").append("    </collection>\n");
@@ -614,7 +615,6 @@ public class CompileXsdStart extends DefaultHandler {
 
         /**
          * @param arg1
-         *
          * @return the class name
          */
         protected String startClass(Attributes arg1) {
@@ -637,12 +637,12 @@ public class CompileXsdStart extends DefaultHandler {
                 mKeyOrder.add(KEY_CLASS_MIXED);
                 class1.put(KEY_CLASS_MIXED,
                         " public String content; "
-                        + "public String getContent(){ "
-                        + "return content;"
-                        + "} "
-                        + "public void setContent(String content){"
-                        + "this.content = content;"
-                        + "}"
+                                + "public String getContent(){ "
+                                + "return content;"
+                                + "} "
+                                + "public void setContent(String content){"
+                                + "this.content = content;"
+                                + "}"
                 );
             }
             class1.put(KEY_CLASS_END, "} /* " + name + "*/\n");
@@ -698,12 +698,12 @@ public class CompileXsdStart extends DefaultHandler {
             );
             appendToClassMap(KEY_CLASS_GETTERS,
                     "  public " + type + " get" + name + "(){\n"
-                    + "    return " + memberName + ";\n"
-                    + "  }\n");
+                            + "    return " + memberName + ";\n"
+                            + "  }\n");
             appendToClassMap(KEY_CLASS_SETTERS,
                     "  public void set" + name + "(" + type + " value){\n"
-                    + "    this." + memberName + " = value;\n"
-                    + "  }\n"
+                            + "    this." + memberName + " = value;\n"
+                            + "  }\n"
             );
             mBindingXml.append("    <value name='").append(rawName).append("' field='").append(memberName).append("' " + "usage='").append(("required".equals(usage)) ? "required" : "optional").append("' ").append(("0".equals(minOccurs)) ? "" : "style='attribute'").append("/>\n");
             // whitespace='preserve' doesn't work
@@ -725,7 +725,7 @@ public class CompileXsdStart extends DefaultHandler {
         public void startElement(String arg0, Attributes arg1) {
             super.startElement(arg0, arg1);
             String val = arg1.getValue("value");
-            appendToClassMap(KEY_CLASS_CONSTANTS, 
+            appendToClassMap(KEY_CLASS_CONSTANTS,
                     "  public static final String " + val.toUpperCase() + " = \"" + val + "\";\n");
         }
 

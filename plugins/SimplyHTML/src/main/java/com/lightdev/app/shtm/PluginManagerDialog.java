@@ -47,32 +47,44 @@ import javax.swing.event.ListSelectionListener;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class PluginManagerDialog extends DialogShell implements ListSelectionListener, ActionListener {
-    /** combo box for selecting the dock location */
+    /**
+     * combo box for selecting the dock location
+     */
     private final JComboBox dockLocation;
-    /** indicates if we can ignore changes (when happenig programmatically */
+    /**
+     * indicates if we can ignore changes (when happenig programmatically
+     */
     private boolean ignoreChanges = false;
-    /** the list with available plug-ins */
+    /**
+     * the list with available plug-ins
+     */
     private final JList pluginNames;
-    /** constant for activation button label */
+    /**
+     * constant for activation button label
+     */
     private final String activateName = Util.getResourceString("activatePlugin");
-    /** constant for deactivation button label */
+    /**
+     * constant for deactivation button label
+     */
     private final String deactivateName = Util.getResourceString("deactivatePlugin");
-    /** button to toggle plug-in activation state */
+    /**
+     * button to toggle plug-in activation state
+     */
     private final JButton toggleActivationButton;
-    /** checkbox to toggle plug-in activation state */
+    /**
+     * checkbox to toggle plug-in activation state
+     */
     private final JCheckBox toggleActivationCheckbox;
 
     /**
      * construct a new <code>PluginManagerDialog</code>
      *
-     * @param parent  the parent frame
+     * @param parent the parent frame
      * @param title  the title of the dialog
      */
     public PluginManagerDialog(final Frame parent, final String title) {
@@ -85,7 +97,7 @@ class PluginManagerDialog extends DialogShell implements ListSelectionListener, 
         /** create panel to show and select plug-ins */
         final JPanel pluginPanel = new JPanel(new BorderLayout());
         pluginPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("pluginPanelTitle")));
+                .getResourceString("pluginPanelTitle")));
         //pluginPanel.setMinimumSize(new Dimension(400, 400));
         SHTMLPanelImpl.pluginManager.plugins();
         pluginNames = new JList(SHTMLPanelImpl.pluginManager.getPluginNames());
@@ -108,10 +120,10 @@ class PluginManagerDialog extends DialogShell implements ListSelectionListener, 
         toggleActivationCheckbox.addActionListener(this);
         Util.addGridBagComponent(pluginSettingsPanel, toggleActivationCheckbox, g, c, 0, 0, GridBagConstraints.WEST);
         Util.addGridBagComponent(pluginSettingsPanel, new JLabel(Util.getResourceString("dockLocationLabel")), g, c, 0,
-            1, GridBagConstraints.EAST);
-        final String[] locations = { Util.getResourceString("pluginDockLocationNone"),
+                1, GridBagConstraints.EAST);
+        final String[] locations = {Util.getResourceString("pluginDockLocationNone"),
                 Util.getResourceString("pluginDockLocationTop"), Util.getResourceString("pluginDockLocationRight"),
-                Util.getResourceString("pluginDockLocationBottom"), Util.getResourceString("pluginDockLocationLeft"), };
+                Util.getResourceString("pluginDockLocationBottom"), Util.getResourceString("pluginDockLocationLeft"),};
         dockLocation = new JComboBox(locations);
         dockLocation.setEnabled(false);
         dockLocation.addActionListener(this);
@@ -123,7 +135,7 @@ class PluginManagerDialog extends DialogShell implements ListSelectionListener, 
         centerWestPanel.add(pluginSettingsPanel, BorderLayout.NORTH);
         centerPanel.add(centerWestPanel, BorderLayout.WEST);
         centerPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("pluginSettingsPanelTitle")));
+                .getResourceString("pluginSettingsPanelTitle")));
         //centerPanel.setPreferredSize(new Dimension(200,400));
         contentPane.add(centerPanel, BorderLayout.CENTER);
         pack();
@@ -143,8 +155,7 @@ class PluginManagerDialog extends DialogShell implements ListSelectionListener, 
             toggleActivationCheckbox.setSelected(active);
             dockLocation.setSelectedIndex(p.getDockLocation());
             dockLocation.setEnabled(true);
-        }
-        else {
+        } else {
             toggleActivationButton.setEnabled(false);
             toggleActivationCheckbox.setEnabled(false);
             dockLocation.setEnabled(false);
@@ -168,8 +179,7 @@ class PluginManagerDialog extends DialogShell implements ListSelectionListener, 
     private void updateActivationButtonText(final boolean active) {
         if (active) {
             toggleActivationButton.setText(deactivateName);
-        }
-        else {
+        } else {
             toggleActivationButton.setText(activateName);
         }
     }
@@ -184,22 +194,18 @@ class PluginManagerDialog extends DialogShell implements ListSelectionListener, 
             final SHTMLPlugin p = getSelectedPlugin();
             if (source.equals(toggleActivationButton)) {
                 p.setStatus(!p.isActive());
-            }
-            else if (source.equals(toggleActivationCheckbox)) {
+            } else if (source.equals(toggleActivationCheckbox)) {
                 p.setStatus(!p.isActive());
-            }
-            else if (source.equals(dockLocation)) {
+            } else if (source.equals(dockLocation)) {
                 p.setDockLocation(dockLocation.getSelectedIndex());
-            }
-            else {
+            } else {
                 super.actionPerformed(e);
             }
             final boolean active = p.isActive();
             toggleActivationCheckbox.setSelected(active);
             updateActivationButtonText(active);
             ignoreChanges = false;
-        }
-        else {
+        } else {
             super.actionPerformed(e);
         }
     }

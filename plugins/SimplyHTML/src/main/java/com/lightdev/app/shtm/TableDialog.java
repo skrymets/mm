@@ -1,20 +1,20 @@
 /*
-* SimplyHTML, a word processor based on Java, HTML and CSS
-* Copyright (C) 2002 Ulrich Hilger
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * SimplyHTML, a word processor based on Java, HTML and CSS
+ * Copyright (C) 2002 Ulrich Hilger
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package com.lightdev.app.shtm;
 
@@ -46,26 +46,30 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class TableDialog extends DialogShell {
-    /** collection of all components with table related attributes */
+    /**
+     * collection of all components with table related attributes
+     */
     Vector tableComponents = new Vector();
-    /** collection of all components with cell related attributes */
+    /**
+     * collection of all components with cell related attributes
+     */
     Vector cellComponents = new Vector();
-    /** selector for cell range to apply cell attributes to */
+    /**
+     * selector for cell range to apply cell attributes to
+     */
     JComboBox cellRange;
 
     /**
      * constructor
      *
-     * @param parent  the main frame having the TextResources
+     * @param parent the main frame having the TextResources
      * @param title  the title for this dialog
-     * @param a  the set of attributes to show and manipulate
+     * @param a      the set of attributes to show and manipulate
      */
     public TableDialog(final Frame parent, final String title) {
         super(parent, title);
@@ -123,7 +127,7 @@ class TableDialog extends DialogShell {
 
     /**
      * build the contents of the cell panel
-     *
+     * <p>
      * this is moved to a separate method to make the code more
      * legible.
      */
@@ -133,7 +137,7 @@ class TableDialog extends DialogShell {
         // construct cell format panel
         final JPanel cellPanel = new JPanel(new BorderLayout());
         cellPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("cellPanelTitle")));
+                .getResourceString("cellPanelTitle")));
         // construct tabbed pane for various cell settings
         final JTabbedPane tp = new JTabbedPane();
         tp.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -153,9 +157,9 @@ class TableDialog extends DialogShell {
         tp.add(Util.getResourceString("cellBorderTabLabel"), bPanel);
         // create cell range panel
         final JPanel crPanel = new JPanel();
-        final String[] cellRangeSelection = new String[] { Util.getResourceString("thisCellRangeLabel"),
+        final String[] cellRangeSelection = new String[]{Util.getResourceString("thisCellRangeLabel"),
                 Util.getResourceString("thisColRangeLabel"), Util.getResourceString("thisRowRangeLabel"),
-                Util.getResourceString("allCellsRangeLabel") };
+                Util.getResourceString("allCellsRangeLabel")};
         crPanel.add(new JLabel(Util.getResourceString("applyCellAttrLabel")));
         cellRange = new JComboBox(cellRangeSelection);
         crPanel.add(cellRange);
@@ -181,7 +185,7 @@ class TableDialog extends DialogShell {
 
     /**
      * build the contents of the table panel
-     *
+     * <p>
      * this is moved to a separate method to make the code more
      * legible.
      */
@@ -192,13 +196,13 @@ class TableDialog extends DialogShell {
         // table panel
         final JPanel tablePanel = new JPanel(g);
         tablePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), Util
-            .getResourceString("tablePanelTitle")));
+                .getResourceString("tablePanelTitle")));
         // table width label
         JLabel lb = new JLabel(Util.getResourceString("tableWidthLabel"));
         Util.addGridBagComponent(tablePanel, lb, g, c, 0, 0, GridBagConstraints.EAST);
         // table width combo box
         final SizeSelectorPanel ssp = new SizeSelectorPanel(CSS.Attribute.WIDTH, HTML.Attribute.WIDTH, false,
-            SizeSelectorPanel.TYPE_COMBO);
+                SizeSelectorPanel.TYPE_COMBO);
         Util.addGridBagComponent(tablePanel, ssp, g, c, 1, 0, GridBagConstraints.WEST);
         tableComponents.addElement(ssp);
         // table background color label
@@ -212,11 +216,11 @@ class TableDialog extends DialogShell {
         lb = new JLabel(Util.getResourceString("alignLabel"));
         Util.addGridBagComponent(tablePanel, lb, g, c, 0, 2, GridBagConstraints.EAST);
         // table alignment combo box
-        final String[] items = new String[] { Util.getResourceString("alignLeft"),
-                Util.getResourceString("alignCenter"), Util.getResourceString("alignRight") };
-        final String[] names = new String[] { "left", "center", "right" };
+        final String[] items = new String[]{Util.getResourceString("alignLeft"),
+                Util.getResourceString("alignCenter"), Util.getResourceString("alignRight")};
+        final String[] names = new String[]{"left", "center", "right"};
         final AttributeComboBox tAlgn = new AttributeComboBox(items, names, CSS.Attribute.TEXT_ALIGN,
-            HTML.Attribute.ALIGN);
+                HTML.Attribute.ALIGN);
         Util.addGridBagComponent(tablePanel, tAlgn, g, c, 1, 2, GridBagConstraints.WEST);
         tableComponents.addElement(tAlgn);
         return tablePanel;

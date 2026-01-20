@@ -38,7 +38,9 @@ class SHTMLHelpBroker {
     private SHTMLHelpBroker() {
     }
 
-    /** our help broker */
+    /**
+     * our help broker
+     */
     private static HelpBroker helpBroker;
 
     /**
@@ -53,8 +55,7 @@ class SHTMLHelpBroker {
             HelpSet hs;
             try {
                 hs = new HelpSet(null, url);
-            }
-            catch (final HelpSetException e) {
+            } catch (final HelpSetException e) {
                 return null;
             }
             helpBroker = hs.createHelpBroker();

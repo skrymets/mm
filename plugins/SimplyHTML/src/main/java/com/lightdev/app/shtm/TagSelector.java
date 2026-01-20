@@ -32,16 +32,18 @@ import javax.swing.text.html.HTML;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class TagSelector extends JComboBox {
-    /** table with available tags to select */
+    /**
+     * table with available tags to select
+     */
     private final Vector tags = new Vector();
-    /** table with tag names corresponding to tags */
+    /**
+     * table with tag names corresponding to tags
+     */
     private final Vector tagNames = new Vector();
 
     /**
@@ -74,14 +76,13 @@ class TagSelector extends JComboBox {
     /**
      * set the tag that is to be shown in this component
      *
-     * @param tag  the name of the tag to show
+     * @param tag the name of the tag to show
      */
     public void setSelectedTag(final String tag) {
         final int index = tags.indexOf(tag);
         if (index > -1) {
             setSelectedIndex(tags.indexOf(tag));
-        }
-        else {
+        } else {
             setSelectedIndex(0);
         }
     }

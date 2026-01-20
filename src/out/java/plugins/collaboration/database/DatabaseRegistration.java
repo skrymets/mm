@@ -38,68 +38,68 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NodeHookAction;
 
 public class DatabaseRegistration implements HookRegistration,
-		MenuItemSelectedListener, MenuItemEnabledListener {
+        MenuItemSelectedListener, MenuItemEnabledListener {
 
-	private final MindMapController mController;
-	private final java.util.logging.Logger logger;
+    private final MindMapController mController;
+    private final java.util.logging.Logger logger;
 
-	public DatabaseRegistration(ModeController controller, MindMap map) {
-		this.mController = (MindMapController) controller;
-		logger = controller.getFrame().getLogger(this.getClass().getName());
-	}
+    public DatabaseRegistration(ModeController controller, MindMap map) {
+        this.mController = (MindMapController) controller;
+        logger = controller.getFrame().getLogger(this.getClass().getName());
+    }
 
-	public void register() {
-		logger.fine("Registration of database registration.");
-	}
+    public void register() {
+        logger.fine("Registration of database registration.");
+    }
 
-	public void deRegister() {
-		logger.fine("Deregistration of database registration.");
-	}
+    public void deRegister() {
+        logger.fine("Deregistration of database registration.");
+    }
 
-	public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
-		logger.info(this + " is asked for " + pAction + ".");
-		if (pAction instanceof NodeHookAction) {
-			NodeHookAction action = (NodeHookAction) pAction;
-			if (action.getHookName().equals(
-					DatabaseConnector.SLAVE_STARTER_NAME)) {
-				return isSlave();
-			}
-		}
-		return isMaster();
-	}
+    public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
+        logger.info(this + " is asked for " + pAction + ".");
+        if (pAction instanceof NodeHookAction) {
+            NodeHookAction action = (NodeHookAction) pAction;
+            if (action.getHookName().equals(
+                    DatabaseConnector.SLAVE_STARTER_NAME)) {
+                return isSlave();
+            }
+        }
+        return isMaster();
+    }
 
-	private boolean isMaster() {
-		Collection<PermanentNodeHook> activatedHooks = mController.getRootNode().getActivatedHooks();
-		for (PermanentNodeHook hook : activatedHooks) {
-			if (hook instanceof DatabaseStarter) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean isMaster() {
+        Collection<PermanentNodeHook> activatedHooks = mController.getRootNode().getActivatedHooks();
+        for (PermanentNodeHook hook : activatedHooks) {
+            if (hook instanceof DatabaseStarter) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private boolean isSlave() {
-		Collection<PermanentNodeHook> activatedHooks = mController.getRootNode().getActivatedHooks();
-		for (PermanentNodeHook hook : activatedHooks) {
-			if (hook instanceof DatabaseConnectionHook) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean isSlave() {
+        Collection<PermanentNodeHook> activatedHooks = mController.getRootNode().getActivatedHooks();
+        for (PermanentNodeHook hook : activatedHooks) {
+            if (hook instanceof DatabaseConnectionHook) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * When one option is enabled, the other is impossible.
-	 * */
-	public boolean isEnabled(JMenuItem pItem, Action pAction) {
-		logger.info(this + " is asked for " + pAction + ".");
-		if (pAction instanceof NodeHookAction) {
-			NodeHookAction action = (NodeHookAction) pAction;
-			if (action.getHookName().equals(
-					DatabaseConnector.SLAVE_STARTER_NAME)) {
-				return !isMaster();
-			}
-		}
-		return !isSlave();
-	}
+    /**
+     * When one option is enabled, the other is impossible.
+     */
+    public boolean isEnabled(JMenuItem pItem, Action pAction) {
+        logger.info(this + " is asked for " + pAction + ".");
+        if (pAction instanceof NodeHookAction) {
+            NodeHookAction action = (NodeHookAction) pAction;
+            if (action.getHookName().equals(
+                    DatabaseConnector.SLAVE_STARTER_NAME)) {
+                return !isMaster();
+            }
+        }
+        return !isSlave();
+    }
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema-set package="freemind.controller.actions.generated.instance"
->
+<schema-set package="freemind.controller.actions.generated.instance">
     <class-decorator class="org.jibx.schema.codegen.extend.CollectionMethodsDecorator"/>
 </schema-set>

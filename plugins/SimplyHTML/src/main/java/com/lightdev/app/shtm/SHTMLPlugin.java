@@ -31,22 +31,30 @@ import javax.swing.JMenuItem;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 public interface SHTMLPlugin {
-    /** indicates docking is not requested */
+    /**
+     * indicates docking is not requested
+     */
     public static final int DOCK_LOCATION_NONE = 0;
-    /** indicates docking requested on top of a given container */
+    /**
+     * indicates docking requested on top of a given container
+     */
     public static final int DOCK_LOCATION_TOP = 1;
-    /** indicates docking requested on the right of a given container */
+    /**
+     * indicates docking requested on the right of a given container
+     */
     public static final int DOCK_LOCATION_RIGHT = 2;
-    /** indicates docking requested on bottom of a given container */
+    /**
+     * indicates docking requested on bottom of a given container
+     */
     public static final int DOCK_LOCATION_BOTTOM = 3;
-    /** indicates docking requested on the left of a given container */
+    /**
+     * indicates docking requested on the left of a given container
+     */
     public static final int DOCK_LOCATION_LEFT = 4;
 
     /**
@@ -102,8 +110,8 @@ public interface SHTMLPlugin {
      * shall be docked at.
      *
      * @param location the dock location, one of DOCK_LOCATION_TOP, DOCK_LOCATION_BOTTOM,
-     * DOCK_LOCATION.LEFT, DOCK_LOCATION_RIGHT or DOCK_LOCATION_NONE, if the
-     * component shall not dock.
+     *                 DOCK_LOCATION.LEFT, DOCK_LOCATION_RIGHT or DOCK_LOCATION_NONE, if the
+     *                 component shall not dock.
      */
     public void setDockLocation(int location);
 
@@ -125,29 +133,28 @@ public interface SHTMLPlugin {
     /**
      * set status of plug-in
      *
-     * @param isActive  indicates whether or not the plug-in shall be activated
+     * @param isActive indicates whether or not the plug-in shall be activated
      */
     public void setStatus(boolean isActive);
 
     /**
      * set the owner of this plug-in
      *
-     * @param owner  the main frame of the instance of SimplyHTML creating the plug-in
+     * @param owner the main frame of the instance of SimplyHTML creating the plug-in
      */
     public void setOwner(SHTMLPanelImpl owner);
 
     /**
      * get the owner of this plug-in
      *
-     * @return   the main frame of the instance of SimplyHTML that created the plug-in
+     * @return the main frame of the instance of SimplyHTML that created the plug-in
      */
     public SHTMLPanelImpl getOwner();
 
     /**
      * get a string from the resource bundle of the owner of this plug-in
      *
-     * @param nm  the name of the string resource to get
-     *
+     * @param nm the name of the string resource to get
      * @return the string with the given name or null, if none is found
      */
     public String getOwnerResString(String nm);
@@ -155,22 +162,22 @@ public interface SHTMLPlugin {
     /**
      * get an action from the resource bundle of the owner of this plug-in
      *
-     * @param cmd  the name of the action to get
-     *
+     * @param cmd the name of the action to get
      * @return the action with the given name or null, if none is found
      */
     public Action getOwnerAction(String cmd);
 
     /**
      * init the plug-in
-     *
+     * <p>
      * this is called by the PluginManager directly after instantiating the plug-in
-     * @param owner  the owner of this plug-in
-     * @param internalName  the internal name this plug-in shall have
-     * @param pluginMenuId  the id of the plug-in menu in the TextResources,
-     * or null if no plugin-in menu is to be created
-     * @param helpMenuId  the id of the help menu for this plug-in in the
-     * TextResources, or null if no help menu is to be created
+     *
+     * @param owner        the owner of this plug-in
+     * @param internalName the internal name this plug-in shall have
+     * @param pluginMenuId the id of the plug-in menu in the TextResources,
+     *                     or null if no plugin-in menu is to be created
+     * @param helpMenuId   the id of the help menu for this plug-in in the
+     *                     TextResources, or null if no help menu is to be created
      */
     public void initPlugin(SHTMLPanelImpl owner, String internalName, String pluginMenuId, String helpMenuId);
 

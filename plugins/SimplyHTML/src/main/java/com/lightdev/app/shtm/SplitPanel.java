@@ -33,7 +33,7 @@ import javax.swing.border.EmptyBorder;
  * a center panel, other panels can be placed very similar
  * to BorderLayout. The difference of this class to BorderLayout is
  * that it creates JSplitPanes for each panel.
- *
+ * <p>
  * (Dan: This class is a JPanel somehow trying to achieve what would
  * better be achieved with Layout. Ideally, it would be removed
  * altogether.)
@@ -46,41 +46,58 @@ import javax.swing.border.EmptyBorder;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class SplitPanel extends JPanel {
     /* --------------- class fields start --------------- */
-    /** constant for the major axis being the horizontal one */
+    /**
+     * constant for the major axis being the horizontal one
+     */
     public static final int MAJOR_AXIS_HORIZONTAL = 1; // NOT SUPPORTED
-    /** constant for the major axis being the vertical one */
+    /**
+     * constant for the major axis being the vertical one
+     */
     public static final int MAJOR_AXIS_VERTICAL = 2;
-    /** constant for the north plug-in container of this SplitPanel */
+    /**
+     * constant for the north plug-in container of this SplitPanel
+     */
     public static final int NORTH = 0;
-    /** constant for the east plug-in container of this SplitPanel */
+    /**
+     * constant for the east plug-in container of this SplitPanel
+     */
     public static final int EAST = 1;
-    /** constant for the south plug-in container of this SplitPanel */
+    /**
+     * constant for the south plug-in container of this SplitPanel
+     */
     public static final int SOUTH = 2;
-    /** constant for the west plug-in container of this SplitPanel */
+    /**
+     * constant for the west plug-in container of this SplitPanel
+     */
     public static final int WEST = 3;
-    /** constant for the center panel of this SplitPanel */
+    /**
+     * constant for the center panel of this SplitPanel
+     */
     public static final int CENTER = 4;
-    /** the outer panels of this SplitPanel */
+    /**
+     * the outer panels of this SplitPanel
+     */
     private final JSplitPane[] outerPanels;
-    /** current setting for major axis of this SplitPanel */
+    /**
+     * current setting for major axis of this SplitPanel
+     */
     private final int majorAxis = SplitPanel.MAJOR_AXIS_VERTICAL;
 
     /* ------ class fields end ------------------ */
+
     /**
      * Constructor
      */
     public SplitPanel() {
         super();
         setLayout(new BorderLayout());
-        final int[] directions = new int[] { NORTH, EAST, SOUTH, WEST };
+        final int[] directions = new int[]{NORTH, EAST, SOUTH, WEST};
         outerPanels = new JSplitPane[directions.length];
         for (int i = 0; i < directions.length; i++) {
             outerPanels[directions[i]] = new JSplitPane();
@@ -107,8 +124,7 @@ class SplitPanel extends JPanel {
             outerPanels[WEST].setRightComponent(outerPanels[SOUTH]);
             outerPanels[EAST].setLeftComponent(outerPanels[WEST]);
             this.add(outerPanels[EAST], BorderLayout.CENTER);
-        }
-        else {
+        } else {
             // [ NOT SUPPORTED ]
             //System.out.println("SplitPanel.buildLayout majorAxis = horizontal");
             outerPanels[SOUTH].setTopComponent(outerPanels[NORTH]);
@@ -137,8 +153,7 @@ class SplitPanel extends JPanel {
             p = (JComponent) outerPanels[EAST].getRightComponent();
             p.removeAll();
             p.setVisible(false);
-        }
-        else {
+        } else {
             // pending...
         }
     }
@@ -146,8 +161,8 @@ class SplitPanel extends JPanel {
     /**
      * Sets the location of a given divider.
      *
-     * @param panel  the panel to set the location for
-     * @param loc  the relative location of the divider (0, 0.1, ..., 0.9, 1)
+     * @param panel the panel to set the location for
+     * @param loc   the relative location of the divider (0, 0.1, ..., 0.9, 1)
      */
     public void setDivLoc(final int panel, final double loc) {
         //System.out.println("SplitPanel.setDivLoc panel=" + panel + ", loc=" + loc);
@@ -158,7 +173,6 @@ class SplitPanel extends JPanel {
      * Gets the divider location for a given panel.
      *
      * @param panel the panel to get the divider location for
-     *
      * @return the divider location
      */
     public int getDivLoc(final int panel) {
@@ -191,8 +205,7 @@ class SplitPanel extends JPanel {
     /**
      * Gets the plug-in container for a given panel.
      *
-     * @param location  the location of the desired container (SplitPanel.NORTH, SOUTH, etc.)
-     *
+     * @param location the location of the desired container (SplitPanel.NORTH, SOUTH, etc.)
      * @return the plug-in container
      */
     public JTabbedPane getPanel(final int location) {
@@ -226,32 +239,28 @@ class SplitPanel extends JPanel {
         if (splitPane.getTopComponent().isVisible()) {
             //System.out.println("north panel top is visible, showing divider");
             splitPane.setDividerSize(2);
-        }
-        else {
+        } else {
             splitPane.setDividerSize(0);
         }
         splitPane = outerPanels[WEST];
         if (splitPane.getLeftComponent().isVisible()) {
             //System.out.println("west panel left is visible, showing divider");
             splitPane.setDividerSize(2);
-        }
-        else {
+        } else {
             splitPane.setDividerSize(0);
         }
         splitPane = outerPanels[SOUTH];
         if (splitPane.getBottomComponent().isVisible()) {
             //System.out.println("south panel bottom is visible, showing divider");
             splitPane.setDividerSize(2);
-        }
-        else {
+        } else {
             splitPane.setDividerSize(0);
         }
         splitPane = outerPanels[EAST];
         if (splitPane.getRightComponent().isVisible()) {
             //System.out.println("south panel right is visible, showing divider");
             splitPane.setDividerSize(2);
-        }
-        else {
+        } else {
             splitPane.setDividerSize(0);
         }
     }
@@ -259,8 +268,8 @@ class SplitPanel extends JPanel {
     /**
      * Adds a plug-in container to this SplitPanel ata given location.
      *
-     * @param c  the plug-in container to add
-     * @param location  the location to add to (SplitPanel.NORTH, SOUTH, etc.)
+     * @param c        the plug-in container to add
+     * @param location the location to add to (SplitPanel.NORTH, SOUTH, etc.)
      */
     public void addComponent(final JComponent component, final int location) {
         if (majorAxis == SplitPanel.MAJOR_AXIS_VERTICAL) {
@@ -292,8 +301,7 @@ class SplitPanel extends JPanel {
                     outerPanels[EAST].setRightComponent(component);
                     break;
             }
-        }
-        else {
+        } else {
             // pending...
             switch (location) {
                 case CENTER:

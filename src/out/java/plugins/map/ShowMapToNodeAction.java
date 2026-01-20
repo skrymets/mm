@@ -29,39 +29,39 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
  */
 public class ShowMapToNodeAction extends MindMapNodeHookAdapter {
 
-	static final String NODE_CONTEXT_PLUGIN_NAME = "plugins/map/MapDialog_ShowMapToNode.properties";
+    static final String NODE_CONTEXT_PLUGIN_NAME = "plugins/map/MapDialog_ShowMapToNode.properties";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
-	 */
-	public void invoke(MindMapNode pNode) {
-		// is the map open? Ask base class.
-		Registration registration = getRegistration();
-		if (registration != null) {
-			// is the map open?
-			MapDialog mapDialog = registration.getMapDialog();
-			if (mapDialog == null) {
-				// if not, open it!
-				getMindMapController().createModeControllerHook(MapDialog.MAP_HOOK_NAME);
-			}
-			mapDialog = registration.getMapDialog();
-			if (mapDialog != null) {
-				mapDialog.getFreeMindMapController().showSelectedNodes();
-				mapDialog.getMapDialog().requestFocus();
-			} else {
-				logger.warning("Can't find dialog to connect to!");
-			}
-		} else {
-			logger.warning("Can't find registration base class!");
-			
-		}
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
+     */
+    public void invoke(MindMapNode pNode) {
+        // is the map open? Ask base class.
+        Registration registration = getRegistration();
+        if (registration != null) {
+            // is the map open?
+            MapDialog mapDialog = registration.getMapDialog();
+            if (mapDialog == null) {
+                // if not, open it!
+                getMindMapController().createModeControllerHook(MapDialog.MAP_HOOK_NAME);
+            }
+            mapDialog = registration.getMapDialog();
+            if (mapDialog != null) {
+                mapDialog.getFreeMindMapController().showSelectedNodes();
+                mapDialog.getMapDialog().requestFocus();
+            } else {
+                logger.warning("Can't find dialog to connect to!");
+            }
+        } else {
+            logger.warning("Can't find registration base class!");
 
-	public Registration getRegistration() {
-		return (Registration) getPluginBaseClass();
-	}
+        }
+    }
+
+    public Registration getRegistration() {
+        return (Registration) getPluginBaseClass();
+    }
 
 }

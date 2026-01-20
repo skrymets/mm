@@ -23,44 +23,41 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JMenuItem;
-
 import freemind.controller.MenuItemEnabledListener;
 import freemind.modes.mindmapmode.MindMapController;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
 @SuppressWarnings("serial")
 public class MindMapControllerHookAction extends AbstractAction implements
-		HookAction, MenuItemEnabledListener {
-	String mHookName;
-	MindMapController mindMapController;
+        HookAction, MenuItemEnabledListener {
+    String mHookName;
+    MindMapController mindMapController;
 
-	public MindMapControllerHookAction(String hookName,
-			MindMapController mindMapController) {
-		super(hookName);
-		this.mHookName = hookName;
-		this.mindMapController = mindMapController;
-	}
+    public MindMapControllerHookAction(String hookName,
+                                       MindMapController mindMapController) {
+        super(hookName);
+        this.mHookName = hookName;
+        this.mindMapController = mindMapController;
+    }
 
-	public void actionPerformed(ActionEvent arg0) {
-		if(null == mindMapController.getMap()) {
-			return;
-		}
-		mindMapController.createModeControllerHook(mHookName);
-	}
+    public void actionPerformed(ActionEvent arg0) {
+        if (null == mindMapController.getMap()) {
+            return;
+        }
+        mindMapController.createModeControllerHook(mHookName);
+    }
 
-	public String getHookName() {
-		return mHookName;
-	}
+    public String getHookName() {
+        return mHookName;
+    }
 
-	/* (non-Javadoc)
-	 * @see freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing.JMenuItem, javax.swing.Action)
-	 */
-	public boolean isEnabled(JMenuItem pItem, Action pAction) {
-		return mindMapController.getMap() != null;
-	}
+    /* (non-Javadoc)
+     * @see freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing.JMenuItem, javax.swing.Action)
+     */
+    public boolean isEnabled(JMenuItem pItem, Action pAction) {
+        return mindMapController.getMap() != null;
+    }
 
 }

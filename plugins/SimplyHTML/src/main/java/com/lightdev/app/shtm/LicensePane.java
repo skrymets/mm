@@ -37,11 +37,9 @@ import javax.swing.JTextArea;
  * @author <a href="http://www.lightdev.com">http://www.lightdev.com</a>
  * @author <a href="mailto:info@lightdev.com">info@lightdev.com</a>
  * @author published under the terms and conditions of the
- *      GNU General Public License,
- *      for details see file gpl.txt in the distribution
- *      package of this software
- *
- * 
+ * GNU General Public License,
+ * for details see file gpl.txt in the distribution
+ * package of this software
  */
 class LicensePane extends JPanel {
     /* line separator character (sequence) */
@@ -85,12 +83,11 @@ class LicensePane extends JPanel {
             }
             r.close();
             is.close();
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             Util.errMsg(
-                this,
-                "The license text could not be opened.\n\nPlease consult file 'readme.txt' for installation guidelines\n\nSimplyHTML and all of its parts are distributed under\nthe terms and conditions of the GNU General Public License (GPL).\nYou may want to obtain a free and complete distribution package at\nhttp://www.lightdev.com",
-                e);
+                    this,
+                    "The license text could not be opened.\n\nPlease consult file 'readme.txt' for installation guidelines\n\nSimplyHTML and all of its parts are distributed under\nthe terms and conditions of the GNU General Public License (GPL).\nYou may want to obtain a free and complete distribution package at\nhttp://www.lightdev.com",
+                    e);
         }
         return license.toString();
     }

@@ -14,46 +14,46 @@
   -->
 
 <xsl:stylesheet version="1.0"
- xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-	<xsl:strip-space elements="*" /> 
-	<xsl:output method="xml" indent="yes" encoding="UTF-8" />
+    <xsl:strip-space elements="*"/>
+    <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
-	<xsl:template match="/xbel">
-		<map>
-		<node>
-			<xsl:attribute name="TEXT">
-				<xsl:value-of select="title" />
-			</xsl:attribute>
-			<xsl:apply-templates />
-		</node>
-		</map>
-	</xsl:template>
+    <xsl:template match="/xbel">
+        <map>
+            <node>
+                <xsl:attribute name="TEXT">
+                    <xsl:value-of select="title"/>
+                </xsl:attribute>
+                <xsl:apply-templates/>
+            </node>
+        </map>
+    </xsl:template>
 
-	<xsl:template match="folder">
-		<node>
-			<xsl:attribute name="TEXT">
-				<xsl:value-of select="title" />
-			</xsl:attribute>
-			<xsl:attribute name="FOLDED">
-				<xsl:value-of select="@folded" />
-			</xsl:attribute>
-			<xsl:apply-templates />
-		</node>
-	</xsl:template>
+    <xsl:template match="folder">
+        <node>
+            <xsl:attribute name="TEXT">
+                <xsl:value-of select="title"/>
+            </xsl:attribute>
+            <xsl:attribute name="FOLDED">
+                <xsl:value-of select="@folded"/>
+            </xsl:attribute>
+            <xsl:apply-templates/>
+        </node>
+    </xsl:template>
 
-	<xsl:template match="bookmark">
-		<node>
-			<xsl:attribute name="TEXT">
-				<xsl:value-of select="title" />
-			</xsl:attribute>
-			<xsl:attribute name="LINK">
-				<xsl:value-of select="@href" />
-			</xsl:attribute>
-		</node>
-	</xsl:template>
+    <xsl:template match="bookmark">
+        <node>
+            <xsl:attribute name="TEXT">
+                <xsl:value-of select="title"/>
+            </xsl:attribute>
+            <xsl:attribute name="LINK">
+                <xsl:value-of select="@href"/>
+            </xsl:attribute>
+        </node>
+    </xsl:template>
 
-	<xsl:template match = "node()|@*" />
-	
+    <xsl:template match="node()|@*"/>
+
 
 </xsl:stylesheet>

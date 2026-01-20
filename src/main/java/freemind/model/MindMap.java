@@ -62,7 +62,7 @@ public interface MindMap extends TreeModel {
     // Abstract methods that _must_ be implemented.
     //
 
-    public boolean save(File file) throws IOException;
+    boolean save(File file) throws IOException;
 
     // see ModeController.
     // public void load(URL file) throws FileNotFoundException, IOException,
@@ -118,9 +118,6 @@ public interface MindMap extends TreeModel {
 
     Filter getFilter();
 
-    /**
-     *
-     */
     void setFilter(Filter inactiveFilter);
 
     void nodeStructureChanged(TreeNode node);
@@ -141,7 +138,7 @@ public interface MindMap extends TreeModel {
      * @author foltin
      * @date 04.07.2011
      */
-    public interface MapSourceChangedObserver {
+    interface MapSourceChangedObserver {
         /**
          * @param pMap
          * @return true, if the map was reloaded, false otherwise. This means,
@@ -153,7 +150,7 @@ public interface MindMap extends TreeModel {
         boolean mapSourceChanged(MindMap pMap) throws Exception;
     }
 
-    public static interface AskUserBeforeUpdateCallback {
+    interface AskUserBeforeUpdateCallback {
         /**
          * @return true, if the map should be updated.
          */
@@ -198,21 +195,17 @@ public interface MindMap extends TreeModel {
 
     CloudAdapter createCloudAdapter(NodeAdapter node);
 
-    ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter source,
-                                            NodeAdapter target);
+    ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter source, NodeAdapter target);
 
     ArrowLinkTarget createArrowLinkTarget(NodeAdapter source, NodeAdapter target);
 
-    public abstract MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback)
-            throws XMLParseException, IOException;
+    MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws XMLParseException, IOException;
 
-    public abstract MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget)
-            throws XMLParseException, IOException;
+    MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException, IOException;
 
     NodeAdapter createEncryptedNode(String additionalInfo);
 
-    void insertNodeInto(MindMapNode pNode,
-                        MindMapNode pParentNode, int pIndex);
+    void insertNodeInto(MindMapNode pNode, MindMapNode pParentNode, int pIndex);
 
     void removeNodeFromParent(MindMapNode node);
 
