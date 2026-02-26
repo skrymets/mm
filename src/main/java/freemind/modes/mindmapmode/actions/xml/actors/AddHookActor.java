@@ -22,7 +22,6 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 import freemind.controller.actions.generated.instance.*;
 import freemind.extensions.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
-import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
@@ -36,7 +35,7 @@ import java.util.Map;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 @Slf4j
 public class AddHookActor extends XmlActorAdapter {
@@ -51,26 +50,24 @@ public class AddHookActor extends XmlActorAdapter {
 
     private HookInstantiationMethod getInstantiationMethod(String hookName) {
         HookFactory factory = getHookFactory();
-        HookInstantiationMethod instMethod = factory.getInstantiationMethod(hookName);
-        return instMethod;
+        return factory.getInstantiationMethod(hookName);
     }
 
-    public void addHook(MindMapNode focussed, List<MindMapNode> selecteds, String hookName, Properties pHookProperties) {
-        HookNodeAction doAction = createHookNodeAction(focussed, selecteds,
-                hookName, pHookProperties);
+    public void addHook(MindMapNode focussed, List<MindMapNode> selected, String hookName, Properties pHookProperties) {
+        HookNodeAction doAction = createHookNodeAction(focussed, selected, hookName, pHookProperties);
 
         XmlAction undoAction = null;
-        // this is the non operation:
+        // this is the non-operation:
         undoAction = new CompoundAction();
         if (getInstantiationMethod(hookName).isPermanent()) {
             // double application = remove.
-            undoAction = createHookNodeUndoAction(focussed, selecteds, hookName);
+            undoAction = createHookNodeUndoAction(focussed, selected, hookName);
         }
         if (getInstantiationMethod(hookName).isUndoable()) {
             execute(new ActionPair(doAction, undoAction));
         } else {
             // direct invocation without undo and such stuff.
-            invoke(focussed, selecteds, hookName, null);
+            invoke(focussed, selected, hookName, null);
         }
     }
 
@@ -87,46 +84,48 @@ public class AddHookActor extends XmlActorAdapter {
         Collection<MindMapNode> destinationNodes = instMethod.getDestinationNodes(getExMapFeedback(), focussed, selectedMindMapNodes);
         MindMapNode adaptedFocussedNode = instMethod.getCenterNode(getExMapFeedback(), focussed, selectedMindMapNodes);
         // test if hook already present
-        if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
-            // remove the hook:
-            for (MindMapNode currentDestinationNode : destinationNodes) {
-                // find the hook in the current node, if present:
-                for (PermanentNodeHook hook : currentDestinationNode.getActivatedHooks()) {
-                    if (hook.getName().equals(hookName)) {
-                        XMLElement child = new XMLElement();
-                        if (!(hook instanceof DontSaveMarker)) {
-                            hook.save(child);
-                            if (child.countChildren() == 1) {
+        if (!instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
+            return undoAction;
+        }
 
-                                XMLElement parameters = child.getChildren().get(0);
+        // remove the hook:
+        for (MindMapNode currentDestinationNode : destinationNodes) {
+            // find the hook in the current node, if present:
+            for (PermanentNodeHook hook : currentDestinationNode.getActivatedHooks()) {
+                if (hook.getName().equals(hookName)) {
+                    XMLElement child = new XMLElement();
+                    if (!(hook instanceof DontSaveMarker)) {
+                        hook.save(child);
+                        if (child.countChildren() == 1) {
 
-                                if (Tools.safeEquals(parameters.getName(),
-                                        PermanentNodeHookAdapter.PARAMETERS)) {
-                                    // standard save mechanism
-                                    for (Iterator<String> it = parameters.enumerateAttributeNames(); it.hasNext(); ) {
-                                        String name = it.next();
-                                        NodeChildParameter nodeHookChild = new NodeChildParameter();
-                                        nodeHookChild.setKey(name);
-                                        nodeHookChild.setValue(parameters.getStringAttribute(name));
-                                        hookNodeAction.addNodeChildParameter(nodeHookChild);
-                                    }
+                            XMLElement parameters = child.getChildren().get(0);
 
-                                } else {
-                                    log.warn("Unusual save mechanism, implement me.");
+                            if (Objects.equals(parameters.getName(), PermanentNodeHookAdapter.PARAMETERS)) {
+                                // standard save mechanism
+                                Iterator<String> it = parameters.enumerateAttributeNames();
+                                while (it.hasNext()) {
+                                    String name = it.next();
+                                    NodeChildParameter nodeHookChild = new NodeChildParameter();
+                                    nodeHookChild.setKey(name);
+                                    nodeHookChild.setValue(parameters.getStringAttribute(name));
+                                    hookNodeAction.addNodeChildParameter(nodeHookChild);
                                 }
+
                             } else {
                                 log.warn("Unusual save mechanism, implement me.");
                             }
+                        } else {
+                            log.warn("Unusual save mechanism, implement me.");
                         }
-                        /*
-                         * fc, 30.7.2004: we have to break. otherwise the
-                         * collection is modified at two points (i.e., the
-                         * collection is not valid anymore after removing one
-                         * element). But this is no problem, as there exist only
-                         * "once" plugins currently.
-                         */
-                        break;
                     }
+                    /*
+                     * fc, 30.7.2004: we have to break. otherwise the
+                     * collection is modified at two points (i.e., the
+                     * collection is not valid anymore after removing one
+                     * element). But this is no problem, as there exist only
+                     * "once" plugins currently.
+                     */
+                    break;
                 }
             }
         }
@@ -249,8 +248,6 @@ public class AddHookActor extends XmlActorAdapter {
     }
 
     /**
-     * @param pNode
-     * @return
      */
     private NodeView getNodeView(MindMapNode pNode) {
         return getViewAbstraction().getNodeView(pNode);

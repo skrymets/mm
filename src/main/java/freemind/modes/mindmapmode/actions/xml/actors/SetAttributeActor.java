@@ -31,7 +31,6 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 public class SetAttributeActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public SetAttributeActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -68,10 +67,6 @@ public class SetAttributeActor extends XmlActorAdapter {
     }
 
     /**
-     * @param pSelected
-     * @param pPosition
-     * @param pAttribute
-     * @return
      */
     public SetAttributeAction getSetAttributeAction(MindMapNode pSelected,
                                                     int pPosition, Attribute pAttribute) {

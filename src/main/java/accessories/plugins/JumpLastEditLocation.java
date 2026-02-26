@@ -36,8 +36,9 @@ import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
+import java.util.Objects;
 
 /**
  * This plugin stores the location of last edit taken place in order to jump to
@@ -60,7 +61,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                 return;
             }
             log.trace("Selecting {} as last edit location.", node);
-            getMindMapController().select(node, Tools.getVectorWithSingleElement(node));
+            getMindMapController().select(node, Tools.getSingletonList(node));
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
         }
@@ -72,7 +73,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
 
         private final MindMapController controller;
 
-        private final Vector<String> mLastEditLocations = new Vector<>();
+        private final List<String> mLastEditLocations = new ArrayList<>();
 
         public MindMapNode getLastEditLocation(MindMapNode pCurrentNode) {
             int size = mLastEditLocations.size();
@@ -92,7 +93,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                         index = 0;
                     }
                 }
-                id = mLastEditLocations.elementAt(index);
+                id = mLastEditLocations.get(index);
                 try {
                     pCurrentNode = controller.getNodeFromID(id);
                     return pCurrentNode;
@@ -137,7 +138,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                 // remove myself:
                 if (doAction instanceof HookNodeAction) {
                     HookNodeAction hookAction = (HookNodeAction) doAction;
-                    if (Tools.safeEquals(hookAction.getHookName(), PLUGIN_NAME)) {
+                    if (Objects.equals(hookAction.getHookName(), PLUGIN_NAME)) {
                         return;
                     }
                 }
@@ -147,9 +148,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                     lastLocation = newNodeAction.getNewId();
                 }
                 // prevent double entries
-                if (!mLastEditLocations.isEmpty()
-                        && Tools.safeEquals(lastLocation,
-                        mLastEditLocations.lastElement())) {
+                if (!mLastEditLocations.isEmpty() && Objects.equals(lastLocation, mLastEditLocations.get(mLastEditLocations.size() - 1))) {
                     return;
                 }
                 mLastEditLocations.add(lastLocation);

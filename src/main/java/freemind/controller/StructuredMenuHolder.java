@@ -31,10 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author foltin
@@ -53,7 +52,7 @@ public class StructuredMenuHolder {
 
     private static final String SEPARATOR_TEXT = "000";
     private static final String ORDER_NAME = "/order";
-    final Map<String, Vector<String>> menuMap;
+    final Map<String, List<String>> menuMap;
 
     private int mIndent;
     private static ImageIcon sSelectedIcon;
@@ -61,7 +60,7 @@ public class StructuredMenuHolder {
     public StructuredMenuHolder() {
 
         menuMap = new HashMap<>();
-        Vector<String> order = new Vector<>();
+        List<String> order = new ArrayList<>();
         menuMap.put(ORDER_NAME, order);
         if (sSelectedIcon == null) {
             sSelectedIcon = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource(
@@ -117,7 +116,6 @@ public class StructuredMenuHolder {
     /**
      * Under Mac, no HTML is rendered for menus.
      *
-     * @param holder
      */
     private void adjustTooltips(StructuredMenuItemHolder holder) {
         if (Tools.isMacOsX()) {
@@ -183,9 +181,9 @@ public class StructuredMenuHolder {
     private static class MapTokenPair {
         final Map map;
         final String token;
-        final Vector<String> order;
+        final List<String> order;
 
-        MapTokenPair(Map map, String token, Vector<String> order) {
+        MapTokenPair(Map map, String token, List<String> order) {
             this.map = map;
             this.token = token;
             this.order = order;
@@ -198,18 +196,18 @@ public class StructuredMenuHolder {
             if (tokens.hasMoreTokens()) {
                 if (!thisMap.containsKey(nextToken)) {
                     Map<Object, Object> newMap = new HashMap<>();
-                    Vector<Object> newOrder = new Vector<>();
+                    List<Object> newOrder = new ArrayList<>();
                     newMap.put(ORDER_NAME, newOrder);
                     thisMap.put(nextToken, newMap);
                 }
                 Map nextMap = (Map) thisMap.get(nextToken);
-                Vector<String> order = (Vector<String>) thisMap.get(ORDER_NAME);
+                List<String> order = (List<String>) thisMap.get(ORDER_NAME);
                 if (!order.contains(nextToken)) {
                     order.add(nextToken);
                 }
                 return getCategoryMap(tokens, nextMap);
             } else {
-                Vector<String> order = (Vector<String>) thisMap.get(ORDER_NAME);
+                List<String> order = (List<String>) thisMap.get(ORDER_NAME);
                 return new MapTokenPair(thisMap, nextToken, order);
             }
         }
@@ -412,11 +410,11 @@ public class StructuredMenuHolder {
         }
     }
 
-    private void updateMenus(MenuAdder menuAdder, Map<String, Vector<String>> thisMap,
+    private void updateMenus(MenuAdder menuAdder, Map<String, List<String>> thisMap,
                              MenuAdderCreator factory) {
         // System.out.println(thisMap);
         // iterate through maps and do the changes:
-        Vector<String> myVector = thisMap.get(ORDER_NAME);
+        List<String> myVector = thisMap.get(ORDER_NAME);
         for (String category : myVector) {
             // The "." target was handled earlier.
             if (category.equals("."))
@@ -499,7 +497,7 @@ public class StructuredMenuHolder {
 
     public static class StructuredMenuListener implements
             javax.swing.event.MenuListener {
-        private final Vector<StructuredMenuItemHolder> menuItemHolder = new Vector<>();
+        private final List<StructuredMenuItemHolder> menuItemHolder = new ArrayList<>();
 
         public StructuredMenuListener() {
         }

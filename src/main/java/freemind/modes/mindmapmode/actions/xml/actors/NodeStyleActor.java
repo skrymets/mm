@@ -22,19 +22,19 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.NodeStyleFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
+import java.util.Objects;
+
 /**
  * @author foltin
- * @date 27.03.2014
+ * {@code @date} 27.03.2014
  */
 public class NodeStyleActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public NodeStyleActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -51,7 +51,7 @@ public class NodeStyleActor extends XmlActorAdapter {
         }
         for (int i = 0; i < MindMapNode.NODE_STYLES.length; i++) {
             String dstyle = MindMapNode.NODE_STYLES[i];
-            if (Tools.safeEquals(style, dstyle)) {
+            if (Objects.equals(style, dstyle)) {
                 execute(getActionPair(node, style));
                 return;
             }
@@ -80,7 +80,7 @@ public class NodeStyleActor extends XmlActorAdapter {
             NodeStyleFormatAction nodeStyleAction = (NodeStyleFormatAction) action;
             MindMapNode node = getNodeFromID(nodeStyleAction.getNode());
             String style = nodeStyleAction.getStyle();
-            if (!Tools.safeEquals(node.hasStyle() ? node.getBareStyle() : null,
+            if (!Objects.equals(node.hasStyle() ? node.getBareStyle() : null,
                     style)) {
                 // logger.info("Setting style of " + node + " to "+ style +
                 // " and was " + node.getStyle());

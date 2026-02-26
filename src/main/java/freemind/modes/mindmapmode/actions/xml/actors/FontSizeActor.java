@@ -22,19 +22,19 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.FontSizeNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
+import java.util.Objects;
+
 /**
  * @author foltin
- * @date 26.03.2014
+ * {@code @date} 26.03.2014
  */
 public class FontSizeActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public FontSizeActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -48,7 +48,7 @@ public class FontSizeActor extends XmlActorAdapter {
      *
      */
     public void setFontSize(MindMapNode node, String fontSizeValue) {
-        if (Tools.safeEquals(fontSizeValue, node.getFontSize())) {
+        if (Objects.equals(fontSizeValue, node.getFontSize())) {
             return;
         }
         execute(getActionPair(node, fontSizeValue));

@@ -412,7 +412,7 @@ public class Tools {
      * @return true, iff the String is "true".
      */
     public static boolean isPreferenceTrue(String option) {
-        return Tools.safeEquals(option, "true");
+        return Objects.equals(option, "true");
     }
 
     /**
@@ -492,13 +492,7 @@ public class Tools {
     }
 
     public static String expandPlaceholders(String message, String s1, String s2, String s3) {
-        String result = message;
-        if (s1 != null) {
-            result = result.replaceAll("\\$1", s1);
-        }
-        if (s2 != null) {
-            result = result.replaceAll("\\$2", s2);
-        }
+        String result = expandPlaceholders(message, s1, s2);
         if (s3 != null) {
             result = result.replaceAll("\\$3", s3);
         }
@@ -506,7 +500,7 @@ public class Tools {
     }
 
     /**
-     * from: http://javaalmanac.com/egs/javax.crypto/PassKey.html
+     * from: <a href="http://javaalmanac.com/egs/javax.crypto/PassKey.html">...</a>
      */
     public static class DesEncrypter {
 
@@ -570,7 +564,7 @@ public class Tools {
                 // determine salt by random:
                 byte[] newSalt = new byte[SALT_LENGTH];
                 for (int i = 0; i < newSalt.length; i++) {
-                    newSalt[i] = (byte) (Math.random() * 256l - 128l);
+                    newSalt[i] = (byte) (Math.random() * 256L - 128L);
                 }
 
                 init(newSalt);
@@ -645,7 +639,6 @@ public class Tools {
     }
 
     /**
-     * @throws IOException
      */
     public static byte[] fromBase64(String base64String) {
         return Base64Coding.decode64(base64String);
@@ -831,7 +824,6 @@ public class Tools {
      * Creates a reader that pipes the input file through a XSLT-Script that
      * updates the version to the current.
      *
-     * @throws IOException
      */
     public static Reader getUpdateReader(Reader pReader, String xsltScript) throws IOException {
         StringWriter writer = null;
@@ -1046,7 +1038,6 @@ public class Tools {
      * Returns the same URL as input with the addition, that the reference part
      * "#..." is filtered out.
      *
-     * @throws MalformedURLException
      */
     public static URL getURLWithoutReference(URL input)
             throws MalformedURLException {
@@ -1213,7 +1204,7 @@ public class Tools {
             if (vk >= 'a' && vk <= 'z') {
                 vk -= ('a' - 'A');
             }
-            action.putValue(Action.MNEMONIC_KEY, new Integer(vk));
+            action.putValue(Action.MNEMONIC_KEY, Integer.valueOf(vk));
         }
 
         /*
@@ -1506,7 +1497,7 @@ public class Tools {
     }
 
     @Deprecated
-    public static <T> List<T> getVectorWithSingleElement(T obj) {
+    public static <T> List<T> getSingletonList(T obj) {
         List<T> nodes = new ArrayList<>();
         nodes.add(obj);
         return nodes;
@@ -1518,7 +1509,7 @@ public class Tools {
         for (Object object : pObjects) {
             for (int j = 0; j < object.getClass().getFields().length; j++) {
                 Field f = object.getClass().getFields()[j];
-                if (Tools.safeEquals(pField, f.getName())) {
+                if (Objects.equals(pField, f.getName())) {
                     return object.getClass().getField(pField).get(object);
                 }
             }
@@ -1580,9 +1571,9 @@ public class Tools {
         return b.toString();
     }
 
-    public static Vector<URL> urlStringToUrls(String pUrls) {
+    public static List<URL> urlStringToUrls(String pUrls) {
         String[] urls = pUrls.split("\n");
-        Vector<URL> ret = new Vector<>();
+        List<URL> ret = new ArrayList<>();
         for (String url : urls) {
             try {
                 ret.add(new URL(url));
@@ -1594,16 +1585,12 @@ public class Tools {
     }
 
     /**
-     * @return
      */
     public static boolean isHeadless() {
         return GraphicsEnvironment.isHeadless();
     }
 
     /**
-     * @param pNode
-     * @param pMindMapController
-     * @return
      */
     public static String getNodeTextHierarchy(MindMapNode pNode,
                                               MindMapController pMindMapController) {
@@ -1678,8 +1665,6 @@ public class Tools {
     }
 
     /**
-     * @param pString
-     * @param pSearchString
      * @return the amount of occurrences of pSearchString in pString.
      */
     public static int countOccurrences(String pString, String pSearchString) {
@@ -1739,7 +1724,6 @@ public class Tools {
     }
 
     /**
-     * @return
      */
     public static String getHostIpAsString() {
         try {
@@ -1803,9 +1787,6 @@ public class Tools {
      * Call this method, if you don't know, if you are in the event thread or
      * not. It checks this and calls the invokeandwait or the runnable directly.
      *
-     * @param pRunnable
-     * @throws InterruptedException
-     * @throws InvocationTargetException
      */
     public static void invokeAndWait(Runnable pRunnable)
             throws InvocationTargetException, InterruptedException {

@@ -25,13 +25,13 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author foltin
- * @date 15.05.2012
+ * {@code @date} 15.05.2012
  */
 public class ShowCloneNodes extends MindMapNodeHookAdapter {
 
@@ -41,7 +41,7 @@ public class ShowCloneNodes extends MindMapNodeHookAdapter {
      */
     public void invoke(MindMapNode pNode) {
         super.invoke(pNode);
-        final Vector<MindMapNode> newSelecteds = new Vector<>();
+        final List<MindMapNode> newSelecteds = new ArrayList<>();
         final MindMapController mindMapController = getMindMapController();
         List<MindMapNode> selecteds = mindMapController.getSelecteds();
         for (MindMapNode node : selecteds) {
@@ -54,7 +54,7 @@ public class ShowCloneNodes extends MindMapNodeHookAdapter {
         }
     }
 
-    protected void addClonesToList(Vector<MindMapNode> newSelecteds, MindMapNode node) {
+    protected void addClonesToList(List<MindMapNode> newSelecteds, MindMapNode node) {
         ClonePlugin hook = ClonePlugin.getHook(node);
         if (hook != null) {
             // original found.

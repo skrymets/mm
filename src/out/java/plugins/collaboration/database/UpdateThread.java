@@ -33,9 +33,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 
@@ -376,12 +377,12 @@ public class UpdateThread extends Thread implements ResultHandler,
         }
     }
 
-    public Vector<String> getUsers() throws SQLException {
+    public List<String> getUsers() throws SQLException {
         if (mPrepareStatementUsers == null) {
             mPrepareStatementUsers = mConnection
                     .prepareStatement(QUERY_GET_USERS);
         }
-        Vector<String> result = new Vector<>();
+        List<String> result = new ArrayList<>();
 
         boolean execute = mPrepareStatementUsers.execute();
         if (!execute) {

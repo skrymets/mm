@@ -22,7 +22,6 @@ package accessories.plugins.time;
 
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.main.Resources;
-import freemind.main.Tools;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -31,10 +30,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Formerly, it has only three calendar widgets at once.
@@ -146,10 +142,10 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
                 protected void init() {
                     super.init();
                     mStandardSelectedColor = new Color(160, 160, 160);
-                    /**
-                     * This is needed as sometimes the current selected date is equal to
-                     * the one, the user presses. Thus, without this statement, no
-                     * property change event is issued.
+                    /*
+                      This is needed as sometimes the current selected date is equal to
+                      the one, the user presses. Thus, without this statement, no
+                      property change event is issued.
                      */
                     setAlwaysFireDayProperty(true);
                 }
@@ -226,7 +222,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
         try {
             mIgnoreChangeEvent = true;
             Object source = evt.getSource();
-            if (Tools.safeEquals(evt.getPropertyName(), JCalendar.CALENDAR_PROPERTY)) {
+            if (Objects.equals(evt.getPropertyName(), JCalendar.CALENDAR_PROPERTY)) {
                 Calendar calendar = (Calendar) evt.getNewValue();
 //				System.out.println("Property change to " + calendar.getTime());
 //				Tools.printStackTrace();

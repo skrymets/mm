@@ -30,12 +30,11 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * @date 27.03.2014
+ * {@code @date} 27.03.2014
  */
 public class UnderlineActor extends NodeXmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public UnderlineActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

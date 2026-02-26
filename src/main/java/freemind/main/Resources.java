@@ -36,6 +36,7 @@ import java.io.File;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -113,7 +114,7 @@ public class Resources implements TextTranslator {
      */
     public boolean getBoolProperty(String key) {
         String boolProperty = getProperty(key);
-        return Tools.safeEquals("true", boolProperty);
+        return Objects.equals("true", boolProperty);
     }
 
     public Properties getProperties() {
@@ -165,8 +166,6 @@ public class Resources implements TextTranslator {
     }
 
     /**
-     * @param baseFileName
-     * @return
      */
     public String createThumbnailFileName(File baseFileName) {
         String fileName = baseFileName.getParent() + File.separatorChar + "." // hidden

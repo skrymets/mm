@@ -22,22 +22,21 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.FontNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * @author foltin
- * @date 26.03.2014
+ * {@code @date} 26.03.2014
  */
 public class FontFamilyActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public FontFamilyActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -81,7 +80,7 @@ public class FontFamilyActor extends XmlActorAdapter {
             FontNodeAction fontFamilyAction = (FontNodeAction) action;
             NodeAdapter node = getNodeFromID(fontFamilyAction.getNode());
             String fontFamily = fontFamilyAction.getFont();
-            if (!Tools.safeEquals(node.getFontFamilyName(), fontFamily)) {
+            if (!Objects.equals(node.getFontFamilyName(), fontFamily)) {
                 node.establishOwnFont();
                 node.setFont(getExMapFeedback().getFontThroughMap(
                         new Font(fontFamily, node.getFont().getStyle(), node

@@ -140,7 +140,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         }
 
         /**
-         * @param pNode
          */
         private void changeSelection(NodeView pNode, boolean pIsSelected) {
             if (pNode.getModel() == null)
@@ -1077,7 +1076,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             }
             view.getContent().getLocation(point);
             Tools.convertPointToAncestor(view, point, this);
-            pointNodePairs.add(new Pair(new Integer(point.y), node));
+            pointNodePairs.add(new Pair(Integer.valueOf(point.y), node));
         }
         // do the sorting:
         pointNodePairs.sort((pair0, pair1) -> {
@@ -1440,7 +1439,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 if (pageIndex >= nrPagesInWidth * nrPagesInHeight) {
                     return Printable.NO_SUCH_PAGE;
                 }
-                int yPageCoord = (int) Math.floor(pageIndex / nrPagesInWidth);
+                int yPageCoord = (int) Math.floor((double) pageIndex / nrPagesInWidth);
                 int xPageCoord = pageIndex - yPageCoord * nrPagesInWidth;
 
                 graphics2D.translate(-pageFormat.getImageableWidth()
@@ -1631,7 +1630,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     }
 
     /**
-     * @param pSimpleScrollMode
      */
     private void setScrollMode(int pSimpleScrollMode) {
         if (getParent() instanceof JViewport) {

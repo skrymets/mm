@@ -32,7 +32,8 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
@@ -117,7 +118,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 
     private StopAction mStopAction;
 
-    private Vector<AbstractAction> mMenuActions = new Vector<AbstractAction>();
+    private List<AbstractAction> mMenuActions = new ArrayList<AbstractAction>();
 
     private final class ResultFieldStream extends OutputStream {
         public void write(int pByte) throws IOException {

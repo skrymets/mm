@@ -1,26 +1,26 @@
 package freemind.common;
 
-/**
- * fc, 2010-12-23 Taken from http://koti.mbnet.fi/akini/java/unicodereader/UnicodeReader.java.txt
- * asuming public domain.
- * <p>
- * version: 1.1 / 2007-01-25
- * - changed BOM recognition ordering (longer boms first)
- * <p>
- * Original pseudocode   : Thomas Weidenfeller
- * Implementation tweaked: Aki Nieminen
- * <p>
- * http://www.unicode.org/unicode/faq/utf_bom.html
- * BOMs:
- * 00 00 FE FF    = UTF-32, big-endian
- * FF FE 00 00    = UTF-32, little-endian
- * EF BB BF       = UTF-8,
- * FE FF          = UTF-16, big-endian
- * FF FE          = UTF-16, little-endian
- * <p>
- * Win2k Notepad:
- * Unicode format = UTF-16LE
- ***/
+/*
+  fc, 2010-12-23 Taken from http://koti.mbnet.fi/akini/java/unicodereader/UnicodeReader.java.txt
+  asuming public domain.
+  <p>
+  version: 1.1 / 2007-01-25
+  - changed BOM recognition ordering (longer boms first)
+  <p>
+  Original pseudocode   : Thomas Weidenfeller
+  Implementation tweaked: Aki Nieminen
+  <p>
+  http://www.unicode.org/unicode/faq/utf_bom.html
+  BOMs:
+  00 00 FE FF    = UTF-32, big-endian
+  FF FE 00 00    = UTF-32, little-endian
+  EF BB BF       = UTF-8,
+  FE FF          = UTF-16, big-endian
+  FF FE          = UTF-16, little-endian
+  <p>
+  Win2k Notepad:
+  Unicode format = UTF-16LE
+ */
 
 import java.io.*;
 

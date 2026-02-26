@@ -29,7 +29,7 @@ import javax.swing.*;
 
 /**
  * @author foltin
- * @date 11.10.2013
+ * {@code @date} 11.10.2013
  */
 public class DeactivateCloneAction extends MindMapNodeHookAdapter implements MenuItemEnabledListener {
 

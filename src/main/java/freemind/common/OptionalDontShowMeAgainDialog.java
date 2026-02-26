@@ -33,6 +33,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Objects;
 
 /**
  * Dialog with a decision that can be disabled.
@@ -117,11 +118,11 @@ public class OptionalDontShowMeAgainDialog {
     @SuppressWarnings("serial")
     public OptionalDontShowMeAgainDialog show() {
         String property = mDontShowPropertyHandler.getProperty();
-        if (Tools.safeEquals(property, "true")) {
+        if (Objects.equals(property, "true")) {
             mResult = JOptionPane.OK_OPTION;
             return this;
         }
-        if (Tools.safeEquals(property, "false")) {
+        if (Objects.equals(property, "false")) {
             mResult = JOptionPane.CANCEL_OPTION;
             return this;
         }

@@ -29,12 +29,11 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 public class EditActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public EditActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

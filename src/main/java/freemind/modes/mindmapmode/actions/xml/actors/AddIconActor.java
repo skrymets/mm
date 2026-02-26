@@ -30,12 +30,11 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * @date 25.03.2014
+ * {@code @date} 25.03.2014
  */
 public class AddIconActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public AddIconActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -100,7 +99,6 @@ public class AddIconActor extends XmlActorAdapter {
     }
 
     /**
-     * @param removeFirst
      */
     private ActionPair getRemoveIconActionPair(MindMapNode node, MindIcon icon,
                                                boolean removeFirst) {

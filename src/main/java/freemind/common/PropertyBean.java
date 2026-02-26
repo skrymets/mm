@@ -24,11 +24,12 @@ package freemind.common;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PropertyBean {
 
-    private final Vector<PropertyChangeListener> mPropertyChangeListeners = new Vector<>();
+    private final List<PropertyChangeListener> mPropertyChangeListeners = new ArrayList<>();
 
     /**
      * The key of the property.

@@ -30,7 +30,6 @@ public interface NodeViewLayout extends LayoutManager {
     Point getMainViewInPoint(NodeView view);
 
     /**
-     * @param pFoldingComponent
      */
     void layoutNodeFoldingComponent(NodeFoldingComponent pFoldingComponent);
 }

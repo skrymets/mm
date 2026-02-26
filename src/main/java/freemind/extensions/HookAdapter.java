@@ -41,16 +41,10 @@ import java.util.Properties;
 @Slf4j
 public class HookAdapter implements MindMapHook {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.modes.NodeHook#getName()
-     */
     @Setter
     @Getter
     private String name;
-    /**
-     */
+
     @Setter
     private Properties properties;
     private ModeController controller;
@@ -62,49 +56,25 @@ public class HookAdapter implements MindMapHook {
     private PluginBaseClassSearcher baseClass;
     protected MapFeedback mapFeedback;
 
-    /**
-     *
-     */
     public HookAdapter() {
         baseClass = null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.modes.NodeHook#startupMapHook(java.lang.String)
-     */
     public void startupMapHook() {
-        // TODO Auto-generated method stub
-
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.modes.NodeHook#shutdownMapHook()
-     */
     public void shutdownMapHook() {
         controller = null;
     }
 
-    /**
-     *
-     */
     protected ModeController getController() {
         return controller;
     }
 
-    /**
-     *
-     */
     protected Properties getProperties() {
         return properties;
     }
 
-    /**
-     *
-     */
     public void setController(MapFeedback controller) {
         this.mapFeedback = controller;
         if (controller instanceof ModeController) {
@@ -112,11 +82,6 @@ public class HookAdapter implements MindMapHook {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.MindMapHook#getResourceString(java.lang.String)
-     */
     public String getResourceString(String property) {
         String result = properties.getProperty(property);
         if (result == null) {
@@ -132,11 +97,6 @@ public class HookAdapter implements MindMapHook {
         return this.getClass().getClassLoader().getResource(resourceName);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.MindMapHook#getPluginBaseClass()
-     */
     public Object getPluginBaseClass() {
         return baseClass.getPluginBaseObject();
     }
@@ -152,6 +112,5 @@ public class HookAdapter implements MindMapHook {
         // Focus fix
         getController().getController().obtainFocusForSelected();
     }
-
 
 }

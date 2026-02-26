@@ -220,7 +220,7 @@ public class ArrowLinkView {
         // flatten the curve and test for intersection (bug fix, fc, 16.1.2004).
         FlatteningPathIterator pi = new FlatteningPathIterator(
                 arrowLinkCurve.getPathIterator(null),
-                MAXIMAL_RECTANGLE_SIZE_FOR_COLLISION_DETECTION / 4, 10/*
+                (double) MAXIMAL_RECTANGLE_SIZE_FOR_COLLISION_DETECTION / 4, 10/*
          * =maximal
          * 2^10=1024
          * points.
@@ -256,7 +256,7 @@ public class ArrowLinkView {
     protected Rectangle2D getControlPoint(Point2D p) {
         // Create a small square around the given point.
         int side = MAXIMAL_RECTANGLE_SIZE_FOR_COLLISION_DETECTION;
-        return new Rectangle2D.Double(p.getX() - side / 2, p.getY() - side / 2,
+        return new Rectangle2D.Double(p.getX() - (double) side / 2, p.getY() - (double) side / 2,
                 side, side);
     }
 

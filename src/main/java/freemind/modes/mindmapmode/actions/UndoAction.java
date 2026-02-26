@@ -35,7 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -44,7 +45,7 @@ public class UndoAction extends AbstractXmlAction {
     private MindMapController controller;
     @Getter
     private boolean isUndoAction;
-    protected final Vector<ActionPair> actionPairList = new Vector<>();
+    protected final List<ActionPair> actionPairList = new ArrayList<>();
     private long timeOfLastAdd = 0;
     private boolean actionFrameStarted = false;
     private static final long TIME_TO_BEGIN_NEW_ACTION = 100;

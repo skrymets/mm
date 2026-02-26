@@ -26,8 +26,6 @@ package freemind.controller.filter.util;
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import java.util.Vector;
-
 /**
  * @author dimitri 14.05.2005
  */
@@ -113,10 +111,6 @@ public class ExtendedComboBoxModel extends DefaultComboBoxModel {
 
     public ExtendedComboBoxModel(Object[] o) {
         super(o);
-    }
-
-    public ExtendedComboBoxModel(Vector v) {
-        super(v);
     }
 
     public Object getElementAt(int i) {

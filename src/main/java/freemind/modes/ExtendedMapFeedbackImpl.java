@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * @author foltin
- * @date 21.02.2014
+ * {@code @date} 21.02.2014
  */
 public final class ExtendedMapFeedbackImpl extends ExtendedMapFeedbackAdapter {
     private MindMap mMap;
@@ -66,7 +66,7 @@ public final class ExtendedMapFeedbackImpl extends ExtendedMapFeedbackAdapter {
                     .getLinkRegistry(), pSaveInvisible, true);
         } catch (IOException ignored) {
         }
-        List<String> nodeList = Tools.getVectorWithSingleElement(getNodeID(pNode));
+        List<String> nodeList = Tools.getSingletonList(getNodeID(pNode));
         return new MindMapNodesSelection(stringWriter.toString(), null,
                 null, null, null, null, null, nodeList);
     }

@@ -56,7 +56,6 @@ public class EditNodeWYSIWYG extends EditNodeBase {
         /**
          * -- GETTER --
          *
-         * @return Returns the htmlEditorPanel.
          */
         private SHTMLPanel htmlEditorPanel;
 

@@ -33,12 +33,11 @@ import java.awt.*;
 
 /**
  * @author foltin
- * @date 26.03.2014
+ * {@code @date} 26.03.2014
  */
 public class CloudActor extends NodeXmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public CloudActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

@@ -45,12 +45,13 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.awt.datatransfer.Transferable;
 import java.util.*;
+import java.util.List;
 
 /**
  * This is the "paste node as clone" action from the menu.
  *
  * @author foltin
- * @date 25.4.2011
+ * {@code @date} 25.4.2011
  */
 @Slf4j
 public class ClonePasteAction extends MindMapNodeHookAdapter {
@@ -84,7 +85,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                         showResult == JOptionPane.OK_OPTION
                                 ? ClonePlugin.CLONE_ITSELF_TRUE
                                 : ClonePlugin.CLONE_ITSELF_FALSE);
-                List<MindMapNode> selecteds = Tools.getVectorWithSingleElement(copiedNode);
+                List<MindMapNode> selecteds = Tools.getSingletonList(copiedNode);
                 getMindMapController().addHook(copiedNode, selecteds,
                         ClonePlugin.PLUGIN_LABEL, properties);
             }
@@ -104,7 +105,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 
         // insert clone:
         List<MindMapNode> listOfChilds = pDestinationNode.getChildren();
-        Vector<String> listOfChildIds = new Vector<>();
+        List<String> listOfChildIds = new ArrayList<>();
         for (MindMapNode node : listOfChilds) {
             String nodeID = getMindMapController().getNodeID(node);
             listOfChildIds.add(nodeID);
@@ -191,7 +192,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 
         private final MindMap mMap;
 
-        private final Vector<MindMapNode> mLastMarkedNodeViews = new Vector<>();
+        private final List<MindMapNode> mLastMarkedNodeViews = new ArrayList<>();
 
         public Registration(ModeController controller, MindMap map) {
             this.controller = (MindMapController) controller;
@@ -237,7 +238,6 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         }
 
         /**
-         * @param pCloneId
          * @return true, if the pCloneId is new (not already registered)
          */
         public boolean registerClone(String pCloneId, ClonePlugin pPlugin) {
@@ -429,9 +429,6 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         /**
          * Method takes into account, that some actions are different.
          *
-         * @param nodeAction
-         * @param node
-         * @return
          */
         public List<MindMapNodePair> getCorrespondingNodes(NodeAction nodeAction,
                                                            MindMapNode node) {
@@ -559,7 +556,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             }
             MindMapNode child;
             // now, there is a clone on the way. Collect the indices.
-            Vector<Integer> indexVector = new Vector<>();
+            List<Integer> indexVector = new ArrayList<>();
             if (pStartWithParent) {
                 addNodePosition(indexVector, pNode);
                 child = pNode.getParentNode();
@@ -570,7 +567,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                 addNodePosition(indexVector, child);
                 child = child.getParentNode();
             }
-            Vector<MindMapNodePair> returnValue = new Vector<>();
+            List<MindMapNodePair> returnValue = new ArrayList<>();
             MindMapNode originalNode = child;
             HashSet<MindMapNode> targets = mCloneIdsMap.get(mClonesMap.get(child));
             CloneLoop:
@@ -608,7 +605,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         }
 
         private String printNodeIds(HashSet<MindMapNode> pClones) {
-            Vector<String> strings = new Vector<>();
+            List<String> strings = new ArrayList<>();
             for (MindMapNode pluginNode : pClones) {
                 strings.add(printNodeId(pluginNode));
             }

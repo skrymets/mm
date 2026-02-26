@@ -31,12 +31,11 @@ import java.awt.*;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 public class ChangeArrowLinkEndPointsActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public ChangeArrowLinkEndPointsActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

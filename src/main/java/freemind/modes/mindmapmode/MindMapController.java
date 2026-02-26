@@ -91,11 +91,11 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class MindMapController extends ControllerAdapter implements ExtendedMapFeedback, MapSourceChangedObserver {
 
-    public static final String REGEXP_FOR_NUMBERS_IN_STRINGS = "([+\\-]?[0-9]*[.,]?[0-9]+)\\b";
+    public static final String REGEXP_FOR_NUMBERS_IN_STRINGS = "([+\\-]?\\d*[.,]?\\d+)\\b";
 
     /**
      * @author foltin
-     * @date 19.11.2013
+     * {@code @date} 19.11.2013
      */
     private class NodeInformationTimerAction implements ActionListener {
 
@@ -165,7 +165,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                     allDescendants.addAll(child.getChildren());
                     allDescendants.remove(0);
                 }
-                nodeStatusLine = Resources.getInstance().format("node_status_line", new Object[]{sel.getShortText(MindMapController.this), new Integer(sel.getChildCount()), amountOfChildren});
+                nodeStatusLine = Resources.getInstance().format("node_status_line", new Object[]{sel.getShortText(MindMapController.this), Integer.valueOf(sel.getChildCount()), amountOfChildren});
             }
             getFrame().setStatusText(nodeStatusLine);
         }
@@ -174,7 +174,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     /**
      * @author foltin
-     * @date 24.01.2012
+     * {@code @date} 24.01.2012
      */
     private final class MapSourceChangeDialog implements Runnable {
 
@@ -566,7 +566,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      * Creates the patterns actions (saved in array patterns), and the pure
      * patterns list (saved in mPatternsList).
      *
-     * @throws Exception
      */
     public void loadPatterns(String patternsXML) throws Exception {
         createPatterns(StylePatternFactory.loadPatterns(patternsXML));

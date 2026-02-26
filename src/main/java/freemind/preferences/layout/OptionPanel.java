@@ -49,7 +49,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class OptionPanel implements TextTranslator {
 
     private static final Color MARKED_BUTTON_COLOR = Color.BLUE;
 
-    private Vector<PropertyControl> controls;
+    private List<PropertyControl> controls;
 
     private KeyProperty findControlByKB(KeyBinding binding) {
         for (PropertyControl control : controls) {
@@ -92,10 +91,9 @@ public class OptionPanel implements TextTranslator {
     private static final String PREFERENCE_STORAGE_PROPERTY = "OptionPanel_Window_Properties";
     private static final String DEFAULT_LAYOUT_FORMAT = "right:max(40dlu;p), 4dlu, 120dlu, 7dlu";
 
-    private final Vector<KeyBinding> allBindings;
+    private final List<KeyBinding> allBindings;
 
     /**
-     * @throws IOException
      */
     public OptionPanel(FreeMind fm, JDialog frame, OptionPanelFeedback feedback) {
         super();
@@ -112,7 +110,7 @@ public class OptionPanel implements TextTranslator {
             OptionPanelWindowConfigurationStorage oWindowSettings = (OptionPanelWindowConfigurationStorage) storage;
             selectedPanel = oWindowSettings.getPanel();
         }
-        allBindings = new Vector<>();
+        allBindings = new ArrayList<>();
     }
 
     public interface OptionPanelFeedback {
@@ -402,20 +400,20 @@ public class OptionPanel implements TextTranslator {
     }
 
     //
-    private Vector<PropertyControl> getControls() {
-        Vector<PropertyControl> controls = new Vector<>();
-        /**
-         * *********************************************************************
-         * Language
-         * ****************************************************************
+    private List<PropertyControl> getControls() {
+        List<PropertyControl> controls = new ArrayList<>();
+        /*
+          *********************************************************************
+          Language
+          ****************************************************************
          */
         controls.add(new NewTabProperty("Environment"));
         controls.add(new SeparatorProperty("language"));
         // TODO: Search class path for translations.
         controls.add(new ComboProperty(
-                /**
-                 * For the codes see
-                 * http://www.loc.gov/standards/iso639-2/php/English_list.php
+                /*
+                  For the codes see
+                  http://www.loc.gov/standards/iso639-2/php/English_list.php
                  */
                 "language.tooltip", FreeMindCommon.RESOURCE_LANGUAGE,
                 new String[]{"automatic", "ar", "bg", "cs", "de", "dk", "en",
@@ -528,10 +526,10 @@ public class OptionPanel implements TextTranslator {
         controls.add(new BooleanProperty(
                 "save_only_intrisically_needed_ids.tooltip",
                 FreeMindCommon.SAVE_ONLY_INTRISICALLY_NEEDED_IDS)); // false
-        /**
-         * *********************************************************************
-         * Defaults
-         * ****************************************************************
+        /*
+          *********************************************************************
+          Defaults
+          ****************************************************************
          */
         controls.add(new NewTabProperty("Defaults"));
         controls.add(new SeparatorProperty("default_styles"));
@@ -607,17 +605,17 @@ public class OptionPanel implements TextTranslator {
         //
         // "standardlinkestyle.tooltip", "standardlinkestyle",
         // new String[] { "bezier" })); // bezier
-        /**
-         * *********************************************************************
-         * Appearance
-         * ****************************************************************
+        /*
+          *********************************************************************
+          Appearance
+          ****************************************************************
          */
         controls.add(new NewTabProperty("Appearance"));
         controls.add(new SeparatorProperty("look_and_feel"));
         LookAndFeelInfo[] lafInfo = UIManager.getInstalledLookAndFeels();
         int reservedCount = 6;
         String[] lafNames = new String[lafInfo.length + reservedCount];
-        Vector<String> translatedLafNames = new Vector<>();
+        List<String> translatedLafNames = new ArrayList<>();
         lafNames[0] = "default";
         translatedLafNames.add(getText("default"));
         lafNames[1] = "metal";
@@ -747,10 +745,10 @@ public class OptionPanel implements TextTranslator {
         controls.add(new StringProperty("icon_order_description",
                 MindIcon.PROPERTY_STRING_ICONS_LIST));
         controls.add(new NumberProperty(null, FreeMind.ICON_BAR_COLUMN_AMOUNT, 1, 10, 1));
-        /**
-         * *********************************************************************
-         * Keystrokes
-         * ****************************************************************
+        /*
+          *********************************************************************
+          Keystrokes
+          ****************************************************************
          */
         String form = "right:max(40dlu;p), 4dlu, 80dlu, 7dlu";
         controls.add(new NewTabProperty("Keystrokes", form + "," + form)); // ", right:max(40dlu;p), 4dlu, 60dlu"));
@@ -1121,9 +1119,9 @@ public class OptionPanel implements TextTranslator {
 
         }
 
-        /**
-         * *********************************************************************
-         * Misc ****************************************************************
+        /*
+          *********************************************************************
+          Misc ****************************************************************
          */
         controls.add(new NewTabProperty("Behaviour"));
         controls.add(new SeparatorProperty("behaviour"));
@@ -1207,10 +1205,10 @@ public class OptionPanel implements TextTranslator {
         controls.add(new NumberProperty("undo_levels.tooltip", "undo_levels",
                 2, 1000, 1));
 
-        /**
-         * *********************************************************************
-         * Browser/external apps
-         * ****************************************************************
+        /*
+          *********************************************************************
+          Browser/external apps
+          ****************************************************************
          */
         controls.add(new NewTabProperty("HTML"));
         controls.add(new SeparatorProperty("browser"));

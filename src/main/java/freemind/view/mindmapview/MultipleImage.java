@@ -24,11 +24,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class MultipleImage extends ImageIcon {
-    private final Vector<ImageIcon> mImages = new Vector<>();
+    private final List<ImageIcon> mImages = new ArrayList<>();
     private double zoomFactor = 1;
     private boolean isDirty;
 

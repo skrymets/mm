@@ -76,14 +76,12 @@ public interface MindMap extends TreeModel {
     /**
      * writes the content of the map to a writer.
      *
-     * @throws IOException
      */
     void getXml(Writer fileout) throws IOException;
 
     /**
      * writes the content of the map to a writer.
      *
-     * @throws IOException
      */
     void getFilteredXml(Writer fileout) throws IOException;
 
@@ -125,7 +123,6 @@ public interface MindMap extends TreeModel {
     /**
      * Use this method to make the map dirty/clean.
      *
-     * @param isSaved
      * @return true, if the map state has changed (and thus the title must be
      * changed).
      */
@@ -136,16 +133,14 @@ public interface MindMap extends TreeModel {
      * edited from somebody else), this observer can be used to notice this.
      *
      * @author foltin
-     * @date 04.07.2011
+     * {@code @date} 04.07.2011
      */
     interface MapSourceChangedObserver {
         /**
-         * @param pMap
          * @return true, if the map was reloaded, false otherwise. This means,
          * that if the method returns true, then the next change on disk
          * is reported as well. If it returns false, the next changes
          * will be ignored until the map is saved.
-         * @throws Exception
          */
         boolean mapSourceChanged(MindMap pMap) throws Exception;
     }
@@ -158,18 +153,12 @@ public interface MindMap extends TreeModel {
     }
 
     /**
-     * @param pMapSourceChangedObserver
-     * @param pGetEventIfChangedAfterThisTimeInMillies if 0, nothing happens, but if you have ever registered,
-     *                                                 unregistered at time t, and register again at time t+s, you
-     *                                                 should specify t here. If there was an event in between t and
-     *                                                 t+s, and event is issued directly.
      */
     void registerMapSourceChangedObserver(
             MapSourceChangedObserver pMapSourceChangedObserver,
             long pGetEventIfChangedAfterThisTimeInMillies);
 
     /**
-     * @param pMapSourceChangedObserver
      * @return the last saving time to be stored (see
      * {@link MindMap#registerMapSourceChangedObserver(MapSourceChangedObserver, long)}
      * )

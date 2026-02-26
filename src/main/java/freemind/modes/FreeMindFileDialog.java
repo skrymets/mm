@@ -26,7 +26,7 @@ import java.io.File;
 
 /**
  * @author foltin
- * @date 23.02.2012
+ * {@code @date} 23.02.2012
  */
 public interface FreeMindFileDialog {
 

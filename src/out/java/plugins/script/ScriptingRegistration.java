@@ -5,9 +5,9 @@ package plugins.script;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 import plugins.script.ScriptEditorPanel.ScriptHolder;
 import plugins.script.ScriptEditorPanel.ScriptModel;
@@ -45,7 +45,7 @@ public class ScriptingRegistration implements HookRegistration,
         }
 
         public List<PropertyControl> getControls(TextTranslator pTextTranslator) {
-            Vector<PropertyControl> controls = new Vector<>();
+            List<PropertyControl> controls = new ArrayList<>();
             controls.add(new OptionPanel.NewTabProperty(
                     "plugins/scripting/tab_name"));
             controls.add(new SeparatorProperty(
@@ -112,7 +112,7 @@ public class ScriptingRegistration implements HookRegistration,
         }
 
         public boolean isDirty() {
-            return !Tools.safeEquals(mScript, mOriginalScript);
+            return !Objects.equals(mScript, mOriginalScript);
         }
 
         public void setScript(int pIndex, ScriptHolder pScript) {

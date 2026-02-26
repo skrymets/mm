@@ -39,8 +39,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * @author foltin
@@ -51,7 +52,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
     /**
      * Of NodeHolder
      */
-    private static final Vector<NodeHolder> sNodeVector = new Vector<>();
+    private static final List<NodeHolder> sNodeVector = new ArrayList<>();
 
     private static int sCurrentPosition = 0;
 
@@ -140,8 +141,8 @@ public class NodeHistory extends MindMapNodeHookAdapter {
         }
 
         public void onFocusNode(NodeView pNode) {
-            /*******************************************************************
-             * don't denote positions, if somebody navigates through them. *
+            /*****************************************************************
+              don't denote positions, if somebody navigates through them. *
              */
             if (!NodeHistory.sPreventRegistration) {
                 // no duplicates:
@@ -153,12 +154,12 @@ public class NodeHistory extends MindMapNodeHookAdapter {
                     return;
                 }
                 if (sCurrentPosition != sNodeVector.size()) {
-                    /***********************************************************
-                     * * we change the selected in the middle of our vector.
-                     * Thus we remove all the coming nodes:
-                     **********************************************************/
+                    /*********************************************************
+                       we change the selected in the middle of our vector.
+                      Thus we remove all the coming nodes:
+                     */
                     for (int i = sNodeVector.size() - 1; i >= sCurrentPosition; --i) {
-                        sNodeVector.removeElementAt(i);
+                        sNodeVector.remove(i);
                     }
                 }
                 // log.info("Adding " + pNode + " at " + sCurrentPosition);
@@ -166,7 +167,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
                 sCurrentPosition++;
                 // only the last 100 nodes
                 while (sNodeVector.size() > 100) {
-                    sNodeVector.removeElementAt(0);
+                    sNodeVector.remove(0);
                     sCurrentPosition--;
                 }
             }
@@ -246,10 +247,10 @@ public class NodeHistory extends MindMapNodeHookAdapter {
         final MapModule fNewModule = newModule;
         log.trace("Selecting {} at pos {}", toBeSelected, sCurrentPosition);
         sPreventRegistration = true;
-        /***********************************************************************
-         * as the selection is restored after invoke, we make this trick to
-         * change it.
-         **********************************************************************/
+        /*********************************************************************
+          as the selection is restored after invoke, we make this trick to
+          change it.
+         */
         EventQueue.invokeLater(() -> {
             ModeController c = modeController;
             if (fChangeModule) {

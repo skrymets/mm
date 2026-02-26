@@ -7,13 +7,13 @@
 
  */
 
-/**************************************************************************
- *
+/************************************************************************
+
  This program is free software; you can redistribute it and/or modify  *
  it under the terms of the GNU General Public License as published by  *
  the Free Software Foundation; either version 2 of the License, or     *
  (at your option) any later version.                                   *
- *
+
  */
 
 package freemind.main;
@@ -141,11 +141,11 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
                 // Determine width of string to center it
                 String freemindVersion = frame.getFreemindVersion().toString();
                 if (mWidth == null) {
-                    mWidth = new Integer(g2.getFontMetrics().stringWidth(
+                    mWidth = Integer.valueOf(g2.getFontMetrics().stringWidth(
                             freemindVersion));
                 }
                 int yCoordinate = calcYRelative(58);
-                int xCoordinate = (int) (getSize().getWidth() / 2 - mWidth
+                int xCoordinate = (int) (getSize().getWidth() / 2 - (double) mWidth
                         .intValue() / 2);
                 g2.setColor(new Color(0x4d, 0x63, 0xb4));
                 g2.drawString(freemindVersion, xCoordinate, yCoordinate);

@@ -30,12 +30,12 @@ import freemind.view.mindmapview.MapView;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.datatransfer.Transferable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author foltin The original version was sent by Stephen Viles (sviles)
- * https://sourceforge.net/tracker/?func=detail&atid=307118&aid=881217&
+ * <a href="https://sourceforge.net/tracker/?func=detail&atid=307118&aid=881217&">...</a>
  * group_id=7118
  * <p>
  * Initial Comment: The "New Parent Node" action creates a node as a
@@ -73,12 +73,12 @@ public class NewParentNode extends MindMapNodeHookAdapter {
         if (focussed.isRoot()) {
             if (selecteds.size() == 1) {
                 // only root is selected. we try to create a new root:
-                Vector<MindMapNode> children = new Vector<>(rootNode.getChildren());
+                List<MindMapNode> children = new ArrayList<>(rootNode.getChildren());
                 // copy only root.
                 Transferable rootContent = getMindMapController().copySingle();
                 // and paste it directly again.
                 getMindMapController().paste(rootContent, rootNode);
-                Vector<MindMapNode> childrenNew = new Vector<>(rootNode.getChildren());
+                List<MindMapNode> childrenNew = new ArrayList<>(rootNode.getChildren());
                 /*
                  * look for the new node as the difference between former
                  * children and new children.
@@ -160,7 +160,7 @@ public class NewParentNode extends MindMapNodeHookAdapter {
         // Move selected nodes to become children of new node
         Transferable copy = getMindMapController().cut(nodesToBeMoved);
         getMindMapController().paste(copy, newNode);
-        getMindMapController().select(selectedParent, Tools.getVectorWithSingleElement(selectedParent));
+        getMindMapController().select(selectedParent, Tools.getSingletonList(selectedParent));
 //		getMindMapController().obtainFocusForSelected();
         nodeChanged(selectedParent);
 

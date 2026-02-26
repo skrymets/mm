@@ -76,7 +76,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
         if (sListener == null) {
             sListener = (pPropertyName, pNewValue, pOldValue) -> {
-                if (Tools.safeEquals(pPropertyName, FreeMind.TOOLTIP_DISPLAY_TIME)) {
+                if (Objects.equals(pPropertyName, FreeMind.TOOLTIP_DISPLAY_TIME)) {
                     // control tooltip times:
                     ToolTipManager.sharedInstance().setDismissDelay(Resources.getInstance().getIntProperty(FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
                 }

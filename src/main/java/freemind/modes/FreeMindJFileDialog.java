@@ -31,7 +31,7 @@ import java.awt.*;
  * File Chooser for OS windows and linux (without Mac)
  *
  * @author foltin
- * @date 23.02.2012
+ * {@code @date} 23.02.2012
  */
 @Slf4j
 public class FreeMindJFileDialog extends JFileChooser implements FreeMindFileDialog {

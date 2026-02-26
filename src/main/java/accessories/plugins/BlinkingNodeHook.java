@@ -24,14 +24,15 @@ import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
 
 /**
  * @author christianfoltin
- * @file BlinkingNodeHook.java
- * @package freemind.modes.mindmapmode
+ * {@code @file} BlinkingNodeHook.java
+ * {@code @package} freemind.modes.mindmapmode
  */
 public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
 
@@ -62,7 +63,7 @@ public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
     // MindMapNode newNode=((ControllerAdapter)getController()).newNode();
     // ((MapAdapter) getMap()).insertNodeInto(newNode, getNode(), 0);
 
-    static final Vector<Color> colors = new Vector<>();
+    static final List<Color> colors = new ArrayList<>();
 
     protected class TimerColorChanger extends TimerTask {
         TimerColorChanger() {

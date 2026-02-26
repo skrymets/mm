@@ -34,8 +34,8 @@ import java.util.Date;
  * @author foltin
  */
 public class HistoryInformation {
-    long createdAt = 0l;
-    long lastModifiedAt = 0l;
+    long createdAt = 0L;
+    long lastModifiedAt = 0L;
 
     /**
      * Initializes to today.

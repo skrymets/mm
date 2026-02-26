@@ -22,21 +22,21 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.generated.instance.EdgeStyleFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.Tools;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapEdge;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
+import java.util.Objects;
+
 /**
  * @author foltin
- * @date 26.03.2014
+ * {@code @date} 26.03.2014
  */
 public class EdgeStyleActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public EdgeStyleActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -47,11 +47,9 @@ public class EdgeStyleActor extends XmlActorAdapter {
     }
 
     /**
-     * @param node
-     * @param style use null to remove the style
      */
     public void setEdgeStyle(MindMapNode node, String style) {
-        if (Tools.safeEquals(style, getStyle(node))) {
+        if (Objects.equals(style, getStyle(node))) {
             return;
         }
         if (style != null) {
@@ -59,7 +57,7 @@ public class EdgeStyleActor extends XmlActorAdapter {
             // check style:
             for (int i = 0; i < EdgeAdapter.EDGESTYLES.length; i++) {
                 String possibleStyle = EdgeAdapter.EDGESTYLES[i];
-                if (Tools.safeEquals(style, possibleStyle)) {
+                if (Objects.equals(style, possibleStyle)) {
                     found = true;
                     break;
                 }
@@ -102,7 +100,7 @@ public class EdgeStyleActor extends XmlActorAdapter {
             MindMapNode node = getNodeFromID(edgeStyleAction.getNode());
             String newStyle = edgeStyleAction.getStyle();
             MindMapEdge edge = node.getEdge();
-            if (!Tools.safeEquals(edge.hasStyle() ? edge.getStyle() : null,
+            if (!Objects.equals(edge.hasStyle() ? edge.getStyle() : null,
                     newStyle)) {
                 ((EdgeAdapter) edge).setStyle(newStyle);
                 getExMapFeedback().nodeChanged(node);

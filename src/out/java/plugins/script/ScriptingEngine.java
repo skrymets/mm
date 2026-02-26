@@ -42,7 +42,6 @@ import org.codehaus.groovy.runtime.InvokerHelper;
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindMain;
-import freemind.main.FreeMindSecurityManager;
 import freemind.main.Tools;
 import freemind.main.Tools.BooleanHolder;
 import freemind.modes.MindMapNode;

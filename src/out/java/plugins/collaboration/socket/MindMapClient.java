@@ -28,8 +28,9 @@ import java.io.StringWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
+import java.util.List;
 
 import freemind.common.NumberProperty;
 import freemind.common.PropertyControl;
@@ -53,7 +54,7 @@ public class MindMapClient extends SocketBasics {
     public void startupMapHook() {
         super.startupMapHook();
         String callType = getProperties().getProperty("callType");
-        boolean isOfPublishType = Tools.safeEquals(callType, "publish");
+        boolean isOfPublishType = Objects.equals(callType, "publish");
         MindMapController controller = getMindMapController();
         if (isOfPublishType && controller.getMap().getFile() == null) {
             controller.out(controller.getResourceString("map_not_saved"));
@@ -76,7 +77,7 @@ public class MindMapClient extends SocketBasics {
             // get last value
             hostProperty.setValue(controller.getFrame().getProperty(
                     HOST_PROPERTY));
-            Vector<PropertyControl> controls = new Vector<>();
+            List<PropertyControl> controls = new ArrayList<>();
             controls.add(passwordProperty);
             controls.add(hostProperty);
             controls.add(portProperty);

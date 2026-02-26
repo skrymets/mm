@@ -59,7 +59,6 @@ public class JSpinField extends JPanel implements ChangeListener,
      * -- GETTER --
      *  Returns the value.
      *
-     * @return the value value
      */
     @Getter
     protected int value;
@@ -165,7 +164,7 @@ public class JSpinField extends JPanel implements ChangeListener,
      */
     public void setValue(int newValue) {
         setValue(newValue, true, true);
-        spinner.setValue(new Integer(value));
+        spinner.setValue(Integer.valueOf(value));
     }
 
     /**

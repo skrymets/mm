@@ -58,6 +58,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
 import java.util.*;
+import java.util.List;
 import java.util.Timer;
 import java.util.regex.Pattern;
 
@@ -291,7 +292,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         AbstractAction toggleViewFoldedNodesAction = new ToggleViewFoldedNodesAction(
                 getResourceString("plugins/TimeManagement.xml_ToggleViewFoldedNodesAction"));
 
-        /** Menu **/
+        /* Menu **/
         StructuredMenuHolder menuHolder = new StructuredMenuHolder();
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu(
@@ -416,7 +417,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
     protected void exportSelectedRowsAndClose() {
         int[] selectedRows = mTimeTable.getSelectedRows();
-        Vector<MindMapNode> selectedNodes = new Vector<>();
+        List<MindMapNode> selectedNodes = new ArrayList<>();
         for (int row : selectedRows) {
             selectedNodes.add(getMindMapNode(row));
         }
@@ -435,7 +436,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
     /**
      * @author foltin
-     * @date 25.04.2012
+     * {@code @date} 25.04.2012
      */
     private static final class MindmapTableModel extends DefaultTableModel {
         /*
@@ -464,11 +465,10 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
     /**
      * @author foltin
-     * @date 25.04.2012
+     * {@code @date} 25.04.2012
      */
     private final class ToggleViewFoldedNodesAction extends AbstractAction implements MenuItemSelectedListener {
         /**
-         * @param pName
          */
         private ToggleViewFoldedNodesAction(String pName) {
             super(pName);
@@ -495,18 +495,13 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
     }
 
     private void replace(IReplaceInputInformation info) {
-        try {
-            String searchString = getText(mFilterTextSearchField.getDocument());
-            String replaceString = getText(mFilterTextReplaceField
-                    .getDocument());
-            replace(info, searchString, replaceString);
-            mTimeTableModel.fireTableDataChanged();
-            mFlatNodeTableFilterModel.resetFilter();
-            mFilterTextSearchField.setText("");
-        } catch (BadLocationException e) {
-            log.error(e.getLocalizedMessage(), e);
-        }
-
+        String searchString = getText(mFilterTextSearchField.getDocument());
+        String replaceString = getText(mFilterTextReplaceField
+                .getDocument());
+        replace(info, searchString, replaceString);
+        mTimeTableModel.fireTableDataChanged();
+        mFlatNodeTableFilterModel.resetFilter();
+        mFilterTextSearchField.setText("");
     }
 
     public static void replace(IReplaceInputInformation info,
@@ -521,7 +516,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             String text = nodeHolder.node.getText();
             String replaceResult = HtmlTools.getInstance().getReplaceResult(p,
                     replacement, text);
-            if (!Tools.safeEquals(text, replaceResult)) {
+            if (!Objects.equals(text, replaceResult)) {
                 // set new node text only, if different.
                 info.changeString(nodeHolder, replaceResult);
             }
@@ -571,7 +566,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         if (focussedRow >= 0) {
             MindMapNode focussedNode = getMindMapNode(focussedRow);
             // getController().centerNode(focussedNode);
-            Vector<MindMapNode> selectedNodes = new Vector<>();
+            List<MindMapNode> selectedNodes = new ArrayList<>();
             for (int row : selectedRows) {
                 selectedNodes.add(getMindMapNode(row));
             }
@@ -677,18 +672,19 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         return storage;
     }
 
-    public static String getRegularExpression(String text)
-            throws BadLocationException {
+    public static String getRegularExpression(String text) {
         text = ".*(" + text + ").*";
         return text;
     }
 
     /**
-     * @throws BadLocationException
      */
-    private String getText(Document document) throws BadLocationException {
-        String text = document.getText(0, document.getLength());
-        return text;
+    private String getText(Document document) {
+        try {
+            return document.getText(0, document.getLength());
+        } catch (BadLocationException e) {
+            return "";
+        }
     }
 
     /**
@@ -961,14 +957,14 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
     static class IconsHolder implements Comparable<IconsHolder> {
         @Getter
-        final Vector<MindIcon> icons = new Vector<>();
+        final List<MindIcon> icons = new ArrayList<>();
 
-        private final Vector<String> iconNames;
+        private final List<String> iconNames;
 
         public IconsHolder(MindMapNode node) {
             icons.addAll(node.getIcons());
             // sorting the output.
-            iconNames = new Vector<>();
+            iconNames = new ArrayList<>();
             for (MindIcon icon : icons) {
                 iconNames.add(icon.getName());
             }

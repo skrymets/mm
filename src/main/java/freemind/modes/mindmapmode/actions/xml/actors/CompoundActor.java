@@ -35,7 +35,6 @@ import java.util.List;
 public class CompoundActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public CompoundActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

@@ -40,8 +40,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -88,7 +88,6 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
     /**
      * -- GETTER --
      *
-     * @return Returns the result.
      */
     @Getter
     private int result = CANCEL;
@@ -120,7 +119,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
     public ManagePatternsPopupDialog(JFrame caller, MindMapController controller) {
         super(caller);
         this.mController = controller;
-        List<Pattern> patternList = new Vector<>();
+        List<Pattern> patternList = new ArrayList<>();
         try {
             patternList = StylePatternFactory.loadPatterns(controller.getPatternsXML());
         } catch (Exception e) {
@@ -136,7 +135,6 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
     /**
      * This method initializes this
      *
-     * @return void
      */
     private void initialize(List<Pattern> patternList) {
         this.setTitle(getDialogTitle());
@@ -235,7 +233,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
             ActionListener addPatternActionListener = this::addPattern;
             ActionListener fromNodesActionListener = this::insertPatternFromNode;
             ActionListener applyActionListener = this::applyToNode;
-            /** Menu **/
+            /* Menu **/
             JMenuBar menu = new JMenuBar();
             StructuredMenuHolder menuHolder = new StructuredMenuHolder();
             JMenu mainItem = new JMenu(mController.getText("ManagePatternsPopupDialog.Actions"));
@@ -383,7 +381,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
         // give it a good name:
         String newName = mController.getText("PatternNewNameProperty");
         // collect names:
-        Vector<String> allNames = new Vector<>();
+        List<String> allNames = new ArrayList<>();
         for (Pattern p : mPatternListModel.unmodifiableList()) {
             allNames.add(p.getName());
         }

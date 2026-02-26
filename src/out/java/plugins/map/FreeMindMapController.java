@@ -54,8 +54,8 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -211,7 +211,7 @@ public class FreeMindMapController extends JMapController implements
 
     private Coordinate mRectangularStart;
 
-    private Vector<FreeMindMapController.PositionHolder> mPositionHolderVector = new Vector<>();
+    private List<FreeMindMapController.PositionHolder> mPositionHolderVector = new ArrayList<>();
     /**
      * Marks the index of the current position or -1 if none.
      */
@@ -1544,7 +1544,7 @@ public class FreeMindMapController extends JMapController implements
     public static TileSourceStore getTileSourceByName(String sourceName) {
         for (int i = 0; i < sTileSources.length; i++) {
             TileSourceStore source = sTileSources[i];
-            if (Tools.safeEquals(getTileSourceName(source.mTileSource),
+            if (Objects.equals(getTileSourceName(source.mTileSource),
                     sourceName)) {
                 logger.fine("Found  tile source " + source);
                 return source;
@@ -1858,7 +1858,7 @@ public class FreeMindMapController extends JMapController implements
 
     private long mWheelZoomLastTime = 0;
 
-    private Vector<CursorPositionListener> mCursorPositionListeners = new Vector<>();
+    private List<CursorPositionListener> mCursorPositionListeners = new ArrayList<>();
 
     private JPopupMenu mSearchPopupMenu;
 
@@ -1887,7 +1887,7 @@ public class FreeMindMapController extends JMapController implements
                     // select the node (single click)
                     MindMapNode node = mMapNodeMovingSource.getNode();
                     if (e.isShiftDown()) {
-                        Vector<MindMapNode> sel = new Vector<>(mMindMapController.getSelecteds());
+                        List<MindMapNode> sel = new ArrayList<>(mMindMapController.getSelecteds());
                         if (sel.contains(node)) {
                             // remove:
                             sel.remove(node);
@@ -1905,7 +1905,7 @@ public class FreeMindMapController extends JMapController implements
             }
             if (mIsRectangularSelect) {
                 // gather all locations and select them:
-                Vector<MindMapNode> mapNodePositionHolders = new Vector<>();
+                List<MindMapNode> mapNodePositionHolders = new ArrayList<>();
                 // take only those elements in the correct rectangle:
                 Rectangle r = getMap().getRectangle(mRectangularStart,
                         coordinates);
@@ -1942,7 +1942,7 @@ public class FreeMindMapController extends JMapController implements
     protected void storeMapPosition(final Coordinate coordinates) {
         final PositionHolder holder = new PositionHolder(coordinates.getLat(),
                 coordinates.getLon(), getMap().getZoom());
-        final Vector<FreeMindMapController.PositionHolder> positionHolderVector = getPositionHolderVector();
+        final List<FreeMindMapController.PositionHolder> positionHolderVector = getPositionHolderVector();
         if (getPositionHolderIndex() >= 0) {
             // check for equalness
             PositionHolder currentPosition = (PositionHolder) positionHolderVector
@@ -1957,8 +1957,7 @@ public class FreeMindMapController extends JMapController implements
         }
         logger.fine("Storing position " + holder + " at index "
                 + getPositionHolderIndex());
-        positionHolderVector.insertElementAt(holder,
-                getPositionHolderIndex() + 1);
+        positionHolderVector.add(getPositionHolderIndex() + 1, holder);
         setPositionHolderIndex(getPositionHolderIndex() + 1);
         // assure that max size is below limit.
         while (positionHolderVector.size() >= POSITION_HOLDER_LIMIT
@@ -2138,10 +2137,10 @@ public class FreeMindMapController extends JMapController implements
                     Place place = (Place) it.next();
                     logger.fine("Found place " + place.getDisplayName());
                     // error handling, if the query wasn't successful.
-                    if (Tools.safeEquals("ERROR", place.getOsmType())) {
+                    if (Objects.equals("ERROR", place.getOsmType())) {
                         mResultTable.setBackground(Color.RED);
                         returnValue = false;
-                    } else if (Tools.safeEquals("WARNING", place.getOsmType())) {
+                    } else if (Objects.equals("WARNING", place.getOsmType())) {
                         mResultTable.setBackground(Color.YELLOW);
                         returnValue = false;
                     } else {
@@ -2607,7 +2606,7 @@ public class FreeMindMapController extends JMapController implements
         }
     }
 
-    public Vector<FreeMindMapController.PositionHolder> getPositionHolderVector() {
+    public List<FreeMindMapController.PositionHolder> getPositionHolderVector() {
         return mPositionHolderVector;
     }
 

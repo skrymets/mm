@@ -187,7 +187,7 @@ public class CloudView {
     }
 
     private double getDistanceToConvexHull() {
-        return 40 / (getIterativeLevel() + 1) * getZoom();
+        return (double) 40 / (getIterativeLevel() + 1) * getZoom();
     }
 
     /**

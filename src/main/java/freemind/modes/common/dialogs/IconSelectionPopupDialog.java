@@ -347,13 +347,11 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         /**
          * -- GETTER --
          *
-         * @return Returns the x.
          */
         private final int x;
         /**
          * -- GETTER --
          *
-         * @return Returns the y.
          */
         private final int y;
 

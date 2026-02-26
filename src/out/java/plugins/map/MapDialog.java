@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -170,14 +170,10 @@ public class MapDialog extends MindMapHookAdapter implements
      * @author foltin
      * @date 25.04.2012
      */
-    public final class ResultTableModel extends AbstractTableModel implements
-            CursorPositionListener {
-        /**
-         *
-         */
-        private final String[] COLUMNS = new String[]{
-                SEARCH_DESCRIPTION_COLUMN_TEXT, SEARCH_DISTANCE_COLUMN_TEXT};
-        Vector<Place> mData = new Vector<>();
+    public final class ResultTableModel extends AbstractTableModel implements CursorPositionListener {
+
+        private final String[] COLUMNS = new String[]{SEARCH_DESCRIPTION_COLUMN_TEXT, SEARCH_DISTANCE_COLUMN_TEXT};
+        Liast<Place> mData = new ArrayList<>();
         private Coordinate mCursorCoordinate = new Coordinate(0, 0);
         private HashMap<Place, MapSearchMarkerLocation> mMapSearchMarkerLocationHash = new HashMap<>();
         private final TextTranslator mTextTranslator;
@@ -192,11 +188,6 @@ public class MapDialog extends MindMapHookAdapter implements
             mTextTranslator = pTextTranslator;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-         */
         public Class<?> getColumnClass(int arg0) {
             switch (arg0) {
                 case SEARCH_DESCRIPTION_COLUMN:
@@ -531,7 +522,7 @@ public class MapDialog extends MindMapHookAdapter implements
             mLastDividerPosition = storage.getLastDividerPosition();
             mSearchSplitPane.setDividerLocation(mLastDividerPosition);
             // restore last map positions
-            final Vector<FreeMindMapController.PositionHolder> positionHolderVector = getFreeMindMapController().getPositionHolderVector();
+            final List<FreeMindMapController.PositionHolder> positionHolderVector = getFreeMindMapController().getPositionHolderVector();
             for (Iterator<MapLocationStorage> it = storage.getListMapLocationStorageList().iterator(); it.hasNext(); ) {
                 MapLocationStorage location = it.next();
                 positionHolderVector.add(new FreeMindMapController.PositionHolder(location

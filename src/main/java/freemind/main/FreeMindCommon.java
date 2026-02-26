@@ -166,9 +166,9 @@ public class FreeMindCommon {
      * Related issues
      * <ul>
      * <li>
-     * http://sourceforge.net/tracker/?func=detail&aid=2908045&group_id=7118&
+     * <a href="http://sourceforge.net/tracker/?func=detail&aid=2908045&group_id=7118&">...</a>
      * atid=107118
-     * <li>http://sourceforge.net/tracker/index.php?func=detail&aid=1980423&
+     * <li><a href="http://sourceforge.net/tracker/index.php?func=detail&aid=1980423&">...</a>
      * group_id=7118&atid=107118
      * </ul>
      */

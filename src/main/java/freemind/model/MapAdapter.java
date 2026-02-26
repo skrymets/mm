@@ -45,6 +45,8 @@ import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -152,7 +154,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      *
      * @return If the map is locked, return the name of the locking user, return
      * null otherwise.
-     * @throws Exception
      */
     public String tryToLock(File file) throws Exception {
         return null;
@@ -245,7 +246,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         boolean left = newRoot.isLeft();
         MindMapNode node = newRoot;
         // collect parents (as we remove them from their parents...)
-        Vector<MindMapNode> parents = new Vector<>();
+        List<MindMapNode> parents = new ArrayList<>();
         while (node.getParentNode() != null) {
             MindMapNode parent = node.getParentNode();
             parents.add(0, node);
@@ -498,8 +499,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     }
 
     /**
-     * @param pMapIcons
-     * @param pRootNode
      */
     private void addIcons(SortedMapListModel pMapIcons, MindMapNode pNode) {
         pMapIcons.addAll(pNode.getIcons());
@@ -516,7 +515,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      */
     @Override
     public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException, IOException {
-        XMLElementAdapter xmlAdapter = new XMLElementAdapter(mMapFeedback, new Vector<>(), pIDToTarget);
+        XMLElementAdapter xmlAdapter = new XMLElementAdapter(mMapFeedback, new ArrayList<>(), pIDToTarget);
         xmlAdapter.parseFromReader(pReader);
         xmlAdapter.processUnfinishedLinks(getLinkRegistry());
         MindMapNode node = xmlAdapter.getMapChild();

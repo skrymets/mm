@@ -35,8 +35,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A dialog for getting shortcut keys.
@@ -88,10 +88,10 @@ public class GrabKeyDialog extends JDialog {
     } // }}}
 
     // {{{ GrabKeyDialog constructor
-    /**
-     * Create and show a new modal dialog.
-     *
-     * @param parent
+    /*
+      Create and show a new modal dialog.
+
+      @param parent
      *            center dialog on this component.
      * @param binding
      *            the action/macro that should get a binding.
@@ -121,12 +121,12 @@ public class GrabKeyDialog extends JDialog {
      * @since jEdit 4.1pre7
      */
     public GrabKeyDialog(FreeMindMain fmMain, Dialog parent,
-                         KeyBinding binding, Vector<KeyBinding> allBindings, Buffer debugBuffer) {
+                         KeyBinding binding, List<KeyBinding> allBindings, Buffer debugBuffer) {
         this(fmMain, parent, binding, allBindings, debugBuffer, 0);
     }
 
     public GrabKeyDialog(FreeMindMain fmMain, Dialog parent,
-                         KeyBinding binding, Vector<KeyBinding> allBindings, Buffer debugBuffer,
+                         KeyBinding binding, List<KeyBinding> allBindings, Buffer debugBuffer,
                          int modifierMask) {
         super(parent, (/* FIXME: getText */("grab-key.title")), true);
         this.fmMain = fmMain;
@@ -196,14 +196,14 @@ public class GrabKeyDialog extends JDialog {
     private boolean isOK;
     private KeyBinding binding;
     KeyBinding bindingReset;
-    private Vector<KeyBinding> allBindings;
+    private List<KeyBinding> allBindings;
     private Buffer debugBuffer;
     private final int modifierMask;
     // }}}
     public final static String MODIFIER_SEPARATOR = " ";
 
     // {{{ init() method
-    private void init(KeyBinding binding, Vector<KeyBinding> allBindings, Buffer debugBuffer) {
+    private void init(KeyBinding binding, List<KeyBinding> allBindings, Buffer debugBuffer) {
         this.binding = binding;
         this.allBindings = allBindings;
         this.debugBuffer = debugBuffer;
@@ -345,10 +345,10 @@ public class GrabKeyDialog extends JDialog {
             return null;
 
         String spacedShortcut = shortcut + " ";
-        Enumeration<KeyBinding> e = allBindings.elements();
+        Iterator<KeyBinding> e = allBindings.iterator();
 
-        while (e.hasMoreElements()) {
-            KeyBinding kb = e.nextElement();
+        while (e.hasNext()) {
+            KeyBinding kb = e.next();
 
             if (!kb.isAssigned())
                 continue;

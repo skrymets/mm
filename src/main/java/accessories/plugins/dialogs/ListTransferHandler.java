@@ -86,7 +86,8 @@ public class ListTransferHandler extends TransferHandler {
             }
         }
 
-        DefaultListModel<?> listModel = (DefaultListModel<?>) target.getModel();
+        @SuppressWarnings("unchecked")
+        DefaultListModel<Object> listModel = (DefaultListModel<Object>) target.getModel();
         int max = listModel.getSize();
         if (index < 0) {
             index = max;
@@ -99,7 +100,7 @@ public class ListTransferHandler extends TransferHandler {
         addIndex = index;
         addCount = alist.size();
 
-        listModel.addAll(index, alist);
+        listModel.addAll(index, (List<Object>) alist);
 
         return true;
     }

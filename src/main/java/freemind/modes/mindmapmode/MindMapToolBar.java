@@ -44,7 +44,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 
     /**
      * A combo box that doesn't fill the complete screen.
-     * See http://stackoverflow.com/questions/13345640/does-anyone-know-how-to-layout-a-jtoolbar-that-doest-move-or-re-size-any-compon
+     * See <a href="http://stackoverflow.com/questions/13345640/does-anyone-know-how-to-layout-a-jtoolbar-that-doest-move-or-re-size-any-compon">...</a>
      */
     private static final class FreeMindComboBox extends JComboBox<String> {
 

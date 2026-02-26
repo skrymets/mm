@@ -38,7 +38,7 @@ import java.util.List;
  * MapFeedback extended by the xml based node change management.
  *
  * @author foltin
- * @date 16.03.2014
+ * {@code @date} 16.03.2014
  */
 public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     /**
@@ -63,28 +63,22 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     String getNodeID(MindMapNode selected);
 
     /**
-     * @return
      */
     MindMapNode getSelected();
 
     void select(MindMapNode pFocussed, List<MindMapNode> pSelecteds);
 
     /**
-     * @param pNewNode
-     * @param pParent
-     * @param pIndex
      */
     void insertNodeInto(MindMapNode pNewNode, MindMapNode pParent, int pIndex);
 
     /**
      * @param pUserObject is the string/html of the new node
-     * @param pMap
      * @return the new node.
      */
     MindMapNode newNode(Object pUserObject, MindMap pMap);
 
     /**
-     * @param pSelectedNode
      */
     void removeNodeFromParent(MindMapNode pSelectedNode);
 
@@ -96,8 +90,6 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     Transferable copy(MindMapNode node, boolean saveInvisible);
 
     /**
-     * @param pNodeList
-     * @param pSaveInvisible
      * @return a MindMapNode list as Transferable (special FM flavor).
      */
     Transferable copy(List<MindMapNode> pNodeList, boolean pSaveInvisible);
@@ -111,8 +103,7 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     /**
      * @param pFile loads a file into a new map.
      */
-    MapFeedback load(File pFile) throws
-            XMLParseException;
+    MapFeedback load(File pFile) throws XMLParseException;
 
     /**
      * Closes the actual map.

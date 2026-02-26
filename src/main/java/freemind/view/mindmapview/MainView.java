@@ -149,22 +149,22 @@ public abstract class MainView extends JLabel {
     public void paintDragOver(Graphics2D graphics) {
         if (isDraggedOver == NodeView.DRAGGED_OVER_SON) {
             if (getNodeView().isLeft()) {
-                graphics.setPaint(new GradientPaint(getWidth() * 3 / 4, 0,
-                        getNodeView().getMap().getBackground(), getWidth() / 4,
+                graphics.setPaint(new GradientPaint((float) (getWidth() * 3) / 4, 0,
+                        getNodeView().getMap().getBackground(), (float) getWidth() / 4,
                         0, NodeView.dragColor));
                 graphics.fillRect(0, 0, getWidth() * 3 / 4, getHeight() - 1);
             } else {
-                graphics.setPaint(new GradientPaint(getWidth() / 4, 0,
+                graphics.setPaint(new GradientPaint((float) getWidth() / 4, 0,
                         getNodeView().getMap().getBackground(),
-                        getWidth() * 3 / 4, 0, NodeView.dragColor));
+                        (float) (getWidth() * 3) / 4, 0, NodeView.dragColor));
                 graphics.fillRect(getWidth() / 4, 0, getWidth() - 1,
                         getHeight() - 1);
             }
         }
 
         if (isDraggedOver == NodeView.DRAGGED_OVER_SIBLING) {
-            graphics.setPaint(new GradientPaint(0, getHeight() * 3 / 5,
-                    getNodeView().getMap().getBackground(), 0, getHeight() / 5,
+            graphics.setPaint(new GradientPaint(0, (float) (getHeight() * 3) / 5,
+                    getNodeView().getMap().getBackground(), 0, (float) getHeight() / 5,
                     NodeView.dragColor));
             graphics.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
         }

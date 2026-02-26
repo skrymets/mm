@@ -42,12 +42,10 @@ public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
     protected MindMapNode source;
     /**
      * -- GETTER --
-     *
+     * <p>
      *
      * -- SETTER --
      *
-     @return Returns the uniqueId.
-      * @param uniqueId The uniqueID to set.
      */
     private String uniqueId;
 

@@ -28,8 +28,8 @@ import java.awt.event.ComponentListener;
 
 /**
  * @author foltin
- * @date 19.06.2015
- * See http://stackoverflow.com/questions/8183949/swing-scale-a-text-font-of-component
+ * {@code @date} 19.06.2015
+ * See <a href="http://stackoverflow.com/questions/8183949/swing-scale-a-text-font-of-component">...</a>
  */
 
 @Slf4j

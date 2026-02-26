@@ -118,7 +118,6 @@ public interface PermanentNodeHook extends NodeHook {
     /**
      * Can be used to contribute to the standard html export.
      *
-     * @param pFileout
      */
     void saveHtml(Writer pFileout);
 }

@@ -31,7 +31,7 @@ import java.net.URLConnection;
 
 /**
  * @author foltin
- * @date 24.05.2015
+ * {@code @date} 24.05.2015
  */
 @Slf4j
 public class ImageFactory {

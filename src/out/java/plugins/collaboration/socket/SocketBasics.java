@@ -195,7 +195,7 @@ public abstract class SocketBasics extends MindMapNodeHookAdapter implements
         }
         if (pAction instanceof HookNodeAction) {
             HookNodeAction hookNodeAction = (HookNodeAction) pAction;
-            if (Tools.safeEquals(hookNodeAction.getHookName(), pSearchString)) {
+            if (Objects.equals(hookNodeAction.getHookName(), pSearchString)) {
                 return true;
             }
         }

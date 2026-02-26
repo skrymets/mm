@@ -25,11 +25,12 @@ import java.awt.font.TextAttribute;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to
- * its parent and children and to its view.
+ * its parents and children and to its view.
  */
 @Slf4j
 public abstract class NodeAdapter implements MindMapNode {
@@ -65,7 +66,7 @@ public abstract class NodeAdapter implements MindMapNode {
     /**
      * stores the icons associated with this node.
      */
-    protected Vector<MindIcon> icons = null; // lazy, fc, 30.6.2005
+    protected List<MindIcon> icons = null; // lazy, fc, 30.6.2005
 
     protected TreeMap<String, ImageIcon> stateIcons = null; // lazy, fc,
     // 30.6.2005
@@ -102,7 +103,6 @@ public abstract class NodeAdapter implements MindMapNode {
     /**
      * -- SETTER --
      *
-     * @param shiftY The shiftY to set.
      */
     @Setter
     @Getter
@@ -145,7 +145,7 @@ public abstract class NodeAdapter implements MindMapNode {
     private String xmlNoteText;
     private static FreemindPropertyListener sSaveIdPropertyChangeListener;
     private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
-    private Vector<Attribute> mAttributeVector = null;
+    private List<Attribute> mAttributeVector = null;
 
     protected NodeAdapter(Object userObject, MindMap pMap) {
         this.map = pMap;
@@ -260,7 +260,7 @@ public abstract class NodeAdapter implements MindMapNode {
      * Creates the TreePath recursively
      */
     public TreePath getPath() {
-        Vector<NodeAdapter> pathVector = new Vector<>();
+        List<NodeAdapter> pathVector = new ArrayList<>();
         TreePath treePath;
         this.addToPathVector(pathVector);
         treePath = new TreePath(pathVector.toArray());
@@ -371,7 +371,8 @@ public abstract class NodeAdapter implements MindMapNode {
 
     public void toggleStrikethrough() {
         establishOwnFont();
-        Map<TextAttribute, ?> attributes = font.getAttributes();
+        @SuppressWarnings("unchecked")
+        Map<TextAttribute, Object> attributes = (Map<TextAttribute, Object>) font.getAttributes();
         if (attributes.containsKey(TextAttribute.STRIKETHROUGH) && attributes.get(TextAttribute.STRIKETHROUGH) == TextAttribute.STRIKETHROUGH_ON) {
             attributes.remove(TextAttribute.STRIKETHROUGH);
         } else {
@@ -525,7 +526,6 @@ public abstract class NodeAdapter implements MindMapNode {
     //
 
     /**
-     * @return
      */
     public MapFeedback getMapFeedback() {
         return getMap().getMapFeedback();
@@ -805,7 +805,7 @@ public abstract class NodeAdapter implements MindMapNode {
     /**
      * Recursive Method for getPath()
      */
-    private void addToPathVector(Vector<NodeAdapter> pathVector) {
+    private void addToPathVector(List<NodeAdapter> pathVector) {
         pathVector.add(0, this); // Add myself to beginning of Vector
         if (parent != null) {
             ((NodeAdapter) parent).addToPathVector(pathVector);
@@ -874,7 +874,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
     private void createHooks() {
         if (hooks == null) {
-            hooks = new Vector<>();
+            hooks = new ArrayList<>();
         }
     }
 
@@ -886,7 +886,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
     private void createIcons() {
         if (icons == null) {
-            icons = new Vector<>();
+            icons = new ArrayList<>();
         }
     }
 
@@ -1044,7 +1044,7 @@ public abstract class NodeAdapter implements MindMapNode {
         // + this.getClass().getName());
         // }
 
-        /** fc, 12.6.2005: XML must not contain any zero characters. */
+        /* fc, 12.6.2005: XML must not contain any zero characters. */
         String text = this.toString().replace('\0', ' ');
         if (!HtmlTools.isHtmlNode(text)) {
             node.setAttribute(XMLElementAdapter.XML_NODE_TEXT, text);
@@ -1085,7 +1085,7 @@ public abstract class NodeAdapter implements MindMapNode {
             node.addChild(cloud);
         }
 
-        Vector<MindMapLink> linkVector = registry.getAllLinksFromMe(this);
+        List<MindMapLink> linkVector = registry.getAllLinksFromMe(this);
         for (MindMapLink mapLink : linkVector) {
             if (mapLink instanceof ArrowLinkAdapter) {
                 XMLElement arrowLinkElement = ((ArrowLinkAdapter) mapLink).save();
@@ -1094,7 +1094,7 @@ public abstract class NodeAdapter implements MindMapNode {
         }
 
         // virtual link targets:
-        Vector<MindMapLink> targetVector = registry.getAllLinksIntoMe(this);
+        List<MindMapLink> targetVector = registry.getAllLinksIntoMe(this);
         for (MindMapLink mindMapLink : targetVector) {
             if (mindMapLink instanceof ArrowLinkAdapter) {
                 XMLElement arrowLinkTargetElement = ((ArrowLinkAdapter) mindMapLink).createArrowLinkTarget(registry).save();
@@ -1336,7 +1336,7 @@ public abstract class NodeAdapter implements MindMapNode {
         if (mAttributeVector == null) {
             return Collections.emptyList();
         }
-        Vector<String> returnValue = new Vector<>();
+        List<String> returnValue = new ArrayList<>();
         for (Attribute attr : mAttributeVector) {
             returnValue.add(attr.getName());
         }
@@ -1366,7 +1366,6 @@ public abstract class NodeAdapter implements MindMapNode {
     }
 
     /**
-     * @param pPosition
      */
     public void checkAttributePosition(int pPosition) {
         if (mAttributeVector == null || getAttributeTableLength() <= pPosition || pPosition < 0) {
@@ -1380,7 +1379,7 @@ public abstract class NodeAdapter implements MindMapNode {
             return null;
         }
         for (Attribute attr : mAttributeVector) {
-            if (Tools.safeEquals(attr.getName(), pKey)) {
+            if (Objects.equals(attr.getName(), pKey)) {
                 return attr.getValue();
             }
         }
@@ -1394,7 +1393,7 @@ public abstract class NodeAdapter implements MindMapNode {
         }
         int index = 0;
         for (Attribute attr : mAttributeVector) {
-            if (Tools.safeEquals(attr.getName(), pKey)) {
+            if (Objects.equals(attr.getName(), pKey)) {
                 return index;
             }
             index++;
@@ -1432,9 +1431,9 @@ public abstract class NodeAdapter implements MindMapNode {
         mAttributeVector.remove(pPosition);
     }
 
-    private Vector<Attribute> getAttributeVector() {
+    private List<Attribute> getAttributeVector() {
         if (mAttributeVector == null) {
-            mAttributeVector = new Vector<>();
+            mAttributeVector = new ArrayList<>();
         }
         return mAttributeVector;
     }

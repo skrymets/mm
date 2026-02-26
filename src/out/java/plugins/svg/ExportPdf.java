@@ -28,9 +28,9 @@ import java.awt.print.Paper;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -56,11 +56,11 @@ public class ExportPdf extends ExportVectorGraphic {
 
     public void startupMapHook() {
         super.startupMapHook();
-        boolean nodeExport = Tools.safeEquals("node",
+        boolean nodeExport = Objects.equals("node",
                 getResourceString("export_type"));
         HashMap<TranscodingHints.Key, Float> transcodingHints = null;
         List<MindMapNode> selecteds = getController().getSelecteds();
-        Vector<File> documentsToOpen = new Vector<>();
+        List<File> documentsToOpen = new ArrayList<>();
         while (!selecteds.isEmpty()) {
             MindMapNode selectedNode = (MindMapNode) selecteds.remove(0);
             String nameExtension = null;

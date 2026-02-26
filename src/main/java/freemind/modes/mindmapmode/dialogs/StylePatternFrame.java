@@ -134,7 +134,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
     private final TextTranslator mTranslator;
 
-    private Vector<PropertyControl> mControls;
+    private List<PropertyControl> mControls;
 
     private ThreeCheckBoxProperty mSetNodeColor;
 
@@ -198,7 +198,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
     private StringProperty mName;
 
-    private Vector<MindIcon> mIconInformationVector;
+    private List<MindIcon> mIconInformationVector;
 
     /**
      * Denotes pairs property -> ThreeCheckBoxProperty such that the boolean
@@ -213,7 +213,6 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     private final StylePatternFrameType mType;
 
     /**
-     * @throws HeadlessException
      */
     public StylePatternFrame(TextTranslator pTranslator,
                              MindMapController pMindMapController, StylePatternFrameType pType)
@@ -263,8 +262,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
     private List<Pattern> mPatternList;
 
-    private Vector<PropertyControl> getControls() {
-        Vector<PropertyControl> controls = new Vector<>();
+    private List<PropertyControl> getControls() {
+        List<PropertyControl> controls = new ArrayList<>();
         controls.add(new SeparatorProperty("General"));
         mClearSetters = new ThreeCheckBoxProperty(CLEAR_ALL_SETTERS
                 + ".tooltip", CLEAR_ALL_SETTERS);
@@ -277,7 +276,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
             mSetChildPattern = new ThreeCheckBoxProperty(SET_CHILD_PATTERN
                     + ".tooltip", SET_CHILD_PATTERN);
             controls.add(mSetChildPattern);
-            Vector<String> childNames = new Vector<>();
+            List<String> childNames = new ArrayList<>();
             mChildPattern = new ComboProperty(CHILD_PATTERN + ".tooltip",
                     CHILD_PATTERN, childNames, childNames);
             controls.add(mChildPattern);
@@ -308,7 +307,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         mNodeStyle = new ComboProperty(NODE_STYLE + ".tooltip", NODE_STYLE,
                 MindMapNode.NODE_STYLES, this);
         controls.add(mNodeStyle);
-        mIconInformationVector = new Vector<>();
+        mIconInformationVector = new ArrayList<>();
         MindMapController controller = mMindMapController;
         List<IconAction> iconActions = controller.iconActions;
         for (IconAction action : iconActions) {
@@ -411,8 +410,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         return controls;
     }
 
-    private Vector<String> getPatternNames() {
-        Vector<String> childNames = new Vector<>();
+    private List<String> getPatternNames() {
+        List<String> childNames = new ArrayList<>();
         for (Pattern pattern : mPatternList) {
             childNames.add(pattern.getName());
         }
@@ -551,12 +550,12 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     private HashMap<String, Integer> getEdgeWidthTransformation() {
         HashMap<String, Integer> transformator = new HashMap<>();
         transformator
-                .put(EDGE_WIDTHS[0], new Integer(EdgeAdapter.WIDTH_PARENT));
-        transformator.put(EDGE_WIDTHS[1], new Integer(EdgeAdapter.WIDTH_THIN));
-        transformator.put(EDGE_WIDTHS[2], new Integer(1));
-        transformator.put(EDGE_WIDTHS[3], new Integer(2));
-        transformator.put(EDGE_WIDTHS[4], new Integer(4));
-        transformator.put(EDGE_WIDTHS[5], new Integer(8));
+                .put(EDGE_WIDTHS[0], Integer.valueOf(EdgeAdapter.WIDTH_PARENT));
+        transformator.put(EDGE_WIDTHS[1], Integer.valueOf(EdgeAdapter.WIDTH_THIN));
+        transformator.put(EDGE_WIDTHS[2], Integer.valueOf(1));
+        transformator.put(EDGE_WIDTHS[3], Integer.valueOf(2));
+        transformator.put(EDGE_WIDTHS[4], Integer.valueOf(4));
+        transformator.put(EDGE_WIDTHS[5], Integer.valueOf(8));
         return transformator;
     }
 
@@ -661,7 +660,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
      */
     public void setPatternList(List<Pattern> patternList) {
         this.mPatternList = patternList;
-        Vector<String> childNames = getPatternNames();
+        List<String> childNames = getPatternNames();
         mChildPattern.updateComboBoxEntries(childNames, childNames);
     }
 

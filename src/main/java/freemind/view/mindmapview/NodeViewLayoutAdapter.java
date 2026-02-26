@@ -28,7 +28,7 @@ import java.awt.*;
 
 /**
  * @author foltin
- * @date 11.07.2013
+ * {@code @date} 11.07.2013
  */
 @Slf4j
 abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
@@ -192,7 +192,6 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
     }
 
     /**
-     * @param isLeft
      * @return a shift, which is less than or equal zero
      */
     protected int getChildVerticalShift(boolean isLeft) {
@@ -252,7 +251,6 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
     /**
      * Implemented in the base class, as the root layout needs it, too.
      *
-     * @param childVerticalShift
      */
     protected void placeRightChildren(int childVerticalShift) {
         final int baseX = getContent().getX() + getContent().getWidth();
@@ -307,7 +305,6 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
     /**
      * Implemented in the base class, as the root layout needs it, too.
      *
-     * @param childVerticalShift
      */
     protected void placeLeftChildren(int childVerticalShift) {
         final int baseX = getContent().getX();

@@ -32,7 +32,8 @@ import lombok.Getter;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IconProperty extends PropertyBean implements PropertyControl,
         ActionListener {
@@ -49,12 +50,12 @@ public class IconProperty extends PropertyBean implements PropertyControl,
     /**
      * Of IconInformation s.
      */
-    private final Vector<MindIcon> mIcons;
+    private final List<MindIcon> mIcons;
 
     private MindIcon mActualIcon = null;
 
     public IconProperty(String description, String label, FreeMindMain frame,
-                        Vector<MindIcon> icons) {
+                        List<MindIcon> icons) {
         super();
         this.description = description;
         this.label = label;
@@ -88,8 +89,8 @@ public class IconProperty extends PropertyBean implements PropertyControl,
     }
 
     public void actionPerformed(ActionEvent arg0) {
-        Vector<IconInformation> icons = new Vector<>();
-        Vector<String> descriptions = new Vector<>();
+        List<IconInformation> icons = new ArrayList<>();
+        List<String> descriptions = new ArrayList<>();
         for (MindIcon icon : mIcons) {
             icons.add(icon);
             descriptions.add(icon.getDescription());

@@ -55,7 +55,6 @@ public class JMonthChooser extends JPanel implements ItemListener,
      * -- GETTER --
      *  Returns the locale.
      *
-     * @return the locale value
      *
      */
     @Getter
@@ -65,7 +64,6 @@ public class JMonthChooser extends JPanel implements ItemListener,
      * -- GETTER --
      *  Returns the month.
      *
-     * @return the month value
      */
     @Getter
     private int month;
@@ -74,7 +72,6 @@ public class JMonthChooser extends JPanel implements ItemListener,
      * -- SETTER --
      *  Convenience method set a day chooser.
      *
-     * @param dayChooser the day chooser
      */
     // needed for comparison
     @Setter
@@ -85,7 +82,6 @@ public class JMonthChooser extends JPanel implements ItemListener,
      *  Convenience method set a year chooser. If set, the spin for the month
      *  buttons will spin the year as well
      *
-     * @param yearChooser the new yearChooser value
      */
     @Setter
     private JYearChooser yearChooser;

@@ -23,7 +23,8 @@
 package plugins.script;
 
 import java.io.PrintStream;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import plugins.script.ScriptEditorPanel.ScriptHolder;
 import plugins.script.ScriptEditorPanel.ScriptModel;
@@ -54,12 +55,12 @@ public class ScriptEditor extends MindMapHookAdapter {
         /**
          * Of AttributeHolder
          */
-        private final Vector<AttributeHolder> mScripts;
+        private final List<AttributeHolder> mScripts;
         private final MindMapNode mNode;
         private final MindMapController mMindMapController;
         private boolean isDirty = false;
 
-        private NodeScriptModel(Vector<AttributeHolder> pScripts, MindMapNode node,
+        private NodeScriptModel(List<AttributeHolder> pScripts, MindMapNode node,
                                 MindMapController pMindMapController) {
             mScripts = pScripts;
             mNode = node;
@@ -170,7 +171,7 @@ public class ScriptEditor extends MindMapHookAdapter {
     public void startupMapHook() {
         super.startupMapHook();
         final MindMapNode node = getMindMapController().getSelected();
-        final Vector<AttributeHolder> scripts = new Vector<>();
+        final List<AttributeHolder> scripts = new ArrayList<>();
         for (int position = 0; position < node.getAttributeTableLength(); position++) {
             Attribute attribute = node.getAttribute(position);
             if (attribute.getName().startsWith(ScriptingEngine.SCRIPT_PREFIX)) {

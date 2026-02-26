@@ -34,6 +34,7 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // Daniel: this seems like a description of what pattern should do rather
 // than of that what it actually does.
@@ -50,13 +51,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of name.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of name.
      *
-     @return Value of name.
-      * @param v Value to assign to name.
      */
     @Setter
     @Getter
@@ -67,7 +66,6 @@ public class StylePattern {
      * -- SETTER --
      *  Set the value of recursive.
      *
-     * @param v Value to assign to recursive.
 
      */
     @Setter
@@ -76,13 +74,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of text.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of text.
      *
-     @return Value of text.
-      * @param v Value to assign to text.
      */
     @Setter
     @Getter
@@ -91,13 +87,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of nodeColor.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of nodeColor.
      *
-     @return Value of nodeColor.
-      * @param v Value to assign to nodeColor.
      */
     @Setter
     @Getter
@@ -108,13 +102,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of nodeStyle.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of nodeStyle.
      *
-     @return Value of nodeStyle.
-      * @param nodeStyle Value to assign to nodeStyle.
      */
     @Setter
     @Getter
@@ -122,48 +114,40 @@ public class StylePattern {
 
     /**
      * -- GETTER --
-     *
+     * <p>
      *
      * -- SETTER --
      *
-     @return Returns the nodeFontFamily.
-      * @param nodeFontFamily The nodeFontFamily to set.
      */
     @Setter
     @Getter
     private String nodeFontFamily = null;
     /**
      * -- GETTER --
-     *
+     * <p>
      *
      * -- SETTER --
      *
-     @return Returns the nodeFontSize.
-      * @param nodeFontSize The nodeFontSize to set.
      */
     @Setter
     @Getter
     private Integer nodeFontSize = null;
     /**
      * -- GETTER --
-     *
+     * <p>
      *
      * -- SETTER --
      *
-     @return Returns the nodeFontBold.
-      * @param nodeFontBold The nodeFontBold to set.
      */
     @Setter
     @Getter
     private Boolean nodeFontBold = null;
     /**
      * -- GETTER --
-     *
+     * <p>
      *
      * -- SETTER --
      *
-     @return Returns the nodeFontItalic.
-      * @param nodeFontItalic The nodeFontItalic to set.
      */
     @Setter
     @Getter
@@ -172,13 +156,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of icon.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of icon.
      *
-     @return Value of icon.
-      * @param nodeIcon Value to assign to icon.
      */
     @Setter
     @Getter
@@ -187,13 +169,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of edgeColor.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of edgeColor.
      *
-     @return Value of edgeColor.
-      * @param edgeColor Value to assign to edgeColor.
      */
     @Setter
     @Getter
@@ -201,13 +181,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of edgeStyle.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of edgeStyle.
      *
-     @return Value of edgeStyle.
-      * @param edgeStyle Value to assign to edgeStyle.
      */
     @Setter
     @Getter
@@ -215,13 +193,11 @@ public class StylePattern {
     /**
      * -- GETTER --
      *  Get the value of edgeWidth.
-     *
+     * <p>
      *
      * -- SETTER --
      *  Set the value of edgeWidth.
      *
-     @return Value of edgeWidth.
-      * @param edgeWidth Value to assign to edgeWidth.
      */
     @Setter
     @Getter
@@ -263,7 +239,7 @@ public class StylePattern {
 
         edgeColor = node.getEdge().getColor();
         edgeStyle = node.getEdge().getStyle();
-        edgeWidth = new Integer(node.getEdge().getWidth());
+        edgeWidth = Integer.valueOf(node.getEdge().getWidth());
 
     }
 
@@ -344,7 +320,7 @@ public class StylePattern {
         if (pattern.getStringAttribute("name") != null) {
             setName(pattern.getStringAttribute("name"));
         }
-        if (Tools.safeEquals(pattern.getStringAttribute("recursive"), "true")) {
+        if (Objects.equals(pattern.getStringAttribute("recursive"), "true")) {
             setRecursive(true);
         }
 
@@ -378,23 +354,19 @@ public class StylePattern {
                     if (nodeChild.getName().equals("font")) {
 
                         if (nodeChild.getStringAttribute("name") != null) {
-                            setNodeFontFamily(nodeChild
-                                    .getStringAttribute("name"));
+                            setNodeFontFamily(nodeChild.getStringAttribute("name"));
                         }
-                        if (Tools.safeEquals(
-                                nodeChild.getStringAttribute("bold"), "true")) {
+                        if (Objects.equals(nodeChild.getStringAttribute("bold"), "true")) {
                             setNodeFontBold(Boolean.TRUE);
                         }
-                        if (Tools.safeEquals(
-                                nodeChild.getStringAttribute("italic"), "true")) {
+                        if (Objects.equals(nodeChild.getStringAttribute("italic"), "true")) {
                             setNodeFontItalic(Boolean.TRUE);
                         }
                         // if (font.getProperty("underline")!=null &&
                         // nodeChild.getProperty("underline").equals("true"))
                         // setUnderlined(true);
                         if (nodeChild.getStringAttribute("size") != null) {
-                            setNodeFontSize(Integer.valueOf(nodeChild
-                                    .getStringAttribute("size")));
+                            setNodeFontSize(Integer.valueOf(nodeChild.getStringAttribute("size")));
                         }
 
                     }
@@ -412,10 +384,9 @@ public class StylePattern {
                 }
                 if (child.getStringAttribute("width") != null) {
                     if (child.getStringAttribute("width").equals("thin")) {
-                        setEdgeWidth(new Integer(
-                                EdgeAdapter.WIDTH_THIN));
+                        setEdgeWidth(Integer.valueOf(EdgeAdapter.WIDTH_THIN));
                     } else {
-                        setEdgeWidth(new Integer(Integer.parseInt(child
+                        setEdgeWidth(Integer.valueOf(Integer.parseInt(child
                                 .getStringAttribute("width"))));
                     }
                 }

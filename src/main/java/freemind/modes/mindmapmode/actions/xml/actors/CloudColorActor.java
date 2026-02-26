@@ -29,15 +29,15 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 public class CloudColorActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public CloudColorActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -73,7 +73,7 @@ public class CloudColorActor extends XmlActorAdapter {
             if (node.getCloud() != null) {
                 selectedColor = node.getCloud().getColor();
             }
-            if (!Tools.safeEquals(color, selectedColor)) {
+            if (!Objects.equals(color, selectedColor)) {
                 ((LineAdapter) node.getCloud()).setColor(color); // null
                 getExMapFeedback().nodeChanged(node);
             }

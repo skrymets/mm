@@ -78,7 +78,6 @@ public class MenuBar extends JMenuBar {
     /**
      * This is the only public method. It restores all menus.
      *
-     * @param newModeController
      */
     public void updateMenus(ModeController newModeController) {
         this.removeAll();

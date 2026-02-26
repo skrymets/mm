@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author foltin
- * @date 27.03.2014
+ * {@code @date} 27.03.2014
  */
 @Slf4j
 public class AddArrowLinkActor extends XmlActorAdapter {

@@ -34,7 +34,6 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 public class StrikethroughNodeActor extends NodeXmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public StrikethroughNodeActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

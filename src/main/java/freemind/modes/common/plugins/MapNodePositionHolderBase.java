@@ -23,7 +23,6 @@ package freemind.modes.common.plugins;
 import freemind.extensions.PermanentNodeHook;
 import freemind.extensions.PermanentNodeHookAdapter;
 import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +30,14 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This base class is free of openstreetmap and similar classes.
  * Thus, it doesn't know much about its position.
  *
  * @author foltin
- * @date 16.08.2012
+ * {@code @date} 16.08.2012
  */
 
 @Slf4j
@@ -120,8 +120,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     }
 
     protected boolean isTooltipDesired() {
-        return Resources.getInstance().getBoolProperty(NODE_MAP_SHOW_TOOLTIP) &&
-                !Tools.safeEquals(mTooltipLocation, "false");
+        return Resources.getInstance().getBoolProperty(NODE_MAP_SHOW_TOOLTIP) && !Objects.equals(mTooltipLocation, "false");
     }
 
 

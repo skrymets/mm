@@ -28,6 +28,7 @@ import freemind.modes.FreeMindFileDialog;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -36,6 +37,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Objects;
 
 /**
  * @author foltin
@@ -70,7 +72,7 @@ public class ExportHook extends ModeControllerHookAdapter {
         // |= Pressed O.K.
         File chosenFile = chooser.getSelectedFile();
         String ext = Tools.getExtension(chosenFile.getName());
-        if (!Tools.safeEqualsIgnoreCase(ext, type)) {
+        if (!StringUtils.equalsIgnoreCase(ext, type)) {
             chosenFile = new File(chosenFile.getParent(), chosenFile.getName()
                     + "." + type);
         }
@@ -99,7 +101,7 @@ public class ExportHook extends ModeControllerHookAdapter {
                 return true;
             }
             String extension = Tools.getExtension(f.getName());
-            return Tools.safeEqualsIgnoreCase(extension, type);
+            return StringUtils.equalsIgnoreCase(extension, type);
         }
 
         public String getDescription() {

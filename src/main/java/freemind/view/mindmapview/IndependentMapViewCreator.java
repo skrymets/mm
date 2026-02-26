@@ -44,7 +44,7 @@ import java.net.URISyntaxException;
 
 /**
  * @author foltin
- * @date 28.09.2011
+ * {@code @date} 28.09.2011
  */
 @Slf4j
 public class IndependentMapViewCreator extends MapFeedbackAdapter {
@@ -108,12 +108,6 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
     }
 
     /**
-     * @param parent
-     * @param mapView
-     * @param outputFileName
-     * @param scale
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     public static void printToFile(MapView mapView,
                                    String outputFileName, boolean scale, int destSize) throws FileNotFoundException, IOException {

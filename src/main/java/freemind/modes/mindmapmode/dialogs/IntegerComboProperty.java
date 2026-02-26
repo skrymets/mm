@@ -29,7 +29,7 @@ import java.util.List;
  * Adjusts string values of integers to the nearest integer as string.
  *
  * @author foltin
- * @date 26.09.2013
+ * {@code @date} 26.09.2013
  */
 @Slf4j
 public class IntegerComboProperty extends ComboProperty {

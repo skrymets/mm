@@ -22,8 +22,9 @@ package plugins.collaboration.socket;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.List;
 
 import freemind.controller.actions.generated.instance.instance.CollaborationUserInformation;
 import freemind.main.Tools;
@@ -45,7 +46,7 @@ public abstract class SocketMaster extends SocketBasics {
         String mLockId;
         long mLockedAt;
         String mLockUserName;
-        Vector<ServerCommunication> mConnections = new Vector<ServerCommunication>();
+        List<ServerCommunication> mConnections = new ArrayList<ServerCommunication>();
         public String mLockMutex = new String();
     }
 
@@ -132,7 +133,7 @@ public abstract class SocketMaster extends SocketBasics {
         SessionData sessionData = getSessionData(pController);
         synchronized (sessionData.mConnections) {
             for (int i = 0; i < sessionData.mConnections.size(); i++) {
-                ((ServerCommunication) sessionData.mConnections.elementAt(i)).sendCommand(
+                ((ServerCommunication) sessionData.mConnections.get(i)).sendCommand(
                         pDoAction, pUndoAction, pLockId);
             }
         }
@@ -183,7 +184,7 @@ public abstract class SocketMaster extends SocketBasics {
             for (int i = 0; i < sessionData.mConnections.size(); i++) {
                 users.append(',');
                 users.append(' ');
-                users.append(sessionData.mConnections.elementAt(i).getName());
+                users.append(sessionData.mConnections.get(i).getName());
             }
         }
         return users.toString();
@@ -222,7 +223,7 @@ public abstract class SocketMaster extends SocketBasics {
     public void addConnection(ServerCommunication pServerCommunication,
                               ExtendedMapFeedback pController) {
         synchronized (mSessions) {
-            mSessions.get(pController).mConnections.addElement(pServerCommunication);
+            mSessions.get(pController).mConnections.add(pServerCommunication);
         }
     }
 

@@ -51,6 +51,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.Objects;
 
 @Slf4j
 public class NodeNoteRegistration implements HookRegistration,
@@ -58,10 +59,10 @@ public class NodeNoteRegistration implements HookRegistration,
     public static final class SimplyHtmlResources implements TextResources {
         public String getString(String pKey) {
             // no splash for SimplyHtml.
-            if (Tools.safeEquals("show_splash_screen", pKey)) {
+            if (Objects.equals("show_splash_screen", pKey)) {
                 return "false";
             }
-            if (Tools.safeEquals("default_paste_mode", pKey)) {
+            if (Objects.equals("default_paste_mode", pKey)) {
                 return "PASTE_HTML";
             }
             pKey = "simplyhtml." + pKey;
@@ -108,7 +109,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 String documentText = normalizeString(getDocumentText());
                 String noteText = normalizeString(mNode.getNoteText());
                 log.trace("Old doc =\n'{}', Current document: \n'{}'. Comparison: '{}'.", noteText, documentText, Tools.compareText(noteText, documentText));
-                if (!Tools.safeEquals(noteText, documentText)) {
+                if (!Objects.equals(noteText, documentText)) {
                     log.trace("Making map dirty.");
                     // make map dirty in order to enable automatic save on note
                     // change.
@@ -228,7 +229,7 @@ public class NodeNoteRegistration implements HookRegistration,
             // update display only, if the node is displayed.
             String newText = node.getNoteText();
             if (node == controller.getSelected()
-                    && (!Tools.safeEquals(newText, getHtmlEditorPanel()
+                    && (!Objects.equals(newText, getHtmlEditorPanel()
                     .getDocumentText()))) {
                 getHtmlEditorPanel().setCurrentDocumentContent(
                         newText == null ? "" : newText);

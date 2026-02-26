@@ -27,7 +27,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -75,7 +75,7 @@ public class FormDialog extends JDialog implements
         mController2 = pController;
     }
 
-    public void setUp(Vector<PropertyControl> controls) {
+    public void setUp(List<PropertyControl> controls) {
         setUp(controls, new FormDialogValidator() {
 
             public boolean isValid() {
@@ -84,7 +84,7 @@ public class FormDialog extends JDialog implements
         });
     }
 
-    public void setUp(Vector<PropertyControl> controls, FormDialogValidator pValidator) {
+    public void setUp(List<PropertyControl> controls, FormDialogValidator pValidator) {
         mFormDialogValidator = pValidator;
         setModal(true);
         getContentPane().setLayout(new BorderLayout());

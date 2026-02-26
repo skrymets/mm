@@ -32,10 +32,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -53,7 +54,7 @@ public class ImportWizard {
     /**
      * Stores the list of all classes in the classpath
      */
-    public final Vector<String> CLASS_LIST = new Vector<>(500);
+    public final List<String> CLASS_LIST = new ArrayList<>(500);
 
     public ImportWizard() {
     }
@@ -108,7 +109,7 @@ public class ImportWizard {
      * @param classList     the Vector to add the classes to
      * @param classPathFile the File to scan as a zip file
      */
-    public void addClassesFromZip(Vector<String> classList, File classPathFile) {
+    public void addClassesFromZip(List<String> classList, File classPathFile) {
         // System.out.println("Processing jar/zip file: " + classPathFile);
 
         try {
@@ -120,7 +121,7 @@ public class ImportWizard {
                 if (isInteresting(current)) {
                     current = current.substring(0,
                             current.length() - lookFor.length());
-                    classList.addElement(current);
+                    classList.add(current);
                 }
             }
         } catch (Exception ex) {
@@ -148,7 +149,7 @@ public class ImportWizard {
      * @param recursionLevel To ensure that after a certain depth the recursive directory
      *                       search stops
      */
-    public void addClassesFromDir(Vector<String> classList, File rootDir,
+    public void addClassesFromDir(List<String> classList, File rootDir,
                                   File currentDir, int recursionLevel) {
         if (recursionLevel >= 6) {
             // search only the first levels
@@ -178,7 +179,7 @@ public class ImportWizard {
                             // The current directory
                             fileName = current;
                         }
-                        classList.addElement(fileName);
+                        classList.add(fileName);
                         log.info("Found: {}", fileName);
                     }
                 } else {

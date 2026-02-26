@@ -25,11 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 
+import static javax.swing.Action.NAME;
+
 /**
  * Common class for all actions that are disabled, when no map is open.
  *
  * @author foltin
- * @date 22.10.2013
+ * {@code @date} 22.10.2013
  */
 @SuppressWarnings("serial")
 @Slf4j
@@ -40,7 +42,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
     /**
      * @param title is a fixed title (no translation is done via resources)
      */
-    public FreemindAction(String title, Icon icon, ControllerAdapter controllerAdapter) {
+    protected FreemindAction(String title, Icon icon, ControllerAdapter controllerAdapter) {
         super(title, icon);
         this.pControllerAdapter = controllerAdapter;
     }
@@ -48,7 +50,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
     /**
      * @param title Title is a resource.
      */
-    public FreemindAction(String title, ControllerAdapter controllerAdapter) {
+    protected FreemindAction(String title, ControllerAdapter controllerAdapter) {
         this(title, (String) null, controllerAdapter);
     }
 
@@ -56,7 +58,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
      * @param title    Title is a resource.
      * @param iconPath is a path to an icon.
      */
-    public FreemindAction(String title, String iconPath, final ControllerAdapter controllerAdapter) {
+    protected FreemindAction(String title, String iconPath, final ControllerAdapter controllerAdapter) {
         this(controllerAdapter.getText(title),
                 (iconPath == null)
                         ? null
@@ -70,7 +72,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
 
     public boolean isEnabled(JMenuItem pItem, Action pAction) {
         boolean result = pControllerAdapter != null && pControllerAdapter.getMap() != null;
-        log.trace("isEnabled {}={} from {}", pAction.getValue(AbstractAction.NAME), result, pControllerAdapter);
+        log.trace("isEnabled {}={} from {}", pAction.getValue(NAME), result, pControllerAdapter);
         return result;
     }
 

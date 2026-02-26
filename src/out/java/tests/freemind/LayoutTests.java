@@ -24,7 +24,8 @@ import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -193,11 +194,11 @@ public class LayoutTests extends FreeMindTestBase {
         LayoutManager layout = root.getLayout();
         layout.layoutContainer(root);
         root.getMainView().doLayout();
-        Vector<NodeView> nodes = Tools.getVectorWithSingleElement(root);
+        List<NodeView> nodes = Tools.getVectorWithSingleElement(root);
         // print summary
         System.out.println("------------------");
         while (!nodes.isEmpty()) {
-            NodeView view = (NodeView) nodes.lastElement();
+            NodeView view = (NodeView) nodes.get(nodes.size() - 1);
             nodes.remove(view);
             nodes.addAll(view.getChildrenViews());
             int yCoordinate = getYCoordinate(view.getModel());

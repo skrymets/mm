@@ -183,7 +183,7 @@ public class MindMapMapModel extends MapAdapter {
             for (Iterator<Color> it = colors.iterator(); it.hasNext(); ++colorPosition) {
                 Color color = it.next();
                 colorTableString.append("\\red").append(color.getRed()).append("\\green").append(color.getGreen()).append("\\blue").append(color.getBlue()).append(";");
-                colorTable.put(color, new Integer(colorPosition));
+                colorTable.put(color, Integer.valueOf(colorPosition));
             }
             colorTableString.append("}");
 
@@ -208,7 +208,6 @@ public class MindMapMapModel extends MapAdapter {
     /**
      * Return the success of saving
      *
-     * @throws IOException
      */
     public boolean save(File file) throws IOException {
         boolean result;
@@ -226,7 +225,6 @@ public class MindMapMapModel extends MapAdapter {
      * This method is intended to provide both normal save routines and saving
      * of temporary (internal) files.
      *
-     * @throws IOException
      */
     private boolean saveInternal(File file, boolean isInternal) throws IOException {
         if (!isInternal && readOnly) { // unexpected situation, yet it's better
@@ -255,7 +253,6 @@ public class MindMapMapModel extends MapAdapter {
     /**
      * writes the content of the map to a writer.
      *
-     * @throws IOException
      */
     public void getXml(Writer fileout, boolean saveInvisible)
             throws IOException {
@@ -265,7 +262,6 @@ public class MindMapMapModel extends MapAdapter {
     /**
      * writes the content of the map to a writer.
      *
-     * @throws IOException
      */
     public void getXml(Writer fileout, boolean saveInvisible,
                        MindMapNode pRootNode) throws IOException {
@@ -330,10 +326,10 @@ public class MindMapMapModel extends MapAdapter {
                 .getBoolProperty("delete_automatic_saves_at_exit");
         String path = getMapFeedback().getProperty("path_to_automatic_saves");
         /* two standard values: */
-        if (Tools.safeEquals(path, "default")) {
+        if (Objects.equals(path, "default")) {
             path = null;
         }
-        if (Tools.safeEquals(path, "freemind_home")) {
+        if (Objects.equals(path, "freemind_home")) {
             path = Resources.getInstance().getFreemindDirectory();
         }
         int delay = Integer.parseInt(getMapFeedback().getProperty(
@@ -497,7 +493,7 @@ public class MindMapMapModel extends MapAdapter {
 
     static private class DoAutomaticSave extends TimerTask {
         private final MindMapMapModel model;
-        private final Vector<File> tempFileStack;
+        private final List<File> tempFileStack;
         private final int numberOfFiles;
         private final boolean filesShouldBeDeletedAfterShutdown;
         private final File pathToStore;
@@ -511,7 +507,7 @@ public class MindMapMapModel extends MapAdapter {
         DoAutomaticSave(MindMapMapModel model, int numberOfTempFiles,
                         boolean filesShouldBeDeletedAfterShutdown, File pathToStore) {
             this.model = model;
-            tempFileStack = new Vector<>();
+            tempFileStack = new ArrayList<>();
             numberOfFiles = ((numberOfTempFiles > 0) ? numberOfTempFiles : 1);
             this.filesShouldBeDeletedAfterShutdown = filesShouldBeDeletedAfterShutdown;
             this.pathToStore = pathToStore;

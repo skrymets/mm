@@ -29,12 +29,11 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * @date 26.03.2014
+ * {@code @date} 26.03.2014
  */
 public class EdgeWidthActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public EdgeWidthActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

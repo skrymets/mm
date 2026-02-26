@@ -33,8 +33,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 /**
  * Inter-process communication.
@@ -58,7 +58,7 @@ import java.util.Vector;
  * <p>
  * <p>
  * In most cases, the script will call the static
- * {@link #handleClient(boolean, String, String[])} method, but of course more
+ *  method, but of course more
  * complicated stuff can be done too.
  *
  * @author Slava Pestov
@@ -202,7 +202,7 @@ public class EditServer extends Thread {
 
             SwingUtilities.invokeLater(() -> {
                 try {
-                    Vector<URL> urls = Tools.urlStringToUrls(script);
+                    List<URL> urls = Tools.urlStringToUrls(script);
                     for (URL urli : urls) {
                         mFrame.getController().getModeController()
                                 .load(urli);

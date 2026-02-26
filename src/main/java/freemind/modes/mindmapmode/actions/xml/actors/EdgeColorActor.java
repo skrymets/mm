@@ -30,15 +30,15 @@ import freemind.modes.mindmapmode.MindMapEdgeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 public class EdgeColorActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public EdgeColorActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -66,7 +66,7 @@ public class EdgeColorActor extends XmlActorAdapter {
             Color color = Tools.xmlToColor(edgeAction.getColor());
             MindMapNode node = getNodeFromID(edgeAction.getNode());
             Color oldColor = ((EdgeAdapter) node.getEdge()).getRealColor();
-            if (!Tools.safeEquals(color, oldColor)) {
+            if (!Objects.equals(color, oldColor)) {
                 ((MindMapEdgeModel) node.getEdge()).setColor(color);
                 getExMapFeedback().nodeChanged(node);
             }

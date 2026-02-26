@@ -32,12 +32,11 @@ import java.awt.*;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 public class ColorArrowLinkActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public ColorArrowLinkActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

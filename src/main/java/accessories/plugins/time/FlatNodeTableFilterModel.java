@@ -51,8 +51,6 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
     private final int mNoteTextColumn;
 
     /**
-     * @param node_text_column
-     * @param note_text_column TODO
      */
     public FlatNodeTableFilterModel(TableModel tableModel, int node_text_column, int note_text_column) {
         super();
@@ -87,7 +85,7 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
                         mNoteTextColumn);
                 if (mPattern.matcher(noteContent.toString()).matches()) {
                     // add index to array:
-                    newIndexArray.add(new Integer(i));
+                    newIndexArray.add(Integer.valueOf(i));
                 }
             }
         }

@@ -27,7 +27,7 @@ import javax.swing.*;
 
 /**
  * @author foltin
- * @date 18.06.2015
+ * {@code @date} 18.06.2015
  */
 public class ScalableJTable extends JTable {
     public ScalableJTable() {

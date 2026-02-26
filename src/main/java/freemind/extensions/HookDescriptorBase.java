@@ -34,9 +34,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author foltin
@@ -51,8 +51,6 @@ public class HookDescriptorBase {
     protected final String mXmlPluginFile;
 
     /**
-     * @param pluginBase
-     * @param xmlPluginFile
      */
     public HookDescriptorBase(final Plugin pluginBase, final String xmlPluginFile) {
         super();
@@ -89,7 +87,7 @@ public class HookDescriptorBase {
     }
 
     public List<PluginClasspath> getPluginClasspath() {
-        Vector<PluginClasspath> returnValue = new Vector<>();
+        List<PluginClasspath> returnValue = new ArrayList<>();
         List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(pluginBase);
         for (Object obj : pluginChoice) {
             if (obj instanceof PluginClasspath) {
@@ -121,7 +119,6 @@ public class HookDescriptorBase {
     }
 
     /**
-     * @throws MalformedURLException
      */
     private ClassLoader getClassLoader(List<PluginClasspath> pluginClasspathList) {
         String key = createPluginClasspathString(pluginClasspathList);

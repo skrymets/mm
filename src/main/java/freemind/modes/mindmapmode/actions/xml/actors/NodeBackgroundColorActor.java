@@ -28,15 +28,15 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 public class NodeBackgroundColorActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public NodeBackgroundColorActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -62,10 +62,9 @@ public class NodeBackgroundColorActor extends XmlActorAdapter {
         if (action instanceof NodeBackgroundColorFormatAction) {
             NodeBackgroundColorFormatAction nodeColorAction = (NodeBackgroundColorFormatAction) action;
             Color color = Tools.xmlToColor(nodeColorAction.getColor());
-            MindMapNode node = getNodeFromID(nodeColorAction
-                    .getNode());
+            MindMapNode node = getNodeFromID(nodeColorAction.getNode());
             Color oldColor = node.getBackgroundColor();
-            if (!Tools.safeEquals(color, oldColor)) {
+            if (!Objects.equals(color, oldColor)) {
                 node.setBackgroundColor(color); // null
                 getExMapFeedback().nodeChanged(node);
             }

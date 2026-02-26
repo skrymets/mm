@@ -33,12 +33,14 @@ import freemind.view.mindmapview.ViewFeedback;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author foltin
- * @date 07.02.2014
+ * {@code @date} 07.02.2014
  */
 @Slf4j
 public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {

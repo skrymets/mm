@@ -49,7 +49,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
     /**
      * @author foltin
-     * @date 21.02.2014
+     * {@code @date} 21.02.2014
      */
     private final class DemoMapFeedback extends ExtendedMapFeedbackAdapter {
         MindMap mMap;
@@ -72,11 +72,6 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
     private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = "accessories.plugins.dialogs.ChooseFormatPopupDialog.window_storage";
 
-    /**
-     * -- GETTER --
-     *
-     * @return Returns the result.
-     */
     @Getter
     private int result = CANCEL;
 
@@ -117,7 +112,6 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
     /**
      * This method initializes this
      *
-     * @return void
      */
     private void initialize(String dialogTitle) {
 
@@ -193,7 +187,6 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
     }
 
     /**
-     * @return
      */
     private Component getDemoFrame() {
         if (mDemoFrame == null) {
@@ -227,7 +220,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                     if (mNode != null) {
                         mDemoNode.setText(mNode.getText());
                     }
-                    mDemoNodeMapFeedback.select(mDemoNode, Tools.getVectorWithSingleElement(mDemoNode));
+                    mDemoNodeMapFeedback.select(mDemoNode, Tools.getSingletonList(mDemoNode));
                     mDemoNodeMapFeedback.applyPattern(mDemoNode, mResetPattern);
                     Pattern pattern = mStylePatternFrame.getResultPattern();
                     mDemoNodeMapFeedback.applyPattern(mDemoNode, pattern);

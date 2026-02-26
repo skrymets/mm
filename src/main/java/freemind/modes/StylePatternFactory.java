@@ -35,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.awt.Font;
 import java.io.Writer;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class constructs patterns from files or from nodes and saves them back.
@@ -63,7 +64,7 @@ public class StylePatternFactory {
             name = "__pattern_string_" + name.replace(" ", "_");
             String translatedName = Resources.getInstance().getResourceString(
                     name);
-            if (!Tools.safeEquals(translatedName, name)) {
+            if (!Objects.equals(translatedName, name)) {
                 // there is a translation:
                 pattern.setName(translatedName);
                 // store original name to be able to translate back
@@ -72,7 +73,7 @@ public class StylePatternFactory {
                 for (Pattern otherPattern : patterns.getPatternList()) {
                     PatternChild child = otherPattern.getPatternChild();
                     if (child != null) {
-                        if (Tools.safeEquals(originalName, child.getValue())) {
+                        if (Objects.equals(originalName, child.getValue())) {
                             child.setValue(translatedName);
                         }
                     }
@@ -87,7 +88,6 @@ public class StylePatternFactory {
      * the result is written to, and it is closed afterward List of Pattern
      * elements.
      *
-     * @throws Exception
      */
     public static void savePatterns(Writer writer, List<Pattern> listOfPatterns)
             throws Exception {
@@ -322,7 +322,7 @@ public class StylePatternFactory {
             return null;
         }
         // both delete the value or both have the same value:
-        if (Tools.safeEquals(prop1.getValue(), prop2.getValue())) {
+        if (Objects.equals(prop1.getValue(), prop2.getValue())) {
             destination.setValue(prop1.getValue());
             return destination;
         }

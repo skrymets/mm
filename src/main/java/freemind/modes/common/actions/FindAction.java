@@ -49,19 +49,12 @@ public class FindAction extends FreemindAction {
     @Getter
     private String searchTerm;
 
-    /**
-     * -- GETTER --
-     *
-     * @return Returns the subterms.
-     */
     @Getter
     private Collection<String> subterms;
 
     public String getFindFromText() {
-        String plainNodeText = HtmlTools.htmlToPlain(findFromNode.toString())
-                .replaceAll("\n", " ");
-        return plainNodeText.length() <= 30 ? plainNodeText : plainNodeText
-                .substring(0, 30) + "...";
+        String plainNodeText = HtmlTools.htmlToPlain(findFromNode.toString()).replaceAll("\n", " ");
+        return plainNodeText.length() <= 30 ? plainNodeText : plainNodeText.substring(0, 30) + "...";
     }
 
     private boolean findCaseSensitive;
@@ -104,10 +97,7 @@ public class FindAction extends FreemindAction {
         if (!found) {
             String messageText = controller.getText("no_found_from");
             String searchTerm = getSearchTermAsEscapedString(messageText);
-            controller.getController().informationMessage(
-                    messageText.replaceAll("\\$1", searchTerm).replaceAll(
-                            "\\$2", getFindFromText()),
-                    controller.getView().getSelected());
+            controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", getFindFromText()), controller.getView().getSelected());
         }
     }
 
@@ -117,19 +107,14 @@ public class FindAction extends FreemindAction {
         mDialog.dispose();
         // Store "find in notes too" value to prop.
         if (pResult == JOptionPane.OK_OPTION) {
-            Resources
-                    .getInstance()
-                    .getProperties()
-                    .setProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO,
-                            mFindInNotesTooBox.isSelected() ? "true" : "false");
+            Resources.getInstance().getProperties().setProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO, mFindInNotesTooBox.isSelected() ? "true" : "false");
             mLastSearchString = mSearchField.getText();
         }
     }
 
     void displayDialog() {
         mDialog = null;
-        mDialog = new JDialog(controller.getFrame().getJFrame(),
-                controller.getText("find"));
+        mDialog = new JDialog(controller.getFrame().getJFrame(), controller.getText("find"));
         mDialog.setModal(true);
         mDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         AbstractAction cancelAction = new AbstractAction() {
@@ -152,44 +137,25 @@ public class FindAction extends FreemindAction {
         });
         Container contentPane = mDialog.getContentPane();
         contentPane.setLayout(new GridBagLayout());
-        contentPane.add(new JLabel(controller.getText("find_what")),
-                new GridBagConstraints(1, 0, 1, 1, 1.0, 1.0,
-                        GridBagConstraints.WEST, GridBagConstraints.BOTH,
-                        new Insets(5, 5, 0, 0), 0, 0));
+        contentPane.add(new JLabel(controller.getText("find_what")), new GridBagConstraints(1, 0, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         mSearchField = new JTextField(mLastSearchString);
         mSearchField.selectAll();
         mSearchField.setMinimumSize(new Dimension(500, 14));
-        contentPane.add(mSearchField, new GridBagConstraints(2, 0, 10, 1, 1.0,
-                1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-                new Insets(5, 5, 0, 0), 0, 0));
-        ImageIcon findImage = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance()
-                .getResource("images/filefind_big.png"));
-        contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1,
-                2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-                new Insets(5, 5, 0, 0), 0, 0));
-        mFindInNotesTooBox = new JCheckBox(
-                controller
-                        .getText("ExtendedFindDialog.find_search_in_notes_too"));
-        mFindInNotesTooBox.setSelected(Resources.getInstance().getBoolProperty(
-                FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
+        contentPane.add(mSearchField, new GridBagConstraints(2, 0, 10, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
+        ImageIcon findImage = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource("images/filefind_big.png"));
+        contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
+        mFindInNotesTooBox = new JCheckBox(controller.getText("ExtendedFindDialog.find_search_in_notes_too"));
+        mFindInNotesTooBox.setSelected(Resources.getInstance().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
         Tools.setLabelAndMnemonic(mFindInNotesTooBox, null);
-        contentPane.add(mFindInNotesTooBox, new GridBagConstraints(0, 2, 3, 1,
-                1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-                new Insets(5, 5, 0, 0), 0, 0));
-        JButton okButton = new JButton(
-                controller.getText("ExtendedFindDialog.ok"));
+        contentPane.add(mFindInNotesTooBox, new GridBagConstraints(0, 2, 3, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
+        JButton okButton = new JButton(controller.getText("ExtendedFindDialog.ok"));
         Tools.setLabelAndMnemonic(okButton, null);
         okButton.addActionListener(okAction);
-        contentPane.add(okButton, new GridBagConstraints(2, 3, 1, 1, 1.0, 1.0,
-                GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5,
-                5, 0, 0), 0, 0));
-        JButton cancelButton = new JButton(
-                controller.getText("ExtendedFindDialog.cancel"));
+        contentPane.add(okButton, new GridBagConstraints(2, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
+        JButton cancelButton = new JButton(controller.getText("ExtendedFindDialog.cancel"));
         Tools.setLabelAndMnemonic(cancelButton, null);
         cancelButton.addActionListener(cancelAction);
-        contentPane.add(cancelButton, new GridBagConstraints(3, 3, 1, 1, 1.0,
-                1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-                new Insets(5, 5, 0, 0), 0, 0));
+        contentPane.add(cancelButton, new GridBagConstraints(3, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         mDialog.getRootPane().setDefaultButton(okButton);
         mDialog.pack();
         Tools.setDialogLocationRelativeTo(mDialog, controller.getSelectedView());
@@ -197,8 +163,7 @@ public class FindAction extends FreemindAction {
     }
 
     private String getSearchTermAsEscapedString(String messageText) {
-        String searchTerm = messageText.startsWith("<html>") ? HtmlTools
-                .toXMLEscapedText(getSearchTerm()) : getSearchTerm();
+        String searchTerm = messageText.startsWith("<html>") ? HtmlTools.toXMLEscapedText(getSearchTerm()) : getSearchTerm();
         // Fix for
         // https://sourceforge.net/tracker/?func=detail&aid=3200783&group_id=7118&atid=107118
         // Patch
@@ -222,27 +187,20 @@ public class FindAction extends FreemindAction {
         public void actionPerformed(ActionEvent e) {
             Collection<String> subterms = find.getSubterms();
             if (subterms == null) {
-                controller.getController().informationMessage(
-                        controller.getText("no_previous_find"),
-                        controller.getView().getSelected());
+                controller.getController().informationMessage(controller.getText("no_previous_find"), controller.getView().getSelected());
                 return;
             }
             boolean found = find.findNext();
             controller.getView().repaint();
             if (!found) {
                 String messageText = controller.getText("no_more_found_from");
-                String searchTerm = find
-                        .getSearchTermAsEscapedString(messageText);
-                controller.getController().informationMessage(
-                        messageText.replaceAll("\\$1", searchTerm).replaceAll(
-                                "\\$2", find.getFindFromText()),
-                        controller.getView().getSelected());
+                String searchTerm = find.getSearchTermAsEscapedString(messageText);
+                controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", find.getFindFromText()), controller.getView().getSelected());
             }
         }
     }
 
-    public boolean find(MindMapNode node, Collection<String> subterms,
-                        boolean caseSensitive) {
+    public boolean find(MindMapNode node, Collection<String> subterms, boolean caseSensitive) {
         findNodesUnfoldedByLastFind = new ArrayList<>();
         LinkedList<MindMapNode> nodes = new LinkedList<>();
         nodes.addFirst(node);
@@ -259,11 +217,9 @@ public class FindAction extends FreemindAction {
         return find(nodes, finalizedSubterms, caseSensitive);
     }
 
-    private boolean find(LinkedList<MindMapNode> nodes,
-                         Collection<String> subterms, boolean caseSensitive) {
+    private boolean find(LinkedList<MindMapNode> nodes, Collection<String> subterms, boolean caseSensitive) {
         // Precondition: if !caseSensitive then >>what<< is in lowercase.
-        boolean searchInNotesToo = Resources.getInstance().getBoolProperty(
-                FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO);
+        boolean searchInNotesToo = Resources.getInstance().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO);
 
         if (!findNodesUnfoldedByLastFind.isEmpty()) {
 
@@ -287,8 +243,7 @@ public class FindAction extends FreemindAction {
                 nodes.addLast(i.next());
             }
 
-            if (!node.isVisible())
-                continue;
+            if (!node.isVisible()) continue;
 
             // Bug fix for
             // http://sourceforge.net/tracker/?func=detail&aid=3035387&group_id=7118&atid=107118
@@ -301,7 +256,7 @@ public class FindAction extends FreemindAction {
             boolean found = true;
             boolean foundInNotes = false;
             for (String subterm : subterms) {
-                if (nodeText.indexOf(subterm) < 0) {
+                if (!nodeText.contains(subterm)) {
                     // Subterm not found
                     found = false;
                     break;
@@ -312,7 +267,7 @@ public class FindAction extends FreemindAction {
                 /* now, search the notes. */
                 found = true;
                 for (String subterm : subterms) {
-                    if (noteText.indexOf(subterm) < 0) {
+                    if (!noteText.contains(subterm)) {
                         // Subterm not found
                         found = false;
                         break;
@@ -354,7 +309,7 @@ public class FindAction extends FreemindAction {
 
     private Collection<String> breakSearchTermIntoSubterms(String searchTerm) {
         ArrayList<String> subterms = new ArrayList<>();
-        StringBuffer subterm = new StringBuffer();
+        StringBuilder subterm = new StringBuilder();
         int len = searchTerm.length();
         char myChar;
 
@@ -363,17 +318,15 @@ public class FindAction extends FreemindAction {
             myChar = searchTerm.charAt(i);
             if (myChar == ' ' && withinQuotes) {
                 subterm.append(myChar);
-            } else if ((myChar == ' ' && !withinQuotes)) {
+            } else if (myChar == ' ') {
                 subterms.add(subterm.toString());
                 subterm.setLength(0);
-            } else if (myChar == '"' && i > 0 && i < len - 1
-                    && searchTerm.charAt(i - 1) != ' '
-                    && searchTerm.charAt(i + 1) != ' ') {
+            } else if (myChar == '"' && i > 0 && i < len - 1 && searchTerm.charAt(i - 1) != ' ' && searchTerm.charAt(i + 1) != ' ') {
                 // Character " surrounded by non-spaces
                 subterm.append(myChar);
             } else if (myChar == '"' && withinQuotes) {
                 withinQuotes = false;
-            } else if (myChar == '"' && !withinQuotes) {
+            } else if (myChar == '"') {
                 withinQuotes = true;
             } else {
                 subterm.append(myChar);
@@ -396,8 +349,7 @@ public class FindAction extends FreemindAction {
             MindMapNode nodeOnPath = (MindMapNode) path[i];
             // System.out.println(nodeOnPath);
             if (nodeOnPath.isFolded()) {
-                if (nodesUnfoldedByDisplay != null)
-                    nodesUnfoldedByDisplay.add(nodeOnPath);
+                if (nodesUnfoldedByDisplay != null) nodesUnfoldedByDisplay.add(nodeOnPath);
                 controller.setFolded(nodeOnPath, false);
             }
         }

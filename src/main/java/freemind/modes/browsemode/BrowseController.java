@@ -46,8 +46,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ListIterator;
-import java.util.Vector;
 
 import static freemind.modes.common.plugins.MapNodePositionHolderBase.*;
 import static java.lang.String.format;
@@ -233,7 +233,7 @@ public class BrowseController extends ViewControllerAdapter {
             HashSet<MindMapNode> nodeAlreadyVisited = new HashSet<>();
             nodeAlreadyVisited.add(link.getSource());
             nodeAlreadyVisited.add(link.getTarget());
-            Vector<MindMapLink> links = getModel().getLinkRegistry().getAllLinks(link.getSource());
+            List<MindMapLink> links = getModel().getLinkRegistry().getAllLinks(link.getSource());
             links.addAll(getModel().getLinkRegistry().getAllLinks(link.getTarget()));
             for (MindMapLink mindMapLink : links) {
                 BrowseArrowLinkModel foreign_link = (BrowseArrowLinkModel) mindMapLink;
@@ -324,12 +324,16 @@ public class BrowseController extends ViewControllerAdapter {
         return newModeController;
     }
 
-    public ModeController load(File pFile) throws IOException {
-        ModeController newModeController = (ModeController) super.load(pFile);
-        // decorator pattern.
-        ((BrowseToolBar) newModeController.getModeToolBar()).setURLField(Tools
-                .fileToUrl(pFile).toString());
-        return newModeController;
+    public ModeController load(File pFile) throws XMLParseException {
+        try {
+            ModeController newModeController = (ModeController) super.load(pFile);
+            // decorator pattern.
+            ((BrowseToolBar) newModeController.getModeToolBar()).setURLField(Tools
+                    .fileToUrl(pFile).toString());
+            return newModeController;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void newMap(MindMap mapModel, ModeController modeController) {

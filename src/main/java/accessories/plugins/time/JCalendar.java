@@ -48,7 +48,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
      * -- GETTER --
      *  Returns the calendar property.
      *
-     * @return the value of the calendar property.
      */
     @Getter
     private Calendar calendar;
@@ -58,7 +57,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
      * -- GETTER --
      *  Gets the dayChooser attribute of the JCalendar object
      *
-     * @return the dayChooser value
 
      */
     @Getter
@@ -75,7 +73,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
      * -- GETTER --
      *  Returns the locale.
      *
-     * @return the value of the locale property.
      *
 
      */
@@ -87,7 +84,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
      * -- GETTER --
      *  Gets the monthChooser attribute of the JCalendar object
      *
-     * @return the monthChooser value
 
      */
     @Getter
@@ -98,7 +94,6 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
      * -- GETTER --
      *  Gets the yearChooser attribute of the JCalendar object
      *
-     * @return the yearChooser value
 
      */
     @Getter

@@ -112,7 +112,6 @@ public class NodeFoldingComponent extends JButton {
     }
 
     /**
-     * @return
      */
     private int getZoomedCircleRadius() {
         return nodeView.getZoomedFoldingSymbolHalfWidth();
@@ -242,7 +241,6 @@ public class NodeFoldingComponent extends JButton {
         }
 
         /**
-         * @return
          */
         private Color getColorForCounter() {
             Color color = nodeView.getModel().getEdge().getColor();

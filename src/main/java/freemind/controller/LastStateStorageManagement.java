@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import static java.util.Comparator.comparingInt;
@@ -75,7 +76,7 @@ public class LastStateStorageManagement {
     public void changeOrAdd(MindmapLastStateStorage pStore) {
         boolean found = false;
         for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
-            if (Tools.safeEquals(pStore.getRestorableName(), store.getRestorableName())) {
+            if (Objects.equals(pStore.getRestorableName(), store.getRestorableName())) {
                 // deep copy
                 store.setLastZoom(pStore.getLastZoom());
                 store.setLastSelected(pStore.getLastSelected());
@@ -127,7 +128,7 @@ public class LastStateStorageManagement {
 
     public MindmapLastStateStorage getStorage(String pRestorableName) {
         for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
-            if (Tools.safeEquals(pRestorableName, store.getRestorableName())) {
+            if (Objects.equals(pRestorableName, store.getRestorableName())) {
                 setLastChanged(store);
                 return store;
             }

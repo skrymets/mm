@@ -58,7 +58,6 @@ public class NodeAttributeTable extends MindMapNodeHookAdapter {
     }
 
     /**
-     * @return
      */
     private NodeAttributeTableRegistration getRegistration() {
         NodeAttributeTableRegistration registration = (NodeAttributeTableRegistration) this

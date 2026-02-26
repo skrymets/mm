@@ -59,9 +59,6 @@ public class AddAttributeActor extends XmlActorAdapter {
     }
 
     /**
-     * @param pSelected
-     * @param pAttribute
-     * @return
      */
     public AddAttributeAction getAddAttributeAction(MindMapNode pSelected,
                                                     Attribute pAttribute) {

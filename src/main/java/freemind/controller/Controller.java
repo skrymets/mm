@@ -805,7 +805,7 @@ public class Controller implements MapModuleChangeObserver {
             if (storage != null) {
                 storage.setTabIndex(index);
             }
-            if (Tools.safeEquals(restorable, currentMapRestorable)) {
+            if (Objects.equals(restorable, currentMapRestorable)) {
                 management.setLastFocussedTab(index);
             }
             index++;
@@ -848,12 +848,12 @@ public class Controller implements MapModuleChangeObserver {
         if (pageFormat == null) {
             pageFormat = printerJob.defaultPage();
         }
-        if (Tools.safeEquals(getProperty("page_orientation"), "landscape")) {
+        if (Objects.equals(getProperty("page_orientation"), "landscape")) {
             pageFormat.setOrientation(PageFormat.LANDSCAPE);
         } else if (Tools
                 .safeEquals(getProperty("page_orientation"), "portrait")) {
             pageFormat.setOrientation(PageFormat.PORTRAIT);
-        } else if (Tools.safeEquals(getProperty("page_orientation"),
+        } else if (Objects.equals(getProperty("page_orientation"),
                 "reverse_landscape")) {
             pageFormat.setOrientation(PageFormat.REVERSE_LANDSCAPE);
         }

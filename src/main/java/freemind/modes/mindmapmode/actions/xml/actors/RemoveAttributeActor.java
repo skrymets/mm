@@ -31,7 +31,6 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 public class RemoveAttributeActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public RemoveAttributeActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -67,9 +66,6 @@ public class RemoveAttributeActor extends XmlActorAdapter {
     }
 
     /**
-     * @param pSelected
-     * @param pPosition TODO
-     * @return
      */
     public RemoveAttributeAction getRemoveAttributeAction(MindMapNode pSelected,
                                                           int pPosition) {

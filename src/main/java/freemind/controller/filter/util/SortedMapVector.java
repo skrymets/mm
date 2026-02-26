@@ -23,8 +23,9 @@
  */
 package freemind.controller.filter.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Vector;
 
 /**
  * @author Dimitri Polivaev 18.06.2005
@@ -49,12 +50,11 @@ public class SortedMapVector {
         }
     }
 
-    private final Vector<MapElement> elements;
+    private final List<MapElement> elements;
     private static final int ELEMENT_NOT_FOUND_FLAG = 1 << 31;
-    private static final int CAPACITY_INCREMENT = 10;
 
     public SortedMapVector() {
-        elements = new Vector<>(0, CAPACITY_INCREMENT);
+        elements = new ArrayList<>();
     }
 
     public int add(Comparable key, Object value) {
@@ -64,10 +64,6 @@ public class SortedMapVector {
             elements.add(index, new MapElement(key, value));
         }
         return index;
-    }
-
-    public int capacity() {
-        return elements.capacity();
     }
 
     public void clear() {
@@ -151,7 +147,7 @@ public class SortedMapVector {
     }
 
     public void remove(int index) {
-        elements.removeElementAt(index);
+        elements.remove(index);
     }
 
     public int size() {

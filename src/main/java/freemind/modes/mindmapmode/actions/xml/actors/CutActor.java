@@ -33,12 +33,11 @@ import java.util.List;
 
 /**
  * @author foltin
- * @date 11.04.2014
+ * {@code @date} 11.04.2014
  */
 public class CutActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public CutActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

@@ -26,7 +26,8 @@ import java.awt.Point;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import freemind.controller.actions.generated.instance.instance.Pattern;
 import freemind.main.FreeMind;
@@ -207,9 +208,9 @@ public class StandaloneMapTests extends FreeMindTestBase {
 //		assertTrue(firstChild.isUnderlined());
         // arrow links
         mapFeedback.addLink(subChild1, subChild2);
-        Vector<MindMapLink> mapLinks = mapFeedback.getMap().getLinkRegistry().getAllLinksFromMe(subChild1);
+        List<MindMapLink> mapLinks = mapFeedback.getMap().getLinkRegistry().getAllLinksFromMe(subChild1);
         assertEquals(1, mapLinks.size());
-        MindMapArrowLink mapLink = (MindMapArrowLink) mapLinks.firstElement();
+        MindMapArrowLink mapLink = (MindMapArrowLink) mapLinks.get(0);
         assertEquals(subChild2, mapLink.getTarget());
         Point startPoint = new Point(40, 50);
         Point endPoint = new Point(-10, -20);
@@ -234,7 +235,7 @@ public class StandaloneMapTests extends FreeMindTestBase {
         assertEquals(darkGray, firstChild.getColor());
 //		// hooks: currently disabled, as too dependent from MindMapController
 //		mapFeedback.addHook(firstChild,
-//				Tools.getVectorWithSingleElement(firstChild),
+//				Tools.getSingletonList(firstChild),
 //				"accessories/plugins/BlinkingNodeHook.properties", null);
 //		int timeout = 10;
 //		Color nodeColor = firstChild.getColor();
@@ -248,7 +249,7 @@ public class StandaloneMapTests extends FreeMindTestBase {
 //		}
 //		assertTrue(found);
 //		mapFeedback.addHook(firstChild,
-//				Tools.getVectorWithSingleElement(firstChild),
+//				Tools.getSingletonList(firstChild),
 //				"accessories/plugins/BlinkingNodeHook.properties", null);
         assertEquals(0, firstChild.getIndex(subChild1));
         mapFeedback.moveNodes(subChild1, Tools.getVectorWithSingleElement(subChild1), 1);

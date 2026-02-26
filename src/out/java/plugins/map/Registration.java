@@ -26,9 +26,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
 
 import javax.swing.Action;
 import javax.swing.JMenuItem;
@@ -197,7 +197,7 @@ public class Registration implements HookRegistration, ActorXml,
         }
 
         public List<PropertyControl> getControls(TextTranslator pTextTranslator) {
-            Vector<PropertyControl> controls = new Vector<>();
+            List<PropertyControl> controls = new ArrayList<>();
             controls.add(new OptionPanel.NewTabProperty(
                     "plugins/map/MapDialog.properties_MapDialogTabName"));
             controls.add(new SeparatorProperty(
@@ -282,7 +282,7 @@ public class Registration implements HookRegistration, ActorXml,
         OsmTileLoader loader = null;
         String tileCacheClass = Resources.getInstance().getProperty(
                 MapDialog.TILE_CACHE_CLASS);
-        if (Tools.safeEquals(tileCacheClass, "file")) {
+        if (Objects.equals(tileCacheClass, "file")) {
             File cacheDir = getCacheDirectory();
             try {
                 OsmFileCacheTileLoader osmFileCacheTileLoader = new OsmFileCacheTileLoader(

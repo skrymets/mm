@@ -54,16 +54,10 @@ public abstract class NodeHookAdapter extends HookAdapter implements NodeHook {
         log.trace("invoke(node) called.");
     }
 
-    /**
-     *
-     */
     protected MindMap getMap() {
         return map;
     }
 
-    /**
-     *
-     */
     protected void nodeChanged(MindMapNode node) {
         getController().nodeChanged(node);
     }

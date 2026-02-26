@@ -131,7 +131,7 @@ import static java.util.Collections.unmodifiableList;
  * href="mailto:cyberelf@mac.com">cyberelf@mac.com</A>&gt;
  * @version $Name: fm_060405_integration $, $Revision: 1.7.18.4.2.8 $
  */
-public class XMLElement {
+public class XMLElement implements Serializable {
 
     public static final String XML_NODE_XHTML_CONTENT_TAG = "richcontent";
 
@@ -140,10 +140,7 @@ public class XMLElement {
 
     private static Pattern sContentEndTagPattern = null;
 
-    /**
-     * Serialization serial version ID.
-     */
-    static final long serialVersionUID = 6685035139346394777L;
+    private static final long serialVersionUID = 6685035139346394777L;
 
     /**
      * Major version of NanoXML. Classes with the same major and minor version
@@ -215,7 +212,7 @@ public class XMLElement {
      * </dl>
      * -- GETTER --
      *  Returns the name of the element.
-     *
+     * <p>
      * -- SETTER --
      *  Changes the name of the element.
      *  <p>
@@ -395,7 +392,7 @@ public class XMLElement {
      * </ul>
      * <p>
      * The entity conversion table.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -422,7 +419,6 @@ public class XMLElement {
      * </dl>
      * <dl>
      *
-     * @param entities
      * @see freemind.main.XMLElement#XMLElement()
      * @see freemind.main.XMLElement#XMLElement(boolean)
      * @see XMLElement#XMLElement(Map, boolean)
@@ -442,7 +438,7 @@ public class XMLElement {
      *
      * <code>true</code> if leading and trailing whitespace in PCDATA content
      * has to be removed.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Postconditions:</b></dt>
@@ -480,7 +476,7 @@ public class XMLElement {
      * <p>
      * The entity conversion table. <code>true</code> if leading and trailing
      * whitespace in PCDATA content has to be removed.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -522,7 +518,7 @@ public class XMLElement {
      * The entity conversion table. <code>true</code> if leading and trailing
      * whitespace in PCDATA content has to be removed. <code>true</code> if the
      * case of element and attribute names have to be ignored.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -572,7 +568,7 @@ public class XMLElement {
      * whitespace in PCDATA content has to be removed. <code>true</code> if the
      * basic entities need to be added to the entity list. <code>true</code> if
      * the case of element and attribute names have to be ignored.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -637,7 +633,7 @@ public class XMLElement {
      * Adds a child element.
      * <p>
      * The child element to add.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -675,7 +671,7 @@ public class XMLElement {
      * Adds or modifies an attribute.
      * <p>
      * The name of the attribute. The value of the attribute.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -742,7 +738,7 @@ public class XMLElement {
      * Adds or modifies an attribute.
      * <p>
      * The name of the attribute. The value of the attribute.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -803,7 +799,7 @@ public class XMLElement {
      * Adds or modifies an attribute.
      * <p>
      * The name of the attribute. The value of the attribute.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -873,7 +869,6 @@ public class XMLElement {
      * </dl>
      *
      * @see freemind.main.XMLElement#addChild(XMLElement) addChild(XMLElement)
-     * @see freemind.main.XMLElement#enumerateChildren()
      * @see freemind.main.XMLElement#getChildren()
      * @see freemind.main.XMLElement#removeChild(XMLElement)
      * removeChild(XMLElement)
@@ -985,7 +980,7 @@ public class XMLElement {
      * <code>null</code> is returned.
      *
      * @param name The name of the attribute.
-     *
+     * <p>
      *             </dl>
      *             <dl>
      *             <dt><b>Preconditions:</b></dt>
@@ -1018,7 +1013,7 @@ public class XMLElement {
      *
      * @param name         The name of the attribute.
      * @param defaultValue Key to use if the attribute is missing.
-     *
+     * <p>
      *                     </dl>
      *                     <dl>
      *                     <dt><b>Preconditions:</b></dt>
@@ -1063,7 +1058,7 @@ public class XMLElement {
      * <p>
      * The name of the attribute. Hashtable mapping keys to values. Key to use
      * if the attribute is missing. <code>true</code> if literals are valid.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1114,7 +1109,7 @@ public class XMLElement {
      * <code>null</code> is returned.
      *
      * @param name The name of the attribute.
-     *
+     * <p>
      *             </dl>
      *             <dl>
      *             <dt><b>Preconditions:</b></dt>
@@ -1147,7 +1142,7 @@ public class XMLElement {
      *
      * @param name         The name of the attribute.
      * @param defaultValue Key to use if the attribute is missing.
-     *
+     * <p>
      *                     </dl>
      *                     <dl>
      *                     <dt><b>Preconditions:</b></dt>
@@ -1185,7 +1180,7 @@ public class XMLElement {
      * <p>
      * The name of the attribute. Hashtable mapping keys to values. Key to use
      * if the attribute is missing. <code>true</code> if literals are valid.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1222,7 +1217,7 @@ public class XMLElement {
      * <code>0</code> is returned.
      *
      * @param name The name of the attribute.
-     *
+     * <p>
      *             </dl>
      *             <dl>
      *             <dt><b>Preconditions:</b></dt>
@@ -1253,7 +1248,7 @@ public class XMLElement {
      *
      * @param name         The name of the attribute.
      * @param defaultValue Key to use if the attribute is missing.
-     *
+     * <p>
      *                     </dl>
      *                     <dl>
      *                     <dt><b>Preconditions:</b></dt>
@@ -1302,7 +1297,7 @@ public class XMLElement {
      * The name of the attribute. Hashtable mapping keys to values. Key to use
      * if the attribute is missing. <code>true</code> if literal numbers are
      * valid.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1361,7 +1356,7 @@ public class XMLElement {
      * <code>0.0</code> is returned.
      *
      * @param name The name of the attribute.
-     *
+     * <p>
      *             </dl>
      *             <dl>
      *             <dt><b>Preconditions:</b></dt>
@@ -1392,7 +1387,7 @@ public class XMLElement {
      *
      * @param name         The name of the attribute.
      * @param defaultValue Key to use if the attribute is missing.
-     *
+     * <p>
      *                     </dl>
      *                     <dl>
      *                     <dt><b>Preconditions:</b></dt>
@@ -1442,7 +1437,7 @@ public class XMLElement {
      * The name of the attribute. Hashtable mapping keys to values. Key to use
      * if the attribute is missing. <code>true</code> if literal numbers are
      * valid.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1509,7 +1504,7 @@ public class XMLElement {
      * @param trueValue    The value associated with <code>true</code>.
      * @param falseValue   The value associated with <code>true</code>.
      * @param defaultValue Value to use if the attribute is missing.
-     *
+     * <p>
      *                     </dl>
      *                     <dl>
      *                     <dt><b>Preconditions:</b></dt>
@@ -1550,7 +1545,7 @@ public class XMLElement {
      * Reads one XML element from a java.io.Reader and parses it.
      * <p>
      * The reader from which to retrieve the XML data.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1588,7 +1583,7 @@ public class XMLElement {
      * <p>
      * The reader from which to retrieve the XML data. The line number of the
      * first line in the data.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1645,7 +1640,7 @@ public class XMLElement {
      * Reads one XML element from a String and parses it.
      * <p>
      * The reader from which to retrieve the XML data.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1684,7 +1679,7 @@ public class XMLElement {
      * <p>
      * The reader from which to retrieve the XML data. The first character in
      * <code>string</code> to scan.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1720,7 +1715,7 @@ public class XMLElement {
      * The reader from which to retrieve the XML data. The first character in
      * <code>string</code> to scan. The character where to stop scanning. This
      * character is not scanned.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1758,7 +1753,7 @@ public class XMLElement {
      * The reader from which to retrieve the XML data. The first character in
      * <code>string</code> to scan. The character where to stop scanning. This
      * character is not scanned. The line number of the first line in the data.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1801,7 +1796,7 @@ public class XMLElement {
      * The reader from which to retrieve the XML data. The first character in
      * <code>string</code> to scan. The character where to stop scanning. This
      * character is not scanned.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1838,7 +1833,7 @@ public class XMLElement {
      * The reader from which to retrieve the XML data. The first character in
      * <code>string</code> to scan. The character where to stop scanning. This
      * character is not scanned. The line number of the first line in the data.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1879,7 +1874,7 @@ public class XMLElement {
      * Removes a child element.
      * <p>
      * The child element to remove.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -1915,7 +1910,7 @@ public class XMLElement {
      * Removes an attribute.
      * <p>
      * The name of the attribute.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2075,7 +2070,7 @@ public class XMLElement {
      * Writes the XML element to a writer.
      * <p>
      * The writer to write the XML data to.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2172,7 +2167,7 @@ public class XMLElement {
      * Writes a string encoded to a writer.
      * <p>
      * The writer to write the XML data to. The string to write encoded.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2244,7 +2239,7 @@ public class XMLElement {
      * appended to <code>result</code>.
      * <p>
      * The buffer in which the scanned identifier will be put.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2306,7 +2301,7 @@ public class XMLElement {
      * whitespace is appended to <code>result</code>.
      *
      * @return the next character following the whitespace.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2336,7 +2331,7 @@ public class XMLElement {
     /**
      * This method scans a delimited string from the current reader. The scanned
      * string without delimiters is appended to <code>string</code>.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2369,7 +2364,7 @@ public class XMLElement {
      * Scans a #PCDATA element. CDATA sections and entities are resolved. The
      * next &lt; char is skipped. The scanned data is appended to
      * <code>data</code>.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2402,7 +2397,7 @@ public class XMLElement {
     /**
      * Scans a special tag and if the tag is a CDATA section, append its content
      * to <code>buf</code>.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2458,7 +2453,7 @@ public class XMLElement {
 
     /**
      * Skips a comment.
-     *
+     * <p>
      * </dl>
      * <dl>
      * <dt><b>Preconditions:</b></dt>
@@ -2489,7 +2484,7 @@ public class XMLElement {
      *
      * @param bracketLevel The number of open square brackets ([) that have already been
      *                     read.
-     *
+     * <p>
      *                     </dl>
      *                     <dl>
      *                     <dt><b>Preconditions:</b></dt>
@@ -2550,7 +2545,7 @@ public class XMLElement {
      * match or after the complete text has been checked, whichever comes first.
      *
      * @param literal the literal to check.
-     *
+     * <p>
      *                </dl>
      *                <dl>
      *                <dt><b>Preconditions:</b></dt>
@@ -2596,7 +2591,7 @@ public class XMLElement {
      * Scans an XML element.
      *
      * @param elt The element that will contain the result.
-     *
+     * <p>
      *            </dl>
      *            <dl>
      *            <dt><b>Preconditions:</b></dt>
@@ -2778,7 +2773,7 @@ public class XMLElement {
      * value of the entity is appended to <code>buf</code>.
      *
      * @param buf Where to put the entity value.
-     *
+     * <p>
      *            </dl>
      *            <dl>
      *            <dt><b>Preconditions:</b></dt>
@@ -2825,7 +2820,7 @@ public class XMLElement {
      * Pushes a character back to the read-back buffer.
      *
      * @param ch The character to push back.
-     *
+     * <p>
      *           </dl>
      *           <dl>
      *           <dt><b>Preconditions:</b></dt>
@@ -2846,7 +2841,7 @@ public class XMLElement {
      * method.
      *
      * @param name The name of the entity.
-     *
+     * <p>
      *             </dl>
      *             <dl>
      *             <dt><b>Preconditions:</b></dt>
@@ -2867,7 +2862,7 @@ public class XMLElement {
      *
      * @param name  The name of the entity.
      * @param value The value of the entity.
-     *
+     * <p>
      *              </dl>
      *              <dl>
      *              <dt><b>Preconditions:</b></dt>
@@ -2898,7 +2893,7 @@ public class XMLElement {
      * Creates a parse exception for when a syntax error occured.
      *
      * @param context The context in which the error occured.
-     *
+     * <p>
      *                </dl>
      *                <dl>
      *                <dt><b>Preconditions:</b></dt>
@@ -2921,7 +2916,7 @@ public class XMLElement {
      *
      * @param charSet The set of characters (in human readable form) that was
      *                expected.
-     *
+     * <p>
      *                </dl>
      *                <dl>
      *                <dt><b>Preconditions:</b></dt>
@@ -2942,7 +2937,7 @@ public class XMLElement {
      * Creates a parse exception for when an entity could not be resolved.
      *
      * @param name The name of the entity.
-     *
+     * <p>
      *             </dl>
      *             <dl>
      *             <dt><b>Preconditions:</b></dt>

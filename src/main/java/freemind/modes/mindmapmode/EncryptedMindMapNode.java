@@ -39,8 +39,8 @@ import javax.swing.tree.MutableTreeNode;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.ListIterator;
-import java.util.Vector;
 
 @Slf4j
 public class EncryptedMindMapNode extends MindMapNodeModel {
@@ -49,8 +49,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
      * Is used to hide all children (when false)
      * -- GETTER --
      *
-     * @return Returns the isAccessible (ie. if the node is decrypted
-     * (isAccessible==true) or not).
 
      */
     @Getter
@@ -89,7 +87,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
      *  be removed. Thus, this flag postpones the childlessness of a node until it
      *  tree structure is updated.
      *
-     * @param isShuttingDown The isShuttingDown to set.
      */
     @Setter
     private boolean isShuttingDown = false;
@@ -236,14 +233,14 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         if (isAccessible()) {
             return super.childrenFolded();
         }
-        return new Vector<MindMapNode>().listIterator();
+        return new ArrayList<MindMapNode>().listIterator();
     }
 
     public ListIterator<MindMapNode> childrenUnfolded() {
         if (isAccessible() || isShuttingDown) {
             return super.childrenUnfolded();
         }
-        return new Vector<MindMapNode>().listIterator();
+        return new ArrayList<MindMapNode>().listIterator();
     }
 
     public boolean hasChildren() {
@@ -338,7 +335,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     }
 
     /**
-     * @throws IOException
      */
     private void generateEncryptedContent()
             throws IOException {

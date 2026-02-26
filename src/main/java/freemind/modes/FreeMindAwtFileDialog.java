@@ -35,7 +35,7 @@ import java.io.IOException;
  * File Chooser for Mac
  *
  * @author foltin
- * @date 23.02.2012
+ * {@code @date} 23.02.2012
  */
 @Slf4j
 public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDialog {
@@ -106,7 +106,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
 
     /**
      * @author foltin
-     * @date 27.02.2012
+     * {@code @date} 27.02.2012
      */
     private static final class FreeMindFilenameFilter implements FilenameFilter {
 

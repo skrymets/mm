@@ -34,10 +34,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
 import static freemind.main.VersionInformation.Type.ALPHA;
 
@@ -229,7 +229,7 @@ public class FreeMindMainMock implements FreeMindMain {
      * @see freemind.main.FreeMindMain#getLoggerList()
      */
     public List getLoggerList() {
-        return new Vector<>();
+        return new ArrayList<>();
     }
 
 }

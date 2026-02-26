@@ -32,7 +32,7 @@ import java.awt.event.MouseMotionAdapter;
  * Long running tasks inside FreeMind should derive from this class.
  *
  * @author foltin
- * @date 08.04.2013
+ * {@code @date} 08.04.2013
  */
 @Slf4j
 public abstract class FreeMindTask extends Thread {
@@ -50,8 +50,6 @@ public abstract class FreeMindTask extends Thread {
 
     protected static class ProgressDescription {
         /**
-         * @param pProgressString
-         * @param pProgressParameters
          */
         public ProgressDescription(String pProgressString,
                                    Object[] pProgressParameters) {
@@ -130,8 +128,7 @@ public abstract class FreeMindTask extends Thread {
                 ProgressDescription progressDescription = mProgressDescription;
                 if (mProgressDescription == null) {
                     progressDescription = new ProgressDescription(
-                            "FreeMindTask.Default", new Object[]{new Integer(
-                            mRounds)});
+                            "FreeMindTask.Default", new Object[]{Integer.valueOf(mRounds)});
                 }
                 boolean canceled = mProgressMonitor.showProgress(mRounds,
                         mAmountOfSteps, progressDescription.mProgressString,

@@ -51,6 +51,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author dimitri
@@ -635,7 +636,7 @@ public class FilterComposerDialog extends JDialog {
 
     private void addAttributeValuesRecursively(String pKey, MindMapNode pNode, SortedListModel pAttributesInMap) {
         for (Attribute attr : pNode.getAttributes()) {
-            if (Tools.safeEquals(attr.getName(), pKey)) {
+            if (Objects.equals(attr.getName(), pKey)) {
                 pAttributesInMap.add(attr.getValue());
             }
         }

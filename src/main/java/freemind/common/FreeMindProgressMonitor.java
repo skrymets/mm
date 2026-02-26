@@ -30,7 +30,7 @@ import java.awt.*;
 
 /**
  * @author foltin
- * @date 01.04.2013
+ * {@code @date} 01.04.2013
  */
 public class FreeMindProgressMonitor extends JDialog {
 
@@ -79,12 +79,6 @@ public class FreeMindProgressMonitor extends JDialog {
     }
 
     /**
-     * @param pCurrent
-     * @param pMax
-     * @param pName       resource string to be displayed as progress string (maybe with
-     *                    parameters pParameters)
-     * @param pParameters objects to be put in the resource string for pName
-     * @return
      */
     public boolean showProgress(int pCurrent, final int pMax, String pName,
                                 Object[] pParameters) {
@@ -130,7 +124,7 @@ public class FreeMindProgressMonitor extends JDialog {
                 progress.dismiss();
                 System.exit(1);
             }
-            Thread.sleep(1000l);
+            Thread.sleep(1000L);
         }
         progress.dismiss();
         System.exit(0);

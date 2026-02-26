@@ -25,7 +25,6 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.common.CommonToggleFoldedAction;
@@ -33,16 +32,16 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ListIterator;
+import java.util.Objects;
 
 /**
  * @author foltin
- * @date 10.04.2014
+ * {@code @date} 10.04.2014
  */
 @Slf4j
 public class ToggleFoldedActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public ToggleFoldedActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
@@ -84,12 +83,8 @@ public class ToggleFoldedActor extends XmlActorAdapter {
     private FoldAction createSingleFoldAction(boolean fold, MindMapNode node,
                                               boolean undo) {
         FoldAction foldAction = null;
-        if ((undo && (node.isFolded() == fold))
-                || (!undo && (node.isFolded() != fold))) {
-            if (node.hasChildren()
-                    || Tools.safeEquals(
-                    getExMapFeedback().getProperty(
-                            "enable_leaves_folding"), "true")) {
+        if ((undo && (node.isFolded() == fold)) || (!undo && (node.isFolded() != fold))) {
+            if (node.hasChildren() || Objects.equals(getExMapFeedback().getProperty("enable_leaves_folding"), "true")) {
                 foldAction = new FoldAction();
                 foldAction.setFolded(fold);
                 foldAction.setNode(getNodeID(node));

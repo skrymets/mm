@@ -48,9 +48,9 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author foltin
@@ -325,7 +325,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
         }
 
         public List<PropertyControl> getControls(TextTranslator pTextTranslator) {
-            Vector<PropertyControl> controls = new Vector<>();
+            List<PropertyControl> controls = new ArrayList<>();
             controls.add(new OptionPanel.NewTabProperty(
                     "accessories/plugins/AutomaticLayout.properties_PatternTabName"));
             controls.add(new SeparatorProperty(

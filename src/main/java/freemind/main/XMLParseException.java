@@ -100,7 +100,7 @@ public class XMLParseException extends RuntimeException {
      *
      * @param name    The name of the element where the error is located.
      * @param message A message describing what went wrong.
-     *
+     * <p>
      *                </dl>
      *                <dl>
      *                <dt><b>Preconditions:</b></dt>
@@ -134,7 +134,7 @@ public class XMLParseException extends RuntimeException {
      * @param name    The name of the element where the error is located.
      * @param lineNr  The number of the line in the input.
      * @param message A message describing what went wrong.
-     *
+     * <p>
      *                </dl>
      *                <dl>
      *                <dt><b>Preconditions:</b></dt>

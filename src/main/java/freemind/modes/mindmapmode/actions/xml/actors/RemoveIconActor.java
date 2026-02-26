@@ -33,12 +33,11 @@ import java.util.List;
 
 /**
  * @author foltin
- * @date 25.03.2014
+ * {@code @date} 25.03.2014
  */
 public class RemoveIconActor extends NodeXmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public RemoveIconActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

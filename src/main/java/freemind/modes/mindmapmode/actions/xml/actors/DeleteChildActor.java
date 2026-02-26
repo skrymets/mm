@@ -37,12 +37,11 @@ import java.util.Iterator;
 
 /**
  * @author foltin
- * @date 18.03.2014
+ * {@code @date} 18.03.2014
  */
 public class DeleteChildActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public DeleteChildActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

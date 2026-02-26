@@ -24,13 +24,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.SortedMap;
-import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.event.EventListenerList;
@@ -56,7 +57,7 @@ import freemind.modes.attributes.Attribute;
 
 public final class TestMindMapNode implements MindMapNode {
     private String text = "";
-    private Vector<TestMindMapNode> children = new Vector<TestMindMapNode>();
+    private List<TestMindMapNode> children = new ArrayList<TestMindMapNode>();
     private TestMindMapNode mNewParent;
 
     public String getText() {
@@ -340,7 +341,7 @@ public final class TestMindMapNode implements MindMapNode {
     }
 
     public void insert(MutableTreeNode child, int index) {
-        children.insertElementAt((TestMindMapNode) child, index);
+        children.add(index, (TestMindMapNode) child);
     }
 
     public void remove(int index) {
@@ -386,7 +387,7 @@ public final class TestMindMapNode implements MindMapNode {
     }
 
     public Enumeration children() {
-        return children.elements();
+        return Collections.enumeration(children);
     }
 
     public String getXmlText() {

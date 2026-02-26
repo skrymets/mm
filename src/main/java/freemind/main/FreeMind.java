@@ -235,12 +235,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     public FreeMind(Properties defaultPreferences, Properties userPreferences) {
         super("FreeMind");
         // Focus searcher - SecurityManager is deprecated in Java 17+ and removed in Java 18+
-        try {
-            System.setSecurityManager(new FreeMindSecurityManager());
-        } catch (UnsupportedOperationException e) {
-            log.warn("SecurityManager not supported in this Java version. Script sandboxing will be unavailable.");
-        }
-
         this.defaultPreferences = defaultPreferences;
         this.userPreferences = userPreferences;
 
@@ -622,7 +616,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     private void setupSpellChecking() {
         boolean checkSpelling
                 = //			Resources.getInstance().getBoolProperty(FreeMindCommon.CHECK_SPELLING);
-                Tools.safeEquals("true", userPreferences.getProperty(FreeMindCommon.CHECK_SPELLING));
+                Objects.equals("true", userPreferences.getProperty(FreeMindCommon.CHECK_SPELLING));
         if (checkSpelling) {
             try {
                 // TODO filter languages in dictionaries.properties like this:
@@ -793,11 +787,11 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             // }
         });
 
-        if (Tools.safeEquals(getProperty("toolbarVisible"), "false")) {
+        if (Objects.equals(getProperty("toolbarVisible"), "false")) {
             controller.setToolbarVisible(false);
         }
 
-        if (Tools.safeEquals(getProperty("leftToolbarVisible"), "false")) {
+        if (Objects.equals(getProperty("leftToolbarVisible"), "false")) {
             controller.setLeftToolbarVisible(false);
         }
 
@@ -806,11 +800,11 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         // and now, determine size, position and state.
         pack();
         // set the default size (PN)
-        int win_width = getIntProperty("appwindow_width", 0);
-        win_width = (win_width > 0) ? win_width : 640;
+        int windowWidth = getIntProperty("appwindow_width", 0);
+        windowWidth = (windowWidth > 0) ? windowWidth : 640;
 
-        int win_height = getIntProperty("appwindow_height", 0);
-        win_height = (win_height > 0) ? win_height : 440;
+        int windowHeight = getIntProperty("appwindow_height", 0);
+        windowHeight = (windowHeight > 0) ? windowHeight : 440;
 
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final Insets screenInsets = defaultToolkit.getScreenInsets(getGraphicsConfiguration());
@@ -818,19 +812,19 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         Dimension screenSize = defaultToolkit.getScreenSize();
 
         final int screenWidth = screenSize.width - screenInsets.left - screenInsets.right;
-        win_width = Math.min(win_width, screenWidth);
+        windowWidth = Math.min(windowWidth, screenWidth);
 
         final int screenHeight = screenSize.height - screenInsets.top - screenInsets.bottom;
-        win_height = Math.min(win_height, screenHeight);
+        windowHeight = Math.min(windowHeight, screenHeight);
 
-        int win_x = getIntProperty("appwindow_x", 0);
-        win_x = Math.max(screenInsets.left, win_x);
-        win_x = Math.min(screenWidth + screenInsets.left - win_width, win_x);
+        int windowX = getIntProperty("appwindow_x", 0);
+        windowX = Math.max(screenInsets.left, windowX);
+        windowX = Math.min(screenWidth + screenInsets.left - windowWidth, windowX);
 
-        int win_y = getIntProperty("appwindow_y", 0);
-        win_y = Math.max(screenInsets.top, win_y);
-        win_y = Math.min(screenWidth + screenInsets.top - win_height, win_y);
-        setBounds(win_x, win_y, win_width, win_height);
+        int windowY = getIntProperty("appwindow_y", 0);
+        windowY = Math.max(screenInsets.top, windowY);
+        windowY = Math.min(screenWidth + screenInsets.top - windowHeight, windowY);
+        setBounds(windowX, windowY, windowWidth, windowHeight);
 
         // set the default state (normal/maximized) (PN) (note: this must be done later when partucular initalizations
         // of the windows are ready, perhaps after setVisible is it enough... :-?
@@ -1016,9 +1010,9 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         removeContentComponent();
         int splitType = JSplitPane.VERTICAL_SPLIT;
         String splitProperty = getProperty(J_SPLIT_PANE_SPLIT_TYPE);
-        if (Tools.safeEquals(splitProperty, HORIZONTAL_SPLIT_RIGHT)) {
+        if (Objects.equals(splitProperty, HORIZONTAL_SPLIT_RIGHT)) {
             splitType = JSplitPane.HORIZONTAL_SPLIT;
-        } else if (Tools.safeEquals(splitProperty, VERTICAL_SPLIT_BELOW)) {
+        } else if (Objects.equals(splitProperty, VERTICAL_SPLIT_BELOW)) {
             // default
         } else {
             log.warn("Split type not known: {}", splitProperty);

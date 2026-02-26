@@ -27,9 +27,9 @@ import freemind.common.ScalableJTable;
 import java.awt.*;
 
 /**
- * Taken from http://stackoverflow.com/questions/2316563/how-can-i-sort-java-jtable-with-an-empty-row-and-force-the-empty-row-always-be-l
- *
- * @date 11.03.2015
+ * Taken from <a href="http://stackoverflow.com/questions/2316563/how-can-i-sort-java-jtable-with-an-empty-row-and-force-the-empty-row-always-be-l">...</a>
+ * <p>
+ * {@code @date} 11.03.2015
  */
 public class NewLineTable extends ScalableJTable {
 

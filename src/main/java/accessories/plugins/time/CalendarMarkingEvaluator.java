@@ -32,7 +32,7 @@ import java.util.TreeSet;
 
 /**
  * @author foltin
- * @date 05.07.2015
+ * {@code @date} 05.07.2015
  */
 @Slf4j
 public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {

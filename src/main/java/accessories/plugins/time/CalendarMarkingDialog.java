@@ -20,9 +20,10 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -40,7 +41,6 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     /**
      * -- GETTER --
      *
-     * @return Returns the result.
      */
     @Getter
     private int result = CANCEL;
@@ -130,7 +130,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             JLabel nameLabel = getLabel("Name");
             nameField = new JTextField(80);
             JLabel repetitionTypeLabel = getLabel("Repetition_Type");
-            mRepetitionTypesList = new Vector<>();
+            mRepetitionTypesList = new ArrayList<>();
             mRepetitionTypesList.add(("never"));
             mRepetitionTypesList.add(("yearly"));
             mRepetitionTypesList.add(("yearly_every_nth_day"));
@@ -142,11 +142,11 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             mRepetitionTypesList.add(("weekly"));
             mRepetitionTypesList.add(("weekly_every_nth_day"));
             mRepetitionTypesList.add(("daily"));
-            Vector<String> items = new Vector<>();
+            List<String> items = new ArrayList<>();
             for (String xmlName : mRepetitionTypesList) {
                 items.add(getText(xmlName));
             }
-            repetitionType = new JComboBox<>(items);
+            repetitionType = new JComboBox<>(items.toArray(new String[0]));
             JLabel repeatEachNOccurenceLabel = getLabel("Repeat_Each_N_Occurence");
 
             mRepeatEachNOccurenceModel = new SpinnerNumberModel(1, 1, 100, 1);
@@ -316,7 +316,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     }
 
     boolean ignoreNextEvent = false;
-    private Vector<String> mRepetitionTypesList;
+    private List<String> mRepetitionTypesList;
 
     @Override
     public void propertyChange(PropertyChangeEvent pEvt) {
@@ -351,7 +351,6 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     /**
      * Sets the dates of both start and end to the specified.
      *
-     * @param pCal
      */
     public void setDates(Calendar pCal) {
         endDate.setDate(pCal);

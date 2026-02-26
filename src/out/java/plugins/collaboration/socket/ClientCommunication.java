@@ -133,7 +133,7 @@ public class ClientCommunication extends CommunicationBase {
             }
             // check server version:
             String serverVersion = ((CollaborationWhoAreYou) pCommand).getServerVersion();
-            if (!Tools.safeEquals(ServerCommunication.SERVER_VERSION, serverVersion)) {
+            if (!Objects.equals(ServerCommunication.SERVER_VERSION, serverVersion)) {
                 String errorMessage = Resources.getInstance().format(
                         "Collaboration_wrong_server_version",
                         new Object[]{ServerCommunication.SERVER_VERSION,

@@ -32,7 +32,7 @@ import java.io.*;
 
 /**
  * @author foltin
- * @date 10.04.2014
+ * {@code @date} 10.04.2014
  */
 @Slf4j
 public class RevertActor extends XmlActorAdapter {

@@ -31,7 +31,7 @@ import java.util.LinkedList;
  * Handles selections, focus, etc.
  *
  * @author foltin
- * @date 18.03.2014
+ * {@code @date} 18.03.2014
  */
 public interface ViewAbstraction {
 
@@ -44,7 +44,6 @@ public interface ViewAbstraction {
      * Removes the selection for this node. Take care, that at least one selected node
      * is remaining.
      *
-     * @param node
      */
     void deselect(NodeView node);
 

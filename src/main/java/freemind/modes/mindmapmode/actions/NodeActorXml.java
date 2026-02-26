@@ -37,8 +37,6 @@ public interface NodeActorXml extends ActorXml {
     /**
      * Returns the action pair to set the node @param selected to the current values.
      *
-     * @param model
-     * @param selected
      */
     ActionPair apply(MindMap model, MindMapNode selected);
 

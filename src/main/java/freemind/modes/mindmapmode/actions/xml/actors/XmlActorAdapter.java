@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author foltin
- * @date 16.03.2014
+ * {@code @date} 16.03.2014
  */
 @Slf4j
 public abstract class XmlActorAdapter implements ActorXml {
@@ -45,7 +45,6 @@ public abstract class XmlActorAdapter implements ActorXml {
     }
 
     /**
-     * @return
      * @deprecated replaced by {@link XmlActorAdapter#getExMapFeedback()}
      */
     @Deprecated

@@ -28,7 +28,8 @@ import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import plugins.collaboration.socket.FormDialog;
 import plugins.collaboration.socket.FormDialog.FormDialogValidator;
@@ -66,7 +67,7 @@ public class DatabaseStarter extends DatabaseBasics implements
         // StringProperty bindProperty = new StringProperty(
         // "IP address of the local machine, or 0.0.0.0 if ", "Host");
         final NumberProperty portProperty = getPortProperty();
-        Vector<PropertyControl> controls = new Vector<>();
+        List<PropertyControl> controls = new ArrayList<>();
         controls.add(passwordProperty);
         controls.add(passwordProperty2);
         // controls.add(bindProperty);
@@ -75,7 +76,7 @@ public class DatabaseStarter extends DatabaseBasics implements
         dialog.setUp(controls, new FormDialogValidator() {
             public boolean isValid() {
                 logger.finest("Output valid?");
-                return Tools.safeEquals(passwordProperty.getValue(),
+                return Objects.equals(passwordProperty.getValue(),
                         passwordProperty2.getValue());
             }
         });

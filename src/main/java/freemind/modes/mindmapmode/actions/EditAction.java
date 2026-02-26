@@ -28,15 +28,17 @@ package freemind.modes.mindmapmode.actions;
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
-import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.*;
+import freemind.view.mindmapview.EditNodeBase.EditControl;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 //
@@ -120,13 +122,9 @@ public class EditAction extends MindmapAction {
         }
         // useRichTextInNewLongNodes =
         // c.getController().getProperty("use_rich_text_in_new_long_nodes");
-        boolean editHtml = isHtmlNode
-                || (editLong && Tools.safeEquals(useRichTextInNewLongNodes,
-                "true"));
-        boolean editInternalWysiwyg = editHtml
-                && Tools.safeEquals(htmlEditingOption, "internal-wysiwyg");
-        boolean editExternal = editHtml
-                && Tools.safeEquals(htmlEditingOption, "external");
+        boolean editHtml = isHtmlNode || (editLong && Objects.equals(useRichTextInNewLongNodes, "true"));
+        boolean editInternalWysiwyg = editHtml && Objects.equals(htmlEditingOption, "internal-wysiwyg");
+        boolean editExternal = editHtml && Objects.equals(htmlEditingOption, "external");
 
         if (editHtml && !isHtmlNode) {
             text = HtmlTools.plainToHTML(text);
@@ -134,7 +132,7 @@ public class EditAction extends MindmapAction {
         if (editInternalWysiwyg) {
             EditNodeWYSIWYG editNodeWYSIWYG = new EditNodeWYSIWYG(node, text,
                     firstEvent, mMindMapController,
-                    new EditNodeBase.EditControl() {
+                    new EditControl() {
                         public void cancel() {
                             mMindMapController.setBlocked(false);
                             mCurrentEditDialog = null;
@@ -161,7 +159,7 @@ public class EditAction extends MindmapAction {
         if (editExternal) {
             EditNodeExternalApplication editNodeExternalApplication = new EditNodeExternalApplication(
                     node, text, firstEvent, mMindMapController,
-                    new EditNodeBase.EditControl() {
+                    new EditControl() {
                         public void cancel() {
                             mMindMapController.setBlocked(false);
                             mCurrentEditDialog = null;
@@ -189,7 +187,7 @@ public class EditAction extends MindmapAction {
         if (isLongNode || editLong) {
             EditNodeDialog nodeEditDialog = new EditNodeDialog(node, text,
                     firstEvent, mMindMapController,
-                    new EditNodeBase.EditControl() {
+                    new EditControl() {
 
                         public void cancel() {
                             mMindMapController.setBlocked(false);
@@ -215,14 +213,14 @@ public class EditAction extends MindmapAction {
         }
         // inline editing:
         EditNodeTextField textfield = new EditNodeTextField(node, text,
-                firstEvent, mMindMapController, new EditNodeBase.EditControl() {
+                firstEvent, mMindMapController, new EditControl() {
 
             public void cancel() {
                 if (isNewNode) { // delete also the node and set focus
                     // to the parent
                     mMindMapController.getView()
                             .selectAsTheOnlyOneSelected(node);
-                    Vector<MindMapNode> nodeList = new Vector<>();
+                    List<MindMapNode> nodeList = new ArrayList<>();
                     nodeList.add(node.getModel());
                     mMindMapController.cut(nodeList);
                     mMindMapController.select(prevSelected);

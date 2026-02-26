@@ -26,13 +26,11 @@ import javax.swing.*;
 
 /**
  * @author foltin
- * @date 06.08.2012
+ * {@code @date} 06.08.2012
  */
 public class PasswordProperty extends StringProperty {
 
     /**
-     * @param pDescription
-     * @param pLabel
      */
     public PasswordProperty(String pDescription, String pLabel) {
         super(pDescription, pLabel);

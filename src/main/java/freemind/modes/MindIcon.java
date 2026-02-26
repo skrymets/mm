@@ -26,9 +26,10 @@ import lombok.Setter;
 import javax.swing.*;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  * This class represents a MindIcon than can be applied to a node or a whole
@@ -41,7 +42,6 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
      * -- SETTER --
      *  Set the value of name.
      *
-     * @param name Value to assign to name.
      */ /* here, we must check, whether the name is allowed. */ // DanPolansky: I suggest to avoid any checking. If the icon with the
     // name
     // does not exist, let's keep the name and save it again anyway. Let us
@@ -65,7 +65,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
      * Stores the once created ImageIcon.
      */
     private ImageIcon associatedIcon;
-    private static Vector<String> mAllIconNames;
+    private static List<String> mAllIconNames;
     private static ImageIcon iconNotFound;
     /**
      * Set of all created icons. Name -> MindIcon
@@ -81,9 +81,6 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
         associatedIcon = null;
     }
 
-    /**
-     *
-     */
     private MindIcon(String name, ImageIcon icon) {
         setName(name);
         associatedIcon = icon;
@@ -172,11 +169,11 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
         return associatedIcon;
     }
 
-    public static Vector<String> getAllIconNames() {
+    public static List<String> getAllIconNames() {
         if (mAllIconNames != null) {
             return mAllIconNames;
         }
-        Vector<String> mAllIconNames = new Vector<>();
+        List<String> mAllIconNames = new ArrayList<>();
         String icons = Resources.getInstance().getProperty(
                 PROPERTY_STRING_ICONS_LIST);
         StringTokenizer tokenizer = new StringTokenizer(icons, ";");

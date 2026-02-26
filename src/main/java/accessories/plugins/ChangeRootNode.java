@@ -39,15 +39,16 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Changes the root node to another one What happens with clouds? This is ok, as
  * it can be removed afterwards.
  *
  * @author foltin
- * @date 01.10.2011
+ * {@code @date} 01.10.2011
  */
 @Slf4j
 public class ChangeRootNode extends MindMapNodeHookAdapter {
@@ -113,15 +114,15 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
                 // change the root node:
                 mMap.changeRoot(focussed);
                 // remove all viewers:
-                Vector<MindMapNode> nodes = new Vector<>();
+                List<MindMapNode> nodes = new ArrayList<>();
                 nodes.add(focussed);
                 MapView view = controller.getView();
                 while (!nodes.isEmpty()) {
-                    MindMapNode child = nodes.firstElement();
+                    MindMapNode child = nodes.get(0);
                     log.trace("Removing viewers for {}", child);
                     nodes.remove(0);
                     nodes.addAll(child.getChildren());
-                    Collection<NodeView> viewers = new Vector<>(view.getViewers(child));
+                    Collection<NodeView> viewers = new ArrayList<>(view.getViewers(child));
                     for (NodeView viewer : viewers) {
                         view.removeViewer(child, viewer);
                     }
@@ -141,7 +142,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
                 controller.nodeChanged(focussed);
                 log.trace("layout done.");
                 controller.select(focussed,
-                        Tools.getVectorWithSingleElement(focussed));
+                        Tools.getSingletonList(focussed));
                 controller.centerNode(focussed);
                 controller.obtainFocusForSelected();
             }

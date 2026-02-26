@@ -48,7 +48,7 @@ public abstract class AbstractXmlAction extends MindmapAction {
         this.controller = controller;
     }
 
-    final public void actionPerformed(ActionEvent arg0) {
+    public final void actionPerformed(ActionEvent arg0) {
         xmlActionPerformed(arg0);
     }
 

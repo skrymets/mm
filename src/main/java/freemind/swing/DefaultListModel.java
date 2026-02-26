@@ -6,7 +6,7 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class DefaultListModel<E> extends AbstractListModel<E> {
-    private final Vector<E> delegate = new Vector<>();
+    private final ArrayList<E> delegate = new ArrayList<>();
 
     /**
      * Returns the number of components in this list.
@@ -39,7 +39,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @see #get(int)
      */
     public E getElementAt(int index) {
-        return delegate.elementAt(index);
+        return delegate.get(index);
     }
 
     /**
@@ -48,16 +48,16 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * else an <code>IndexOutOfBoundsException</code> is thrown.
      *
      * @param anArray the array into which the components get copied
-     * @see Vector#copyInto(Object[])
+     * @see ArrayList#toArray(Object[])
      */
     public void copyInto(Object[] anArray) {
-        delegate.copyInto(anArray);
+        delegate.toArray(anArray);
     }
 
     /**
      * Trims the capacity of this list to be the list's current size.
      *
-     * @see Vector#trimToSize()
+     * @see ArrayList#trimToSize()
      */
     public void trimToSize() {
         delegate.trimToSize();
@@ -69,7 +69,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * the minimum capacity argument.
      *
      * @param minCapacity the desired minimum capacity
-     * @see Vector#ensureCapacity(int)
+     * @see ArrayList#ensureCapacity(int)
      */
     public void ensureCapacity(int minCapacity) {
         delegate.ensureCapacity(minCapacity);
@@ -79,11 +79,14 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * Sets the size of this list.
      *
      * @param newSize the new size of this list
-     * @see Vector#setSize(int)
      */
     public void setSize(int newSize) {
         int oldSize = delegate.size();
-        delegate.setSize(newSize);
+        if (newSize < oldSize) {
+            delegate.subList(newSize, oldSize).clear();
+        } else {
+            while (delegate.size() < newSize) delegate.add(null);
+        }
         if (oldSize > newSize) {
             fireIntervalRemoved(this, newSize, oldSize - 1);
         } else if (oldSize < newSize) {
@@ -93,19 +96,21 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
 
     /**
      * Returns the current capacity of this list.
+     * <p>
+     * Since ArrayList does not expose its internal capacity,
+     * this method returns the current size as an approximation.
      *
-     * @return the current capacity
-     * @see Vector#capacity()
+     * @return the current size of the list
      */
     public int capacity() {
-        return delegate.capacity();
+        return delegate.size();
     }
 
     /**
      * Returns the number of components in this list.
      *
      * @return the number of components in this list
-     * @see Vector#size()
+     * @see ArrayList#size()
      */
     public int size() {
         return delegate.size();
@@ -117,7 +122,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @return <code>true</code> if and only if this list has
      * no components, that is, its size is zero;
      * <code>false</code> otherwise
-     * @see Vector#isEmpty()
+     * @see ArrayList#isEmpty()
      */
     public boolean isEmpty() {
         return delegate.isEmpty();
@@ -127,10 +132,10 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * Returns an enumeration of the components of this list.
      *
      * @return an enumeration of the components of this list
-     * @see Vector#elements()
+     * @see Collections#enumeration(Collection)
      */
     public Enumeration<E> elements() {
-        return delegate.elements();
+        return Collections.enumeration(delegate);
     }
 
     /**
@@ -139,7 +144,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param elem an object
      * @return <code>true</code> if the specified object
      * is the same as a component in this list
-     * @see Vector#contains(Object)
+     * @see ArrayList#contains(Object)
      */
     public boolean contains(Object elem) {
         return delegate.contains(elem);
@@ -151,7 +156,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param elem an object
      * @return the index of the first occurrence of the argument in this
      * list; returns <code>-1</code> if the object is not found
-     * @see Vector#indexOf(Object)
+     * @see ArrayList#indexOf(Object)
      */
     public int indexOf(Object elem) {
         return delegate.indexOf(elem);
@@ -166,10 +171,12 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @return the index where the first occurrence of <code>elem</code>
      * is found after <code>index</code>; returns <code>-1</code>
      * if the <code>elem</code> is not found in the list
-     * @see Vector#indexOf(Object, int)
      */
     public int indexOf(Object elem, int index) {
-        return delegate.indexOf(elem, index);
+        for (int i = index; i < delegate.size(); i++) {
+            if (Objects.equals(elem, delegate.get(i))) return i;
+        }
+        return -1;
     }
 
     /**
@@ -178,7 +185,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param elem the desired component
      * @return the index of the last occurrence of <code>elem</code>
      * in the list; returns <code>-1</code> if the object is not found
-     * @see Vector#lastIndexOf(Object)
+     * @see ArrayList#lastIndexOf(Object)
      */
     public int lastIndexOf(Object elem) {
         return delegate.lastIndexOf(elem);
@@ -193,10 +200,12 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @return the index of the last occurrence of the <code>elem</code>
      * in this list at position less than <code>index</code>;
      * returns <code>-1</code> if the object is not found
-     * @see Vector#lastIndexOf(Object, int)
      */
     public int lastIndexOf(Object elem, int index) {
-        return delegate.lastIndexOf(elem, index);
+        for (int i = index; i >= 0; i--) {
+            if (Objects.equals(elem, delegate.get(i))) return i;
+        }
+        return -1;
     }
 
     /**
@@ -212,34 +221,33 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param index an index into this list
      * @return the component at the specified index
      * @see #get(int)
-     * @see Vector#elementAt(int)
      */
     public E elementAt(int index) {
-        return delegate.elementAt(index);
+        return delegate.get(index);
     }
 
     /**
      * Returns the first component of this list.
      * Throws a <code>NoSuchElementException</code> if this
-     * vector has no components.
+     * list has no components.
      *
      * @return the first component of this list
-     * @see Vector#firstElement()
      */
     public E firstElement() {
-        return delegate.firstElement();
+        if (delegate.isEmpty()) throw new NoSuchElementException();
+        return delegate.get(0);
     }
 
     /**
      * Returns the last component of the list.
-     * Throws a <code>NoSuchElementException</code> if this vector
+     * Throws a <code>NoSuchElementException</code> if this list
      * has no components.
      *
      * @return the last component of the list
-     * @see Vector#lastElement()
      */
     public E lastElement() {
-        return delegate.lastElement();
+        if (delegate.isEmpty()) throw new NoSuchElementException();
+        return delegate.get(delegate.size() - 1);
     }
 
     /**
@@ -258,10 +266,9 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param element what the component is to be set to
      * @param index   the specified index
      * @see #set(int, Object)
-     * @see Vector#setElementAt(Object, int)
      */
     public void setElementAt(E element, int index) {
-        delegate.setElementAt(element, index);
+        delegate.set(index, element);
         fireContentsChanged(this, index, index);
     }
 
@@ -278,10 +285,9 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      *
      * @param index the index of the object to remove
      * @see #remove(int)
-     * @see Vector#removeElementAt(int)
      */
     public void removeElementAt(int index) {
-        delegate.removeElementAt(index);
+        delegate.remove(index);
         fireIntervalRemoved(this, index, index);
     }
 
@@ -301,10 +307,9 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param index   where to insert the new component
      * @throws ArrayIndexOutOfBoundsException if the index was invalid
      * @see #add(int, Object)
-     * @see Vector#insertElementAt(Object, int)
      */
     public void insertElementAt(E element, int index) {
-        delegate.insertElementAt(element, index);
+        delegate.add(index, element);
         fireIntervalAdded(this, index, index);
     }
 
@@ -312,11 +317,10 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * Adds the specified component to the end of this list.
      *
      * @param element the component to be added
-     * @see Vector#addElement(Object)
      */
     public void addElement(E element) {
         int index = delegate.size();
-        delegate.addElement(element);
+        delegate.add(element);
         fireIntervalAdded(this, index, index);
     }
 
@@ -327,11 +331,10 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param obj the component to be removed
      * @return <code>true</code> if the argument was a component of this
      * list; <code>false</code> otherwise
-     * @see Vector#removeElement(Object)
      */
     public boolean removeElement(Object obj) {
         int index = indexOf(obj);
-        boolean rv = delegate.removeElement(obj);
+        boolean rv = delegate.remove(obj);
         if (index >= 0) {
             fireIntervalRemoved(this, index, index);
         }
@@ -348,11 +351,10 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * </blockquote>
      *
      * @see #clear()
-     * @see Vector#removeAllElements()
      */
     public void removeAllElements() {
         int index1 = delegate.size() - 1;
-        delegate.removeAllElements();
+        delegate.clear();
         if (index1 >= 0) {
             fireIntervalRemoved(this, 0, index1);
         }
@@ -379,12 +381,9 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * correct order.
      *
      * @return an array containing the elements of the list
-     * @see Vector#toArray()
      */
     public Object[] toArray() {
-        Object[] rv = new Object[delegate.size()];
-        delegate.copyInto(rv);
-        return rv;
+        return delegate.toArray();
     }
 
     /**
@@ -397,7 +396,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param index index of element to return
      */
     public E get(int index) {
-        return delegate.elementAt(index);
+        return delegate.get(index);
     }
 
     /**
@@ -413,8 +412,8 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @return the element previously at the specified position
      */
     public E set(int index, E element) {
-        E rv = delegate.elementAt(index);
-        delegate.setElementAt(element, index);
+        E rv = delegate.get(index);
+        delegate.set(index, element);
         fireContentsChanged(this, index, index);
         return rv;
     }
@@ -430,7 +429,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @param element element to be inserted
      */
     public void add(int index, E element) {
-        delegate.insertElementAt(element, index);
+        delegate.add(index, element);
         fireIntervalAdded(this, index, index);
     }
 
@@ -446,8 +445,8 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      * @return the element previously at the specified position
      */
     public E remove(int index) {
-        E rv = delegate.elementAt(index);
-        delegate.removeElementAt(index);
+        E rv = delegate.get(index);
+        delegate.remove(index);
         fireIntervalRemoved(this, index, index);
         return rv;
     }
@@ -458,7 +457,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
      */
     public void clear() {
         int index1 = delegate.size() - 1;
-        delegate.removeAllElements();
+        delegate.clear();
         if (index1 >= 0) {
             fireIntervalRemoved(this, 0, index1);
         }
@@ -483,9 +482,7 @@ public class DefaultListModel<E> extends AbstractListModel<E> {
         if (fromIndex > toIndex) {
             throw new IllegalArgumentException("fromIndex must be <= toIndex");
         }
-        for (int i = toIndex; i >= fromIndex; i--) {
-            delegate.removeElementAt(i);
-        }
+        delegate.subList(fromIndex, toIndex + 1).clear();
         fireIntervalRemoved(this, fromIndex, toIndex);
     }
 

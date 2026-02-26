@@ -29,7 +29,8 @@ import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 
@@ -101,7 +102,7 @@ public class MindMapMaster extends SocketMaster implements PermanentNodeHook,
                         for (int i = 0; i < sessionData.mConnections.size(); i++) {
                             try {
                                 final ServerCommunication connection = sessionData.mConnections
-                                        .elementAt(i);
+                                        .get(i);
                                 /*
                                  * to each server, the IP address is chosen that
                                  * belongs to this connection. E.g. if the
@@ -159,7 +160,7 @@ public class MindMapMaster extends SocketMaster implements PermanentNodeHook,
         // StringProperty bindProperty = new StringProperty(
         // "IP address of the local machine, or 0.0.0.0 if ", "Host");
         final NumberProperty portProperty = getPortProperty();
-        Vector<PropertyControl> controls = new Vector<>();
+        List<PropertyControl> controls = new ArrayList<>();
         controls.add(passwordProperty);
         controls.add(passwordProperty2);
         // controls.add(bindProperty);
@@ -168,7 +169,7 @@ public class MindMapMaster extends SocketMaster implements PermanentNodeHook,
         dialog.setUp(controls, new FormDialogValidator() {
             public boolean isValid() {
                 logger.finest("Output valid?");
-                return Tools.safeEquals(passwordProperty.getValue(),
+                return Objects.equals(passwordProperty.getValue(),
                         passwordProperty2.getValue());
             }
         });
@@ -252,7 +253,7 @@ public class MindMapMaster extends SocketMaster implements PermanentNodeHook,
         synchronized (sessionData.mConnections) {
             for (int i = 0; i < sessionData.mConnections.size(); i++) {
                 final ServerCommunication serverCommunication = sessionData.mConnections
-                        .elementAt(i);
+                        .get(i);
                 try {
                     serverCommunication.send(goodbye);
                     serverCommunication.commitSuicide();

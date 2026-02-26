@@ -29,9 +29,11 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 /**
  * @author foltin
- * @date 23.04.2014
+ * {@code @date} 23.04.2014
  */
 @Slf4j
 public class ChangeNoteTextActor extends XmlActorAdapter {
@@ -46,7 +48,7 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
             MindMapNode node = getNodeFromID(noteTextAction.getNode());
             String newText = noteTextAction.getText();
             String oldText = node.getNoteText();
-            if (!Tools.safeEquals(newText, oldText)) {
+            if (!Objects.equals(newText, oldText)) {
                 node.setNoteText(newText);
                 getExMapFeedback().nodeChanged(node);
             }
@@ -70,7 +72,7 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
 
     public void setNoteText(MindMapNode node, String text) {
         String oldNoteText = node.getNoteText();
-        if (Tools.safeEquals(text, oldNoteText)) {
+        if (Objects.equals(text, oldNoteText)) {
             // they are equal.
             return;
         }

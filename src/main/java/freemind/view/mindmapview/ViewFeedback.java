@@ -31,85 +31,68 @@ import java.awt.event.MouseWheelEvent;
  * to offer view related methods.
  *
  * @author foltin
- * @date 25.04.2014
+ * {@code @date} 25.04.2014
  */
 public interface ViewFeedback {
 
     /**
-     * @param pNode
-     * @param pIsSelected
      */
     void changeSelection(NodeView pNode, boolean pIsSelected);
 
     /**
-     * @param pNode
      */
     void onLostFocusNode(NodeView pNode);
 
     /**
-     * @param pNode
      */
     void onFocusNode(NodeView pNode);
 
     /**
-     * @param pModel
-     * @param pFold  true means, that the node should be folded.
      */
     void setFolded(MindMapNode pModel, boolean pFold);
 
     /**
-     * @param pNewView
      */
     void onViewCreatedHook(NodeView pNewView);
 
     /**
-     * @param pNodeView
      */
     void onViewRemovedHook(NodeView pNodeView);
 
     /**
-     * @param pResourceId
      * @return the setting of freemind.properties resp. auto.properties.
      */
     String getProperty(String pResourceId);
 
     /**
-     * @return
      */
     Font getDefaultFont();
 
     /**
-     * @return
      */
     NodeMouseMotionListener getNodeMouseMotionListener();
 
     /**
-     * @return
      */
     NodeMotionListener getNodeMotionListener();
 
     /**
-     * @return
      */
     NodeKeyListener getNodeKeyListener();
 
     /**
-     * @return
      */
     NodeDragListener getNodeDragListener();
 
     /**
-     * @return
      */
     NodeDropListener getNodeDropListener();
 
     /**
-     * @return
      */
     MapMouseMotionListener getMapMouseMotionListener();
 
     /**
-     * @return
      */
     MapMouseWheelListener getMapMouseWheelListener();
 

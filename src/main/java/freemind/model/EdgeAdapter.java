@@ -28,6 +28,7 @@ import freemind.modes.MapFeedback;
 import freemind.preferences.FreemindPropertyListener;
 
 import java.awt.*;
+import java.util.Objects;
 
 public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 
@@ -65,10 +66,6 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
             Controller.addPropertyChangeListener(listener);
         }
     }
-
-    //
-    // Attributes
-    //
 
     public Color getColor() {
         if (color == null) {
@@ -184,13 +181,13 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
      */
     public int getStyleAsInt() {
         final String edgeStyle = getStyle();
-        if (Tools.safeEquals(edgeStyle, EDGESTYLE_LINEAR)) {
+        if (Objects.equals(edgeStyle, EDGESTYLE_LINEAR)) {
             return INT_EDGESTYLE_LINEAR;
-        } else if (Tools.safeEquals(edgeStyle, EDGESTYLE_BEZIER)) {
+        } else if (Objects.equals(edgeStyle, EDGESTYLE_BEZIER)) {
             return INT_EDGESTYLE_BEZIER;
-        } else if (Tools.safeEquals(edgeStyle, EDGESTYLE_SHARP_LINEAR)) {
+        } else if (Objects.equals(edgeStyle, EDGESTYLE_SHARP_LINEAR)) {
             return INT_EDGESTYLE_SHARP_LINEAR;
-        } else if (Tools.safeEquals(edgeStyle, EDGESTYLE_SHARP_BEZIER)) {
+        } else if (Objects.equals(edgeStyle, EDGESTYLE_SHARP_BEZIER)) {
             return INT_EDGESTYLE_SHARP_BEZIER;
         } else {
             throw new IllegalArgumentException("Unknown Edge Style " + edgeStyle);

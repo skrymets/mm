@@ -28,10 +28,10 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-import java.util.Vector;
 
-import freemind.main.FreeMindSecurityManager;
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
 import freemind.modes.MapAdapter;
@@ -68,7 +68,7 @@ public class ToolsTests extends FreeMindTestBase {
     public void testArgsToUrlConversion() throws Exception {
         String[] args = new String[]{"/home/bla", "--quiet", "c:\\test.mm"};
         String arrayToUrls = Tools.arrayToUrls(args);
-        Vector<URL> urlVector = Tools.urlStringToUrls(arrayToUrls);
+        List<URL> urlVector = Tools.urlStringToUrls(arrayToUrls);
         assertEquals(args.length, urlVector.size());
         for (URL urli : urlVector) {
             System.out.println(urli);

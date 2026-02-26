@@ -31,7 +31,6 @@ import freemind.controller.actions.generated.instance.AttributeTableProperties;
 import freemind.controller.actions.generated.instance.TableColumnOrder;
 import freemind.extensions.HookRegistration;
 import freemind.main.FreeMind;
-import freemind.main.Tools;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
@@ -56,7 +55,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Vector;
+import java.util.List;
+import java.util.Objects;
 
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
@@ -100,7 +100,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         }
 
         /**
-         * @param node
          */
         private void setModelFromNode(MindMapNode node) {
             mAttributeTableModel.clear();
@@ -150,7 +149,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         /**
          * Returns true, if the attributes are in the same order and of the same content.
          *
-         * @return
          */
         public boolean areModelAndNodeAttributesEqual() {
             boolean equal = false;
@@ -159,7 +157,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
                 equal = true;
                 for (AttributeHolder holder : mAttributeTableModel.mData) {
                     Attribute attribute = mCurrentNode.getAttribute(index);
-                    if (Tools.safeEquals(holder.mKey, attribute.getName()) && Tools.safeEquals(holder.mValue, attribute.getValue())) {
+                    if (Objects.equals(holder.mKey, attribute.getName()) && Objects.equals(holder.mValue, attribute.getValue())) {
                         // ok
                     } else {
                         equal = false;
@@ -202,7 +200,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
 
     /**
      * @author foltin
-     * @date 4.09.2014
+     * {@code @date} 4.09.2014
      */
     @SuppressWarnings("serial")
     public final class AttributeTableModel extends AbstractTableModel {
@@ -211,7 +209,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
          */
         private final String[] COLUMNS = new String[]{KEY_COLUMN_TEXT,
                 VALUE_COLUMN_TEXT};
-        final Vector<AttributeHolder> mData = new Vector<>();
+        final List<AttributeHolder> mData = new ArrayList<>();
         private final TextTranslator mTextTranslator;
 
         /**
@@ -223,8 +221,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         }
 
         /**
-         * @param pAttribute
-         * @param pMakeMapDirty TODO
          */
         public void addAttributeHolder(Attribute pAttribute, boolean pMakeMapDirty) {
             AttributeHolder holder = new AttributeHolder();
@@ -234,9 +230,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         }
 
         /**
-         * @param pAttribute
-         * @param pMakeMapDirty if true, the map is made dirty to reflect the change.
-         * @return
          */
         public int addAttributeHolder(AttributeHolder pAttribute, boolean pMakeMapDirty) {
             mData.add(pAttribute);
@@ -343,11 +336,11 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
             String newValue = (String) pAValue;
             switch (pColumnIndex) {
                 case KEY_COLUMN:
-                    isUnchanged = Tools.safeEquals(holder.mKey, newValue);
+                    isUnchanged = Objects.equals(holder.mKey, newValue);
                     holder.mKey = newValue;
                     break;
                 case VALUE_COLUMN:
-                    isUnchanged = Tools.safeEquals(holder.mValue, newValue);
+                    isUnchanged = Objects.equals(holder.mValue, newValue);
                     holder.mValue = newValue;
                     break;
             }

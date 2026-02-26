@@ -26,7 +26,12 @@ import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Interface for the registry, which manages the ids of nodes and the existing
@@ -42,44 +47,37 @@ public class MindMapLinkRegistry {
      * structure, but reversed.
      *
      * @author foltin
-     * @date 23.01.2012
+     * {@code @date} 23.01.2012
      */
     @SuppressWarnings("serial")
-    private class SynchronousVector extends Vector<MindMapLink> {
-        /*
-         * (non-Javadoc)
-         *
-         * @see java.util.Vector#add(java.lang.Object)
-         */
-        public synchronized boolean add(MindMapLink pE) {
-            boolean add = super.add(pE);
+    private class SynchronousLinksList extends ArrayList<MindMapLink> {
+
+        @Override
+        public boolean add(MindMapLink pE) {
+            boolean added = super.add(pE);
             if (pE instanceof MindMapLink) {
                 MindMapLink link = pE;
                 MindMapNode source = link.getSource();
                 if (!mSourceToLinks.containsKey(source)) {
-                    mSourceToLinks.put(source, new Vector<>());
+                    mSourceToLinks.put(source, new ArrayList<>());
                 }
                 mSourceToLinks.get(source).add(pE);
             }
-            return add;
+            return added;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see java.util.Vector#removeElementAt(int)
-         */
-        public synchronized void removeElementAt(int pIndex) {
+        @Override
+        public MindMapLink remove(int pIndex) {
             MindMapLink link = get(pIndex);
             MindMapNode source = link.getSource();
-            Vector<MindMapLink> vector = mSourceToLinks.get(source);
-            if (vector != null) {
-                vector.remove(link);
-                if (vector.isEmpty()) {
+            List<MindMapLink> list = mSourceToLinks.get(source);
+            if (list != null) {
+                list.remove(link);
+                if (list.isEmpty()) {
                     mSourceToLinks.remove(source);
                 }
             }
-            super.removeElementAt(pIndex);
+            return super.remove(pIndex);
         }
 
     }
@@ -87,7 +85,7 @@ public class MindMapLinkRegistry {
     /**
      * source -> vector of links with same source
      */
-    protected final HashMap<MindMapNode, Vector<MindMapLink>> mSourceToLinks = new HashMap<>();
+    protected final HashMap<MindMapNode, List<MindMapLink>> mSourceToLinks = new HashMap<>();
 
     // //////////////////////////////////////////////////////////////////////////////////////
     // // Attributes /////
@@ -104,7 +102,7 @@ public class MindMapLinkRegistry {
     /**
      * id -> vector of links whose TargetToID.get(target) == id.
      */
-    protected final HashMap<String, Vector<MindMapLink>> mIdToLinks;
+    protected final HashMap<String, List<MindMapLink>> mIdToLinks;
     /**
      * id -> link
      */
@@ -180,7 +178,6 @@ public class MindMapLinkRegistry {
     }
 
     /**
-     * @param node
      * @return null, if not registered.
      */
     public String getState(MindMapNode node) {
@@ -194,21 +191,20 @@ public class MindMapLinkRegistry {
      * the argument.
      */
     public MindMapNode getTargetForId(String ID) {
-        final MindMapNode target = mIdToTarget.get(ID);
-        return target;
+        return mIdToTarget.get(ID);
     }
 
     /**
      * @return a Vector of {@link MindMapLink}s
      */
-    private Vector<MindMapLink> getAssignedLinksVector(String newId) {
+    private List<MindMapLink> getAssignedLinksVector(String newId) {
         String id = newId;
         // look, if target is already present:
-        Vector<MindMapLink> vec;
+        List<MindMapLink> vec;
         if (mIdToLinks.containsKey(id)) {
             vec = mIdToLinks.get(id);
         } else {
-            vec = new SynchronousVector();
+            vec = new SynchronousLinksList();
             mIdToLinks.put(id, vec);
         }
 
@@ -223,7 +219,7 @@ public class MindMapLinkRegistry {
     public void deregisterLinkTarget(MindMapNode target)
             throws java.lang.IllegalArgumentException {
         // deregister all links :
-        Vector<MindMapLink> links = getAllLinks(target);
+        List<MindMapLink> links = getAllLinks(target);
         for (int i = links.size() - 1; i >= 0; --i) {
             MindMapLink link = links.get(i);
             deregisterLink(link);
@@ -257,7 +253,7 @@ public class MindMapLinkRegistry {
         MindMapNode target = link.getTarget();
         log.trace("Register link ({}) from source node:{} to target {}", link, source, target);
         String id = _registerLinkTarget(target);
-        Vector<MindMapLink> vec = getAssignedLinksVector(id);
+        List<MindMapLink> vec = getAssignedLinksVector(id);
         // already present?
         for (MindMapLink mindMapLink : vec) {
             if (mindMapLink == link)
@@ -283,12 +279,12 @@ public class MindMapLinkRegistry {
     public void deregisterLink(MindMapLink link) {
         MindMapNode target = link.getTarget();
         String id = _registerLinkTarget(target);
-        Vector<MindMapLink> vec = getAssignedLinksVector(id);
+        List<MindMapLink> vec = getAssignedLinksVector(id);
         for (int i = vec.size() - 1; i >= 0; --i) {
             // log.trace("Test for equal node:"+source+" to vector(i) " +
             // vec.get(i));
             if (vec.get(i) == link) {
-                vec.removeElementAt(i);
+                vec.remove(i);
                 log.info("Deregister link  ({}) from source node:{} to target {}", link, link.getSource(), target);
             }
         }
@@ -310,12 +306,12 @@ public class MindMapLinkRegistry {
      * @return Returns a Vector of {@link MindMapNode}s that point to the given
      * target node.
      */
-    public Vector<MindMapNode> getAllSources(MindMapNode target) {
-        Vector<MindMapNode> returnValue;
-        returnValue = new Vector<>();
+    public List<MindMapNode> getAllSources(MindMapNode target) {
+        List<MindMapNode> returnValue;
+        returnValue = new ArrayList<>();
         String id = getState(target);
         if (id != null) {
-            Vector<MindMapLink> vec = getAssignedLinksVector(id);
+            List<MindMapLink> vec = getAssignedLinksVector(id);
             for (MindMapLink mindMapLink : vec) {
                 returnValue.add(mindMapLink.getSource());
             }
@@ -326,8 +322,8 @@ public class MindMapLinkRegistry {
     /**
      * @return returns all links from or to this node.
      */
-    public Vector<MindMapLink> getAllLinks(MindMapNode node) {
-        Vector<MindMapLink> returnValue = new Vector<>();
+    public List<MindMapLink> getAllLinks(MindMapNode node) {
+        List<MindMapLink> returnValue = new ArrayList<>();
         returnValue.addAll(getAllLinksIntoMe(node));
         returnValue.addAll(getAllLinksFromMe(node));
         // Dimitry : log is a performance killer here
@@ -338,11 +334,11 @@ public class MindMapLinkRegistry {
     /**
      * @return returns all links to this node as {@link MindMapLink} vector.
      */
-    public Vector<MindMapLink> getAllLinksIntoMe(MindMapNode target) {
-        Vector<MindMapLink> returnValue = new Vector<>();
+    public List<MindMapLink> getAllLinksIntoMe(MindMapNode target) {
+        List<MindMapLink> returnValue = new ArrayList<>();
         String id = getState(target);
         if (id != null) {
-            Vector<MindMapLink> vec = getAssignedLinksVector(id);
+            List<MindMapLink> vec = getAssignedLinksVector(id);
             /* "clone" */
             returnValue.addAll(vec);
         }
@@ -352,8 +348,8 @@ public class MindMapLinkRegistry {
     /**
      * @return returns all links from this node as {@link MindMapLink} vector.
      */
-    public Vector<MindMapLink> getAllLinksFromMe(MindMapNode source) {
-        Vector<MindMapLink> returnValue = new Vector<>();
+    public List<MindMapLink> getAllLinksFromMe(MindMapNode source) {
+        List<MindMapLink> returnValue = new ArrayList<>();
         Collection<MindMapLink> vec = mSourceToLinks.get(source);
         if (vec != null) {
             returnValue.addAll(vec);

@@ -30,15 +30,12 @@ import freemind.view.mindmapview.MapView;
  * parts of links (ie. source, destination or both).
  *
  * @author foltin
- * @date 27.10.2012
+ * {@code @date} 27.10.2012
  */
 public class ArrowLinkTarget extends ArrowLinkAdapter {
     private String mSourceLabel;
 
     /**
-     * @param pSource
-     * @param pTarget      I am the target!
-     * @param pMapFeedback
      */
     public ArrowLinkTarget(MindMapNode pSource, MindMapNode pTarget,
                            MapFeedback pMapFeedback) {

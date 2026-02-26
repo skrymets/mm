@@ -30,12 +30,11 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * @date 01.04.2014
+ * {@code @date} 01.04.2014
  */
 public class ChangeArrowsInArrowLinkActor extends XmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public ChangeArrowsInArrowLinkActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

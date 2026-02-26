@@ -25,13 +25,13 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.MenuItemSelectedListener;
-import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 import javax.swing.*;
+import java.util.Objects;
 
 @SuppressWarnings("serial")
 public class NodeStyleAction extends NodeGeneralAction implements MenuItemSelectedListener {
@@ -55,6 +55,6 @@ public class NodeStyleAction extends NodeGeneralAction implements MenuItemSelect
         MindMapNode selected = modeController.getSelected();
         if (!selected.hasStyle())
             return false;
-        return Tools.safeEquals(mStyle, selected.getStyle());
+        return Objects.equals(mStyle, selected.getStyle());
     }
 }

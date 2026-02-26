@@ -196,8 +196,6 @@ public interface MindMapNode extends MutableTreeNode {
      * If the test node is identical or in the same family and elder as the
      * object. node.isChild..(parent) == true means: parent -> .. -> node exists
      * in the tree.
-     *
-     * @see isDecendantOf
      */
     boolean isDescendantOfOrEqual(MindMapNode pParentNode);
 
@@ -294,7 +292,6 @@ public interface MindMapNode extends MutableTreeNode {
     /**
      * Removes all hooks from this node.
      *
-     * @param node
      */
     void removeAllHooks();
 
@@ -315,8 +312,6 @@ public interface MindMapNode extends MutableTreeNode {
 
     /**
      * Is only used to store encrypted content of an encrypted mind map node.
-     *
-     * @see MindMapNode.setAdditionalInfo(String)
      */
     String getAdditionalInfo();
 
@@ -421,13 +416,11 @@ public interface MindMapNode extends MutableTreeNode {
     void insertAttribute(int pPosition, Attribute pAttribute);
 
     /**
-     * @param pAttribute
      * @return the index of the new attribute
      */
     int addAttribute(Attribute pAttribute);
 
     /**
-     * @param pPosition
      */
     void removeAttribute(int pPosition);
 

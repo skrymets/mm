@@ -34,7 +34,7 @@ import java.io.IOException;
 
 /**
  * @author foltin
- * @date 18.10.2011
+ * {@code @date} 18.10.2011
  */
 @SuppressWarnings("serial")
 @Slf4j

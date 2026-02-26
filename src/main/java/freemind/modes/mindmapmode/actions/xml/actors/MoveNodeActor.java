@@ -30,12 +30,11 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * @date 27.03.2014
+ * {@code @date} 27.03.2014
  */
 public class MoveNodeActor extends NodeXmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public MoveNodeActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

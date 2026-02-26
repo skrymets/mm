@@ -33,7 +33,7 @@ import java.util.List;
  * a MindMap and its descendants.
  *
  * @author foltin
- * @date 30.01.2014
+ * {@code @date} 30.01.2014
  */
 public interface MapFeedback {
     /**
@@ -60,13 +60,11 @@ public interface MapFeedback {
     void paste(MindMapNode pNode, MindMapNode pParent);
 
     /**
-     * @param pTextId
      * @return the string from Resources_<lang>.properties belonging to the pResourceId.
      */
     String getResourceString(String pTextId);
 
     /**
-     * @param pResourceId
      * @return the setting of freemind.properties resp. auto.properties.
      */
     String getProperty(String pResourceId);
@@ -78,18 +76,14 @@ public interface MapFeedback {
     /**
      * Show the message to the user.
      *
-     * @param pFormat
      */
     void out(String pFormat);
 
     /**
-     * @return
      */
     Font getDefaultFont();
 
     /**
-     * @param pFont
-     * @return
      */
     Font getFontThroughMap(Font pFont);
 
@@ -99,15 +93,10 @@ public interface MapFeedback {
     MindMap getMap();
 
     /**
-     * @param pLoadName
-     * @param pNode
-     * @return
      */
     NodeHook createNodeHook(String pLoadName, MindMapNode pNode);
 
     /**
-     * @param pNode
-     * @param pModel
      */
     void invokeHooksRecursively(MindMapNode pNode, MindMap pModel);
 

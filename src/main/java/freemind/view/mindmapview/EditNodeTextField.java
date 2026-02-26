@@ -48,7 +48,7 @@ public class EditNodeTextField extends EditNodeBase {
     final int cursorWidth = 1;
     int xOffset = 0;
     final int yOffset = -1; // Optimized for Windows style; basically ad hoc
-    final int widthAddition = 2 * 0 + cursorWidth + 2;
+    final int widthAddition = cursorWidth + 2;
     final int heightAddition = 2;
 
     // minimal width for input field of leaf or folded node (PN)

@@ -30,9 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 @Slf4j
 public class XMLElementAdapter extends XMLElement {
@@ -52,7 +53,7 @@ public class XMLElementAdapter extends XMLElement {
     private String iconName;
 
     // arrow link attributes:
-    protected final Vector<ArrowLinkAdapter> mArrowLinkAdapters;
+    protected final List<ArrowLinkAdapter> mArrowLinkAdapters;
     protected HashMap<String, NodeAdapter> mIdToTarget;
     public static final String XML_NODE_TEXT = "TEXT";
     public static final String XML_NODE = "node";
@@ -81,10 +82,10 @@ public class XMLElementAdapter extends XMLElement {
     private boolean fontStyleStrikethrough;
 
     public XMLElementAdapter(MapFeedback pMapFeedback) {
-        this(pMapFeedback, new Vector<>(), new HashMap<>());
+        this(pMapFeedback, new ArrayList<>(), new HashMap<>());
     }
 
-    public XMLElementAdapter(MapFeedback pMapFeedback, Vector<ArrowLinkAdapter> arrowLinkAdapters, HashMap<String, NodeAdapter> IDToTarget) {
+    public XMLElementAdapter(MapFeedback pMapFeedback, List<ArrowLinkAdapter> arrowLinkAdapters, HashMap<String, NodeAdapter> IDToTarget) {
         this.mMapFeedback = pMapFeedback;
         this.mArrowLinkAdapters = arrowLinkAdapters;
         this.mIdToTarget = IDToTarget;

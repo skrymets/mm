@@ -25,8 +25,9 @@ package plugins.collaboration.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
+import java.util.List;
 
 import plugins.collaboration.socket.FormDialog;
 import freemind.common.NumberProperty;
@@ -71,7 +72,7 @@ public class DatabaseConnector extends DatabaseBasics {
             // get last value
             hostProperty.setValue(controller.getFrame().getProperty(
                     HOST_PROPERTY));
-            Vector<PropertyControl> controls = new Vector<>();
+            List<PropertyControl> controls = new ArrayList<>();
             controls.add(passwordProperty);
             controls.add(hostProperty);
             controls.add(portProperty);

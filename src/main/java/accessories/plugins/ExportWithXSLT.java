@@ -47,8 +47,9 @@ import javax.xml.transform.stream.StreamSource;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.util.List;
+import java.util.Objects;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  * @author foltin
@@ -91,7 +92,7 @@ public class ExportWithXSLT extends ExportHook {
         super.startupMapHook();
         ModeController mc = getController();
         MindMap model = getController().getMap();
-        if (Tools.safeEquals(getResourceString("file_type"), "user")) {
+        if (Objects.equals(getResourceString("file_type"), "user")) {
             if (model == null)
                 return; // there may be no map open
             if ((model.getFile() == null) || model.isReadOnly()) {
@@ -130,14 +131,12 @@ public class ExportWithXSLT extends ExportHook {
     }
 
     /**
-     * @param saveFile
      * @return If ok: null, else: the resource identifier of the error string.
-     * @throws Exception
      */
     public String transform(File saveFile) throws Exception {
         // get AREA:
         // create HTML image?
-        boolean create_image = Tools.safeEquals(
+        boolean create_image = Objects.equals(
                 getResourceString("create_html_linked_image"), "true");
         String areaCode = getAreaCode(create_image);
         // XSLT Transformation
@@ -151,7 +150,7 @@ public class ExportWithXSLT extends ExportHook {
         }
         // create directory?
         if (success
-                && Tools.safeEquals(getResourceString("create_dir"), "true")) {
+                && Objects.equals(getResourceString("create_dir"), "true")) {
             String directoryName = saveFile.getAbsolutePath() + "_files";
             success = createDirectory(directoryName);
 
@@ -164,11 +163,11 @@ public class ExportWithXSLT extends ExportHook {
             }
             // copy icons?
             if (success
-                    && Tools.safeEquals(getResourceString("copy_icons"), "true")) {
+                    && Objects.equals(getResourceString("copy_icons"), "true")) {
                 success = copyIcons(directoryName);
             }
             if (success
-                    && Tools.safeEquals(getResourceString("copy_map"), "true")) {
+                    && Objects.equals(getResourceString("copy_map"), "true")) {
                 success = copyMap(directoryName);
             }
             if (success && create_image) {
@@ -231,7 +230,7 @@ public class ExportWithXSLT extends ExportHook {
      *
      */
     private void copyIconsToDirectory(String directoryName2) {
-        Vector<String> iconNames = MindIcon.getAllIconNames();
+        List<String> iconNames = MindIcon.getAllIconNames();
         for (String s : iconNames) {
             String iconName = s;
             MindIcon myIcon = MindIcon.factory(iconName);
@@ -278,7 +277,6 @@ public class ExportWithXSLT extends ExportHook {
     }
 
     /**
-     * @throws IOException
      */
     private boolean transformMapWithXslt(String xsltFileName, File saveFile,
                                          String areaCode) throws IOException {
@@ -296,7 +294,6 @@ public class ExportWithXSLT extends ExportHook {
     }
 
     /**
-     * @throws IOException
      */
     private StringWriter getMapXml() throws IOException {
         // get output:
@@ -307,7 +304,6 @@ public class ExportWithXSLT extends ExportHook {
     }
 
     /**
-     * @param create_image
      */
     private String getAreaCode(boolean create_image) {
         String areaCode = "";

@@ -63,7 +63,6 @@ public class NodeNote extends MindMapNodeHookAdapter {
     }
 
     /**
-     * @return
      */
     private NodeNoteRegistration getRegistration() {
         NodeNoteRegistration registration = (NodeNoteRegistration) this

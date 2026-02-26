@@ -188,8 +188,8 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
     protected Rectangle getControlRegion(Point2D p) {
         // Create a small square around the given point.
         int side = 8;
-        return new Rectangle((int) (p.getX() - side / 2),
-                (int) (p.getY() - side / 2), side, side);
+        return new Rectangle((int) (p.getX() - (double) side / 2),
+                (int) (p.getY() - (double) side / 2), side, side);
     }
 
     public void createTimer(MouseEvent e) {

@@ -26,7 +26,11 @@ import freemind.model.MindMapNode;
 import freemind.modes.MapFeedback;
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class HookInstantiationMethod {
     private interface DestinationNodesGetter {
@@ -48,7 +52,7 @@ public class HookInstantiationMethod {
 
     private static class RootDestinationNodesGetter implements DestinationNodesGetter {
         public Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
-            Vector<MindMapNode> returnValue = new Vector<>();
+            List<MindMapNode> returnValue = new ArrayList<>();
             returnValue.add(controller.getMap().getRootNode());
             return returnValue;
         }
@@ -69,7 +73,7 @@ public class HookInstantiationMethod {
         }
 
         public Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
-            Vector<MindMapNode> returnValue = new Vector<>();
+            List<MindMapNode> returnValue = new ArrayList<>();
             addChilds(controller.getMap().getRootNode(), returnValue);
             return returnValue;
         }
@@ -86,7 +90,6 @@ public class HookInstantiationMethod {
     /**
      * -- GETTER --
      *
-     * @return Returns the isPermanent.
      */
     @Getter
     private final boolean isPermanent;

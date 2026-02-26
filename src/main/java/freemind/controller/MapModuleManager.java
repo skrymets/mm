@@ -23,7 +23,6 @@
 
 package freemind.controller;
 
-import freemind.main.Tools;
 import freemind.model.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
@@ -208,7 +207,7 @@ public class MapModuleManager {
     public boolean changeToMapModule(String mapModuleDisplayName) {
         MapModule mapModuleCandidate = null;
         for (MapModule mapMod : mapModules) {
-            if (Tools.safeEquals(mapModuleDisplayName, mapMod.getDisplayName())) {
+            if (Objects.equals(mapModuleDisplayName, mapMod.getDisplayName())) {
                 mapModuleCandidate = mapMod;
                 break;
             }

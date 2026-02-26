@@ -33,7 +33,7 @@ import java.util.HashMap;
  * internally. Future: if more than two, it can use a JTabbedPane.
  *
  * @author foltin
- * @date 26.08.2014
+ * {@code @date} 26.08.2014
  */
 @SuppressWarnings("serial")
 public class JOptionalSplitPane extends JPanel {
@@ -105,7 +105,6 @@ public class JOptionalSplitPane extends JPanel {
     }
 
     /**
-     * @param pComponent
      */
     private void setSingleJPanel(JComponent pComponent) {
         if (mBasicComponent != null) {
@@ -147,7 +146,6 @@ public class JOptionalSplitPane extends JPanel {
     }
 
     /**
-     * @param index
      */
     private void checkIndex(int index) {
         if (index < 0 || index > 1) {

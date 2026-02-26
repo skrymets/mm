@@ -43,7 +43,6 @@ public class EnterPasswordDialog extends JDialog {
     /**
      * -- GETTER --
      *
-     * @return Returns the result.
      */
     @Getter
     private int result = CANCEL;
@@ -61,7 +60,6 @@ public class EnterPasswordDialog extends JDialog {
     /**
      * -- GETTER --
      *
-     * @return Returns the password.
      */
     @Getter
     private StringBuffer password = null;
@@ -91,7 +89,6 @@ public class EnterPasswordDialog extends JDialog {
     /**
      * This method initializes this
      *
-     * @return void
      */
     private void initialize() {
         if (enterTwoPasswords)

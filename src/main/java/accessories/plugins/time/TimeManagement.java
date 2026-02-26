@@ -49,10 +49,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
-import java.util.Vector;
 
 //FIXME: Reminder: more than once. (later)
 
@@ -86,7 +87,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
 
         public void actionPerformed(ActionEvent actionEvent) {
             MindMapNode lastElement = null;
-            Vector<MindMapNode> sel = new Vector<>();
+            List<MindMapNode> sel = new ArrayList<>();
             for (MindMapNode element : getMindMapController().getSelecteds()) {
                 element = mFactory.getNode(element);
                 DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
@@ -278,7 +279,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
         });
         Action closeAction = new CloseAction();
         Tools.addEscapeActionToDialog(mDialog, closeAction);
-        /** Menu **/
+        /* Menu **/
         StructuredMenuHolder menuHolder = new StructuredMenuHolder();
         JMenuBar menu = new JMenuBar();
         menuHolder.addMenu(new JMenu(getMindMapController().getText(
@@ -463,7 +464,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                     Long.toString(pRemindAt));
         }
         getMindMapController().addHook(node,
-                Tools.getVectorWithSingleElement(node), REMINDER_HOOK_NAME,
+                Tools.getSingletonList(node), REMINDER_HOOK_NAME,
                 properties);
     }
 

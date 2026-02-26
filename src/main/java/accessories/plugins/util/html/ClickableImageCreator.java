@@ -28,8 +28,9 @@ import freemind.view.mindmapview.NodeView;
 import javax.swing.*;
 import java.awt.*;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
 /**
  *
@@ -59,7 +60,7 @@ public class ClickableImageCreator {
 
     }
 
-    final Vector<AreaHolder> area = new Vector<>();
+    final List<AreaHolder> area = new ArrayList<>();
 
     private final MindMapNode root;
 
@@ -99,7 +100,19 @@ public class ClickableImageCreator {
             if (replacement.isEmpty()) {
                 continue;
             }
-            htmlArea.append("<area shape=\"").append(holder.shape).append("\" href=\"").append(replacement).append("\" alt=\"").append(HtmlTools.toXMLEscapedText(holder.alt)).append("\" title=\"").append(HtmlTools.toXMLEscapedText(holder.title)).append("\" coords=\"").append(holder.coordinates.x).append(",").append(holder.coordinates.y).append(",").append(holder.coordinates.width + holder.coordinates.x).append(",").append(+(holder.coordinates.height + holder.coordinates.y)).append("\" />");
+            htmlArea.append("<area shape=\"")
+                    .append(holder.shape)
+                    .append("\" href=\"")
+                    .append(replacement)
+                    .append("\" alt=\"")
+                    .append(HtmlTools.toXMLEscapedText(holder.alt))
+                    .append("\" title=\"")
+                    .append(HtmlTools.toXMLEscapedText(holder.title))
+                    .append("\" coords=\"")
+                    .append(holder.coordinates.x).append(",")
+                    .append(holder.coordinates.y).append(",")
+                    .append(holder.coordinates.width + holder.coordinates.x).append(",")
+                    .append(+(holder.coordinates.height + holder.coordinates.y)).append("\" />");
         }
         return htmlArea.toString();
     }
@@ -108,9 +121,6 @@ public class ClickableImageCreator {
         createArea(root);
     }
 
-    /**
-     *
-     */
     private void createArea(MindMapNode node) {
         if (mapView == null) {
             return;

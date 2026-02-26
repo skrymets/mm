@@ -55,10 +55,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      * @param file Nowadays this is an URL to unify the behaviour of the browser
      *             and the other modes.
      * @return returns the new mode controller created for this url.
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws XMLParseException
-     * @throws URISyntaxException
      */
     MapFeedback load(URL file) throws FileNotFoundException, IOException, XMLParseException, URISyntaxException;
 
@@ -208,9 +204,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
          */
         void onFocusNode(NodeView node);
 
-        /**
-         * Is sent when a node has lost its focus (see {@link onSelectHook()}).
-         */
+
         void onLostFocusNode(NodeView node);
 
         /**
@@ -224,18 +218,11 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
          * nodes (in contrast to the focused node above). The nodes selection is
          * already changed, when this method is called.
          *
-         * @param pNode
-         * @param pIsSelected true, if the node is selected now.
          */
         void onSelectionChange(NodeView pNode, boolean pIsSelected);
     }
 
     /**
-     * @param listener
-     * @param pCallWithCurrentSelection if true, the methods for focused and selected nodes are called
-     *                                  directly with the current selection. Otherwise, the first
-     *                                  selection change would provoke the first call to the given
-     *                                  listener.
      */
     void registerNodeSelectionListener(NodeSelectionListener listener,
                                        boolean pCallWithCurrentSelection);
@@ -378,8 +365,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
     void setView(MapView pView);
 
     /**
-     * @param pNode
-     * @param pIsSelected
      * @see NodeSelectionListener
      */
     void changeSelection(NodeView pNode, boolean pIsSelected);

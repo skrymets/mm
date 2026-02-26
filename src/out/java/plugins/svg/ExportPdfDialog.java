@@ -205,7 +205,7 @@ public class ExportPdfDialog extends JDialog {
                 .getProperty(PROP_PDF_PAGE_ORIENTATION);
         if (storedOrientation != null) // property found
         {
-            if (Tools.safeEquals(storedOrientation, LANDSCAPE)) {
+            if (Objects.equals(storedOrientation, LANDSCAPE)) {
                 birdButtonLandscape.setSelected(true);
             } else {
                 birdButtonPortrait.setSelected(true);

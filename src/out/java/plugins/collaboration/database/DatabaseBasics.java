@@ -24,9 +24,9 @@ package plugins.collaboration.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 import freemind.common.NumberProperty;
 import freemind.controller.Controller;
@@ -145,7 +145,7 @@ public abstract class DatabaseBasics extends MindMapNodeHookAdapter implements
         if (mUpdateThread != null) {
             try {
                 boolean first = true;
-                Vector<String> users = mUpdateThread.getUsers();
+                List<String> users = mUpdateThread.getUsers();
                 for (String user : users) {
                     if (first)
                         first = false;

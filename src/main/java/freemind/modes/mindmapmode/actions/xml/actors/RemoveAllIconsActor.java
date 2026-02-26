@@ -32,12 +32,11 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**
  * @author foltin
- * @date 25.03.2014
+ * {@code @date} 25.03.2014
  */
 public class RemoveAllIconsActor extends NodeXmlActorAdapter {
 
     /**
-     * @param pMapFeedback
      */
     public RemoveAllIconsActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);

@@ -29,11 +29,15 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeSet;
 
 /**
  * @author foltin
- * @date 08.04.2014
+ * {@code @date} 08.04.2014
  */
 @Slf4j
 public class NodeUpActor extends XmlActorAdapter {
@@ -53,14 +57,14 @@ public class NodeUpActor extends XmlActorAdapter {
         if (!selected.isRoot()) {
             MindMapNode parent = selected.getParentNode();
             // multiple move:
-            Vector<MindMapNode> sortedChildren = getSortedSiblings(parent);
+            List<MindMapNode> sortedChildren = getSortedSiblings(parent);
             TreeSet<Integer> range = new TreeSet<>(comparator);
             for (MindMapNode node : selecteds) {
                 if (node.getParent() != parent) {
                     log.warn("Not all selected nodes (here: {}) have the same parent {}.", node.getText(), parent.getText());
                     return;
                 }
-                range.add(new Integer(sortedChildren.indexOf(node)));
+                range.add(Integer.valueOf(sortedChildren.indexOf(node)));
             }
             // test range for adjacent nodes:
             Integer last = range.iterator().next();
@@ -91,7 +95,7 @@ public class NodeUpActor extends XmlActorAdapter {
         int index = model.getIndexOfChild(parent, newChild);
         int newIndex = index;
         int maxIndex = parent.getChildCount();
-        Vector<MindMapNode> sortedNodesIndices = getSortedSiblings(parent);
+        List<MindMapNode> sortedNodesIndices = getSortedSiblings(parent);
         int newPositionInVector = sortedNodesIndices.indexOf(newChild) + direction;
         if (newPositionInVector < 0) {
             newPositionInVector = maxIndex - 1;
@@ -110,8 +114,8 @@ public class NodeUpActor extends XmlActorAdapter {
     /**
      * Sorts nodes by their left/right status. The left are first.
      */
-    private Vector<MindMapNode> getSortedSiblings(MindMapNode node) {
-        Vector<MindMapNode> nodes = new Vector<>();
+    private List<MindMapNode> getSortedSiblings(MindMapNode node) {
+        List<MindMapNode> nodes = new ArrayList<>();
         for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
             nodes.add(i.next());
         }
@@ -129,7 +133,7 @@ public class NodeUpActor extends XmlActorAdapter {
             MoveNodesAction moveAction = (MoveNodesAction) action;
             MindMapNode selected = getNodeFromID(moveAction
                     .getNode());
-            Vector<MindMapNode> selecteds = new Vector<>();
+            List<MindMapNode> selecteds = new ArrayList<>();
             for (NodeListMember node : moveAction.getNodeListMemberList()) {
                 selecteds.add(getNodeFromID(node.getNode()));
             }

@@ -50,7 +50,7 @@ import static org.apache.commons.lang3.StringUtils.capitalize;
 
 /**
  * @author foltin
- * @date 20.03.2014
+ * {@code @date} 20.03.2014
  */
 @Slf4j
 public class PasteActor extends XmlActorAdapter {
@@ -71,9 +71,6 @@ public class PasteActor extends XmlActorAdapter {
     }
 
     /**
-     * @param t
-     * @param coord
-     * @param pUndoAction is filled automatically when not null.
      * @return a new PasteNodeAction.
      */
     public PasteNodeAction getPasteNodeAction(Transferable t, NodeCoordinate coord, UndoPasteNodeAction pUndoAction) {
@@ -343,7 +340,7 @@ public class PasteActor extends XmlActorAdapter {
                 HtmlTools.getInstance().insertHtmlIntoNodes(textFromClipboard,
                         target, mNodeCreator);
             } else {
-                if (Tools.safeEquals(
+                if (Objects.equals(
                         getExMapFeedback().getProperty(
                                 "cut_out_pictures_when_pasting_html"), "true")) {
                     textFromClipboard = textFromClipboard.replaceAll(
@@ -657,7 +654,7 @@ public class PasteActor extends XmlActorAdapter {
                     node.setLeft(isLeft);
                     insertNodeInto(node, target);
                     parentNodes.add(node);
-                    parentNodesDepths.add(new Integer(depth));
+                    parentNodesDepths.add(Integer.valueOf(depth));
                     break;
                 }
             }
@@ -804,10 +801,6 @@ public class PasteActor extends XmlActorAdapter {
     /**
      * Only for HTML nodes.
      *
-     * @param t
-     * @return
-     * @throws UnsupportedFlavorException
-     * @throws IOException
      */
     public int determineAmountOfNewNodes(Transferable t) throws UnsupportedFlavorException, IOException {
         // create a new node for testing purposes.
@@ -847,7 +840,7 @@ public class PasteActor extends XmlActorAdapter {
     private Transferable getTransferable(TransferableContent trans) {
         // create Transferable:
         // Add file list to this selection.
-        Vector<File> fileList = new Vector<>();
+        List<File> fileList = new ArrayList<>();
         for (TransferableFile tFile : trans.getTransferableFileList()) {
             fileList.add(new File(tFile.getFileName()));
         }

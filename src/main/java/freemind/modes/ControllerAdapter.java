@@ -73,6 +73,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     private Mode mode;
 
     /**
+     *
      */
     @Getter
     private final Color selectionColor = new Color(200, 220, 200);
@@ -171,9 +172,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     }
 
-    /**
-     *
-     */
     public void nodeStructureChanged(MindMapNode node) {
         getMap().nodeStructureChanged(node);
     }
@@ -367,10 +365,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     /**
-     * @param model
-     * @throws URISyntaxException
-     * @throws IOException
-     * @throws XMLParseException
+     *
      */
     abstract protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, XMLParseException, IOException;
 
@@ -378,32 +373,28 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * You may decide to overload this or take the default and implement the
      * functionality in your MapModel (implements MindMap)
      */
-    public MapFeedback load(File file) throws
-            IOException {
+    public MapFeedback load(File file) throws XMLParseException {
         try {
             return load(Tools.fileToUrl(file));
-        } catch (XMLParseException | URISyntaxException e) {
+        } catch (XMLParseException | URISyntaxException | IOException e) {
             log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);
         }
     }
 
-    protected void restoreMapsLastState(final ModeController newModeController,
-                                        final MapAdapter model) {
+    protected void restoreMapsLastState(final ModeController modeController, final MapAdapter model) {
         // restore zoom, etc.
         String lastStateMapXml = getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
         LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
         MindmapLastStateStorage store = management.getStorage(model.getRestorable());
         if (store != null) {
-            ModeController modeController = newModeController;
             // Zoom must be set on combo box, too.
             getController().setZoom(store.getLastZoom());
-            MindMapNode sel;
             try {
                 // Selected:
-                sel = modeController.getNodeFromID(store.getLastSelected());
+                MindMapNode sel = modeController.getNodeFromID(store.getLastSelected());
                 modeController.centerNode(sel);
-                List<MindMapNode> selected = new Vector<>();
+                List<MindMapNode> selected = new ArrayList<>();
                 for (NodeListMember member : store.getNodeListMemberList()) {
                     MindMapNode selNode = modeController.getNodeFromID(member.getNode());
                     selected.add(selNode);
@@ -411,10 +402,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 modeController.select(sel, selected);
             } catch (Exception e) {
                 log.error(e.getLocalizedMessage(), e);
-                newModeController.getView().moveToRoot();
+                modeController.getView().moveToRoot();
             }
         } else {
-            newModeController.getView().moveToRoot();
+            modeController.getView().moveToRoot();
         }
     }
 
@@ -1278,7 +1269,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     public List<String> createForNodeIdsFlavor(List<MindMapNode> selectedNodes, boolean copyInvisible) {
-        Vector<String> forNodesFlavor = new Vector<>();
+        List<String> forNodesFlavor = new ArrayList<>();
 
         for (MindMapNode tmpNode : selectedNodes) {
             forNodesFlavor.add(getNodeID(tmpNode));
@@ -1467,7 +1458,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 
     /**
-     * @throws {@link IllegalArgumentException} when node isn't found.
+     *
      */
     @Override
     public NodeAdapter getNodeFromID(String nodeID) {
