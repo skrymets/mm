@@ -22,7 +22,7 @@
 
 package accessories.plugins;
 
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;

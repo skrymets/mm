@@ -19,31 +19,36 @@
  *
  * Created on 23.06.2004
  */
-/*$Id: XmlBindingTools.java,v 1.1.2.2.2.5 2009/05/20 19:19:11 christianfoltin Exp $*/
 
 package freemind.common;
 
 import freemind.controller.Controller;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.*;;
 import freemind.main.Resources;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 import lombok.extern.slf4j.Slf4j;
-import org.jibx.runtime.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
- * @author foltin Singleton
+ * XML serialization facade using JAXB (Jakarta XML Binding).
+ * Replaces previous JiBX-based implementation.
+ *
+ * @author foltin
  */
 @Slf4j
 public class XmlBindingTools {
 
     private static XmlBindingTools instance;
-    private static IBindingFactory mBindingFactory;
+    private static JAXBContext jaxbContext;
 
     private XmlBindingTools() {
     }
@@ -52,31 +57,19 @@ public class XmlBindingTools {
         if (instance == null) {
             instance = new XmlBindingTools();
             try {
-                mBindingFactory = BindingDirectory.getFactory(XmlAction.class);
-            } catch (JiBXException e) {
-                log.error(e.getLocalizedMessage(), e);
+                jaxbContext = JAXBContext.newInstance(
+                        XmlAction.class, MenuStructure.class, Plugin.class,
+                        MenuCategoryBase.class, MenuSubmenu.class,
+                        MenuAction.class, MenuCheckedAction.class,
+                        MenuRadioAction.class, MenuSeparator.class,
+                        PluginClasspath.class, PluginRegistration.class,
+                        PluginAction.class, PluginStrings.class
+                );
+            } catch (JAXBException e) {
+                log.error("Failed to initialize JAXB context", e);
             }
-
         }
         return instance;
-    }
-
-    public IMarshallingContext createMarshaller() {
-        try {
-            return mBindingFactory.createMarshallingContext();
-        } catch (JiBXException e) {
-            log.error(e.getLocalizedMessage(), e);
-            return null;
-        }
-    }
-
-    public IUnmarshallingContext createUnmarshaller() {
-        try {
-            return mBindingFactory.createUnmarshallingContext();
-        } catch (JiBXException e) {
-            log.error(e.getLocalizedMessage(), e);
-            return null;
-        }
     }
 
     public void storeDialogPositions(Controller controller,
@@ -92,22 +85,18 @@ public class XmlBindingTools {
         storage.setY((dialog.getY()));
         storage.setWidth((dialog.getWidth()));
         storage.setHeight((dialog.getHeight()));
-        String marshalled = marshall(storage);
-        String result = marshalled;
-        return result;
+        return marshall(storage);
     }
 
     public WindowConfigurationStorage decorateDialog(Controller controller, JDialog dialog, String windowPreferenceStorageProperty) {
         String marshalled = controller.getProperty(windowPreferenceStorageProperty);
-        WindowConfigurationStorage result = decorateDialog(marshalled, dialog);
-        return result;
+        return decorateDialog(marshalled, dialog);
     }
 
     public WindowConfigurationStorage decorateDialog(String marshalled, JDialog dialog) {
         if (marshalled != null) {
             WindowConfigurationStorage storage = (WindowConfigurationStorage) unMarshall(marshalled);
             if (storage != null) {
-                // Check that location is on current screen.
                 Dimension screenSize;
                 if (Resources.getInstance().getBoolProperty(
                         "place_dialogs_on_first_screen")) {
@@ -128,7 +117,6 @@ public class XmlBindingTools {
             }
         }
 
-        // set standard dialog size of no size is stored
         final Frame rootFrame = JOptionPane.getFrameForComponent(dialog);
         final Dimension prefSize = rootFrame.getSize();
         prefSize.width = prefSize.width * 3 / 4;
@@ -138,17 +126,16 @@ public class XmlBindingTools {
     }
 
     public String marshall(XmlAction action) {
-        StringWriter writer = new StringWriter();
-        IMarshallingContext m = XmlBindingTools.getInstance().createMarshaller();
         try {
-            m.marshalDocument(action, "UTF-8", null, writer);
-        } catch (JiBXException e) {
+            StringWriter writer = new StringWriter();
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.marshal(action, writer);
+            return writer.toString();
+        } catch (JAXBException e) {
             log.error(e.getLocalizedMessage(), e);
             return null;
         }
-        String result = writer.toString();
-        return result;
-
     }
 
     public XmlAction unMarshall(String inputString) {
@@ -157,14 +144,21 @@ public class XmlBindingTools {
 
     public XmlAction unMarshall(Reader reader) {
         try {
-            // unmarshall:
-            IUnmarshallingContext u = XmlBindingTools.getInstance().createUnmarshaller();
-            XmlAction doAction = (XmlAction) u.unmarshalDocument(reader, null);
-            return doAction;
-        } catch (JiBXException e) {
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            return (XmlAction) unmarshaller.unmarshal(reader);
+        } catch (JAXBException e) {
             log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
 
+    public Object unMarshall(InputStream inputStream) {
+        try {
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            return unmarshaller.unmarshal(inputStream);
+        } catch (JAXBException e) {
+            log.error(e.getLocalizedMessage(), e);
+            return null;
+        }
+    }
 }

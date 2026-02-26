@@ -20,7 +20,7 @@
 package freemind.modes.mindmapmode.hooks;
 
 import freemind.common.XmlBindingTools;
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.extensions.*;
 import freemind.extensions.MindMapHook.PluginBaseClassSearcher;
 import freemind.frok.patches.JIBXGeneratedUtil;
@@ -28,7 +28,6 @@ import freemind.main.Resources;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.ImageFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.jibx.runtime.IUnmarshallingContext;
 
 import javax.swing.*;
 import java.io.InputStream;
@@ -107,8 +106,6 @@ public class MindMapHookFactory extends HookFactoryAdapter {
             allPlugins = new ArrayList<>();
             allRegistrations = new HashSet<>();
 
-            IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance().createUnmarshaller();
-
             for (String xmlPluginFile : importWizard.CLASS_LIST) {
                 if (xmlPluginFile.matches(pluginPrefixRegEx)) {
                     // make file name:
@@ -121,7 +118,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                     try {
                         log.trace("Reading: {} from {}", xmlPluginFile, pluginURL);
                         InputStream in = pluginURL.openStream();
-                        plugin = (Plugin) unmarshaller.unmarshalDocument(in, null);
+                        plugin = (Plugin) XmlBindingTools.getInstance().unMarshall(in);
                     } catch (Exception e) {
                         // error case
                         log.error(e.getLocalizedMessage(), e);

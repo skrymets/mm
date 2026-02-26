@@ -19,7 +19,7 @@
  */
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.extensions.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.XMLElement;

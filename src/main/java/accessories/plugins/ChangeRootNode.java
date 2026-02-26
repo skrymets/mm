@@ -21,8 +21,8 @@
 package accessories.plugins;
 
 import freemind.controller.MenuItemEnabledListener;
-import freemind.controller.actions.generated.instance.ChangeRootNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.ChangeRootNodeAction;
+import freemind.controller.actions.XmlAction;
 import freemind.extensions.HookRegistration;
 import freemind.main.Tools;
 import freemind.model.MindMap;

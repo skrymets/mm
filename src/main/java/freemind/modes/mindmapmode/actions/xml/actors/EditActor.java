@@ -20,8 +20,8 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.EditNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.EditNodeAction;
+import freemind.controller.actions.XmlAction;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;

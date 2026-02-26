@@ -1,9 +1,9 @@
 package accessories.plugins.time;
 
 import accessories.plugins.time.JTripleCalendar.JSwitchableCalendar;
-import freemind.controller.actions.generated.instance.CalendarMarking;
-import freemind.controller.actions.generated.instance.CalendarMarkings;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
+import freemind.controller.actions.CalendarMarking;
+import freemind.controller.actions.CalendarMarkings;
+import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.Getter;

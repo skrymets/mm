@@ -22,8 +22,8 @@
 /*$Id: UndoAction.java,v 1.1.2.2.2.4 2006/11/26 10:20:44 dpolivaev Exp $*/
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.CompoundAction;
+import freemind.controller.actions.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;

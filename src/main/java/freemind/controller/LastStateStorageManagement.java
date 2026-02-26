@@ -20,10 +20,10 @@
 
 package freemind.controller;
 
-import freemind.controller.actions.generated.instance.MindmapLastStateMapStorage;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
-import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.MindmapLastStateMapStorage;
+import freemind.controller.actions.MindmapLastStateStorage;
+import freemind.controller.actions.NodeListMember;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Tools;
 import lombok.extern.slf4j.Slf4j;
 

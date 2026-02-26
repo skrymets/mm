@@ -17,7 +17,7 @@
  */
 package freemind.frok.patches;
 
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -159,6 +159,63 @@ public class JIBXGeneratedUtil {
 
         return choice;
 
+    }
+
+    /**
+     * Convert a Choice wrapper to its contained XmlAction (for JAXB serialization).
+     */
+    public static XmlAction choiceToXmlAction(CompoundAction.Choice choice) {
+        if (choice.ifCompoundAction()) return choice.getCompoundAction();
+        if (choice.ifSelectNodeAction()) return choice.getSelectNodeAction();
+        if (choice.ifCutNodeAction()) return choice.getCutNodeAction();
+        if (choice.ifPasteNodeAction()) return choice.getPasteNodeAction();
+        if (choice.ifUndoPasteNodeAction()) return choice.getUndoPasteNodeAction();
+        if (choice.ifRevertXmlAction()) return choice.getRevertXmlAction();
+        if (choice.ifBoldNodeAction()) return choice.getBoldNodeAction();
+        if (choice.ifStrikethroughNodeAction()) return choice.getStrikethroughNodeAction();
+        if (choice.ifItalicNodeAction()) return choice.getItalicNodeAction();
+        if (choice.ifUnderlinedNodeAction()) return choice.getUnderlinedNodeAction();
+        if (choice.ifFontSizeNodeAction()) return choice.getFontSizeNodeAction();
+        if (choice.ifFontNodeAction()) return choice.getFontNodeAction();
+        if (choice.ifNodeColorFormatAction()) return choice.getNodeColorFormatAction();
+        if (choice.ifNodeBackgroundColorFormatAction()) return choice.getNodeBackgroundColorFormatAction();
+        if (choice.ifNodeStyleFormatAction()) return choice.getNodeStyleFormatAction();
+        if (choice.ifEdgeColorFormatAction()) return choice.getEdgeColorFormatAction();
+        if (choice.ifEdgeWidthFormatAction()) return choice.getEdgeWidthFormatAction();
+        if (choice.ifEdgeStyleFormatAction()) return choice.getEdgeStyleFormatAction();
+        if (choice.ifDeleteNodeAction()) return choice.getDeleteNodeAction();
+        if (choice.ifEditNodeAction()) return choice.getEditNodeAction();
+        if (choice.ifNewNodeAction()) return choice.getNewNodeAction();
+        if (choice.ifFoldAction()) return choice.getFoldAction();
+        if (choice.ifMoveNodesAction()) return choice.getMoveNodesAction();
+        if (choice.ifHookNodeAction()) return choice.getHookNodeAction();
+        if (choice.ifAddIconAction()) return choice.getAddIconAction();
+        if (choice.ifRemoveIconXmlAction()) return choice.getRemoveIconXmlAction();
+        if (choice.ifRemoveAllIconsXmlAction()) return choice.getRemoveAllIconsXmlAction();
+        if (choice.ifMoveNodeXmlAction()) return choice.getMoveNodeXmlAction();
+        if (choice.ifAddCloudXmlAction()) return choice.getAddCloudXmlAction();
+        if (choice.ifCloudColorXmlAction()) return choice.getCloudColorXmlAction();
+        if (choice.ifAddArrowLinkXmlAction()) return choice.getAddArrowLinkXmlAction();
+        if (choice.ifAddLinkXmlAction()) return choice.getAddLinkXmlAction();
+        if (choice.ifRemoveArrowLinkXmlAction()) return choice.getRemoveArrowLinkXmlAction();
+        if (choice.ifArrowLinkColorXmlAction()) return choice.getArrowLinkColorXmlAction();
+        if (choice.ifArrowLinkArrowXmlAction()) return choice.getArrowLinkArrowXmlAction();
+        if (choice.ifArrowLinkPointXmlAction()) return choice.getArrowLinkPointXmlAction();
+        if (choice.ifSetAttributeAction()) return choice.getSetAttributeAction();
+        if (choice.ifInsertAttributeAction()) return choice.getInsertAttributeAction();
+        if (choice.ifAddAttributeAction()) return choice.getAddAttributeAction();
+        if (choice.ifRemoveAttributeAction()) return choice.getRemoveAttributeAction();
+        if (choice.ifEditNoteToNodeAction()) return choice.getEditNoteToNodeAction();
+        if (choice.ifPlaceNodeXmlAction()) return choice.getPlaceNodeXmlAction();
+        return null;
+    }
+
+    /**
+     * Convert an XmlAction to a Choice wrapper (for JAXB deserialization).
+     * Delegates to existing choiceFromXmlActions method.
+     */
+    public static CompoundAction.Choice xmlActionToChoice(XmlAction action) {
+        return choiceFromXmlActions(action);
     }
 
     public static List<XmlAction> listXmlActions(CompoundAction pAction) {

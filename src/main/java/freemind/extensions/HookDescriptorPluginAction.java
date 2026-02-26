@@ -22,7 +22,7 @@
 /*$Id: HookDescriptorPluginAction.java,v 1.1.2.2 2008/01/13 20:55:34 christianfoltin Exp $*/
 package freemind.extensions;
 
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import lombok.Getter;
 

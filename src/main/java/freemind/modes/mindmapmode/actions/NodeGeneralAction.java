@@ -25,7 +25,7 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
+import freemind.controller.actions.CompoundAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;

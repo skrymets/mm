@@ -22,7 +22,7 @@ package freemind.controller;
 
 import freemind.common.BooleanProperty;
 import freemind.common.JOptionalSplitPane;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
+import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.controller.filter.FilterController;
 import freemind.controller.printpreview.PreviewDialog;
 import freemind.main.*;

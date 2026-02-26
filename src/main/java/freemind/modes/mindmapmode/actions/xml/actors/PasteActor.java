@@ -21,7 +21,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.MindMapNodesSelection;
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.main.HtmlTools.NodeCreator;

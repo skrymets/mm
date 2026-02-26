@@ -20,8 +20,8 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.ArrowLinkPointXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.ArrowLinkPointXmlAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapArrowLink;

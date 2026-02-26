@@ -23,7 +23,7 @@
 
 package freemind.modes.mindmapmode.actions.xml;
 
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.XmlAction;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.extern.slf4j.Slf4j;
 

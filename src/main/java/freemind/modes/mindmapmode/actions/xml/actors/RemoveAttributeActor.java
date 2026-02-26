@@ -20,9 +20,9 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.NodeAction;
-import freemind.controller.actions.generated.instance.RemoveAttributeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.NodeAction;
+import freemind.controller.actions.RemoveAttributeAction;
+import freemind.controller.actions.XmlAction;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;

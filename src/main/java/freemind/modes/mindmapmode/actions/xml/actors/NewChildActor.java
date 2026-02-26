@@ -20,9 +20,9 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.DeleteNodeAction;
-import freemind.controller.actions.generated.instance.NewNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.DeleteNodeAction;
+import freemind.controller.actions.NewNodeAction;
+import freemind.controller.actions.XmlAction;
 import freemind.extensions.PermanentNodeHook;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;

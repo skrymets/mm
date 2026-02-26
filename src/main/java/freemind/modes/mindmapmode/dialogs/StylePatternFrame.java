@@ -25,7 +25,7 @@ package freemind.modes.mindmapmode.dialogs;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 import freemind.common.*;
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.main.FreeMind;
 import freemind.main.Tools;
 import freemind.model.EdgeAdapter;

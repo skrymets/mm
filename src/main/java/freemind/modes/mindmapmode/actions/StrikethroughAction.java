@@ -21,7 +21,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.MenuItemSelectedListener;
-import freemind.controller.actions.generated.instance.StrikethroughNodeAction;
+import freemind.controller.actions.StrikethroughNodeAction;
 import freemind.modes.mindmapmode.MindMapController;
 
 import javax.swing.*;

@@ -20,8 +20,8 @@
 package accessories.plugins.dialogs;
 
 import freemind.common.TextTranslator;
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
+import freemind.controller.actions.Pattern;
+import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.model.MapAdapter;

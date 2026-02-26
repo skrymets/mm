@@ -23,8 +23,8 @@
  */
 package accessories.plugins;
 
-import freemind.controller.actions.generated.instance.EditNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.EditNodeAction;
+import freemind.controller.actions.XmlAction;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionHandler;

@@ -22,8 +22,8 @@
 /*$Id: HookDescriptorBase.java,v 1.1.2.7 2008/07/09 20:01:00 christianfoltin Exp $*/
 package freemind.extensions;
 
-import freemind.controller.actions.generated.instance.Plugin;
-import freemind.controller.actions.generated.instance.PluginClasspath;
+import freemind.controller.actions.Plugin;
+import freemind.controller.actions.PluginClasspath;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.main.Tools;

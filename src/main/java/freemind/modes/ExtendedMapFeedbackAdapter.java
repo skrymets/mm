@@ -20,7 +20,7 @@
 
 package freemind.modes;
 
-import freemind.controller.actions.generated.instance.Pattern;
+import freemind.controller.actions.Pattern;
 import freemind.extensions.HookFactory;
 import freemind.main.XMLParseException;
 import freemind.model.MindMap;

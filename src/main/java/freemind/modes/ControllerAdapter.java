@@ -20,8 +20,8 @@
 package freemind.modes;
 
 import freemind.controller.*;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
-import freemind.controller.actions.generated.instance.NodeListMember;
+import freemind.controller.actions.MindmapLastStateStorage;
+import freemind.controller.actions.NodeListMember;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.model.MapAdapter;

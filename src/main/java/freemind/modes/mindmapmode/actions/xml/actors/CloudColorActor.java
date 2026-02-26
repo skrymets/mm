@@ -20,8 +20,8 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.CloudColorXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.CloudColorXmlAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Tools;
 import freemind.model.LineAdapter;
 import freemind.model.MindMapNode;

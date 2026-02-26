@@ -24,7 +24,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.common.OptionalDontShowMeAgainDialog;
-import freemind.controller.actions.generated.instance.DeleteNodeAction;
+import freemind.controller.actions.DeleteNodeAction;
 import freemind.main.FreeMind;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

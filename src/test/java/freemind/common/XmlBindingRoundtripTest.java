@@ -1,6 +1,6 @@
 package freemind.common;
 
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.main.Tools;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -9,17 +9,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Roundtrip tests for JiBX XML serialization: create object -> marshall to XML -> unmarshall -> verify.
- * These tests establish a safety net for the JiBX-to-JAXB migration (Phase 1).
+ * Roundtrip tests for JAXB XML serialization: create object -> marshall to XML -> unmarshall -> verify.
  */
 class XmlBindingRoundtripTest {
 
     @BeforeAll
     static void ensureBindingFactoryInitialized() {
-        // Force initialization of the JiBX binding factory
         assertNotNull(XmlBindingTools.getInstance(), "XmlBindingTools singleton must be available");
-        assertNotNull(XmlBindingTools.getInstance().createMarshaller(), "Marshaller must be available");
-        assertNotNull(XmlBindingTools.getInstance().createUnmarshaller(), "Unmarshaller must be available");
     }
 
     @Nested

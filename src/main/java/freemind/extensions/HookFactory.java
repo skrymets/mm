@@ -22,7 +22,7 @@
 /*$Id: HookFactory.java,v 1.1.4.9.2.1 2006/07/25 20:28:20 christianfoltin Exp $*/
 package freemind.extensions;
 
-import freemind.controller.actions.generated.instance.Plugin;
+import freemind.controller.actions.Plugin;
 import freemind.model.MindMapNode;
 
 import java.util.Collection;

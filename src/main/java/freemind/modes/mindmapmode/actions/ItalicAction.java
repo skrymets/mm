@@ -24,7 +24,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.MenuItemSelectedListener;
-import freemind.controller.actions.generated.instance.ItalicNodeAction;
+import freemind.controller.actions.ItalicNodeAction;
 import freemind.modes.mindmapmode.MindMapController;
 
 import javax.swing.*;

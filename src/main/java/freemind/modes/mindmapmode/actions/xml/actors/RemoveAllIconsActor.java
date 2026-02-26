@@ -19,10 +19,10 @@
  */
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.AddIconAction;
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.RemoveAllIconsXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.AddIconAction;
+import freemind.controller.actions.CompoundAction;
+import freemind.controller.actions.RemoveAllIconsXmlAction;
+import freemind.controller.actions.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;

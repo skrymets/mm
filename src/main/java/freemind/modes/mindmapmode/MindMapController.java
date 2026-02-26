@@ -23,7 +23,7 @@ import freemind.common.XmlBindingTools;
 import freemind.controller.MenuBar;
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.extensions.*;
 import freemind.extensions.HookFactory.RegistrationContainer;
 import freemind.main.*;
@@ -59,8 +59,6 @@ import freemind.view.mindmapview.NodeView;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.jibx.runtime.IUnmarshallingContext;
-import org.jibx.runtime.JiBXException;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -858,14 +856,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public MenuStructure updateMenusFromXml(InputStream in) {
-        try {
-            IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance().createUnmarshaller();
-            MenuStructure menus = (MenuStructure) unmarshaller.unmarshalDocument(in, null);
-            return menus;
-        } catch (JiBXException e) {
-            log.error(e.getLocalizedMessage(), e);
+        MenuStructure menus = (MenuStructure) XmlBindingTools.getInstance().unMarshall(in);
+        if (menus == null) {
             throw new IllegalArgumentException("Menu structure could not be read.");
         }
+        return menus;
     }
 
     public void processMenuCategory(StructuredMenuHolder holder, List<Object> list, String category) {

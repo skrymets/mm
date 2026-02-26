@@ -20,8 +20,8 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.RevertXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.RevertXmlAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.modes.ExtendedMapFeedback;

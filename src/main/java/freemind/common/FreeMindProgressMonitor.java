@@ -20,7 +20,7 @@
 
 package freemind.common;
 
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
+import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.main.Resources;
 import freemind.main.Tools;

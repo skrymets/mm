@@ -23,7 +23,7 @@ import com.inet.jortho.SpellChecker;
 import freemind.controller.Controller;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
+import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;

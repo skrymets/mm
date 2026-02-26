@@ -20,8 +20,8 @@
 
 package accessories.plugins.time;
 
-import freemind.controller.actions.generated.instance.CalendarMarking;
-import freemind.controller.actions.generated.instance.CalendarMarkings;
+import freemind.controller.actions.CalendarMarking;
+import freemind.controller.actions.CalendarMarkings;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.DateFormat;

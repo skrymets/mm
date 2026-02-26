@@ -23,7 +23,7 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
+import freemind.controller.actions.RemoveIconXmlAction;
 import freemind.main.Tools;
 import freemind.modes.IconInformation;
 import freemind.modes.mindmapmode.MindMapController;

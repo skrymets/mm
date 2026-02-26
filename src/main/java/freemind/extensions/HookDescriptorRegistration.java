@@ -22,9 +22,9 @@
 /*$Id: HookDescriptorRegistration.java,v 1.1.2.1 2006/08/20 19:34:25 christianfoltin Exp $*/
 package freemind.extensions;
 
-import freemind.controller.actions.generated.instance.Plugin;
-import freemind.controller.actions.generated.instance.PluginMode;
-import freemind.controller.actions.generated.instance.PluginRegistration;
+import freemind.controller.actions.Plugin;
+import freemind.controller.actions.PluginMode;
+import freemind.controller.actions.PluginRegistration;
 
 import java.util.List;
 

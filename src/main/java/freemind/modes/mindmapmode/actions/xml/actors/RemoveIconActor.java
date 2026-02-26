@@ -20,9 +20,9 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.generated.instance.AddIconAction;
-import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.AddIconAction;
+import freemind.controller.actions.RemoveIconXmlAction;
+import freemind.controller.actions.XmlAction;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;

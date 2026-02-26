@@ -22,7 +22,7 @@ package freemind.modes;
 
 import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
-import freemind.controller.actions.generated.instance.*;
+import freemind.controller.actions.*;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.EdgeAdapter;
