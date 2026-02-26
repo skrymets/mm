@@ -21,7 +21,6 @@ package freemind.modes.mindmapmode;
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.common.XmlBindingTools;
 import freemind.controller.MenuBar;
-import freemind.controller.MindMapNodesSelection;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.*;
 import freemind.extensions.*;
@@ -48,10 +47,7 @@ import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
-import freemind.modes.mindmapmode.services.IconService;
-import freemind.modes.mindmapmode.services.LinkService;
-import freemind.modes.mindmapmode.services.NodeFormattingService;
-import freemind.modes.mindmapmode.services.TreeStructureService;
+import freemind.modes.mindmapmode.services.*;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.MapView;
@@ -199,7 +195,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     public interface MindMapControllerPlugin {
     }
 
-    private static final String RESOURCE_UNFOLD_ON_PASTE = "unfold_on_paste";
     // for MouseEventHandlers
     private final HashSet<MouseWheelEventHandler> mRegisteredMouseWheelEventHandler = new HashSet<>();
 
@@ -340,6 +335,10 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         linkService = new LinkService(mActorFactory);
         nodeFormattingService = new NodeFormattingService(mActorFactory);
         treeStructureService = new TreeStructureService(mActorFactory);
+        clipboardService = new ClipboardService(mActorFactory, this);
+        editingService = new EditingService(mActorFactory);
+        hookService = new HookService(mActorFactory);
+        attributeService = new AttributeService(mActorFactory);
 
         log.info("createIconActions");
         // create standard actions:
@@ -779,6 +778,10 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     private LinkService linkService;
     private NodeFormattingService nodeFormattingService;
     private TreeStructureService treeStructureService;
+    private ClipboardService clipboardService;
+    private EditingService editingService;
+    private HookService hookService;
+    private AttributeService attributeService;
 
     public interface NewNodeCreator {
 
@@ -1420,7 +1423,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void setNodeText(MindMapNode selected, String newText) {
-        getActorFactory().getEditActor().setNodeText(selected, newText);
+        editingService.setNodeText(selected, newText);
     }
 
     /**
@@ -1446,13 +1449,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     @Override
     public Transferable copy(MindMapNode node, boolean saveInvisible) {
-        StringWriter stringWriter = new StringWriter();
-        try {
-            node.save(stringWriter, getMap().getLinkRegistry(), saveInvisible, true);
-        } catch (IOException ignored) {
-        }
-        List<String> nodeList = Collections.singletonList(getNodeID(node));
-        return new MindMapNodesSelection(stringWriter.toString(), null, null, null, null, null, null, nodeList);
+        return clipboardService.copy(node, saveInvisible);
     }
 
     public Transferable cut() {
@@ -1460,11 +1457,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public Transferable cut(List<MindMapNode> nodeList) {
-        return getActorFactory().getCutActor().cut(nodeList);
+        return clipboardService.cut(nodeList);
     }
 
     public void paste(Transferable t, MindMapNode parent) {
-        paste(t, /* target= */ parent, /* asSibling= */ false, parent.isNewChildLeft());
+        clipboardService.paste(t, parent);
     }
 
     /*
@@ -1475,14 +1472,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      * .Transferable, freemind.model.MindMapNode, boolean, boolean)
      */
     public boolean paste(Transferable t, MindMapNode target, boolean asSibling, boolean isLeft) {
-        if (!asSibling && target.isFolded() && Resources.getInstance().getBoolProperty(RESOURCE_UNFOLD_ON_PASTE)) {
-            setFolded(target, false);
-        }
-        return mActorFactory.getPasteActor().paste(t, target, asSibling, isLeft);
+        return clipboardService.paste(t, target, asSibling, isLeft);
     }
 
     public void paste(MindMapNode node, MindMapNode parent) {
-        mActorFactory.getPasteActor().paste(node, parent);
+        clipboardService.paste(node, parent);
     }
 
     public MindMapNode addNew(final MindMapNode target, final int newNodeMode, final KeyEvent e) {
@@ -1571,11 +1565,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void addHook(MindMapNode focussed, List<MindMapNode> selecteds, String hookName, Properties pHookProperties) {
-        getActorFactory().getAddHookActor().addHook(focussed, selecteds, hookName, pHookProperties);
+        hookService.addHook(focussed, selecteds, hookName, pHookProperties);
     }
 
     public void removeHook(MindMapNode focussed, List<MindMapNode> selecteds, String hookName) {
-        getActorFactory().getAddHookActor().removeHook(focussed, selecteds, hookName);
+        hookService.removeHook(focussed, selecteds, hookName);
     }
 
     protected class SetLinkByFileChooserAction extends MindmapAction {
@@ -1712,16 +1706,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void invokeHook(ModeControllerHook hook) {
-        try {
-            // initialize:
-            hook.setController(this);
-            // the main invocation:
-            hook.startupMapHook();
-            // and goodbye.
-            hook.shutdownMapHook();
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage(), e);
-        }
+        hookService.invokeHook(hook, this);
     }
 
     public ActionRegistry getActionRegistry() {
@@ -2069,22 +2054,22 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     @Override
     public void setAttribute(MindMapNode pNode, int pPosition, Attribute pAttribute) {
-        getActorFactory().getSetAttributeActor().setAttribute(pNode, pPosition, pAttribute);
+        attributeService.setAttribute(pNode, pPosition, pAttribute);
     }
 
     @Override
     public void insertAttribute(MindMapNode pNode, int pPosition, Attribute pAttribute) {
-        getActorFactory().getInsertAttributeActor().insertAttribute(pNode, pPosition, pAttribute);
+        attributeService.insertAttribute(pNode, pPosition, pAttribute);
     }
 
     @Override
     public int addAttribute(MindMapNode pNode, Attribute pAttribute) {
-        return getActorFactory().getAddAttributeActor().addAttribute(pNode, pAttribute);
+        return attributeService.addAttribute(pNode, pAttribute);
     }
 
     @Override
     public void removeAttribute(MindMapNode pNode, int pPosition) {
-        getActorFactory().getRemoveAttributeActor().removeAttribute(pNode, pPosition);
+        attributeService.removeAttribute(pNode, pPosition);
     }
 
     @Override
@@ -2099,7 +2084,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     @Override
     public void setNoteText(MindMapNode pSelected, String pNewText) {
-        getActorFactory().getChangeNoteTextActor().setNoteText(pSelected, pNewText);
+        editingService.setNoteText(pSelected, pNewText);
     }
 
 }

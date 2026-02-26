@@ -69,7 +69,7 @@ public class EditServer extends Thread {
 
     private final FreeMindMain mFrame;
 
-    EditServer(String portFile, FreeMindMain pFrame) {
+    public EditServer(String portFile, FreeMindMain pFrame) {
         super("FreeMind server daemon [" + portFile + "]");
         mFrame = pFrame;
         setDaemon(true);
@@ -163,7 +163,7 @@ public class EditServer extends Thread {
     } // }}}
 
     // {{{ stopServer() method
-    void stopServer() {
+    public void stopServer() {
         abort = true;
         try {
             socket.close();

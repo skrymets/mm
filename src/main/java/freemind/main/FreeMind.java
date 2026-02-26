@@ -24,9 +24,13 @@ import freemind.controller.Controller;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
 import freemind.controller.actions.MindmapLastStateStorage;
+import freemind.main.services.EditServerService;
+import freemind.main.services.WindowService;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -44,7 +48,7 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import static javax.swing.JOptionPane.showMessageDialog;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 
 @Slf4j
 public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
@@ -61,9 +65,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private static final String FREE_MIND_PROGRESS_LOAD_MAPS_NAME = "FreeMind.progress.loadNamedMaps";
 
-    private static final String SPLIT_PANE_POSITION = "split_pane_position";
 
-    private static final String SPLIT_PANE_LAST_POSITION = "split_pane_last_position";
 
     public static final String RESOURCE_LOOKANDFEEL = "lookandfeel";
 
@@ -217,11 +219,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     @Getter
     private JScrollPane scrollPane = null;
 
-    private JSplitPane splitPane;
-
-    @Getter
-    private JComponent contentComponent = null;
-
     private JTabbedPane tabbedPane = null;
 
     private ImageIcon windowIcon;
@@ -230,9 +227,13 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private final List<StartupDoneListener> startupDoneListeners = new ArrayList<>();
 
-    private EditServer editServer = null;
+    private EditServerService editServerService;
 
-    public FreeMind(Properties defaultPreferences, Properties userPreferences) {
+    private WindowService windowService;
+
+    @Inject
+    public FreeMind(@Named("default") Properties defaultPreferences,
+                    @Named("user") Properties userPreferences) {
         super("FreeMind");
         // Focus searcher - SecurityManager is deprecated in Java 17+ and removed in Java 18+
         this.defaultPreferences = defaultPreferences;
@@ -463,8 +464,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 //            log.error(ex.getLocalizedMessage(), ex);
 //        }
 //        getController().getFilterController().saveConditions();
-//        if (pIsShutdown && editServer != null) {
-//            editServer.stopServer();
+//        if (pIsShutdown && editServerService != null) {
+//            editServerService.stopServer();
 //        }
     }
 
@@ -559,8 +560,9 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             }
 
             IFreeMindSplash splash = null;
-            this.checkForAnotherInstance(args);
-            this.initServer();
+            editServerService = new EditServerService(this);
+            editServerService.checkForAnotherInstance(args);
+            editServerService.initServer();
             final FeedBack feedBack;
             splash = new FreeMindSplashModern(this);
             splash.setVisible(true);
@@ -652,68 +654,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         }
     }
 
-    private void initServer() {
-        String portFile = getPortFile();
-        if (portFile == null) {
-            return;
-        }
-        editServer = new EditServer(portFile, this);
-        editServer.start();
-    }
-
-    private void checkForAnotherInstance(String[] pArgs) {
-        String portFile = getPortFile();
-        if (isEmpty(portFile) || !new File(portFile).exists()) {
-            return;
-        }
-
-        try {
-            try (BufferedReader in = new BufferedReader(new FileReader(portFile))) {
-                String check = in.readLine();
-                if (!"b".equals(check)) {
-                    throw new Exception("Wrong port file format");
-                }
-
-                int port = parseInt(in.readLine());
-                int key = parseInt(in.readLine());
-
-                Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), port);
-                try (DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
-                    out.writeInt(key);
-
-                    String script;
-                    // Put url to open here
-                    script = Tools.arrayToUrls(pArgs);
-                    out.writeUTF(script);
-
-                    log.info("Waiting for server");
-                    // block until its closed
-                    try {
-                        socket.getInputStream().read();
-                    } catch (Exception ignored) {
-                    }
-
-                    in.close();
-                }
-            }
-
-            System.exit(0);
-        } catch (Exception e) {
-            // ok, this one seems to confuse newbies endlessly, so log it as NOTICE, not ERROR
-            log.info("An error occurred while connecting to the FreeMind server instance. This probably means that FreeMind crashed and/or exited abnormally the last time it was run. If you don't know what this means, don't worry. Exception: {}", String.valueOf(e));
-        }
-
-    }
-
-    /**
-     * @return null, if no port should be opened.
-     */
-    private String getPortFile() {
-        if (editServer == null && Resources.getInstance().getBoolProperty(RESOURCES_DON_T_OPEN_PORT)) {
-            return null;
-        }
-        return getFreemindDirectory() + File.separator + getProperty(PORT_FILE);
-    }
 
     private void fireStartupDone() {
         startupDone = true;
@@ -744,7 +684,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         statusLabel.setText("");
 
         statusMessageDisplayTimer = new Timer(TIME_TO_DISPLAY_MESSAGES, this);
-        contentComponent = scrollPane;
 
         boolean shouldUseTabbedPane = Resources.getInstance().getBoolProperty(RESOURCES_USE_TABBED_PANE);
 
@@ -760,8 +699,10 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             getContentPane().add(tabbedPane, BorderLayout.CENTER);
         } else {
             // don't use tabbed panes.
-            getContentPane().add(contentComponent, BorderLayout.CENTER);
+            getContentPane().add(scrollPane, BorderLayout.CENTER);
         }
+
+        windowService = new WindowService(this, scrollPane, tabbedPane);
 
         getContentPane().add(statusLabel, BorderLayout.SOUTH);
 
@@ -1003,89 +944,15 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     public JSplitPane insertComponentIntoSplitPane(JComponent pMindMapComponent) {
-        if (splitPane != null) {
-            // already present:
-            return splitPane;
-        }
-        removeContentComponent();
-        int splitType = JSplitPane.VERTICAL_SPLIT;
-        String splitProperty = getProperty(J_SPLIT_PANE_SPLIT_TYPE);
-        if (Objects.equals(splitProperty, HORIZONTAL_SPLIT_RIGHT)) {
-            splitType = JSplitPane.HORIZONTAL_SPLIT;
-        } else if (Objects.equals(splitProperty, VERTICAL_SPLIT_BELOW)) {
-            // default
-        } else {
-            log.warn("Split type not known: {}", splitProperty);
-        }
-        splitPane = new JSplitPane(splitType, scrollPane, pMindMapComponent);
-        splitPane.setContinuousLayout(true);
-        splitPane.setOneTouchExpandable(false);
-
-        // * This means that the mind map area gets all the space that results from resizing the window.
-        splitPane.setResizeWeight(1.0d);
-
-        // split panes eat F8 and F6. This is corrected here.
-        Tools.correctJSplitPaneKeyMap();
-        contentComponent = splitPane;
-
-        setContentComponent();
-        // set divider position:
-        setSplitLocation();
-        // after making this window visible, the size is adjusted. To get the right split location, we postpone this.
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent pE) {
-                setSplitLocation();
-                removeComponentListener(this);
-            }
-        });
-        return splitPane;
-    }
-
-    private void setSplitLocation() {
-        int splitPanePosition = getIntProperty(SPLIT_PANE_POSITION, -1);
-        int lastSplitPanePosition = getIntProperty(SPLIT_PANE_LAST_POSITION, -1);
-
-        if (splitPane != null && splitPanePosition != -1 && lastSplitPanePosition != -1) {
-            splitPane.setDividerLocation(splitPanePosition);
-            splitPane.setLastDividerLocation(lastSplitPanePosition);
-        }
+        return windowService.insertComponentIntoSplitPane(pMindMapComponent);
     }
 
     public void removeSplitPane() {
-        if (splitPane == null) {
-            return;
-        }
-
-        setProperty(SPLIT_PANE_POSITION, "" + splitPane.getDividerLocation());
-        setProperty(SPLIT_PANE_LAST_POSITION, "" + splitPane.getLastDividerLocation());
-        removeContentComponent();
-        contentComponent = scrollPane;
-        setContentComponent();
-        splitPane = null;
+        windowService.removeSplitPane();
     }
 
-    private void removeContentComponent() {
-        if (tabbedPane == null) {
-            getContentPane().remove(contentComponent);
-            getRootPane().revalidate();
-        } else {
-            if (tabbedPane.getSelectedIndex() >= 0) {
-                tabbedPane.setComponentAt(tabbedPane.getSelectedIndex(), new JPanel());
-            }
-        }
-
-    }
-
-    private void setContentComponent() {
-        if (tabbedPane == null) {
-            getContentPane().add(contentComponent, BorderLayout.CENTER);
-            getRootPane().revalidate();
-        } else {
-            if (tabbedPane.getSelectedIndex() >= 0) {
-                tabbedPane.setComponentAt(tabbedPane.getSelectedIndex(), contentComponent);
-            }
-        }
+    public JComponent getContentComponent() {
+        return windowService.getContentComponent();
     }
 
     public void registerStartupDoneListener(StartupDoneListener pStartupDoneListener) {

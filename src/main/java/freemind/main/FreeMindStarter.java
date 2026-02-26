@@ -22,6 +22,8 @@
 /*$Id: FreeMindStarter.java,v 1.1.2.11 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.main;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -68,7 +70,10 @@ public class FreeMindStarter {
         tweakAWT();
 
         try {
-            new FreeMind(defaultPreferences, userPreferences).go(args);
+            Injector injector = Guice.createInjector(
+                    new FreeMindModule(defaultPreferences, userPreferences));
+            FreeMind app = injector.getInstance(FreeMind.class);
+            app.go(args);
         } catch (Exception e) {
             FreeMind.cantGo(e);
         }

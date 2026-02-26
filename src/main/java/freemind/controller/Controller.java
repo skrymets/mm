@@ -25,6 +25,8 @@ import freemind.common.JOptionalSplitPane;
 import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.controller.filter.FilterController;
 import freemind.controller.printpreview.PreviewDialog;
+import freemind.controller.services.PrintService;
+import freemind.controller.services.ZoomService;
 import freemind.main.*;
 import freemind.model.MindMap;
 import freemind.modes.Mode;
@@ -46,9 +48,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -69,11 +68,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 @Slf4j
 public class Controller implements MapModuleChangeObserver {
 
-    private static final String PAGE_FORMAT_PROPERTY = "page_format";
-
     private final HashSet<MapTitleChangeListener> mMapTitleChangeListenerSet = new HashSet<>();
     private final HashSet<MapTitleContributor> mMapTitleContributorSet = new HashSet<>();
-    private final HashSet<ZoomListener> mZoomListenerSet = new HashSet<>();
 
     /**
      * Converts from a local link to the real file URL of the documentation map. (Used to change this behaviour under MacOSX).
@@ -116,14 +112,15 @@ public class Controller implements MapModuleChangeObserver {
     private final ModesCreator modesCreator = new ModesCreator(this);
 
     @Getter
-    private PageFormat pageFormat = null;
-    private PrinterJob printerJob = null;
+    private PrintService printService;
+    @Getter
+    private ZoomService zoomService;
+
     private final Map<String, Font> fontMap = new HashMap<>();
 
     @Getter
     private FilterController filterController;
 
-    boolean isPrintingAllowed = true;
     boolean menubarVisible = true;
     boolean toolbarVisible = true;
     boolean leftToolbarVisible = true;
@@ -163,8 +160,6 @@ public class Controller implements MapModuleChangeObserver {
     public PropertyAction propertyAction;
     public OpenURLAction freemindUrl;
 
-    private static final float[] zoomValues = {0.25f, 0.5f, 0.75f, 1.0f, 1.5f, 2.0f, 3.0f, 4.0f};
-
     private static final List<FreemindPropertyListener> propertyChangeListeners = new ArrayList<>();
 
     private List<MapModule> tabbedPaneMapModules;
@@ -178,6 +173,9 @@ public class Controller implements MapModuleChangeObserver {
 
     public void init() {
         initialization();
+
+        printService = new PrintService(frame);
+        zoomService = new ZoomService();
 
         nodeMouseMotionListener = new NodeMouseMotionListener(this);
         nodeMotionListener = new NodeMotionListener(this);
@@ -342,12 +340,7 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     public String[] getZooms() {
-        String[] zooms = new String[zoomValues.length];
-        for (int i = 0; i < zoomValues.length; i++) {
-            float val = zoomValues[i];
-            zooms[i] = (int) (val * 100f) + "%";
-        }
-        return zooms;
+        return zoomService.getZooms();
     }
 
     public LastOpenedList getLastOpenedList() {
@@ -499,7 +492,7 @@ public class Controller implements MapModuleChangeObserver {
                 getView().selectAsTheOnlyOneSelected(getView().getRoot());
             }
             lastOpened.mapOpened(newMapModule);
-            changeZoomValueProperty(newMapModule.getView().getZoom());
+            zoomService.changeZoomValueProperty(newMapModule.getView().getZoom());
             // ((MainToolBar) getToolbar()).setZoomComboBox(zoomValue);
             // old
             // obtainFocusForSelected();
@@ -539,12 +532,6 @@ public class Controller implements MapModuleChangeObserver {
         menuBar.repaint();
         // new
         obtainFocusForSelected();
-    }
-
-    protected void changeZoomValueProperty(final float zoomValue) {
-        for (ZoomListener listener : mZoomListenerSet) {
-            listener.setZoom(zoomValue);
-        }
     }
 
     public void numberOfOpenMapInformation(int number, int pIndex) {
@@ -676,7 +663,7 @@ public class Controller implements MapModuleChangeObserver {
 
     public void setZoom(float zoom) {
         getView().setZoom(zoom);
-        changeZoomValueProperty(zoom);
+        zoomService.changeZoomValueProperty(zoom);
         // ((MainToolBar) toolbar).setZoomComboBox(zoom);
         // show text in status bar:
         Object[] messageArguments = {valueOf(zoom * 100f)};
@@ -729,11 +716,11 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     public void registerZoomListener(ZoomListener pZoomListener) {
-        mZoomListenerSet.add(pZoomListener);
+        zoomService.registerZoomListener(pZoomListener);
     }
 
     public void unregisterZoomListener(ZoomListener pZoomListener) {
-        mZoomListenerSet.remove(pZoomListener);
+        zoomService.unregisterZoomListener(pZoomListener);
     }
 
     public void registerMapTitleContributor(MapTitleContributor pMapTitleContributor) {
@@ -748,10 +735,10 @@ public class Controller implements MapModuleChangeObserver {
      * Manage the availability of all Actions dependent of whether there is a map or not
      */
     public void setAllActions(boolean enabled) {
-        print.setEnabled(enabled && isPrintingAllowed);
-        printDirect.setEnabled(enabled && isPrintingAllowed);
-        printPreview.setEnabled(enabled && isPrintingAllowed);
-        page.setEnabled(enabled && isPrintingAllowed);
+        print.setEnabled(enabled && printService.isPrintingAllowed());
+        printDirect.setEnabled(enabled && printService.isPrintingAllowed());
+        printPreview.setEnabled(enabled && printService.isPrintingAllowed());
+        page.setEnabled(enabled && printService.isPrintingAllowed());
         close.setEnabled(enabled);
         moveToRoot.setEnabled(enabled);
         ((MainToolBar) getToolBar()).setAllActions(enabled);
@@ -836,37 +823,6 @@ public class Controller implements MapModuleChangeObserver {
         System.exit(0);
     }
 
-    private boolean acquirePrinterJobAndPageFormat() {
-        if (printerJob == null) {
-            try {
-                printerJob = PrinterJob.getPrinterJob();
-            } catch (SecurityException ex) {
-                isPrintingAllowed = false;
-                return false;
-            }
-        }
-        if (pageFormat == null) {
-            pageFormat = printerJob.defaultPage();
-        }
-        if (Objects.equals(getProperty("page_orientation"), "landscape")) {
-            pageFormat.setOrientation(PageFormat.LANDSCAPE);
-        } else if (Tools
-                .safeEquals(getProperty("page_orientation"), "portrait")) {
-            pageFormat.setOrientation(PageFormat.PORTRAIT);
-        } else if (Objects.equals(getProperty("page_orientation"),
-                "reverse_landscape")) {
-            pageFormat.setOrientation(PageFormat.REVERSE_LANDSCAPE);
-        }
-        String pageFormatProperty = getProperty(PAGE_FORMAT_PROPERTY);
-        if (!pageFormatProperty.isEmpty()) {
-            log.info("Page format (stored): {}", pageFormatProperty);
-            final Paper storedPaper = new Paper();
-            Tools.setPageFormatFromString(storedPaper, pageFormatProperty);
-            pageFormat.setPaper(storedPaper);
-        }
-        return true;
-    }
-
     // ////////////
     // Inner Classes
     // //////////
@@ -919,17 +875,17 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (!acquirePrinterJobAndPageFormat()) {
+            if (!printService.acquirePrinterJobAndPageFormat()) {
                 return;
             }
 
-            printerJob.setPrintable(getView(), pageFormat);
+            printService.getPrinterJob().setPrintable(getView(), printService.getPageFormat());
 
-            if (!isDlg || printerJob.printDialog()) {
+            if (!isDlg || printService.getPrinterJob().printDialog()) {
                 try {
                     frame.setWaitingCursor(true);
-                    printerJob.print();
-                    storePageFormat();
+                    printService.getPrinterJob().print();
+                    printService.storePageFormat(Controller.this::setProperty);
                 } catch (Exception ex) {
                     log.error(ex.getLocalizedMessage(), ex);
                 } finally {
@@ -948,13 +904,13 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (!acquirePrinterJobAndPageFormat()) {
+            if (!printService.acquirePrinterJobAndPageFormat()) {
                 return;
             }
             PreviewDialog previewDialog = new PreviewDialog(
                     controller.getResourceString("print_preview_title"),
                     getView(),
-                    getPageFormat());
+                    printService.getPageFormat());
             previewDialog.pack();
             previewDialog.setLocationRelativeTo(JOptionPane
                     .getFrameForComponent(getView()));
@@ -970,7 +926,7 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (!acquirePrinterJobAndPageFormat()) {
+            if (!printService.acquirePrinterJobAndPageFormat()) {
                 return;
             }
 
@@ -1031,8 +987,8 @@ public class Controller implements MapModuleChangeObserver {
                 return;
 
             // Ask user for page format (e.g., portrait/landscape)
-            pageFormat = printerJob.pageDialog(pageFormat);
-            storePageFormat();
+            printService.setPageFormat(printService.getPrinterJob().pageDialog(printService.getPageFormat()));
+            printService.storePageFormat(Controller.this::setProperty);
         }
     }
 
@@ -1310,15 +1266,15 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         public void actionPerformed(ActionEvent e) {
-            // log.info("ZoomInAction actionPerformed");
             float currentZoom = getView().getZoom();
-            for (float val : zoomValues) {
+            float[] values = ZoomService.getZoomValues();
+            for (float val : values) {
                 if (val > currentZoom) {
                     setZoom(val);
                     return;
                 }
             }
-            setZoom(zoomValues[zoomValues.length - 1]);
+            setZoom(values[values.length - 1]);
         }
     }
 
@@ -1329,8 +1285,9 @@ public class Controller implements MapModuleChangeObserver {
 
         public void actionPerformed(ActionEvent e) {
             float currentZoom = getView().getZoom();
-            float lastZoom = zoomValues[0];
-            for (float val : zoomValues) {
+            float[] values = ZoomService.getZoomValues();
+            float lastZoom = values[0];
+            for (float val : values) {
                 if (val >= currentZoom) {
                     setZoom(lastZoom);
                     return;
@@ -1646,22 +1603,6 @@ public class Controller implements MapModuleChangeObserver {
         tabbedPane.setComponentAt(selectedIndex, frame.getContentComponent());
         // double call, due to mac strangeness.
         obtainFocusForSelected();
-    }
-
-    protected void storePageFormat() {
-        switch (pageFormat.getOrientation()) {
-            case PageFormat.LANDSCAPE:
-                setProperty("page_orientation", "landscape");
-                break;
-            case PageFormat.PORTRAIT:
-                setProperty("page_orientation", "portrait");
-                break;
-            case PageFormat.REVERSE_LANDSCAPE:
-                setProperty("page_orientation", "reverse_landscape");
-                break;
-        }
-
-        setProperty(PAGE_FORMAT_PROPERTY, Tools.getPageFormatAsString(pageFormat.getPaper()));
     }
 
     public enum SplitComponentType {
