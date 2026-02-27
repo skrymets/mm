@@ -20,7 +20,6 @@
 
 package freemind.modes;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.ColorUtils;
 import freemind.model.LineAdapter;
@@ -48,7 +47,7 @@ public abstract class CloudAdapter extends LineAdapter implements MindMapCloud {
         iterativeLevel = -1;
         if (listener == null) {
             listener = new CloudAdapterListener();
-            Controller.addPropertyChangeListener(listener);
+            pMapFeedback.addPropertyChangeListener(listener);
         }
 
     }

@@ -21,13 +21,13 @@
  * Created on 15.05.2005
  *
  */
-package freemind.controller.filter;
+package freemind.model;
 
 /**
  * @author dimitri 15.05.2005
  */
 public class FilterInfo {
-    private int info = Filter.FILTER_INITIAL_VALUE;
+    private int info = FilterConstants.FILTER_INITIAL_VALUE;
 
     /**
      *
@@ -37,29 +37,29 @@ public class FilterInfo {
     }
 
     public void reset() {
-        info = Filter.FILTER_INITIAL_VALUE;
+        info = FilterConstants.FILTER_INITIAL_VALUE;
     }
 
     public void setAncestor() {
-        add(Filter.FILTER_SHOW_ANCESTOR);
+        add(FilterConstants.FILTER_SHOW_ANCESTOR);
     }
 
     public void setDescendant() {
-        add(Filter.FILTER_SHOW_DESCENDANT);
+        add(FilterConstants.FILTER_SHOW_DESCENDANT);
     }
 
     public void setMatched() {
-        add(Filter.FILTER_SHOW_MATCHED);
+        add(FilterConstants.FILTER_SHOW_MATCHED);
     }
 
-    void add(int flag) {
-        if ((flag & (Filter.FILTER_SHOW_MATCHED | Filter.FILTER_SHOW_HIDDEN)) != 0) {
-            info &= ~Filter.FILTER_INITIAL_VALUE;
+    public void add(int flag) {
+        if ((flag & (FilterConstants.FILTER_SHOW_MATCHED | FilterConstants.FILTER_SHOW_HIDDEN)) != 0) {
+            info &= ~FilterConstants.FILTER_INITIAL_VALUE;
         }
         info |= flag;
     }
 
-    int get() {
+    public int get() {
         return info;
     }
 
@@ -67,13 +67,13 @@ public class FilterInfo {
      *
      */
     public boolean isAncestor() {
-        return (info & Filter.FILTER_SHOW_ANCESTOR) != 0;
+        return (info & FilterConstants.FILTER_SHOW_ANCESTOR) != 0;
     }
 
     /**
      *
      */
     public boolean isMatched() {
-        return (info & Filter.FILTER_SHOW_MATCHED) != 0;
+        return (info & FilterConstants.FILTER_SHOW_MATCHED) != 0;
     }
 }

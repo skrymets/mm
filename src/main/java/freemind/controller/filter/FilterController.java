@@ -25,6 +25,7 @@ package freemind.controller.filter;
 
 import freemind.controller.Controller;
 import freemind.controller.MapModuleChangeObserver;
+import freemind.model.Filter;
 import freemind.controller.filter.condition.Condition;
 import freemind.controller.filter.condition.ConditionFactory;
 import freemind.controller.filter.condition.ConditionRenderer;

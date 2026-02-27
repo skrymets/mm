@@ -25,6 +25,9 @@ import org.apache.commons.io.FilenameUtils;
 import freemind.controller.*;
 import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.controller.actions.NodeListMember;
+import freemind.events.FreeMindEventBus;
+import freemind.events.NodeModifiedEvent;
+import freemind.events.NodeSelectionChangedEvent;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.model.MapAdapter;
@@ -87,6 +90,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     private MapAdapter mModel;
     private final HashSet<NodeSelectionListener> mNodeSelectionListeners = new HashSet<>();
     private final HashSet<NodeLifetimeListener> mNodeLifetimeListeners = new HashSet<>();
+    @Setter
+    private FreeMindEventBus eventBus;
     private File lastCurrentDir = null;
 
     /**
@@ -133,6 +138,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     public void nodeChanged(MindMapNode node) {
         setSaved(false);
         nodeRefresh(node, true);
+        if (eventBus != null) {
+            eventBus.post(new NodeModifiedEvent(node, null, null, null));
+        }
     }
 
     public void setSaved(boolean pIsClean) {
@@ -200,6 +208,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
                 hook.onLostFocusNode(node);
             }
+            if (eventBus != null) {
+                eventBus.post(new NodeSelectionChangedEvent(node.getModel(), false));
+            }
         } catch (RuntimeException e) {
             log.info("Error in node selection listeners", e);
         }
@@ -217,6 +228,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             }
             for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
                 hook.onFocusNode(node);
+            }
+            if (eventBus != null) {
+                eventBus.post(new NodeSelectionChangedEvent(node.getModel(), true));
             }
         } catch (RuntimeException e) {
             log.info("Error in node selection listeners", e);

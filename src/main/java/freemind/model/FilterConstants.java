@@ -17,41 +17,20 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- * Created on 18.06.2005
- * Copyright (C) 2005 Dimitri Polivaev
- *
- */
-package freemind.controller.filter.util;
-
-import javax.swing.*;
+package freemind.model;
 
 /**
- * @author Dimitri Polivaev 18.06.2005
+ * Filter flag constants shared between the model and controller filter layers.
  */
-public interface SortedListModel extends ListModel {
+public final class FilterConstants {
+    public static final int FILTER_INITIAL_VALUE = 1;
+    public static final int FILTER_SHOW_MATCHED = 2;
+    public static final int FILTER_SHOW_ANCESTOR = 4;
+    public static final int FILTER_SHOW_DESCENDANT = 8;
+    public static final int FILTER_SHOW_ECLIPSED = 16;
+    public static final int FILTER_SHOW_HIDDEN = 32;
 
-    /**
-     *
-     */
-    void clear();
-
-    /**
-     *
-     */
-    boolean contains(Object o);
-
-    /**
-     *
-     */
-    void add(Object o);
-
-    void replace(Object oldO, Object newO);
-
-    void remove(Object o);
-
-    /**
-     *
-     */
-    int getIndexOf(Object o);
+    private FilterConstants() {
+        // utility class
+    }
 }

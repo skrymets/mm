@@ -33,9 +33,9 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import freemind.controller.filter.Filter;
-import freemind.controller.filter.util.SortedListModel;
-import freemind.controller.filter.util.SortedMapListModel;
+import freemind.model.Filter;
+import freemind.model.SortedListModel;
+import freemind.model.SortedMapListModel;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.modes.ArrowLinkAdapter;
@@ -218,28 +218,17 @@ public class MindMapMock implements MindMap {
         return 0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMap#changeRoot(freemind.model.MindMapNode)
-     */
     @Override
     public void changeRoot(MindMapNode pNewRoot) {
         // TODO Auto-generated method stub
 
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#setReadOnly(boolean)
-     */
     @Override
     public void setReadOnly(boolean pIsReadOnly) {
 
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#getMapFeedback()
-     */
     @Override
     public MapFeedback getMapFeedback() {
         return new MapFeedbackAdapter() {
@@ -252,62 +241,41 @@ public class MindMapMock implements MindMap {
         };
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#getIcons()
-     */
     @Override
     public SortedListModel getIcons() {
         return new SortedMapListModel();
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#loadTree(freemind.modes.ModeController.ReaderCreator, freemind.model.MapAdapter.AskUserBeforeUpdateCallback)
-     */
     @Override
     public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws XMLParseException,
             IOException {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createNodeTreeFromXml(java.io.Reader, java.util.HashMap)
-     */
     @Override
     public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget)
             throws XMLParseException, IOException {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createNodeAdapter(freemind.model.MindMap, java.lang.String)
-     */
     @Override
     public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createEdgeAdapter(freemind.model.NodeAdapter)
-     */
     @Override
     public EdgeAdapter createEdgeAdapter(NodeAdapter pNode) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createCloudAdapter(freemind.model.NodeAdapter)
-     */
     @Override
     public CloudAdapter createCloudAdapter(NodeAdapter pNode) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createArrowLinkAdapter(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
-     */
     @Override
     public ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter pSource,
                                                    NodeAdapter pTarget) {
@@ -315,9 +283,6 @@ public class MindMapMock implements MindMap {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createArrowLinkTarget(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
-     */
     @Override
     public ArrowLinkTarget createArrowLinkTarget(NodeAdapter pSource,
                                                  NodeAdapter pTarget) {
@@ -325,27 +290,18 @@ public class MindMapMock implements MindMap {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createEncryptedNode(java.lang.String)
-     */
     @Override
     public NodeAdapter createEncryptedNode(String pAdditionalInfo) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#insertNodeInto(freemind.model.MindMapNode, freemind.model.MindMapNode, int)
-     */
     @Override
     public void insertNodeInto(MindMapNode pNode, MindMapNode pParentNode,
                                int pIndex) {
 
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#removeNodeFromParent(freemind.model.MindMapNode)
-     */
     @Override
     public void removeNodeFromParent(MindMapNode pNode) {
     }

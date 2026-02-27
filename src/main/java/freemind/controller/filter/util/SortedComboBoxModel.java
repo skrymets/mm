@@ -23,6 +23,8 @@
  */
 package freemind.controller.filter.util;
 
+import freemind.model.SortedListModel;
+import freemind.model.SortedMapListModel;
 import lombok.Getter;
 
 import javax.swing.*;

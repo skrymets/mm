@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 
+import freemind.events.FreeMindEventBus;
 import jakarta.inject.Singleton;
 import java.util.Properties;
 
@@ -24,6 +25,7 @@ public class FreeMindModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(FreeMindMain.class).to(FreeMind.class);
+        bind(FreeMindEventBus.class).in(Singleton.class);
     }
 
     @Provides

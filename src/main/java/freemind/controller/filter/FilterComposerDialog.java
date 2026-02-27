@@ -32,7 +32,7 @@ import freemind.controller.filter.condition.ConjunctConditions;
 import freemind.controller.filter.condition.DisjunctConditions;
 import freemind.controller.filter.util.ExtendedComboBoxModel;
 import freemind.controller.filter.util.SortedComboBoxModel;
-import freemind.controller.filter.util.SortedListModel;
+import freemind.model.SortedListModel;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;

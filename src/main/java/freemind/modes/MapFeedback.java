@@ -23,6 +23,7 @@ package freemind.modes;
 import freemind.extensions.NodeHook;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
+import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.ViewFeedback;
 
 import java.awt.*;
@@ -111,6 +112,11 @@ public interface MapFeedback {
     ViewFeedback getViewFeedback();
 
     void sortNodesByDepth(List<MindMapNode> inPlaceList);
+
+    /**
+     * Registers a listener that will be notified when a FreeMind property changes.
+     */
+    void addPropertyChangeListener(FreemindPropertyListener listener);
 
 }
 

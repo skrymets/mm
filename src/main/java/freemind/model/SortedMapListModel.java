@@ -21,7 +21,7 @@
  * Created on 14.05.2005
  *
  */
-package freemind.controller.filter.util;
+package freemind.model;
 
 import javax.swing.*;
 import java.util.*;
@@ -102,7 +102,7 @@ public class SortedMapListModel extends AbstractListModel implements
      * (non-Javadoc)
      *
      * @see
-     * freemind.controller.filter.util.SortedListModel#replace(java.lang.Object,
+     * freemind.model.SortedListModel#replace(java.lang.Object,
      * java.lang.Object)
      */
     public void replace(Object oldO, Object newO) {
@@ -119,7 +119,7 @@ public class SortedMapListModel extends AbstractListModel implements
      * (non-Javadoc)
      *
      * @see
-     * freemind.controller.filter.util.SortedListModel#delete(java.lang.Object)
+     * freemind.model.SortedListModel#delete(java.lang.Object)
      */
     public void remove(Object element) {
         if (model.remove(element)) {

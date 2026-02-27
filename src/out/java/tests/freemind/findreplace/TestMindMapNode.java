@@ -40,7 +40,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import freemind.controller.filter.FilterInfo;
+import freemind.model.FilterInfo;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.XMLElement;

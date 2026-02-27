@@ -25,7 +25,9 @@ package freemind.controller.filter;
 
 import freemind.controller.Controller;
 import freemind.controller.filter.condition.Condition;
-import freemind.model.MindMap;
+import freemind.model.Filter;
+import freemind.model.FilterConstants;
+import freemind.model.FilterContext;
 import freemind.model.MindMapNode;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
@@ -48,14 +50,14 @@ public class DefaultFilter implements Filter {
         super();
 
         this.condition = condition;
-        this.options = FILTER_INITIAL_VALUE | FILTER_SHOW_MATCHED;
+        this.options = FilterConstants.FILTER_INITIAL_VALUE | FilterConstants.FILTER_SHOW_MATCHED;
         if (areAnchestorsShown) {
-            options += FILTER_SHOW_ANCESTOR;
+            options += FilterConstants.FILTER_SHOW_ANCESTOR;
         }
 
-        options += FILTER_SHOW_ECLIPSED;
+        options += FilterConstants.FILTER_SHOW_ECLIPSED;
         if (areDescendantsShown) {
-            options += FILTER_SHOW_DESCENDANT;
+            options += FilterConstants.FILTER_SHOW_DESCENDANT;
         }
     }
 
@@ -63,26 +65,26 @@ public class DefaultFilter implements Filter {
      * (non-Javadoc)
      *
      * @see
-     * freemind.controller.filter.Filter#applyFilter(freemind.model.MindMap)
+     * freemind.model.Filter#applyFilter(freemind.model.FilterContext)
      */
-    public void applyFilter(Controller controller) {
+    public void applyFilter(FilterContext context) {
         if (condition == null) {
             return;
         }
+        Controller controller = (Controller) context;
 
         try {
-            controller.getFrame().setWaitingCursor(true);
-            MindMap map = controller.getModel();
+            context.setWaitingCursor(true);
+            MindMapNode root = context.getRootNode();
             MapView mapView = controller.getView();
-            MindMapNode root = map.getRootNode();
 
             resetFilter(root);
             if (filterChildren(root, controller, condition.checkNode(controller, root), false)) {
-                addFilterResult(root, FILTER_SHOW_ANCESTOR);
+                addFilterResult(root, FilterConstants.FILTER_SHOW_ANCESTOR);
             }
             selectVisibleNode(mapView);
         } finally {
-            controller.getFrame().setWaitingCursor(false);
+            context.setWaitingCursor(false);
         }
     }
 
@@ -135,26 +137,26 @@ public class DefaultFilter implements Filter {
                                 boolean isDescendantSelected) {
         resetFilter(node);
         if (isAncestorSelected) {
-            addFilterResult(node, FILTER_SHOW_DESCENDANT);
+            addFilterResult(node, FilterConstants.FILTER_SHOW_DESCENDANT);
         }
 
         boolean conditionSatisfied = condition.checkNode(c, node);
         if (conditionSatisfied) {
             isDescendantSelected = true;
-            addFilterResult(node, FILTER_SHOW_MATCHED);
+            addFilterResult(node, FilterConstants.FILTER_SHOW_MATCHED);
         } else {
-            addFilterResult(node, FILTER_SHOW_HIDDEN);
+            addFilterResult(node, FilterConstants.FILTER_SHOW_HIDDEN);
         }
 
         if (isAncestorEclipsed) {
-            addFilterResult(node, FILTER_SHOW_ECLIPSED);
+            addFilterResult(node, FilterConstants.FILTER_SHOW_ECLIPSED);
         }
 
         if (filterChildren(node,
                 c,
                 conditionSatisfied || isAncestorSelected,
                 !conditionSatisfied || isAncestorEclipsed)) {
-            addFilterResult(node, FILTER_SHOW_ANCESTOR);
+            addFilterResult(node, FilterConstants.FILTER_SHOW_ANCESTOR);
             isDescendantSelected = true;
         }
         return isDescendantSelected;
@@ -164,18 +166,18 @@ public class DefaultFilter implements Filter {
      * (non-Javadoc)
      *
      * @see
-     * freemind.controller.filter.Filter#isVisible(freemind.model.MindMapNode)
+     * freemind.model.Filter#isVisible(freemind.model.MindMapNode)
      */
     public boolean isVisible(MindMapNode node) {
         if (condition == null)
             return true;
         int filterResult = node.getFilterInfo().get();
-        if ((options & FILTER_SHOW_ANCESTOR) != 0) {
-            if ((options & filterResult & ~FILTER_SHOW_ECLIPSED) != 0) {
+        if ((options & FilterConstants.FILTER_SHOW_ANCESTOR) != 0) {
+            if ((options & filterResult & ~FilterConstants.FILTER_SHOW_ECLIPSED) != 0) {
                 return true;
             }
-        } else if ((options & FILTER_SHOW_ECLIPSED) >= (filterResult & FILTER_SHOW_ECLIPSED)) {
-            if ((options & filterResult & ~FILTER_SHOW_ECLIPSED) != 0) {
+        } else if ((options & FilterConstants.FILTER_SHOW_ECLIPSED) >= (filterResult & FilterConstants.FILTER_SHOW_ECLIPSED)) {
+            if ((options & filterResult & ~FilterConstants.FILTER_SHOW_ECLIPSED) != 0) {
                 return true;
             }
         }
@@ -193,7 +195,7 @@ public class DefaultFilter implements Filter {
     /*
      * (non-Javadoc)
      *
-     * @see freemind.controller.filter.Filter#areMatchedShown()
+     * @see freemind.model.Filter#areMatchedShown()
      */
     public boolean areMatchedShown() {
         return true;
@@ -202,7 +204,7 @@ public class DefaultFilter implements Filter {
     /*
      * (non-Javadoc)
      *
-     * @see freemind.controller.filter.Filter#areHiddenShown()
+     * @see freemind.model.Filter#areHiddenShown()
      */
     public boolean areHiddenShown() {
         return false;
@@ -211,25 +213,25 @@ public class DefaultFilter implements Filter {
     /*
      * (non-Javadoc)
      *
-     * @see freemind.controller.filter.Filter#areAncestorsShown()
+     * @see freemind.model.Filter#areAncestorsShown()
      */
     public boolean areAncestorsShown() {
-        return 0 != (options & FILTER_SHOW_ANCESTOR);
+        return 0 != (options & FilterConstants.FILTER_SHOW_ANCESTOR);
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see freemind.controller.filter.Filter#areDescendantsShown()
+     * @see freemind.model.Filter#areDescendantsShown()
      */
     public boolean areDescendantsShown() {
-        return 0 != (options & FILTER_SHOW_DESCENDANT);
+        return 0 != (options & FilterConstants.FILTER_SHOW_DESCENDANT);
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see freemind.controller.filter.Filter#areEclipsedShown()
+     * @see freemind.model.Filter#areEclipsedShown()
      */
     public boolean areEclipsedShown() {
         return true;

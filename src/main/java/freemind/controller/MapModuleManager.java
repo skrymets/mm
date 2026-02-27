@@ -23,12 +23,16 @@
 
 package freemind.controller;
 
+import freemind.events.FreeMindEventBus;
+import freemind.events.MapClosedEvent;
+import freemind.events.MapLoadedEvent;
 import freemind.model.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -65,6 +69,13 @@ public class MapModuleManager {
     // private Map mapModules = new HashMap();
 
     /**
+     * Event bus for publishing map lifecycle events. Set via setter to avoid
+     * disrupting legacy construction in Controller.
+     */
+    @Setter
+    private FreeMindEventBus eventBus;
+
+    /**
      * A list of MapModule instances. They are ordered according to their screen order.
      */
     private final List<MapModule> mapModules = new ArrayList<>();
@@ -79,7 +90,7 @@ public class MapModuleManager {
      */
     private Mode mCurrentMode = null;
 
-    MapModuleManager(Controller c) {
+    public MapModuleManager(Controller c) {
     }
 
     /**
@@ -114,6 +125,10 @@ public class MapModuleManager {
         MapModule mapModule = new MapModule(map, new MapView(map, modeController), modeController.getMode(), modeController);
         addToOrChangeInMapModules(mapModule.toString(), mapModule);
         setMapModule(mapModule, modeController.getMode());
+        if (eventBus != null) {
+            String fileName = map.toString();
+            eventBus.post(new MapLoadedEvent(map, fileName));
+        }
     }
 
     public MapModule getModuleGivenModeController(ModeController pModeController) {
@@ -316,6 +331,9 @@ public class MapModuleManager {
             changeToMapModule(mapModules.get(index));
         }
         listener.afterMapClose(module, module.getMode());
+        if (eventBus != null) {
+            eventBus.post(new MapClosedEvent(module.getModel()));
+        }
         return true;
     }
 

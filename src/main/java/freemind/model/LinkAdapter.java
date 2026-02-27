@@ -20,7 +20,6 @@
 
 package freemind.model;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.ColorUtils;
 import freemind.modes.MapFeedback;
@@ -56,7 +55,7 @@ public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
         referenceText = null;
         if (listener == null) {
             listener = new LinkAdapterListener();
-            Controller.addPropertyChangeListener(listener);
+            pMapFeedback.addPropertyChangeListener(listener);
         }
     }
 

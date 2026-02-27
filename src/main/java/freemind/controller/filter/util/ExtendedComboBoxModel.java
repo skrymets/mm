@@ -23,6 +23,8 @@
  */
 package freemind.controller.filter.util;
 
+import freemind.model.SortedListModel;
+
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;

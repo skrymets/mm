@@ -19,8 +19,6 @@
 
 package freemind.model;
 
-import freemind.controller.filter.Filter;
-import freemind.controller.filter.util.SortedListModel;
 import freemind.main.Tools;
 import freemind.modes.*;
 

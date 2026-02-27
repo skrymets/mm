@@ -31,7 +31,7 @@ public final class StringEncoder {
      */
     public static String encode(String value) {
         if (value == null) {
-            return value;
+            return null;
         }
         StringBuilder buf = new StringBuilder(value.length() + 4);
         final int limit = value.length();
@@ -45,7 +45,7 @@ public final class StringEncoder {
                 continue;
             }
 
-            // If character is an otherwise valid XML character, pass it through
+            // If a character is an otherwise valid XML character, pass it through
             // unchanged
             if (isValidXMLChar(ch)) {
                 buf.append(ch);
@@ -93,8 +93,7 @@ public final class StringEncoder {
 
             // Get next char
             if (++i >= limit) {
-                throw new IllegalArgumentException(
-                        "illegal trailing '\\' in encoded string");
+                throw new IllegalArgumentException("illegal trailing '\\' in encoded string");
             }
             ch = text.charAt(i);
 
@@ -104,26 +103,20 @@ public final class StringEncoder {
                 continue;
             }
 
-            // Must be unicode escape
+            // Must be Unicode escape
             if (ch != 'u') {
-                throw new IllegalArgumentException(
-                        "illegal escape sequence '\\" + ch
-                                + "' in encoded string");
+                throw new IllegalArgumentException("illegal escape sequence '\\" + ch + "' in encoded string");
             }
 
             // Decode hex value
             int value = 0;
             for (int j = 0; j < 4; j++) {
                 if (++i >= limit) {
-                    throw new IllegalArgumentException(
-                            "illegal truncated '\\u' escape sequence in encoded string");
+                    throw new IllegalArgumentException("illegal truncated '\\u' escape sequence in encoded string");
                 }
                 int nibble = Character.digit(text.charAt(i), 16);
                 if (nibble == -1) {
-                    throw new IllegalArgumentException(
-                            "illegal escape sequence '"
-                                    + text.substring(i - j - 2, i - j + 4)
-                                    + "' in encoded string");
+                    throw new IllegalArgumentException("illegal escape sequence '" + text.substring(i - j - 2, i - j + 4) + "' in encoded string");
                 }
                 // assert nibble >= 0 && nibble <= 0xf;
                 value = (value << 4) | nibble;
@@ -136,11 +129,9 @@ public final class StringEncoder {
     }
 
     /**
-     * Determine if the given character is a valid XML character according to
-     * the XML 1.0 specification.
+     * Determine if the given character is a valid XML character, according to the XML 1.0 specification.
      *
-     * @see <a href="http://www.w3.org/TR/REC-xml/#charsets">The XML 1.0
-     * Specification</a>
+     * @see <a href="http://www.w3.org/TR/REC-xml/#charsets">The XML 1.0 Specification</a>
      */
     public static boolean isValidXMLChar(char ch) {
         return (ch >= ' ' && ch <= '\ud7ff') || (ch >= '\ue000' && ch <= '\ufffd');

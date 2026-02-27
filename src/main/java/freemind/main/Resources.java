@@ -32,14 +32,13 @@ import freemind.modes.FreeMindFileDialog;
 import freemind.modes.FreeMindJFileDialog;
 import lombok.extern.slf4j.Slf4j;
 
+import freemind.preferences.FreemindPropertyListener;
+
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * @author Dimitri Polivaev 12.07.2005
@@ -50,6 +49,8 @@ public class Resources implements TextTranslator {
     private final FreeMindMain main;
     static Resources resourcesInstance = null;
     private HashMap<String, String> countryMap;
+
+    private static final List<FreemindPropertyListener> propertyChangeListeners = new ArrayList<>();
 
     private Resources(FreeMindMain frame) {
         this.main = frame;
@@ -172,6 +173,43 @@ public class Resources implements TextTranslator {
         String fileName = baseFileName.getParent() + File.separatorChar + "." // hidden
                 + baseFileName.getName().replaceFirst(FreeMindCommon.FREEMIND_FILE_EXTENSION + "$", ".png");
         return fileName;
+    }
+
+    //
+    // Property change listener management (static, accessible from all layers)
+    //
+
+    public static Collection<FreemindPropertyListener> getPropertyChangeListeners() {
+        return Collections.unmodifiableCollection(propertyChangeListeners);
+    }
+
+    public static void addPropertyChangeListener(FreemindPropertyListener listener) {
+        propertyChangeListeners.add(listener);
+    }
+
+    /**
+     * @param listener The new listener. All currently available properties are sent
+     *                 to the listener after registration. Here, the oldValue
+     *                 parameter is set to null.
+     */
+    public static void addPropertyChangeListenerAndPropagate(FreemindPropertyListener listener) {
+        addPropertyChangeListener(listener);
+        Properties properties = getInstance().getProperties();
+        for (Object key : properties.keySet()) {
+            listener.propertyChanged((String) key, properties.getProperty((String) key), null);
+        }
+    }
+
+    public static void removePropertyChangeListener(FreemindPropertyListener listener) {
+        propertyChangeListeners.remove(listener);
+    }
+
+    public static void firePropertyChanged(String propertyName, String newValue, String oldValue) {
+        if (oldValue == null || !oldValue.equals(newValue)) {
+            for (FreemindPropertyListener listener : getPropertyChangeListeners()) {
+                listener.propertyChanged(propertyName, newValue, oldValue);
+            }
+        }
     }
 
 }

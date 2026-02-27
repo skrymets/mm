@@ -28,6 +28,7 @@ import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
+import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
 import lombok.extern.slf4j.Slf4j;
@@ -257,5 +258,9 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
     public void deRegisterMouseWheelEventHandler(MouseWheelEventHandler pHandler) {
     }
 
+    @Override
+    public void addPropertyChangeListener(FreemindPropertyListener listener) {
+        Resources.addPropertyChangeListener(listener);
+    }
 
 }

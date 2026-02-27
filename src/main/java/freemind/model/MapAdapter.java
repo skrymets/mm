@@ -20,10 +20,6 @@
 
 package freemind.model;
 
-import freemind.controller.filter.DefaultFilter;
-import freemind.controller.filter.Filter;
-import freemind.controller.filter.condition.NoFilteringCondition;
-import freemind.controller.filter.util.SortedMapListModel;
 import freemind.main.*;
 import freemind.modes.MapFeedback;
 import freemind.modes.MindMapLinkRegistry;
@@ -87,8 +83,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     public MapAdapter(MapFeedback mapFeedback) {
         super(null);
         this.mMapFeedback = mapFeedback;
-        filter = new DefaultFilter(NoFilteringCondition.createCondition(),
-                true, false);
+        filter = NoFilter.INSTANCE;
         mTimerForFileChangeObservation = new Timer();
         mTimerForFileChangeObservation.schedule(
                 new FileChangeInspectorTimerTask(),
@@ -187,24 +182,17 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         }
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#removeNodeFromParent(freemind.model.MindMapNode)
-     */
     @Override
     public void removeNodeFromParent(MindMapNode pNode) {
         super.removeNodeFromParent(pNode);
     }
-
-    //
-    // Attributes
-    //
 
     public boolean isSaved() {
         return (changesPerformedSinceLastSave == 0);
     }
 
     /**
-     * Counts the amount of actions performed.
+     * Counts the number of actions performed.
      *
      * @param saved true if the file was saved recently. False otherwise.
      */
@@ -525,10 +513,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     public static final DontAskUserBeforeUpdateAdapter sDontAskInstance = new DontAskUserBeforeUpdateAdapter();
 
     public static class DontAskUserBeforeUpdateAdapter implements AskUserBeforeUpdateCallback {
-
-        /* (non-Javadoc)
-         * @see freemind.modes.XMLElementAdapter.AskUserBeforeUpdateCallback#askUserForUpdate()
-         */
         @Override
         public boolean askUserForUpdate() {
             return true;
@@ -562,23 +546,14 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             if (!SwingUtils.isHeadless()) {
                 boolean showResult = pAskUserBeforeUpdateCallback.askUserForUpdate();
                 if (!showResult) {
-                    throw new IllegalArgumentException(
-                            "We should not open the reader " + pReaderCreator);
+                    throw new IllegalArgumentException("We should not open the reader " + pReaderCreator);
                 }
             }
-            reader = Tools.getUpdateReader(pReaderCreator.createReader(),
-                    FREEMIND_VERSION_UPDATER_XSLT);
-            if (reader == null) {
-                // something went wrong on update:
-                // FIXME: Translate me.
-                mMapFeedback.out("Error on conversion. Continue without conversion. Some elements may be lost!");
-                reader = Tools.getActualReader(pReaderCreator.createReader());
-            }
+            reader = Tools.getUpdateReader(pReaderCreator.createReader(), FREEMIND_VERSION_UPDATER_XSLT);
         }
         try {
             HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();
-            return createNodeTreeFromXml(
-                    reader, IDToTarget);
+            return createNodeTreeFromXml(reader, IDToTarget);
         } catch (Exception ex) {
             String errorMessage = "Error while parsing file:" + ex;
             System.err.println(errorMessage);
@@ -587,9 +562,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             result.setText(errorMessage);
             return result;
         } finally {
-            if (reader != null) {
-                reader.close();
-            }
+            reader.close();
         }
     }
 

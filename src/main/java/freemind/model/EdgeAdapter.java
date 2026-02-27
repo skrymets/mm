@@ -20,7 +20,6 @@
 
 package freemind.model;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.ColorUtils;
 import freemind.modes.MapFeedback;
@@ -64,7 +63,7 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
         NORMAL_WIDTH = WIDTH_PARENT;
         if (listener == null) {
             listener = new EdgeAdapterListener();
-            Controller.addPropertyChangeListener(listener);
+            pMapFeedback.addPropertyChangeListener(listener);
         }
     }
 

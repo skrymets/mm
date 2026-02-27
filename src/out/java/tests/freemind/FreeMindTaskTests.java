@@ -37,33 +37,20 @@ import freemind.common.FreeMindTask;
  */
 public class FreeMindTaskTests extends FreeMindTestBase {
 
-    /* (non-Javadoc)
-     * @see tests.freemind.FreeMindTestBase#setUp()
-     */
     protected void setUp() throws Exception {
         super.setUp();
     }
 
     private class TestTask extends FreeMindTask {
 
-        /**
-         *
-         */
         private static final int AMOUNT_OF_TIME = 10;
 
-        /**
-         * @param pFrame
-         * @param pAmountOfSteps
-         */
         public TestTask(JFrame pFrame) {
             super(pFrame, AMOUNT_OF_TIME, "TestTask");
         }
 
         private int i = AMOUNT_OF_TIME;
 
-        /* (non-Javadoc)
-         * @see freemind.common.FreeMindTask#processAction()
-         */
         protected boolean processAction() throws Exception {
             Thread.sleep(200);
             i--;
@@ -73,10 +60,6 @@ public class FreeMindTaskTests extends FreeMindTestBase {
 
     }
 
-    /**
-     * @throws InterruptedException
-     * @throws InvocationTargetException
-     */
     public void testTestTask() throws InterruptedException, InvocationTargetException {
         JFrame frame = new JFrame("Hi");
         final TestTask task = new TestTask(frame);

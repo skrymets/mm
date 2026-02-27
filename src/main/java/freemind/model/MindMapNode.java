@@ -20,7 +20,6 @@
 
 package freemind.model;
 
-import freemind.controller.filter.FilterInfo;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.modes.*;

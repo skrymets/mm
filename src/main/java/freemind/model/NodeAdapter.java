@@ -1,8 +1,5 @@
 package freemind.model;
 
-import freemind.controller.Controller;
-import freemind.controller.filter.Filter;
-import freemind.controller.filter.FilterInfo;
 import freemind.extensions.DontSaveMarker;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
@@ -163,7 +160,7 @@ public abstract class NodeAdapter implements MindMapNode {
                     sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(newValue).booleanValue();
                 }
             };
-            Controller.addPropertyChangeListenerAndPropagate(sSaveIdPropertyChangeListener);
+            Resources.addPropertyChangeListenerAndPropagate(sSaveIdPropertyChangeListener);
         }
 
     }

@@ -116,9 +116,8 @@ public class NodeGeneralAction extends AbstractXmlAction {
                 MindMapNodeModel selected = (MindMapNodeModel) mindMapNode;
                 ActionPair pair = getActionPair(selected);
                 if (pair != null) {
-                    CompoundAction.Choice doActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(doAction);
+                    CompoundAction.Choice doActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(pair.getDoAction());
                     doAction.addChoice(doActionChoice);
-                    //doAction.addChoice(pair.getDoAction());
                     CompoundAction.Choice undoActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(pair.getUndoAction());
                     undo.getChoiceList().add(0, undoActionChoice);
                 }

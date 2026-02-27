@@ -24,8 +24,10 @@ import freemind.controller.Controller;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
 import freemind.controller.actions.MindmapLastStateStorage;
+import freemind.events.FreeMindEventBus;
 import freemind.main.services.EditServerService;
 import freemind.main.services.WindowService;
+import freemind.modes.ControllerAdapter;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
@@ -231,13 +233,17 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private WindowService windowService;
 
+    private final FreeMindEventBus eventBus;
+
     @Inject
     public FreeMind(@Named("default") Properties defaultPreferences,
-                    @Named("user") Properties userPreferences) {
+                    @Named("user") Properties userPreferences,
+                    FreeMindEventBus eventBus) {
         super("FreeMind");
         // Focus searcher - SecurityManager is deprecated in Java 17+ and removed in Java 18+
         this.defaultPreferences = defaultPreferences;
         this.userPreferences = userPreferences;
+        this.eventBus = eventBus;
 
         printEnvironmentInfo();
 
@@ -306,6 +312,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
         controller = new Controller(this);
         controller.init();
+        controller.getMapModuleManager().setEventBus(eventBus);
 
         feedback.increase("FreeMind.progress.settingPreferences", null);
         // add a listener for the controller, resource bundle:
@@ -342,6 +349,9 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         // JComponents
         feedback.increase("FreeMind.progress.createInitialMode", null);
         controller.createNewMode(getProperty("initial_mode"));
+        if (controller.getModeController() instanceof ControllerAdapter modeAdapter) {
+            modeAdapter.setEventBus(eventBus);
+        }
 
 //		EventQueue eventQueue = Toolkit.getDefaultToolkit().getSystemEventQueue();
 //		eventQueue.push(new MyEventQueue());

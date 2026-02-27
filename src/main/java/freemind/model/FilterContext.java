@@ -17,39 +17,13 @@
  *along with this program; if not, write to the Free Software
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- * Created on 07.05.2005
- *
- */
-package freemind.controller.filter;
-
-import freemind.controller.Controller;
-import freemind.model.MindMapNode;
+package freemind.model;
 
 /**
- * @author dimitri 07.05.2005
+ * Provides the model-level context needed by {@link Filter#applyFilter(FilterContext)},
+ * so the Filter interface can live in the model package without depending on Controller.
  */
-public interface Filter {
-    int FILTER_INITIAL_VALUE = 1;
-    int FILTER_SHOW_MATCHED = 2;
-    int FILTER_SHOW_ANCESTOR = 4;
-    int FILTER_SHOW_DESCENDANT = 8;
-    int FILTER_SHOW_ECLIPSED = 16;
-    int FILTER_SHOW_HIDDEN = 32;
-
-    void applyFilter(Controller c);
-
-    boolean isVisible(MindMapNode node);
-
-    boolean areMatchedShown();
-
-    boolean areHiddenShown();
-
-    boolean areAncestorsShown();
-
-    boolean areDescendantsShown();
-
-    boolean areEclipsedShown();
-
-    Object getCondition();
+public interface FilterContext {
+    MindMapNode getRootNode();
+    void setWaitingCursor(boolean waiting);
 }

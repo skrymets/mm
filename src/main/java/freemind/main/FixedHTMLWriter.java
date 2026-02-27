@@ -81,12 +81,6 @@ public class FixedHTMLWriter extends HTMLWriter {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.text.html.HTMLWriter#writeAttributes(javax.swing.text.
-     * AttributeSet)
-     */
     protected void writeAttributes(AttributeSet attr) throws IOException {
         // translate css attributes to html
         if (attr instanceof Element) {

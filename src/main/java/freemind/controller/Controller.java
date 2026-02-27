@@ -30,7 +30,9 @@ import freemind.controller.printpreview.PreviewDialog;
 import freemind.controller.services.PrintService;
 import freemind.controller.services.ZoomService;
 import freemind.main.*;
+import freemind.model.FilterContext;
 import freemind.model.MindMap;
+import freemind.model.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.ModesCreator;
@@ -68,7 +70,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * Forwards all messages to MapModel(editing) or MapView(navigation).
  */
 @Slf4j
-public class Controller implements MapModuleChangeObserver {
+public class Controller implements MapModuleChangeObserver, FilterContext {
 
     private static final String FREEMIND = "FreeMind";
     private static final String TRUE = "true";
@@ -164,8 +166,6 @@ public class Controller implements MapModuleChangeObserver {
     public Action showSelectionAsRectangle;
     public PropertyAction propertyAction;
     public OpenURLAction freemindUrl;
-
-    private static final List<FreemindPropertyListener> propertyChangeListeners = new ArrayList<>();
 
     private List<MapModule> tabbedPaneMapModules;
     private JTabbedPane tabbedPane;
@@ -284,11 +284,7 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     private void firePropertyChanged(String property, String value, String oldValue) {
-        if (oldValue == null || !oldValue.equals(value)) {
-            for (FreemindPropertyListener listener : Controller.getPropertyChangeListeners()) {
-                listener.propertyChanged(property, value, oldValue);
-            }
-        }
+        Resources.firePropertyChanged(property, value, oldValue);
     }
 
     public JFrame getJFrame() {
@@ -334,6 +330,19 @@ public class Controller implements MapModuleChangeObserver {
 
     public MapView getView() {
         return getMapModule() == null ? null : getMapModule().getView();
+    }
+
+    // -- FilterContext implementation --
+
+    @Override
+    public MindMapNode getRootNode() {
+        MindMap model = getModel();
+        return model == null ? null : model.getRootNode();
+    }
+
+    @Override
+    public void setWaitingCursor(boolean waiting) {
+        getFrame().setWaitingCursor(waiting);
     }
 
     Set<String> getModes() {
@@ -1325,8 +1334,10 @@ public class Controller implements MapModuleChangeObserver {
     // Preferences
     //
 
+    /** @deprecated Use {@link Resources#getPropertyChangeListeners()} instead */
+    @Deprecated
     public static Collection<FreemindPropertyListener> getPropertyChangeListeners() {
-        return Collections.unmodifiableCollection(propertyChangeListeners);
+        return Resources.getPropertyChangeListeners();
     }
 
     public void toggleSelectionAsRectangle() {
@@ -1351,27 +1362,22 @@ public class Controller implements MapModuleChangeObserver {
         return getMapModule().getModel();
     }
 
-    public static void addPropertyChangeListener(
-            FreemindPropertyListener listener) {
-        Controller.propertyChangeListeners.add(listener);
+    /** @deprecated Use {@link Resources#addPropertyChangeListener(FreemindPropertyListener)} instead */
+    @Deprecated
+    public static void addPropertyChangeListener(FreemindPropertyListener listener) {
+        Resources.addPropertyChangeListener(listener);
     }
 
-    /**
-     * @param listener The new listener. All currently available properties are sent
-     *                 to the listener after registration. Here, the oldValue
-     *                 parameter is set to null.
-     */
+    /** @deprecated Use {@link Resources#addPropertyChangeListenerAndPropagate(FreemindPropertyListener)} instead */
+    @Deprecated
     public static void addPropertyChangeListenerAndPropagate(FreemindPropertyListener listener) {
-        Controller.addPropertyChangeListener(listener);
-        Properties properties = Resources.getInstance().getProperties();
-        for (Object key : properties.keySet()) {
-            listener.propertyChanged((String) key, properties.getProperty((String) key), null);
-        }
+        Resources.addPropertyChangeListenerAndPropagate(listener);
     }
 
-    public static void removePropertyChangeListener(
-            FreemindPropertyListener listener) {
-        Controller.propertyChangeListeners.remove(listener);
+    /** @deprecated Use {@link Resources#removePropertyChangeListener(FreemindPropertyListener)} instead */
+    @Deprecated
+    public static void removePropertyChangeListener(FreemindPropertyListener listener) {
+        Resources.removePropertyChangeListener(listener);
     }
 
     /**

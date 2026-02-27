@@ -225,9 +225,6 @@ public class FreeMindMainMock implements FreeMindMain {
 
     }
 
-    /* (non-Javadoc)
-     * @see freemind.main.FreeMindMain#getLoggerList()
-     */
     public List getLoggerList() {
         return new ArrayList<>();
     }
