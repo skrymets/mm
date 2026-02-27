@@ -151,7 +151,7 @@ public class MapModuleManager {
         setMapModule(getMapModule(), getMapModule().getMode());
     }
 
-    void nextMapModule() {
+    public void nextMapModule() {
         int size = mapModules.size();
         int index = getMapModule() == null ? size - 1 : mapModules.indexOf(getMapModule());
 
@@ -163,7 +163,7 @@ public class MapModuleManager {
         }
     }
 
-    void previousMapModule() {
+    public void previousMapModule() {
         int size = mapModules.size();
         int index = getMapModule() == null ? 0 : mapModules.indexOf(getMapModule());
         if (index > 0) {

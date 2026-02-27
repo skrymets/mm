@@ -26,7 +26,7 @@ package accessories.plugins;
 import com.inet.jortho.SpellChecker;
 import com.lightdev.app.shtm.SHTMLPanel;
 import com.lightdev.app.shtm.TextResources;
-import freemind.controller.Controller.SplitComponentType;
+import freemind.controller.SplitComponentType;
 import freemind.controller.MenuItemSelectedListener;
 import freemind.extensions.HookRegistration;
 import freemind.main.FreeMind;

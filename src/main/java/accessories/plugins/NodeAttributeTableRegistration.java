@@ -25,7 +25,7 @@ package accessories.plugins;
 
 import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
-import freemind.controller.Controller.SplitComponentType;
+import freemind.controller.SplitComponentType;
 import freemind.controller.MenuItemSelectedListener;
 import freemind.controller.actions.AttributeTableProperties;
 import freemind.controller.actions.TableColumnOrder;

@@ -19,7 +19,7 @@
 
 package freemind.modes.browsemode;
 
-import freemind.controller.Controller.SplitComponentType;
+import freemind.controller.SplitComponentType;
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.ModeController.NodeSelectionListener;
