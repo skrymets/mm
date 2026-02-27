@@ -1033,10 +1033,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return toolbar;
     }
 
-    public Component getLeftToolBar() {
-        return toolbar.getLeftToolBar();
-    }
-
     /**
      * Enabled/Disabled all actions that are dependent on whether there is a map
      * open or not.

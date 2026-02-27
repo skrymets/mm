@@ -999,13 +999,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     /**
      * Overwrite this, if you have one.
      */
-    public Component getLeftToolBar() {
-        return null;
-    }
-
-    /**
-     * Overwrite this, if you have one.
-     */
     public JToolBar getModeToolBar() {
         return null;
     }

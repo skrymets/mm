@@ -296,11 +296,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
     JToolBar getModeToolBar();
 
     /**
-     * For the toolbar on the left hand side of the window.
-     */
-    Component getLeftToolBar();
-
-    /**
      * Use this method to get menus to the screen.
      */
     void updateMenus(StructuredMenuHolder holder);

@@ -130,7 +130,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
 
     boolean menubarVisible = true;
     boolean toolbarVisible = true;
-    boolean leftToolbarVisible = true;
 
     public CloseAction close;
     public Action print;
@@ -158,7 +157,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     public Action moveToRoot;
     public Action toggleMenubar;
     public Action toggleToolbar;
-    public Action toggleLeftToolbar;
 
     public Action zoomIn;
     public Action zoomOut;
@@ -211,7 +209,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         showFilterToolbarAction = new ShowFilterToolbarAction(this);
         toggleMenubar = new ToggleMenubarAction(this);
         toggleToolbar = new ToggleToolbarAction(this);
-        toggleLeftToolbar = new ToggleLeftToolbarAction(this);
         optionAntialiasAction = new OptionAntialiasAction();
         optionHTMLExportFoldingAction = new OptionHTMLExportFoldingAction(this);
         optionSelectionMechanismAction = new OptionSelectionMechanismAction(this);
@@ -484,11 +481,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
             // northToolbarPanel.remove(oldModeController.getModeToolBar());
             // northToolbarPanel.add(toolbar, BorderLayout.NORTH);
         }
-        /* other toolbars are to be removed too. */
-        if (oldModeController.getLeftToolBar() != null) {
-            getFrame().getContentPane().remove(
-                    oldModeController.getLeftToolBar());
-        }
     }
 
     @Override
@@ -526,17 +518,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
             // northToolbarPanel.remove(toolbar);
             // northToolbarPanel.add(newToolBar, BorderLayout.NORTH);
             newToolBar.repaint();
-        }
-        /* new left toolbar. */
-        Component newLeftToolBar = newModeController.getLeftToolBar();
-        if (newLeftToolBar != null) {
-            getFrame().getContentPane().add(newLeftToolBar, BorderLayout.WEST);
-            if (leftToolbarVisible) {
-                newLeftToolBar.setVisible(true);
-                newLeftToolBar.repaint();
-            } else {
-                newLeftToolBar.setVisible(false);
-            }
         }
         toolbar.validate();
         toolbar.repaint();
@@ -603,18 +584,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
      */
     public JToolBar getToolbar() {
         return toolbar;
-    }
-
-    public void setLeftToolbarVisible(boolean visible) {
-        leftToolbarVisible = visible;
-        if (getMode() == null) {
-            return;
-        }
-        final Component leftToolBar = getModeController().getLeftToolBar();
-        if (leftToolBar != null) {
-            leftToolBar.setVisible(leftToolbarVisible);
-            leftToolBar.getParent().revalidate();
-        }
     }
 
     void moveToRoot() {
@@ -822,7 +791,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         // ^ Not allowed in application because of problems with not working key
         // shortcuts
         setProperty("toolbarVisible", toolbarVisible ? TRUE : FALSE);
-        setProperty("leftToolbarVisible", leftToolbarVisible ? TRUE : FALSE);
         final int winState = getFrame().getWinState();
         if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {
             setProperty("appwindow_x", valueOf(getFrame().getWinX()));
@@ -1256,23 +1224,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
             log.info("ToggleToolbar was asked for selectedness.");
             return toolbarVisible;
-        }
-    }
-
-    private class ToggleLeftToolbarAction extends AbstractAction implements
-            MenuItemSelectedListener {
-        ToggleLeftToolbarAction(Controller controller) {
-            super(controller.getResourceString("toggle_left_toolbar"));
-            setEnabled(true);
-        }
-
-        public void actionPerformed(ActionEvent event) {
-            leftToolbarVisible = !leftToolbarVisible;
-            setLeftToolbarVisible(leftToolbarVisible);
-        }
-
-        public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
-            return leftToolbarVisible;
         }
     }
 

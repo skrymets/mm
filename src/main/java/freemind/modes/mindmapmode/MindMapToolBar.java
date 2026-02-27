@@ -26,7 +26,6 @@ import freemind.controller.StructuredMenuHolder;
 import freemind.controller.ZoomListener;
 import freemind.controller.color.ColorPair;
 import freemind.controller.color.JColorCombo;
-import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;
@@ -65,8 +64,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
     private final JComboBox<String> fonts;
     private final JComboBox<String> size;
 
-    private final JAutoScrollBarPane iconToolBarScrollPane;
-    private final JToolBar iconToolBar;
     private boolean fontSize_IgnoreChangeEvent = false;
     private boolean fontFamily_IgnoreChangeEvent = false;
     private boolean color_IgnoreChangeEvent = false;
@@ -83,12 +80,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         fonts.setFocusable(false);
         size = new FreeMindComboBox(sizes);
         size.setFocusable(false);
-        iconToolBar = new FreeMindToolBar();
-        iconToolBarScrollPane = new JAutoScrollBarPane(iconToolBar);
-        iconToolBar.setOrientation(JToolBar.VERTICAL);
-        iconToolBar.setRollover(true);
-        iconToolBar.setLayout(new GridLayout(0, getController().getIntProperty(FreeMind.ICON_BAR_COLUMN_AMOUNT, 1)));
-        iconToolBarScrollPane.getVerticalScrollBar().setUnitIncrement(100);
         // TODO: this is super-dirty, why doesn't the toolbar know the
         // model?
         // fc, 27.8.2004: I don't understand, why the ignore type is
@@ -207,14 +198,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         addIcon("images/page-zoom.png");
         add(zoom);
 
-        // button tool bar.
-        iconToolBar.removeAll();
-        iconToolBar.add(mindMapController.removeLastIconAction);
-        iconToolBar.add(mindMapController.removeAllIconsAction);
-        iconToolBar.addSeparator();
-        for (int i = 0; i < mindMapController.iconActions.size(); ++i) {
-            iconToolBar.add(mindMapController.iconActions.get(i));
-        }
     }
 
     public JLabel addIcon(String iconPath) {
@@ -237,10 +220,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         fontSize_IgnoreChangeEvent = true;
         size.setSelectedItem(fontSize);
         fontSize_IgnoreChangeEvent = false;
-    }
-
-    Component getLeftToolBar() {
-        return iconToolBarScrollPane;
     }
 
     public void selectFontName(String fontName) // (DiPo)

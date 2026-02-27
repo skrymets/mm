@@ -238,11 +238,6 @@ public class MindMapControllerMock extends MapFeedbackAdapter implements ModeCon
     }
 
     @Override
-    public Component getLeftToolBar() {
-        return null;
-    }
-
-    @Override
     public void updateMenus(StructuredMenuHolder pHolder) {
     }
 

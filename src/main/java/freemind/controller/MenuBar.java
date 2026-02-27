@@ -227,10 +227,6 @@ public class MenuBar extends JMenuBar {
         newPopupItem = menuHolder.addAction(c.toggleToolbar, POPUP_MENU
                 + "toggleToolbar");
         newPopupItem.setForeground(new Color(100, 80, 80));
-
-        newPopupItem = menuHolder.addAction(c.toggleLeftToolbar, POPUP_MENU
-                + "toggleLeftToolbar");
-        newPopupItem.setForeground(new Color(100, 80, 80));
     }
 
     private void updateMapsMenu(StructuredMenuHolder holder, String basicKey) {
@@ -349,7 +345,6 @@ public class MenuBar extends JMenuBar {
 
     private void updateViewMenu() {
         menuHolder.addAction(c.toggleToolbar, VIEW_MENU + "toolbars/toggleToolbar");
-        menuHolder.addAction(c.toggleLeftToolbar, VIEW_MENU + "toolbars/toggleLeftToolbar");
 
         menuHolder.addSeparator(VIEW_MENU);
 

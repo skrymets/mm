@@ -184,8 +184,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private static final int TIME_TO_DISPLAY_MESSAGES = 10000;
 
-    public static final String ICON_BAR_COLUMN_AMOUNT = "icon_bar_column_amount";
-
     public static final String RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION = "resources_optional_split_divider_position";
 
     public static final String RESOURCES_PASTE_HTML_STRUCTURE = "paste_html_structure";
@@ -760,10 +758,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
         if (Objects.equals(getProperty("toolbarVisible"), "false")) {
             controller.setToolbarVisible(false);
-        }
-
-        if (Objects.equals(getProperty("leftToolbarVisible"), "false")) {
-            controller.setLeftToolbarVisible(false);
         }
 
         // first define the final layout of the screen:
