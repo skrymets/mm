@@ -27,6 +27,7 @@ import freemind.main.FreeMind;
 import freemind.modes.ControllerAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.ViewFeedback.MouseWheelEventHandler;
+import freemind.view.mindmapview.ZoomAnimator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.event.InputEvent;
@@ -48,6 +49,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
     // |= oldX >=0 iff we are in the drag
 
     private final ControllerAdapter mController;
+    private final ZoomAnimator zoomAnimator = new ZoomAnimator();
 
     /**
      *
@@ -90,7 +92,8 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
             newZoom = Math.max(1f / 32f, newZoom);
             newZoom = Math.min(32f, newZoom);
             if (newZoom != oldZoom) {
-                mController.getController().setZoom(newZoom);
+                zoomAnimator.animateZoom(oldZoom, newZoom,
+                    z -> mController.getController().setZoom(z));
             }
             // end zoomchange
         } else if ((e.getModifiers() & HORIZONTAL_SCROLL_MASK) != 0) {
