@@ -582,7 +582,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     public void go(String[] args) {
         try {
             int scale = this.getIntProperty(SCALING_FACTOR_PROPERTY, 100);
-            if (scale != 100) {
+            boolean isFlatLaf = UIManager.getLookAndFeel() instanceof com.formdev.flatlaf.FlatLaf;
+            if (scale != 100 && !isFlatLaf) {
                 SwingUtils.scaleAllFonts(scale / 100f);
                 Font SEGOE_UI_PLAIN_12 = new Font("Segoe UI", Font.PLAIN, 12 * scale / 100);
                 UIManager.put("MenuItem.acceleratorFont", SEGOE_UI_PLAIN_12);
