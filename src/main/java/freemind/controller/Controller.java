@@ -1414,9 +1414,12 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
                 }
 
                 if (propertiesChanged) {
-                    showMessageDialog(null,
-                            getResourceString("option_changes_may_require_restart"));
                     controller.getFrame().saveProperties(false);
+                    // Apply L&F change immediately
+                    FreeMind fm = (FreeMind) controller.getFrame();
+                    fm.updateLookAndFeel();
+                    SwingUtilities.updateComponentTreeUI(fm);
+                    fm.pack();
                 }
             });
             options.buildPanel();

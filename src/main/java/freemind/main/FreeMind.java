@@ -367,7 +367,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         }
     }
 
-    private void updateLookAndFeel() {
+    public void updateLookAndFeel() {
         try {
             String lookAndFeel = userPreferences.getProperty(RESOURCE_LOOKANDFEEL);
             switch (lookAndFeel) {
@@ -482,24 +482,18 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     public void saveProperties(boolean pIsShutdown) {
-//        try {
-//            OutputStream out = new FileOutputStream(autoPropertiesFile);
-//            final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out, "8859_1");
-//            outputStreamWriter.write("#FreeMind ");
-//            outputStreamWriter.write(VERSION.toString());
-//            outputStreamWriter.write('\n');
-//            outputStreamWriter.flush();
-//            //to save as few props as possible.
-//            Properties toBeStored = Tools.copyChangedProperties(userPreferences, defaultPreferences);
-//            toBeStored.store(out, null);
-//            out.close();
-//        } catch (Exception ex) {
-//            log.error(ex.getLocalizedMessage(), ex);
-//        }
-//        getController().getFilterController().saveConditions();
-//        if (pIsShutdown && editServerService != null) {
-//            editServerService.stopServer();
-//        }
+        try {
+            File propsFile = new File(getFreemindDirectory(), "user.properties");
+            Properties toBeStored = Tools.copyChangedProperties(userPreferences, defaultPreferences);
+            try (OutputStream out = new FileOutputStream(propsFile)) {
+                toBeStored.store(out, "FreeMind " + VERSION);
+            }
+        } catch (Exception ex) {
+            log.error("Failed to save user properties", ex);
+        }
+        if (pIsShutdown && editServerService != null) {
+            editServerService.stopServer();
+        }
     }
 
     public MapView getView() {
