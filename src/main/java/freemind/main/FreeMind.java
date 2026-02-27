@@ -367,32 +367,54 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     private void updateLookAndFeel() {
-        // set Look&Feel
         try {
             String lookAndFeel = userPreferences.getProperty(RESOURCE_LOOKANDFEEL);
-            if (lookAndFeel.equals("windows")) {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            } else if (lookAndFeel.equals("motif")) {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-            } else if (lookAndFeel.equals("mac")) {
-                // Only available on macOS
-                UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
-            } else if (lookAndFeel.equals("metal")) {
-                UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-            } else if (lookAndFeel.equals("gtk")) {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-            } else if (lookAndFeel.equals("nothing")) {
-            } else if (lookAndFeel.indexOf('.') != -1) { // string contains a
-                // dot
-                UIManager.setLookAndFeel(lookAndFeel);
-                // we assume class name
-            } else {
-                // default.
-                log.info("Default (System) Look & Feel: {}", UIManager.getSystemLookAndFeelClassName());
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            switch (lookAndFeel) {
+                case "flatlaf_light":
+                    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+                    break;
+                case "flatlaf_dark":
+                    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
+                    break;
+                case "flatlaf_intellij":
+                    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatIntelliJLaf());
+                    break;
+                case "flatlaf_darcula":
+                    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarculaLaf());
+                    break;
+                case "windows":
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                    break;
+                case "motif":
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+                    break;
+                case "mac":
+                    UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
+                    break;
+                case "metal":
+                    UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+                    break;
+                case "gtk":
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+                    break;
+                case "nothing":
+                    break;
+                default:
+                    if (lookAndFeel.indexOf('.') != -1) {
+                        UIManager.setLookAndFeel(lookAndFeel);
+                    } else {
+                        log.info("Default Look & Feel: FlatLaf Light");
+                        UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+                    }
+                    break;
             }
         } catch (Exception ex) {
-            System.err.println("Unable to set Look & Feel.");
+            log.warn("Unable to set Look & Feel, falling back to system default", ex);
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception fallbackEx) {
+                log.error("System L&F also failed", fallbackEx);
+            }
         }
         freeMindCommon.loadUIProperties(defaultPreferences);
     }
