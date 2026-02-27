@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
+
 /**
  * @author foltin
  * {@code @date} 24.05.2015
@@ -62,6 +63,29 @@ public class ImageFactory {
         return new ImageIcon(pResource);
     }
 
+
+    /**
+     * Tries to load an SVG version of the icon first; falls back to the PNG at the given URL.
+     * The SVG is looked up by converting {@code images/foo.png} to {@code images/svg/foo.svg}.
+     *
+     * @param pngUrl URL of the original PNG icon
+     * @return an SVG Icon if available, otherwise the PNG ImageIcon
+     */
+    public Icon createIconWithSvgFallback(URL pngUrl) {
+        if (pngUrl != null) {
+            String path = pngUrl.getPath();
+            int lastSlash = path.lastIndexOf('/');
+            String filename = (lastSlash >= 0) ? path.substring(lastSlash + 1) : path;
+            String baseName = filename.contains(".") ? filename.substring(0, filename.lastIndexOf('.')) : filename;
+            String svgPath = "images/svg/" + baseName + ".svg";
+            Icon svgIcon = SvgIconFactory.loadSvgIcon(svgPath);
+            if (svgIcon != null) {
+                return svgIcon;
+            }
+        }
+        // Fall back to PNG
+        return createIcon(pngUrl);
+    }
 
     public ImageIcon createIcon(String pFilePath) {
         if (SwingUtils.getScalingFactorPlain() == 200) {
