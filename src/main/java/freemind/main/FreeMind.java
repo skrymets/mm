@@ -30,6 +30,7 @@ import freemind.main.services.WindowService;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
+import freemind.view.StatusBarPanel;
 import freemind.view.mindmapview.MapView;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -201,7 +202,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private MenuBar menuBar;
 
-    private JLabel statusLabel;
+    private StatusBarPanel statusBarPanel;
 
     private Timer statusMessageDisplayTimer;
 
@@ -513,12 +514,16 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         return menuBar;
     }
 
+    public StatusBarPanel getStatusBarPanel() {
+        return statusBarPanel;
+    }
+
     public void setStatusText(String msg) {
-        if (statusLabel == null) {
+        if (statusBarPanel == null) {
             return;
         }
 
-        statusLabel.setText(msg);
+        statusBarPanel.setStatusText(msg);
         statusMessageDisplayTimer.restart();
     }
 
@@ -712,9 +717,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         }
-        statusLabel = new JLabel("!");
-        statusLabel.setPreferredSize(statusLabel.getPreferredSize());
-        statusLabel.setText("");
+        statusBarPanel = new StatusBarPanel();
 
         statusMessageDisplayTimer = new Timer(TIME_TO_DISPLAY_MESSAGES, this);
 
@@ -737,7 +740,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
         windowService = new WindowService(this, scrollPane, tabbedPane);
 
-        getContentPane().add(statusLabel, BorderLayout.SOUTH);
+        getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
 
         // Disable the default close button, instead use windowListener
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
