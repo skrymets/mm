@@ -20,7 +20,7 @@
 package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.NodeMotionListener.NodeMotionAdapter;
-import freemind.main.Tools;
+import freemind.main.PointUtils;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
@@ -63,7 +63,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
             final MapView mapView = nodeView.getMap();
             MindMapNode node = nodeView.getModel();
             Point point = e.getPoint();
-            Tools.convertPointToAncestor(motionListenerView, point,
+            PointUtils.convertPointToAncestor(motionListenerView, point,
                     JScrollPane.class);
             if (!isActive()) {
                 setDragStartingPoint(point, node);
@@ -86,7 +86,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
                 c.getModeController().nodeRefresh(node);
             }
             Point mapPoint = e.getPoint();
-            Tools.convertPointToAncestor(motionListenerView, mapPoint, mapView);
+            PointUtils.convertPointToAncestor(motionListenerView, mapPoint, mapView);
             boolean isEventPointVisible = mapView.getVisibleRect().contains(
                     mapPoint);
             if (!isEventPointVisible) {
@@ -196,7 +196,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
             return;
         NodeView nodeV = getNodeView(e);
         Point point = e.getPoint();
-        Tools.convertPointToAncestor(nodeV, point, JScrollPane.class);
+        PointUtils.convertPointToAncestor(nodeV, point, JScrollPane.class);
         // move node to end position.
         MindMapNode node = nodeV.getModel();
         MindMapNode parentNode = nodeV.getModel().getParentNode();

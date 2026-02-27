@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.AddCloudXmlAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
@@ -76,7 +76,7 @@ public class CloudActor extends NodeXmlActorAdapter {
         AddCloudXmlAction nodecloudAction = new AddCloudXmlAction();
         nodecloudAction.setNode(getNodeID(selected));
         nodecloudAction.setEnabled(enable);
-        nodecloudAction.setColor(Tools.colorToXml(color));
+        nodecloudAction.setColor(ColorUtils.colorToXml(color));
         return nodecloudAction;
     }
 
@@ -93,7 +93,7 @@ public class CloudActor extends NodeXmlActorAdapter {
                             getExMapFeedback());
                     node.setCloud(cloudModel);
                     if (nodecloudAction.getColor() != null) {
-                        Color color = Tools.xmlToColor(nodecloudAction
+                        Color color = ColorUtils.xmlToColor(nodecloudAction
                                 .getColor());
                         cloudModel.setColor(color);
                     }

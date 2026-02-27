@@ -24,7 +24,8 @@ import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
 import freemind.controller.actions.*;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.MindMapUtils;
+import freemind.main.ColorUtils;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
@@ -121,12 +122,12 @@ public class StylePatternFactory {
 
         if (node.getColor() != null) {
             PatternNodeColor subPattern = new PatternNodeColor();
-            subPattern.setValue(Tools.colorToXml(node.getColor()));
+            subPattern.setValue(ColorUtils.colorToXml(node.getColor()));
             pattern.setPatternNodeColor(subPattern);
         }
         if (node.getBackgroundColor() != null) {
             PatternNodeBackgroundColor subPattern = new PatternNodeBackgroundColor();
-            subPattern.setValue(Tools.colorToXml(node.getBackgroundColor()));
+            subPattern.setValue(ColorUtils.colorToXml(node.getBackgroundColor()));
             pattern.setPatternNodeBackgroundColor(subPattern);
         }
         if (node.getStyle() != null) {
@@ -162,7 +163,7 @@ public class StylePatternFactory {
         }
         if (node.getEdge().getColor() != null) {
             PatternEdgeColor subPattern = new PatternEdgeColor();
-            subPattern.setValue(Tools.colorToXml(node.getEdge().getColor()));
+            subPattern.setValue(ColorUtils.colorToXml(node.getEdge().getColor()));
             pattern.setPatternEdgeColor(subPattern);
         }
         if (node.getEdge().getStyle() != null) {
@@ -362,11 +363,11 @@ public class StylePatternFactory {
     @Deprecated
     public static void applyPattern(Pattern pattern, MindMapNode pNode, MapFeedback pFeedback) {
         if (pattern.getPatternNodeColor() != null) {
-            pNode.setColor(Tools.xmlToColor(pattern
+            pNode.setColor(ColorUtils.xmlToColor(pattern
                     .getPatternNodeColor().getValue()));
         }
         if (pattern.getPatternNodeBackgroundColor() != null) {
-            pNode.setBackgroundColor(Tools
+            pNode.setBackgroundColor(ColorUtils
                     .xmlToColor(pattern
                             .getPatternNodeBackgroundColor()
                             .getValue()));
@@ -377,7 +378,7 @@ public class StylePatternFactory {
         }
         if (pattern.getPatternEdgeColor() != null) {
             ((EdgeAdapter) pNode.getEdge()).setColor(
-                    Tools.xmlToColor(pattern.getPatternEdgeColor()
+                    ColorUtils.xmlToColor(pattern.getPatternEdgeColor()
                             .getValue()));
         }
         if (pattern.getPatternNodeText() != null) {
@@ -449,7 +450,7 @@ public class StylePatternFactory {
         PatternEdgeWidth patternEdgeWidth = pattern.getPatternEdgeWidth();
         if (patternEdgeWidth != null) {
             if (patternEdgeWidth.getValue() != null) {
-                ((EdgeAdapter) pNode.getEdge()).setWidth(Tools.edgeWidthStringToInt(patternEdgeWidth.getValue()));
+                ((EdgeAdapter) pNode.getEdge()).setWidth(MindMapUtils.edgeWidthStringToInt(patternEdgeWidth.getValue()));
             } else {
                 ((EdgeAdapter) pNode.getEdge()).setWidth(EdgeAdapter.DEFAULT_WIDTH);
             }
@@ -469,10 +470,10 @@ public class StylePatternFactory {
         }
         if (pattern.getPatternNodeColor() != null) {
             pMapFeedback.setNodeColor(node,
-                    Tools.xmlToColor(pattern.getPatternNodeColor().getValue()));
+                    ColorUtils.xmlToColor(pattern.getPatternNodeColor().getValue()));
         }
         if (pattern.getPatternNodeBackgroundColor() != null) {
-            pMapFeedback.setNodeBackgroundColor(node, Tools.xmlToColor(pattern
+            pMapFeedback.setNodeBackgroundColor(node, ColorUtils.xmlToColor(pattern
                     .getPatternNodeBackgroundColor().getValue()));
         }
         // Perhaps already fixed?:
@@ -534,7 +535,7 @@ public class StylePatternFactory {
 
         if (pattern.getPatternEdgeColor() != null) {
             pMapFeedback.setEdgeColor(node,
-                    Tools.xmlToColor(pattern.getPatternEdgeColor().getValue()));
+                    ColorUtils.xmlToColor(pattern.getPatternEdgeColor().getValue()));
         }
         if (pattern.getPatternEdgeStyle() != null) {
             pMapFeedback.setEdgeStyle(node, pattern.getPatternEdgeStyle()
@@ -544,7 +545,7 @@ public class StylePatternFactory {
         if (patternEdgeWidth != null) {
             if (patternEdgeWidth.getValue() != null) {
                 pMapFeedback
-                        .setEdgeWidth(node, Tools
+                        .setEdgeWidth(node, MindMapUtils
                                 .edgeWidthStringToInt(patternEdgeWidth
                                         .getValue()));
             } else {

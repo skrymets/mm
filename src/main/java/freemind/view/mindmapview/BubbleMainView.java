@@ -20,6 +20,7 @@
 package freemind.view.mindmapview;
 
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 
 import java.awt.*;
@@ -59,7 +60,7 @@ class BubbleMainView extends MainView {
         // return to std stroke
         g.setStroke(DEF_STROKE);
         g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 10, 10);
-        Tools.restoreAntialiasing(g, renderingHint);
+        SwingUtils.restoreAntialiasing(g, renderingHint);
 
         super.paint(g);
     }

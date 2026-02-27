@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.awt.datatransfer.Transferable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -160,7 +161,7 @@ public class NewParentNode extends MindMapNodeHookAdapter {
         // Move selected nodes to become children of new node
         Transferable copy = getMindMapController().cut(nodesToBeMoved);
         getMindMapController().paste(copy, newNode);
-        getMindMapController().select(selectedParent, Tools.getSingletonList(selectedParent));
+        getMindMapController().select(selectedParent, Collections.singletonList(selectedParent));
 //		getMindMapController().obtainFocusForSelected();
         nodeChanged(selectedParent);
 

@@ -20,10 +20,11 @@
 
 package freemind.modes.browsemode;
 
-import freemind.main.XMLElement;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
 import freemind.modes.MapFeedback;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 
@@ -33,7 +34,7 @@ public class BrowseEdgeModel extends EdgeAdapter {
         super(node, pMapFeedback);
     }
 
-    public XMLElement save() {
+    public Element save(Document doc) {
         return null;
     }
 

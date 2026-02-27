@@ -28,6 +28,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.controller.actions.CompoundAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
@@ -74,7 +75,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
     protected void setName(String name) {
         if (name != null) {
             putValue(Action.NAME, name);
-            putValue(Action.SHORT_DESCRIPTION, Tools.removeMnemonic(name));
+            putValue(Action.SHORT_DESCRIPTION, SwingUtils.removeMnemonic(name));
         }
 
     }

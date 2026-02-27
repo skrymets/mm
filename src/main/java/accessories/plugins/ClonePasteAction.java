@@ -21,14 +21,16 @@
 package accessories.plugins;
 
 import freemind.common.OptionalDontShowMeAgainDialog;
+import org.apache.commons.lang3.StringUtils;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.actions.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
+import freemind.main.MindMapUtils;
+import freemind.main.MindMapUtils.MindMapNodePair;
 import freemind.main.Tools;
-import freemind.main.Tools.MindMapNodePair;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
@@ -62,7 +64,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
     public void invoke(MindMapNode pNode) {
         super.invoke(pNode);
         List<MindMapNode> mindMapNodes = getMindMapNodes();
-        log.trace("Clones for nodes: {}", Tools.listToString(mindMapNodes));
+        log.trace("Clones for nodes: {}", StringUtils.join(mindMapNodes, ";"));
         // now, construct the plugin for those nodes:
         for (MindMapNode copiedNode : mindMapNodes) {
             ClonePlugin clonePlugin = ClonePlugin.getHook(copiedNode);
@@ -85,7 +87,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                         showResult == JOptionPane.OK_OPTION
                                 ? ClonePlugin.CLONE_ITSELF_TRUE
                                 : ClonePlugin.CLONE_ITSELF_FALSE);
-                List<MindMapNode> selecteds = Tools.getSingletonList(copiedNode);
+                List<MindMapNode> selecteds = Collections.singletonList(copiedNode);
                 getMindMapController().addHook(copiedNode, selecteds,
                         ClonePlugin.PLUGIN_LABEL, properties);
             }
@@ -115,7 +117,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
     }
 
     public List<MindMapNode> getMindMapNodes() {
-        return Tools.getMindMapNodesFromClipboard(getMindMapController());
+        return MindMapUtils.getMindMapNodesFromClipboard(getMindMapController());
     }
 
     protected Registration getRegistration() {
@@ -220,8 +222,8 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             String hookName = ((NodeHookAction) pAction).getHookName();
             if (PLUGIN_NAME.equals(hookName)) {
                 // only enabled, if nodes have been copied before.
-                List<MindMapNode> mindMapNodes = Tools.getMindMapNodesFromClipboard(controller);
-                // log.warn("Nodes " + Tools.listToString(mindMapNodes));
+                List<MindMapNode> mindMapNodes = MindMapUtils.getMindMapNodesFromClipboard(controller);
+                // log.warn("Nodes " + StringUtils.join(mindMapNodes, ";"));
                 return !mindMapNodes.isEmpty();
             }
             List<MindMapNode> selecteds = controller.getSelecteds();
@@ -234,7 +236,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         }
 
         public String generateNewCloneId(String pProposedID) {
-            return Tools.generateID(pProposedID, mCloneIdsMap, "CLONE_");
+            return MindMapUtils.generateID(pProposedID, mCloneIdsMap, "CLONE_");
         }
 
         /**
@@ -346,7 +348,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         }
 
         private XmlAction cloneAction(NodeAction nodeAction, MindMapNode node) {
-            List<Tools.MindMapNodePair> correspondingNodes = getCorrespondingNodes(nodeAction, node);
+            List<MindMapUtils.MindMapNodePair> correspondingNodes = getCorrespondingNodes(nodeAction, node);
             if (correspondingNodes.isEmpty()) {
                 return nodeAction;
             }
@@ -354,14 +356,14 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             CompoundAction.Choice choice = JIBXGeneratedUtil.choiceFromXmlActions(nodeAction);
             CompoundAction compound = new CompoundAction();
             compound.addChoice(choice);
-            for (Tools.MindMapNodePair pair : correspondingNodes) {
+            for (MindMapUtils.MindMapNodePair pair : correspondingNodes) {
                 getNewCompoundAction(nodeAction, pair, compound);
             }
             return compound;
         }
 
         private void getNewCompoundAction(NodeAction nodeAction,
-                                          Tools.MindMapNodePair correspondingNodePair,
+                                          MindMapUtils.MindMapNodePair correspondingNodePair,
                                           CompoundAction compound) {
             // deep copy:
             NodeAction copiedNodeAction = (NodeAction) Tools
@@ -408,13 +410,13 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         }
 
         public void changeNodeListMember(
-                Tools.MindMapNodePair correspondingNodePair,
+                MindMapUtils.MindMapNodePair correspondingNodePair,
                 NodeAction pAction, NodeListMember member) {
             NodeAdapter memberNode = controller.getNodeFromID(member.getNode());
-            List<Tools.MindMapNodePair> correspondingMoveNodes = getCorrespondingNodes(pAction, memberNode);
+            List<MindMapUtils.MindMapNodePair> correspondingMoveNodes = getCorrespondingNodes(pAction, memberNode);
             if (!correspondingMoveNodes.isEmpty()) {
                 // search for this clone:
-                for (Tools.MindMapNodePair pair : correspondingMoveNodes) {
+                for (MindMapUtils.MindMapNodePair pair : correspondingMoveNodes) {
                     if (pair.getCloneNode() == correspondingNodePair
                             .getCloneNode()) {
                         // found:
@@ -586,7 +588,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                 }
                 // log.trace("Found corresponding node " + printNodeId(target)
                 // + " on clone " + printNodeId(cloneNode));
-                returnValue.add(new Tools.MindMapNodePair(target, cloneNode));
+                returnValue.add(new MindMapUtils.MindMapNodePair(target, cloneNode));
             }
             return returnValue;
         }
@@ -609,7 +611,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             for (MindMapNode pluginNode : pClones) {
                 strings.add(printNodeId(pluginNode));
             }
-            return Tools.listToString(strings);
+            return StringUtils.join(strings, ";");
         }
 
         /**

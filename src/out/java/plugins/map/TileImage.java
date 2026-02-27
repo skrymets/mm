@@ -39,6 +39,7 @@ import javax.imageio.ImageIO;
 import org.openstreetmap.gui.jmapviewer.Tile;
 import org.openstreetmap.gui.jmapviewer.TileController;
 
+import freemind.main.EncryptionUtils;
 import freemind.main.Tools;
 
 public class TileImage implements ImageObserver {
@@ -141,7 +142,7 @@ public class TileImage implements ImageObserver {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             ImageIO.write(mImage, "png", stream);
             stream.close();
-            return Tools.toBase64(stream.toByteArray());
+            return EncryptionUtils.toBase64(stream.toByteArray());
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
         }

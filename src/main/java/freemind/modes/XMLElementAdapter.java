@@ -21,40 +21,35 @@ package freemind.modes;
 
 import freemind.extensions.PermanentNodeHook;
 import freemind.extensions.PermanentNodeHookSubstituteUnknown;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.*;
 import freemind.model.*;
 import freemind.modes.attributes.Attribute;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Builds FreeMind model objects (nodes, edges, clouds, etc.) from a DOM tree.
+ * Replaces the former XMLElement-subclass approach where model objects were built
+ * via parser callbacks (setName/setAttribute/addChild). Now uses DOM tree walking.
+ */
 @Slf4j
-public class XMLElementAdapter extends XMLElement {
+public class XMLElementAdapter {
 
-    @Getter
-    private Object userObject = null;
     @Getter
     private NodeAdapter mapChild = null;
-    private final HashMap<String, String> nodeAttributes = new HashMap<>();
 
-    // Font attributes
-    private String fontName;
-    private int fontStyle = 0;
-    private int fontSize = 0;
-
-    // Icon attributes
-    private String iconName;
-
-    // arrow link attributes:
-    protected final List<ArrowLinkAdapter> mArrowLinkAdapters;
-    protected HashMap<String, NodeAdapter> mIdToTarget;
     public static final String XML_NODE_TEXT = "TEXT";
     public static final String XML_NODE = "node";
     public static final String XML_NODE_ATTRIBUTE = "attribute";
@@ -62,24 +57,22 @@ public class XMLElementAdapter extends XMLElement {
     public static final String XML_NODE_ATTRIBUTE_REGISTRY = "attribute_registry";
     public static final String XML_NODE_REGISTERED_ATTRIBUTE_NAME = "attribute_name";
     public static final String XML_NODE_REGISTERED_ATTRIBUTE_VALUE = "attribute_value";
-    // public static final String XML_NODE_CLASS_PREFIX = XML_NODE+"_";
     public static final String XML_NODE_CLASS = "AA_NODE_CLASS";
     public static final String XML_NODE_ADDITIONAL_INFO = "ADDITIONAL_INFO";
     public static final String XML_NODE_ENCRYPTED_CONTENT = "ENCRYPTED_CONTENT";
     public static final String XML_NODE_HISTORY_CREATED_AT = "CREATED";
     public static final String XML_NODE_HISTORY_LAST_MODIFIED_AT = "MODIFIED";
 
+    public static final String XML_NODE_XHTML_CONTENT_TAG = "richcontent";
     public static final String XML_NODE_XHTML_TYPE_TAG = "TYPE";
     public static final String XML_NODE_XHTML_TYPE_NODE = "NODE";
     public static final String XML_NODE_XHTML_TYPE_NOTE = "NOTE";
 
-    private String attributeName;
-
-    private String attributeValue;
+    // arrow link attributes:
+    protected final List<ArrowLinkAdapter> mArrowLinkAdapters;
+    protected HashMap<String, NodeAdapter> mIdToTarget;
 
     protected final MapFeedback mMapFeedback;
-
-    private boolean fontStyleStrikethrough;
 
     public XMLElementAdapter(MapFeedback pMapFeedback) {
         this(pMapFeedback, new ArrayList<>(), new HashMap<>());
@@ -89,44 +82,112 @@ public class XMLElementAdapter extends XMLElement {
         this.mMapFeedback = pMapFeedback;
         this.mArrowLinkAdapters = arrowLinkAdapters;
         this.mIdToTarget = IDToTarget;
+    }
 
+    protected MindMap getMap() {
+        return mMapFeedback.getMap();
     }
 
     /**
-     * abstract method to create elements of my type (factory).
+     * Build the FreeMind model tree from a DOM Element (typically the document element).
+     * This replaces the old parseFromReader() + callback approach.
      */
-    protected XMLElement createAnotherElement() {
-        // We do not need to initialize the things of XMLElement.
-        return new XMLElementAdapter(mMapFeedback, mArrowLinkAdapters, mIdToTarget);
+    public void buildFromDom(Element domElement) {
+        String tagName = domElement.getTagName();
+        if ("map".equals(tagName)) {
+            // Process child elements of the map element
+            for (Element child : FreeMindXml.getChildElements(domElement)) {
+                BuildResult childResult = buildElement(child);
+                if (childResult != null && childResult.userObject instanceof NodeAdapter) {
+                    mapChild = (NodeAdapter) childResult.userObject;
+                }
+            }
+        } else if (XML_NODE.equals(tagName)) {
+            // Direct node element (e.g. from clipboard paste)
+            BuildResult result = buildElement(domElement);
+            if (result != null && result.userObject instanceof NodeAdapter) {
+                mapChild = (NodeAdapter) result.userObject;
+            }
+        }
     }
 
+    /**
+     * Recursively builds a model object from a DOM element.
+     * Returns a BuildResult containing the created user object and the element name.
+     */
+    private BuildResult buildElement(Element domElement) {
+        String name = domElement.getTagName();
 
-    protected void setUserObject(Object obj) {
-        userObject = obj;
+        // --- Phase 1: Create user object based on element name (was setName()) ---
+        Object userObject = createUserObject(name);
+
+        // --- Phase 2: Apply attributes (was setAttribute()) ---
+        HashMap<String, String> nodeAttributes = new HashMap<>();
+        NamedNodeMap attrs = domElement.getAttributes();
+        for (int i = 0; i < attrs.getLength(); i++) {
+            String attrName = attrs.item(i).getNodeName().toUpperCase();
+            String attrValue = attrs.item(i).getNodeValue();
+            userObject = applyAttribute(name, userObject, attrName, attrValue, nodeAttributes);
+        }
+
+        // --- Phase 3: Process children recursively (was addChild()) ---
+        for (Element childElement : FreeMindXml.getChildElements(domElement)) {
+            String childName = childElement.getTagName();
+
+            if (XML_NODE_XHTML_CONTENT_TAG.equals(childName)) {
+                // richcontent: serialize inner content back to string
+                BuildResult childResult = new BuildResult(childName, null);
+                String xmlText = serializeInnerContent(childElement);
+                childResult.content = xmlText;
+                // Copy attributes from the richcontent element
+                NamedNodeMap childAttrs = childElement.getAttributes();
+                childResult.attributes = new HashMap<>();
+                for (int i = 0; i < childAttrs.getLength(); i++) {
+                    childResult.attributes.put(
+                            childAttrs.item(i).getNodeName().toUpperCase(),
+                            childAttrs.item(i).getNodeValue());
+                }
+                addChildResult(name, userObject, childResult);
+            } else if ("hook".equals(childName)) {
+                // hook elements need special handling: pass the DOM element directly
+                addHookChild(userObject, childElement);
+            } else {
+                BuildResult childResult = buildElement(childElement);
+                if (childResult != null) {
+                    addChildResult(name, userObject, childResult);
+                }
+            }
+        }
+
+        // --- Phase 4: Complete element (was completeElement()) ---
+        Object[] completed = completeElement(name, userObject, attrs, nodeAttributes);
+        userObject = completed[0];
+
+        // Track mapChild for top-level node
+        if (XML_NODE.equals(name) && mapChild == null && userObject instanceof NodeAdapter) {
+            mapChild = (NodeAdapter) userObject;
+        }
+
+        BuildResult result = new BuildResult(name, userObject);
+        return result;
     }
 
-    // Real parsing methods
-
-    public void setName(String name) {
-        super.setName(name);
-        // Create user object based on name
+    /**
+     * Create the appropriate user object based on the element tag name.
+     * Equivalent to the old setName() method.
+     */
+    private Object createUserObject(String name) {
         switch (name) {
             case XML_NODE:
-                userObject = getMap().createNodeAdapter(getMap(), null);
-                nodeAttributes.clear();
-                break;
+                return getMap().createNodeAdapter(getMap(), null);
             case "edge":
-                userObject = getMap().createEdgeAdapter(null);
-                break;
+                return getMap().createEdgeAdapter(null);
             case "cloud":
-                userObject = getMap().createCloudAdapter(null);
-                break;
+                return getMap().createCloudAdapter(null);
             case "arrowlink":
-                userObject = getMap().createArrowLinkAdapter(null, null);
-                break;
+                return getMap().createArrowLinkAdapter(null, null);
             case "linktarget":
-                userObject = getMap().createArrowLinkTarget(null, null);
-                break;
+                return getMap().createArrowLinkTarget(null, null);
             case "font":
             case "icon":
             case XML_NODE_REGISTERED_ATTRIBUTE_VALUE:
@@ -135,149 +196,39 @@ public class XMLElementAdapter extends XMLElement {
             case "map":
             case XML_NODE_ATTRIBUTE_LAYOUT:
             case XML_NODE_ATTRIBUTE:
-                userObject = null;
-                break;
-            case "hook":
-                // we gather the xml element and send it to the hook after
-                // completion.
-                userObject = new XMLElement();
-                break;
+                return null;
             default:
-                userObject = new XMLElement(); // for childs of hooks
-
-                break;
+                return null;
         }
     }
 
-    protected MindMap getMap() {
-        return mMapFeedback.getMap();
-    }
-
-    public void addChild(XMLElement child) {
-        if (getName().equals("map")) {
-            mapChild = (NodeAdapter) child.getUserObject();
-            return;
-        }
-        if (userObject instanceof XMLElement) {
-            // ((XMLElement) userObject).addChild(child);
-            super.addChild(child);
-            return;
-        }
+    /**
+     * Apply a single attribute to the current user object.
+     * Equivalent to the old setAttribute() method.
+     * Returns the (possibly replaced) user object.
+     */
+    private Object applyAttribute(String elementName, Object userObject, String attrName, String sValue,
+                                   HashMap<String, String> nodeAttributes) {
         if (userObject instanceof NodeAdapter) {
             NodeAdapter node = (NodeAdapter) userObject;
-            if (child.getUserObject() instanceof NodeAdapter) {
-                node.insert((NodeAdapter) child.getUserObject(), -1);
-            } // to the end without preferable... (PN)
-            // node.getRealChildCount()); }
-            else if (child.getUserObject() instanceof EdgeAdapter) {
-                EdgeAdapter edge = (EdgeAdapter) child.getUserObject();
-                edge.setTarget(node);
-                node.setEdge(edge);
-            } else if (child.getUserObject() instanceof CloudAdapter) {
-                CloudAdapter cloud = (CloudAdapter) child.getUserObject();
-                cloud.setTarget(node);
-                node.setCloud(cloud);
-            } else if (child.getUserObject() instanceof ArrowLinkTarget) {
-                // ArrowLinkTarget is derived from ArrowLinkAdapter, so it must
-                // be checked first.
-                ArrowLinkTarget arrowLinkTarget = (ArrowLinkTarget) child
-                        .getUserObject();
-                arrowLinkTarget.setTarget(node);
-                mArrowLinkAdapters.add(arrowLinkTarget);
-            } else if (child.getUserObject() instanceof ArrowLinkAdapter) {
-                ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) child
-                        .getUserObject();
-                arrowLink.setSource(node);
-                // annotate this link: (later processed by caller.).
-                // System.out.println("arrowLink="+arrowLink);
-                mArrowLinkAdapters.add(arrowLink);
-            } else if (child.getName().equals("font")) {
-                node.setFont((Font) child.getUserObject());
-            } else if (child.getName().equals(XML_NODE_ATTRIBUTE)) {
-                node.addAttribute(
-                        (Attribute) child.getUserObject());
-
-            } else if (child.getName().equals(XML_NODE_ATTRIBUTE_LAYOUT)) {
-//				node.createAttributeTableModel();
-//				AttributeTableLayoutModel layout = node.getAttributes()
-//						.getLayout();
-//				layout.setColumnWidth(0,
-//						((XMLElementAdapter) child).attributeNameWidth);
-//				layout.setColumnWidth(1,
-//						((XMLElementAdapter) child).attributeValueWidth);
-            } else if (child.getName().equals("icon")) {
-                node.addIcon((MindIcon) child.getUserObject(), MindIcon.LAST);
-            } else if (child.getName().equals(XML_NODE_XHTML_CONTENT_TAG)) {
-                String xmlText = child.getContent();
-                Object typeAttribute = child
-                        .getAttribute(XML_NODE_XHTML_TYPE_TAG);
-                if (typeAttribute == null
-                        || XML_NODE_XHTML_TYPE_NODE.equals(typeAttribute)) {
-                    // output:
-                    log.trace("Setting node html content to:{}", xmlText);
-                    node.setXmlText(xmlText);
-                } else {
-                    log.trace("Setting note html content to:{}", xmlText);
-                    node.setXmlNoteText(xmlText);
-                }
-            } else if (child.getName().equals("hook")) {
-                XMLElement xml = child/* .getUserObject() */;
-                String loadName = (String) xml.getAttribute("NAME");
-                PermanentNodeHook hook = null;
-                try {
-                    // loadName=loadName.replace('/', File.separatorChar);
-                    /*
-                     * The next code snippet is an exception. Normally, hooks
-                     * have to be created via the ModeController. DO NOT COPY.
-                     */
-                    hook = (PermanentNodeHook) mMapFeedback.createNodeHook(loadName, node);
-                    // this is a bad hack. Don't make use of this data unless
-                    // you know exactly what you are doing.
-                    hook.setNode(node);
-                } catch (Exception e) {
-                    log.error(e.getLocalizedMessage(), e);
-                    hook = new PermanentNodeHookSubstituteUnknown(loadName);
-                }
-                hook.loadFrom(xml);
-                node.addHook(hook);
+            NodeAdapter result = setNodeAttribute(attrName, sValue, node);
+            nodeAttributes.put(attrName, sValue);
+            if (result != node) {
+                // Node was replaced (e.g., encrypted node)
+                copyAttributesToNode(result, nodeAttributes);
+                return result;
             }
-            return;
-        }
-        if (child instanceof XMLElementAdapter
-                && getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)
-                && child.getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_VALUE)) {
-        }
-    }
-
-    public void setAttribute(String name, Object value) {
-        // We take advantage of precondition that value != null.
-        String sValue = value.toString();
-        if (ignoreCase) {
-            name = name.toUpperCase();
-        }
-        if (userObject instanceof XMLElement) {
-            // ((XMLElement) userObject).setAttribute(name, value);
-            super.setAttribute(name, value); // and to myself, as I am also an
-            // xml element.
-            return;
-        }
-
-        if (userObject instanceof NodeAdapter) {
-            //
-            NodeAdapter node = (NodeAdapter) userObject;
-            userObject = setNodeAttribute(name, sValue, node);
-            nodeAttributes.put(name, sValue);
-            return;
+            return result;
         }
 
         if (userObject instanceof EdgeAdapter) {
             EdgeAdapter edge = (EdgeAdapter) userObject;
-            switch (name) {
+            switch (attrName) {
                 case "STYLE":
                     edge.setStyle(sValue);
                     break;
                 case "COLOR":
-                    edge.setColor(Tools.xmlToColor(sValue));
+                    edge.setColor(ColorUtils.xmlToColor(sValue));
                     break;
                 case "WIDTH":
                     if (sValue.equals(EdgeAdapter.EDGE_WIDTH_THIN_STRING)) {
@@ -287,28 +238,28 @@ public class XMLElementAdapter extends XMLElement {
                     }
                     break;
             }
-            return;
+            return userObject;
         }
 
         if (userObject instanceof CloudAdapter) {
             CloudAdapter cloud = (CloudAdapter) userObject;
-            switch (name) {
+            switch (attrName) {
                 case "STYLE":
                     cloud.setStyle(sValue);
                     break;
                 case "COLOR":
-                    cloud.setColor(Tools.xmlToColor(sValue));
+                    cloud.setColor(ColorUtils.xmlToColor(sValue));
                     break;
                 case "WIDTH":
                     cloud.setWidth(Integer.parseInt(sValue));
                     break;
             }
-            return;
+            return userObject;
         }
 
         if (userObject instanceof ArrowLinkAdapter) {
             ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) userObject;
-            switch (name) {
+            switch (attrName) {
                 case "STYLE":
                     arrowLink.setStyle(sValue);
                     break;
@@ -316,7 +267,7 @@ public class XMLElementAdapter extends XMLElement {
                     arrowLink.setUniqueId(sValue);
                     break;
                 case "COLOR":
-                    arrowLink.setColor(Tools.xmlToColor(sValue));
+                    arrowLink.setColor(ColorUtils.xmlToColor(sValue));
                     break;
                 case "DESTINATION":
                     arrowLink.setDestinationLabel(sValue);
@@ -325,10 +276,10 @@ public class XMLElementAdapter extends XMLElement {
                     arrowLink.setReferenceText((sValue));
                     break;
                 case "STARTINCLINATION":
-                    arrowLink.setStartInclination(Tools.xmlToPoint(sValue));
+                    arrowLink.setStartInclination(PointUtils.xmlToPoint(sValue));
                     break;
                 case "ENDINCLINATION":
-                    arrowLink.setEndInclination(Tools.xmlToPoint(sValue));
+                    arrowLink.setEndInclination(PointUtils.xmlToPoint(sValue));
                     break;
                 case "STARTARROW":
                     arrowLink.setStartArrow(sValue);
@@ -342,80 +293,222 @@ public class XMLElementAdapter extends XMLElement {
             }
             if (userObject instanceof ArrowLinkTarget) {
                 ArrowLinkTarget arrowLinkTarget = (ArrowLinkTarget) userObject;
-                if (name.equals("SOURCE")) {
+                if (attrName.equals("SOURCE")) {
                     arrowLinkTarget.setSourceLabel(sValue);
                 }
+            }
+            return userObject;
+        }
+
+        // For elements with null userObject: font, icon, attribute, etc.
+        // These are handled via per-element state tracked in BuildResult/completeElement
+        return userObject;
+    }
+
+    /**
+     * Font/icon/attribute state holder used during element building.
+     * In the old code these were instance fields; now they're tracked per-element.
+     */
+    private static class ElementState {
+        String fontName;
+        int fontStyle = 0;
+        int fontSize = 0;
+        boolean fontStyleStrikethrough;
+        String iconName;
+        String attributeName;
+        String attributeValue;
+    }
+
+    /**
+     * Apply font/icon/attribute-specific attributes.
+     * Returns the element state for use in completeElement.
+     */
+    private ElementState applyElementAttributes(String elementName, NamedNodeMap attrs) {
+        ElementState state = new ElementState();
+        for (int i = 0; i < attrs.getLength(); i++) {
+            String attrName = attrs.item(i).getNodeName().toUpperCase();
+            String sValue = attrs.item(i).getNodeValue();
+
+            if (elementName.equals("font")) {
+                if (attrName.equals("SIZE")) {
+                    state.fontSize = Integer.parseInt(sValue);
+                } else if (attrName.equals("NAME")) {
+                    state.fontName = sValue;
+                } else if (sValue.equals("true")) {
+                    switch (attrName) {
+                        case "BOLD":
+                            state.fontStyle += Font.BOLD;
+                            break;
+                        case "ITALIC":
+                            state.fontStyle += Font.ITALIC;
+                            break;
+                        case "STRIKETHROUGH":
+                            state.fontStyleStrikethrough = true;
+                            break;
+                    }
+                }
+            } else if (elementName.equals("icon")) {
+                if (attrName.equals("BUILTIN")) {
+                    state.iconName = sValue;
+                }
+            } else if (elementName.equals(XML_NODE_ATTRIBUTE)) {
+                if (attrName.equals("NAME")) {
+                    state.attributeName = sValue;
+                } else if (attrName.equals("VALUE")) {
+                    state.attributeValue = sValue;
+                }
+            } else if (elementName.equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)) {
+                if (attrName.equals("NAME")) {
+                    state.attributeName = sValue;
+                }
+            } else if (elementName.equals(XML_NODE_REGISTERED_ATTRIBUTE_VALUE)) {
+                if (attrName.equals("VALUE")) {
+                    state.attributeValue = sValue;
+                }
+            }
+        }
+        return state;
+    }
+
+    /**
+     * Complete an element after all attributes and children are processed.
+     * Returns array: [userObject].
+     */
+    private Object[] completeElement(String name, Object userObject, NamedNodeMap attrs,
+                                      HashMap<String, String> nodeAttributes) {
+        switch (name) {
+            case "font": {
+                ElementState state = applyElementAttributes(name, attrs);
+                Font font = new Font(state.fontName, state.fontStyle, state.fontSize);
+                if (state.fontStyleStrikethrough) {
+                    Map attr = font.getAttributes();
+                    attr.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+                    font = new Font(attr);
+                }
+                userObject = mMapFeedback.getFontThroughMap(font);
+                break;
+            }
+            case "icon": {
+                ElementState state = applyElementAttributes(name, attrs);
+                userObject = MindIcon.factory(state.iconName);
+                break;
+            }
+            case XML_NODE_ATTRIBUTE: {
+                ElementState state = applyElementAttributes(name, attrs);
+                userObject = new Attribute(state.attributeName, state.attributeValue);
+                break;
+            }
+        }
+        return new Object[]{userObject};
+    }
+
+    /**
+     * Wire a child result into its parent's user object.
+     * Equivalent to the old addChild() method.
+     */
+    private void addChildResult(String parentName, Object parentUserObject, BuildResult child) {
+        if ("map".equals(parentName)) {
+            if (child.userObject instanceof NodeAdapter) {
+                mapChild = (NodeAdapter) child.userObject;
             }
             return;
         }
 
-        if (getName().equals("font")) {
-            if (name.equals("SIZE")) {
-                fontSize = Integer.parseInt(sValue);
-            } else if (name.equals("NAME")) {
-                fontName = sValue;
-            }
-
-            // Styling
-            else if (sValue.equals("true")) {
-                switch (name) {
-                    case "BOLD":
-                        fontStyle += Font.BOLD;
-                        break;
-                    case "ITALIC":
-                        fontStyle += Font.ITALIC;
-                        break;
-                    case "STRIKETHROUGH":
-                        fontStyleStrikethrough = true;
-                        break;
+        if (parentUserObject instanceof NodeAdapter) {
+            NodeAdapter node = (NodeAdapter) parentUserObject;
+            if (child.userObject instanceof NodeAdapter) {
+                node.insert((NodeAdapter) child.userObject, -1);
+            } else if (child.userObject instanceof EdgeAdapter) {
+                EdgeAdapter edge = (EdgeAdapter) child.userObject;
+                edge.setTarget(node);
+                node.setEdge(edge);
+            } else if (child.userObject instanceof CloudAdapter) {
+                CloudAdapter cloud = (CloudAdapter) child.userObject;
+                cloud.setTarget(node);
+                node.setCloud(cloud);
+            } else if (child.userObject instanceof ArrowLinkTarget) {
+                ArrowLinkTarget arrowLinkTarget = (ArrowLinkTarget) child.userObject;
+                arrowLinkTarget.setTarget(node);
+                mArrowLinkAdapters.add(arrowLinkTarget);
+            } else if (child.userObject instanceof ArrowLinkAdapter) {
+                ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) child.userObject;
+                arrowLink.setSource(node);
+                mArrowLinkAdapters.add(arrowLink);
+            } else if (child.name.equals("font")) {
+                node.setFont((Font) child.userObject);
+            } else if (child.name.equals(XML_NODE_ATTRIBUTE)) {
+                node.addAttribute((Attribute) child.userObject);
+            } else if (child.name.equals(XML_NODE_ATTRIBUTE_LAYOUT)) {
+                // Attribute layout - currently no-op in legacy code
+            } else if (child.name.equals("icon")) {
+                node.addIcon((MindIcon) child.userObject, MindIcon.LAST);
+            } else if (child.name.equals(XML_NODE_XHTML_CONTENT_TAG)) {
+                String xmlText = child.content;
+                String typeAttribute = child.attributes != null
+                        ? child.attributes.get(XML_NODE_XHTML_TYPE_TAG)
+                        : null;
+                if (typeAttribute == null
+                        || XML_NODE_XHTML_TYPE_NODE.equals(typeAttribute)) {
+                    log.trace("Setting node html content to:{}", xmlText);
+                    node.setXmlText(xmlText);
+                } else {
+                    log.trace("Setting note html content to:{}", xmlText);
+                    node.setXmlNoteText(xmlText);
                 }
-            }
-        }
-        /* icons */
-        if (getName().equals("icon")) {
-            if (name.equals("BUILTIN")) {
-                iconName = sValue;
-            }
-        }
-        /* attributes */
-        else if (getName().equals(XML_NODE_ATTRIBUTE)) {
-            if (name.equals("NAME")) {
-                attributeName = sValue;
-            } else if (name.equals("VALUE")) {
-                attributeValue = sValue;
-            }
-        } else if (getName().equals(XML_NODE_ATTRIBUTE_LAYOUT)) {
-//			if (name.equals("NAME_WIDTH")) {
-//				attributeNameWidth = Integer.parseInt(sValue);
-//			} else if (name.equals("VALUE_WIDTH")) {
-//				attributeValueWidth = Integer.parseInt(sValue);
-//			}
-        } else if (getName().equals(XML_NODE_ATTRIBUTE_REGISTRY)) {
-        } else if (getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)) {
-            if (name.equals("NAME")) {
-                attributeName = sValue;
-            } else {
-                super.setAttribute(name, sValue);
-            }
-        } else if (getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_VALUE)) {
-            if (name.equals("VALUE")) {
-                attributeValue = sValue;
             }
         }
     }
 
-    private NodeAdapter setNodeAttribute(String name, String sValue,
-                                         NodeAdapter node) {
+    /**
+     * Handle a hook child element. Hooks receive the DOM element directly.
+     */
+    private void addHookChild(Object parentUserObject, Element hookElement) {
+        if (!(parentUserObject instanceof NodeAdapter)) {
+            return;
+        }
+        NodeAdapter node = (NodeAdapter) parentUserObject;
+        String loadName = hookElement.getAttribute("NAME");
+        PermanentNodeHook hook = null;
+        try {
+            hook = (PermanentNodeHook) mMapFeedback.createNodeHook(loadName, node);
+            hook.setNode(node);
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage(), e);
+            hook = new PermanentNodeHookSubstituteUnknown(loadName);
+        }
+        hook.loadFrom(hookElement);
+        node.addHook(hook);
+    }
+
+    /**
+     * Serialize the inner content of a DOM element (its children) back to a string.
+     * Used for richcontent elements that contain XHTML.
+     */
+    private String serializeInnerContent(Element element) {
+        StringBuilder sb = new StringBuilder();
+        org.w3c.dom.NodeList children = element.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            org.w3c.dom.Node child = children.item(i);
+            if (child.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                sb.append(FreeMindXml.toString((Element) child));
+            } else if (child.getNodeType() == org.w3c.dom.Node.TEXT_NODE) {
+                String text = child.getNodeValue();
+                if (text != null && !text.trim().isEmpty()) {
+                    sb.append(text);
+                }
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    private NodeAdapter setNodeAttribute(String name, String sValue, NodeAdapter node) {
         switch (name) {
             case XML_NODE_TEXT:
                 log.trace("Setting node text content to:{}", sValue);
                 node.setUserObject(sValue);
                 break;
             case XML_NODE_ENCRYPTED_CONTENT:
-                // we change the node implementation to EncryptedMindMapNode.
                 node = getMap().createEncryptedNode(sValue);
-                setUserObject(node);
-                copyAttributesToNode(node);
                 break;
             case XML_NODE_HISTORY_CREATED_AT:
                 if (node.getHistoryInformation() == null) {
@@ -427,8 +520,7 @@ public class XMLElementAdapter extends XMLElement {
                 if (node.getHistoryInformation() == null) {
                     node.setHistoryInformation(new HistoryInformation());
                 }
-                node.getHistoryInformation().setLastModifiedAt(
-                        Tools.xmlToDate(sValue));
+                node.getHistoryInformation().setLastModifiedAt(Tools.xmlToDate(sValue));
                 break;
             case "FOLDED":
                 if (sValue.equals("true")) {
@@ -436,17 +528,16 @@ public class XMLElementAdapter extends XMLElement {
                 }
                 break;
             case "POSITION":
-                // fc, 17.12.2003: Remove the left/right bug.
                 node.setLeft(sValue.equals("left"));
                 break;
             case "COLOR":
                 if (sValue.length() == 7) {
-                    node.setColor(Tools.xmlToColor(sValue));
+                    node.setColor(ColorUtils.xmlToColor(sValue));
                 }
                 break;
             case "BACKGROUND_COLOR":
                 if (sValue.length() == 7) {
-                    node.setBackgroundColor(Tools.xmlToColor(sValue));
+                    node.setBackgroundColor(ColorUtils.xmlToColor(sValue));
                 }
                 break;
             case "LINK":
@@ -456,8 +547,6 @@ public class XMLElementAdapter extends XMLElement {
                 node.setStyle(sValue);
                 break;
             case "ID":
-                // do not set label but annotate in list:
-                // System.out.println("(sValue, node) = " + sValue + ", "+ node);
                 mIdToTarget.put(sValue, node);
                 break;
             case "VSHIFT":
@@ -474,144 +563,71 @@ public class XMLElementAdapter extends XMLElement {
     }
 
     /**
-     * Sets all attributes that were formely applied to the current userObject
-     * to a given (new) node. Thus, the instance of a node can be changed after
-     * the creation. (At the moment, relevant for encrypted nodes).
+     * Re-apply previously collected attributes to a new node instance.
+     * Used when the node type changes (e.g., to EncryptedMindMapNode).
      */
-    protected void copyAttributesToNode(NodeAdapter node) {
-        // reactivate all settings from nodeAttributes:
-        for (String key : nodeAttributes.keySet()) {
-            // to avoid self reference:
-            setNodeAttribute(key, nodeAttributes.get(key), node);
-        }
-    }
-
-    protected void completeElement() {
-        switch (getName()) {
-            case XML_NODE:
-                // unify map child behaviour:
-                if (mapChild == null) {
-                    mapChild = (NodeAdapter) userObject;
-                }
-                return;
-            case "font":
-                Font font = new Font(fontName, fontStyle, fontSize);
-                if (fontStyleStrikethrough) {
-                    Map attr = font.getAttributes();
-                    attr.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
-                    font = new Font(attr);
-                }
-                userObject = mMapFeedback.getFontThroughMap(font);
-                return;
-
-            /* icons */
-            case "icon":
-                userObject = MindIcon.factory(iconName);
-                return;
-
-            /* attributes */
-            case XML_NODE_ATTRIBUTE:
-                userObject = new Attribute(attributeName, attributeValue);
-                return;
-            case XML_NODE_REGISTERED_ATTRIBUTE_NAME:
+    protected void copyAttributesToNode(NodeAdapter node, HashMap<String, String> nodeAttributes) {
+        for (Map.Entry<String, String> entry : nodeAttributes.entrySet()) {
+            setNodeAttribute(entry.getKey(), entry.getValue(), node);
         }
     }
 
     /**
-     * Completes the links within the getMap(). They are registered in the
-     * registry.
-     * <p>
-     * Case I: Source+Destination are pasted (Ia: cut, Ib: copy) Case II: Source
-     * is pasted, Destination remains unchanged in the map (IIa: cut, IIb: copy)
-     * Case III: Destination is pasted, Source remains unchanged in the map
-     * (IIIa: cut, IIIb: copy)
+     * Completes the links within the map. They are registered in the registry.
      */
     public void processUnfinishedLinks(MindMapLinkRegistry registry) {
         // add labels to the nodes:
         for (String key : mIdToTarget.keySet()) {
             NodeAdapter target1 = mIdToTarget.get(key);
-            /*
-             * key is the proposed name for the target, is changed by the
-             * registry, if already present.
-             */
             registry.registerLinkTarget(target1, key);
         }
         // complete arrow links with right labels:
         for (ArrowLinkAdapter arrowObject : mArrowLinkAdapters) {
             if (arrowObject instanceof ArrowLinkTarget) {
                 ArrowLinkTarget linkTarget = (ArrowLinkTarget) arrowObject;
-                // do the same as for ArrowLinkAdapter and start to search for the source.
                 String oldId = linkTarget.getSourceLabel();
                 MindMapNode source = registry.getTargetForId(oldId);
-                // find oldId in target list:
                 if (mIdToTarget.containsKey(oldId)) {
-                    // link source present in the paste as well and has probably
-                    // been renamed (case I), do nothing, as the source does
-                    // all.
                     continue;
                 } else if (source == null) {
-                    // link source is in nowhere-land
                     log.error("Cannot find the label {} in the map. The link target {} is not restored.", oldId, linkTarget);
                     continue;
                 }
-                // link source remains in the map (case III)
-                // set the source:
                 linkTarget.setSource(source);
-                // here, it is getting more complex: case IIIa: the arrowLink
-                // has to be recreated.
-                // case IIIb: the arrowLink has to be doubled! First,
-                // distinguish between a and b.
                 MindMapNode target = linkTarget.getTarget();
                 String targetCurrentId = registry.getLabel(target);
                 if (!mIdToTarget.containsKey(targetCurrentId)) {
-                    // the id of target has changed, we have case IIIb.
-                    MindMapLink link = registry.getLinkForId(linkTarget
-                            .getUniqueId());
+                    MindMapLink link = registry.getLinkForId(linkTarget.getUniqueId());
                     if (link == null) {
                         log.error("Cannot find the label {} for the link in the map. The link target {} is not restored.", linkTarget.getUniqueId(), linkTarget);
                     } else {
-                        // double the link.
                         MindMapLink clone = (MindMapLink) link.clone();
                         clone.setTarget(target);
-                        ((ArrowLinkAdapter) clone)
-                                .setDestinationLabel(targetCurrentId);
-                        // add the new arrowLink and give it a new id
+                        ((ArrowLinkAdapter) clone).setDestinationLabel(targetCurrentId);
                         registry.registerLink(clone);
                         linkTarget.setUniqueId(clone.getUniqueId());
                     }
                 } else {
-                    // case IIIa: The link must only be re-added:
-                    // change from linkTarget to ArrowLinkAdapter and add it:
                     ArrowLinkAdapter linkAdapter = linkTarget.createArrowLinkAdapter(registry);
                     registry.registerLink(linkAdapter);
                 }
             } else if (arrowObject instanceof ArrowLinkAdapter) {
                 ArrowLinkAdapter arrowLink = arrowObject;
-                // here, the source is in the paste, and the destination is now
-                // searched:
                 String oldId = arrowLink.getDestinationLabel();
                 NodeAdapter target = null;
                 String newId = null;
-                // find oldId in target list:
                 if (mIdToTarget.containsKey(oldId)) {
-                    // link target present in the paste as well and has probably
-                    // been renamed (case I)
                     target = mIdToTarget.get(oldId);
                     newId = registry.getLabel(target);
                 } else if (registry.getTargetForId(oldId) != null) {
-                    // link target remains in the map (case II)
                     target = (NodeAdapter) registry.getTargetForId(oldId);
                     newId = oldId;
                 } else {
-                    // link target is in nowhere-land
                     log.error("Cannot find the label {} in the map. The link {} is not restored.", oldId, arrowLink);
                     continue;
                 }
-                // set the new ID:
                 arrowLink.setDestinationLabel(newId);
-                // set the target:
                 arrowLink.setTarget(target);
-                // add the arrowLink:
                 registry.registerLink(arrowLink);
             }
         }
@@ -625,5 +641,18 @@ public class XMLElementAdapter extends XMLElement {
         mIdToTarget = pToTarget;
     }
 
+    /**
+     * Holds the result of building a single DOM element.
+     */
+    private static class BuildResult {
+        final String name;
+        Object userObject;
+        String content; // for richcontent elements
+        Map<String, String> attributes; // for richcontent elements
 
+        BuildResult(String name, Object userObject) {
+            this.name = name;
+            this.userObject = userObject;
+        }
+    }
 }

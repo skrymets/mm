@@ -33,6 +33,7 @@ import com.lightdev.app.shtm.SHTMLPanel;
 import freemind.main.HtmlTools;
 import freemind.main.HtmlTools.NodeCreator;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.main.Tools.IntHolder;
 import freemind.main.XMLElement;
 import freemind.modes.ExtendedMapFeedbackImpl;
@@ -192,7 +193,7 @@ public class HtmlConversionTests extends FreeMindTestBase {
      * Then, setting and getting this text to the panel must give the same.
      */
     public void testSpaceHandlingInShtmlIdempotency() throws Exception {
-        if (Tools.isHeadless()) {
+        if (SwingUtils.isHeadless()) {
             return;
         }
         String input = getInputStringWithManySpaces(" ");
@@ -208,7 +209,7 @@ public class HtmlConversionTests extends FreeMindTestBase {
     }
 
     public void testSpaceRemovalInShtml() throws Exception {
-        if (Tools.isHeadless()) {
+        if (SwingUtils.isHeadless()) {
             return;
         }
         String input = getInputStringWithManySpaces(HtmlTools.SP);

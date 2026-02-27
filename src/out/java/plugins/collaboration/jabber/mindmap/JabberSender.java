@@ -36,6 +36,7 @@ import com.echomine.jabber.JabberSession;
 import freemind.controller.actions.generated.instance.instance.CollaborationAction;
 import freemind.controller.actions.generated.instance.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.instance.XmlAction;
+import freemind.main.EncryptionUtils;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -209,7 +210,7 @@ public class JabberSender implements ActionFilter {
         /*
          * Wait until there is a reply.
          */
-        chat.sendPrivateMessage(new JID(requestReceiverUser), Tools.compress(message), false);
+        chat.sendPrivateMessage(new JID(requestReceiverUser), EncryptionUtils.compress(message), false);
 
     }
 

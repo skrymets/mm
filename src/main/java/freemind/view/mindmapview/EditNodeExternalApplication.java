@@ -26,10 +26,12 @@ package freemind.view.mindmapview;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
 /**
@@ -82,7 +84,7 @@ public class EditNodeExternalApplication extends EditNodeBase {
                 // and with Vim though.
 
                 // c. Get the text from the temporary file
-                String content = Tools.getFile(temporaryFile);
+                String content = FileUtils.readFileToString(temporaryFile, StandardCharsets.UTF_8);
                 if (content == null) {
                     getEditControl().cancel();
                 }

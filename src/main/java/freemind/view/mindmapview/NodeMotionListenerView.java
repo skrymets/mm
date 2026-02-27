@@ -21,6 +21,7 @@ package freemind.view.mindmapview;
 
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,7 +72,7 @@ public class NodeMotionListenerView extends JComponent {
             }
             g2.setStroke(oldStroke);
             g2.setColor(color);
-            Tools.restoreAntialiasing(g2, renderingHint);
+            SwingUtils.restoreAntialiasing(g2, renderingHint);
         }
     }
 

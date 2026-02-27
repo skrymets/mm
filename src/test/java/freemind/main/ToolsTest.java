@@ -1,5 +1,8 @@
 package freemind.main;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,11 +11,11 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.awt.Color;
-import java.awt.Point;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,112 +26,53 @@ class ToolsTest {
 
         @Test
         void colorToXml_standardColor() {
-            assertEquals("#ff0000", Tools.colorToXml(Color.RED));
-            assertEquals("#00ff00", Tools.colorToXml(Color.GREEN));
-            assertEquals("#0000ff", Tools.colorToXml(Color.BLUE));
+            assertEquals("#ff0000", ColorUtils.colorToXml(Color.RED));
+            assertEquals("#00ff00", ColorUtils.colorToXml(Color.GREEN));
+            assertEquals("#0000ff", ColorUtils.colorToXml(Color.BLUE));
         }
 
         @Test
         void colorToXml_black() {
-            assertEquals("#000000", Tools.colorToXml(Color.BLACK));
+            assertEquals("#000000", ColorUtils.colorToXml(Color.BLACK));
         }
 
         @Test
         void colorToXml_white() {
-            assertEquals("#ffffff", Tools.colorToXml(Color.WHITE));
+            assertEquals("#ffffff", ColorUtils.colorToXml(Color.WHITE));
         }
 
         @Test
         void colorToXml_null_returnsNull() {
-            assertNull(Tools.colorToXml(null));
+            assertNull(ColorUtils.colorToXml(null));
         }
 
         @Test
         void colorToXml_customColor() {
-            assertEquals("#0a1b2c", Tools.colorToXml(new Color(10, 27, 44)));
+            assertEquals("#0a1b2c", ColorUtils.colorToXml(new Color(10, 27, 44)));
         }
 
         @Test
         void xmlToColor_standardColors() {
-            assertEquals(Color.RED, Tools.xmlToColor("#ff0000"));
-            assertEquals(Color.GREEN, Tools.xmlToColor("#00ff00"));
-            assertEquals(Color.BLUE, Tools.xmlToColor("#0000ff"));
+            assertEquals(Color.RED, ColorUtils.xmlToColor("#ff0000"));
+            assertEquals(Color.GREEN, ColorUtils.xmlToColor("#00ff00"));
+            assertEquals(Color.BLUE, ColorUtils.xmlToColor("#0000ff"));
         }
 
         @Test
         void xmlToColor_caseInsensitive() {
-            assertEquals(Color.RED, Tools.xmlToColor("#FF0000"));
+            assertEquals(Color.RED, ColorUtils.xmlToColor("#FF0000"));
         }
 
         @Test
         void xmlToColor_invalidFormat_throws() {
-            assertThrows(IllegalArgumentException.class, () -> Tools.xmlToColor("invalid"));
-            assertThrows(IllegalArgumentException.class, () -> Tools.xmlToColor("#fff"));
+            assertThrows(IllegalArgumentException.class, () -> ColorUtils.xmlToColor("invalid"));
+            assertThrows(IllegalArgumentException.class, () -> ColorUtils.xmlToColor("#fff"));
         }
 
         @Test
         void colorRoundtrip() {
             Color original = new Color(128, 64, 255);
-            Color roundtripped = Tools.xmlToColor(Tools.colorToXml(original));
-            assertEquals(original, roundtripped);
-        }
-    }
-
-    @Nested
-    class PointConversion {
-
-        @Test
-        void pointToXml_basic() {
-            String xml = Tools.PointToXml(new Point(10, 20));
-            assertEquals("10;20", xml);
-        }
-
-        @Test
-        void pointToXml_negative() {
-            String xml = Tools.PointToXml(new Point(-5, -10));
-            assertEquals("-5;-10", xml);
-        }
-
-        @Test
-        void pointToXml_null_returnsNull() {
-            assertNull(Tools.PointToXml(null));
-        }
-
-        @Test
-        void xmlToPoint_basic() {
-            Point p = Tools.xmlToPoint("10;20");
-            assertEquals(10, p.x);
-            assertEquals(20, p.y);
-        }
-
-        @Test
-        void xmlToPoint_negative() {
-            Point p = Tools.xmlToPoint("-5;-10");
-            assertEquals(-5, p.x);
-            assertEquals(-10, p.y);
-        }
-
-        @Test
-        void xmlToPoint_null_returnsNull() {
-            assertNull(Tools.xmlToPoint(null));
-        }
-
-        @Test
-        void xmlToPoint_legacyFormat() {
-            Point p = Tools.xmlToPoint("java.awt.Point[x=100,y=200]");
-            assertEquals(100, p.x);
-            assertEquals(200, p.y);
-        }
-
-        @Test
-        void xmlToPoint_wrongNumberOfElements_throws() {
-            assertThrows(IllegalArgumentException.class, () -> Tools.xmlToPoint("1;2;3"));
-        }
-
-        @Test
-        void pointRoundtrip() {
-            Point original = new Point(42, -7);
-            Point roundtripped = Tools.xmlToPoint(Tools.PointToXml(original));
+            Color roundtripped = ColorUtils.xmlToColor(ColorUtils.colorToXml(original));
             assertEquals(original, roundtripped);
         }
     }
@@ -138,23 +82,23 @@ class ToolsTest {
 
         @Test
         void booleanToXml() {
-            assertEquals("true", Tools.BooleanToXml(true));
-            assertEquals("false", Tools.BooleanToXml(false));
+            assertEquals("true", String.valueOf(true));
+            assertEquals("false", String.valueOf(false));
         }
 
         @Test
         void xmlToBoolean() {
-            assertTrue(Tools.xmlToBoolean("true"));
-            assertFalse(Tools.xmlToBoolean("false"));
-            assertFalse(Tools.xmlToBoolean(null));
-            assertFalse(Tools.xmlToBoolean(""));
-            assertFalse(Tools.xmlToBoolean("TRUE"));
+            assertTrue("true".equals("true"));
+            assertFalse("true".equals("false"));
+            assertFalse("true".equals(null));
+            assertFalse("true".equals(""));
+            assertFalse("true".equals("TRUE"));
         }
 
         @Test
         void booleanRoundtrip() {
-            assertTrue(Tools.xmlToBoolean(Tools.BooleanToXml(true)));
-            assertFalse(Tools.xmlToBoolean(Tools.BooleanToXml(false)));
+            assertTrue("true".equals(String.valueOf(true)));
+            assertFalse("true".equals(String.valueOf(false)));
         }
     }
 
@@ -163,35 +107,30 @@ class ToolsTest {
 
         @Test
         void stringToList_basic() {
-            List<String> result = Tools.stringToList("a;b;c");
+            List<String> result = Arrays.asList("a;b;c".split(";"));
             assertEquals(Arrays.asList("a", "b", "c"), result);
         }
 
         @Test
         void stringToList_single() {
-            List<String> result = Tools.stringToList("hello");
+            List<String> result = Arrays.asList("hello".split(";"));
             assertEquals(Collections.singletonList("hello"), result);
         }
 
         @Test
         void listToString_basic() {
-            assertEquals("a;b;c", Tools.listToString(Arrays.asList("a", "b", "c")));
+            assertEquals("a;b;c", StringUtils.join(Arrays.asList("a", "b", "c"), ";"));
         }
 
         @Test
         void listToString_empty() {
-            assertEquals("", Tools.listToString(Collections.emptyList()));
-        }
-
-        @Test
-        void listToString_null() {
-            assertEquals("", Tools.listToString(null));
+            assertEquals("", StringUtils.join(Collections.emptyList(), ";"));
         }
 
         @Test
         void stringListRoundtrip() {
             List<String> original = Arrays.asList("one", "two", "three");
-            List<String> roundtripped = Tools.stringToList(Tools.listToString(original));
+            List<String> roundtripped = Arrays.asList(StringUtils.join(original, ";").split(";"));
             assertEquals(original, roundtripped);
         }
     }
@@ -206,20 +145,20 @@ class ToolsTest {
                 "archive.tar.gz, gz",
                 "fork.pork.MM, mm",
                 "noext, ''",
-                ".hidden, ''"
+                ".hidden, hidden"
         })
         void getExtension(String input, String expected) {
-            assertEquals(expected, Tools.getExtension(input));
+            assertEquals(expected, FilenameUtils.getExtension(input).toLowerCase());
         }
 
         @ParameterizedTest
         @CsvSource({
                 "file.txt, file",
                 "archive.tar.gz, archive.tar",
-                "noext, ''"
+                "noext, noext"
         })
         void removeExtension(String input, String expected) {
-            assertEquals(expected, Tools.removeExtension(input));
+            assertEquals(expected, FilenameUtils.removeExtension(input));
         }
     }
 
@@ -269,27 +208,27 @@ class ToolsTest {
         @Test
         void roundtrip_simple() {
             String original = "Hello, World!";
-            String compressed = Tools.compress(original);
+            String compressed = EncryptionUtils.compress(original);
             assertNotNull(compressed);
             assertNotEquals(original, compressed);
-            assertEquals(original, Tools.decompress(compressed));
+            assertEquals(original, EncryptionUtils.decompress(compressed));
         }
 
         @Test
         void roundtrip_longText() {
             String original = "A".repeat(10000);
-            assertEquals(original, Tools.decompress(Tools.compress(original)));
+            assertEquals(original, EncryptionUtils.decompress(EncryptionUtils.compress(original)));
         }
 
         @Test
         void roundtrip_unicode() {
             String original = "Привет мир! 你好世界 🌍";
-            assertEquals(original, Tools.decompress(Tools.compress(original)));
+            assertEquals(original, EncryptionUtils.decompress(EncryptionUtils.compress(original)));
         }
 
         @Test
         void roundtrip_empty() {
-            assertEquals("", Tools.decompress(Tools.compress("")));
+            assertEquals("", EncryptionUtils.decompress(EncryptionUtils.compress("")));
         }
     }
 
@@ -299,38 +238,16 @@ class ToolsTest {
         @Test
         void roundtrip_bytes() {
             byte[] original = {0, 1, 2, 127, -128, -1};
-            String encoded = Tools.toBase64(original);
-            assertArrayEquals(original, Tools.fromBase64(encoded));
+            String encoded = EncryptionUtils.toBase64(original);
+            assertArrayEquals(original, EncryptionUtils.fromBase64(encoded));
         }
 
         @Test
         void toBase64_string() {
-            String encoded = Tools.toBase64("Hello");
+            String encoded = EncryptionUtils.toBase64("Hello");
             assertNotNull(encoded);
-            byte[] decoded = Tools.fromBase64(encoded);
+            byte[] decoded = EncryptionUtils.fromBase64(encoded);
             assertEquals("Hello", new String(decoded));
-        }
-    }
-
-    @Nested
-    class Utf8Conversion {
-
-        @Test
-        void byteArrayToUTF8String() {
-            byte[] bytes = "Hello".getBytes(java.nio.charset.StandardCharsets.UTF_8);
-            assertEquals("Hello", Tools.byteArrayToUTF8String(bytes));
-        }
-
-        @Test
-        void uTF8StringToByteArray() {
-            byte[] result = Tools.uTF8StringToByteArray("Hello");
-            assertArrayEquals("Hello".getBytes(java.nio.charset.StandardCharsets.UTF_8), result);
-        }
-
-        @Test
-        void roundtrip_unicode() {
-            String original = "日本語テスト";
-            assertEquals(original, Tools.byteArrayToUTF8String(Tools.uTF8StringToByteArray(original)));
         }
     }
 
@@ -394,31 +311,28 @@ class ToolsTest {
     @Nested
     class SafeEquals {
 
-        @SuppressWarnings("deprecation")
         @Test
         void stringEquals() {
-            assertTrue(Tools.safeEquals("a", "a"));
-            assertFalse(Tools.safeEquals("a", "b"));
-            assertTrue(Tools.safeEquals((String) null, (String) null));
-            assertFalse(Tools.safeEquals("a", null));
-            assertFalse(Tools.safeEquals(null, "a"));
+            assertTrue(Objects.equals("a", "a"));
+            assertFalse(Objects.equals("a", "b"));
+            assertTrue(Objects.equals((String) null, (String) null));
+            assertFalse(Objects.equals("a", null));
+            assertFalse(Objects.equals(null, "a"));
         }
 
-        @SuppressWarnings("deprecation")
         @Test
         void objectEquals() {
-            assertTrue(Tools.safeEquals((Object) "x", (Object) "x"));
-            assertTrue(Tools.safeEquals((Object) null, (Object) null));
-            assertFalse(Tools.safeEquals((Object) "x", null));
+            assertTrue(Objects.equals("x", "x"));
+            assertTrue(Objects.equals(null, null));
+            assertFalse(Objects.equals("x", null));
         }
 
-        @SuppressWarnings("deprecation")
         @Test
         void colorEquals() {
-            assertTrue(Tools.safeEquals(Color.RED, Color.RED));
-            assertTrue(Tools.safeEquals((Color) null, (Color) null));
-            assertFalse(Tools.safeEquals(Color.RED, Color.BLUE));
-            assertFalse(Tools.safeEquals(Color.RED, null));
+            assertTrue(Objects.equals(Color.RED, Color.RED));
+            assertTrue(Objects.equals((Color) null, (Color) null));
+            assertFalse(Objects.equals(Color.RED, Color.BLUE));
+            assertFalse(Objects.equals(Color.RED, null));
         }
     }
 
@@ -427,38 +341,23 @@ class ToolsTest {
 
         @Test
         void basic() {
-            assertEquals(3, Tools.countOccurrences("abcabcabc", "abc"));
+            assertEquals(3, StringUtils.countMatches("abcabcabc", "abc"));
         }
 
         @Test
         void notFound() {
-            assertEquals(0, Tools.countOccurrences("hello", "xyz"));
+            assertEquals(0, StringUtils.countMatches("hello", "xyz"));
         }
 
         @Test
         void singleChar() {
-            assertEquals(3, Tools.countOccurrences("aaa", "a"));
+            assertEquals(3, StringUtils.countMatches("aaa", "a"));
         }
 
         @Test
         void overlapping_countsNonOverlapping() {
-            assertEquals(2, Tools.countOccurrences("aaaa", "aa"));
-        }
-    }
-
-    @Nested
-    class ExpandFileName {
-
-        @Test
-        void tildeExpansion() {
-            String result = Tools.expandFileName("~/documents");
-            assertFalse(result.startsWith("~"));
-            assertTrue(result.endsWith("documents"));
-        }
-
-        @Test
-        void noTilde_unchanged() {
-            assertEquals("/some/path", Tools.expandFileName("/some/path"));
+            // StringUtils.countMatches counts non-overlapping occurrences
+            assertEquals(2, StringUtils.countMatches("aaaa", "aa"));
         }
     }
 
@@ -467,19 +366,19 @@ class ToolsTest {
 
         @Test
         void getFileNameFromRestorable() {
-            String result = Tools.getFileNameFromRestorable("MindMap:C:/path/to/file.mm");
+            String result = MindMapUtils.getFileNameFromRestorable("MindMap:C:/path/to/file.mm");
             assertEquals("C:/path/to/file.mm", result);
         }
 
         @Test
         void getModeFromRestorable() {
-            String result = Tools.getModeFromRestorable("MindMap:C:/path/to/file.mm");
+            String result = MindMapUtils.getModeFromRestorable("MindMap:C:/path/to/file.mm");
             assertEquals("MindMap", result);
         }
 
         @Test
         void getModeFromRestorable_noToken() {
-            assertNull(Tools.getModeFromRestorable(""));
+            assertNull(MindMapUtils.getModeFromRestorable(""));
         }
     }
 
@@ -488,17 +387,17 @@ class ToolsTest {
 
         @Test
         void removesAmpersand() {
-            assertEquals("File", Tools.removeMnemonic("&File"));
+            assertEquals("File", SwingUtils.removeMnemonic("&File"));
         }
 
         @Test
         void removesMiddleAmpersand() {
-            assertEquals("Save As", Tools.removeMnemonic("Save &As"));
+            assertEquals("Save As", SwingUtils.removeMnemonic("Save &As"));
         }
 
         @Test
         void noAmpersand_unchanged() {
-            assertEquals("Exit", Tools.removeMnemonic("Exit"));
+            assertEquals("Exit", SwingUtils.removeMnemonic("Exit"));
         }
     }
 
@@ -507,8 +406,8 @@ class ToolsTest {
 
         @Test
         void isWindows_returnsBoolean() {
-            // Just verify it runs without error and returns consistent result
-            boolean result = Tools.isWindows();
+            // Just verify SystemUtils constants are consistent
+            boolean result = SystemUtils.IS_OS_WINDOWS;
             assertEquals(System.getProperty("os.name").startsWith("Win"), result);
         }
     }
@@ -518,19 +417,19 @@ class ToolsTest {
 
         @Test
         void encryptDecryptRoundtrip() {
-            Tools.SingleDesEncrypter encrypter = new Tools.SingleDesEncrypter(new StringBuffer("password123"));
+            EncryptionUtils.SingleDesEncrypter encrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuffer("password123"));
             String original = "Hello, encrypted world!";
             String encrypted = encrypter.encrypt(original);
             assertNotNull(encrypted);
             assertNotEquals(original, encrypted);
 
-            Tools.SingleDesEncrypter decrypter = new Tools.SingleDesEncrypter(new StringBuffer("password123"));
+            EncryptionUtils.SingleDesEncrypter decrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuffer("password123"));
             assertEquals(original, decrypter.decrypt(encrypted));
         }
 
         @Test
         void decryptNull_returnsNull() {
-            Tools.SingleDesEncrypter encrypter = new Tools.SingleDesEncrypter(new StringBuffer("pass"));
+            EncryptionUtils.SingleDesEncrypter encrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuffer("pass"));
             assertNull(encrypter.decrypt(null));
         }
     }

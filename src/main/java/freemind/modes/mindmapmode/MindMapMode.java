@@ -21,7 +21,6 @@
 package freemind.modes.mindmapmode;
 
 import freemind.controller.Controller;
-import freemind.main.XMLParseException;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import lombok.Getter;
@@ -65,7 +64,7 @@ public class MindMapMode extends Mode {
         }
     }
 
-    public void restore(String restorable) throws XMLParseException, IOException {
+    public void restore(String restorable) throws IOException {
         getDefaultModeController().load(new File(restorable));
     }
 

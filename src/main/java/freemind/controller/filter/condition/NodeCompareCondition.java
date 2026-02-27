@@ -24,9 +24,10 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 class NodeCompareCondition extends CompareConditionAdapter {
 
@@ -52,21 +53,19 @@ class NodeCompareCondition extends CompareConditionAdapter {
         }
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
         super.saveAttributes(child);
-        child.setIntAttribute(COMPARATION_RESULT, comparationResult);
-        child.setAttribute(SUCCEED, Tools.BooleanToXml(succeed));
-        element.addChild(child);
+        child.setAttribute(COMPARATION_RESULT, String.valueOf(comparationResult));
+        child.setAttribute(SUCCEED, String.valueOf(succeed));
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
-        return new NodeCompareCondition(element.getStringAttribute(VALUE),
-                Tools.xmlToBoolean(element
-                        .getStringAttribute(NodeCompareCondition.IGNORE_CASE)),
-                element.getIntAttribute(COMPARATION_RESULT),
-                Tools.xmlToBoolean(element.getStringAttribute(SUCCEED)));
+    static Condition load(Element element) {
+        return new NodeCompareCondition(FreeMindXml.getStringAttribute(element, VALUE),
+                "true".equals(FreeMindXml.getStringAttribute(element, NodeCompareCondition.IGNORE_CASE)),
+                FreeMindXml.getIntAttribute(element, COMPARATION_RESULT, 0),
+                "true".equals(FreeMindXml.getStringAttribute(element, SUCCEED)));
     }
 
     protected String createDesctiption() {

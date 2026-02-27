@@ -26,6 +26,7 @@ package accessories.plugins;
 import freemind.extensions.ExportHook;
 import freemind.main.Tools;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -161,7 +162,8 @@ public class ExportToOoWriter extends ExportHook {
                 return false;
             }
             InputStream in = resource.openStream();
-            Tools.copyStream(in, out, false);
+            IOUtils.copy(in, out);
+            in.close();
             return true;
         } catch (Exception e) {
             log.error("File not found or could not be copied. Was earching for {} and should go to {}", fileName, out);

@@ -31,6 +31,7 @@ import javax.swing.JPanel;
 
 import freemind.controller.Controller;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
@@ -94,7 +95,7 @@ public class LayoutTests extends FreeMindTestBase {
         parent.setOpaque(true);
         parent.setDoubleBuffered(false); // for better performance
         parent.doLayout();
-        Tools.waitForEventQueue();
+        SwingUtils.waitForEventQueue();
         mMapView.addNotify();
     }
 

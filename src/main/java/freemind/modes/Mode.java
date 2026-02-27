@@ -21,8 +21,6 @@
 package freemind.modes;
 
 import freemind.controller.Controller;
-import freemind.main.XMLParseException;
-
 import java.io.IOException;
 
 public abstract class Mode {
@@ -33,7 +31,7 @@ public abstract class Mode {
 
     public abstract void activate();
 
-    public abstract void restore(String restorable) throws XMLParseException, IOException;
+    public abstract void restore(String restorable) throws IOException;
 
     /**
      * Creates a new mode controller and returns it.

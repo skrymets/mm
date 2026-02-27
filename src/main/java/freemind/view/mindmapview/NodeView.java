@@ -1,5 +1,7 @@
 package freemind.view.mindmapview;
 
+import freemind.main.SwingUtils;
+
 import freemind.controller.Controller;
 import freemind.main.*;
 import freemind.model.MindMapNode;
@@ -438,7 +440,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     }
 
     protected Point convertPointToMap(Point p) {
-        return Tools.convertPointToAncestor(this, p, getMap());
+        return PointUtils.convertPointToAncestor(this, p, getMap());
     }
 
     /**
@@ -1189,7 +1191,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                 }
                 Point childPoint = new Point(0, childView.getMainView()
                         .getHeight() / 2);
-                Tools.convertPointToAncestor(childView.getMainView(),
+                PointUtils.convertPointToAncestor(childView.getMainView(),
                         childPoint, baseComponent);
                 final int gapToChild = Math.abs(childPoint.y - ownY);
                 if (gapToChild < yGap) {
@@ -1387,7 +1389,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             NodeView nodeView = (NodeView) component;
             if (nodeView.isContentVisible()) {
                 Point p = new Point();
-                Tools.convertPointToAncestor(nodeView, p, this);
+                PointUtils.convertPointToAncestor(nodeView, p, this);
                 g.translate(p.x, p.y);
                 nodeView.paintCloud(g);
                 g.translate(-p.x, -p.y);
@@ -1397,7 +1399,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                 nodeView.paintCloudsAndEdges(g);
             }
         }
-        Tools.restoreAntialiasing(g, renderingHint);
+        SwingUtils.restoreAntialiasing(g, renderingHint);
     }
 
     /*

@@ -22,8 +22,7 @@ package freemind.modes.mindmapmode;
 
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
-import freemind.main.Tools.SingleDesEncrypter;
-import freemind.main.XMLElement;
+import freemind.main.EncryptionUtils.SingleDesEncrypter;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -33,6 +32,8 @@ import freemind.modes.ModeController;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import javax.swing.tree.MutableTreeNode;
@@ -309,10 +310,10 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
      *
      */
 
-    public XMLElement save(Writer writer, MindMapLinkRegistry registry,
-                           boolean saveHidden, boolean saveChildren) throws IOException {
+    public Element save(Writer writer, Document doc, MindMapLinkRegistry registry,
+                         boolean saveHidden, boolean saveChildren) throws IOException {
         if (isStoringEncryptedContent()) {
-            return super.save(writer, registry, saveHidden, saveChildren);
+            return super.save(writer, doc, registry, saveHidden, saveChildren);
         }
         if (isDecrypted) {
             if (!isAccessible()) {
@@ -325,9 +326,9 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         }
         boolean oldIsVisible = isAccessible();
         setAccessible(false);
-        XMLElement ret = null;
+        Element ret = null;
         try {
-            ret = super.save(writer, registry, saveHidden, saveChildren);
+            ret = super.save(writer, doc, registry, saveHidden, saveChildren);
         } finally {
             setAccessible(oldIsVisible);
         }
@@ -380,7 +381,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         // if (decrypted == null || decrypted.isEmpty()) {
         // log.warn("Perhaps wrong algorithm used (due to a Java bug, in FreeMind 0.8.0 and Java4-5 DES whereas with Java6 Triple DES was used. Trying Triple DES...");
         // decrypted = new
-        // Tools.TripleDesEncrypter(pwd).decrypt(encryptedString);
+        // EncryptionUtils.TripleDesEncrypter(pwd).decrypt(encryptedString);
         // }
 
         return decrypted;

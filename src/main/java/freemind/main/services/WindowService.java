@@ -21,6 +21,7 @@ package freemind.main.services;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindMain;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -87,7 +88,7 @@ public class WindowService {
         splitPane.setResizeWeight(1.0d);
 
         // split panes eat F8 and F6. This is corrected here.
-        Tools.correctJSplitPaneKeyMap();
+        SwingUtils.correctJSplitPaneKeyMap();
         contentComponent = splitPane;
 
         setContentComponent();

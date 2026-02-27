@@ -90,8 +90,7 @@ public class UnfoldAll extends MindMapNodeHookAdapter {
 
     public void invoke(MindMapNode node) {
         super.invoke(node);
-        boolean foldState = Tools
-                .xmlToBoolean(getResourceString("foldingState"));
+        boolean foldState = "true".equals(getResourceString("foldingState"));
         String foldingType = getResourceString("foldingType");
         String applyTo = getResourceString("applyTo");
         if ("root".equals(applyTo)) {

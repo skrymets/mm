@@ -19,8 +19,7 @@
 /*$Id: LastOpenedList.java,v 1.8.18.2.2.2 2008/04/11 16:58:31 christianfoltin Exp $*/
 package freemind.controller;
 
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
+import freemind.main.MindMapUtils;
 import freemind.view.MapModule;
 import lombok.extern.slf4j.Slf4j;
 
@@ -109,14 +108,14 @@ public class LastOpenedList {
     }
 
     public boolean open(String restoreable) throws
-            XMLParseException, IOException,
+            IOException,
             URISyntaxException {
         boolean changedToMapModule = mController.getMapModuleManager()
                 .tryToChangeToMapModule(
                         mRestorableToMapName.get(restoreable));
         if ((restoreable != null) && !(changedToMapModule)) {
-            String mode = Tools.getModeFromRestorable(restoreable);
-            String fileName = Tools.getFileNameFromRestorable(restoreable);
+            String mode = MindMapUtils.getModeFromRestorable(restoreable);
+            String fileName = MindMapUtils.getFileNameFromRestorable(restoreable);
             if (mController.createNewMode(mode)) {
                 mController.getMode().restore(fileName);
                 return true;

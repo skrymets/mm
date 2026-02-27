@@ -41,6 +41,7 @@ import freemind.common.TextTranslator;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;
+import freemind.main.EncryptionUtils;
 import freemind.main.Tools;
 import freemind.modes.common.dialogs.EnterPasswordDialog;
 
@@ -156,7 +157,7 @@ public class SignedScriptHandler {
             instance.initSign((PrivateKey) mKeyStore.getKey(keyName, password));
             instance.update(content.mScript.getBytes());
             byte[] signature = instance.sign();
-            content.mSignature = Tools.toBase64(signature);
+            content.mSignature = EncryptionUtils.toBase64(signature);
             // System.out.println("Signed: " +content);
             return content.toString();
         } catch (Exception e) {

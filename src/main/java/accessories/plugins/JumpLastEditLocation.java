@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +62,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
                 return;
             }
             log.trace("Selecting {} as last edit location.", node);
-            getMindMapController().select(node, Tools.getSingletonList(node));
+            getMindMapController().select(node, Collections.singletonList(node));
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
         }

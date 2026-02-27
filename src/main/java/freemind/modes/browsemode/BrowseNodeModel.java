@@ -20,7 +20,6 @@
 
 package freemind.modes.browsemode;
 
-import freemind.main.XMLElement;
 import freemind.model.MindMap;
 import freemind.model.NodeAdapter;
 
@@ -40,15 +39,6 @@ public class BrowseNodeModel extends NodeAdapter {
         super(userObject, map);
         children = new LinkedList<>();
         setEdge(new BrowseEdgeModel(this, getMapFeedback()));
-    }
-
-    //
-    // The mandatory load and save methods
-    //
-
-    // NanoXML save method
-    public XMLElement save() {
-        return null;
     }
 
     public boolean isWriteable() {

@@ -8,6 +8,7 @@ import freemind.extensions.PermanentNodeHook;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.model.MindMapNode;
 
 import java.io.IOException;
@@ -549,7 +550,7 @@ class MindMapHTMLWriter {
         String fontStyle = "";
 
         if (model.getColor() != null) {
-            fontStyle += "color: " + Tools.colorToXml(model.getColor()) + ";";
+            fontStyle += "color: " + ColorUtils.colorToXml(model.getColor()) + ";";
         }
 
         if (model.getFont() != null && model.getFont().getSize() != 0) {

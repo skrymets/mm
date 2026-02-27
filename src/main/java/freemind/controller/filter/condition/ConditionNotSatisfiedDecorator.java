@@ -25,10 +25,12 @@ package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
 import freemind.controller.filter.FilterController;
+import freemind.main.FreeMindXml;
 import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import java.util.List;
@@ -69,7 +71,7 @@ public class ConditionNotSatisfiedDecorator implements Condition {
      */
     public JComponent getListCellRendererComponent() {
         JCondition component = new JCondition();
-        final String not = Tools.removeMnemonic(Resources.getInstance()
+        final String not = SwingUtils.removeMnemonic(Resources.getInstance()
                 .getResourceString("filter_not"));
         String text = not + ' ';
         component.add(new JLabel(text));
@@ -80,15 +82,14 @@ public class ConditionNotSatisfiedDecorator implements Condition {
         return component;
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
-        originalCondition.save(child);
-        element.addChild(child);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
+        originalCondition.save(doc, child);
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
-        final List<XMLElement> children = element.getChildren();
+    static Condition load(Element element) {
+        final List<Element> children = FreeMindXml.getChildElements(element);
         Condition cond = FilterController.getConditionFactory().loadCondition(children.get(0));
         return new ConditionNotSatisfiedDecorator(cond);
     }

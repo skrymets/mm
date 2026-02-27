@@ -24,6 +24,8 @@
 package freemind.extensions;
 
 import freemind.main.Tools;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;
@@ -71,7 +73,7 @@ public class ExportHook extends ModeControllerHookAdapter {
 
         // |= Pressed O.K.
         File chosenFile = chooser.getSelectedFile();
-        String ext = Tools.getExtension(chosenFile.getName());
+        String ext = FilenameUtils.getExtension(chosenFile.getName()).toLowerCase();
         if (!StringUtils.equalsIgnoreCase(ext, type)) {
             chosenFile = new File(chosenFile.getParent(), chosenFile.getName()
                     + "." + type);
@@ -100,7 +102,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             if (f.isDirectory()) {
                 return true;
             }
-            String extension = Tools.getExtension(f.getName());
+            String extension = FilenameUtils.getExtension(f.getName()).toLowerCase();
             return StringUtils.equalsIgnoreCase(extension, type);
         }
 
@@ -177,7 +179,9 @@ public class ExportHook extends ModeControllerHookAdapter {
                     + fileName);
 
             // Transfer bytes from in to out
-            Tools.copyStream(in, out, true);
+            IOUtils.copy(in, out);
+            in.close();
+            out.close();
         } catch (Exception e) {
             log.error("File not found or could not be copied. Was earching for {}{} and should go to {}", prefix, fileName, destinationDirectory);
             log.error(e.getLocalizedMessage(), e);
@@ -198,7 +202,9 @@ public class ExportHook extends ModeControllerHookAdapter {
                     + fileName);
 
             // Transfer bytes from in to out
-            Tools.copyStream(in, out, true);
+            IOUtils.copy(in, out);
+            in.close();
+            out.close();
         } catch (Exception e) {
             log.error("File not found or could not be copied. Was earching for {}{} and should go to {}", dir, fileName, destinationDirectory);
             log.error(e.getLocalizedMessage(), e);

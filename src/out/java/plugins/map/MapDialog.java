@@ -60,6 +60,7 @@ import freemind.controller.actions.generated.instance.instance.Place;
 import freemind.controller.actions.generated.instance.instance.TableColumnSetting;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.modes.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.ModeController.NodeSelectionListener;
@@ -324,7 +325,7 @@ public class MapDialog extends MindMapHookAdapter implements
         mCloseAction = new CloseAction();
         // the action title is changed by the following method, thus we create
         // another close action.
-        Tools.addEscapeActionToDialog(mMapDialog, new CloseAction());
+        SwingUtils.addEscapeActionToDialog(mMapDialog, new CloseAction());
         mMapDialog.setSize(400, 400);
 
         map = new JCursorMapViewer(getMindMapController(), mMapDialog,
@@ -469,7 +470,7 @@ public class MapDialog extends MindMapHookAdapter implements
                 mSearchPanel, map);
         mSearchSplitPane.setContinuousLayout(true);
         mSearchSplitPane.setOneTouchExpandable(false);
-        Tools.correctJSplitPaneKeyMap();
+        SwingUtils.correctJSplitPaneKeyMap();
         mSearchSplitPane.setResizeWeight(0d);
         mSearchSplitPane.addPropertyChangeListener(
                 JSplitPane.DIVIDER_LOCATION_PROPERTY,

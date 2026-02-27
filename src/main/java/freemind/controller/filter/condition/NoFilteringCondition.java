@@ -25,8 +25,9 @@ package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
 import freemind.main.Resources;
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 
@@ -67,7 +68,7 @@ public class NoFilteringCondition implements Condition {
         return condition;
     }
 
-    public void save(XMLElement element) {
+    public void save(Document doc, Element parent) {
     }
 
 }

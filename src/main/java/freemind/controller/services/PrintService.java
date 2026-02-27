@@ -75,7 +75,7 @@ public class PrintService {
         }
         if (Objects.equals(frame.getProperty("page_orientation"), "landscape")) {
             pageFormat.setOrientation(PageFormat.LANDSCAPE);
-        } else if (Tools.safeEquals(frame.getProperty("page_orientation"), "portrait")) {
+        } else if (Objects.equals(frame.getProperty("page_orientation"), "portrait")) {
             pageFormat.setOrientation(PageFormat.PORTRAIT);
         } else if (Objects.equals(frame.getProperty("page_orientation"), "reverse_landscape")) {
             pageFormat.setOrientation(PageFormat.REVERSE_LANDSCAPE);

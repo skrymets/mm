@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.ArrowLinkColorXmlAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.model.LineAdapter;
 import freemind.model.MindMapLink;
 import freemind.modes.ExtendedMapFeedback;
@@ -59,7 +59,7 @@ public class ColorArrowLinkActor extends XmlActorAdapter {
             ArrowLinkColorXmlAction colorAction = (ArrowLinkColorXmlAction) action;
             MindMapLink link = getLinkRegistry().getLinkForId(
                     colorAction.getId());
-            ((LineAdapter) link).setColor(Tools.xmlToColor(colorAction
+            ((LineAdapter) link).setColor(ColorUtils.xmlToColor(colorAction
                     .getColor()));
             getExMapFeedback().nodeChanged(link.getSource());
         }
@@ -72,7 +72,7 @@ public class ColorArrowLinkActor extends XmlActorAdapter {
     private ArrowLinkColorXmlAction createArrowLinkColorXmlAction(
             MindMapLink arrowLink, Color color) {
         ArrowLinkColorXmlAction action = new ArrowLinkColorXmlAction();
-        action.setColor(Tools.colorToXml(color));
+        action.setColor(ColorUtils.colorToXml(color));
         action.setId(arrowLink.getUniqueId());
         return action;
     }

@@ -20,7 +20,10 @@
 
 package freemind.extensions;
 
-import freemind.main.XMLElement;
+import freemind.main.FreeMindXml;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * If a hook can't be find at map loading, this substition is used.
@@ -36,17 +39,18 @@ public class PermanentNodeHookSubstituteUnknown extends
         hookName = name;
     }
 
-    private XMLElement child;
+    private Element child;
 
-    public void loadFrom(XMLElement child) {
+    public void loadFrom(Element child) {
         this.child = child;
         super.loadFrom(child);
     }
 
-    public void save(XMLElement xml) {
-        super.save(xml);
-        for (XMLElement childchild : child.getChildren()) {
-            xml.addChild(childchild);
+    public void save(Document doc, Element xml) {
+        super.save(doc, xml);
+        for (Element childchild : FreeMindXml.getChildElements(child)) {
+            Node imported = doc.importNode(childchild, true);
+            xml.appendChild(imported);
         }
     }
 

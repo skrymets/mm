@@ -20,10 +20,11 @@
 package accessories.plugins.dialogs;
 
 import freemind.common.TextTranslator;
+import java.util.Collections;
 import freemind.controller.actions.Pattern;
 import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.Tools;
-import freemind.main.XMLParseException;
+import freemind.main.SwingUtils;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -131,7 +132,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                 cancelPressed();
             }
         };
-        Tools.addEscapeActionToDialog(this, action);
+        SwingUtils.addEscapeActionToDialog(this, action);
         pack();
         mController.decorateDialog(this, WINDOW_PREFERENCE_STORAGE_PROPERTY);
 
@@ -200,7 +201,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                         MapAdapter.sDontAskInstance);
                 mMap.setRoot(root);
                 mDemoNode = (MindMapNode) root.getChildAt(0);
-            } catch (XMLParseException | IOException e) {
+            } catch (RuntimeException | IOException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
             mDemoFrame = new MapView(mMap, mDemoNodeMapFeedback);
@@ -220,7 +221,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                     if (mNode != null) {
                         mDemoNode.setText(mNode.getText());
                     }
-                    mDemoNodeMapFeedback.select(mDemoNode, Tools.getSingletonList(mDemoNode));
+                    mDemoNodeMapFeedback.select(mDemoNode, Collections.singletonList(mDemoNode));
                     mDemoNodeMapFeedback.applyPattern(mDemoNode, mResetPattern);
                     Pattern pattern = mStylePatternFrame.getResultPattern();
                     mDemoNodeMapFeedback.applyPattern(mDemoNode, pattern);
@@ -251,7 +252,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
 
             });
 
-            Tools.setLabelAndMnemonic(jOKButton, mController.getText("ok"));
+            SwingUtils.setLabelAndMnemonic(jOKButton, mController.getText("ok"));
         }
         return jOKButton;
     }
@@ -270,7 +271,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                     cancelPressed();
                 }
             });
-            Tools.setLabelAndMnemonic(jCancelButton,
+            SwingUtils.setLabelAndMnemonic(jCancelButton,
                     mController.getText(("cancel")));
         }
         return jCancelButton;

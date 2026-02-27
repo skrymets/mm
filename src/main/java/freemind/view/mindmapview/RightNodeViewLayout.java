@@ -23,7 +23,7 @@
  */
 package freemind.view.mindmapview;
 
-import freemind.main.Tools;
+import freemind.main.PointUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +70,7 @@ public class RightNodeViewLayout extends NodeViewLayoutAdapter {
         final JComponent content = nodeView.getContent();
         location.x = -LISTENER_VIEW_WIDTH;
         location.y = 0;
-        Tools.convertPointToAncestor(content, location, nodeMotionView.getParent());
+        PointUtils.convertPointToAncestor(content, location, nodeMotionView.getParent());
         nodeMotionView.setLocation(location);
         nodeMotionView.setSize(LISTENER_VIEW_WIDTH, content.getHeight());
     }

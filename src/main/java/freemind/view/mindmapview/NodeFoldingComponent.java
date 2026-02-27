@@ -22,6 +22,7 @@ package freemind.view.mindmapview;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -237,7 +238,7 @@ public class NodeFoldingComponent extends JButton {
                     }
                 }
             }
-            Tools.restoreAntialiasing(g2, oldRenderingHint);
+            SwingUtils.restoreAntialiasing(g2, oldRenderingHint);
         }
 
         /**

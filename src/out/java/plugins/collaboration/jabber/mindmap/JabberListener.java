@@ -38,6 +38,7 @@ import com.echomine.jabber.JabberSession;
 import freemind.controller.actions.generated.instance.instance.CollaborationAction;
 import freemind.controller.actions.generated.instance.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.instance.XmlAction;
+import freemind.main.EncryptionUtils;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -149,7 +150,7 @@ public class JabberListener {
                 JabberChatMessage msg = (JabberChatMessage) commandQueue
                         .removeFirst(); //Process the first command in the
 
-                String msgString = Tools.decompress(msg.getBody());
+                String msgString = EncryptionUtils.decompress(msg.getBody());
                 // list.
                 if (logger.isLoggable(Level.INFO)) {
                     String displayMessage = ("Sending message:" + ((msgString

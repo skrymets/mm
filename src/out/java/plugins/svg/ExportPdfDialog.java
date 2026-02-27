@@ -23,6 +23,7 @@ import javax.swing.JRadioButton;
 
 import freemind.controller.Controller;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 
 /**
  * @author Andy
@@ -185,7 +186,7 @@ public class ExportPdfDialog extends JDialog {
         initDefaults();
 
         // add escape action
-        freemind.main.Tools.addEscapeActionToDialog(this);
+        freemind.main.SwingUtils.addEscapeActionToDialog(this);
 
         // finish dialog
         this.setLocationRelativeTo(this.getParent());

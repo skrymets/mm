@@ -33,6 +33,7 @@ import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
@@ -364,7 +365,7 @@ public class NodeNoteRegistration implements HookRegistration,
                  * http://sourceforge.net/tracker/?func=detail&aid=2800933&group_id
                  * =7118&atid=107118
                  */
-                defaultFont = Tools.updateFontSize(defaultFont,
+                defaultFont = SwingUtils.updateFontSize(defaultFont,
                         this.getMindMapController().getView().getZoom(),
                         defaultFont.getSize());
             }

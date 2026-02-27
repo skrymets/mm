@@ -22,7 +22,6 @@ package freemind.modes;
 
 import freemind.controller.actions.Pattern;
 import freemind.extensions.HookFactory;
-import freemind.main.XMLParseException;
 import freemind.model.MindMap;
 import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
@@ -196,8 +195,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
      * @see freemind.modes.ExtendedMapFeedback#load(java.io.File)
      */
     @Override
-    public MapFeedback load(File pFile) throws
-            XMLParseException {
+    public MapFeedback load(File pFile) {
         return this;
     }
 

@@ -25,7 +25,6 @@ import freemind.controller.MapModuleManager;
 import freemind.controller.StructuredMenuHolder;
 import freemind.extensions.HookFactory;
 import freemind.main.FreeMindMain;
-import freemind.main.XMLParseException;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -56,7 +55,7 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      *             and the other modes.
      * @return returns the new mode controller created for this url.
      */
-    MapFeedback load(URL file) throws FileNotFoundException, IOException, XMLParseException, URISyntaxException;
+    MapFeedback load(URL file) throws FileNotFoundException, IOException, URISyntaxException;
 
     /**
      * This is the same as load(URL) for those points where you have a file

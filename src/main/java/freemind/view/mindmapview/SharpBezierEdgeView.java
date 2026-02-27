@@ -20,7 +20,7 @@
 
 package freemind.view.mindmapview;
 
-import freemind.main.Tools;
+import freemind.main.PointUtils;
 
 import java.awt.*;
 import java.awt.geom.CubicCurve2D;
@@ -107,7 +107,7 @@ public class SharpBezierEdgeView extends EdgeView {
                     deltaY = -deltaY;
                 }
             }
-            Tools.convertPointToAncestor(mainView, start, source);
+            PointUtils.convertPointToAncestor(mainView, start, source);
         } else {
             final int delta = getMap().getZoomed(getWidth() / 2 + 1);
             super.createStart();

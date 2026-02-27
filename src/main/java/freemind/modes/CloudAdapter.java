@@ -22,11 +22,12 @@ package freemind.modes;
 
 import freemind.controller.Controller;
 import freemind.main.FreeMind;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.ColorUtils;
 import freemind.model.LineAdapter;
 import freemind.model.MindMapNode;
 import freemind.preferences.FreemindPropertyListener;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 
@@ -100,15 +101,14 @@ public abstract class CloudAdapter extends LineAdapter implements MindMapCloud {
 
     private int iterativeLevel;
 
-    public XMLElement save() {
-        XMLElement cloud = new XMLElement();
-        cloud.setName("cloud");
+    public Element save(Document doc) {
+        Element cloud = doc.createElement("cloud");
 
         if (style != null) {
             cloud.setAttribute("STYLE", style);
         }
         if (color != null) {
-            cloud.setAttribute("COLOR", Tools.colorToXml(color));
+            cloud.setAttribute("COLOR", ColorUtils.colorToXml(color));
         }
         if (width != DEFAULT_WIDTH) {
             cloud.setAttribute("WIDTH", Integer.toString(width));
@@ -145,7 +145,7 @@ public abstract class CloudAdapter extends LineAdapter implements MindMapCloud {
         public void propertyChanged(String propertyName, String newValue,
                                     String oldValue) {
             if (propertyName.equals(FreeMind.RESOURCES_CLOUD_COLOR)) {
-                CloudAdapter.standardColor = Tools.xmlToColor(newValue);
+                CloudAdapter.standardColor = ColorUtils.xmlToColor(newValue);
             }
             if (propertyName.equals(RESOURCES_STANDARDCLOUDSTYLE)) {
                 CloudAdapter.standardStyle = newValue;

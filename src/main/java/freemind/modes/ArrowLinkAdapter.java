@@ -20,13 +20,15 @@
 
 package freemind.modes;
 
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.PointUtils;
+import freemind.main.ColorUtils;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 
@@ -108,9 +110,8 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArr
         return showControlPointsFlag;
     }
 
-    public XMLElement save() {
-        XMLElement arrowLink = new XMLElement();
-        arrowLink.setName("arrowlink");
+    public Element save(Document doc) {
+        Element arrowLink = doc.createElement("arrowlink");
 
         if (style != null) {
             arrowLink.setAttribute("STYLE", style);
@@ -119,7 +120,7 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArr
             arrowLink.setAttribute("ID", getUniqueId());
         }
         if (color != null) {
-            arrowLink.setAttribute("COLOR", Tools.colorToXml(color));
+            arrowLink.setAttribute("COLOR", ColorUtils.colorToXml(color));
         }
         if (getDestinationLabel() != null) {
             arrowLink.setAttribute("DESTINATION", getDestinationLabel());
@@ -128,10 +129,10 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArr
             arrowLink.setAttribute("REFERENCETEXT", getReferenceText());
         }
         if (getStartInclination() != null) {
-            arrowLink.setAttribute("STARTINCLINATION", Tools.PointToXml(getStartInclination()));
+            arrowLink.setAttribute("STARTINCLINATION", PointUtils.PointToXml(getStartInclination()));
         }
         if (getEndInclination() != null) {
-            arrowLink.setAttribute("ENDINCLINATION", Tools.PointToXml(getEndInclination()));
+            arrowLink.setAttribute("ENDINCLINATION", PointUtils.PointToXml(getEndInclination()));
         }
         if (getStartArrow() != null)
             arrowLink.setAttribute("STARTARROW", (getStartArrow()));

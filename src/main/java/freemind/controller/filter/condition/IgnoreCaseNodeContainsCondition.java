@@ -24,8 +24,10 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
-import freemind.main.XMLElement;
+import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 class IgnoreCaseNodeContainsCondition extends NodeCondition {
 
@@ -42,17 +44,16 @@ class IgnoreCaseNodeContainsCondition extends NodeCondition {
         return node.getText().toLowerCase().indexOf(value) > -1;
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
         super.saveAttributes(child);
         child.setAttribute(VALUE, value);
-        element.addChild(child);
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
+    static Condition load(Element element) {
         return new IgnoreCaseNodeContainsCondition(
-                element.getStringAttribute(VALUE));
+                FreeMindXml.getStringAttribute(element, VALUE));
     }
 
     protected String createDesctiption() {

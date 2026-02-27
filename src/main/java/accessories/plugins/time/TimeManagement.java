@@ -31,6 +31,7 @@ import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.common.plugins.ReminderHookBase;
@@ -50,6 +51,7 @@ import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -278,7 +280,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
             }
         });
         Action closeAction = new CloseAction();
-        Tools.addEscapeActionToDialog(mDialog, closeAction);
+        SwingUtils.addEscapeActionToDialog(mDialog, closeAction);
         /* Menu **/
         StructuredMenuHolder menuHolder = new StructuredMenuHolder();
         JMenuBar menu = new JMenuBar();
@@ -464,7 +466,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                     Long.toString(pRemindAt));
         }
         getMindMapController().addHook(node,
-                Tools.getSingletonList(node), REMINDER_HOOK_NAME,
+                Collections.singletonList(node), REMINDER_HOOK_NAME,
                 properties);
     }
 

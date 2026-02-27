@@ -211,7 +211,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private final FreeMindCommon freeMindCommon;
 
-    private static final boolean mFileHandlerError = false;
+    private static final boolean FILE_HANDLER_ERROR = false;
 
     /**
      * The main map's scroll pane.
@@ -551,7 +551,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         try {
             int scale = this.getIntProperty(SCALING_FACTOR_PROPERTY, 100);
             if (scale != 100) {
-                Tools.scaleAllFonts(scale / 100f);
+                SwingUtils.scaleAllFonts(scale / 100f);
                 Font SEGOE_UI_PLAIN_12 = new Font("Segoe UI", Font.PLAIN, 12 * scale / 100);
                 UIManager.put("MenuItem.acceleratorFont", SEGOE_UI_PLAIN_12);
                 UIManager.put("Menu.acceleratorFont", SEGOE_UI_PLAIN_12);
@@ -579,7 +579,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
             this.loadMaps(args, ctrl, feedBack);
 
-            Tools.waitForEventQueue();
+            SwingUtils.waitForEventQueue();
             feedBack.increase("FreeMind.progress.endStartup", null);
             // focus fix after startup.
             this.addWindowFocusListener(new WindowFocusListener() {
@@ -643,7 +643,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         if ("true".equals(userPreferences.getProperty(PROXY_USE_SETTINGS))) {
             if ("true".equals(userPreferences.getProperty(PROXY_IS_AUTHENTICATED))) {
                 Authenticator.setDefault(new ProxyAuthenticator(userPreferences
-                        .getProperty(PROXY_USER), Tools.decompress(userPreferences
+                        .getProperty(PROXY_USER), EncryptionUtils.decompress(userPreferences
                         .getProperty(PROXY_PASSWORD))));
             }
             System.setProperty("http.proxyHost", userPreferences.getProperty(PROXY_HOST));
@@ -829,7 +829,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
             if (fileArgument.toLowerCase().endsWith(FreeMindCommon.FREEMIND_FILE_EXTENSION)) {
 
-                if (!Tools.isAbsolutePath(fileArgument)) {
+                if (!new File(fileArgument).isAbsolute()) {
                     fileArgument = format("%s%s%s", System.getProperty("user.dir"), System.getProperty("file.separator"), fileArgument);
                 }
 

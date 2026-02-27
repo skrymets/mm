@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.EdgeColorFormatAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
@@ -63,7 +63,7 @@ public class EdgeColorActor extends XmlActorAdapter {
     public void act(XmlAction action) {
         if (action instanceof EdgeColorFormatAction) {
             EdgeColorFormatAction edgeAction = (EdgeColorFormatAction) action;
-            Color color = Tools.xmlToColor(edgeAction.getColor());
+            Color color = ColorUtils.xmlToColor(edgeAction.getColor());
             MindMapNode node = getNodeFromID(edgeAction.getNode());
             Color oldColor = ((EdgeAdapter) node.getEdge()).getRealColor();
             if (!Objects.equals(color, oldColor)) {
@@ -78,7 +78,7 @@ public class EdgeColorActor extends XmlActorAdapter {
         EdgeColorFormatAction edgeAction = new EdgeColorFormatAction();
         edgeAction.setNode(getNodeID(node));
         if (color != null) {
-            edgeAction.setColor(Tools.colorToXml(color));
+            edgeAction.setColor(ColorUtils.colorToXml(color));
         }
         return edgeAction;
     }

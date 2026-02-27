@@ -25,6 +25,7 @@ package freemind.preferences.layout;
 //{{{ Imports
 
 import freemind.main.Tools;
+import org.apache.commons.lang3.SystemUtils;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -359,7 +360,7 @@ public class KeyEventTranslator {
     private static final Map<Key, Key> transMap = new HashMap<>();
 
     static {
-        if (Tools.isMacOsX()) {
+        if (SystemUtils.IS_OS_MAC) {
             setModifierMapping(InputEvent.META_MASK, /* == C+ */
                     InputEvent.CTRL_MASK, /* == A+ */
                     /* M+ discarded by key event workaround! */

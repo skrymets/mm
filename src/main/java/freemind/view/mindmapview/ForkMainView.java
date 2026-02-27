@@ -20,6 +20,7 @@
 package freemind.view.mindmapview;
 
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapEdge;
 import freemind.model.MindMapNode;
@@ -48,7 +49,7 @@ class ForkMainView extends MainView {
         g.drawLine(0, getHeight() - edgeWidth / 2 - 1, getWidth(), getHeight()
                 - edgeWidth / 2 - 1);
         g.setColor(oldColor);
-        Tools.restoreAntialiasing(g, renderingHint);
+        SwingUtils.restoreAntialiasing(g, renderingHint);
         super.paint(g);
     }
 

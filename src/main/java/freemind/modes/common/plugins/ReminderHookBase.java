@@ -23,12 +23,13 @@
 package freemind.modes.common.plugins;
 
 import freemind.extensions.PermanentNodeHookAdapter;
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -76,7 +77,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
         super();
     }
 
-    public void loadFrom(XMLElement child) {
+    public void loadFrom(Element child) {
         super.loadFrom(child);
         HashMap<String, String> hash = loadNameValuePairs(child);
         if (hash.containsKey(REMINDUSERAT)) {
@@ -86,11 +87,11 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
 
     }
 
-    public void save(XMLElement xml) {
-        super.save(xml);
+    public void save(Document doc, Element xml) {
+        super.save(doc, xml);
         HashMap<String, Object> nameValuePairs = new HashMap<>();
         nameValuePairs.put(REMINDUSERAT, remindUserAt);
-        saveNameValuePairs(nameValuePairs, xml);
+        saveNameValuePairs(nameValuePairs, doc, xml);
     }
 
     public void shutdownMapHook() {

@@ -8,6 +8,8 @@ import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.modes.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import freemind.modes.attributes.Attribute;
 import freemind.preferences.FreemindPropertyListener;
 import lombok.Getter;
@@ -509,7 +511,8 @@ public abstract class NodeAdapter implements MindMapNode {
         try {
             // get XML from me.
             StringWriter writer = new StringWriter();
-            this.save(writer, this.getMap().getLinkRegistry(), true, false);
+            Document doc = FreeMindXml.newDocument();
+            this.save(writer, doc, this.getMap().getLinkRegistry(), true, false);
             String result = writer.toString();
             HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();
             MindMapNode copy = getMap().createNodeTreeFromXml(new StringReader(result), IDToTarget);
@@ -1031,18 +1034,11 @@ public abstract class NodeAdapter implements MindMapNode {
         return controller.getNodeID(this);
     }
 
-    public XMLElement save(Writer writer, MindMapLinkRegistry registry,
-                           boolean saveInvisible, boolean saveChildren) throws IOException {
+    public Element save(Writer writer, Document doc, MindMapLinkRegistry registry,
+                         boolean saveInvisible, boolean saveChildren) throws IOException {
         // pre save event to save all contents of the node:
         getMapFeedback().firePreSaveEvent(this);
-        XMLElement node = new XMLElement();
-
-        // if (!isNodeClassToBeSaved()) {
-        node.setName(XMLElementAdapter.XML_NODE);
-        // } else {
-        // node.setName(XMLElementAdapter.XML_NODE_CLASS_PREFIX
-        // + this.getClass().getName());
-        // }
+        Element node = doc.createElement(XMLElementAdapter.XML_NODE);
 
         /* fc, 12.6.2005: XML must not contain any zero characters. */
         String text = this.toString().replace('\0', ' ');
@@ -1050,46 +1046,40 @@ public abstract class NodeAdapter implements MindMapNode {
             node.setAttribute(XMLElementAdapter.XML_NODE_TEXT, text);
         } else {
             // save <content> tag:
-            XMLElement htmlElement = new XMLElement();
-            htmlElement.setName(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
+            Element htmlElement = doc.createElement(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
             htmlElement.setAttribute(XMLElementAdapter.XML_NODE_XHTML_TYPE_TAG,
                     XMLElementAdapter.XML_NODE_XHTML_TYPE_NODE);
-            htmlElement
-                    .setEncodedContent(convertToEncodedContent(getXmlText()));
-            node.addChild(htmlElement);
+            FreeMindXml.setEncodedContent(htmlElement, convertToEncodedContent(getXmlText()));
+            node.appendChild(htmlElement);
         }
         if (getXmlNoteText() != null) {
-            XMLElement htmlElement = new XMLElement();
-            htmlElement.setName(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
+            Element htmlElement = doc.createElement(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
             htmlElement.setAttribute(XMLElementAdapter.XML_NODE_XHTML_TYPE_TAG,
                     XMLElementAdapter.XML_NODE_XHTML_TYPE_NOTE);
-            htmlElement
-                    .setEncodedContent(convertToEncodedContent(getXmlNoteText()));
-            node.addChild(htmlElement);
-
+            FreeMindXml.setEncodedContent(htmlElement, convertToEncodedContent(getXmlNoteText()));
+            node.appendChild(htmlElement);
         }
         // save additional info:
         if (getAdditionalInfo() != null) {
             node.setAttribute(XMLElementAdapter.XML_NODE_ENCRYPTED_CONTENT,
                     getAdditionalInfo());
         }
-        // ((MindMapEdgeModel)getEdge()).save(doc,node);
 
-        XMLElement edge = (getEdge()).save();
+        Element edge = (getEdge()).save(doc);
         if (edge != null) {
-            node.addChild(edge);
+            node.appendChild(edge);
         }
 
         if (getCloud() != null) {
-            XMLElement cloud = (getCloud()).save();
-            node.addChild(cloud);
+            Element cloud = (getCloud()).save(doc);
+            node.appendChild(cloud);
         }
 
         List<MindMapLink> linkVector = registry.getAllLinksFromMe(this);
         for (MindMapLink mapLink : linkVector) {
             if (mapLink instanceof ArrowLinkAdapter) {
-                XMLElement arrowLinkElement = ((ArrowLinkAdapter) mapLink).save();
-                node.addChild(arrowLinkElement);
+                Element arrowLinkElement = ((ArrowLinkAdapter) mapLink).save(doc);
+                node.appendChild(arrowLinkElement);
             }
         }
 
@@ -1097,8 +1087,8 @@ public abstract class NodeAdapter implements MindMapNode {
         List<MindMapLink> targetVector = registry.getAllLinksIntoMe(this);
         for (MindMapLink mindMapLink : targetVector) {
             if (mindMapLink instanceof ArrowLinkAdapter) {
-                XMLElement arrowLinkTargetElement = ((ArrowLinkAdapter) mindMapLink).createArrowLinkTarget(registry).save();
-                node.addChild(arrowLinkTargetElement);
+                Element arrowLinkTargetElement = ((ArrowLinkAdapter) mindMapLink).createArrowLinkTarget(registry).save(doc);
+                node.appendChild(arrowLinkTargetElement);
             }
         }
 
@@ -1123,13 +1113,13 @@ public abstract class NodeAdapter implements MindMapNode {
             }
         }
         if (color != null) {
-            node.setAttribute("COLOR", Tools.colorToXml(getColor()));
+            node.setAttribute("COLOR", ColorUtils.colorToXml(getColor()));
         }
 
         // new background color.
         if (getBackgroundColor() != null) {
             node.setAttribute("BACKGROUND_COLOR",
-                    Tools.colorToXml(getBackgroundColor()));
+                    ColorUtils.colorToXml(getBackgroundColor()));
         }
 
         if (style != null) {
@@ -1166,8 +1156,7 @@ public abstract class NodeAdapter implements MindMapNode {
         }
         // font
         if (font != null) {
-            XMLElement fontElement = new XMLElement();
-            fontElement.setName("font");
+            Element fontElement = doc.createElement("font");
 
             if (font != null) {
                 fontElement.setAttribute("NAME", font.getFamily());
@@ -1188,43 +1177,39 @@ public abstract class NodeAdapter implements MindMapNode {
             if (isUnderlined()) {
                 fontElement.setAttribute("UNDERLINE", "true");
             }
-            node.addChild(fontElement);
+            node.appendChild(fontElement);
         }
         for (int i = 0; i < getIcons().size(); ++i) {
-            XMLElement iconElement = new XMLElement();
-            iconElement.setName("icon");
+            Element iconElement = doc.createElement("icon");
             iconElement.setAttribute("BUILTIN",
                     getIcons().get(i).getName());
-            node.addChild(iconElement);
+            node.appendChild(iconElement);
         }
 
         for (PermanentNodeHook permHook : getActivatedHooks()) {
             if (permHook instanceof DontSaveMarker) {
                 continue;
             }
-            XMLElement hookElement = new XMLElement();
-            hookElement.setName("hook");
-            permHook.save(hookElement);
-            node.addChild(hookElement);
+            Element hookElement = doc.createElement("hook");
+            permHook.save(doc, hookElement);
+            node.appendChild(hookElement);
         }
         if (mAttributeVector != null) {
             for (Attribute attribute : mAttributeVector) {
-                XMLElement attributeElement = new XMLElement();
-                attributeElement.setName(XMLElementAdapter.XML_NODE_ATTRIBUTE);
-                Attribute attr = attribute;
-                attributeElement.setAttribute("NAME", attr.getName());
-                attributeElement.setAttribute("VALUE", attr.getValue());
-                node.addChild(attributeElement);
+                Element attributeElement = doc.createElement(XMLElementAdapter.XML_NODE_ATTRIBUTE);
+                attributeElement.setAttribute("NAME", attribute.getName());
+                attributeElement.setAttribute("VALUE", attribute.getValue());
+                node.appendChild(attributeElement);
             }
         }
 
         if (saveChildren && childrenUnfolded().hasNext()) {
-            node.writeWithoutClosingTag(writer);
+            FreeMindXml.writeFreeMindElement(node, writer, false);
             // recursive
-            saveChildren(writer, registry, this, saveInvisible);
-            node.writeClosingTag(writer);
+            saveChildren(writer, doc, registry, this, saveInvisible);
+            FreeMindXml.writeFreeMindClosingTag(node, writer);
         } else {
-            node.write(writer);
+            FreeMindXml.writeFreeMindElement(node, writer, true);
         }
         return node;
     }
@@ -1234,14 +1219,14 @@ public abstract class NodeAdapter implements MindMapNode {
         return HtmlTools.unicodeToHTMLUnicodeEntity(replace, true);
     }
 
-    private void saveChildren(Writer writer, MindMapLinkRegistry registry,
+    private void saveChildren(Writer writer, Document doc, MindMapLinkRegistry registry,
                               NodeAdapter node, boolean saveHidden) throws IOException {
         for (ListIterator<NodeAdapter> e = node.childrenUnfolded(); e.hasNext(); ) {
             NodeAdapter child = e.next();
             if (saveHidden || child.isVisible())
-                child.save(writer, registry, saveHidden, true);
+                child.save(writer, doc, registry, saveHidden, true);
             else
-                saveChildren(writer, registry, child, saveHidden);
+                saveChildren(writer, doc, registry, child, saveHidden);
         }
     }
 

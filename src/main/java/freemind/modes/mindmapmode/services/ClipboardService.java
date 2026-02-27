@@ -19,10 +19,12 @@
 package freemind.modes.mindmapmode.services;
 
 import freemind.controller.MindMapNodesSelection;
+import freemind.main.FreeMindXml;
 import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
+import org.w3c.dom.Document;
 
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
@@ -52,7 +54,8 @@ public class ClipboardService {
     public Transferable copy(MindMapNode node, boolean saveInvisible) {
         StringWriter stringWriter = new StringWriter();
         try {
-            node.save(stringWriter, mapFeedback.getMap().getLinkRegistry(), saveInvisible, true);
+            Document doc = FreeMindXml.newDocument();
+            node.save(stringWriter, doc, mapFeedback.getMap().getLinkRegistry(), saveInvisible, true);
         } catch (IOException ignored) {
         }
         List<String> nodeList = Collections.singletonList(mapFeedback.getNodeID(node));

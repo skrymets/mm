@@ -25,15 +25,18 @@
  */
 package freemind.extensions;
 
-import freemind.main.XMLElement;
+import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.view.mindmapview.NodeView;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 import java.io.Writer;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * Simple, straight forward implementation of PermanentNodeHook
@@ -75,13 +78,13 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements Permane
         log.trace("onRemoveChild");
     }
 
-    public void save(XMLElement xml) {
+    public void save(Document doc, Element xml) {
         String saveName = getName();
         // saveName=saveName.replace(File.separatorChar, '/');
         xml.setAttribute("name", saveName);
     }
 
-    public void loadFrom(XMLElement child) {
+    public void loadFrom(Element child) {
     }
 
     public void onFocusNode(NodeView nodeView) {
@@ -99,30 +102,31 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements Permane
 
     public static final String PARAMETERS = "Parameters";
 
-    protected HashMap<String, String> loadNameValuePairs(XMLElement xml) {
+    protected HashMap<String, String> loadNameValuePairs(Element xml) {
         HashMap<String, String> result = new HashMap<>();
-        if (xml.getChildren().isEmpty()) {
+        List<Element> children = FreeMindXml.getChildElements(xml);
+        if (children.isEmpty()) {
             return result;
         }
-        XMLElement child = xml.getChildren().get(0);
-        if (child != null && PARAMETERS.equals(child.getName())) {
-            for (Iterator<String> i = child.enumerateAttributeNames(); i.hasNext(); ) {
-                String name = i.next();
-                result.put(name, child.getStringAttribute(name));
+        Element child = children.get(0);
+        if (PARAMETERS.equals(child.getTagName())) {
+            NamedNodeMap attrs = child.getAttributes();
+            for (int i = 0; i < attrs.getLength(); i++) {
+                String name = attrs.item(i).getNodeName();
+                result.put(name, child.getAttribute(name));
             }
         }
         return result;
     }
 
-    protected void saveNameValuePairs(HashMap<String, Object> nameValuePairs, XMLElement xml) {
+    protected void saveNameValuePairs(HashMap<String, Object> nameValuePairs, Document doc, Element xml) {
         if (!nameValuePairs.isEmpty()) {
-            XMLElement child = new XMLElement();
-            child.setName(PARAMETERS);
+            Element child = doc.createElement(PARAMETERS);
             for (String key : nameValuePairs.keySet()) {
                 Object value = nameValuePairs.get(key);
-                child.setAttribute(key, value);
+                child.setAttribute(key, value.toString());
             }
-            xml.addChild(child);
+            xml.appendChild(child);
         }
     }
 

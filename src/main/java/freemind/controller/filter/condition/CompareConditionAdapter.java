@@ -24,8 +24,7 @@
 package freemind.controller.filter.condition;
 
 import freemind.common.NamedObject;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import org.w3c.dom.Element;
 
 abstract class CompareConditionAdapter extends NodeCondition {
 
@@ -58,10 +57,10 @@ abstract class CompareConditionAdapter extends NodeCondition {
         }
     }
 
-    public void saveAttributes(XMLElement child) {
+    public void saveAttributes(Element child) {
         super.saveAttributes(child);
         child.setAttribute(VALUE, conditionValue);
-        child.setAttribute(IGNORE_CASE, Tools.BooleanToXml(ignoreCase));
+        child.setAttribute(IGNORE_CASE, String.valueOf(ignoreCase));
     }
 
     public String createDescription(String attribute, int comparationResult,

@@ -19,7 +19,7 @@
 
 package freemind.view.mindmapview;
 
-import freemind.main.Tools;
+import freemind.main.PointUtils;
 import freemind.model.MindMapNode;
 import lombok.extern.slf4j.Slf4j;
 
@@ -84,7 +84,7 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         setUp(c);
         layout();
         Point location2 = view.getLocation();
-        Tools.convertPointToAncestor(view, location2, view.getMap());
+        PointUtils.convertPointToAncestor(view, location2, view.getMap());
 //		log.info("Layouting node '" + view.getModel() + "' to " + location2);
         layoutOtherItems();
         shutDown();
@@ -376,7 +376,7 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
 
         Point location = movedView.getFoldingMarkPosition();
         JComponent content = movedView.getContent();
-        Tools.convertPointToAncestor(content, location, pFoldingComponent.getParent());
+        PointUtils.convertPointToAncestor(content, location, pFoldingComponent.getParent());
         pFoldingComponent.setCorrectedLocation(location);
 
         Dimension preferredSize = pFoldingComponent.getPreferredSize();

@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.NodeBackgroundColorFormatAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -54,14 +54,14 @@ public class NodeBackgroundColorActor extends XmlActorAdapter {
             MindMapNode node, Color color) {
         NodeBackgroundColorFormatAction nodeAction = new NodeBackgroundColorFormatAction();
         nodeAction.setNode(getNodeID(node));
-        nodeAction.setColor(Tools.colorToXml(color));
+        nodeAction.setColor(ColorUtils.colorToXml(color));
         return nodeAction;
     }
 
     public void act(XmlAction action) {
         if (action instanceof NodeBackgroundColorFormatAction) {
             NodeBackgroundColorFormatAction nodeColorAction = (NodeBackgroundColorFormatAction) action;
-            Color color = Tools.xmlToColor(nodeColorAction.getColor());
+            Color color = ColorUtils.xmlToColor(nodeColorAction.getColor());
             MindMapNode node = getNodeFromID(nodeColorAction.getNode());
             Color oldColor = node.getBackgroundColor();
             if (!Objects.equals(color, oldColor)) {

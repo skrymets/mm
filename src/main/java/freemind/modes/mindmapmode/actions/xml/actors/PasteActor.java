@@ -21,6 +21,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.MindMapNodesSelection;
+import org.apache.commons.lang3.StringUtils;
 import freemind.controller.actions.*;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
@@ -415,7 +416,7 @@ public class PasteActor extends XmlActorAdapter {
             File tempFile = File
                     .createTempFile(filePrefix.toString(), ".jpeg", parentFile);
             FileOutputStream fos = new FileOutputStream(tempFile);
-            fos.write(Tools.fromBase64(transferData.toString()));
+            fos.write(EncryptionUtils.fromBase64(transferData.toString()));
             fos.close();
 
             // Absolute, if not in the correct directory!
@@ -484,7 +485,7 @@ public class PasteActor extends XmlActorAdapter {
 
     public MindMapNodeModel pasteXMLWithoutRedisplay(String pasted,
                                                      MindMapNode target, boolean asSibling, boolean changeSide,
-                                                     boolean isLeft, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException {
+                                                     boolean isLeft, HashMap<String, NodeAdapter> pIDToTarget) {
         // Call nodeStructureChanged(target) after this function.
         log.trace("Pasting {} to {}", pasted, target);
         try {
@@ -708,7 +709,7 @@ public class PasteActor extends XmlActorAdapter {
                 trans.setTransferable(HtmlTools.makeValidXml(textFromClipboard));
                 if (pUndoAction != null && !amountAlreadySet) {
                     pUndoAction
-                            .setNodeAmount(Tools.countOccurrences(
+                            .setNodeAmount(StringUtils.countMatches(
                                     textFromClipboard,
                                     ControllerAdapter.NODESEPARATOR) + 1);
                     amountAlreadySet = true;
@@ -764,7 +765,7 @@ public class PasteActor extends XmlActorAdapter {
                     log.info("Starting to write clipboard image {}", image);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ImageIO.write(image, "jpg", baos);
-                    String base64String = Tools.toBase64(baos.toByteArray());
+                    String base64String = EncryptionUtils.toBase64(baos.toByteArray());
                     trans.setTransferableAsImage(base64String);
 
 

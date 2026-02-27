@@ -21,7 +21,6 @@
 package freemind.modes;
 
 import freemind.extensions.HookFactory;
-import freemind.main.XMLParseException;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
@@ -103,7 +102,7 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     /**
      * @param pFile loads a file into a new map.
      */
-    MapFeedback load(File pFile) throws XMLParseException;
+    MapFeedback load(File pFile);
 
     /**
      * Closes the actual map.

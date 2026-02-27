@@ -23,7 +23,7 @@
  */
 package freemind.controller.filter.condition;
 
-import freemind.main.XMLElement;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 
@@ -53,7 +53,7 @@ public abstract class NodeCondition implements Condition {
 
     abstract protected String createDesctiption();
 
-    public void saveAttributes(XMLElement child) {
+    public void saveAttributes(Element child) {
     }
 
 }

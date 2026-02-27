@@ -22,6 +22,7 @@ package freemind.modes.common.dialogs;
 
 import freemind.common.TextTranslator;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -107,7 +108,7 @@ public class EnterPasswordDialog extends JDialog {
             }
 
         });
-        Tools.addEscapeActionToDialog(this, new AbstractAction() {
+        SwingUtils.addEscapeActionToDialog(this, new AbstractAction() {
             public void actionPerformed(ActionEvent pE) {
                 cancelPressed();
             }

@@ -30,6 +30,7 @@ import java.net.SocketTimeoutException;
 import freemind.controller.actions.generated.instance.instance.CollaborationActionBase;
 import freemind.controller.actions.generated.instance.instance.CollaborationTransaction;
 import freemind.controller.actions.generated.instance.instance.XmlAction;
+import freemind.main.EncryptionUtils;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.MindMapController;
@@ -97,7 +98,7 @@ public abstract class CommunicationBase extends TerminateableThread {
             printCommand("Send", pCommand);
             final String marshalledText = Tools.marshall(pCommand);
             logger.fine(getName() + " :Sending " + marshalledText);
-            String text = Tools.compress(marshalledText);
+            String text = EncryptionUtils.compress(marshalledText);
             // split into pieces, as the writeUTF method is only able to send
             // 65535 bytes...
             int index = 0;
@@ -160,7 +161,7 @@ public abstract class CommunicationBase extends TerminateableThread {
                 mCurrentCommand.append(text);
                 final String textValue = mCurrentCommand.toString();
                 mCurrentCommand.setLength(0);
-                final String decompressedText = Tools.decompress(textValue);
+                final String decompressedText = EncryptionUtils.decompress(textValue);
                 logger.fine(getName() + " :Received " + decompressedText);
                 final CollaborationActionBase command = (CollaborationActionBase) Tools
                         .unMarshall(decompressedText);

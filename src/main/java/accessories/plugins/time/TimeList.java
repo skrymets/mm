@@ -31,7 +31,8 @@ import freemind.controller.actions.TimeWindowConfigurationStorage;
 import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.MindMapUtils;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.Mode;
@@ -147,7 +148,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         COLUMN_DATE = getResourceString("plugins/TimeList.xml_Date");
         COLUMN_NOTES = getResourceString("plugins/TimeList.xml_Notes");
 
-        mShowAllNodes = Tools.xmlToBoolean(getResourceString("show_all_nodes"));
+        mShowAllNodes = "true".equals(getResourceString("show_all_nodes"));
         mDialog = new JDialog(getController().getFrame().getJFrame(), false /* unmodal */);
         String windowTitle;
         if (mShowAllNodes) {
@@ -162,7 +163,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                 disposeDialog();
             }
         });
-        Tools.addEscapeActionToDialog(mDialog, new AbstractAction() {
+        SwingUtils.addEscapeActionToDialog(mDialog, new AbstractAction() {
             public void actionPerformed(ActionEvent arg0) {
                 disposeDialog();
             }
@@ -351,7 +352,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         // table selection listener to display the history of the selected nodes
         rowSM.addListSelectionListener(new ListSelectionListener() {
             String getNodeText(MindMapNode node) {
-                return Tools.getNodeTextHierarchy(node, getMindMapController());
+                return MindMapUtils.getNodeTextHierarchy(node, getMindMapController());
             }
 
             public void valueChanged(ListSelectionEvent e) {
@@ -412,7 +413,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         String resourceString = getResourceString(stringProperty);
         selectAction.putValue(AbstractAction.NAME,
                 resourceString.replaceAll("&", ""));
-        Tools.setLabelAndMnemonic(selectButton, resourceString);
+        SwingUtils.setLabelAndMnemonic(selectButton, resourceString);
     }
 
     protected void exportSelectedRowsAndClose() {

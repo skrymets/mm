@@ -25,6 +25,7 @@ import freemind.extensions.PermanentNodeHookSubstituteUnknown;
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.main.FreeMindMain;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -83,7 +84,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
         MapView mapView = new MapView(mMap, this);
         parent.add(mapView, BorderLayout.CENTER);
         mapView.setBounds(parent.getBounds());
-        Tools.waitForEventQueue();
+        SwingUtils.waitForEventQueue();
         mapView.addNotify();
         return mapView;
     }

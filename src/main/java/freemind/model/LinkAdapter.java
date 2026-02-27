@@ -22,7 +22,7 @@ package freemind.model;
 
 import freemind.controller.Controller;
 import freemind.main.FreeMind;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.modes.MapFeedback;
 import freemind.preferences.FreemindPropertyListener;
 import lombok.Getter;
@@ -97,7 +97,7 @@ public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
         public void propertyChanged(String propertyName, String newValue,
                                     String oldValue) {
             if (propertyName.equals(FreeMind.RESOURCES_LINK_COLOR)) {
-                LinkAdapter.standardColor = Tools.xmlToColor(newValue);
+                LinkAdapter.standardColor = ColorUtils.xmlToColor(newValue);
             }
             if (propertyName.equals(RESOURCES_STANDARDLINKSTYLE)) {
                 LinkAdapter.standardStyle = newValue;

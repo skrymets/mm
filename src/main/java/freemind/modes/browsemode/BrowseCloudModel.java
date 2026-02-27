@@ -20,10 +20,11 @@
 
 package freemind.modes.browsemode;
 
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.CloudAdapter;
 import freemind.modes.MapFeedback;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class BrowseCloudModel extends CloudAdapter {
 
@@ -31,7 +32,7 @@ public class BrowseCloudModel extends CloudAdapter {
         super(node, pMapFeedback);
     }
 
-    public XMLElement save() {
+    public Element save(Document doc) {
         return null;
     }
 

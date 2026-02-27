@@ -25,6 +25,7 @@ package freemind.view.mindmapview;
 
 import com.inet.jortho.SpellChecker;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.modes.ModeController;
 
 import javax.swing.*;
@@ -91,10 +92,10 @@ public class EditNodeDialog extends EditNodeBase {
             final JCheckBox enterConfirms = new JCheckBox("",
                     binOptionIsTrue("el__enter_confirms_by_default"));
 
-            Tools.setLabelAndMnemonic(okButton, getText("ok"));
-            Tools.setLabelAndMnemonic(cancelButton, getText("cancel"));
-            Tools.setLabelAndMnemonic(splitButton, getText("split"));
-            Tools.setLabelAndMnemonic(enterConfirms, getText("enter_confirms"));
+            SwingUtils.setLabelAndMnemonic(okButton, getText("ok"));
+            SwingUtils.setLabelAndMnemonic(cancelButton, getText("cancel"));
+            SwingUtils.setLabelAndMnemonic(splitButton, getText("split"));
+            SwingUtils.setLabelAndMnemonic(enterConfirms, getText("enter_confirms"));
 
             if (booleanHolderForConfirmState == null) {
                 booleanHolderForConfirmState = enterConfirms.isSelected();
@@ -177,7 +178,7 @@ public class EditNodeDialog extends EditNodeBase {
             });
 
             Font font = getNode().getTextFont();
-            font = Tools.updateFontSize(font, getView().getZoom(), font.getSize());
+            font = SwingUtils.updateFontSize(font, getView().getZoom(), font.getSize());
             textArea.setFont(font);
 
             final Color nodeTextColor = getNode().getTextColor();
@@ -258,7 +259,7 @@ public class EditNodeDialog extends EditNodeBase {
 
         // set position
         getView().scrollNodeToVisible(getNode(), 0);
-        Tools.setDialogLocationRelativeTo(dialog, getNode());
+        SwingUtils.setDialogLocationRelativeTo(dialog, getNode());
         dialog.setVisible(true);
     }
 }

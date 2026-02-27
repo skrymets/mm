@@ -23,7 +23,6 @@ package freemind.modes.filemode;
 import freemind.controller.MenuBar;
 import freemind.controller.StructuredMenuHolder;
 import freemind.extensions.HookFactory;
-import freemind.main.XMLParseException;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -157,8 +156,7 @@ public class FileController extends ViewControllerAdapter {
      * @see freemind.modes.ControllerAdapter#loadInternally(java.net.URL, freemind.model.MapAdapter)
      */
     @Override
-    protected void loadInternally(URL pUrl, MapAdapter pModel)
-            throws XMLParseException {
+    protected void loadInternally(URL pUrl, MapAdapter pModel) {
         // empty on purpose.
     }
 

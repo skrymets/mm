@@ -23,7 +23,8 @@
  */
 package freemind.controller;
 
-import freemind.main.Tools;
+import org.apache.commons.lang3.SystemUtils;
+import freemind.main.SwingUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,7 +47,7 @@ public class FreeMindToolBar extends JToolBar {
 
     public JButton add(Action action) {
         final Object actionName = action.getValue(Action.NAME);
-        action.putValue(Action.SHORT_DESCRIPTION, Tools.removeMnemonic(actionName.toString()));
+        action.putValue(Action.SHORT_DESCRIPTION, SwingUtils.removeMnemonic(actionName.toString()));
         JButton returnValue = super.add(action);
         returnValue.setName(actionName.toString());
         returnValue.setText("");
@@ -54,7 +55,7 @@ public class FreeMindToolBar extends JToolBar {
         returnValue.setFocusable(false);
 
         // fc, 20.6.2004: try to make the toolbar looking good under Mac OS X.
-        if (Tools.isMacOsX()) {
+        if (SystemUtils.IS_OS_MAC) {
             returnValue.setBorderPainted(false);
         }
         returnValue.setContentAreaFilled(false);

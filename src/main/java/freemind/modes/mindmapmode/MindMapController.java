@@ -18,6 +18,10 @@
  */
 package freemind.modes.mindmapmode;
 
+import freemind.main.SwingUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.SystemUtils;
+
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.common.XmlBindingTools;
 import freemind.controller.MenuBar;
@@ -299,6 +303,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     public FindAction find = null;
     public FindNextAction findNext = null;
+    public SearchAction searchAllMaps = null;
     public NodeHookAction nodeHookAction = null;
     public RevertAction revertAction = null;
     public SelectBranchAction selectBranchAction = null;
@@ -445,6 +450,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         importFolderStructure = new ImportFolderStructureAction(this);
         find = new FindAction(this);
         findNext = new FindNextAction(this, find);
+        searchAllMaps = new SearchAction(this);
         nodeHookAction = new NodeHookAction("no_title", this);
         revertAction = new RevertAction(this);
         selectBranchAction = new SelectBranchAction(this);
@@ -512,7 +518,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return undo.isUndoAction() || redo.isUndoAction();
     }
 
-    protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, XMLParseException, IOException {
+    protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, IOException {
         log.info("Loading file: {}", url.toString());
         File file = Tools.urlToFile(url);
         if (!file.exists()) {
@@ -548,11 +554,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         }
     }
 
-    MindMapNode loadTree(final File pFile) throws XMLParseException, IOException {
+    MindMapNode loadTree(final File pFile) throws IOException {
         return loadTree(new Tools.FileReaderCreator(pFile));
     }
 
-    public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator) throws XMLParseException, IOException {
+    public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator) throws IOException {
         return getMap().loadTree(pReaderCreator, () -> {
             int showResult = new OptionalDontShowMeAgainDialog(getFrame().getJFrame(), getSelectedView(), "really_convert_to_current_version2", "confirmation", MindMapController.this, new OptionalDontShowMeAgainDialog.StandardPropertyHandler(getController(), FreeMind.RESOURCES_CONVERT_TO_CURRENT_VERSION), OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED).show().getResult();
             return (showResult == JOptionPane.OK_OPTION);
@@ -896,7 +902,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
                 }
                 String keystroke = action.getKeyRef();
                 try {
-                    Action theAction = (Action) Tools.getField(new Object[]{this, getController()}, field);
+                    Action theAction = (Action) MindMapUtils.getField(new Object[]{this, getController()}, field);
                     if (theAction == null) {
                         log.warn("Menu action field '{}' resolved to null", field);
                         continue;
@@ -1081,6 +1087,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         strikethrough.setEnabled(enabled);
         find.setEnabled(enabled);
         findNext.setEnabled(enabled);
+        searchAllMaps.setEnabled(enabled);
         addArrowLinkAction.setEnabled(enabled);
         addLocalLinkAction.setEnabled(enabled);
         nodeColorBlend.setEnabled(enabled);
@@ -1296,7 +1303,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             if (f.isDirectory()) {
                 return true;
             }
-            String extension = Tools.getExtension(f.getName());
+            String extension = FilenameUtils.getExtension(f.getName()).toLowerCase();
             if (extension != null) {
                 return extension.equals(FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT);
             }
@@ -1865,7 +1872,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         boolean extend = e.isControlDown();
         // Fixes Cannot select multiple single nodes *
         // https://sourceforge.net/tracker/?func=detail&atid=107118&aid=1675829&group_id=7118
-        if (Tools.isMacOsX()) {
+        if (SystemUtils.IS_OS_MAC) {
             extend |= e.isMetaDown();
         }
         boolean range = e.isShiftDown();
@@ -2025,7 +2032,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     public boolean mapSourceChanged(MindMap pMap) throws Exception {
         // ask the user, if he wants to reload the map.
         MapSourceChangeDialog runnable = new MapSourceChangeDialog();
-        Tools.invokeAndWait(runnable);
+        SwingUtils.invokeAndWait(runnable);
         return runnable.getReturnValue();
     }
 

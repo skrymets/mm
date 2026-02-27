@@ -40,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 
@@ -142,7 +143,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
                 controller.nodeChanged(focussed);
                 log.trace("layout done.");
                 controller.select(focussed,
-                        Tools.getSingletonList(focussed));
+                        Collections.singletonList(focussed));
                 controller.centerNode(focussed);
                 controller.obtainFocusForSelected();
             }

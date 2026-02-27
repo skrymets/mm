@@ -24,15 +24,14 @@ import freemind.controller.filter.DefaultFilter;
 import freemind.controller.filter.Filter;
 import freemind.controller.filter.condition.NoFilteringCondition;
 import freemind.controller.filter.util.SortedMapListModel;
-import freemind.main.FreeMind;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
+import freemind.main.*;
 import freemind.modes.MapFeedback;
 import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.XMLElementAdapter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
@@ -514,9 +513,10 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      * freshly created nodes.
      */
     @Override
-    public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException, IOException {
+    public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
+        Document doc = FreeMindXml.parse(pReader);
         XMLElementAdapter xmlAdapter = new XMLElementAdapter(mMapFeedback, new ArrayList<>(), pIDToTarget);
-        xmlAdapter.parseFromReader(pReader);
+        xmlAdapter.buildFromDom(doc.getDocumentElement());
         xmlAdapter.processUnfinishedLinks(getLinkRegistry());
         MindMapNode node = xmlAdapter.getMapChild();
         return node;
@@ -538,7 +538,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 
     @Override
     public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator,
-                                AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws XMLParseException, IOException {
+                                AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws IOException {
         int versionInfoLength;
         versionInfoLength = EXPECTED_START_STRINGS[0].length();
         // reading the start of the file:
@@ -559,7 +559,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             }
         }
         if (reader == null) {
-            if (!Tools.isHeadless()) {
+            if (!SwingUtils.isHeadless()) {
                 boolean showResult = pAskUserBeforeUpdateCallback.askUserForUpdate();
                 if (!showResult) {
                     throw new IllegalArgumentException(

@@ -23,6 +23,7 @@
 package freemind.main;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SystemUtils;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -81,7 +82,7 @@ public class EditServer extends Thread {
             // access to user home dirs, people can't see your
             // port file (and hence send arbitriary BeanShell code
             // your way. Nasty.)
-            if (Tools.isUnix()) {
+            if (SystemUtils.IS_OS_UNIX) {
                 new File(portFile).createNewFile();
                 Tools.setPermissions(portFile, 0600);
             }

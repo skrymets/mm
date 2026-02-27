@@ -68,6 +68,7 @@ import freemind.controller.actions.generated.instance.instance.ScriptEditorWindo
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 
 /**
  * @author foltin TODO:
@@ -331,7 +332,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
                 disposeDialog(true);
             }
         });
-        Tools.addEscapeActionToDialog(this, new AbstractAction() {
+        SwingUtils.addEscapeActionToDialog(this, new AbstractAction() {
             public void actionPerformed(ActionEvent arg0) {
                 disposeDialog(true);
             }
@@ -394,7 +395,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu();
         menu.addMenuListener(this);
-        Tools.setLabelAndMnemonic(menu,
+        SwingUtils.setLabelAndMnemonic(menu,
                 pFrame.getResourceString("plugins/ScriptEditor.menu_actions"));
         if (pHasNewScriptFunctionality) {
             addAction(
@@ -439,7 +440,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
     private void addAction(JMenu menu, AbstractAction action) {
         mMenuActions.add(action);
         JMenuItem item = menu.add(action);
-        Tools.setLabelAndMnemonic(item,
+        SwingUtils.setLabelAndMnemonic(item,
                 (String) action.getValue(AbstractAction.NAME));
         item.setIcon(new BlindIcon(StructuredMenuHolder.ICON_SIZE));
     }

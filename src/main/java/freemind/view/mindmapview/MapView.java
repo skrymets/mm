@@ -19,6 +19,8 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.SwingUtils;
+
 import freemind.controller.Controller;
 import freemind.controller.NodeKeyListener;
 import freemind.controller.NodeMotionListener;
@@ -267,14 +269,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         if (standardNodeTextColor == null) {
             try {
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_BACKGROUND_COLOR);
-                standardMapBackgroundColor = Tools.xmlToColor(stdcolor);
+                standardMapBackgroundColor = ColorUtils.xmlToColor(stdcolor);
             } catch (Exception ex) {
                 log.error(ex.getLocalizedMessage(), ex);
                 standardMapBackgroundColor = Color.WHITE;
             }
             try {
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_NODE_TEXT_COLOR);
-                standardNodeTextColor = Tools.xmlToColor(stdcolor);
+                standardNodeTextColor = ColorUtils.xmlToColor(stdcolor);
             } catch (Exception ex) {
                 log.error(ex.getLocalizedMessage(), ex);
                 standardSelectColor = Color.WHITE;
@@ -282,7 +284,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             // initialize the selectedColor:
             try {
                 String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_SELECTED_NODE_COLOR);
-                standardSelectColor = Tools.xmlToColor(stdcolor);
+                standardSelectColor = ColorUtils.xmlToColor(stdcolor);
             } catch (Exception ex) {
                 log.error(ex.getLocalizedMessage(), ex);
                 standardSelectColor = Color.BLUE.darker();
@@ -291,14 +293,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             // initialize the selectedTextColor:
             try {
                 String stdtextcolor = mFeedback.getProperty(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR);
-                standardSelectRectangleColor = Tools.xmlToColor(stdtextcolor);
+                standardSelectRectangleColor = ColorUtils.xmlToColor(stdtextcolor);
             } catch (Exception ex) {
                 log.error(ex.getLocalizedMessage(), ex);
                 standardSelectRectangleColor = Color.WHITE;
             }
             try {
                 String drawCircle = mFeedback.getProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION);
-                standardDrawRectangleForSelection = Tools.xmlToBoolean(drawCircle);
+                standardDrawRectangleForSelection = "true".equals(drawCircle);
             } catch (Exception ex) {
                 log.error(ex.getLocalizedMessage(), ex);
                 standardDrawRectangleForSelection = false;
@@ -306,7 +308,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
             try {
                 String printOnWhite = mFeedback.getProperty(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND);
-                printOnWhiteBackground = Tools.xmlToBoolean(printOnWhite);
+                printOnWhiteBackground = "true".equals(printOnWhite);
             } catch (Exception ex) {
                 log.error(ex.getLocalizedMessage(), ex);
                 printOnWhiteBackground = true;
@@ -385,27 +387,27 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
             switch (propertyName) {
                 case FreeMind.RESOURCES_NODE_TEXT_COLOR:
-                    standardNodeTextColor = Tools.xmlToColor(newValue);
+                    standardNodeTextColor = ColorUtils.xmlToColor(newValue);
                     MapView.this.getRoot().updateAll();
                     break;
                 case FreeMind.RESOURCES_BACKGROUND_COLOR:
-                    standardMapBackgroundColor = Tools.xmlToColor(newValue);
+                    standardMapBackgroundColor = ColorUtils.xmlToColor(newValue);
                     MapView.this.setBackground(standardMapBackgroundColor);
                     break;
                 case FreeMind.RESOURCES_SELECTED_NODE_COLOR:
-                    standardSelectColor = Tools.xmlToColor(newValue);
+                    standardSelectColor = ColorUtils.xmlToColor(newValue);
                     MapView.this.repaintSelecteds();
                     break;
                 case FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR:
-                    standardSelectRectangleColor = Tools.xmlToColor(newValue);
+                    standardSelectRectangleColor = ColorUtils.xmlToColor(newValue);
                     MapView.this.repaintSelecteds();
                     break;
                 case FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION:
-                    standardDrawRectangleForSelection = Tools.xmlToBoolean(newValue);
+                    standardDrawRectangleForSelection = "true".equals(newValue);
                     MapView.this.repaintSelecteds();
                     break;
                 case FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND:
-                    printOnWhiteBackground = Tools.xmlToBoolean(newValue);
+                    printOnWhiteBackground = "true".equals(newValue);
                     break;
                 case FreeMindCommon.RESOURCE_ANTIALIAS:
                     if ("antialias_none".equals(newValue)) {
@@ -514,7 +516,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
      */
     public void centerNode(final NodeView node) {
         // FIXME: Correct the resize map behaviour.
-        Tools.waitForEventQueue();
+        SwingUtils.waitForEventQueue();
         if (!isValid()) {
             mCenterNodeTimer.schedule(new CheckLaterForCenterNodeTask(node), 100);
             return;
@@ -798,7 +800,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
     private int getMainViewY(NodeView node) {
         Point newSelectedLocation = new Point();
-        Tools.convertPointToAncestor(node.getMainView(), newSelectedLocation, this);
+        PointUtils.convertPointToAncestor(node.getMainView(), newSelectedLocation, this);
         final int newY = newSelectedLocation.y;
         return newY;
     }
@@ -1075,7 +1077,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 }
             }
             view.getContent().getLocation(point);
-            Tools.convertPointToAncestor(view, point, this);
+            PointUtils.convertPointToAncestor(view, point, this);
             pointNodePairs.add(new Pair(Integer.valueOf(point.y), node));
         }
         // do the sorting:
@@ -1146,7 +1148,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         Point oldRootContentLocation = rootContentLocation;
         final NodeView root = getRoot();
         Point newRootContentLocation = root.getContent().getLocation();
-        Tools.convertPointToAncestor(getRoot(), newRootContentLocation, getParent());
+        PointUtils.convertPointToAncestor(getRoot(), newRootContentLocation, getParent());
 
         final int deltaX = newRootContentLocation.x - oldRootContentLocation.x;
         final int deltaY = newRootContentLocation.y - oldRootContentLocation.y;
@@ -1187,7 +1189,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         long startMilli = System.currentTimeMillis();
         if (isValid()) {
             getRoot().getContent().getLocation(rootContentLocation);
-            Tools.convertPointToAncestor(getRoot(), rootContentLocation, getParent());
+            PointUtils.convertPointToAncestor(getRoot(), rootContentLocation, getParent());
         }
         final Graphics2D g2 = (Graphics2D) g;
         final Object renderingHint = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
@@ -1227,7 +1229,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         Graphics2D graphics2d = (Graphics2D) graphics;
         Object renderingHint = setEdgesRenderingHint(graphics2d);
         paintLinks(rootView, graphics2d, labels, null);
-        Tools.restoreAntialiasing(graphics2d, renderingHint);
+        SwingUtils.restoreAntialiasing(graphics2d, renderingHint);
         paintSelecteds(graphics2d);
     }
 
@@ -1248,7 +1250,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             NodeView selected = i.next();
             paintSelected(g, selected);
         }
-        Tools.restoreAntialiasing(g, renderingHint);
+        SwingUtils.restoreAntialiasing(g, renderingHint);
         g.setColor(c);
         g.setStroke(s);
     }
@@ -1257,7 +1259,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         final int arcWidth = 4;
         final JComponent content = selected.getContent();
         Point contentLocation = new Point();
-        Tools.convertPointToAncestor(content, contentLocation, this);
+        PointUtils.convertPointToAncestor(content, contentLocation, this);
         g.drawRoundRect(contentLocation.x - arcWidth, contentLocation.y
                         - arcWidth, content.getWidth() + 2 * arcWidth,
                 content.getHeight() + 2 * arcWidth, 15, 15);
@@ -1602,7 +1604,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
     public Point getNodeContentLocation(NodeView nodeView) {
         Point contentXY = new Point(0, 0);
-        Tools.convertPointToAncestor(nodeView.getContent(), contentXY, this);
+        PointUtils.convertPointToAncestor(nodeView.getContent(), contentXY, this);
         return contentXY;
     }
 

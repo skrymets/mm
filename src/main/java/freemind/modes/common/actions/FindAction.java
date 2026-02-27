@@ -23,6 +23,7 @@ import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.FreemindAction;
@@ -129,7 +130,7 @@ public class FindAction extends FreemindAction {
                 close(JOptionPane.OK_OPTION);
             }
         };
-        Tools.addEscapeActionToDialog(mDialog, cancelAction);
+        SwingUtils.addEscapeActionToDialog(mDialog, cancelAction);
         mDialog.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent pE) {
                 close(JOptionPane.CANCEL_OPTION);
@@ -146,19 +147,19 @@ public class FindAction extends FreemindAction {
         contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         mFindInNotesTooBox = new JCheckBox(controller.getText("ExtendedFindDialog.find_search_in_notes_too"));
         mFindInNotesTooBox.setSelected(Resources.getInstance().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
-        Tools.setLabelAndMnemonic(mFindInNotesTooBox, null);
+        SwingUtils.setLabelAndMnemonic(mFindInNotesTooBox, null);
         contentPane.add(mFindInNotesTooBox, new GridBagConstraints(0, 2, 3, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         JButton okButton = new JButton(controller.getText("ExtendedFindDialog.ok"));
-        Tools.setLabelAndMnemonic(okButton, null);
+        SwingUtils.setLabelAndMnemonic(okButton, null);
         okButton.addActionListener(okAction);
         contentPane.add(okButton, new GridBagConstraints(2, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         JButton cancelButton = new JButton(controller.getText("ExtendedFindDialog.cancel"));
-        Tools.setLabelAndMnemonic(cancelButton, null);
+        SwingUtils.setLabelAndMnemonic(cancelButton, null);
         cancelButton.addActionListener(cancelAction);
         contentPane.add(cancelButton, new GridBagConstraints(3, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         mDialog.getRootPane().setDefaultButton(okButton);
         mDialog.pack();
-        Tools.setDialogLocationRelativeTo(mDialog, controller.getSelectedView());
+        SwingUtils.setDialogLocationRelativeTo(mDialog, controller.getSelectedView());
         mDialog.setVisible(true);
     }
 

@@ -22,8 +22,7 @@
 
 package freemind.modes.browsemode;
 
-import freemind.main.Tools.SingleDesEncrypter;
-import freemind.main.XMLParseException;
+import freemind.main.EncryptionUtils.SingleDesEncrypter;
 import freemind.model.MindMap;
 import freemind.model.NodeAdapter;
 import freemind.modes.MapFeedback;
@@ -115,7 +114,7 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
                 //mMapFeedback.nodeStructureChanged(this);
                 isDecrypted = true;
                 updateIcon();
-            } catch (XMLParseException | IOException e) {
+            } catch (RuntimeException | IOException e) {
                 log.error(e.getLocalizedMessage(), e);
                 return;
             }

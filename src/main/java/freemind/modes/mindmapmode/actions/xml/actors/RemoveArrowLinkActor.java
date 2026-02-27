@@ -23,7 +23,8 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 import freemind.controller.actions.AddArrowLinkXmlAction;
 import freemind.controller.actions.RemoveArrowLinkXmlAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.PointUtils;
+import freemind.main.ColorUtils;
 import freemind.model.MindMapLink;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapArrowLink;
@@ -85,14 +86,14 @@ public class RemoveArrowLinkActor extends XmlActorAdapter {
         action.setNode(getNodeID(link.getSource()));
         action.setDestination(getNodeID(link.getTarget()));
         action.setNewId(link.getUniqueId());
-        action.setColor(Tools.colorToXml(link.getColor()));
+        action.setColor(ColorUtils.colorToXml(link.getColor()));
         if (link instanceof MindMapArrowLink) {
             MindMapArrowLink arrowLink = (MindMapArrowLink) link;
             action.setEndArrow(arrowLink.getEndArrow());
-            action.setEndInclination(Tools.PointToXml(arrowLink
+            action.setEndInclination(PointUtils.PointToXml(arrowLink
                     .getEndInclination()));
             action.setStartArrow(arrowLink.getStartArrow());
-            action.setStartInclination(Tools.PointToXml(arrowLink
+            action.setStartInclination(PointUtils.PointToXml(arrowLink
                     .getStartInclination()));
         }
         return action;

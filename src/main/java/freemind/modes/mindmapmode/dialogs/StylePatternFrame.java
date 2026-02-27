@@ -27,7 +27,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import freemind.common.*;
 import freemind.controller.actions.*;
 import freemind.main.FreeMind;
-import freemind.main.Tools;
+import freemind.main.MindMapUtils;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
@@ -529,7 +529,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     private String transformEdgeWidth(String pEdgeWidth) {
         if (pEdgeWidth == null)
             return null;
-        int edgeWidth = Tools.edgeWidthStringToInt(pEdgeWidth);
+        int edgeWidth = MindMapUtils.edgeWidthStringToInt(pEdgeWidth);
         HashMap<String, Integer> transformator = getEdgeWidthTransformation();
         for (String widthString : transformator.keySet()) {
             Integer width = transformator.get(widthString);

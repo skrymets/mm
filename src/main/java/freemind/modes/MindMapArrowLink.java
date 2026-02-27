@@ -20,9 +20,10 @@
 
 package freemind.modes;
 
-import freemind.main.XMLElement;
 import freemind.model.MindMapLink;
 import freemind.view.mindmapview.MapView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 
@@ -67,6 +68,6 @@ public interface MindMapArrowLink extends MindMapLink {
 
     boolean getShowControlPointsFlag();
 
-    XMLElement save();
+    Element save(Document doc);
 
 }

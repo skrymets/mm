@@ -28,6 +28,8 @@ import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
+import freemind.main.ColorUtils;
 import freemind.modes.ModeController;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -63,14 +65,14 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             super(base);
             createEditorPanel();
             getContentPane().add(htmlEditorPanel, BorderLayout.CENTER);
-            Tools.addEscapeActionToDialog(this, new CancelAction());
+            SwingUtils.addEscapeActionToDialog(this, new CancelAction());
             final JButton okButton = new JButton();
             final JButton cancelButton = new JButton();
             final JButton splitButton = new JButton();
 
-            Tools.setLabelAndMnemonic(okButton, base.getText("ok"));
-            Tools.setLabelAndMnemonic(cancelButton, base.getText("cancel"));
-            Tools.setLabelAndMnemonic(splitButton, base.getText("split"));
+            SwingUtils.setLabelAndMnemonic(okButton, base.getText("ok"));
+            SwingUtils.setLabelAndMnemonic(cancelButton, base.getText("cancel"));
+            SwingUtils.setLabelAndMnemonic(splitButton, base.getText("split"));
 
             okButton.addActionListener(e -> submit());
 
@@ -78,9 +80,9 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 
             splitButton.addActionListener(e -> split());
 
-            Tools.addKeyActionToDialog(this, new SubmitAction(), "alt ENTER",
+            SwingUtils.addKeyActionToDialog(this, new SubmitAction(), "alt ENTER",
                     "submit");
-            Tools.addKeyActionToDialog(this, new SubmitAction(),
+            SwingUtils.addKeyActionToDialog(this, new SubmitAction(),
                     "control ENTER", "submit");
             JPanel buttonPane = new JPanel();
             buttonPane.add(okButton);
@@ -220,7 +222,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
                  * http://sourceforge.net/tracker/?func=detail&aid=2800933&group_id
                  * =7118&atid=107118
                  */
-                font = Tools.updateFontSize(font, this.getView().getZoom(),
+                font = SwingUtils.updateFontSize(font, this.getView().getZoom(),
                         font.getSize());
             }
             final Color nodeTextBackground = node.getTextBackground();
@@ -235,7 +237,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
                 rule += "font-weight: bold; ";
             }
             final Color nodeTextColor = node.getTextColor();
-            rule += "color: " + Tools.colorToXml(nodeTextColor) + ";";
+            rule += "color: " + ColorUtils.colorToXml(nodeTextColor) + ";";
             rule += "}\n";
             rule += "p {";
             rule += "margin-top:0;";
@@ -269,7 +271,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 
             htmlEditorWindow.pack();
 
-            Tools.setDialogLocationRelativeTo(htmlEditorWindow, node);
+            SwingUtils.setDialogLocationRelativeTo(htmlEditorWindow, node);
 
             String content = node.getModel().toString();
             if (!HtmlTools.isHtmlNode(content)) {

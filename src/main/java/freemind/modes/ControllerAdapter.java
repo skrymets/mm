@@ -19,6 +19,9 @@
 
 package freemind.modes;
 
+import freemind.main.SwingUtils;
+import org.apache.commons.io.FilenameUtils;
+
 import freemind.controller.*;
 import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.controller.actions.NodeListMember;
@@ -346,7 +349,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * functionality in your MapModel (implements MindMap)
      */
     public MapFeedback load(URL file) throws
-            IOException, XMLParseException, URISyntaxException {
+            IOException, URISyntaxException {
         String mapDisplayName = getController().getMapModuleManager()
                 .checkIfFileIsAlreadyOpened(file);
         if (null != mapDisplayName) {
@@ -367,16 +370,16 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     /**
      *
      */
-    abstract protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, XMLParseException, IOException;
+    abstract protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, IOException;
 
     /**
      * You may decide to overload this or take the default and implement the
      * functionality in your MapModel (implements MindMap)
      */
-    public MapFeedback load(File file) throws XMLParseException {
+    public MapFeedback load(File file) {
         try {
             return load(Tools.fileToUrl(file));
-        } catch (XMLParseException | URISyntaxException | IOException e) {
+        } catch (URISyntaxException | IOException e) {
             log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);
         }
@@ -423,7 +426,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         try {
             log.info("Trying to open {}", relative);
             URL absolute = null;
-            if (Tools.isAbsolutePath(relative)) {
+            if (new File(relative).isAbsolute()) {
                 // Protocol can be identified by rexep pattern "[a-zA-Z]://.*".
                 // This should distinguish a protocol path from a file path on
                 // most platforms.
@@ -473,7 +476,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 // remove ref from absolute:
                 absolute = Tools.getURLWithoutReference(absolute);
             }
-            String extension = Tools.getExtension(absolute.toString());
+            String extension = FilenameUtils.getExtension(absolute.toString()).toLowerCase();
             if ((extension != null)
                     && extension
                     .equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) { // ----
@@ -792,7 +795,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             f = chooser.getSelectedFile();
             lastCurrentDir = f.getParentFile();
             // Force the extension to be .mm
-            String ext = Tools.getExtension(f.getName());
+            String ext = FilenameUtils.getExtension(f.getName()).toLowerCase();
             if (!ext.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) {
                 f = new File(f.getParent(), f.getName()
                         + freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION);
@@ -846,7 +849,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * Keywords: suggest file name.
      */
     private String getFileNameProposal() {
-        return Tools.getFileNameProposal(getMap().getRootNode());
+        return MindMapUtils.getFileNameProposal(getMap().getRootNode());
     }
 
     /**
@@ -858,7 +861,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         if (!force && !getModel().isSaved()) {
             String text = getText("save_unsaved") + "\n"
                     + mapModuleManager.getMapModule().toString();
-            String title = Tools.removeMnemonic(getText("save"));
+            String title = SwingUtils.removeMnemonic(getText("save"));
             int returnVal = JOptionPane.showOptionDialog(getFrame()
                             .getContentPane(), text, title,
                     JOptionPane.YES_NO_CANCEL_OPTION,
@@ -1112,7 +1115,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     public class SaveAction extends FreemindAction {
 
         public SaveAction() {
-            super(Tools.removeMnemonic(getText("save")), freemind.view.ImageFactory.getInstance().createIcon(
+            super(SwingUtils.removeMnemonic(getText("save")), freemind.view.ImageFactory.getInstance().createIcon(
                     getResource("images/filesave.png")), ControllerAdapter.this);
         }
 

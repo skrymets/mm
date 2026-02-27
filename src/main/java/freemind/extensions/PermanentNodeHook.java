@@ -25,9 +25,10 @@
  */
 package freemind.extensions;
 
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.view.mindmapview.NodeView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.io.Writer;
 
@@ -103,12 +104,12 @@ public interface PermanentNodeHook extends NodeHook {
     /**
      *
      */
-    void save(XMLElement hookElement);
+    void save(Document doc, Element hookElement);
 
     /**
      *
      */
-    void loadFrom(XMLElement child);
+    void loadFrom(Element child);
 
     /**
      * Can be used to adjust some things after a paste action. (Currently it is used for clones).

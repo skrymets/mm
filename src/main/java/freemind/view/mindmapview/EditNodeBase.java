@@ -27,7 +27,7 @@ import freemind.controller.Controller;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.MindMapUtils;
 import freemind.modes.ModeController;
 import lombok.Getter;
 import lombok.Setter;
@@ -251,7 +251,7 @@ public class EditNodeBase {
     }
 
     public Clipboard getClipboard() {
-        return Tools.getClipboard();
+        return MindMapUtils.getClipboard();
     }
 
     protected void redispatchKeyEvents(final JTextComponent textComponent,

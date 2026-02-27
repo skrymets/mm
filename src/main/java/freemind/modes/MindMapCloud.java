@@ -20,8 +20,9 @@
 
 package freemind.modes;
 
-import freemind.main.XMLElement;
 import freemind.model.MindMapLine;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 
@@ -55,5 +56,5 @@ public interface MindMapCloud extends MindMapLine {
      */
     void changeIterativeLevel(int deltaLevel);
 
-    XMLElement save();
+    Element save(Document doc);
 }

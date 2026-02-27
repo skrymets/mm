@@ -20,12 +20,14 @@
 
 package freemind.modes;
 
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.ColorUtils;
+import freemind.main.FreeMindXml;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
 import lombok.Getter;
 import lombok.Setter;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -214,7 +216,7 @@ public class StylePattern {
     public StylePattern() {
     }
 
-    public StylePattern(XMLElement elm, List<StylePattern> justConstructedPatterns) {
+    public StylePattern(Element elm, List<StylePattern> justConstructedPatterns) {
         loadPattern(elm, justConstructedPatterns);
     }
 
@@ -307,66 +309,66 @@ public class StylePattern {
     public static List loadPatterns(Reader reader) throws Exception {
         List list = new ArrayList();
 
-        XMLElement parser = new XMLElement();
-        parser.parseFromReader(reader);
-        for (XMLElement xmlElement : parser.getChildren()) {
-            list.add(new StylePattern(xmlElement, list));
+        Document doc = FreeMindXml.parse(reader);
+        Element root = doc.getDocumentElement();
+        for (Element childElement : FreeMindXml.getChildElements(root)) {
+            list.add(new StylePattern(childElement, list));
         }
         return list;
     }
 
-    protected void loadPattern(XMLElement pattern, List<StylePattern> justConstructedPatterns) {
+    protected void loadPattern(Element pattern, List<StylePattern> justConstructedPatterns) {
         // PATTERN
-        if (pattern.getStringAttribute("name") != null) {
-            setName(pattern.getStringAttribute("name"));
+        if (FreeMindXml.getStringAttribute(pattern, "name") != null) {
+            setName(FreeMindXml.getStringAttribute(pattern, "name"));
         }
-        if (Objects.equals(pattern.getStringAttribute("recursive"), "true")) {
+        if (Objects.equals(FreeMindXml.getStringAttribute(pattern, "recursive"), "true")) {
             setRecursive(true);
         }
 
-        for (XMLElement child : pattern.getChildren()) {
+        for (Element child : FreeMindXml.getChildElements(pattern)) {
             // this has to be improved!
             // NODE
-            if (child.getName().equals("node")) {
-                if (child.getStringAttribute("color") != null
-                        && child.getStringAttribute("color").length() == 7) {
-                    setNodeColor(Tools.xmlToColor(child
-                            .getStringAttribute("color")));
+            if (child.getTagName().equals("node")) {
+                if (FreeMindXml.getStringAttribute(child, "color") != null
+                        && FreeMindXml.getStringAttribute(child, "color").length() == 7) {
+                    setNodeColor(ColorUtils.xmlToColor(FreeMindXml
+                            .getStringAttribute(child, "color")));
                 }
-                if (child.getStringAttribute("background_color") != null
-                        && child.getStringAttribute("background_color")
+                if (FreeMindXml.getStringAttribute(child, "background_color") != null
+                        && FreeMindXml.getStringAttribute(child, "background_color")
                         .length() == 7) {
-                    setNodeBackgroundColor(Tools.xmlToColor(child
-                            .getStringAttribute("background_color")));
+                    setNodeBackgroundColor(ColorUtils.xmlToColor(FreeMindXml
+                            .getStringAttribute(child, "background_color")));
                 }
-                if (child.getStringAttribute("style") != null) {
-                    setNodeStyle(child.getStringAttribute("style"));
+                if (FreeMindXml.getStringAttribute(child, "style") != null) {
+                    setNodeStyle(FreeMindXml.getStringAttribute(child, "style"));
                 }
-                if (child.getStringAttribute("icon") != null) {
-                    setNodeIcon(child.getStringAttribute("icon").equals("none") ? null
+                if (FreeMindXml.getStringAttribute(child, "icon") != null) {
+                    setNodeIcon(FreeMindXml.getStringAttribute(child, "icon").equals("none") ? null
                             : MindIcon
-                            .factory(child.getStringAttribute("icon")));
+                            .factory(FreeMindXml.getStringAttribute(child, "icon")));
                 }
-                setText(child.getStringAttribute("text"));
+                setText(FreeMindXml.getStringAttribute(child, "text"));
 
-                for (XMLElement nodeChild : child.getChildren()) {
+                for (Element nodeChild : FreeMindXml.getChildElements(child)) {
                     // FONT
-                    if (nodeChild.getName().equals("font")) {
+                    if (nodeChild.getTagName().equals("font")) {
 
-                        if (nodeChild.getStringAttribute("name") != null) {
-                            setNodeFontFamily(nodeChild.getStringAttribute("name"));
+                        if (FreeMindXml.getStringAttribute(nodeChild, "name") != null) {
+                            setNodeFontFamily(FreeMindXml.getStringAttribute(nodeChild, "name"));
                         }
-                        if (Objects.equals(nodeChild.getStringAttribute("bold"), "true")) {
+                        if (Objects.equals(FreeMindXml.getStringAttribute(nodeChild, "bold"), "true")) {
                             setNodeFontBold(Boolean.TRUE);
                         }
-                        if (Objects.equals(nodeChild.getStringAttribute("italic"), "true")) {
+                        if (Objects.equals(FreeMindXml.getStringAttribute(nodeChild, "italic"), "true")) {
                             setNodeFontItalic(Boolean.TRUE);
                         }
                         // if (font.getProperty("underline")!=null &&
                         // nodeChild.getProperty("underline").equals("true"))
                         // setUnderlined(true);
-                        if (nodeChild.getStringAttribute("size") != null) {
-                            setNodeFontSize(Integer.valueOf(nodeChild.getStringAttribute("size")));
+                        if (FreeMindXml.getStringAttribute(nodeChild, "size") != null) {
+                            setNodeFontSize(Integer.valueOf(FreeMindXml.getStringAttribute(nodeChild, "size")));
                         }
 
                     }
@@ -374,29 +376,29 @@ public class StylePattern {
             }
 
             // EDGE
-            if (child.getName().equals("edge")) {
-                if (child.getStringAttribute("style") != null) {
-                    setEdgeStyle(child.getStringAttribute("style"));
+            if (child.getTagName().equals("edge")) {
+                if (FreeMindXml.getStringAttribute(child, "style") != null) {
+                    setEdgeStyle(FreeMindXml.getStringAttribute(child, "style"));
                 }
-                if (child.getStringAttribute("color") != null) {
-                    setEdgeColor(Tools.xmlToColor(child
-                            .getStringAttribute("color")));
+                if (FreeMindXml.getStringAttribute(child, "color") != null) {
+                    setEdgeColor(ColorUtils.xmlToColor(FreeMindXml
+                            .getStringAttribute(child, "color")));
                 }
-                if (child.getStringAttribute("width") != null) {
-                    if (child.getStringAttribute("width").equals("thin")) {
+                if (FreeMindXml.getStringAttribute(child, "width") != null) {
+                    if (FreeMindXml.getStringAttribute(child, "width").equals("thin")) {
                         setEdgeWidth(Integer.valueOf(EdgeAdapter.WIDTH_THIN));
                     } else {
-                        setEdgeWidth(Integer.valueOf(Integer.parseInt(child
-                                .getStringAttribute("width"))));
+                        setEdgeWidth(Integer.valueOf(Integer.parseInt(FreeMindXml
+                                .getStringAttribute(child, "width"))));
                     }
                 }
             }
 
             // CHILD
-            if (child.getName().equals("child")) {
-                if (child.getStringAttribute("pattern") != null) {
+            if (child.getTagName().equals("child")) {
+                if (FreeMindXml.getStringAttribute(child, "pattern") != null) {
                     // find name in list of justConstructedPatterns:
-                    String searchName = child.getStringAttribute("pattern");
+                    String searchName = FreeMindXml.getStringAttribute(child, "pattern");
                     boolean anythingFound = false;
                     for (StylePattern patternFound : justConstructedPatterns) {
                         if (patternFound.getName().equals(searchName)) {
@@ -441,7 +443,7 @@ public class StylePattern {
  *
  * if (isFolded()) { node.addProperty("folded","true"); }
  *
- * if (color != null) { node.addProperty("color", Tools.colorToXml(getColor()));
+ * if (color != null) { node.addProperty("color", ColorUtils.colorToXml(getColor()));
  * }
  *
  * if (style != null) { node.addProperty("style", getStyle()); }
@@ -470,4 +472,3 @@ public class StylePattern {
  * System.err.println("Error in MindMapMapModel.saveXML(): ");
  * freemind.main.Resources.getInstance().logExecption(e); } }
  */
-

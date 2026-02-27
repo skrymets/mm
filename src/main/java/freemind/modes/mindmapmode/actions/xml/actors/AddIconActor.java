@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.AddIconAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.MindMapUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;
@@ -45,8 +45,7 @@ public class AddIconActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof AddIconAction) {
-            AddIconAction iconAction = (AddIconAction) action;
+        if (action instanceof AddIconAction iconAction) {
             MindMapNode node = getNodeFromID(iconAction.getNode());
             String iconName = iconAction.getIconName();
             int position = iconAction.getIconPosition();
@@ -89,7 +88,7 @@ public class AddIconActor extends XmlActorAdapter {
      *
      */
     private ActionPair getToggleIconActionPair(MindMapNode node, MindIcon icon) {
-        int iconIndex = Tools.iconFirstIndex(node,
+        int iconIndex = MindMapUtils.iconFirstIndex(node,
                 icon.getName());
         if (iconIndex == -1) {
             return getAddLastIconActionPair(node, icon);
@@ -102,8 +101,8 @@ public class AddIconActor extends XmlActorAdapter {
      */
     private ActionPair getRemoveIconActionPair(MindMapNode node, MindIcon icon,
                                                boolean removeFirst) {
-        int iconIndex = removeFirst ? Tools.iconFirstIndex(
-                node, icon.getName()) : Tools.iconLastIndex(
+        int iconIndex = removeFirst ? MindMapUtils.iconFirstIndex(
+                node, icon.getName()) : MindMapUtils.iconLastIndex(
                 node, icon.getName());
         return iconIndex >= 0 ? getRemoveIconActionPair(node, icon, iconIndex)
                 : null;

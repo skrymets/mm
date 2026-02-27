@@ -24,8 +24,9 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 
@@ -34,5 +35,5 @@ public interface Condition {
 
     JComponent getListCellRendererComponent();
 
-    void save(XMLElement element);
+    void save(Document doc, Element parent);
 }

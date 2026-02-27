@@ -25,10 +25,12 @@ package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
 import freemind.controller.filter.FilterController;
+import freemind.main.FreeMindXml;
 import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import java.util.List;
@@ -58,7 +60,7 @@ public class ConjunctConditions implements Condition {
         JCondition component = new JCondition();
         component.add(new JLabel("("));
 
-        String text = format(" %s ", Tools.removeMnemonic(Resources.getInstance().getResourceString("filter_and")));
+        String text = format(" %s ", SwingUtils.removeMnemonic(Resources.getInstance().getResourceString("filter_and")));
 
         conditions.forEach(condition -> {
             component.add(new JLabel(text));
@@ -71,16 +73,15 @@ public class ConjunctConditions implements Condition {
         return component;
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
-        conditions.forEach(condition -> condition.save(child));
-        element.addChild(child);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
+        conditions.forEach(condition -> condition.save(doc, child));
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
-        final List<Condition> conditions = element.getChildren().stream()
-                .map(xmlElement -> FilterController.getConditionFactory().loadCondition(xmlElement))
+    static Condition load(Element element) {
+        final List<Condition> conditions = FreeMindXml.getChildElements(element).stream()
+                .map(childEl -> FilterController.getConditionFactory().loadCondition(childEl))
                 .collect(toList());
 
         return new ConjunctConditions(conditions);

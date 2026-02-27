@@ -25,7 +25,7 @@ package freemind.controller.filter.condition;
 
 import freemind.common.NamedObject;
 import freemind.main.Resources;
-import freemind.main.XMLElement;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 
@@ -69,33 +69,31 @@ public class ConditionFactory {
         return description;
     }
 
-    public Condition loadCondition(XMLElement element) {
-        if (element.getName().equalsIgnoreCase(NodeContainsCondition.NAME))
+    public Condition loadCondition(Element element) {
+        String name = element.getTagName();
+        if (name.equalsIgnoreCase(NodeContainsCondition.NAME))
             return NodeContainsCondition.load(element);
-        if (element.getName().equalsIgnoreCase(
-                IgnoreCaseNodeContainsCondition.NAME))
+        if (name.equalsIgnoreCase(IgnoreCaseNodeContainsCondition.NAME))
             return IgnoreCaseNodeContainsCondition.load(element);
-        if (element.getName().equalsIgnoreCase(NodeCompareCondition.NAME))
+        if (name.equalsIgnoreCase(NodeCompareCondition.NAME))
             return NodeCompareCondition.load(element);
-        if (element.getName().equalsIgnoreCase(IconContainedCondition.NAME))
+        if (name.equalsIgnoreCase(IconContainedCondition.NAME))
             return IconContainedCondition.load(element);
-        if (element.getName().equalsIgnoreCase(IconNotContainedCondition.NAME))
+        if (name.equalsIgnoreCase(IconNotContainedCondition.NAME))
             return IconNotContainedCondition.load(element);
-        if (element.getName().equalsIgnoreCase(AttributeCompareCondition.NAME))
+        if (name.equalsIgnoreCase(AttributeCompareCondition.NAME))
             return AttributeCompareCondition.load(element);
-        if (element.getName().equalsIgnoreCase(AttributeExistsCondition.NAME))
+        if (name.equalsIgnoreCase(AttributeExistsCondition.NAME))
             return AttributeExistsCondition.load(element);
-        if (element.getName()
-                .equalsIgnoreCase(AttributeNotExistsCondition.NAME))
+        if (name.equalsIgnoreCase(AttributeNotExistsCondition.NAME))
             return AttributeNotExistsCondition.load(element);
-        if (element.getName().equalsIgnoreCase(
-                ConditionNotSatisfiedDecorator.NAME)) {
+        if (name.equalsIgnoreCase(ConditionNotSatisfiedDecorator.NAME)) {
             return ConditionNotSatisfiedDecorator.load(element);
         }
-        if (element.getName().equalsIgnoreCase(ConjunctConditions.NAME)) {
+        if (name.equalsIgnoreCase(ConjunctConditions.NAME)) {
             return ConjunctConditions.load(element);
         }
-        if (element.getName().equalsIgnoreCase(DisjunctConditions.NAME)) {
+        if (name.equalsIgnoreCase(DisjunctConditions.NAME)) {
             return DisjunctConditions.load(element);
         }
         return null;

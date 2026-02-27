@@ -21,6 +21,7 @@
 package accessories.plugins.time;
 
 import freemind.common.ScalableJButton;
+import org.apache.commons.lang3.SystemUtils;
 import freemind.common.XmlBindingTools;
 import freemind.controller.Controller;
 import freemind.controller.actions.CalendarMarking;
@@ -28,7 +29,7 @@ import freemind.controller.actions.CalendarMarkings;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -312,7 +313,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
                         private static final long serialVersionUID = -7433645992591669725L;
 
                         public void paint(Graphics g) {
-                            if (Tools.isWindows() || Tools.isMacOsX()) {
+                            if (SystemUtils.IS_OS_WINDOWS || SystemUtils.IS_OS_MAC) {
                                 // this is a hack to get the background painted
                                 // when using Windows Look & Feel
                                 if (selectedDay == this) {
@@ -546,7 +547,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
                 CalendarMarking marked = mCalendarMarkingEvaluator
                         .isMarked(tmpCalendar);
                 if (marked != null) {
-                    currentBorder = BorderFactory.createLineBorder(Tools.xmlToColor(marked.getColor()), 2);
+                    currentBorder = BorderFactory.createLineBorder(ColorUtils.xmlToColor(marked.getColor()), 2);
                     currentToolTipText = marked.getName();
                 }
             }

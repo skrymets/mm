@@ -22,7 +22,6 @@ package freemind.model;
 import freemind.controller.filter.Filter;
 import freemind.controller.filter.util.SortedListModel;
 import freemind.main.Tools;
-import freemind.main.XMLParseException;
 import freemind.modes.*;
 
 import javax.swing.tree.TreeModel;
@@ -188,9 +187,9 @@ public interface MindMap extends TreeModel {
 
     ArrowLinkTarget createArrowLinkTarget(NodeAdapter source, NodeAdapter target);
 
-    MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws XMLParseException, IOException;
+    MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws IOException;
 
-    MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws XMLParseException, IOException;
+    MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException;
 
     NodeAdapter createEncryptedNode(String additionalInfo);
 

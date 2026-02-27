@@ -20,10 +20,11 @@
 
 package freemind.modes;
 
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapArrowLinkModel;
 import freemind.view.mindmapview.MapView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Stores targets of arrow links. It is used to enable cut/copy+paste for every
@@ -50,13 +51,20 @@ public class ArrowLinkTarget extends ArrowLinkAdapter {
         mSourceLabel = sourceLabel;
     }
 
-    public XMLElement save() {
-        XMLElement arrowLink = super.save();
-        arrowLink.setName("linktarget");
-        if (getSourceLabel() != null) {
-            arrowLink.setAttribute("SOURCE", getSourceLabel());
+    public Element save(Document doc) {
+        Element arrowLink = super.save(doc);
+        // Re-create as "linktarget" since super creates "arrowlink"
+        Element linkTarget = doc.createElement("linktarget");
+        // Copy all attributes from arrowLink
+        var attrs = arrowLink.getAttributes();
+        for (int i = 0; i < attrs.getLength(); i++) {
+            var attr = attrs.item(i);
+            linkTarget.setAttribute(attr.getNodeName(), attr.getNodeValue());
         }
-        return arrowLink;
+        if (getSourceLabel() != null) {
+            linkTarget.setAttribute("SOURCE", getSourceLabel());
+        }
+        return linkTarget;
     }
 
     /* (non-Javadoc)

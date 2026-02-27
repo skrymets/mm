@@ -22,7 +22,7 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.main.Tools;
+import freemind.main.MindMapUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class AddLocalLinkAction extends MindmapAction {
 
     public void actionPerformed(ActionEvent e) {
         MindMapNode source = modeController.getSelected();
-        List<MindMapNode> nodesFromClipboard = Tools.getMindMapNodesFromClipboard(modeController);
+        List<MindMapNode> nodesFromClipboard = MindMapUtils.getMindMapNodesFromClipboard(modeController);
         if (isNotEmpty(nodesFromClipboard)) {
             modeController.getController().errorMessage(modeController.getText("no_copied_nodes"));
             return;
@@ -72,7 +72,7 @@ public class AddLocalLinkAction extends MindmapAction {
     public boolean isEnabled(JMenuItem pItem, Action pAction) {
         return super.isEnabled(pItem, pAction)
                 && (modeController != null)
-                && Tools.getMindMapNodesFromClipboard(modeController).size() == 1;
+                && MindMapUtils.getMindMapNodesFromClipboard(modeController).size() == 1;
     }
 
 }

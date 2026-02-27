@@ -20,6 +20,8 @@
 
 package freemind.controller;
 
+import freemind.main.SwingUtils;
+
 import freemind.common.BooleanProperty;
 import freemind.common.JOptionalSplitPane;
 import freemind.controller.actions.MindmapLastStateStorage;
@@ -68,6 +70,9 @@ import static javax.swing.JOptionPane.showMessageDialog;
 @Slf4j
 public class Controller implements MapModuleChangeObserver {
 
+    private static final String FREEMIND = "FreeMind";
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
     private final HashSet<MapTitleChangeListener> mMapTitleChangeListenerSet = new HashSet<>();
     private final HashSet<MapTitleContributor> mMapTitleContributorSet = new HashSet<>();
 
@@ -193,7 +198,7 @@ public class Controller implements MapModuleChangeObserver {
         page = new PageAction(this);
         quit = new QuitAction(this);
         about = new AboutAction(this);
-        freemindUrl = new OpenURLAction(this, getResourceString("FreeMind"), getProperty("webFreeMindLocation"));
+        freemindUrl = new OpenURLAction(this, getResourceString(FREEMIND), getProperty("webFreeMindLocation"));
         faq = new OpenURLAction(this, getResourceString("FAQ"), getProperty("webFAQLocation"));
         keyDocumentation = new KeyDocumentationAction(this);
         webDocu = new OpenURLAction(this, getResourceString("webDocu"), getProperty("webDocuLocation"));
@@ -258,7 +263,7 @@ public class Controller implements MapModuleChangeObserver {
         final String DEFAULT_FONT_PROPERTY = "defaultfont";
         final String defaultFont = getProperty(DEFAULT_FONT_PROPERTY);
 
-        if (!Tools.isAvailableFontFamily(defaultFont)) {
+        if (!SwingUtils.isAvailableFontFamily(defaultFont)) {
             log.warn("The font you have set as standard - {} - is not available.", defaultFont);
             frame.setProperty(DEFAULT_FONT_PROPERTY, "SansSerif");
         }
@@ -619,11 +624,11 @@ public class Controller implements MapModuleChangeObserver {
     }
 
     public void informationMessage(Object message) {
-        showMessageDialog(getFrame().getContentPane(), message.toString(), "FreeMind", JOptionPane.INFORMATION_MESSAGE);
+        showMessageDialog(getFrame().getContentPane(), message.toString(), FREEMIND, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void informationMessage(Object message, JComponent component) {
-        showMessageDialog(component, message.toString(), "FreeMind", JOptionPane.INFORMATION_MESSAGE);
+        showMessageDialog(component, message.toString(), FREEMIND, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void errorMessage(Object message) {
@@ -637,12 +642,12 @@ public class Controller implements MapModuleChangeObserver {
                 myMessage = "Undefined error";
             }
         }
-        showMessageDialog(getFrame().getContentPane(), myMessage, "FreeMind", JOptionPane.ERROR_MESSAGE);
+        showMessageDialog(getFrame().getContentPane(), myMessage, FREEMIND, JOptionPane.ERROR_MESSAGE);
 
     }
 
     public void errorMessage(Object message, JComponent component) {
-        showMessageDialog(component, message.toString(), "FreeMind", JOptionPane.ERROR_MESSAGE);
+        showMessageDialog(component, message.toString(), FREEMIND, JOptionPane.ERROR_MESSAGE);
     }
 
     public void obtainFocusForSelected() {
@@ -807,8 +812,8 @@ public class Controller implements MapModuleChangeObserver {
         // "false");
         // ^ Not allowed in application because of problems with not working key
         // shortcuts
-        setProperty("toolbarVisible", toolbarVisible ? "true" : "false");
-        setProperty("leftToolbarVisible", leftToolbarVisible ? "true" : "false");
+        setProperty("toolbarVisible", toolbarVisible ? TRUE : FALSE);
+        setProperty("leftToolbarVisible", leftToolbarVisible ? TRUE : FALSE);
         final int winState = getFrame().getWinState();
         if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {
             setProperty("appwindow_x", valueOf(getFrame().getWinX()));
@@ -853,7 +858,7 @@ public class Controller implements MapModuleChangeObserver {
         private final Controller controller;
 
         CloseAction(Controller controller) {
-            Tools.setLabelAndMnemonic(this, controller.getResourceString("close"));
+            SwingUtils.setLabelAndMnemonic(this, controller.getResourceString("close"));
             this.controller = controller;
         }
 
@@ -910,15 +915,18 @@ public class Controller implements MapModuleChangeObserver {
             PreviewDialog previewDialog = new PreviewDialog(
                     controller.getResourceString("print_preview_title"),
                     getView(),
-                    printService.getPageFormat());
+                    printService.getPageFormat()
+            );
             previewDialog.pack();
-            previewDialog.setLocationRelativeTo(JOptionPane
-                    .getFrameForComponent(getView()));
+            previewDialog.setLocationRelativeTo(JOptionPane.getFrameForComponent(getView()));
             previewDialog.setVisible(true);
         }
     }
 
     private class PageAction extends AbstractAction {
+
+        private static final String RESOURCE_FIT_TO_PAGE = "fit_to_page";
+        private static final String RESOURCE_USER_ZOOM = "user_zoom";
 
         PageAction(Controller controller) {
             super(controller.getResourceString("page"));
@@ -931,14 +939,13 @@ public class Controller implements MapModuleChangeObserver {
             }
 
             // Ask about custom printing settings
-            final JDialog dialog = new JDialog((JFrame) getFrame(),
-                    getResourceString("printing_settings"), /* modal= */true);
-            final JCheckBox fitToPage = new JCheckBox(getResourceString("fit_to_page"), Resources.getInstance().getBoolProperty("fit_to_page"));
-            final JLabel userZoomL = new JLabel(getResourceString("user_zoom"));
-            final JTextField userZoom = new JTextField(getProperty("user_zoom"), 3);
+            final JDialog dialog = new JDialog((JFrame) getFrame(), getResourceString("printing_settings"), /* modal= */true);
+            final JCheckBox fitToPage = new JCheckBox(getResourceString(RESOURCE_FIT_TO_PAGE), Resources.getInstance().getBoolProperty(RESOURCE_FIT_TO_PAGE));
+            final JLabel userZoomL = new JLabel(getResourceString(RESOURCE_USER_ZOOM));
+            final JTextField userZoom = new JTextField(getProperty(RESOURCE_USER_ZOOM), 3);
             userZoom.setEditable(!fitToPage.isSelected());
             final JButton okButton = new JButton();
-            Tools.setLabelAndMnemonic(okButton, getResourceString("ok"));
+            SwingUtils.setLabelAndMnemonic(okButton, getResourceString("ok"));
 
             JPanel panel = new JPanel();
 
@@ -981,8 +988,8 @@ public class Controller implements MapModuleChangeObserver {
             dialog.setVisible(true);
 
             if (eventSource[0] == 1) {
-                setProperty("user_zoom", userZoom.getText());
-                setProperty("fit_to_page", fitToPage.isSelected() ? "true" : "false");
+                setProperty(RESOURCE_USER_ZOOM, userZoom.getText());
+                setProperty(RESOURCE_FIT_TO_PAGE, fitToPage.isSelected() ? TRUE : FALSE);
             } else
                 return;
 
@@ -1421,7 +1428,7 @@ public class Controller implements MapModuleChangeObserver {
                     options.closeWindow();
                 }
             };
-            Tools.addEscapeActionToDialog(dialog, action);
+            SwingUtils.addEscapeActionToDialog(dialog, action);
             dialog.setVisible(true);
 
         }

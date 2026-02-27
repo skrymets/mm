@@ -24,10 +24,12 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
+import freemind.main.FreeMindXml;
 import freemind.main.Resources;
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.attributes.Attribute;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Dimitri Polivaev 12.07.2005
@@ -61,17 +63,16 @@ public class AttributeExistsCondition extends NodeCondition {
         return false;
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
         super.saveAttributes(child);
         child.setAttribute(ATTRIBUTE, attribute);
-        element.addChild(child);
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
+    static Condition load(Element element) {
         return new AttributeExistsCondition(
-                element.getStringAttribute(ATTRIBUTE));
+                FreeMindXml.getStringAttribute(element, ATTRIBUTE));
     }
 
     protected String createDesctiption() {

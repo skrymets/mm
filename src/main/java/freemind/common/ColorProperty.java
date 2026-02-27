@@ -24,7 +24,7 @@ package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import freemind.controller.Controller;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -68,11 +68,11 @@ public class ColorProperty extends PropertyBean implements PropertyControl,
     }
 
     public void setValue(String value) {
-        setColorValue(Tools.xmlToColor(value));
+        setColorValue(ColorUtils.xmlToColor(value));
     }
 
     public String getValue() {
-        return Tools.colorToXml(getColorValue());
+        return ColorUtils.colorToXml(getColorValue());
     }
 
     public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
@@ -121,7 +121,7 @@ public class ColorProperty extends PropertyBean implements PropertyControl,
             result = Color.WHITE;
         }
         mButton.setBackground(result);
-        mButton.setText(Tools.colorToXml(result));
+        mButton.setText(ColorUtils.colorToXml(result));
     }
 
     /**

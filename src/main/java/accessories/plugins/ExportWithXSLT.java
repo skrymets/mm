@@ -117,8 +117,7 @@ public class ExportWithXSLT extends ExportHook {
                             JOptionPane.ERROR_MESSAGE);
                     mTransformResultWithoutError = false;
                 } else {
-                    if (Tools
-                            .safeEquals(getResourceString("load_file"), "true")) {
+                    if (Objects.equals(getResourceString("load_file"), "true")) {
                         getController().getFrame().openDocument(
                                 Tools.fileToUrl(saveFile));
                     }

@@ -1,6 +1,6 @@
 package freemind.view.mindmapview;
 
-import freemind.main.Tools;
+import freemind.main.PointUtils;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapEdge;
 
@@ -36,12 +36,12 @@ public abstract class EdgeView {
 
     protected void createEnd() {
         end = getTarget().getMainViewInPoint();
-        Tools.convertPointToAncestor(this.target.getMainView(), end, source);
+        PointUtils.convertPointToAncestor(this.target.getMainView(), end, source);
     }
 
     protected void createStart() {
         start = source.getMainViewOutPoint(getTarget(), end);
-        Tools.convertPointToAncestor(source.getMainView(), start, source);
+        PointUtils.convertPointToAncestor(source.getMainView(), start, source);
     }
 
     abstract protected void paint(Graphics2D g);

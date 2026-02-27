@@ -26,6 +26,7 @@ import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.ManageStyleEditorWindowConfigurationStorage;
 import freemind.controller.actions.Pattern;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.MindMapController;
@@ -152,7 +153,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
                 cancelPressed();
             }
         };
-        Tools.addEscapeActionToDialog(this, cancelAction);
+        SwingUtils.addEscapeActionToDialog(this, cancelAction);
         // // recover latest pattern:
         int i = 0;
         if (sLastSelectedPattern != null) {
@@ -445,7 +446,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
                     cancelPressed();
                 }
             });
-            Tools.setLabelAndMnemonic(jCancelButton, getText("cancel"));
+            SwingUtils.setLabelAndMnemonic(jCancelButton, getText("cancel"));
         }
         return jCancelButton;
     }

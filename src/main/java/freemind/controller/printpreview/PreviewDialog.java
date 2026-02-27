@@ -22,6 +22,7 @@
 package freemind.controller.printpreview;
 
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.view.mindmapview.MapView;
 
 import javax.swing.*;
@@ -64,7 +65,7 @@ public class PreviewDialog extends JDialog implements ActionListener {
         ok.addActionListener(this);
         dialog.add(ok);
         getContentPane().add(dialog, "South");
-        Tools.addEscapeActionToDialog(this);
+        SwingUtils.addEscapeActionToDialog(this);
     }
 
     private JButton getButton(String iconName, AbstractAction action) {

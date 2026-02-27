@@ -20,7 +20,7 @@
 
 package freemind.modes;
 
-import freemind.main.Tools;
+import freemind.main.MindMapUtils;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
@@ -125,14 +125,14 @@ public class MindMapLinkRegistry {
      * labeled.
      */
     public String generateUniqueID(String proposedID) {
-        return Tools.generateID(proposedID, mIdToLinks, "ID_");
+        return MindMapUtils.generateID(proposedID, mIdToLinks, "ID_");
     }
 
     /**
      * This can be used, if the id has to be known, before a link can be labled.
      */
     public String generateUniqueLinkId(String proposedID) {
-        return Tools.generateID(proposedID, mIdToLink, "Arrow_ID_");
+        return MindMapUtils.generateID(proposedID, mIdToLink, "Arrow_ID_");
     }
 
     public String registerLinkTarget(MindMapNode pTarget) {

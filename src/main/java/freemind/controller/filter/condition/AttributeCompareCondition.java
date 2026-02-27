@@ -24,10 +24,11 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
 import freemind.modes.attributes.Attribute;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Dimitri Polivaev 12.07.2005
@@ -72,25 +73,22 @@ public class AttributeCompareCondition extends CompareConditionAdapter {
         return false;
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
         super.saveAttributes(child);
         child.setAttribute(ATTRIBUTE, attribute);
-        child.setIntAttribute(COMPARATION_RESULT, comparationResult);
-        child.setAttribute(SUCCEED, Tools.BooleanToXml(succeed));
-        element.addChild(child);
-
+        child.setAttribute(COMPARATION_RESULT, String.valueOf(comparationResult));
+        child.setAttribute(SUCCEED, String.valueOf(succeed));
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
+    static Condition load(Element element) {
         return new AttributeCompareCondition(
-                element.getStringAttribute(ATTRIBUTE),
-                element.getStringAttribute(AttributeCompareCondition.VALUE),
-                Tools.xmlToBoolean(element
-                        .getStringAttribute(AttributeCompareCondition.IGNORE_CASE)),
-                element.getIntAttribute(COMPARATION_RESULT), Tools
-                .xmlToBoolean(element.getStringAttribute(SUCCEED)));
+                FreeMindXml.getStringAttribute(element, ATTRIBUTE),
+                FreeMindXml.getStringAttribute(element, AttributeCompareCondition.VALUE),
+                "true".equals(FreeMindXml.getStringAttribute(element, AttributeCompareCondition.IGNORE_CASE)),
+                FreeMindXml.getIntAttribute(element, COMPARATION_RESULT, 0),
+                "true".equals(FreeMindXml.getStringAttribute(element, SUCCEED)));
     }
 
     protected String createDesctiption() {

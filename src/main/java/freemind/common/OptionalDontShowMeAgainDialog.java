@@ -26,6 +26,7 @@ package freemind.common;
 import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -142,7 +143,7 @@ public class OptionalDontShowMeAgainDialog {
                 close(JOptionPane.OK_OPTION);
             }
         };
-        Tools.addEscapeActionToDialog(mDialog, cancelAction);
+        SwingUtils.addEscapeActionToDialog(mDialog, cancelAction);
         mDialog.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent pE) {
                 close(JOptionPane.CANCEL_OPTION);
@@ -169,7 +170,7 @@ public class OptionalDontShowMeAgainDialog {
             boxString = "OptionalDontShowMeAgainDialog.rememberMyDescision";
         }
         mDontShowAgainBox = new JCheckBox(mTextTranslator.getText(boxString));
-        Tools.setLabelAndMnemonic(mDontShowAgainBox, null);
+        SwingUtils.setLabelAndMnemonic(mDontShowAgainBox, null);
         mDialog.getContentPane().add(
                 mDontShowAgainBox,
                 new GridBagConstraints(0, 2, 3, 1, 1.0, 1.0,
@@ -177,7 +178,7 @@ public class OptionalDontShowMeAgainDialog {
                         new Insets(5, 5, 0, 0), 0, 0));
         JButton okButton = new JButton(
                 mTextTranslator.getText("OptionalDontShowMeAgainDialog.ok"));
-        Tools.setLabelAndMnemonic(okButton, null);
+        SwingUtils.setLabelAndMnemonic(okButton, null);
         okButton.addActionListener(okAction);
         mDialog.getContentPane().add(
                 okButton,
@@ -186,7 +187,7 @@ public class OptionalDontShowMeAgainDialog {
                         new Insets(5, 5, 0, 0), 0, 0));
         JButton cancelButton = new JButton(
                 mTextTranslator.getText("OptionalDontShowMeAgainDialog.cancel"));
-        Tools.setLabelAndMnemonic(cancelButton, null);
+        SwingUtils.setLabelAndMnemonic(cancelButton, null);
         cancelButton.addActionListener(cancelAction);
         mDialog.getContentPane().add(
                 cancelButton,
@@ -196,7 +197,7 @@ public class OptionalDontShowMeAgainDialog {
         mDialog.getRootPane().setDefaultButton(okButton);
         mDialog.pack();
         if (mComponent != null) {
-            Tools.setDialogLocationRelativeTo(mDialog, mComponent);
+            SwingUtils.setDialogLocationRelativeTo(mDialog, mComponent);
         }
         mDialog.setVisible(true);
         return this;

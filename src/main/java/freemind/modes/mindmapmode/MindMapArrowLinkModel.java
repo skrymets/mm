@@ -20,11 +20,14 @@
 
 package freemind.modes.mindmapmode;
 
+import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
 import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.MapFeedback;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 
@@ -41,8 +44,10 @@ public class MindMapArrowLinkModel extends ArrowLinkAdapter {
     }
 
     public String toString() {
+        Document doc = FreeMindXml.newDocument();
+        Element saved = save(doc);
         return "Source=" + getSource() + ", target=" + getTarget() + ", "
-                + save().toString();
+                + FreeMindXml.toString(saved);
     }
 
     /*

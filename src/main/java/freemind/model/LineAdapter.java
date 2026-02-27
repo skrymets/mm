@@ -20,7 +20,7 @@
 
 package freemind.model;
 
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.modes.MapFeedback;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,7 +73,7 @@ public abstract class LineAdapter implements MindMapLine {
             String stdColor = getMapFeedback().getProperty(
                     getStandardColorPropertyString());
             if (stdColor != null && stdColor.length() == 7) {
-                setStandardColor(Tools.xmlToColor(stdColor));
+                setStandardColor(ColorUtils.xmlToColor(stdColor));
             } else {
                 setStandardColor(Color.RED);
             }

@@ -22,6 +22,7 @@ package freemind.view;
 
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -45,12 +46,12 @@ public class ImageFactory {
     }
 
     public ImageIcon createIcon(URL pUrl) {
-        if (Tools.getScalingFactorPlain() == 100) {
+        if (SwingUtils.getScalingFactorPlain() == 100) {
             return createUnscaledIcon(pUrl);
         }
 
         ScalableImageIcon icon = new ScalableImageIcon(pUrl);
-        icon.setScale(Tools.getScalingFactor());
+        icon.setScale(SwingUtils.getScalingFactor());
         return icon;
     }
 
@@ -63,7 +64,7 @@ public class ImageFactory {
 
 
     public ImageIcon createIcon(String pFilePath) {
-        if (Tools.getScalingFactorPlain() == 200) {
+        if (SwingUtils.getScalingFactorPlain() == 200) {
             // test for existence  of a scaled icon:
             if (pFilePath.endsWith(".png")) {
                 try {

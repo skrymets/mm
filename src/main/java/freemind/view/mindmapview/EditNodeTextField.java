@@ -26,7 +26,7 @@ package freemind.view.mindmapview;
 import com.inet.jortho.SpellChecker;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.PointUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import lombok.extern.slf4j.Slf4j;
@@ -192,7 +192,7 @@ public class EditNodeTextField extends EditNodeBase {
             // changes
             mPoint = new Point();
 
-            Tools.convertPointToAncestor(nodeView.getMainView(), mPoint,
+            PointUtils.convertPointToAncestor(nodeView.getMainView(), mPoint,
                     mapView);
             if (xExtraWidth < 0) {
                 mPoint.x += xExtraWidth;

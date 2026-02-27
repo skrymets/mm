@@ -22,6 +22,7 @@ package freemind.view.mindmapview;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 
 import java.awt.*;
 
@@ -48,7 +49,7 @@ class RootMainView extends MainView {
         g.setColor(Color.gray);
         g.setStroke(new BasicStroke(1.0f));
         g.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
-        Tools.restoreAntialiasing(g, renderingHint);
+        SwingUtils.restoreAntialiasing(g, renderingHint);
         super.paint(g);
     }
 

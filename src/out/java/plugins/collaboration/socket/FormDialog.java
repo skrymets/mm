@@ -42,6 +42,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import freemind.common.PropertyBean;
 import freemind.common.PropertyControl;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.modes.mindmapmode.MindMapController;
 
 @SuppressWarnings("serial")
@@ -99,7 +100,7 @@ public class FormDialog extends JDialog implements
         }
         getContentPane().add(builder.getPanel(), BorderLayout.CENTER);
         JButton cancelButton = new JButton();
-        Tools.setLabelAndMnemonic(cancelButton, getText("cancel"));
+        SwingUtils.setLabelAndMnemonic(cancelButton, getText("cancel"));
         cancelButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
@@ -108,7 +109,7 @@ public class FormDialog extends JDialog implements
 
         });
         mOkButton = new JButton();
-        Tools.setLabelAndMnemonic(mOkButton, getText("ok"));
+        SwingUtils.setLabelAndMnemonic(mOkButton, getText("ok"));
         mOkButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
@@ -141,8 +142,8 @@ public class FormDialog extends JDialog implements
                 closeWindow();
             }
         };
-        Tools.addEscapeActionToDialog(this, action);
-        Tools.addKeyActionToDialog(this, actionSuccess, "ENTER",
+        SwingUtils.addEscapeActionToDialog(this, action);
+        SwingUtils.addKeyActionToDialog(this, actionSuccess, "ENTER",
                 "ok_dialog");
 
         pack();

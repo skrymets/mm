@@ -20,6 +20,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.main.Tools;
+import org.apache.commons.io.FilenameUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.mindmapmode.MindMapController;
@@ -89,11 +90,11 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
             // For each .url file: add it
             for (File file : list) {
                 if (!file.isDirectory()
-                        && Tools.getExtension(file).equals("url")) {
+                        && FilenameUtils.getExtension(file.toString()).equalsIgnoreCase("url")) {
                     favoritesFound = true;
                     try {
                         MindMapNode node = addNode(target,
-                                Tools.removeExtension(file.getName()));
+                                FilenameUtils.removeExtension(file.getName()));
                         // For each line: Is it URL? => Set it as link
                         BufferedReader in = new BufferedReader(new FileReader(
                                 file));

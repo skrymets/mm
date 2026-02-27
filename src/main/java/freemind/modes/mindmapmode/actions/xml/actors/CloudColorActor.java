@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.CloudColorXmlAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.ColorUtils;
 import freemind.model.LineAdapter;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
@@ -54,14 +54,13 @@ public class CloudColorActor extends XmlActorAdapter {
                                                          Color color) {
         CloudColorXmlAction nodeAction = new CloudColorXmlAction();
         nodeAction.setNode(getNodeID(node));
-        nodeAction.setColor(Tools.colorToXml(color));
+        nodeAction.setColor(ColorUtils.colorToXml(color));
         return nodeAction;
     }
 
     public void act(XmlAction action) {
-        if (action instanceof CloudColorXmlAction) {
-            CloudColorXmlAction nodeColorAction = (CloudColorXmlAction) action;
-            Color color = Tools.xmlToColor(nodeColorAction.getColor());
+        if (action instanceof CloudColorXmlAction nodeColorAction) {
+            Color color = ColorUtils.xmlToColor(nodeColorAction.getColor());
             MindMapNode node = getNodeFromID(nodeColorAction
                     .getNode());
             // this is not necessary, as this action is not enabled if there is

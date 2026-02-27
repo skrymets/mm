@@ -23,7 +23,8 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 import freemind.controller.actions.AddArrowLinkXmlAction;
 import freemind.controller.actions.RemoveArrowLinkXmlAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Tools;
+import freemind.main.PointUtils;
+import freemind.main.ColorUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.MindMapArrowLinkModel;
@@ -64,20 +65,20 @@ public class AddArrowLinkActor extends XmlActorAdapter {
                     proposedId));
             // check for other attributes:
             if (arrowAction.getColor() != null) {
-                linkModel.setColor(Tools.xmlToColor(arrowAction.getColor()));
+                linkModel.setColor(ColorUtils.xmlToColor(arrowAction.getColor()));
             }
             if (arrowAction.getEndArrow() != null) {
                 linkModel.setEndArrow(arrowAction.getEndArrow());
             }
             if (arrowAction.getEndInclination() != null) {
-                linkModel.setEndInclination(Tools.xmlToPoint(arrowAction
+                linkModel.setEndInclination(PointUtils.xmlToPoint(arrowAction
                         .getEndInclination()));
             }
             if (arrowAction.getStartArrow() != null) {
                 linkModel.setStartArrow(arrowAction.getStartArrow());
             }
             if (arrowAction.getStartInclination() != null) {
-                linkModel.setStartInclination(Tools.xmlToPoint(arrowAction
+                linkModel.setStartInclination(PointUtils.xmlToPoint(arrowAction
                         .getStartInclination()));
             }
             // register link.

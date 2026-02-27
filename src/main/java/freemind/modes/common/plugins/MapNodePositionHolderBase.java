@@ -23,9 +23,9 @@ package freemind.modes.common.plugins;
 import freemind.extensions.PermanentNodeHook;
 import freemind.extensions.PermanentNodeHookAdapter;
 import freemind.main.Resources;
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import java.io.File;
@@ -124,7 +124,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     }
 
 
-    public void loadFrom(XMLElement pChild) {
+    public void loadFrom(Element pChild) {
         super.loadFrom(pChild);
         mValues = loadNameValuePairs(pChild);
         // if no value stored, the get method returns null.

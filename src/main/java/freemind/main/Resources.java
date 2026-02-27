@@ -24,6 +24,7 @@
 package freemind.main;
 
 import freemind.common.NamedObject;
+import org.apache.commons.lang3.SystemUtils;
 import freemind.common.TextTranslator;
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.modes.FreeMindAwtFileDialog;
@@ -157,7 +158,7 @@ public class Resources implements TextTranslator {
     }
 
     public FreeMindFileDialog getStandardFileChooser(FileFilter filter) {
-        FreeMindFileDialog chooser = Tools.isMacOsX() ? new FreeMindAwtFileDialog() : new FreeMindJFileDialog();
+        FreeMindFileDialog chooser = SystemUtils.IS_OS_MAC ? new FreeMindAwtFileDialog() : new FreeMindJFileDialog();
 
         if (filter != null) {
             chooser.addChoosableFileFilterAsDefault(filter);

@@ -29,6 +29,7 @@ import freemind.controller.color.JColorCombo;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.view.ImageFactory;
 import freemind.view.mindmapview.MapView;
@@ -78,7 +79,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         super();
         this.mindMapController = controller;
         this.setRollover(true);
-        fonts = new FreeMindComboBox(Tools.getAvailableFonts());
+        fonts = new FreeMindComboBox(SwingUtils.getAvailableFonts());
         fonts.setFocusable(false);
         size = new FreeMindComboBox(sizes);
         size.setFocusable(false);

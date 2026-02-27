@@ -24,8 +24,10 @@
 package freemind.controller;
 
 import freemind.main.HtmlTools;
+import org.apache.commons.lang3.SystemUtils;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -118,7 +120,7 @@ public class StructuredMenuHolder {
      *
      */
     private void adjustTooltips(StructuredMenuItemHolder holder) {
-        if (Tools.isMacOsX()) {
+        if (SystemUtils.IS_OS_MAC) {
             // remove html tags from tooltips:
             String toolTipText = holder.getMenuItem().getToolTipText();
             if (toolTipText != null) {
@@ -223,7 +225,7 @@ public class StructuredMenuHolder {
         updateMenus(new MenuAdder() {
 
             public void addMenuItem(StructuredMenuItemHolder holder) {
-                Tools.setLabelAndMnemonic(holder.getMenuItem(), null);
+                SwingUtils.setLabelAndMnemonic(holder.getMenuItem(), null);
                 myItem.add(holder.getMenuItem());
             }
 
@@ -249,7 +251,7 @@ public class StructuredMenuHolder {
             final StructuredMenuListener listener = new StructuredMenuListener();
 
             public void addMenuItem(StructuredMenuItemHolder holder) {
-                Tools.setLabelAndMnemonic(holder.getMenuItem(), null);
+                SwingUtils.setLabelAndMnemonic(holder.getMenuItem(), null);
                 JMenuItem menuItem = holder.getMenuItem();
                 adjustMenuItem(menuItem);
                 myItem.add(menuItem);
@@ -350,7 +352,7 @@ public class StructuredMenuHolder {
                 mItemCounter = 0;
                 mMenuCounter++;
             }
-            Tools.setLabelAndMnemonic(holder.getMenuItem(), null);
+            SwingUtils.setLabelAndMnemonic(holder.getMenuItem(), null);
             JMenuItem item = holder.getMenuItem();
             adjustMenuItem(item);
             listener.addItem(holder);

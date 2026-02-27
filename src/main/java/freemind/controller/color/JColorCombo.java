@@ -21,6 +21,7 @@
 package freemind.controller.color;
 
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
 
     public static class ColorIcon extends ImageIcon {
 
-        private static final int ICON_SIZE = (int) (Tools.getScalingFactor() * 16);
+        private static final int ICON_SIZE = (int) (SwingUtils.getScalingFactor() * 16);
 
         public ColorIcon(Color pColor) {
             super(new BufferedImage(ICON_SIZE, ICON_SIZE, BufferedImage.TYPE_INT_RGB));

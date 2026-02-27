@@ -20,7 +20,7 @@
 
 package freemind.common;
 
-import freemind.main.Tools;
+import freemind.main.EncryptionUtils;
 
 import javax.swing.*;
 
@@ -41,11 +41,11 @@ public class PasswordProperty extends StringProperty {
     }
 
     public String getValue() {
-        return Tools.compress(mTextField.getText());
+        return EncryptionUtils.compress(mTextField.getText());
     }
 
     public void setValue(String value) {
-        String pwInPlain = Tools.decompress(value);
+        String pwInPlain = EncryptionUtils.decompress(value);
         super.setValue(pwInPlain);
     }
 

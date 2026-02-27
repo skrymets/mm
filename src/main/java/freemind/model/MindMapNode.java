@@ -23,10 +23,11 @@ package freemind.model;
 import freemind.controller.filter.FilterInfo;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
-import freemind.main.XMLElement;
 import freemind.modes.*;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.actions.MindMapActions;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
@@ -322,11 +323,16 @@ public interface MindMapNode extends MutableTreeNode {
     MindMapNode shallowCopy();
 
     /**
+     * Save this node (and optionally its children) as a DOM Element, and write to the given Writer.
+     *
+     * @param writer       the writer to output XML to
+     * @param doc          the DOM Document used to create elements
+     * @param registry     the link registry for resolving links
      * @param saveHidden   TODO: Seems not to be used. Remove or fill with live.
      * @param saveChildren if true, the save recurses to all of the nodes children.
      */
-    XMLElement save(Writer writer, MindMapLinkRegistry registry,
-                    boolean saveHidden, boolean saveChildren) throws IOException;
+    Element save(Writer writer, Document doc, MindMapLinkRegistry registry,
+                 boolean saveHidden, boolean saveChildren) throws IOException;
 
     // fc, 10.2.2005:
 

@@ -25,7 +25,6 @@ import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.StructuredMenuHolder;
 import freemind.extensions.HookFactory;
 import freemind.main.Tools;
-import freemind.main.XMLParseException;
 import freemind.model.*;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
@@ -315,7 +314,7 @@ public class BrowseController extends ViewControllerAdapter {
     //
     // }
 
-    public ModeController load(URL url) throws IOException, XMLParseException,
+    public ModeController load(URL url) throws IOException,
             URISyntaxException {
         ModeController newModeController = (ModeController) super.load(url);
         // decorator pattern.
@@ -324,7 +323,7 @@ public class BrowseController extends ViewControllerAdapter {
         return newModeController;
     }
 
-    public ModeController load(File pFile) throws XMLParseException {
+    public ModeController load(File pFile) {
         try {
             ModeController newModeController = (ModeController) super.load(pFile);
             // decorator pattern.
@@ -411,7 +410,7 @@ public class BrowseController extends ViewControllerAdapter {
      */
     @Override
     protected void loadInternally(URL url, MapAdapter pModel)
-            throws XMLParseException, IOException {
+            throws IOException {
         ((BrowseMapModel) pModel).setURL(url);
         BrowseNodeModel root = loadTree(url);
         if (root != null) {

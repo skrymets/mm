@@ -24,6 +24,7 @@ import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +51,7 @@ public class FreeMindProgressMonitor extends JDialog {
         mLabel = new JLabel("!");
         mProgressBar = new JProgressBar();
         JButton mCancelButton = new JButton();
-        Tools.setLabelAndMnemonic(mCancelButton, getString(("cancel")));
+        SwingUtils.setLabelAndMnemonic(mCancelButton, getString(("cancel")));
         mCancelButton.addActionListener(pE -> mCanceled = true);
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints(0, 0,
@@ -64,7 +65,7 @@ public class FreeMindProgressMonitor extends JDialog {
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.EAST;
         add(mCancelButton, constraints);
-        // Tools.addEscapeActionToDialog(this);
+        // SwingUtils.addEscapeActionToDialog(this);
         pack();
         setSize(new Dimension(600, 200));
         String marshaled = Resources.getInstance().getProperty(

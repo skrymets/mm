@@ -122,7 +122,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
         JLabel splashImageLabel = new JLabel(splashImage) {
             private Integer mWidth = null;
             private final Font progressFont = new Font("SansSerif", Font.PLAIN, 10);
-            private final Font versionTextFont = Tools.isAvailableFontFamily("Century Gothic") ? new Font("Century Gothic", Font.BOLD, 14) : new Font("Arial", Font.BOLD, 12);
+            private final Font versionTextFont = SwingUtils.isAvailableFontFamily("Century Gothic") ? new Font("Century Gothic", Font.BOLD, 14) : new Font("Arial", Font.BOLD, 12);
 
             private int calcYRelative(int y) {
                 return (int) (((float) y) / SPLASH_HEIGHT * splashImage.getIconHeight());

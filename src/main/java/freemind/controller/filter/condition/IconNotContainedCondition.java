@@ -24,11 +24,13 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
+import freemind.main.FreeMindXml;
 import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.MindMapUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import java.util.List;
@@ -49,11 +51,11 @@ public class IconNotContainedCondition implements Condition {
     }
 
     static public int iconFirstIndex(MindMapNode node, String iconName) {
-        return Tools.iconFirstIndex(node, iconName);
+        return MindMapUtils.iconFirstIndex(node, iconName);
     }
 
     static public int iconLastIndex(MindMapNode node, String iconName) {
-        return Tools.iconLastIndex(node, iconName);
+        return MindMapUtils.iconLastIndex(node, iconName);
     }
 
     private static boolean isStateIconContained(MindMapNode node, String iconName) {
@@ -82,15 +84,14 @@ public class IconNotContainedCondition implements Condition {
         return iconName;
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
         child.setAttribute(ICON, iconName);
-        element.addChild(child);
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
+    static Condition load(Element element) {
         return new IconNotContainedCondition(
-                element.getStringAttribute(ICON));
+                FreeMindXml.getStringAttribute(element, ICON));
     }
 }

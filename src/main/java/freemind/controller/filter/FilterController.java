@@ -29,9 +29,11 @@ import freemind.controller.filter.condition.Condition;
 import freemind.controller.filter.condition.ConditionFactory;
 import freemind.controller.filter.condition.ConditionRenderer;
 import freemind.controller.filter.condition.NoFilteringCondition;
+import freemind.main.FreeMindXml;
 import freemind.main.Resources;
-import freemind.main.XMLElement;
 import freemind.model.MindMap;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import freemind.modes.MindIcon;
 import freemind.modes.Mode;
 import freemind.modes.common.plugins.NodeNoteBase;
@@ -168,27 +170,28 @@ public class FilterController implements MapModuleChangeObserver {
     }
 
     void saveConditions(DefaultComboBoxModel<Condition> filterConditionModel, String pathToFilterFile) throws IOException {
-
-        XMLElement saver = new XMLElement();
-        saver.setName("filter_conditions");
-        Writer writer = new FileWriter(pathToFilterFile);
+        Document doc = FreeMindXml.newDocument();
+        Element root = doc.createElement("filter_conditions");
+        doc.appendChild(root);
         for (int i = 0; i < filterConditionModel.getSize(); i++) {
             Condition cond = filterConditionModel.getElementAt(i);
-            cond.save(saver);
+            cond.save(doc, root);
         }
-        saver.write(writer);
-        writer.close();
+        try (Writer writer = new FileWriter(pathToFilterFile)) {
+            FreeMindXml.write(doc, writer);
+        }
     }
 
     void loadConditions(DefaultComboBoxModel<Condition> filterConditionModel, String pathToFilterFile) throws IOException {
         filterConditionModel.removeAllElements();
 
-        XMLElement loader = new XMLElement();
-        Reader reader = new FileReader(pathToFilterFile);
-        loader.parseFromReader(reader);
-        reader.close();
+        Document doc;
+        try (Reader reader = new FileReader(pathToFilterFile)) {
+            doc = FreeMindXml.parse(reader);
+        }
 
-        for (XMLElement condition : loader.getChildren()) {
+        Element root = doc.getDocumentElement();
+        for (Element condition : FreeMindXml.getChildElements(root)) {
             filterConditionModel.addElement(FilterController.getConditionFactory().loadCondition(condition));
         }
     }

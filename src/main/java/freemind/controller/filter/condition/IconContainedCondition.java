@@ -24,11 +24,13 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
+import freemind.main.FreeMindXml;
 import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
+import freemind.main.MindMapUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import java.util.Set;
@@ -43,7 +45,7 @@ public class IconContainedCondition implements Condition {
     }
 
     public boolean checkNode(Controller c, MindMapNode node) {
-        return Tools.iconFirstIndex(node, iconName) != -1
+        return MindMapUtils.iconFirstIndex(node, iconName) != -1
                 || isStateIconContained(node, iconName);
     }
 
@@ -79,14 +81,13 @@ public class IconContainedCondition implements Condition {
         return iconName;
     }
 
-    public void save(XMLElement element) {
-        XMLElement child = new XMLElement();
-        child.setName(NAME);
+    public void save(Document doc, Element parent) {
+        Element child = doc.createElement(NAME);
         child.setAttribute(ICON, iconName);
-        element.addChild(child);
+        parent.appendChild(child);
     }
 
-    static Condition load(XMLElement element) {
-        return new IconContainedCondition(element.getStringAttribute(ICON));
+    static Condition load(Element element) {
+        return new IconContainedCondition(FreeMindXml.getStringAttribute(element, ICON));
     }
 }

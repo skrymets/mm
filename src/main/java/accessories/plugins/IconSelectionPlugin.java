@@ -27,6 +27,7 @@ package accessories.plugins;
 
 import freemind.main.FreeMind;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.IconInformation;
 import freemind.modes.common.dialogs.IconSelectionPopupDialog;
@@ -68,7 +69,7 @@ public class IconSelectionPlugin extends MindMapNodeHookAdapter {
         final MapView mapView = controller.getView();
         mapView.scrollNodeToVisible(focussed, 0);
         selectionDialog.pack();
-        Tools.setDialogLocationRelativeTo(selectionDialog, focussed);
+        SwingUtils.setDialogLocationRelativeTo(selectionDialog, focussed);
         selectionDialog.setModal(true);
         selectionDialog.setVisible(true);
         // process result:

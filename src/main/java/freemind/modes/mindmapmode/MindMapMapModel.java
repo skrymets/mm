@@ -25,6 +25,7 @@ import freemind.model.*;
 import freemind.modes.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
 
 import java.awt.*;
 import java.io.*;
@@ -269,7 +270,8 @@ public class MindMapMapModel extends MapAdapter {
         fileout.write("version=\"" + FreeMind.XML_VERSION + "\"");
         fileout.write(">\n");
         fileout.write("<!-- To view this file, download free mind mapping software FreeMind from https://freemind.sourceforge.net -->\n");
-        pRootNode.save(fileout, this.getLinkRegistry(), saveInvisible, true);
+        Document doc = FreeMindXml.newDocument();
+        pRootNode.save(fileout, doc, this.getLinkRegistry(), saveInvisible, true);
         fileout.write("</map>\n");
         fileout.close();
     }

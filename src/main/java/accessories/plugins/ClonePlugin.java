@@ -24,11 +24,12 @@ import accessories.plugins.ClonePasteAction.ClonePropertiesObserver;
 import accessories.plugins.ClonePasteAction.Registration;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.Tools;
-import freemind.main.XMLElement;
 import freemind.model.MindMapNode;
 import freemind.modes.ModeController.NodeLifetimeListener;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.awt.*;
 import java.util.*;
@@ -95,19 +96,19 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
     protected void removeHook() {
         // first deactivate cloning for this node (otherwise, the deactivation will be cloned, too!)
         deregisterCloning();
-        List<MindMapNode> selecteds = Tools.getSingletonList(getNode());
+        List<MindMapNode> selecteds = Collections.singletonList(getNode());
         getMindMapController().addHook(getNode(), selecteds, PLUGIN_LABEL, null);
     }
 
-    public void save(XMLElement xml) {
-        super.save(xml);
+    public void save(Document doc, Element xml) {
+        super.save(doc, xml);
         HashMap<String, Object> values = new HashMap<>();
         values.put(XML_STORAGE_CLONES, getCloneIdsAsString());
         values.put(XML_STORAGE_CLONE_ID, mCloneId);
         String cloneItselfValue = getCloneItselfValue();
         values.put(XML_STORAGE_CLONE_ITSELF, cloneItselfValue);
         log.trace("Saved mCloneItself to {}", cloneItselfValue);
-        saveNameValuePairs(values, xml);
+        saveNameValuePairs(values, doc, xml);
         log.trace("Saved clone plugin");
     }
 
@@ -126,7 +127,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
         return cloneIds.toString();
     }
 
-    public void loadFrom(XMLElement child) {
+    public void loadFrom(Element child) {
         super.loadFrom(child);
         mCloneNodes = null;
         mCloneNodeIds = new HashSet<>();
@@ -322,7 +323,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
             ClonePlugin hook = getHook(cloneNode);
             if (hook == null && cloneNode != null) {
                 // add hook to clone partner:
-                List<MindMapNode> selecteds = Tools.getSingletonList(cloneNode);
+                List<MindMapNode> selecteds = Collections.singletonList(cloneNode);
                 // Transport the data to the plugin, as this method calls
                 // invoke.
                 Properties hookProperties = new Properties();

@@ -5,6 +5,8 @@ import freemind.controller.actions.CalendarMarking;
 import freemind.controller.actions.CalendarMarkings;
 import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
+import freemind.main.ColorUtils;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -85,7 +87,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
                 cancelPressed();
             }
         };
-        Tools.addEscapeActionToDialog(this, cancelAction);
+        SwingUtils.addEscapeActionToDialog(this, cancelAction);
         this.pack();
         if (mController != null) {
             mController.decorateDialog(this, WINDOW_PREFERENCE_STORAGE_PROPERTY);
@@ -223,7 +225,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     public CalendarMarking getCalendarMarking() {
         CalendarMarking marking = new CalendarMarking();
         marking.setName(nameField.getText());
-        marking.setColor(Tools.colorToXml(markerColor.getColor()));
+        marking.setColor(ColorUtils.colorToXml(markerColor.getColor()));
         marking.setStartDate(startDate.getCalendar().getTimeInMillis());
         marking.setEndDate(endDate.getCalendar().getTimeInMillis());
         marking.setFirstOccurence(mFirstOccurenceModel.getNumber().intValue());
@@ -239,7 +241,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 
     public void setCalendarMarking(CalendarMarking pMarking) {
         nameField.setText(pMarking.getName());
-        markerColor.setColor(Tools.xmlToColor(pMarking.getColor()));
+        markerColor.setColor(ColorUtils.xmlToColor(pMarking.getColor()));
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(pMarking.getStartDate());
         startDate.setCalendar(cal);
@@ -273,7 +275,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 
             });
 
-            Tools.setLabelAndMnemonic(jOKButton, getText("ok"));
+            SwingUtils.setLabelAndMnemonic(jOKButton, getText("ok"));
         }
         return jOKButton;
     }
@@ -299,7 +301,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
                     cancelPressed();
                 }
             });
-            Tools.setLabelAndMnemonic(jCancelButton,
+            SwingUtils.setLabelAndMnemonic(jCancelButton,
                     getText(("cancel")));
         }
         return jCancelButton;

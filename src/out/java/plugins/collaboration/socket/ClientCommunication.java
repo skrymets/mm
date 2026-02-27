@@ -66,6 +66,7 @@ import freemind.extensions.PermanentNodeHook;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.modes.MapAdapter;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
@@ -210,7 +211,7 @@ public class ClientCommunication extends CommunicationBase {
                         terminateSocketWithGoodbye();
                     }
                 };
-                Tools.addEscapeActionToDialog(mapChooserDialog, cancelAction);
+                SwingUtils.addEscapeActionToDialog(mapChooserDialog, cancelAction);
                 final JList<String> mapList = new JList<>();
                 mapList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 mapList.setModel(new AbstractListModel<String>() {
@@ -250,7 +251,7 @@ public class ClientCommunication extends CommunicationBase {
                                 new Insets(5, 5, 0, 0), 0, 10));
                 JButton okButton = new JButton(
                         getController().getResourceString("ExtendedFindDialog.ok"));
-                Tools.setLabelAndMnemonic(okButton, null);
+                SwingUtils.setLabelAndMnemonic(okButton, null);
                 okButton.addActionListener(okAction);
                 mapChooserDialog.getContentPane().add(
                         okButton,
@@ -259,7 +260,7 @@ public class ClientCommunication extends CommunicationBase {
                                 new Insets(5, 5, 0, 0), 0, 0));
                 JButton cancelButton = new JButton(
                         getController().getResourceString("ExtendedFindDialog.cancel"));
-                Tools.setLabelAndMnemonic(cancelButton, null);
+                SwingUtils.setLabelAndMnemonic(cancelButton, null);
                 cancelButton.addActionListener(cancelAction);
                 mapChooserDialog.getContentPane().add(
                         cancelButton,

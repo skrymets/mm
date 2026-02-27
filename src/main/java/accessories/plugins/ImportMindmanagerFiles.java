@@ -22,7 +22,6 @@ package accessories.plugins;
 
 import freemind.extensions.ExportHook;
 import freemind.extensions.ModeControllerHookAdapter;
-import freemind.main.XMLParseException;
 import freemind.modes.FreeMindFileDialog;
 import lombok.extern.slf4j.Slf4j;
 
@@ -103,7 +102,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
                 }
                 break;
             }
-        } catch (IOException | XMLParseException e) {
+        } catch (IOException | RuntimeException e) {
             log.error(e.getLocalizedMessage(), e);
         }
     }
