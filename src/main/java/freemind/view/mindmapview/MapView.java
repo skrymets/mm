@@ -31,6 +31,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindMapArrowLink;
 import freemind.modes.ViewAbstraction;
 import freemind.preferences.FreemindPropertyListener;
+import freemind.view.mindmapview.services.ViewerRegistryService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -255,6 +256,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     static final boolean NEED_PREF_SIZE_BUG_FIX = System.getProperty("java.version").compareTo("1.5.0") < 0;
 
     private final ViewFeedback mFeedback;
+    private final ViewerRegistryService viewerRegistryService;
     private static boolean antialiasEdges = false;
     private static boolean antialiasAll = false;
 
@@ -264,6 +266,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         this.model = model;
         mFeedback = pFeedback;
         mCenterNodeTimer = new Timer();
+        viewerRegistryService = new ViewerRegistryService(this);
         // initialize the standard colors.
         if (standardNodeTextColor == null) {
             try {
@@ -377,6 +380,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
      */
     public ViewFeedback getViewFeedback() {
         return mFeedback;
+    }
+
+    public ViewerRegistryService getViewerRegistryService() {
+        return viewerRegistryService;
     }
 
 
@@ -1533,18 +1540,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     }
 
     public NodeView getNodeView(MindMapNode node) {
-        if (node == null) {
-            return null;
-        }
-        Collection<NodeView> viewers = getViewers(node);
-        final Iterator<NodeView> iterator = viewers.iterator();
-        while (iterator.hasNext()) {
-            NodeView candidateView = iterator.next();
-            if (candidateView.getMap() == this) {
-                return candidateView;
-            }
-        }
-        return null;
+        return viewerRegistryService.getNodeView(node);
     }
 
     /*
@@ -1638,34 +1634,20 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         return 0;
     }
 
-    private HashMap<MindMapNode, List<NodeView>> views = null;
-
     public Collection<NodeView> getViewers(MindMapNode mindMapNode) {
-        if (views == null) {
-            views = new HashMap<>();
-        }
-        if (!views.containsKey(mindMapNode)) {
-            views.put(mindMapNode, new ArrayList<>());
-        }
-        return views.get(mindMapNode);
+        return viewerRegistryService.getViewers(mindMapNode);
     }
 
     public void addViewer(MindMapNode mindMapNode, NodeView viewer) {
-        getViewers(mindMapNode).add(viewer);
-        mindMapNode.addTreeModelListener(viewer);
+        viewerRegistryService.addViewer(mindMapNode, viewer);
     }
 
     public void removeViewer(MindMapNode mindMapNode, NodeView viewer) {
-        Collection<NodeView> viewers = getViewers(mindMapNode);
-        viewers.remove(viewer);
-        if (viewers.isEmpty()) {
-            views.remove(mindMapNode);
-        }
-        mindMapNode.removeTreeModelListener(viewer);
+        viewerRegistryService.removeViewer(mindMapNode, viewer);
     }
 
     public void acceptViewVisitor(MindMapNode mindMapNode, NodeViewVisitor visitor) {
-        getViewers(mindMapNode).forEach(visitor::visit);
+        viewerRegistryService.acceptViewVisitor(mindMapNode, visitor);
     }
 
 
