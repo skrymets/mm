@@ -214,6 +214,12 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     private List<Pattern> mPatternsList = new ArrayList<>();
     private long mGetEventIfChangedAfterThisTimeInMillies = 0;
 
+    // Extracted services
+    private MenuConfigService menuConfigService;
+    private FileManagementService fileManagementService;
+    private SelectionService selectionService;
+    private TextOperationService textOperationService;
+
     public MindMapController(Mode mode) {
         super(mode);
         // create action factory:
@@ -239,6 +245,9 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         editingService = new EditingService(mActorFactory);
         hookService = new HookService(mActorFactory);
         attributeService = new AttributeService(mActorFactory);
+        fileManagementService = new FileManagementService(this);
+        selectionService = new SelectionService(this);
+        textOperationService = new TextOperationService(this);
 
         log.info("createIconActions");
         // create standard actions:
@@ -263,6 +272,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
         log.info("MindMapToolBar");
         toolbar = new MindMapToolBar(this);
+
+        menuConfigService = new MenuConfigService(this);
 
         mRegistrations = new ArrayList<>();
 
@@ -414,50 +425,15 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, IOException {
-        log.info("Loading file: {}", url.toString());
-        File file = Tools.urlToFile(url);
-        if (!file.exists()) {
-            throw new FileNotFoundException(Tools.expandPlaceholders(getText("file_not_found"), file.getPath()));
-        }
-        if (!file.canWrite()) {
-            model.setReadOnly(true);
-        } else {
-            // try to lock the map
-            try {
-                String lockingUser = model.tryToLock(file);
-                if (lockingUser != null) {
-                    getFrame().getController().informationMessage(Tools.expandPlaceholders(getText("map_locked_by_open"), file.getName(), lockingUser));
-                    model.setReadOnly(true);
-                } else {
-                    model.setReadOnly(false);
-                }
-            } catch (Exception e) {
-                // Thrown by tryToLock
-                log.error(e.getLocalizedMessage(), e);
-                getFrame().getController().informationMessage(Tools.expandPlaceholders(getText("locking_failed_by_open"), file.getName()));
-                model.setReadOnly(true);
-            }
-        }
-
-        synchronized (model) {
-            MindMapNode root = loadTree(file);
-            if (root != null) {
-                model.setRoot(root);
-            }
-            model.setFile(file);
-            model.setFileTime();
-        }
+        fileManagementService.loadInternally(url, model);
     }
 
     public MindMapNode loadTree(final File pFile) throws IOException {
-        return loadTree(new Tools.FileReaderCreator(pFile));
+        return fileManagementService.loadTree(pFile);
     }
 
     public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator) throws IOException {
-        return getMap().loadTree(pReaderCreator, () -> {
-            int showResult = new OptionalDontShowMeAgainDialog(getFrame().getJFrame(), getSelectedView(), "really_convert_to_current_version2", "confirmation", MindMapController.this, new OptionalDontShowMeAgainDialog.StandardPropertyHandler(getController(), FreeMind.RESOURCES_CONVERT_TO_CURRENT_VERSION), OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED).show().getResult();
-            return (showResult == JOptionPane.OK_OPTION);
-        });
+        return fileManagementService.loadTree(pReaderCreator);
     }
 
     /**
@@ -713,140 +689,47 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     // get/set methods
 
     public void updateMenus(StructuredMenuHolder holder) {
-
-        List<Object> objects = mMenuStructure.getMenuCategoryList().stream().map((mcb) -> (Object) mcb).collect(Collectors.toList());
-
-        processMenuCategory(holder, objects, "");
-        // add hook actions to this holder.
-        // hooks, fc, 1.3.2004:
-        MindMapHookFactory hookFactory = (MindMapHookFactory) getHookFactory();
-        for (HookAction action : hookActions) {
-            AbstractAction hookAction = (AbstractAction) action;
-            String hookName = ((HookAction) hookAction).getHookName();
-            hookFactory.decorateAction(hookName, hookAction);
-            List<String> hookMenuPositions = hookFactory.getHookMenuPositions(hookName);
-            for (String pos : hookMenuPositions) {
-                holder.addMenuItem(hookFactory.getMenuItem(hookName, hookAction), pos);
-            }
-        }
-        // update popup and toolbar:
-        popupmenu.update(holder);
-        toolbar.update(holder);
-
-        // editMenu.add(getExtensionMenu());
-        String formatMenuString = MenuBar.FORMAT_MENU;
-        createPatternSubMenu(holder, formatMenuString);
-
-        // editMenu.add(getIconMenu());
-        addIconsToMenu(holder, MenuBar.INSERT_MENU + "icons");
-
+        menuConfigService.updateMenus(holder);
     }
 
     public void addIconsToMenu(StructuredMenuHolder holder, String iconMenuString) {
-        JMenu iconMenu = holder.addMenu(new JMenu(getText("icon_menu")), iconMenuString + "/.");
-        holder.addAction(removeLastIconAction, iconMenuString + "/removeLastIcon");
-        holder.addAction(removeAllIconsAction, iconMenuString + "/removeAllIcons");
-        holder.addSeparator(iconMenuString);
-        for (int i = 0; i < iconActions.size(); ++i) {
-            holder.addAction(iconActions.get(i), iconMenuString + "/" + i);
-        }
+        menuConfigService.addIconsToMenu(holder, iconMenuString);
     }
 
     public void createPatternSubMenu(StructuredMenuHolder holder, String formatMenuString) {
-        for (int i = 0; i < patterns.length; ++i) {
-            JMenuItem item = holder.addAction(patterns[i], formatMenuString + "patterns/patterns/" + i);
-            item.setAccelerator(KeyStroke.getKeyStroke(getFrame().getAdjustableProperty("keystroke_apply_pattern_" + (i + 1))));
-        }
+        menuConfigService.createPatternSubMenu(holder, formatMenuString);
     }
 
     public MenuStructure updateMenusFromXml(InputStream in) {
-        MenuStructure menus = (MenuStructure) XmlBindingTools.getInstance().unMarshall(in);
-        if (menus == null) {
-            throw new IllegalArgumentException("Menu structure could not be read.");
-        }
-        return menus;
+        return menuConfigService.updateMenusFromXml(in);
     }
 
     public void processMenuCategory(StructuredMenuHolder holder, List<Object> list, String category) {
-        ButtonGroup buttonGroup = null;
-        for (Object obj : list) {
-            // Unwrap Base wrapper if present (JiBX generated choice wrapper)
-            Object unwrapped = unwrapBaseObject(obj);
-
-            // Processes menu categories, actions, and separators recursively
-            if (unwrapped instanceof MenuCategoryBase) {
-                MenuCategoryBase cat = (MenuCategoryBase) unwrapped;
-                String newCategory = category + "/" + cat.getName();
-                holder.addCategory(newCategory);
-                if (cat instanceof MenuSubmenu) {
-                    MenuSubmenu submenu = (MenuSubmenu) cat;
-                    holder.addMenu(new JMenu(getText(submenu.getNameRef())), newCategory + "/.");
-                }
-
-                List<?> baseList = cat.getBaseList();
-                if (CollectionUtils.isNotEmpty(baseList)) {
-                    List<Object> objects = baseList.stream().map((mcb) -> (Object) mcb).collect(toList());
-                    processMenuCategory(holder, objects, newCategory);
-                }
-            } else if (unwrapped instanceof MenuActionBase) {
-                MenuActionBase action = (MenuActionBase) unwrapped;
-                String field = action.getField();
-                String name = action.getName();
-                if (name == null) {
-                    name = field;
-                }
-                String keystroke = action.getKeyRef();
-                try {
-                    Action theAction = (Action) MindMapUtils.getField(new Object[]{this, getController()}, field);
-                    if (theAction == null) {
-                        log.warn("Menu action field '{}' resolved to null", field);
-                        continue;
-                    }
-                    String theCategory = category + "/" + name;
-                    if (unwrapped instanceof MenuCheckedAction) {
-                        addCheckBox(holder, theCategory, theAction, keystroke);
-                    } else if (unwrapped instanceof MenuRadioAction) {
-                        final JRadioButtonMenuItem item = (JRadioButtonMenuItem) addRadioItem(holder, theCategory, theAction, keystroke, ((MenuRadioAction) unwrapped).getSelected());
-                        if (buttonGroup == null) {
-                            buttonGroup = new ButtonGroup();
-                        }
-                        buttonGroup.add(item);
-
-                    } else {
-                        add(holder, theCategory, theAction, keystroke);
-                    }
-                } catch (Exception e) {
-                    log.error(e.getLocalizedMessage(), e);
-                }
-            } else if (unwrapped instanceof MenuSeparator) {
-                holder.addSeparator(category);
-            }
-            /* else exception */
-        }
+        menuConfigService.processMenuCategory(holder, list, category);
     }
 
-    /**
-     * Unwrap JiBX Base wrapper object to get the actual menu element.
-     * The Base class is a choice wrapper generated by JiBX for xs:choice elements.
-     */
-    private Object unwrapBaseObject(Object obj) {
-        if (obj instanceof Base) {
-            Base base = (Base) obj;
-            if (base.ifMenuCategory()) {
-                return base.getMenuCategory();
-            } else if (base.ifMenuSubmenu()) {
-                return base.getMenuSubmenu();
-            } else if (base.ifMenuAction()) {
-                return base.getMenuAction();
-            } else if (base.ifMenuCheckedAction()) {
-                return base.getMenuCheckedAction();
-            } else if (base.ifMenuRadioAction()) {
-                return base.getMenuRadioAction();
-            } else if (base.ifMenuSeparator()) {
-                return base.getMenuSeparator();
-            }
-        }
-        return obj;
+    public MenuStructure getMenuStructure() {
+        return mMenuStructure;
+    }
+
+    public List<HookAction> getHookActions() {
+        return hookActions;
+    }
+
+    public MindMapPopupMenu getPopupMenuInternal() {
+        return popupmenu;
+    }
+
+    public JMenuItem addMenuItem(StructuredMenuHolder holder, String category, Action action, String keystroke) {
+        return add(holder, category, action, keystroke);
+    }
+
+    public JMenuItem addCheckBoxMenuItem(StructuredMenuHolder holder, String category, Action action, String keystroke) {
+        return addCheckBox(holder, category, action, keystroke);
+    }
+
+    public JMenuItem addRadioMenuItem(StructuredMenuHolder holder, String category, Action action, String keystroke, boolean isSelected) {
+        return addRadioItem(holder, category, action, keystroke, isSelected);
     }
 
     public JPopupMenu getPopupMenu() {
@@ -924,7 +807,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return getToolBar();
     }
 
-    MindMapToolBar getToolBar() {
+    public MindMapToolBar getToolBar() {
         return toolbar;
     }
 
@@ -1221,47 +1104,15 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void setLinkByFileChooser() {
-        String relative = getLinkByFileChooser(null);
-        if (relative != null) {
-            setLink(getSelected(), relative);
-        }
+        fileManagementService.setLinkByFileChooser();
     }
 
     public void setImageByFileChooser() {
-        ExampleFileFilter filter = new ExampleFileFilter();
-        filter.addExtension("jpg");
-        filter.addExtension("jpeg");
-        filter.addExtension("png");
-        filter.addExtension("gif");
-        filter.setDescription("JPG, PNG and GIF Images");
-
-        String relative = getLinkByFileChooser(filter);
-        if (relative != null) {
-            String strText = "<html><body><img src=\"" + relative + "\"/></body></html>";
-            setNodeText(getSelected(), strText);
-        }
+        fileManagementService.setImageByFileChooser();
     }
 
     protected String getLinkByFileChooser(FileFilter fileFilter) {
-        String relative = null;
-        File input;
-        FreeMindFileDialog chooser = getFileChooser(fileFilter);
-        if (getMap().getFile() == null) {
-            JOptionPane.showMessageDialog(getFrame().getContentPane(), getText("not_saved_for_link_error"), "FreeMind", JOptionPane.WARNING_MESSAGE);
-            return null;
-            // In the previous version Freemind automatically displayed save
-            // dialog. It happened very often, that user took this save
-            // dialog to be an open link dialog; as a result, the new map
-            // overwrote the linked map.
-
-        }
-
-        int returnVal = chooser.showOpenDialog(getFrame().getContentPane());
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            input = chooser.getSelectedFile();
-            relative = Tools.fileToRelativeUrlString(input, getMap().getFile());
-        }
-        return relative;
+        return fileManagementService.getLinkByFileChooser(fileFilter);
     }
 
     public void loadURL(String relative) {
@@ -1293,22 +1144,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     // ///////////////////////////////////////////////////////////
     // ///////////////////////////////////////////////////////////
     public void plainClick(MouseEvent e) {
-        /* perform action only if one selected node. */
-        if (getSelecteds().size() != 1) {
-            return;
-        }
-        final MainView component = (MainView) e.getComponent();
-        if (component.isInFollowLinkRegion(e.getX())) {
-            loadURL();
-        } else {
-            MindMapNode node = (component).getNodeView().getModel();
-            if (!node.hasChildren()) {
-                // then emulate the plain click.
-                doubleClick(e);
-                return;
-            }
-            toggleFolded();
-        }
+        selectionService.plainClick(e);
     }
 
     @Override
@@ -1363,78 +1199,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      *
      */
     public void splitNode(MindMapNode node, int caretPosition, String newText) {
-        if (node.isRoot()) {
-            return;
-        }
-        // If there are children, they go to the node below
-        String futureText = newText != null ? newText : node.toString();
-
-        String[] strings = getContent(futureText, caretPosition);
-        if (strings == null) { // do nothing
-            return;
-        }
-        String newUpperContent = strings[0];
-        String newLowerContent = strings[1];
-        setNodeText(node, newUpperContent);
-
-        MindMapNode parent = node.getParentNode();
-        MindMapNode lowerNode = addNewNode(parent, parent.getChildPosition(node) + 1, node.isLeft());
-        lowerNode.setColor(node.getColor());
-        lowerNode.setFont(node.getFont());
-        setNodeText(lowerNode, newLowerContent);
-
-    }
-
-    private String[] getContent(String text, int pos) {
-        if (pos <= 0) {
-            return null;
-        }
-        String[] strings = new String[2];
-        if (text.startsWith("<html>")) {
-            HTMLEditorKit kit = new HTMLEditorKit();
-            HTMLDocument doc = new HTMLDocument();
-            StringReader buf = new StringReader(text);
-            try {
-                kit.read(buf, doc, 0);
-                final char[] firstText = doc.getText(0, pos).toCharArray();
-                int firstStart = 0;
-                int firstLen = pos;
-                while ((firstStart < firstLen) && (firstText[firstStart] <= ' ')) {
-                    firstStart++;
-                }
-                while ((firstStart < firstLen) && (firstText[firstLen - 1] <= ' ')) {
-                    firstLen--;
-                }
-                int secondStart = 0;
-                int secondLen = doc.getLength() - pos;
-                final char[] secondText = doc.getText(pos, secondLen).toCharArray();
-                while ((secondStart < secondLen) && (secondText[secondStart] <= ' ')) {
-                    secondStart++;
-                }
-                while ((secondStart < secondLen) && (secondText[secondLen - 1] <= ' ')) {
-                    secondLen--;
-                }
-                if (firstStart == firstLen || secondStart == secondLen) {
-                    return null;
-                }
-                StringWriter out = new StringWriter();
-                new FixedHTMLWriter(out, doc, firstStart, firstLen - firstStart).write();
-                strings[0] = out.toString();
-                out = new StringWriter();
-                new FixedHTMLWriter(out, doc, pos + secondStart, secondLen - secondStart).write();
-                strings[1] = out.toString();
-                return strings;
-            } catch (IOException | BadLocationException e) {
-                log.error(e.getLocalizedMessage(), e);
-            }
-        } else {
-            if (pos >= text.length()) {
-                return null;
-            }
-            strings[0] = text.substring(0, pos);
-            strings[1] = text.substring(pos);
-        }
-        return strings;
+        textOperationService.splitNode(node, caretPosition, newText);
     }
 
     protected void updateNode(MindMapNode node) {
@@ -1467,77 +1232,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void doubleClick(MouseEvent e) {
-        /* perform action only if one selected node. */
-        if (getSelecteds().size() != 1) {
-            return;
-        }
-        MindMapNode node = ((MainView) e.getComponent()).getNodeView().getModel();
-        // edit the node only if the node is a leaf (fc 0.7.1), or the root node
-        // (fc 0.9.0)
-        if (!e.isAltDown() && !e.isControlDown() && !e.isShiftDown() && !e.isPopupTrigger() && e.getButton() == MouseEvent.BUTTON1 && (node.getLink() == null)) {
-            edit(null, false, false);
-        }
+        selectionService.doubleClick(e);
     }
 
     public boolean extendSelection(MouseEvent e) {
-        NodeView newlySelectedNodeView = ((MainView) e.getComponent()).getNodeView();
-        // MindMapNode newlySelectedNode = newlySelectedNodeView.getModel();
-        boolean extend = e.isControlDown();
-        // Fixes Cannot select multiple single nodes *
-        // https://sourceforge.net/tracker/?func=detail&atid=107118&aid=1675829&group_id=7118
-        if (SystemUtils.IS_OS_MAC) {
-            extend |= e.isMetaDown();
-        }
-        boolean range = e.isShiftDown();
-        boolean branch = e.isAltGraphDown() || e.isAltDown();
-        /*
-         * windows alt,
-         * linux altgraph
-         * ....
-         */
-        boolean retValue = false;
-
-        if (extend || range || branch || !getView().isSelected(newlySelectedNodeView)) {
-            if (!range) {
-                if (extend) {
-                    getView().toggleSelected(newlySelectedNodeView);
-                } else {
-                    select(newlySelectedNodeView);
-                }
-                retValue = true;
-            } else {
-                retValue = getView().selectContinuous(newlySelectedNodeView);
-                // /* fc, 25.1.2004: replace getView by controller methods.*/
-                // if (newlySelectedNodeView != getView().getSelected() &&
-                // newlySelectedNodeView.isSiblingOf(getView().getSelected())) {
-                // getView().selectContinuous(newlySelectedNodeView);
-                // retValue = true;
-                // } else {
-                // /* if shift was down, but no range can be selected, then the
-                // new node is simply selected: */
-                // if(!getView().isSelected(newlySelectedNodeView)) {
-                // getView().toggleSelected(newlySelectedNodeView);
-                // retValue = true;
-                // }
-            }
-            if (branch) {
-                getView().selectBranch(newlySelectedNodeView, extend);
-                retValue = true;
-            }
-        }
-
-        if (retValue) {
-            e.consume();
-
-            // Display link in status line
-            String link = newlySelectedNodeView.getModel().getLink();
-            if (link != null) {
-                getController().getFrame().setStatusText(link);
-            }
-        }
-        log.trace("MouseEvent: extend:{}, range:{}, branch:{}, event:{}, retValue:{}", extend, range, branch, e, retValue);
-        obtainFocusForSelected();
-        return retValue;
+        return selectionService.extendSelection(e);
     }
 
     public void registerMouseWheelEventHandler(MouseWheelEventHandler handler) {

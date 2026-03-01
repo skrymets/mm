@@ -29,7 +29,6 @@ import freemind.controller.actions.CloseAction;
 import freemind.controller.actions.DocumentationAction;
 import freemind.controller.actions.KeyDocumentationAction;
 import freemind.controller.actions.LicenseAction;
-import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.controller.actions.MoveToRootAction;
 import freemind.controller.actions.NavigationMoveMapLeftAction;
 import freemind.controller.actions.NavigationMoveMapRightAction;
@@ -51,7 +50,10 @@ import freemind.controller.actions.ToggleToolbarAction;
 import freemind.controller.actions.ZoomInAction;
 import freemind.controller.actions.ZoomOutAction;
 import freemind.controller.filter.FilterController;
+import freemind.controller.services.DialogService;
 import freemind.controller.services.PrintService;
+import freemind.controller.services.SessionService;
+import freemind.controller.services.TabbedPaneService;
 import freemind.controller.services.ZoomService;
 import freemind.main.*;
 import freemind.model.FilterContext;
@@ -71,23 +73,15 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
-import java.io.File;
-import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.List;
 
 import static java.lang.String.valueOf;
-import static java.util.Collections.swap;
-import static java.util.stream.IntStream.range;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Provides the methods to edit/change a Node.
@@ -97,8 +91,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class Controller implements MapModuleChangeObserver, FilterContext {
 
     private static final String FREEMIND = "FreeMind";
-    private static final String TRUE = "true";
-    private static final String FALSE = "false";
     private final HashSet<MapTitleChangeListener> mMapTitleChangeListenerSet = new HashSet<>();
     private final HashSet<MapTitleContributor> mMapTitleContributorSet = new HashSet<>();
 
@@ -107,7 +99,10 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
      * Used for MAC!!!
      */
     public static LocalLinkConverter localDocumentationLinkConverter;
-    private static final JColorChooser colorChooser = new JColorChooser();
+    @Getter
+    private TabbedPaneService tabbedPaneService;
+    @Getter
+    private SessionService sessionService;
     private LastOpenedList lastOpened; // A list of the path names of all the maps
 
     // that were opened in the last time
@@ -191,11 +186,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     public PropertyAction propertyAction;
     public OpenURLAction freemindUrl;
 
-    private List<MapModule> tabbedPaneMapModules;
-    @Getter
-    private JTabbedPane tabbedPane;
-
-    private boolean mTabbedPaneSelectionUpdate = true;
 
     public Controller(FreeMindMain frame) {
         this.frame = frame;
@@ -206,6 +196,8 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
 
         printService = new PrintService(frame);
         zoomService = new ZoomService();
+        tabbedPaneService = new TabbedPaneService(this);
+        sessionService = new SessionService(this);
 
         nodeMouseMotionListener = new NodeMouseMotionListener(this);
         nodeMotionListener = new NodeMotionListener(this);
@@ -431,23 +423,11 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
      * Static JColorChooser to have the recent colors feature.
      */
     static public JColorChooser getCommonJColorChooser() {
-        return colorChooser;
+        return DialogService.getCommonJColorChooser();
     }
 
     public static Color showCommonJColorChooserDialog(Component component, String title, Color initialColor) throws HeadlessException {
-
-        final JColorChooser pane = getCommonJColorChooser();
-        pane.setColor(initialColor);
-
-        ColorTracker ok = new ColorTracker(pane);
-        JDialog dialog = JColorChooser.createDialog(component, title, true, pane, ok, null);
-        dialog.addWindowListener(new Closer());
-        dialog.addComponentListener(new DisposeOnClose());
-
-        dialog.setVisible(true);
-        // blocks until user brings dialog down...
-
-        return ok.getColor();
+        return DialogService.showCommonJColorChooserDialog(component, title, initialColor);
     }
 
     public boolean isMapModuleChangeAllowed(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
@@ -600,30 +580,19 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     }
 
     public void informationMessage(Object message) {
-        showMessageDialog(getFrame().getContentPane(), message.toString(), FREEMIND, JOptionPane.INFORMATION_MESSAGE);
+        DialogService.informationMessage(getFrame().getContentPane(), message);
     }
 
     public void informationMessage(Object message, JComponent component) {
-        showMessageDialog(component, message.toString(), FREEMIND, JOptionPane.INFORMATION_MESSAGE);
+        DialogService.informationMessage(component, message);
     }
 
     public void errorMessage(Object message) {
-        String myMessage;
-
-        if (message != null) {
-            myMessage = message.toString();
-        } else {
-            myMessage = getResourceString("undefined_error");
-            if (myMessage == null) {
-                myMessage = "Undefined error";
-            }
-        }
-        showMessageDialog(getFrame().getContentPane(), myMessage, FREEMIND, JOptionPane.ERROR_MESSAGE);
-
+        DialogService.errorMessage(getFrame().getContentPane(), message, getResourceString("undefined_error"));
     }
 
     public void errorMessage(Object message, JComponent component) {
-        showMessageDialog(component, message.toString(), FREEMIND, JOptionPane.ERROR_MESSAGE);
+        DialogService.errorMessage(component, message);
     }
 
     public void obtainFocusForSelected() {
@@ -656,36 +625,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
      * Set the Frame title with mode and file if exist
      */
     public void setTitle() {
-        Object[] messageArguments = {getMode().toLocalizedString()};
-        MessageFormat formatter = new MessageFormat(getResourceString("mode_title"));
-
-        String title = formatter.format(messageArguments);
-
-        String rawTitle = "";
-        MindMap model = null;
-        MapModule mapModule = getMapModule();
-        if (mapModule != null) {
-            model = mapModule.getModel();
-            rawTitle = mapModule.toString();
-            title = rawTitle
-                    + (model.isSaved() ? "" : "*")
-                    + " - "
-                    + title
-                    + (model.isReadOnly() ? " ("
-                    + getResourceString("read_only") + ")" : "");
-            File file = model.getFile();
-            if (file != null) {
-                title += " " + file.getAbsolutePath();
-            }
-            for (MapTitleContributor contributor : mMapTitleContributorSet) {
-                title = contributor.getMapTitle(title, mapModule, model);
-            }
-
-        }
-        getFrame().setTitle(title);
-        for (MapTitleChangeListener listener : mMapTitleChangeListenerSet) {
-            listener.setMapTitle(rawTitle, mapModule, model);
-        }
+        sessionService.setTitle(mMapTitleContributorSet, mMapTitleChangeListenerSet);
     }
 
     public void registerMapTitleChangeListener(MapTitleChangeListener pMapTitleChangeListener) {
@@ -731,76 +671,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     //
 
     public void quit() {
-        String currentMapRestorable = (getModel() != null) ? getModel().getRestorable() : null;
-        storeOptionSplitPanePosition();
-        // collect all maps:
-        List<String> restorables = new ArrayList<>();
-        // move to first map in the window.
-        List<MapModule> mapModuleList = getMapModuleManager().getMapModuleList();
-        if (!mapModuleList.isEmpty()) {
-            String displayName = mapModuleList.get(0)
-                    .getDisplayName();
-            getMapModuleManager().changeToMapModule(displayName);
-        }
-        while (!mapModuleList.isEmpty()) {
-            if (getMapModule() != null) {
-                StringBuffer restorableBuffer = new StringBuffer();
-                boolean closingNotCancelled = getMapModuleManager().close(
-                        false, restorableBuffer);
-                if (!closingNotCancelled) {
-                    return;
-                }
-                if (restorableBuffer.length() != 0) {
-                    String restorableString = restorableBuffer.toString();
-                    log.info("Closed the map {}", restorableString);
-                    restorables.add(restorableString);
-                }
-            } else {
-                // map module without view open.
-                // FIXME: This seems to be a bad hack. correct me!
-                getMapModuleManager().nextMapModule();
-            }
-        }
-        // store the last tab session:
-        int index = 0;
-
-        String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
-        management.setLastFocussedTab(-1);
-        management.clearTabIndices();
-        for (String restorable : restorables) {
-            MindmapLastStateStorage storage = management.getStorage(restorable);
-            if (storage != null) {
-                storage.setTabIndex(index);
-            }
-            if (Objects.equals(restorable, currentMapRestorable)) {
-                management.setLastFocussedTab(index);
-            }
-            index++;
-        }
-        setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE, management.getXml());
-
-        String lastOpenedString = lastOpened.save();
-        setProperty("lastOpened", lastOpenedString);
-        getFrame().setProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED,
-                currentMapRestorable != null ? currentMapRestorable : "");
-        // getFrame().setProperty("menubarVisible",menubarVisible ? "true" :
-        // "false");
-        // ^ Not allowed in application because of problems with not working key
-        // shortcuts
-        setProperty("toolbarVisible", toolbarVisible ? TRUE : FALSE);
-        final int winState = getFrame().getWinState();
-        if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {
-            setProperty("appwindow_x", valueOf(getFrame().getWinX()));
-            setProperty("appwindow_y", valueOf(getFrame().getWinY()));
-            setProperty("appwindow_width", valueOf(getFrame().getWinWidth()));
-            setProperty("appwindow_height", valueOf(getFrame().getWinHeight()));
-        }
-        setProperty("appwindow_state", valueOf(winState));
-        // Stop edit server!
-        getFrame().saveProperties(true);
-        // save to properties
-        System.exit(0);
+        sessionService.quit();
     }
 
     // ////////////
@@ -867,129 +738,15 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     }
 
     public void addTabbedPane(JTabbedPane pTabbedPane) {
-        tabbedPane = pTabbedPane;
-        tabbedPaneMapModules = new ArrayList<>();
-        tabbedPane.addChangeListener(new ChangeListener() {
-
-            public synchronized void stateChanged(ChangeEvent pE) {
-                tabSelectionChanged();
-            }
-
-        });
-        getMapModuleManager().addListener(new MapModuleChangeObserver() {
-
-            public void afterMapModuleChange(MapModule pOldMapModule, Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
-                int selectedIndex = tabbedPane.getSelectedIndex();
-                if (pNewMapModule == null) {
-                    return;
-                }
-                // search, if already present:
-                for (int i = 0; i < tabbedPaneMapModules.size(); ++i) {
-                    if (tabbedPaneMapModules.get(i) == pNewMapModule) {
-                        if (selectedIndex != i) {
-                            tabbedPane.setSelectedIndex(i);
-                        }
-                        return;
-                    }
-                }
-                // create new tab:
-                tabbedPaneMapModules.add(pNewMapModule);
-                tabbedPane.addTab(pNewMapModule.toString(), new JPanel());
-                tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-            }
-
-            public void beforeMapModuleChange(MapModule pOldMapModule,
-                                              Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
-            }
-
-            public boolean isMapModuleChangeAllowed(MapModule pOldMapModule,
-                                                    Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
-                return true;
-            }
-
-            public void numberOfOpenMapInformation(int pNumber, int pIndex) {
-            }
-
-            public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
-                for (int i = 0; i < tabbedPaneMapModules.size(); ++i) {
-                    if (tabbedPaneMapModules.get(i) == pOldMapModule) {
-                        log.trace("Remove tab:{} with title:{}", i, tabbedPane.getTitleAt(i));
-                        mTabbedPaneSelectionUpdate = false;
-                        tabbedPane.removeTabAt(i);
-                        tabbedPaneMapModules.remove(i);
-                        mTabbedPaneSelectionUpdate = true;
-                        tabSelectionChanged();
-                        return;
-                    }
-                }
-            }
-        });
-
-        registerMapTitleChangeListener((pNewMapTitle, pMapModule, pModel) ->
-                range(0, tabbedPaneMapModules.size())
-                        .filter(i -> tabbedPaneMapModules.get(i) == pMapModule)
-                        .forEachOrdered(i -> tabbedPane.setTitleAt(i, pNewMapTitle + ((pModel.isSaved()) ? "" : "*"))));
-
+        tabbedPaneService.addTabbedPane(pTabbedPane);
     }
 
-    private void tabSelectionChanged() {
-        if (!mTabbedPaneSelectionUpdate)
-            return;
-
-        int selectedIndex = tabbedPane.getSelectedIndex();
-        // display nothing on the other tabs:
-        range(0, tabbedPane.getTabCount())
-                .filter(j -> j != selectedIndex)
-                .forEachOrdered(j -> tabbedPane.setComponentAt(j, new JPanel()));
-        if (selectedIndex < 0) {
-            // nothing selected. probably, the last map was closed
-            return;
-        }
-        MapModule module = tabbedPaneMapModules.get(selectedIndex);
-        log.trace("Selected index of tab is now: {} with title:{}", selectedIndex, module.toString());
-        if (module != getMapModule()) {
-            // we have to change the active map actively:
-            getMapModuleManager().changeToMapModule(module.toString());
-        }
-        // mScrollPane could be set invisible by JTabbedPane
-        frame.getScrollPane().setVisible(true);
-        tabbedPane.setComponentAt(selectedIndex, frame.getContentComponent());
-        // double call, due to mac strangeness.
-        obtainFocusForSelected();
+    public JTabbedPane getTabbedPane() {
+        return tabbedPaneService.getTabbedPane();
     }
 
     public void moveTab(int src, int dst) {
-        // snippet taken from
-        // http://www.exampledepot.com/egs/javax.swing/tabbed_TpMove.html
-        // Get all the properties
-        Component comp = tabbedPane.getComponentAt(src);
-        String label = tabbedPane.getTitleAt(src);
-        Icon icon = tabbedPane.getIconAt(src);
-        Icon iconDis = tabbedPane.getDisabledIconAt(src);
-        String tooltip = tabbedPane.getToolTipTextAt(src);
-        boolean enabled = tabbedPane.isEnabledAt(src);
-        int keycode = tabbedPane.getMnemonicAt(src);
-        int mnemonicLoc = tabbedPane.getDisplayedMnemonicIndexAt(src);
-        Color fg = tabbedPane.getForegroundAt(src);
-        Color bg = tabbedPane.getBackgroundAt(src);
-
-        mTabbedPaneSelectionUpdate = false;
-        // Remove the tab
-        tabbedPane.remove(src);
-        // Add a new tab
-        tabbedPane.insertTab(label, icon, comp, tooltip, dst);
-        swap(tabbedPaneMapModules, src, dst);
-        getMapModuleManager().swapModules(src, dst);
-        tabbedPane.setSelectedIndex(dst);
-        mTabbedPaneSelectionUpdate = true;
-
-        // Restore all properties
-        tabbedPane.setDisabledIconAt(dst, iconDis);
-        tabbedPane.setEnabledAt(dst, enabled);
-        tabbedPane.setMnemonicAt(dst, keycode);
-        tabbedPane.setDisplayedMnemonicIndexAt(dst, mnemonicLoc);
-        tabbedPane.setForegroundAt(dst, fg);
-        tabbedPane.setBackgroundAt(dst, bg);
+        tabbedPaneService.moveTab(src, dst);
     }
 
     private JOptionalSplitPane mOptionalSplitPane = null;
@@ -1026,7 +783,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         }
     }
 
-    private void storeOptionSplitPanePosition() {
+    public void storeOptionSplitPanePosition() {
         if (mOptionalSplitPane != null) {
             setProperty(FreeMind.RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION, "" + mOptionalSplitPane.getDividerPosition());
         }
