@@ -76,7 +76,7 @@ public class DeleteChildActor extends XmlActorAdapter {
         map.getLinkRegistry()
                 .deregisterLinkTarget(selectedNode);
         // deselect
-        MapView view = getExMapFeedback().getViewAbstraction();
+        MapView view = getExMapFeedback().getMapView();
         if (view != null) {
             NodeView nodeView = view.getNodeView(selectedNode);
             view.deselect(nodeView);

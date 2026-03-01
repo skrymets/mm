@@ -106,7 +106,7 @@ public interface MapFeedback {
     /**
      * @return the MapView, if a view is attached, null otherwise.
      */
-    MapView getViewAbstraction();
+    MapView getMapView();
 
     /**
      * @return null, if no feedback is available.

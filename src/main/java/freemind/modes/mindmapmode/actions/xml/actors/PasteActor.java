@@ -355,7 +355,7 @@ public class PasteActor extends XmlActorAdapter {
             File mindmapFile = getExMapFeedback().getMap().getFile();
             String imgfile;
             if (mindmapFile == null) {
-                JOptionPane.showMessageDialog(getExMapFeedback().getViewAbstraction().getSelected(), getExMapFeedback().getResourceString("map_not_saved"), "FreeMind", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(getExMapFeedback().getMapView().getSelected(), getExMapFeedback().getResourceString("map_not_saved"), "FreeMind", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             File parentFile = mindmapFile.getParentFile();

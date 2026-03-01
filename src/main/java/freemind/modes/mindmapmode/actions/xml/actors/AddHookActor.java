@@ -255,15 +255,15 @@ public class AddHookActor extends XmlActorAdapter {
     /**
      */
     private NodeView getNodeView(MindMapNode pNode) {
-        return getViewAbstraction().getNodeView(pNode);
+        return getMapView().getNodeView(pNode);
     }
 
-    protected MapView getViewAbstraction() {
-        MapView viewAbstraction = getExMapFeedback().getViewAbstraction();
-        if (viewAbstraction == null) {
-            throw new IllegalArgumentException("View abstraction not available.");
+    protected MapView getMapView() {
+        MapView mapView = getExMapFeedback().getMapView();
+        if (mapView == null) {
+            throw new IllegalArgumentException("MapView not available.");
         }
-        return viewAbstraction;
+        return mapView;
     }
 
     /**
@@ -275,7 +275,7 @@ public class AddHookActor extends XmlActorAdapter {
      */
     private void finishInvocation(MindMapNode focussed, List<MindMapNode> selecteds, MindMapNode adaptedFocussedNode, Collection<MindMapNode> destinationNodes) {
         // restore selection only, if nothing selected.
-        if (getViewAbstraction().getSelecteds().isEmpty()) {
+        if (getMapView().getSelecteds().isEmpty()) {
             // select all destination nodes:
             getExMapFeedback().select(focussed, selecteds);
         }

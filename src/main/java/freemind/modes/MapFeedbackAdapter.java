@@ -212,7 +212,7 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
     }
 
     @Override
-    public MapView getViewAbstraction() {
+    public MapView getMapView() {
         return null;
     }
 

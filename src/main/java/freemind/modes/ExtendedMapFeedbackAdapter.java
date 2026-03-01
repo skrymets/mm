@@ -231,7 +231,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
 
     @Override
     public Transferable cut() {
-        return cut(getViewAbstraction().getSelectedNodesSortedByY());
+        return cut(getMapView().getSelectedNodesSortedByY());
     }
 
     @Override
@@ -246,7 +246,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
 
     @Override
     public void toggleFolded() {
-        getActorFactory().getToggleFoldedActor().toggleFolded(getViewAbstraction().getSelecteds().listIterator());
+        getActorFactory().getToggleFoldedActor().toggleFolded(getMapView().getSelecteds().listIterator());
     }
 
     @Override

@@ -1061,10 +1061,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     /* (non-Javadoc)
-     * @see freemind.modes.MapFeedback#getViewAbstraction()
+     * @see freemind.modes.MapFeedback#getMapView()
      */
     @Override
-    public MapView getViewAbstraction() {
+    public MapView getMapView() {
         return getView();
     }
 
