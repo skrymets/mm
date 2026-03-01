@@ -170,7 +170,7 @@ public class NodeViewFactory {
             }
         }
 
-        map.addViewer(model, newView);
+        map.getViewerRegistryService().addViewer(model, newView);
         newView.update();
         fireNodeViewCreated(newView);
         return newView;

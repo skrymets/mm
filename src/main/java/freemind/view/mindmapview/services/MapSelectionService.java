@@ -272,7 +272,7 @@ public class MapSelectionService {
         selected.clear();
         for (NodeView oldNodeView : selectedNodes) {
             if (oldNodeView.isContentVisible()) {
-                NodeView newNodeView = mapView.getNodeView(oldNodeView.getModel());
+                NodeView newNodeView = mapView.getViewerRegistryService().getNodeView(oldNodeView.getModel());
                 if (newNodeView != null) {
                     selected.add(newNodeView);
                 }

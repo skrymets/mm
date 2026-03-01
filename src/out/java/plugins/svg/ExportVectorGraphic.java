@@ -91,7 +91,7 @@ public class ExportVectorGraphic extends ExportHook {
             view.preparePrinting();
             Rectangle innerBounds = null;
 
-            for (NodeView nodeView : view.getViewers(pNode)) {
+            for (NodeView nodeView : view.getViewerRegistryService().getViewers(pNode)) {
                 if (innerBounds == null) {
                     innerBounds = nodeView.getInnerBounds();
                 } else {
@@ -104,7 +104,7 @@ public class ExportVectorGraphic extends ExportHook {
             //
             // Generate SVG content
             //
-            for (NodeView nodeView : view.getViewers(pNode)) {
+            for (NodeView nodeView : view.getViewerRegistryService().getViewers(pNode)) {
                 nodeView.print(g2d);
             }
         } finally {

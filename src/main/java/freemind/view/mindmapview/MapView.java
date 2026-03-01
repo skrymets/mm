@@ -605,9 +605,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         scrollRectToVisible(r);
     }
 
-    public NodeView getNodeView(MindMapNode node) {
-        return viewerRegistryService.getNodeView(node);
-    }
 
     /*
      * (non-Javadoc)
@@ -635,21 +632,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         return geometryService.getViewPosition();
     }
 
-    public Collection<NodeView> getViewers(MindMapNode mindMapNode) {
-        return viewerRegistryService.getViewers(mindMapNode);
-    }
-
-    public void addViewer(MindMapNode mindMapNode, NodeView viewer) {
-        viewerRegistryService.addViewer(mindMapNode, viewer);
-    }
-
-    public void removeViewer(MindMapNode mindMapNode, NodeView viewer) {
-        viewerRegistryService.removeViewer(mindMapNode, viewer);
-    }
-
-    public void acceptViewVisitor(MindMapNode mindMapNode, NodeViewVisitor visitor) {
-        viewerRegistryService.acceptViewVisitor(mindMapNode, visitor);
-    }
 
 
 }

@@ -82,7 +82,7 @@ public class BlinkingNodeHook extends PermanentMindMapNodeHookAdapter {
             SwingUtilities.invokeLater(() -> {
                 if (getNode() == null || getController().isBlocked())
                     return;
-                getController().getView().acceptViewVisitor(getNode(), view -> {
+                getController().getView().getViewerRegistryService().acceptViewVisitor(getNode(), view -> {
                     if (!view.isVisible()) {
                         return;
                     }

@@ -125,7 +125,7 @@ public class ClickableImageCreator {
         if (mapView == null) {
             return;
         }
-        final NodeView nodeView = mapView.getNodeView(node);
+        final NodeView nodeView = mapView.getViewerRegistryService().getNodeView(node);
         if (nodeView != null) {
             AreaHolder holder = new AreaHolder();
             holder.title = node.getShortText(modeController);

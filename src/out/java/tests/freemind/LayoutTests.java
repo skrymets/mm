@@ -210,16 +210,16 @@ public class LayoutTests extends FreeMindTestBase {
     }
 
     protected int getYCoordinate(MindMapNode child2) {
-        assertTrue(mMapView.getViewers(child2).size() > 0);
-        NodeView nodeView = (NodeView) mMapView.getViewers(child2).iterator().next();
+        assertTrue(mMapView.getViewerRegistryService().getViewers(child2).size() > 0);
+        NodeView nodeView = (NodeView) mMapView.getViewerRegistryService().getViewers(child2).iterator().next();
         Point point = nodeView.getMainView().getLocation();
         Tools.convertPointToAncestor(nodeView, point, mMapView);
         return point.y;
     }
 
     protected int getYCoordinateToViewport(MindMapNode child2) {
-        assertTrue(mMapView.getViewers(child2).size() > 0);
-        NodeView nodeView = (NodeView) mMapView.getViewers(child2).iterator().next();
+        assertTrue(mMapView.getViewerRegistryService().getViewers(child2).size() > 0);
+        NodeView nodeView = (NodeView) mMapView.getViewerRegistryService().getViewers(child2).iterator().next();
         Point point = nodeView.getMainView().getLocation();
         Tools.convertPointToAncestor(nodeView, point, mScrollPane);
         return point.y;

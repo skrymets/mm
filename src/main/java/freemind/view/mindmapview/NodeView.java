@@ -786,7 +786,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         }
         getViewFeedback().onViewRemovedHook(this);
         removeFromMap();
-        mapView.removeViewer(getModel(), this); // Let the model know he is invisible
+        mapView.getViewerRegistryService().removeViewer(getModel(), this); // Let the model know he is invisible
     }
 
     public void update() {

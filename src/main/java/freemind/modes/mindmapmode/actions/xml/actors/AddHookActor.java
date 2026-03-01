@@ -255,7 +255,7 @@ public class AddHookActor extends XmlActorAdapter {
     /**
      */
     private NodeView getNodeView(MindMapNode pNode) {
-        return getMapView().getNodeView(pNode);
+        return getMapView().getViewerRegistryService().getNodeView(pNode);
     }
 
     protected MapView getMapView() {

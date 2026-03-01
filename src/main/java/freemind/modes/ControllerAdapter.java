@@ -1364,20 +1364,20 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     public void centerNode(MindMapNode node) {
         NodeView view = null;
         if (node != null) {
-            view = getController().getView().getNodeView(node);
+            view = getController().getView().getViewerRegistryService().getNodeView(node);
         } else {
             return;
         }
         if (view == null) {
             displayNode(node);
-            view = getController().getView().getNodeView(node);
+            view = getController().getView().getViewerRegistryService().getNodeView(node);
         }
         centerNode(view);
     }
 
     @Override
     public NodeView getNodeView(MindMapNode node) {
-        return getView().getNodeView(node);
+        return getView().getViewerRegistryService().getNodeView(node);
     }
 
     public void loadURL() {

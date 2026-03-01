@@ -79,7 +79,7 @@ public class LatexNodeHook extends PermanentMindMapNodeHookAdapter {
     }
 
     public void invoke(MindMapNode node) {
-        for (NodeView view : getMindMapController().getView().getViewers(node)) {
+        for (NodeView view : getMindMapController().getView().getViewerRegistryService().getViewers(node)) {
             createViewer(view);
         }
         super.invoke(node);

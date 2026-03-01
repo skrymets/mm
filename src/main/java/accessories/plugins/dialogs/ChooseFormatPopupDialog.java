@@ -205,7 +205,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                 log.error(e.getLocalizedMessage(), e);
             }
             mDemoFrame = new MapView(mMap, mDemoNodeMapFeedback);
-            mDemoFrame.centerNode(mDemoFrame.getNodeView(mDemoNode));
+            mDemoFrame.centerNode(mDemoFrame.getViewerRegistryService().getNodeView(mDemoNode));
         }
         return mDemoFrame;
     }
@@ -225,7 +225,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                     mDemoNodeMapFeedback.applyPattern(mDemoNode, mResetPattern);
                     Pattern pattern = mStylePatternFrame.getResultPattern();
                     mDemoNodeMapFeedback.applyPattern(mDemoNode, pattern);
-                    mDemoFrame.getNodeView(mDemoNode).updateAll();
+                    mDemoFrame.getViewerRegistryService().getNodeView(mDemoNode).updateAll();
                     mDemoFrame.doLayout();
                 }
             };

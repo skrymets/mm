@@ -123,9 +123,9 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
                     log.trace("Removing viewers for {}", child);
                     nodes.remove(0);
                     nodes.addAll(child.getChildren());
-                    Collection<NodeView> viewers = new ArrayList<>(view.getViewers(child));
+                    Collection<NodeView> viewers = new ArrayList<>(view.getViewerRegistryService().getViewers(child));
                     for (NodeView viewer : viewers) {
-                        view.removeViewer(child, viewer);
+                        view.getViewerRegistryService().removeViewer(child, viewer);
                     }
                 }
 

@@ -1290,7 +1290,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     public void removeNodeFromParent(MindMapNode selectedNode) {
         setSaved(false);
         // first deselect, and then remove.
-        NodeView nodeView = getView().getNodeView(selectedNode);
+        NodeView nodeView = getView().getViewerRegistryService().getNodeView(selectedNode);
         getView().getSelectionService().deselect(nodeView);
         getModel().removeNodeFromParent(selectedNode);
     }

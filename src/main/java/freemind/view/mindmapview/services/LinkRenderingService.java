@@ -54,8 +54,8 @@ public class LinkRenderingService {
                 if (ref instanceof MindMapArrowLink) {
                     ArrowLinkView arrowLink = new ArrowLinkView(
                             (MindMapArrowLink) ref,
-                            mapView.getNodeView(ref.getSource()),
-                            mapView.getNodeView(ref.getTarget()));
+                            mapView.getViewerRegistryService().getNodeView(ref.getSource()),
+                            mapView.getViewerRegistryService().getNodeView(ref.getTarget()));
 
                     arrowLink.paint(graphics);
                     mArrowLinkViews.add(arrowLink);

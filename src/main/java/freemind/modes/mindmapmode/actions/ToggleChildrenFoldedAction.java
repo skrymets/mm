@@ -42,7 +42,7 @@ public class ToggleChildrenFoldedAction extends MindmapAction {
         MindMapNode selected = modeController.getSelected();
         modeController.getActorFactory().getToggleFoldedActor().toggleFolded(selected.childrenUnfolded());
         final MapView mapView = modeController.getView();
-        mapView.getSelectionService().selectAsTheOnlyOneSelected(mapView.getNodeView(selected));
+        mapView.getSelectionService().selectAsTheOnlyOneSelected(mapView.getViewerRegistryService().getNodeView(selected));
         modeController.getController().obtainFocusForSelected();
     }
 }

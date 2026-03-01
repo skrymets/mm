@@ -72,7 +72,7 @@ public class JoinNodesAction extends MindmapAction {
             isHtml = isHtml || isHtmlNode;
         }
 
-        mapView.getSelectionService().selectAsTheOnlyOneSelected(mapView.getNodeView(selectedNode));
+        mapView.getSelectionService().selectAsTheOnlyOneSelected(mapView.getViewerRegistryService().getNodeView(selectedNode));
         controller.setNodeText(selectedNode, newContent);
     }
 

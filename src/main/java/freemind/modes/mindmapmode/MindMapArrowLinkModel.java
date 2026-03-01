@@ -60,8 +60,8 @@ public class MindMapArrowLinkModel extends ArrowLinkAdapter {
                                   int deltaX, int deltaY) {
         double distSqToTarget = 0;
         double distSqToSource = 0;
-        NodeView targetView = map.getNodeView(getTarget());
-        NodeView sourceView = map.getNodeView(getSource());
+        NodeView targetView = map.getViewerRegistryService().getNodeView(getTarget());
+        NodeView sourceView = map.getViewerRegistryService().getNodeView(getSource());
         if (targetView != null && sourceView != null) {
             Point targetLinkPoint = targetView
                     .getLinkPoint(getEndInclination());
