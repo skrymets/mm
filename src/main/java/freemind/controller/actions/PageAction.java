@@ -4,6 +4,7 @@ import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.SwingUtils;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,11 +18,13 @@ public class PageAction extends AbstractAction {
     private static final String RESOURCE_USER_ZOOM = "user_zoom";
 
     private final Controller controller;
+    private final Resources resources;
 
-    public PageAction(Controller controller) {
+    public PageAction(Controller controller, Resources resources) {
         super(controller.getResourceString("page"));
         setEnabled(false);
         this.controller = controller;
+        this.resources = resources;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -31,7 +34,7 @@ public class PageAction extends AbstractAction {
 
         // Ask about custom printing settings
         final JDialog dialog = new JDialog((JFrame) controller.getFrame(), controller.getResourceString("printing_settings"), /* modal= */true);
-        final JCheckBox fitToPage = new JCheckBox(controller.getResourceString(RESOURCE_FIT_TO_PAGE), Resources.getInstance().getBoolProperty(RESOURCE_FIT_TO_PAGE));
+        final JCheckBox fitToPage = new JCheckBox(controller.getResourceString(RESOURCE_FIT_TO_PAGE), resources.getBoolProperty(RESOURCE_FIT_TO_PAGE));
         final JLabel userZoomL = new JLabel(controller.getResourceString(RESOURCE_USER_ZOOM));
         final JTextField userZoom = new JTextField(controller.getProperty(RESOURCE_USER_ZOOM), 3);
         userZoom.setEditable(!fitToPage.isSelected());

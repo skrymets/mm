@@ -24,6 +24,7 @@
 package freemind.controller;
 
 import freemind.events.FreeMindEventBus;
+import freemind.main.Resources;
 import freemind.events.MapClosedEvent;
 import freemind.events.MapLoadedEvent;
 import freemind.model.MindMap;
@@ -89,7 +90,10 @@ public class MapModuleManager {
      */
     private Mode mCurrentMode = null;
 
-    public MapModuleManager(Controller c) {
+    private final Resources resources;
+
+    public MapModuleManager(Controller c, Resources resources) {
+        this.resources = resources;
     }
 
     /**

@@ -2,6 +2,7 @@ package freemind.events;
 
 import freemind.controller.Controller;
 import freemind.controller.MapModuleManager;
+import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
@@ -37,7 +38,7 @@ class MapLifecycleEventTest {
         Controller mockController = mock(Controller.class);
         eventBus = mock(FreeMindEventBus.class);
 
-        mapModuleManager = new MapModuleManager(mockController);
+        mapModuleManager = new MapModuleManager(mockController, mock(Resources.class));
         mapModuleManager.setEventBus(eventBus);
 
         mockMap = mock(MindMap.class);

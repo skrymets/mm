@@ -4,6 +4,7 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.Subscribe;
 import freemind.controller.Controller;
 import freemind.controller.MapModuleManager;
+import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import org.junit.jupiter.api.BeforeEach;
@@ -338,7 +339,7 @@ class EventBusIntegrationTest {
     @Test
     void mapModuleManagerAcceptsEventBusInjection() {
         Controller mockController = mock(Controller.class);
-        MapModuleManager manager = new MapModuleManager(mockController);
+        MapModuleManager manager = new MapModuleManager(mockController, mock(Resources.class));
         FreeMindEventBus bus = new FreeMindEventBus();
 
         assertDoesNotThrow(() -> manager.setEventBus(bus));
@@ -347,7 +348,7 @@ class EventBusIntegrationTest {
     @Test
     void mapModuleManagerWorksWithNullEventBus() {
         Controller mockController = mock(Controller.class);
-        MapModuleManager manager = new MapModuleManager(mockController);
+        MapModuleManager manager = new MapModuleManager(mockController, mock(Resources.class));
 
         // Setting null event bus should not cause issues
         assertDoesNotThrow(() -> manager.setEventBus(null));

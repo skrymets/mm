@@ -186,8 +186,11 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     public OpenURLAction freemindUrl;
 
 
-    public Controller(FreeMindMain frame) {
+    private final Resources resources;
+
+    public Controller(FreeMindMain frame, Resources resources) {
         this.frame = frame;
+        this.resources = resources;
     }
 
     public void init() {
@@ -196,7 +199,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         printService = new PrintService(frame);
         zoomService = new ZoomService();
         tabbedPaneService = new TabbedPaneService(this);
-        sessionService = new SessionService(this);
+        sessionService = new SessionService(this, resources);
 
         nodeMouseMotionListener = new NodeMouseMotionListener(this);
         nodeMotionListener = new NodeMotionListener(this);
@@ -211,7 +214,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         print = new PrintAction(this, true);
         printDirect = new PrintAction(this, false);
         printPreview = new PrintPreviewAction(this);
-        page = new PageAction(this);
+        page = new PageAction(this, resources);
         quit = new QuitAction(this);
         about = new AboutAction(this);
         freemindUrl = new OpenURLAction(this, getResourceString(FREEMIND), getProperty("webFreeMindLocation"));
@@ -272,7 +275,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         localDocumentationLinkConverter = new DefaultLocalLinkConverter(frame);
         lastOpened = new LastOpenedList(this, getProperty("lastOpened"));
 
-        mapModuleManager = new MapModuleManager(this);
+        mapModuleManager = new MapModuleManager(this, resources);
         mapModuleManager.addListener(this);
 
         final String DEFAULT_FONT_PROPERTY = "defaultfont";
@@ -282,6 +285,10 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
             log.warn("The font you have set as standard - {} - is not available.", defaultFont);
             frame.setProperty(DEFAULT_FONT_PROPERTY, "SansSerif");
         }
+    }
+
+    public Resources getResources() {
+        return resources;
     }
 
     public String getProperty(String property) {
@@ -616,7 +623,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         // ((MainToolBar) toolbar).setZoomComboBox(zoom);
         // show text in status bar:
         Object[] messageArguments = {valueOf(zoom * 100f)};
-        String stringResult = Resources.getInstance().format("user_defined_zoom_status_bar", messageArguments);
+        String stringResult = resources.format("user_defined_zoom_status_bar", messageArguments);
         getFrame().setStatusText(stringResult);
     }
 

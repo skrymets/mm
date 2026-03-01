@@ -25,6 +25,7 @@ import freemind.controller.MapTitleChangeListener;
 import freemind.controller.MapTitleContributor;
 import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.main.FreeMindCommon;
+import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.view.MapModule;
 import lombok.extern.slf4j.Slf4j;
@@ -49,9 +50,11 @@ public class SessionService {
     private static final String FALSE = "false";
 
     private final Controller controller;
+    private final Resources resources;
 
-    public SessionService(Controller controller) {
+    public SessionService(Controller controller, Resources resources) {
         this.controller = controller;
+        this.resources = resources;
     }
 
     /**

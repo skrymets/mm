@@ -309,7 +309,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         // Layout everything
         getContentPane().setLayout(new BorderLayout());
 
-        controller = new Controller(this);
+        controller = new Controller(this, Resources.getInstance());
         controller.init();
         controller.getMapModuleManager().setEventBus(eventBus);
 

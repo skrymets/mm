@@ -26,10 +26,10 @@ import java.awt.*;
 
 
 public class ColorPair {
-    public ColorPair(Color pColor, String pString) {
+    public ColorPair(Color pColor, String pString, Resources resources) {
         color = pColor;
         name = pString;
-        displayName = Resources.getInstance().getText("font_color_" + name);
+        displayName = resources.getText("font_color_" + name);
     }
 
     public ColorPair(Color pColor, String pName, String pDisplayName) {
