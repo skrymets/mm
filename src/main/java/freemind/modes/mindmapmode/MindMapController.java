@@ -248,6 +248,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         fileManagementService = new FileManagementService(this);
         selectionService = new SelectionService(this);
         textOperationService = new TextOperationService(this);
+        menuConfigService = new MenuConfigService(this);
 
         log.info("createIconActions");
         // create standard actions:
@@ -272,8 +273,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
         log.info("MindMapToolBar");
         toolbar = new MindMapToolBar(this);
-
-        menuConfigService = new MenuConfigService(this);
 
         mRegistrations = new ArrayList<>();
 
