@@ -29,7 +29,6 @@ import freemind.model.Filter;
 import freemind.controller.filter.condition.Condition;
 import freemind.controller.filter.condition.NoFilteringCondition;
 import freemind.controller.filter.condition.SelectedViewCondition;
-import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 
@@ -108,10 +107,8 @@ class FilterToolbar extends FreeMindToolBar {
 
     private class EditFilterAction extends AbstractAction {
         EditFilterAction() {
-            super("", freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource(
-                    "images/Btn_edit.gif")));
-            putValue(SHORT_DESCRIPTION, Resources.getInstance()
-                    .getResourceString("filter_edit_description"));
+            super("", freemind.view.ImageFactory.getInstance().createIcon(c.getResource("images/Btn_edit.gif")));
+            putValue(SHORT_DESCRIPTION, c.getResourceString("filter_edit_description"));
         }
 
         /*
@@ -144,8 +141,7 @@ class FilterToolbar extends FreeMindToolBar {
          *
          */
         UnfoldAncestorsAction() {
-            super("", freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource(
-                    "images/unfold.png")));
+            super("", freemind.view.ImageFactory.getInstance().createIcon(c.getResource("images/unfold.png")));
         }
 
         private void unfoldAncestors(MindMapNode parent) {
@@ -180,9 +176,7 @@ class FilterToolbar extends FreeMindToolBar {
         setFocusable(false);
         setRollover(true);
         filterChangeListener = new FilterChangeListener();
-        add(new JLabel(Resources.getInstance().getResourceString(
-                "filter_toolbar")
-                + " "));
+        add(new JLabel(c.getResourceString("filter_toolbar") + " "));
 
         activeFilter = null;
         activeFilterConditionComboBox = new JComboBox<>() {
@@ -199,17 +193,14 @@ class FilterToolbar extends FreeMindToolBar {
         add(btnEdit);
 
         JButton btnUnfoldAncestors = add(new UnfoldAncestorsAction());
-        btnUnfoldAncestors.setToolTipText(Resources.getInstance()
-                .getResourceString("filter_unfold_ancestors"));
+        btnUnfoldAncestors.setToolTipText(c.getResourceString("filter_unfold_ancestors"));
         add(btnUnfoldAncestors);
 
-        showAncestors = new JCheckBox(Resources.getInstance()
-                .getResourceString("filter_show_ancestors"), true);
+        showAncestors = new JCheckBox(c.getResourceString("filter_show_ancestors"), true);
         add(showAncestors);
         showAncestors.getModel().addActionListener(filterChangeListener);
 
-        showDescendants = new JCheckBox(Resources.getInstance()
-                .getResourceString("filter_show_descendants"), false);
+        showDescendants = new JCheckBox(c.getResourceString("filter_show_descendants"), false);
         add(showDescendants);
         showDescendants.getModel().addActionListener(filterChangeListener);
 

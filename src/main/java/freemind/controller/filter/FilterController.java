@@ -31,7 +31,7 @@ import freemind.controller.filter.condition.ConditionFactory;
 import freemind.controller.filter.condition.ConditionRenderer;
 import freemind.controller.filter.condition.NoFilteringCondition;
 import freemind.main.FreeMindXml;
-import freemind.main.Resources;
+
 import freemind.model.MindMap;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -84,10 +84,10 @@ public class FilterController implements MapModuleChangeObserver {
             // FIXME state icons should be created on order to make possible
             // their use in the filter component.
             // It should not happen here.
-            MindIcon.factory("AttributeExist", freemind.view.ImageFactory.getInstance().createIcon(Resources
-                    .getInstance().getResource("images/showAttributes.gif")));
+            MindIcon.factory("AttributeExist", freemind.view.ImageFactory.getInstance().createIcon(
+                    c.getResource("images/showAttributes.gif")));
             MindIcon.factory(NodeNoteBase.NODE_NOTE_ICON, freemind.view.ImageFactory.getInstance().createIcon(
-                    Resources.getInstance().getResource("images/knotes.png")));
+                    c.getResource("images/knotes.png")));
             MindIcon.factory("encrypted");
             MindIcon.factory("decrypted");
 
