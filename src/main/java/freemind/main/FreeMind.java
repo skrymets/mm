@@ -415,6 +415,14 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                 log.error("System L&F also failed", fallbackEx);
             }
         }
+        if (UIManager.getLookAndFeel() instanceof com.formdev.flatlaf.FlatLaf) {
+            UIManager.put("ScrollBar.thumbArc", 8);
+            UIManager.put("ScrollBar.trackArc", 8);
+            UIManager.put("TabbedPane.showTabSeparators", true);
+            UIManager.put("Component.arc", 8);
+            UIManager.put("Button.arc", 8);
+            UIManager.put("TextComponent.arc", 8);
+        }
         freeMindCommon.loadUIProperties(defaultPreferences);
     }
 
