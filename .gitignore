@@ -5,3 +5,5 @@ plugins/jortho/target/
 plugins/SimplyHTML/target/
 /tmpclaude-*
 /**/tmpclaude-*
+/docs/plans/
+/.claude/
