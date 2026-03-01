@@ -45,7 +45,7 @@ public class CommonToggleChildrenFoldedAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         NodeView selected = modeController.getSelectedView();
         modeController.toggleFolded.toggleFolded(selected.getModel().childrenUnfolded());
-        modeController.getView().selectAsTheOnlyOneSelected(selected);
+        modeController.getView().getSelectionService().selectAsTheOnlyOneSelected(selected);
         modeController.getController().obtainFocusForSelected();
     }
 

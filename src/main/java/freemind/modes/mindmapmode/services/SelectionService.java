@@ -92,19 +92,19 @@ public class SelectionService {
         boolean branch = e.isAltGraphDown() || e.isAltDown();
         boolean retValue = false;
 
-        if (extend || range || branch || !controller.getView().isSelected(newlySelectedNodeView)) {
+        if (extend || range || branch || !controller.getView().getSelectionService().isSelected(newlySelectedNodeView)) {
             if (!range) {
                 if (extend) {
-                    controller.getView().toggleSelected(newlySelectedNodeView);
+                    controller.getView().getSelectionService().toggleSelected(newlySelectedNodeView);
                 } else {
                     controller.select(newlySelectedNodeView);
                 }
                 retValue = true;
             } else {
-                retValue = controller.getView().selectContinuous(newlySelectedNodeView);
+                retValue = controller.getView().getSelectionService().selectContinuous(newlySelectedNodeView);
             }
             if (branch) {
-                controller.getView().selectBranch(newlySelectedNodeView, extend);
+                controller.getView().getSelectionService().selectBranch(newlySelectedNodeView, extend);
                 retValue = true;
             }
         }

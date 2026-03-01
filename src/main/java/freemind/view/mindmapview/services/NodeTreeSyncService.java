@@ -35,7 +35,7 @@ public class NodeTreeSyncService {
         if (!nodeView.getModel().hasVisibleChilds()) {
             nodeView.removeFoldingListener();
         }
-        nodeView.getMap().resetShiftSelectionOrigin();
+        nodeView.getMap().getSelectionService().resetShiftSelectionOrigin();
         if (nodeView.getModel().isFolded()) {
             return;
         }
@@ -82,20 +82,20 @@ public class NodeTreeSyncService {
             node.remove();
         }
         NodeView preferred = nodeView.getPreferredVisibleChild(preferredChildIsLeft);
-        nodeView.getMap().selectAsTheOnlyOneSelected(Objects.requireNonNullElse(preferred, nodeView));
+        nodeView.getMap().getSelectionService().selectAsTheOnlyOneSelected(Objects.requireNonNullElse(preferred, nodeView));
         nodeView.revalidate();
     }
 
     public void treeStructureChanged(TreeModelEvent e) {
-        nodeView.getMap().resetShiftSelectionOrigin();
+        nodeView.getMap().getSelectionService().resetShiftSelectionOrigin();
         for (NodeView child : nodeView.getChildrenViews()) {
             child.remove();
         }
         nodeView.insert();
-        if (nodeView.getMap().getSelected() == null) {
-            nodeView.getMap().selectAsTheOnlyOneSelected(nodeView);
+        if (nodeView.getMap().getSelectionService().getSelected() == null) {
+            nodeView.getMap().getSelectionService().selectAsTheOnlyOneSelected(nodeView);
         }
-        nodeView.getMap().revalidateSelecteds();
+        nodeView.getMap().getSelectionService().revalidateSelecteds();
         nodeView.revalidate();
     }
 }

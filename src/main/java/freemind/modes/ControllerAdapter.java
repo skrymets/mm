@@ -267,7 +267,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             } catch (Exception e) {
                 log.error(e.getLocalizedMessage(), e);
             }
-            for (NodeView view : getView().getSelecteds()) {
+            for (NodeView view : getView().getSelectionService().getSelecteds()) {
                 try {
                     listener.onSelectionChange(view, true);
                 } catch (Exception e) {
@@ -552,7 +552,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      */
     public List<MindMapNode> getSelecteds() {
         LinkedList<MindMapNode> selecteds = new LinkedList<>();
-        ListIterator<NodeView> it = getView().getSelecteds().listIterator();
+        ListIterator<NodeView> it = getView().getSelectionService().getSelecteds().listIterator();
         if (it != null) {
             while (it.hasNext()) {
                 NodeView selected = it.next();
@@ -564,7 +564,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     @Override
     public void select(NodeView node) {
-        getView().select(node);
+        getView().getSelectionService().select(node);
     }
 
     public void select(MindMapNode primarySelected, List<MindMapNode> selecteds) {
@@ -574,12 +574,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         }
         final NodeView focussedNodeView = getNodeView(primarySelected);
         if (focussedNodeView != null) {
-            getView().selectAsTheOnlyOneSelected(focussedNodeView);
+            getView().getSelectionService().selectAsTheOnlyOneSelected(focussedNodeView);
             getView().scrollNodeToVisible(focussedNodeView);
             for (MindMapNode node : selecteds) {
                 NodeView nodeView = getNodeView(node);
                 if (nodeView != null) {
-                    getView().makeTheSelected(nodeView);
+                    getView().getSelectionService().makeTheSelected(nodeView);
                 }
             }
         }
@@ -588,7 +588,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     public void selectBranch(NodeView selected, boolean extend) {
         displayNode(selected.getModel());
-        getView().selectBranch(selected, extend);
+        getView().getSelectionService().selectBranch(selected, extend);
     }
 
     public List<MindMapNode> getSelectedsByDepth() {
@@ -1093,7 +1093,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     public NodeView getSelectedView() {
         if (getView() != null)
-            return getView().getSelected();
+            return getView().getSelectionService().getSelected();
         return null;
     }
 
@@ -1229,12 +1229,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     public Transferable copy() {
-        return copy(getView().getSelectedNodesSortedByY(), false);
+        return copy(getView().getSelectionService().getSelectedNodesSortedByY(), false);
     }
 
     public Transferable copySingle() {
 
-        final ArrayList<MindMapNode> selectedNodes = getView().getSingleSelectedNodes();
+        final ArrayList<MindMapNode> selectedNodes = getView().getSelectionService().getSingleSelectedNodes();
         return copy(selectedNodes, false);
     }
 
@@ -1358,7 +1358,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      **/
     private void centerNode(NodeView node) {
         getView().centerNode(node);
-        getView().selectAsTheOnlyOneSelected(node);
+        getView().getSelectionService().selectAsTheOnlyOneSelected(node);
     }
 
     public void centerNode(MindMapNode node) {

@@ -477,9 +477,9 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         } else {
             getFrame().setView(newMapModule.getView());
             setAllActions(true);
-            if ((getView().getSelected() == null)) {
+            if ((getView().getSelectionService().getSelected() == null)) {
                 // moveToRoot();
-                getView().selectAsTheOnlyOneSelected(getView().getRoot());
+                getView().getSelectionService().selectAsTheOnlyOneSelected(getView().getRoot());
             }
             lastOpened.mapOpened(newMapModule);
             zoomService.changeZoomValueProperty(newMapModule.getView().getZoom());

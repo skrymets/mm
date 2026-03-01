@@ -43,7 +43,7 @@ public class SetLinkByTextFieldAction extends MindmapAction {
 
     public void actionPerformed(ActionEvent e) {
         String inputValue = JOptionPane.showInputDialog(controller.getView()
-                        .getSelected(), controller.getText("edit_link_manually"),
+                        .getSelectionService().getSelected(), controller.getText("edit_link_manually"),
                 controller.getSelected().getLink());
         if (inputValue != null) {
             if (inputValue.isEmpty()) {

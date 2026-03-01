@@ -331,7 +331,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     }
 
     public boolean isSelected() {
-        return (getMap().isSelected(this));
+        return (getMap().getSelectionService().isSelected(this));
     }
 
     /**
@@ -782,7 +782,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             nodeView.remove();
         }
         if (isSelected()) {
-            getMap().deselect(this);
+            getMap().getSelectionService().deselect(this);
         }
         getViewFeedback().onViewRemovedHook(this);
         removeFromMap();
@@ -1285,7 +1285,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         if (!getModel().hasVisibleChilds()) {
             removeFoldingListener();
         }
-        getMap().resetShiftSelectionOrigin();
+        getMap().getSelectionService().resetShiftSelectionOrigin();
         if (getModel().isFolded()) {
             return;
         }
@@ -1330,7 +1330,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         }
         NodeView preferred = getPreferredVisibleChild(preferredChildIsLeft);
         // after delete focus on a brother (PN)
-        getMap().selectAsTheOnlyOneSelected(Objects.requireNonNullElse(preferred, this));
+        getMap().getSelectionService().selectAsTheOnlyOneSelected(Objects.requireNonNullElse(preferred, this));
         revalidate();
     }
 
@@ -1342,15 +1342,15 @@ public class NodeView extends JComponent implements TreeModelListener {
      * event.TreeModelEvent)
      */
     public void treeStructureChanged(TreeModelEvent e) {
-        getMap().resetShiftSelectionOrigin();
+        getMap().getSelectionService().resetShiftSelectionOrigin();
         for (NodeView nodeView : getChildrenViews()) {
             nodeView.remove();
         }
         insert();
-        if (mapView.getSelected() == null) {
-            mapView.selectAsTheOnlyOneSelected(this);
+        if (mapView.getSelectionService().getSelected() == null) {
+            mapView.getSelectionService().selectAsTheOnlyOneSelected(this);
         }
-        mapView.revalidateSelecteds();
+        mapView.getSelectionService().revalidateSelecteds();
         revalidate();
     }
 

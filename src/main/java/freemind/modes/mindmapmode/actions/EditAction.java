@@ -64,7 +64,7 @@ public class EditAction extends MindmapAction {
 
     // edit begins with home/end or typing (PN 6.2)
     public void edit(KeyEvent e, boolean addNew, boolean editLong) {
-        NodeView selectedNodeView = mMindMapController.getView().getSelected();
+        NodeView selectedNodeView = mMindMapController.getView().getSelectionService().getSelected();
         if (selectedNodeView != null) {
             if (e == null || !addNew) {
                 edit(selectedNodeView, selectedNodeView, e, false, false,
@@ -219,7 +219,7 @@ public class EditAction extends MindmapAction {
                 if (isNewNode) { // delete also the node and set focus
                     // to the parent
                     mMindMapController.getView()
-                            .selectAsTheOnlyOneSelected(node);
+                            .getSelectionService().selectAsTheOnlyOneSelected(node);
                     List<MindMapNode> nodeList = new ArrayList<>();
                     nodeList.add(node.getModel());
                     mMindMapController.cut(nodeList);

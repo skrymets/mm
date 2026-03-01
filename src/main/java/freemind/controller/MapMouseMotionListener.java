@@ -86,7 +86,7 @@ public class MapMouseMotionListener implements MouseMotionListener,
 
     public void mouseClicked(MouseEvent e) {
         // to loose the focus in edit
-        c.getView().selectAsTheOnlyOneSelected(c.getView().getSelected());
+        c.getView().getSelectionService().selectAsTheOnlyOneSelected(c.getView().getSelectionService().getSelected());
         c.obtainFocusForSelected();
     }
 

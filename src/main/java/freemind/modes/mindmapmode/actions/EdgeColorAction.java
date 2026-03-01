@@ -41,7 +41,7 @@ public class EdgeColorAction extends MindmapAction {
 
     public void actionPerformed(ActionEvent e) {
         Color color = Controller.showCommonJColorChooserDialog(controller
-                .getView().getSelected(), controller
+                .getView().getSelectionService().getSelected(), controller
                 .getText("choose_edge_color"), controller.getSelected()
                 .getEdge().getColor());
         if (color == null)

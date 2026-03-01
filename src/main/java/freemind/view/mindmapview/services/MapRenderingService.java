@@ -78,7 +78,7 @@ public class MapRenderingService {
         }
         g.setStroke(standardSelectionStroke);
         Object renderingHint = setEdgesRenderingHint(g);
-        final Iterator<NodeView> i = mapView.getSelecteds().iterator();
+        final Iterator<NodeView> i = mapView.getSelectionService().getSelecteds().iterator();
         while (i.hasNext()) {
             NodeView selected = i.next();
             paintSelected(g, selected);

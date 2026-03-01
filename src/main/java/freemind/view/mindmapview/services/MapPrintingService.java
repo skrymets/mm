@@ -77,7 +77,7 @@ public class MapPrintingService {
     }
 
     public void repaintSelecteds() {
-        final Iterator<NodeView> iterator = mapView.getSelecteds().iterator();
+        final Iterator<NodeView> iterator = mapView.getSelectionService().getSelecteds().iterator();
         while (iterator.hasNext()) {
             NodeView next = iterator.next();
             next.repaintSelected();

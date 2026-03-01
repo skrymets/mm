@@ -216,7 +216,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
             mindMapController.nodeStructureChanged(encNode);
             mindMapController.nodeChanged(encNode);
             final MapView mapView = mindMapController.getView();
-            mapView.selectAsTheOnlyOneSelected(mapView.getNodeView(encNode));
+            mapView.getSelectionService().selectAsTheOnlyOneSelected(mapView.getNodeView(encNode));
             encNode.setShuttingDown(false);
         } else {
             // box:

@@ -1049,7 +1049,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public Transferable cut() {
-        return cut(getView().getSelectedNodesSortedByY());
+        return cut(getView().getSelectionService().getSelectedNodesSortedByY());
     }
 
     public Transferable cut(List<MindMapNode> nodeList) {
@@ -1291,7 +1291,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         setSaved(false);
         // first deselect, and then remove.
         NodeView nodeView = getView().getNodeView(selectedNode);
-        getView().deselect(nodeView);
+        getView().getSelectionService().deselect(nodeView);
         getModel().removeNodeFromParent(selectedNode);
     }
 

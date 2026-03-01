@@ -259,7 +259,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
             }
 
             public Component getDefaultComponent(Container pAContainer) {
-                Component defaultComponent = getSelected();
+                Component defaultComponent = selectionService.getSelected();
                 log.trace("Focus traversal to: {}", defaultComponent);
                 return defaultComponent;
             }
@@ -432,42 +432,10 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         navigationService.move(e);
     }
 
-    public void resetShiftSelectionOrigin() {
-        selectionService.resetShiftSelectionOrigin();
-    }
-
     public void moveToRoot() {
         navigationService.moveToRoot();
     }
 
-
-    public void select(NodeView node) {
-        selectionService.select(node);
-    }
-
-    public void selectAsTheOnlyOneSelected(NodeView newSelected) {
-        selectionService.selectAsTheOnlyOneSelected(newSelected);
-    }
-
-    public void toggleSelected(NodeView newSelected) {
-        selectionService.toggleSelected(newSelected);
-    }
-
-    public void makeTheSelected(NodeView newSelected) {
-        selectionService.makeTheSelected(newSelected);
-    }
-
-    public void deselect(NodeView newSelected) {
-        selectionService.deselect(newSelected);
-    }
-
-    public void selectBranch(NodeView newlySelectedNodeView, boolean extend) {
-        selectionService.selectBranch(newlySelectedNodeView, extend);
-    }
-
-    public boolean selectContinuous(NodeView newSelected) {
-        return selectionService.selectContinuous(newSelected);
-    }
 
     //
     // get/set methods
@@ -503,26 +471,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         return getViewFeedback().getNodeDropListener();
     }
 
-    public NodeView getSelected() {
-        return selectionService.getSelected();
-    }
-
-    public LinkedList<NodeView> getSelecteds() {
-        return selectionService.getSelecteds();
-    }
-
-    public ArrayList<MindMapNode> getSelectedNodesSortedByY() {
-        return selectionService.getSelectedNodesSortedByY();
-    }
-
-    public ArrayList<MindMapNode> getSingleSelectedNodes() {
-        return selectionService.getSingleSelectedNodes();
-    }
-
-    public boolean isSelected(NodeView n) {
-        return selectionService.isSelected(n);
-    }
-
     public int getZoomed(int number) {
         return (int) (number * zoom);
     }
@@ -531,7 +479,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         this.zoom = zoom;
         getRoot().updateAll();
         revalidate();
-        scrollService.setNodeToBeVisible(getSelected());
+        scrollService.setNodeToBeVisible(selectionService.getSelected());
     }
 
     protected void validateTree() {
@@ -673,10 +621,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
             return preferredLayoutSize;
         }
         return super.getPreferredSize();
-    }
-
-    public void revalidateSelecteds() {
-        selectionService.revalidateSelecteds();
     }
 
     public Point getNodeContentLocation(NodeView nodeView) {

@@ -275,7 +275,7 @@ public class AddHookActor extends XmlActorAdapter {
      */
     private void finishInvocation(MindMapNode focussed, List<MindMapNode> selecteds, MindMapNode adaptedFocussedNode, Collection<MindMapNode> destinationNodes) {
         // restore selection only, if nothing selected.
-        if (getMapView().getSelecteds().isEmpty()) {
+        if (getMapView().getSelectionService().getSelecteds().isEmpty()) {
             // select all destination nodes:
             getExMapFeedback().select(focussed, selecteds);
         }

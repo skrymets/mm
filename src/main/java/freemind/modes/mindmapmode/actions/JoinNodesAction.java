@@ -40,10 +40,10 @@ public class JoinNodesAction extends MindmapAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        MindMapNode selectedNode = controller.getView().getSelected()
+        MindMapNode selectedNode = controller.getView().getSelectionService().getSelected()
                 .getModel();
         ArrayList<MindMapNode> selectedNodes = controller.getView()
-                .getSelectedNodesSortedByY();
+                .getSelectionService().getSelectedNodesSortedByY();
         joinNodes(selectedNode, selectedNodes);
     }
 
@@ -72,7 +72,7 @@ public class JoinNodesAction extends MindmapAction {
             isHtml = isHtml || isHtmlNode;
         }
 
-        mapView.selectAsTheOnlyOneSelected(mapView.getNodeView(selectedNode));
+        mapView.getSelectionService().selectAsTheOnlyOneSelected(mapView.getNodeView(selectedNode));
         controller.setNodeText(selectedNode, newContent);
     }
 

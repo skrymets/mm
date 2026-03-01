@@ -52,7 +52,7 @@ public class ColorArrowLinkAction extends MindmapAction {
     public void actionPerformed(ActionEvent e) {
         Color selectedColor = arrowLink.getColor();
         Color color = Controller.showCommonJColorChooserDialog(controller
-                        .getView().getSelected(), (String) this.getValue(Action.NAME),
+                        .getView().getSelectionService().getSelected(), (String) this.getValue(Action.NAME),
                 selectedColor);
         if (color == null)
             return;

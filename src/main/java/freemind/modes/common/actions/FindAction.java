@@ -98,7 +98,7 @@ public class FindAction extends FreemindAction {
         if (!found) {
             String messageText = controller.getText("no_found_from");
             String searchTerm = getSearchTermAsEscapedString(messageText);
-            controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", getFindFromText()), controller.getView().getSelected());
+            controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", getFindFromText()), controller.getView().getSelectionService().getSelected());
         }
     }
 
@@ -183,7 +183,7 @@ public class FindAction extends FreemindAction {
         public void actionPerformed(ActionEvent e) {
             Collection<String> subterms = find.getSubterms();
             if (subterms == null) {
-                controller.getController().informationMessage(controller.getText("no_previous_find"), controller.getView().getSelected());
+                controller.getController().informationMessage(controller.getText("no_previous_find"), controller.getView().getSelectionService().getSelected());
                 return;
             }
             boolean found = find.findNext();
@@ -191,7 +191,7 @@ public class FindAction extends FreemindAction {
             if (!found) {
                 String messageText = controller.getText("no_more_found_from");
                 String searchTerm = find.getSearchTermAsEscapedString(messageText);
-                controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", find.getFindFromText()), controller.getView().getSelected());
+                controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", find.getFindFromText()), controller.getView().getSelectionService().getSelected());
             }
         }
     }

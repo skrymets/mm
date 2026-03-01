@@ -114,7 +114,7 @@ public class NewParentNode extends MindMapNodeHookAdapter {
             return;
         }
         // Start editing new node
-        mapView.selectAsTheOnlyOneSelected(mapView.getNodeView(newNode));
+        mapView.getSelectionService().selectAsTheOnlyOneSelected(mapView.getNodeView(newNode));
         getMindMapController().getFrame().repaint();
         // edit is not necessary, as the new text can directly entered and
         // editing is starting automatically.

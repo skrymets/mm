@@ -100,7 +100,7 @@ public class FileController extends ViewControllerAdapter {
 
         public void actionPerformed(ActionEvent e) {
             String inputValue = JOptionPane.showInputDialog(getController()
-                    .getView().getSelected(), getText("open"), "");
+                    .getView().getSelectionService().getSelected(), getText("open"), "");
             if (inputValue != null) {
                 File newCenter = new File(inputValue);
                 if (newCenter.exists()) { // and is a folder

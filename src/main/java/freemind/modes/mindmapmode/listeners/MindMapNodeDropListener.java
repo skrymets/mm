@@ -155,7 +155,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
                 // link feature continues here. fc, 01.11.2003:
                 // if there are more than 4 nodes, then ask the user:
                 int yesorno = JOptionPane.YES_OPTION;
-                if (mMindMapController.getView().getSelecteds().size() >= 5) {
+                if (mMindMapController.getView().getSelectionService().getSelecteds().size() >= 5) {
                     yesorno = JOptionPane
                             .showConfirmDialog(
                                     mMindMapController.getFrame()
@@ -163,13 +163,13 @@ public class MindMapNodeDropListener implements DropTargetListener {
                                     mMindMapController
                                             .getText("lots_of_links_warning"),
                                     mMindMapController
-                                            .getView().getSelecteds().size()
+                                            .getView().getSelectionService().getSelecteds().size()
                                             + " links to the same node",
                                     JOptionPane.YES_NO_OPTION);
                 }
                 if (yesorno == JOptionPane.YES_OPTION) {
                     for (NodeView nodeView : mMindMapController.getView()
-                            .getSelecteds()) {
+                            .getSelectionService().getSelecteds()) {
                         MindMapNodeModel selectedNodeModel = (MindMapNodeModel) nodeView.getModel();
                         // mindMapMapModel.setNodeColor(selectedNodeModel,targetNode.getColor());
                         // mindMapMapModel.setNodeFont(selectedNodeModel,targetNode.getFont());
@@ -209,7 +209,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
                     trans = mMindMapController.copy();
                 }
 
-                mMindMapController.getView().selectAsTheOnlyOneSelected(
+                mMindMapController.getView().getSelectionService().selectAsTheOnlyOneSelected(
                         targetNodeView);
                 boolean result = mMindMapController.paste(trans, targetNode,
                         mainView.dropAsSibling(dtde.getLocation().getX()),

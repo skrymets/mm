@@ -48,7 +48,7 @@ public class CloudColorAction extends MindmapAction implements MenuItemEnabledLi
             selectedColor = controller.getSelected().getCloud().getColor();
         }
         Color color = Controller.showCommonJColorChooserDialog(controller
-                .getView().getSelected(), controller
+                .getView().getSelectionService().getSelected(), controller
                 .getText("choose_cloud_color"), selectedColor);
         if (color == null) {
             return;

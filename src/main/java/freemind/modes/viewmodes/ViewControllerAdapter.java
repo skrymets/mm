@@ -82,15 +82,15 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
         boolean retValue = false;
 
         if (extend || range || branch
-                || !getView().isSelected(newlySelectedNodeView)) {
+                || !getView().getSelectionService().isSelected(newlySelectedNodeView)) {
             if (!range) {
                 if (extend)
-                    getView().toggleSelected(newlySelectedNodeView);
+                    getView().getSelectionService().toggleSelected(newlySelectedNodeView);
                 else
                     select(newlySelectedNodeView);
                 retValue = true;
             } else {
-                retValue = getView().selectContinuous(newlySelectedNodeView);
+                retValue = getView().getSelectionService().selectContinuous(newlySelectedNodeView);
                 // /* fc, 25.1.2004: replace getView by controller methods.*/
                 // if (newlySelectedNodeView != getView().getSelected() &&
                 // newlySelectedNodeView.isSiblingOf(getView().getSelected())) {
@@ -105,7 +105,7 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
                 // }
             }
             if (branch) {
-                getView().selectBranch(newlySelectedNodeView, extend);
+                getView().getSelectionService().selectBranch(newlySelectedNodeView, extend);
                 retValue = true;
             }
         }

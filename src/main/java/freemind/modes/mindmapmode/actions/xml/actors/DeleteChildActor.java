@@ -79,8 +79,8 @@ public class DeleteChildActor extends XmlActorAdapter {
         MapView view = getExMapFeedback().getMapView();
         if (view != null) {
             NodeView nodeView = view.getNodeView(selectedNode);
-            view.deselect(nodeView);
-            if (view.getSelecteds().isEmpty()) {
+            view.getSelectionService().deselect(nodeView);
+            if (view.getSelectionService().getSelecteds().isEmpty()) {
                 NodeView newSelectedView;
                 int childIndex = parent.getChildPosition(selectedNode);
                 if (parent.getChildCount() > childIndex + 1) {
@@ -93,7 +93,7 @@ public class DeleteChildActor extends XmlActorAdapter {
                     // no other node on same level. take the parent.
                     newSelectedView = view.getNodeView(parent);
                 }
-                view.select(newSelectedView);
+                view.getSelectionService().select(newSelectedView);
             }
         }
         getExMapFeedback().removeNodeFromParent(selectedNode);

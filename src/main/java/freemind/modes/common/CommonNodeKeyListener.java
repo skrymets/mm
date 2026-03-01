@@ -160,7 +160,7 @@ public class CommonNodeKeyListener implements KeyListener {
 
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-            c.getView().resetShiftSelectionOrigin();
+            c.getView().getSelectionService().resetShiftSelectionOrigin();
         }
     }
 }

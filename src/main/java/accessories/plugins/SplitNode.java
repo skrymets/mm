@@ -88,7 +88,7 @@ public class SplitNode extends MindMapNodeHookAdapter {
             c.setNodeText(lowerNode, part);
             EventQueue.invokeLater(() -> {
                 final MapView mapView = c.getView();
-                mapView.toggleSelected(mapView.getNodeView(lowerNode));
+                mapView.getSelectionService().toggleSelected(mapView.getNodeView(lowerNode));
             });
         }
     }

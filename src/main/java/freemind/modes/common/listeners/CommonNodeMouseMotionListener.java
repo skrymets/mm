@@ -114,7 +114,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
         NodeView nodeV = ((MainView) e.getComponent()).getNodeView();
 
         // if dragged for the first time, select the node:
-        if (!c.getView().isSelected(nodeV))
+        if (!c.getView().getSelectionService().isSelected(nodeV))
             c.extendSelection(e);
     }
 
@@ -231,7 +231,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
             // * formerly in ControllerAdapter. To guarantee, that point-to-select does not change selection if
             // any meta key is pressed.
             SwingUtilities.invokeLater(() -> {
-                if (e.getModifiers() == 0 && !c.isBlocked() && c.getView().getSelecteds().size() <= 1) {
+                if (e.getModifiers() == 0 && !c.isBlocked() && c.getView().getSelectionService().getSelecteds().size() <= 1) {
                     c.extendSelection(e);
                 }
             });

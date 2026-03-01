@@ -42,7 +42,7 @@ public class NodeBackgroundColorAction extends MindmapAction {
 
     public void actionPerformed(ActionEvent e) {
         Color color = Controller.showCommonJColorChooserDialog(controller
-                .getView().getSelected(), controller
+                .getView().getSelectionService().getSelected(), controller
                 .getText("choose_node_background_color"), controller
                 .getSelected().getBackgroundColor());
         if (color == null) {

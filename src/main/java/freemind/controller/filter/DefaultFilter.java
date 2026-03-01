@@ -89,7 +89,7 @@ public class DefaultFilter implements Filter {
     }
 
     static public void selectVisibleNode(MapView mapView) {
-        LinkedList<NodeView> selectedNodes = mapView.getSelecteds();
+        LinkedList<NodeView> selectedNodes = mapView.getSelectionService().getSelecteds();
         final int lastSelectedIndex = selectedNodes.size() - 1;
         if (lastSelectedIndex == -1) {
             return;
@@ -99,14 +99,14 @@ public class DefaultFilter implements Filter {
         while (iterator.hasPrevious()) {
             NodeView previous = iterator.previous();
             if (!previous.getModel().isVisible()) {
-                mapView.toggleSelected(previous);
+                mapView.getSelectionService().toggleSelected(previous);
             }
         }
 
-        NodeView selected = mapView.getSelected();
+        NodeView selected = mapView.getSelectionService().getSelected();
         if (!selected.getModel().isVisible()) {
             selected = getNearestVisibleParent(selected);
-            mapView.selectAsTheOnlyOneSelected(selected);
+            mapView.getSelectionService().selectAsTheOnlyOneSelected(selected);
         }
         mapView.setSiblingMaxLevel(selected.getModel().getNodeLevel());
     }
