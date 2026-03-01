@@ -112,7 +112,7 @@ public class FreeMindProgressMonitor extends JDialog {
      */
     public static void main(String[] args) throws InterruptedException {
         FreeMindMainMock mock = new FreeMindMainMock();
-        Resources.createInstance(mock);
+        new Resources(mock);
         FreeMindProgressMonitor progress = new FreeMindProgressMonitor("title", Resources.get());
         progress.setVisible(true);
         for (int i = 0; i < 10; i++) {

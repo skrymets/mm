@@ -155,7 +155,7 @@ public class JOptionalSplitPane extends JPanel {
 
 
     public static void main(String[] args) {
-        Resources.createInstance(new FreeMindMainMock());
+        new FreeMindMainMock();
         final JFrame frame = new JFrame("JOptionalSplitPane");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         final JOptionalSplitPane panel = new JOptionalSplitPane();

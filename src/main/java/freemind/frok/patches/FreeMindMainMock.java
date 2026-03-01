@@ -53,7 +53,7 @@ public class FreeMindMainMock implements FreeMindMain {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Resources.createInstance(this);
+        new Resources(this);
 
     }
 

@@ -194,7 +194,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
     }
 
     public static void main(String[] args) {
-        Resources.createInstance(new FreeMindMainMock());
+        new FreeMindMainMock();
         final JFrame frame = new JFrame("JTripleCalendar");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         final JTripleCalendar jcalendar = new JTripleCalendar(4, null);

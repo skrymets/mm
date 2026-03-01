@@ -254,8 +254,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         printEnvironmentInfo();
 
         freeMindCommon = new FreeMindCommon(this);
-        Resources.createInstance(this);
-        this.resources = Resources.getInstance();
+        new Resources(this);
+        this.resources = Resources.get();
     }
 
     private void printEnvironmentInfo() {

@@ -26,7 +26,7 @@ package freemind.main;
 import freemind.common.NamedObject;
 import org.apache.commons.lang3.SystemUtils;
 import freemind.common.TextTranslator;
-import freemind.frok.patches.FreeMindMainMock;
+
 import freemind.modes.FreeMindAwtFileDialog;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.FreeMindJFileDialog;
@@ -54,19 +54,9 @@ public class Resources implements TextTranslator {
     private static final List<FreemindPropertyListener> propertyChangeListeners = new ArrayList<>();
 
     @Inject
-    Resources(FreeMindMain frame) {
+    public Resources(FreeMindMain frame) {
         this.main = frame;
         resourcesInstance = this;
-    }
-
-    /**
-     * @deprecated Use Guice injection instead. Resources is now Guice-managed.
-     */
-    @Deprecated
-    static public void createInstance(FreeMindMain frame) {
-        if (resourcesInstance == null) {
-            resourcesInstance = new Resources(frame);
-        }
     }
 
     public URL getResource(String resource) {
@@ -86,18 +76,6 @@ public class Resources implements TextTranslator {
      * (static initializers, legacy bridge code, etc.).
      */
     public static Resources get() {
-        return resourcesInstance;
-    }
-
-    /**
-     * @deprecated Use {@link #get()} or Guice injection instead.
-     */
-    @Deprecated
-    static public Resources getInstance() {
-        if (resourcesInstance == null) {
-            createInstance(new FreeMindMainMock());
-            System.err.println("Resources without FreeMind called.");
-        }
         return resourcesInstance;
     }
 
