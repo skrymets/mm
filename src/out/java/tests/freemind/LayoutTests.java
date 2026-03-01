@@ -147,10 +147,10 @@ public class LayoutTests extends FreeMindTestBase {
         layout(mMapView);
         int yCoordinateRoot = getYCoordinateToViewport(mRoot);
         int delta = 10;
-        Point viewPosition = mMapView.getViewPosition();
-        mMapView.scrollBy(0, delta);
+        Point viewPosition = mMapView.getGeometryService().getViewPosition();
+        mMapView.getScrollService().scrollBy(0, delta);
         layout(mMapView);
-        assertEquals(viewPosition.y + delta, mMapView.getViewPosition().y);
+        assertEquals(viewPosition.y + delta, mMapView.getGeometryService().getViewPosition().y);
         assertEquals(yCoordinateRoot - delta, getYCoordinateToViewport(mRoot));
     }
 
@@ -164,7 +164,7 @@ public class LayoutTests extends FreeMindTestBase {
         int yCoordinate3 = getYCoordinateToViewport(child3);
         int delta = -10;
         mChild2.setShiftY(delta);
-        mMapView.scrollBy(0, -delta);
+        mMapView.getScrollService().scrollBy(0, -delta);
         layout(mMapView);
         assertTrue(getYCoordinateToViewport(mChild1) != getYCoordinateToViewport(mChild2));
         assertEquals(yCoordinateRoot, getYCoordinateToViewport(mRoot));

@@ -325,7 +325,7 @@ public class FreeMindMapController extends JMapController implements
 
         public void cancel() {
             if (!mIsEditOfExistingNode) {
-                mMindMapController.getView().selectAsTheOnlyOneSelected(
+                mMindMapController.getView().getSelectionService().selectAsTheOnlyOneSelected(
                         mNodeView);
                 mMindMapController.cut(Tools
                         .getVectorWithSingleElement(mNewNode));
