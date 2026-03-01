@@ -62,7 +62,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
         this(controllerAdapter.getText(title),
                 (iconPath == null)
                         ? null
-                        : freemind.view.ImageFactory.getInstance().createIcon(controllerAdapter.getResource(iconPath)),
+                        : freemind.view.ImageFactory.getInstance().createIconWithSvgFallback(controllerAdapter.getResource(iconPath)),
                 controllerAdapter);
     }
 

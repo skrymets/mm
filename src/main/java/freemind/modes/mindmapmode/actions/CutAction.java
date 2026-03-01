@@ -38,7 +38,7 @@ public class CutAction extends AbstractAction {
     private final MindMapController mMindMapController;
 
     public CutAction(MindMapController c) {
-        super(c.getText("cut"), freemind.view.ImageFactory.getInstance().createIcon(c.getResource("images/editcut.png")));
+        super(c.getText("cut"), freemind.view.ImageFactory.getInstance().createIconWithSvgFallback(c.getResource("images/editcut.png")));
         this.mMindMapController = c;
         setEnabled(false);
     }

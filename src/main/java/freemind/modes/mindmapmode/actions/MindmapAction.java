@@ -66,7 +66,7 @@ public abstract class MindmapAction extends FreemindAction {
         this(mindMapController.getText(title),
                 (iconPath == null)
                         ? null
-                        : freemind.view.ImageFactory.getInstance().createIcon(mindMapController.getResource(iconPath)),
+                        : freemind.view.ImageFactory.getInstance().createIconWithSvgFallback(mindMapController.getResource(iconPath)),
                 mindMapController);
     }
 
