@@ -24,7 +24,6 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
-import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,7 +42,7 @@ public class NoFilteringCondition implements Condition {
 
     public String toString() {
         if (description == null) {
-            description = Resources.getInstance().getResourceString(
+            description = ConditionFactory.getResources().getResourceString(
                     "filter_no_filtering");
         }
         return description;

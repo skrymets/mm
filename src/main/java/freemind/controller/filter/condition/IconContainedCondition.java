@@ -25,7 +25,6 @@ package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
 import freemind.main.FreeMindXml;
-import freemind.main.Resources;
 import freemind.main.MindMapUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
@@ -68,9 +67,9 @@ public class IconContainedCondition implements Condition {
      */
     public JComponent getListCellRendererComponent() {
         JCondition component = new JCondition();
-        String text = Resources.getInstance().getResourceString("filter_icon")
+        String text = ConditionFactory.getResources().getResourceString("filter_icon")
                 + ' '
-                + Resources.getInstance().getResourceString("filter_contains")
+                + ConditionFactory.getResources().getResourceString("filter_contains")
                 + ' ';
         component.add(new JLabel(text));
         component.add(MindIcon.factory(getIconName()).getRendererComponent());

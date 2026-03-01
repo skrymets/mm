@@ -24,7 +24,6 @@
 package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
-import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import freemind.view.mindmapview.NodeView;
 import org.w3c.dom.Document;
@@ -44,7 +43,7 @@ public class SelectedViewCondition implements Condition {
 
     public String toString() {
         if (description == null) {
-            description = Resources.getInstance().getResourceString(
+            description = ConditionFactory.getResources().getResourceString(
                     "filter_selected_node_view");
         }
         return description;

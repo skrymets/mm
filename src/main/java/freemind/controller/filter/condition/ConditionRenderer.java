@@ -23,7 +23,6 @@
  */
 package freemind.controller.filter.condition;
 
-import freemind.main.Resources;
 import freemind.modes.MindIcon;
 
 import javax.swing.*;
@@ -46,7 +45,7 @@ public class ConditionRenderer implements ListCellRenderer<Object> {
     public Component getListCellRendererComponent(JList list, Object value,
                                                   int index, boolean isSelected, boolean cellHasFocus) {
         if (value == null)
-            return new JLabel(Resources.getInstance().getResourceString(
+            return new JLabel(ConditionFactory.getResources().getResourceString(
                     "filter_no_filtering"));
         JComponent component;
         if (value instanceof MindIcon) {

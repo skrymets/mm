@@ -26,7 +26,6 @@ package freemind.controller.filter.condition;
 import freemind.controller.Controller;
 import freemind.controller.filter.FilterController;
 import freemind.main.FreeMindXml;
-import freemind.main.Resources;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import org.w3c.dom.Document;
@@ -71,7 +70,7 @@ public class ConditionNotSatisfiedDecorator implements Condition {
      */
     public JComponent getListCellRendererComponent() {
         JCondition component = new JCondition();
-        final String not = SwingUtils.removeMnemonic(Resources.getInstance()
+        final String not = SwingUtils.removeMnemonic(ConditionFactory.getResources()
                 .getResourceString("filter_not"));
         String text = not + ' ';
         component.add(new JLabel(text));

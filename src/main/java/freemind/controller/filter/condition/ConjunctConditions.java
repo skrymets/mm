@@ -26,7 +26,6 @@ package freemind.controller.filter.condition;
 import freemind.controller.Controller;
 import freemind.controller.filter.FilterController;
 import freemind.main.FreeMindXml;
-import freemind.main.Resources;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import org.w3c.dom.Document;
@@ -60,7 +59,7 @@ public class ConjunctConditions implements Condition {
         JCondition component = new JCondition();
         component.add(new JLabel("("));
 
-        String text = format(" %s ", SwingUtils.removeMnemonic(Resources.getInstance().getResourceString("filter_and")));
+        String text = format(" %s ", SwingUtils.removeMnemonic(ConditionFactory.getResources().getResourceString("filter_and")));
 
         conditions.forEach(condition -> {
             component.add(new JLabel(text));

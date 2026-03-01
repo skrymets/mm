@@ -25,7 +25,6 @@ package freemind.controller.filter.condition;
 
 import freemind.controller.Controller;
 import freemind.main.FreeMindXml;
-import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import freemind.modes.attributes.Attribute;
 import org.w3c.dom.Document;
@@ -76,7 +75,7 @@ public class AttributeNotExistsCondition extends NodeCondition {
     }
 
     protected String createDesctiption() {
-        final String simpleCondition = Resources.getInstance()
+        final String simpleCondition = ConditionFactory.getResources()
                 .getResourceString(ConditionFactory.FILTER_DOES_NOT_EXIST);
         return ConditionFactory.createDescription(attribute, simpleCondition,
                 null, false);
