@@ -35,12 +35,12 @@ public abstract class EdgeView {
     }
 
     protected void createEnd() {
-        end = getTarget().getMainViewInPoint();
+        end = ((NodeViewLayout) getTarget().getLayout()).getMainViewInPoint(getTarget());
         PointUtils.convertPointToAncestor(this.target.getMainView(), end, source);
     }
 
     protected void createStart() {
-        start = source.getMainViewOutPoint(getTarget(), end);
+        start = ((NodeViewLayout) source.getLayout()).getMainViewOutPoint(source, getTarget(), end);
         PointUtils.convertPointToAncestor(source.getMainView(), start, source);
     }
 

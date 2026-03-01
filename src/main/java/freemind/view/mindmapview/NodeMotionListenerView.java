@@ -45,7 +45,7 @@ public class NodeMotionListenerView extends JComponent {
 
         // fc, 16.6.2005: to emphasis the possible movement.
         this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-        final String helpMsg = view.getViewFeedback().getResources().getResourceString("node_location_help");
+        final String helpMsg = view.getMap().getViewFeedback().getResources().getResourceString("node_location_help");
         this.setToolTipText(helpMsg);
     }
 

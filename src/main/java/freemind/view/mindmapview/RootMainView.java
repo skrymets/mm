@@ -108,7 +108,7 @@ class RootMainView extends MainView {
      * @see freemind.view.mindmapview.NodeView#getStyle()
      */
     public String getStyle() {
-        return getNodeView().getViewFeedback().getResources().getProperty(
+        return getNodeView().getMap().getViewFeedback().getResources().getProperty(
                 FreeMind.RESOURCES_ROOT_NODE_STYLE);
     }
 

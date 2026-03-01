@@ -52,7 +52,7 @@ public class SelectedViewCondition implements Condition {
 
     public boolean checkNode(Controller c, MindMapNode node) {
         NodeView viewer = c.getModeController().getNodeView(node);
-        return viewer != null && viewer.isSelected();
+        return viewer != null && viewer.getMap().getSelectionService().isSelected(viewer);
     }
 
     public JComponent getListCellRendererComponent() {

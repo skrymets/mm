@@ -5,6 +5,7 @@ import freemind.modes.MindMapCloud;
 import freemind.view.mindmapview.CloudView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+import freemind.view.mindmapview.NodeViewLayout;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -108,7 +109,7 @@ public class NodeGeometryService {
     }
 
     public Point getFoldingMarkPosition() {
-        return nodeView.getMainViewOutPoint(nodeView, new Point());
+        return ((NodeViewLayout) nodeView.getLayout()).getMainViewOutPoint(nodeView, nodeView, new Point());
     }
 
     public Rectangle getInnerBounds() {
@@ -126,6 +127,6 @@ public class NodeGeometryService {
     }
 
     public Point getInPointInMap() {
-        return convertPointToMap(nodeView.getMainViewInPoint());
+        return convertPointToMap(((NodeViewLayout) nodeView.getLayout()).getMainViewInPoint(nodeView));
     }
 }

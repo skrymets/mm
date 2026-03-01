@@ -88,7 +88,7 @@ public class NodeUpdateService {
     public int getMaxToolTipWidth() {
         if (maxToolTipWidth == 0) {
             try {
-                maxToolTipWidth = Integer.parseInt(nodeView.getViewFeedback().getProperty(
+                maxToolTipWidth = Integer.parseInt(nodeView.getMap().getViewFeedback().getProperty(
                         "max_tooltip_width"));
             } catch (NumberFormatException e) {
                 maxToolTipWidth = 600;
@@ -136,7 +136,7 @@ public class NodeUpdateService {
                 } catch (MalformedURLException ignored) {
                 }
             }
-            String htmlLongNodeHead = nodeView.getViewFeedback()
+            String htmlLongNodeHead = nodeView.getMap().getViewFeedback()
                     .getProperty("html_long_node_head");
             if (htmlLongNodeHead != null && !htmlLongNodeHead.isEmpty()) {
                 if (nodeText.matches("(?ims).*<head>.*")) {
@@ -184,7 +184,7 @@ public class NodeUpdateService {
 
     private void updateFont() {
         Font font = nodeView.getModel().getFont();
-        font = font == null ? nodeView.getViewFeedback().getDefaultFont() : font;
+        font = font == null ? nodeView.getMap().getViewFeedback().getDefaultFont() : font;
         if (font != null) {
             nodeView.getMainView().setFont(font);
         } else {
@@ -204,7 +204,7 @@ public class NodeUpdateService {
             iconImages.addImage(myIcon);
         }
 
-        Resources resources = nodeView.getViewFeedback().getResources();
+        Resources resources = nodeView.getMap().getViewFeedback().getResources();
         if (showAttributeIcon == null) {
             showAttributeIcon = resources.getBoolProperty("el__show_icon_for_attributes");
         }

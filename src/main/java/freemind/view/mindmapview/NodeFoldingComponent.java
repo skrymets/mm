@@ -61,7 +61,7 @@ public class NodeFoldingComponent extends JButton {
         setFocusable(false);
         setAlignmentY(Component.TOP_ALIGNMENT);
         setUI(new RoundImageButtonUI());
-        boolean mIsEnabled = view.getViewFeedback().getResources().getBoolProperty(
+        boolean mIsEnabled = view.getMap().getViewFeedback().getResources().getBoolProperty(
                 FreeMind.RESOURCES_DISPLAY_FOLDING_BUTTONS);
         if (mIsEnabled) {
             addMouseListener(new MouseListener() {

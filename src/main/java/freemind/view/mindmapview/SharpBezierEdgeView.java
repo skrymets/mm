@@ -85,7 +85,7 @@ public class SharpBezierEdgeView extends EdgeView {
 
     protected void createStart() {
         if (source.isRoot()) {
-            start = source.getMainViewOutPoint(getTarget(), end);
+            start = ((NodeViewLayout) source.getLayout()).getMainViewOutPoint(source, getTarget(), end);
             final MainView mainView = source.getMainView();
             final double w = (double) mainView.getWidth() / 2;
             final double x0 = start.x - w;

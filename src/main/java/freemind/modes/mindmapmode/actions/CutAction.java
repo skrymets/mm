@@ -44,7 +44,7 @@ public class CutAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (mMindMapController.getView().getRoot().isSelected()) {
+        if (mMindMapController.getView().getSelectionService().isSelected(mMindMapController.getView().getRoot())) {
             mMindMapController.getController().errorMessage(
                     mMindMapController.getFrame().getResourceString(
                             "cannot_delete_root"));

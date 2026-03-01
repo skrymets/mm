@@ -125,7 +125,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             mFoldingListener = new NodeFoldingComponent(this);
             add(mFoldingListener, getComponentCount() - 1);
 
-            mFoldingListener.addActionListener(pE -> getViewFeedback().setFolded(getModel(), !getModel().isFolded()));
+            mFoldingListener.addActionListener(pE -> getMap().getViewFeedback().setFolded(getModel(), !getModel().isFolded()));
         }
     }
 
@@ -291,9 +291,6 @@ public class NodeView extends JComponent implements TreeModelListener {
         }
     }
 
-    public boolean isSelected() {
-        return (getMap().getSelectionService().isSelected(this));
-    }
 
     /**
      * Is the node left of root?
@@ -310,12 +307,8 @@ public class NodeView extends JComponent implements TreeModelListener {
         return mapView;
     }
 
-    public ViewFeedback getViewFeedback() {
-        return getMap().getViewFeedback();
-    }
-
     private Resources getResources() {
-        return getViewFeedback().getResources();
+        return getMap().getViewFeedback().getResources();
     }
 
     boolean isParentHidden() {
@@ -364,26 +357,6 @@ public class NodeView extends JComponent implements TreeModelListener {
         return getParentView().getChildrenViews();
     }
 
-    /**
-     * Returns the point the edge should start given the point of the child node
-     * that should be connected.
-     *
-     */
-    public Point getMainViewOutPoint(NodeView targetView, Point destinationPoint) {
-        final NodeViewLayout layoutManager = (NodeViewLayout) getLayout();
-        Point out = layoutManager.getMainViewOutPoint(this, targetView,
-                destinationPoint);
-        return out;
-    }
-
-    /**
-     * Returns the Point where the InEdge should arrive the Node.
-     */
-    public Point getMainViewInPoint() {
-        final NodeViewLayout layoutManager = (NodeViewLayout) getLayout();
-        Point in = layoutManager.getMainViewInPoint(this);
-        return in;
-    }
 
     /**
      * Returns the Point where the Links should arrive the Node.
@@ -482,7 +455,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * @return the position of the in-point of this node in view coordinates
      */
     public Point getInPointInMap() {
-        return convertPointToMap(getMainViewInPoint());
+        return convertPointToMap(((NodeViewLayout) getLayout()).getMainViewInPoint(this));
     }
 
     public NodeView getPreviousPage() {
@@ -742,10 +715,10 @@ public class NodeView extends JComponent implements TreeModelListener {
         for (NodeView nodeView : getChildrenViews()) {
             nodeView.remove();
         }
-        if (isSelected()) {
+        if (getMap().getSelectionService().isSelected(this)) {
             getMap().getSelectionService().deselect(this);
         }
-        getViewFeedback().onViewRemovedHook(this);
+        getMap().getViewFeedback().onViewRemovedHook(this);
         removeFromMap();
         mapView.getViewerRegistryService().removeViewer(getModel(), this); // Let the model know he is invisible
     }
@@ -820,7 +793,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             // <body width="800">, or avoid the <body> tag altogether.
 
             // Set user HTML head
-            String htmlLongNodeHead = getViewFeedback()
+            String htmlLongNodeHead = getMap().getViewFeedback()
                     .getProperty("html_long_node_head");
             if (htmlLongNodeHead != null && !htmlLongNodeHead.isEmpty()) {
                 if (nodeText.matches("(?ims).*<head>.*")) {
@@ -878,7 +851,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     private void updateFont() {
         Font font = getModel().getFont();
-        font = font == null ? getViewFeedback().getDefaultFont() : font;
+        font = font == null ? getMap().getViewFeedback().getDefaultFont() : font;
         if (font != null) {
             mainView.setFont(font);
         } else {
@@ -961,7 +934,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     }
 
     public boolean useSelectionColors() {
-        return isSelected() && !MapView.standardDrawRectangleForSelection
+        return getMap().getSelectionService().isSelected(this) && !MapView.standardDrawRectangleForSelection
                 && !mapView.isCurrentlyPrinting();
     }
 
@@ -1004,7 +977,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     public int getMaxToolTipWidth() {
         if (maxToolTipWidth == 0) {
             try {
-                maxToolTipWidth = Integer.parseInt(getViewFeedback().getProperty(
+                maxToolTipWidth = Integer.parseInt(getMap().getViewFeedback().getProperty(
                         "max_tooltip_width"));
             } catch (NumberFormatException e) {
                 maxToolTipWidth = 600;
@@ -1323,7 +1296,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * by the folding circle width.
      */
     public Point getFoldingMarkPosition() {
-        Point out = getMainViewOutPoint(this, new Point());
+        Point out = ((NodeViewLayout) getLayout()).getMainViewOutPoint(this, this, new Point());
         return out;
     }
 

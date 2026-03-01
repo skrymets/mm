@@ -69,7 +69,7 @@ public class NodeStyleService {
     }
 
     public boolean useSelectionColors() {
-        return nodeView.isSelected() && !MapView.standardDrawRectangleForSelection
+        return nodeView.getMap().getSelectionService().isSelected(nodeView) && !MapView.standardDrawRectangleForSelection
                 && !nodeView.getMap().isCurrentlyPrinting();
     }
 }
