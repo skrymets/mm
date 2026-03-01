@@ -32,6 +32,7 @@ import freemind.modes.FreeMindFileDialog;
 import freemind.modes.FreeMindJFileDialog;
 import lombok.extern.slf4j.Slf4j;
 
+import jakarta.inject.Inject;
 import freemind.preferences.FreemindPropertyListener;
 
 import javax.swing.filechooser.FileFilter;
@@ -52,10 +53,16 @@ public class Resources implements TextTranslator {
 
     private static final List<FreemindPropertyListener> propertyChangeListeners = new ArrayList<>();
 
-    private Resources(FreeMindMain frame) {
+    @Inject
+    Resources(FreeMindMain frame) {
         this.main = frame;
+        resourcesInstance = this;
     }
 
+    /**
+     * @deprecated Use Guice injection instead. Resources is now Guice-managed.
+     */
+    @Deprecated
     static public void createInstance(FreeMindMain frame) {
         if (resourcesInstance == null) {
             resourcesInstance = new Resources(frame);
@@ -74,6 +81,10 @@ public class Resources implements TextTranslator {
         return main.getResourceString(key, resource);
     }
 
+    /**
+     * @deprecated Use constructor injection via Guice instead.
+     */
+    @Deprecated
     static public Resources getInstance() {
         if (resourcesInstance == null) {
             createInstance(new FreeMindMainMock());

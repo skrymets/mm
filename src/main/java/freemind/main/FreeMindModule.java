@@ -45,8 +45,7 @@ public class FreeMindModule extends AbstractModule {
     @Provides
     @Singleton
     Resources provideResources(FreeMindMain frame) {
-        // Resources singleton is created in FreeMind constructor via Resources.createInstance()
-        // Return the existing singleton for Guice-managed injection
-        return Resources.getInstance();
+        // Constructor sets the static resourcesInstance field for backward compatibility
+        return new Resources(frame);
     }
 }
