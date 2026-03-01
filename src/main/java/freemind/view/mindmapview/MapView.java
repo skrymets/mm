@@ -389,10 +389,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     }
 
     //
-    // Navigation
-    //
-
-    //
     // get/set methods
     //
 
@@ -560,7 +556,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         scrollRectToVisible(r);
     }
 
-
     /*
      * (non-Javadoc)
      *
@@ -574,8 +569,5 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         }
         return super.getPreferredSize();
     }
-
-
-
 
 }
