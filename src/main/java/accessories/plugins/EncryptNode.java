@@ -137,7 +137,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
      *
      */
     private void newEncryptedMap() {
-        final StringBuffer password = getUsersPassword();
+        final StringBuilder password = getUsersPassword();
         if (password == null) {
             return;
         }
@@ -161,7 +161,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
      *
      */
     private void encrypt(MindMapNode node) {
-        final StringBuffer password = getUsersPassword();
+        final StringBuilder password = getUsersPassword();
         if (password == null) {
             return;
         }
@@ -185,7 +185,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
     /**
      *
      */
-    private StringBuffer getUsersPassword() {
+    private StringBuilder getUsersPassword() {
         // get password:
         final EnterPasswordDialog pwdDialog = new EnterPasswordDialog(
                 (JFrame) getMindMapController().getFrame(),
@@ -195,7 +195,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         if (pwdDialog.getResult() == EnterPasswordDialog.CANCEL) {
             return null;
         }
-        final StringBuffer password = pwdDialog.getPassword();
+        final StringBuilder password = pwdDialog.getPassword();
         return password;
     }
 

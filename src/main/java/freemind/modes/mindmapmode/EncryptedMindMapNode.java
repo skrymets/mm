@@ -69,11 +69,11 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     private boolean isDecrypted = true;
 
     /**
-     * password have to be stored in a StringBuffer as Strings cannot be deleted
+     * password have to be stored in a StringBuilder as Strings cannot be deleted
      * or overwritten.
      */
     @Setter
-    private StringBuffer password = null;
+    private StringBuilder password = null;
 
     private String encryptedContent;
 
@@ -116,7 +116,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     /**
      * @return true, if the password was correct.
      */
-    public boolean decrypt(StringBuffer givenPassword) {
+    public boolean decrypt(StringBuilder givenPassword) {
         if (!checkPassword(givenPassword)) {
             return false;
         }
@@ -167,7 +167,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         return (MindMapMapModel) getMapFeedback().getMap();
     }
 
-    public boolean checkPassword(StringBuffer givenPassword) {
+    public boolean checkPassword(StringBuilder givenPassword) {
 
         if (password != null) {
             if (!equals(givenPassword, password)) {
@@ -198,7 +198,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     /**
      *
      */
-    private boolean equals(StringBuffer givenPassword, StringBuffer password2) {
+    private boolean equals(StringBuilder givenPassword, StringBuilder password2) {
         if (givenPassword.length() != password.length())
             return false;
         for (int i = 0; i < password2.length(); i++) {
@@ -343,7 +343,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         try {
             StringWriter sWriter = new StringWriter();
             getMindMapMapModel().getXml(sWriter, true, this);
-            StringBuffer childXml = sWriter.getBuffer();
+            String childXml = sWriter.toString();
             encryptedContent = encryptXml(childXml);
         } finally {
             setStoringEncryptedContent(false);
@@ -353,14 +353,14 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     /**
      *
      */
-    private String encryptXml(StringBuffer childXml) {
+    private String encryptXml(String childXml) {
         try {
             // Create encrypter/decrypter class
             // FIXME: Use char[] instead of toString.
             SingleDesEncrypter encrypter = new SingleDesEncrypter(password);
 
             // Encrypt
-            String encrypted = encrypter.encrypt(childXml.toString());
+            String encrypted = encrypter.encrypt(childXml);
             return encrypted;
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
@@ -371,7 +371,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     /**
      * @return null if the password is wrong.
      */
-    private String decryptXml(String encryptedString, StringBuffer pwd) {
+    private String decryptXml(String encryptedString, StringBuilder pwd) {
         SingleDesEncrypter encrypter = new SingleDesEncrypter(pwd);
 
         // // Decrypt

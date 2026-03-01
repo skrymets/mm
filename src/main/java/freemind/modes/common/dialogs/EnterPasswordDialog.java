@@ -63,7 +63,7 @@ public class EnterPasswordDialog extends JDialog {
      *
      */
     @Getter
-    private StringBuffer password = null;
+    private StringBuilder password = null;
 
     private boolean enterTwoPasswords = true;
 
@@ -128,7 +128,7 @@ public class EnterPasswordDialog extends JDialog {
                     .getText("accessories/plugins/EncryptNode.properties_1")); //$NON-NLS-1$
             return;
         }
-        password = new StringBuffer();
+        password = new StringBuilder();
         password.append(jPasswordField.getPassword());
         result = OK;
         close();

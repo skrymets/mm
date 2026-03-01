@@ -251,7 +251,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     private void printEnvironmentInfo() {
-        StringBuffer info = new StringBuffer();
+        StringBuilder info = new StringBuilder();
         info.append("freemind_version = ");
         info.append(VERSION);
         info.append("; freemind_xml_version = ");
@@ -276,7 +276,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         log.info(info.toString());
 
         try {
-            StringBuffer b = new StringBuffer();
+            StringBuilder b = new StringBuilder();
             // print all java/sun properties
             Properties properties = System.getProperties();
             List<String> list = new ArrayList<>();

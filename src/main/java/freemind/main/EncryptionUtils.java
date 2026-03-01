@@ -153,7 +153,7 @@ public final class EncryptionUtils {
         private final char[] passPhrase;
         private final String mAlgorithm;
 
-        public DesEncrypter(StringBuffer pPassPhrase, String pAlgorithm) {
+        public DesEncrypter(StringBuilder pPassPhrase, String pAlgorithm) {
             passPhrase = new char[pPassPhrase.length()];
             pPassPhrase.getChars(0, passPhrase.length, passPhrase, 0);
             mAlgorithm = pAlgorithm;
@@ -239,7 +239,7 @@ public final class EncryptionUtils {
 
     public static class SingleDesEncrypter extends DesEncrypter {
 
-        public SingleDesEncrypter(StringBuffer pPassPhrase) {
+        public SingleDesEncrypter(StringBuilder pPassPhrase) {
             super(pPassPhrase, "PBEWithMD5AndDES");
         }
 
@@ -247,7 +247,7 @@ public final class EncryptionUtils {
 
     public static class TripleDesEncrypter extends DesEncrypter {
 
-        public TripleDesEncrypter(StringBuffer pPassPhrase) {
+        public TripleDesEncrypter(StringBuilder pPassPhrase) {
             super(pPassPhrase, "PBEWithMD5AndTripleDES");
         }
 

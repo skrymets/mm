@@ -119,7 +119,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
     }
 
     public String getCloneIdsAsString() {
-        StringBuffer cloneIds = new StringBuffer();
+        StringBuilder cloneIds = new StringBuilder();
         for (String cloneId : mCloneNodeIds) {
             cloneIds.append(cloneId);
             cloneIds.append(",");

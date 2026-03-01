@@ -297,30 +297,30 @@ public class KeyEventTranslator {
 
     // {{{ modifiersToString() method
     public static String modifiersToString(int mods) {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
 
         if ((mods & InputEvent.CTRL_MASK) != 0) {
-            buf = new StringBuffer();
+            buf = new StringBuilder();
 
             buf.append(getSymbolicModifierName(InputEvent.CTRL_MASK));
         }
         if ((mods & InputEvent.ALT_MASK) != 0) {
             if (buf == null)
-                buf = new StringBuffer();
+                buf = new StringBuilder();
             else
                 buf.append(GrabKeyDialog.MODIFIER_SEPARATOR);
             buf.append(getSymbolicModifierName(InputEvent.ALT_MASK));
         }
         if ((mods & InputEvent.META_MASK) != 0) {
             if (buf == null)
-                buf = new StringBuffer();
+                buf = new StringBuilder();
             else
                 buf.append(GrabKeyDialog.MODIFIER_SEPARATOR);
             buf.append(getSymbolicModifierName(InputEvent.META_MASK));
         }
         if ((mods & InputEvent.SHIFT_MASK) != 0) {
             if (buf == null)
-                buf = new StringBuffer();
+                buf = new StringBuilder();
             else
                 buf.append(GrabKeyDialog.MODIFIER_SEPARATOR);
             buf.append(getSymbolicModifierName(InputEvent.SHIFT_MASK));
@@ -342,7 +342,7 @@ public class KeyEventTranslator {
      * @since jEdit 4.2pre3
      */
     public static String getModifierString(InputEvent evt) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         if (evt.isControlDown())
             buf.append(getSymbolicModifierName(InputEvent.CTRL_MASK));
         if (evt.isAltDown())

@@ -418,7 +418,7 @@ public class Tools {
         if (pText1 == null || pText2 == null) {
             return "One of the Strings is null " + pText1 + ", " + pText2;
         }
-        StringBuffer b = new StringBuffer();
+        StringBuilder b = new StringBuilder();
         if (pText1.length() > pText2.length()) {
             b.append("First string is longer :").append(pText1.substring(pText2.length())).append("\n");
         }
@@ -470,7 +470,7 @@ public class Tools {
     } // }}}
 
     public static String arrayToUrls(String[] pArgs) {
-        StringBuffer b = new StringBuffer();
+        StringBuilder b = new StringBuilder();
         for (String fileName : pArgs) {
             try {
                 b.append(fileToUrl(new File(fileName)));
@@ -593,9 +593,9 @@ public class Tools {
      *
      * @return an empty string buffer, if something fails.
      */
-    public static StringBuffer readFileStart(Reader pReader, int pMinimumLength) {
+    public static StringBuilder readFileStart(Reader pReader, int pMinimumLength) {
         BufferedReader in = null;
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         try {
             // get the file start into the memory:
             in = new BufferedReader(pReader);
@@ -609,7 +609,7 @@ public class Tools {
             in.close();
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
-            return new StringBuffer();
+            return new StringBuilder();
         }
         return buffer;
     }

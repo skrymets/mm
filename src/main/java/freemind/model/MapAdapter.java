@@ -526,7 +526,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         int versionInfoLength;
         versionInfoLength = EXPECTED_START_STRINGS[0].length();
         // reading the start of the file:
-        StringBuffer buffer = Tools.readFileStart(pReaderCreator.createReader(),
+        StringBuilder buffer = Tools.readFileStart(pReaderCreator.createReader(),
                 versionInfoLength);
         // the resulting file is accessed by the reader:
         Reader reader = null;

@@ -154,7 +154,7 @@ public class HtmlTools {
 
         // remove tags and denote their positions:
         {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             Matcher matcher = FIND_TAGS_PATTERN.matcher(text);
             int lastMatchEnd = 0;
             while (matcher.find()) {
@@ -207,7 +207,7 @@ public class HtmlTools {
           For each pair that is not a tag we find concurrences and replace
           them, if a pair is a tag then we just append
          */
-        StringBuffer sbResult = new StringBuffer();
+        StringBuilder sbResult = new StringBuilder();
         for (IndexPair pair : splittedStringList) {
             if (pair.mIsTag)
                 append(sbResult, text, pair.originalStart, pair.originalEnd);
@@ -251,7 +251,7 @@ public class HtmlTools {
      * Need to program this, as the stringbuffer method appears in java 1.5
      * first.
      */
-    private void append(StringBuffer pSbResult, String pText, int pStart,
+    private void append(StringBuilder pSbResult, String pText, int pStart,
                         int pEnd) {
         pSbResult.append(pText, pStart, pEnd);
     }
@@ -297,7 +297,7 @@ public class HtmlTools {
      */
     public static String unicodeToHTMLUnicodeEntity(String text, boolean pPreserveNewlines) {
         // Heuristic reserve for expansion : factor 1.2
-        StringBuffer result = new StringBuffer((int) (text.length() * 1.2));
+        StringBuilder result = new StringBuilder((int) (text.length() * 1.2));
         int intValue;
         char myChar;
         for (int i = 0; i < text.length(); ++i) {
@@ -330,8 +330,8 @@ public class HtmlTools {
      * @return the converted output.
      */
     public static String unescapeHTMLUnicodeEntity(String text) {
-        StringBuffer result = new StringBuffer(text.length());
-        StringBuffer entity = new StringBuffer();
+        StringBuilder result = new StringBuilder(text.length());
+        StringBuilder entity = new StringBuilder();
         boolean readingEntity = false;
         char myChar;
         char entityChar;
@@ -462,7 +462,7 @@ public class HtmlTools {
         // as
         // tab
         // width.
-        StringBuffer result = new StringBuffer(textTabsExpanded.length()); // Heuristic
+        StringBuilder result = new StringBuilder(textTabsExpanded.length()); // Heuristic
         int lengthMinus1 = textTabsExpanded.length() - 1;
         result.append("<html><body><p>");
         for (int i = 0; i < textTabsExpanded.length(); ++i) {
@@ -506,7 +506,7 @@ public class HtmlTools {
         text = text.replaceAll("\t", "         "); // Use eight spaces as tab
         // width.
         int len = text.length();
-        StringBuffer result = new StringBuffer(len);
+        StringBuilder result = new StringBuilder(len);
         char myChar;
         for (int i = 0; i < len; ++i) {
             myChar = text.charAt(i);
@@ -616,8 +616,8 @@ public class HtmlTools {
      * of <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">...</a>.
      */
     public static String removeInvalidXmlCharacters(String text) {
-        StringBuffer result = new StringBuffer(text.length());
-        StringBuffer entity = new StringBuffer();
+        StringBuilder result = new StringBuilder(text.length());
+        StringBuilder entity = new StringBuilder();
         boolean readingEntity = false;
         char myChar;
         char entityChar;
@@ -694,7 +694,7 @@ public class HtmlTools {
      *
      */
     public static String replaceSpacesToNonbreakableSpaces(String input) {
-        StringBuffer result = new StringBuffer(input.length());
+        StringBuilder result = new StringBuilder(input.length());
         boolean readingSpaces = false;
         char myChar;
         for (int i = 0; i < input.length(); ++i) {

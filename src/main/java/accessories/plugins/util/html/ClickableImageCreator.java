@@ -93,7 +93,7 @@ public class ClickableImageCreator {
     }
 
     public String generateHtml() {
-        StringBuffer htmlArea = new StringBuffer();
+        StringBuilder htmlArea = new StringBuilder();
         for (AreaHolder holder : area) {
             MessageFormat formatter = new MessageFormat(linkFormatter);
             String replacement = formatter.format(new Object[]{holder.href, holder.link});

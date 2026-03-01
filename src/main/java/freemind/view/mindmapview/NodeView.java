@@ -999,7 +999,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             mainView.setToolTipText(null);
         } else {
             // html table
-            StringBuffer text = new StringBuffer("<html><table width=\""
+            StringBuilder text = new StringBuilder("<html><table width=\""
                     + getMaxToolTipWidth() + "\">");
             for (String key : tooltips.keySet()) {
                 String value = tooltips.get(key);

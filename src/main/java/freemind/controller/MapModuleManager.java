@@ -304,7 +304,7 @@ public class MapModuleManager {
      *                    saving.
      * @return false if saving was canceled.
      */
-    public boolean close(boolean force, StringBuffer pRestorable) {
+    public boolean close(boolean force, StringBuilder pRestorable) {
         // (DP) The mode controller does not close the map
         MapModule module = getMapModule();
         // FIXME: This is not correct, as this class should not ask somebody.

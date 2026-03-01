@@ -275,7 +275,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
     }
 
     private void printVector() {
-        StringBuffer sb = new StringBuffer("\n");
+        StringBuilder sb = new StringBuilder("\n");
         int i = 0;
         for (NodeHolder holder : sNodeVector) {
             sb.append((sCurrentPosition - 1 == i) ? "==>" : "   ").append("Node pos ").append(i).append(" is ").append(holder.getNode(getMindMapController().getController()));

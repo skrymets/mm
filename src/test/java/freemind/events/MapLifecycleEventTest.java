@@ -80,7 +80,7 @@ class MapLifecycleEventTest {
         when(mockMap.getRestorable()).thenReturn("test.mm");
         injectMapModule("test.mm");
 
-        StringBuffer restorable = new StringBuffer();
+        StringBuilder restorable = new StringBuilder();
         boolean closed = mapModuleManager.close(true, restorable);
 
         assertTrue(closed);

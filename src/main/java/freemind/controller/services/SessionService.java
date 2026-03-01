@@ -72,7 +72,7 @@ public class SessionService {
         }
         while (!mapModuleList.isEmpty()) {
             if (controller.getMapModule() != null) {
-                StringBuffer restorableBuffer = new StringBuffer();
+                StringBuilder restorableBuffer = new StringBuilder();
                 boolean closingNotCancelled = controller.getMapModuleManager().close(
                         false, restorableBuffer);
                 if (!closingNotCancelled) {

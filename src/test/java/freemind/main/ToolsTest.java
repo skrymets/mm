@@ -417,19 +417,19 @@ class ToolsTest {
 
         @Test
         void encryptDecryptRoundtrip() {
-            EncryptionUtils.SingleDesEncrypter encrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuffer("password123"));
+            EncryptionUtils.SingleDesEncrypter encrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuilder("password123"));
             String original = "Hello, encrypted world!";
             String encrypted = encrypter.encrypt(original);
             assertNotNull(encrypted);
             assertNotEquals(original, encrypted);
 
-            EncryptionUtils.SingleDesEncrypter decrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuffer("password123"));
+            EncryptionUtils.SingleDesEncrypter decrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuilder("password123"));
             assertEquals(original, decrypter.decrypt(encrypted));
         }
 
         @Test
         void decryptNull_returnsNull() {
-            EncryptionUtils.SingleDesEncrypter encrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuffer("pass"));
+            EncryptionUtils.SingleDesEncrypter encrypter = new EncryptionUtils.SingleDesEncrypter(new StringBuilder("pass"));
             assertNull(encrypter.decrypt(null));
         }
     }
