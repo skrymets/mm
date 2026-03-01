@@ -59,7 +59,7 @@ class BubbleMainView extends MainView {
 
         // return to std stroke
         g.setStroke(DEF_STROKE);
-        g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 10, 10);
+        g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 14, 14);
         SwingUtils.restoreAntialiasing(g, renderingHint);
 
         super.paint(g);
@@ -76,7 +76,7 @@ class BubbleMainView extends MainView {
 
     protected void paintBackground(Graphics2D graphics, Color color) {
         graphics.setColor(color);
-        graphics.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 10, 10);
+        graphics.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 14, 14);
     }
 
     Point getLeftPoint() {
