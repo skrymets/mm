@@ -191,7 +191,11 @@ public class Resources implements TextTranslator {
      */
     public static void addPropertyChangeListenerAndPropagate(FreemindPropertyListener listener) {
         addPropertyChangeListener(listener);
-        Properties properties = get().getProperties();
+        Resources instance = get();
+        if (instance == null) {
+            return;
+        }
+        Properties properties = instance.getProperties();
         for (Object key : properties.keySet()) {
             listener.propertyChanged((String) key, properties.getProperty((String) key), null);
         }
