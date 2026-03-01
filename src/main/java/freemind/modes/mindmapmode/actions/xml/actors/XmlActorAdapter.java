@@ -24,7 +24,6 @@ import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapLinkRegistry;
-import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
 import freemind.view.mindmapview.ViewFeedback;
@@ -42,14 +41,6 @@ public abstract class XmlActorAdapter implements ActorXml {
     public XmlActorAdapter(ExtendedMapFeedback pMapFeedback) {
         mMapFeedback = pMapFeedback;
         addActor(this);
-    }
-
-    /**
-     * @deprecated replaced by {@link XmlActorAdapter#getExMapFeedback()}
-     */
-    @Deprecated
-    protected MindMapController getModeController() {
-        return (MindMapController) mMapFeedback;
     }
 
     public ExtendedMapFeedback getExMapFeedback() {

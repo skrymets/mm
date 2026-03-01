@@ -713,12 +713,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     // Preferences
     //
 
-    /** @deprecated Use {@link Resources#getPropertyChangeListeners()} instead */
-    @Deprecated
-    public static Collection<FreemindPropertyListener> getPropertyChangeListeners() {
-        return Resources.getPropertyChangeListeners();
-    }
-
     /** @deprecated Use {@link Resources#addPropertyChangeListener(FreemindPropertyListener)} instead */
     @Deprecated
     public static void addPropertyChangeListener(FreemindPropertyListener listener) {
