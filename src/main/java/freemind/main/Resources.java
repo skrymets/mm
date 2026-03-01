@@ -82,7 +82,15 @@ public class Resources implements TextTranslator {
     }
 
     /**
-     * @deprecated Use constructor injection via Guice instead.
+     * Non-deprecated static accessor for classes that cannot use Guice injection
+     * (static initializers, legacy bridge code, etc.).
+     */
+    public static Resources get() {
+        return resourcesInstance;
+    }
+
+    /**
+     * @deprecated Use {@link #get()} or Guice injection instead.
      */
     @Deprecated
     static public Resources getInstance() {
@@ -205,7 +213,7 @@ public class Resources implements TextTranslator {
      */
     public static void addPropertyChangeListenerAndPropagate(FreemindPropertyListener listener) {
         addPropertyChangeListener(listener);
-        Properties properties = getInstance().getProperties();
+        Properties properties = get().getProperties();
         for (Object key : properties.keySet()) {
             listener.propertyChanged((String) key, properties.getProperty((String) key), null);
         }

@@ -102,7 +102,7 @@ public class OptionalDontShowMeAgainDialog {
                                          DontShowPropertyHandler pDontShowPropertyHandler,
                                          int pMessageType) {
         this(pFrame, pComponent, pMessageId, pTitleId, pTextTranslator,
-                pDontShowPropertyHandler, pMessageType, Resources.getInstance());
+                pDontShowPropertyHandler, pMessageType, Resources.get());
     }
 
     public OptionalDontShowMeAgainDialog(JFrame pFrame,

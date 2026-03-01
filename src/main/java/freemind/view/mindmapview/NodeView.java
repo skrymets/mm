@@ -1433,7 +1433,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public static int getFoldingSymbolWidth() {
         if (FOLDING_SYMBOL_WIDTH == -1) {
-            FOLDING_SYMBOL_WIDTH = Resources.getInstance().getIntProperty("foldingsymbolwidth", 8);  // static context: lazy one-time init
+            FOLDING_SYMBOL_WIDTH = Resources.get().getIntProperty("foldingsymbolwidth", 8);  // static context: lazy one-time init
         }
         return FOLDING_SYMBOL_WIDTH;
     }

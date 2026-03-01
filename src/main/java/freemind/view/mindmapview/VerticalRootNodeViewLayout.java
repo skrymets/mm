@@ -39,7 +39,7 @@ public class VerticalRootNodeViewLayout extends NodeViewLayoutAdapter {
 
     static boolean getUseCommonOutPointForRootNode() {
         if (useCommonOutPointForRootNode == null) {
-            useCommonOutPointForRootNode = Resources.getInstance()
+            useCommonOutPointForRootNode = Resources.get()
                     .getBoolProperty(USE_COMMON_OUT_POINT_FOR_ROOT_NODE_STRING);
         }
         return useCommonOutPointForRootNode;

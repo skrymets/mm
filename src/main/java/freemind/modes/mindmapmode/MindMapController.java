@@ -1187,12 +1187,12 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     static public void saveHTML(MindMapNodeModel rootNodeOfBranch, File file) throws IOException {
         BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.getInstance());
+        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.get());
         htmlWriter.saveHTML(rootNodeOfBranch);
     }
 
     static public void saveHTML(List<MindMapNodeModel> mindMapNodes, Writer fileout) throws IOException {
-        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.getInstance());
+        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.get());
         htmlWriter.saveHTML(mindMapNodes);
     }
 

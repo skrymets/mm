@@ -256,7 +256,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
      * @param weekOfYearVisible true, if the weeks of a year shall be shown
      */
     public JDayChooser(boolean weekOfYearVisible) {
-        this.resources = Resources.getInstance();
+        this.resources = Resources.get();
         if (mCalendarMarkingEvaluator == null) {
             CalendarMarkings markings = null;
             try {

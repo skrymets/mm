@@ -979,7 +979,7 @@ public abstract class NodeAdapter implements MindMapNode {
             if (addIt) {
                 try {
                     File mmFile = Tools.urlToFile(new URL(getMap().getURL(), link));
-                    String thumbnailFileName = Resources.getInstance().createThumbnailFileName(mmFile);
+                    String thumbnailFileName = Resources.get().createThumbnailFileName(mmFile);
                     if (new File(thumbnailFileName).exists()) {
                         URL thumbUrl = Tools.fileToUrl(new File(thumbnailFileName));
                         String imgHtml = "<img src=\"" + thumbUrl + "\" " + linkHtmlPart + "/>";

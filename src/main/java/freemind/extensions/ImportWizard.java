@@ -66,7 +66,7 @@ public class ImportWizard {
         String classPath = System.getProperty("java.class.path");
         String classPathSeparator = File.pathSeparator;
         // add the current dir to find more plugins
-        classPath = Resources.getInstance().getFreemindBaseDir() + classPathSeparator
+        classPath = Resources.get().getFreemindBaseDir() + classPathSeparator
                 + classPath;
         log.info("Classpath for plugins:{}", classPath);
         // to remove duplicates

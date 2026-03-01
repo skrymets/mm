@@ -51,7 +51,7 @@ public class StylePatternFactory {
      * @return a List of Pattern elements.
      */
     public static List<Pattern> loadPatterns(String patternsXML) {
-        return loadPatterns(patternsXML, Resources.getInstance());
+        return loadPatterns(patternsXML, Resources.get());
     }
 
     public static List<Pattern> loadPatterns(String patternsXML, Resources resources) {

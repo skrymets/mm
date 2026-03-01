@@ -85,7 +85,7 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 
     @Override
     public Resources getResources() {
-        return Resources.getInstance();
+        return Resources.get();
     }
 
     @Override
