@@ -26,10 +26,10 @@ import java.awt.*;
 
 
 public class ColorPair {
-    public ColorPair(Color pColor, String pString, Resources resources) {
+    public ColorPair(Color pColor, String pName) {
         color = pColor;
-        name = pString;
-        displayName = resources.getText("font_color_" + name);
+        name = pName;
+        displayName = null;
     }
 
     public ColorPair(Color pColor, String pName, String pDisplayName) {
@@ -38,7 +38,11 @@ public class ColorPair {
         displayName = pDisplayName;
     }
 
+    void resolveDisplayName(Resources resources) {
+        displayName = resources.getText("font_color_" + name);
+    }
+
     public final Color color;
     public final String name;
-    public final String displayName;
+    public String displayName;
 }

@@ -21,6 +21,7 @@ package freemind.main;
 
 import com.inet.jortho.SpellChecker;
 import freemind.controller.Controller;
+import freemind.controller.color.JColorCombo;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
 import freemind.controller.actions.MindmapLastStateStorage;
@@ -312,6 +313,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         controller = new Controller(this, Resources.getInstance());
         controller.init();
         controller.getMapModuleManager().setEventBus(eventBus);
+
+        JColorCombo.initColors(Resources.getInstance());
 
         feedback.increase("FreeMind.progress.settingPreferences", null);
         // add a listener for the controller, resource bundle:
