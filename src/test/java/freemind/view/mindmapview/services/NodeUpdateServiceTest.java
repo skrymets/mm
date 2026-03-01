@@ -38,16 +38,20 @@ class NodeUpdateServiceTest {
 
     @Test
     void getMaxToolTipWidthDefaultsTo600() {
+        MapView mapView = mock(MapView.class);
         ViewFeedback feedback = mock(ViewFeedback.class);
-        when(nodeView.getViewFeedback()).thenReturn(feedback);
+        when(nodeView.getMap()).thenReturn(mapView);
+        when(mapView.getViewFeedback()).thenReturn(feedback);
         when(feedback.getProperty("max_tooltip_width")).thenReturn("invalid");
         assertEquals(600, service.getMaxToolTipWidth());
     }
 
     @Test
     void getMaxToolTipWidthParsesProperty() {
+        MapView mapView = mock(MapView.class);
         ViewFeedback feedback = mock(ViewFeedback.class);
-        when(nodeView.getViewFeedback()).thenReturn(feedback);
+        when(nodeView.getMap()).thenReturn(mapView);
+        when(mapView.getViewFeedback()).thenReturn(feedback);
         when(feedback.getProperty("max_tooltip_width")).thenReturn("800");
         assertEquals(800, service.getMaxToolTipWidth());
     }
