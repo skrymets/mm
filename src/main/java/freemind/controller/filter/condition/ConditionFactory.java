@@ -34,15 +34,17 @@ import javax.swing.*;
  */
 public class ConditionFactory {
 
-    static final NamedObject FILTER_NODE = Resources.getInstance().createTranslatedString("filter_node");
-    static final NamedObject FILTER_ICON = Resources.getInstance().createTranslatedString("filter_icon");
+    private static Resources resources;
+
+    static NamedObject FILTER_NODE;
+    static NamedObject FILTER_ICON;
 
     static final String FILTER_DOES_NOT_EXIST = "filter_does_not_exist";
     static final String FILTER_EXIST = "filter_exist";
-    static final NamedObject FILTER_CONTAINS = Resources.getInstance().createTranslatedString("filter_contains");
-    static final NamedObject FILTER_NOT_CONTAINS = Resources.getInstance().createTranslatedString("filter_not_contains");
-    static final NamedObject FILTER_IS_NOT_EQUAL_TO = Resources.getInstance().createTranslatedString("filter_is_not_equal_to");
-    static final NamedObject FILTER_IS_EQUAL_TO = Resources.getInstance().createTranslatedString("filter_is_equal_to");
+    static NamedObject FILTER_CONTAINS;
+    static NamedObject FILTER_NOT_CONTAINS;
+    static NamedObject FILTER_IS_NOT_EQUAL_TO;
+    static NamedObject FILTER_IS_EQUAL_TO;
     static final NamedObject FILTER_LE = NamedObject.literal("<=");
     static final NamedObject FILTER_LT = NamedObject.literal("<");
     static final NamedObject FILTER_GE = NamedObject.literal(">=");
@@ -50,10 +52,20 @@ public class ConditionFactory {
 
     static final String FILTER_IGNORE_CASE = "filter_ignore_case";
 
+    public static void init(Resources res) {
+        resources = res;
+        FILTER_NODE = res.createTranslatedString("filter_node");
+        FILTER_ICON = res.createTranslatedString("filter_icon");
+        FILTER_CONTAINS = res.createTranslatedString("filter_contains");
+        FILTER_NOT_CONTAINS = res.createTranslatedString("filter_not_contains");
+        FILTER_IS_NOT_EQUAL_TO = res.createTranslatedString("filter_is_not_equal_to");
+        FILTER_IS_EQUAL_TO = res.createTranslatedString("filter_is_equal_to");
+    }
 
-    /**
-     *
-     */
+    public static Resources getResources() {
+        return resources;
+    }
+
     public ConditionFactory() {
     }
 
@@ -64,7 +76,7 @@ public class ConditionFactory {
                 + simpleCondition
                 + (value != null ? " \"" + value + "\"" : "")
                 + (ignoreCase && value != null ? ", "
-                + Resources.getInstance().getResourceString(
+                + resources.getResourceString(
                 FILTER_IGNORE_CASE) : "");
         return description;
     }
@@ -172,8 +184,8 @@ public class ConditionFactory {
     }
 
     public NamedObject[] getAttributeConditionNames() {
-        return new NamedObject[]{Resources.getInstance().createTranslatedString(FILTER_EXIST),
-                Resources.getInstance().createTranslatedString(FILTER_DOES_NOT_EXIST), FILTER_IS_EQUAL_TO,
+        return new NamedObject[]{resources.createTranslatedString(FILTER_EXIST),
+                resources.createTranslatedString(FILTER_DOES_NOT_EXIST), FILTER_IS_EQUAL_TO,
                 FILTER_IS_NOT_EQUAL_TO, FILTER_GT, FILTER_GE, FILTER_LE, FILTER_LT,};
     }
 

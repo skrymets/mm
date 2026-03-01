@@ -77,6 +77,7 @@ public class FilterController implements MapModuleChangeObserver {
      */
     public FilterToolbar getFilterToolbar() {
         if (filterToolbar == null) {
+            ConditionFactory.init(c.getResources());
             filterToolbar = new FilterToolbar(c);
             filterConditionModel = (DefaultComboBoxModel<Condition>) filterToolbar.getFilterConditionModel();
 
