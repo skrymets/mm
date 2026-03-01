@@ -22,8 +22,8 @@
 
 package freemind.modes.common.listeners;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMind;
+import freemind.main.Resources;
 import freemind.modes.ControllerAdapter;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.ViewFeedback.MouseWheelEventHandler;
@@ -58,7 +58,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
         super();
         mController = controller;
 
-        Controller.addPropertyChangeListener((propertyName, newValue, oldValue) -> {
+        Resources.addPropertyChangeListener((propertyName, newValue, oldValue) -> {
             if (propertyName.equals(FreeMind.RESOURCES_WHEEL_VELOCITY)) {
                 SCROLL_SKIPS = Integer.parseInt(newValue);
             }

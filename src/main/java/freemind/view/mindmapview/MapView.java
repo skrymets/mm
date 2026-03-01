@@ -21,7 +21,6 @@ package freemind.view.mindmapview;
 
 import freemind.main.SwingUtils;
 
-import freemind.controller.Controller;
 import freemind.controller.NodeKeyListener;
 import freemind.controller.NodeMotionListener;
 import freemind.controller.NodeMouseMotionListener;
@@ -426,7 +425,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             }
 
         };
-        Controller.addPropertyChangeListener(propertyChangeListener);
+        Resources.addPropertyChangeListener(propertyChangeListener);
     }
 
     private static void setAntialiasEdges(boolean pAntialiasEdges) {

@@ -26,9 +26,9 @@ package accessories.plugins;
 import accessories.plugins.dialogs.ChooseFormatPopupDialog;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import freemind.common.*;
-import freemind.controller.Controller;
 import freemind.controller.actions.Pattern;
 import freemind.controller.actions.Patterns;
+import freemind.main.Resources;
 import freemind.extensions.HookRegistration;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -92,7 +92,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
             if (listener == null) {
                 listener = new MyFreemindPropertyListener();
             }
-            Controller.addPropertyChangeListener(listener);
+            Resources.addPropertyChangeListener(listener);
 
             mAutomaticLayoutPropertyContributor = new AutomaticLayoutPropertyContributor(
                     modeController);
@@ -101,7 +101,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 
         public void deRegister() {
             OptionPanel.removeContributor(mAutomaticLayoutPropertyContributor);
-            Controller.removePropertyChangeListener(listener);
+            Resources.removePropertyChangeListener(listener);
         }
 
     }

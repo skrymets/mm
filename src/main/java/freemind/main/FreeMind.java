@@ -315,7 +315,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
         feedback.increase("FreeMind.progress.settingPreferences", null);
         // add a listener for the controller, resource bundle:
-        Controller.addPropertyChangeListener((propertyName, newValue, oldValue) -> {
+        Resources.addPropertyChangeListener((propertyName, newValue, oldValue) -> {
             if (propertyName.equals(FreeMindCommon.RESOURCE_LANGUAGE)) {
                 // re-read resources:
                 freeMindCommon.clearLanguageResources();

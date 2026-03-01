@@ -2,6 +2,7 @@ package freemind.controller.actions;
 
 import freemind.controller.Controller;
 import freemind.main.FreeMind;
+import freemind.main.Resources;
 import freemind.preferences.FreemindPropertyListener;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class OptionSelectionMechanismAction extends AbstractAction implements Fr
 
     public OptionSelectionMechanismAction(Controller controller) {
         this.controller = controller;
-        Controller.addPropertyChangeListener(this);
+        Resources.addPropertyChangeListener(this);
     }
 
     public void actionPerformed(ActionEvent e) {

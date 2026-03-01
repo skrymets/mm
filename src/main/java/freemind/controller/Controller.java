@@ -63,7 +63,6 @@ import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.ModesCreator;
 import freemind.modes.browsemode.BrowseMode;
-import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
 import freemind.view.ImageFactory;
 import freemind.view.MapModule;
@@ -712,24 +711,6 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     //
     // Preferences
     //
-
-    /** @deprecated Use {@link Resources#addPropertyChangeListener(FreemindPropertyListener)} instead */
-    @Deprecated
-    public static void addPropertyChangeListener(FreemindPropertyListener listener) {
-        Resources.addPropertyChangeListener(listener);
-    }
-
-    /** @deprecated Use {@link Resources#addPropertyChangeListenerAndPropagate(FreemindPropertyListener)} instead */
-    @Deprecated
-    public static void addPropertyChangeListenerAndPropagate(FreemindPropertyListener listener) {
-        Resources.addPropertyChangeListenerAndPropagate(listener);
-    }
-
-    /** @deprecated Use {@link Resources#removePropertyChangeListener(FreemindPropertyListener)} instead */
-    @Deprecated
-    public static void removePropertyChangeListener(FreemindPropertyListener listener) {
-        Resources.removePropertyChangeListener(listener);
-    }
 
     public void addTabbedPane(JTabbedPane pTabbedPane) {
         tabbedPaneService.addTabbedPane(pTabbedPane);

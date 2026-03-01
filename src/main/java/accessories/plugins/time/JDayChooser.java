@@ -23,7 +23,6 @@ package accessories.plugins.time;
 import freemind.common.ScalableJButton;
 import org.apache.commons.lang3.SystemUtils;
 import freemind.common.XmlBindingTools;
-import freemind.controller.Controller;
 import freemind.controller.actions.CalendarMarking;
 import freemind.controller.actions.CalendarMarkings;
 import freemind.main.FreeMind;
@@ -270,7 +269,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
                 markings = new CalendarMarkings();
             }
             mCalendarMarkingEvaluator = new CalendarMarkingEvaluator(markings);
-            Controller.addPropertyChangeListener((pPropertyName, pNewValue, pOldValue) -> {
+            Resources.addPropertyChangeListener((pPropertyName, pNewValue, pOldValue) -> {
                 if (FreeMindCommon.TIME_MANAGEMENT_MARKING_XML.equals(pPropertyName)) {
                     CalendarMarkings markings1 = (CalendarMarkings) XmlBindingTools.getInstance()
                             .unMarshall(pNewValue);

@@ -2,7 +2,6 @@ package freemind.view.mindmapview;
 
 import freemind.main.SwingUtils;
 
-import freemind.controller.Controller;
 import freemind.main.*;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
@@ -83,7 +82,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                     ToolTipManager.sharedInstance().setDismissDelay(Resources.getInstance().getIntProperty(FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
                 }
             };
-            Controller.addPropertyChangeListenerAndPropagate(sListener);
+            Resources.addPropertyChangeListenerAndPropagate(sListener);
         }
 
         setFocusCycleRoot(true);
