@@ -21,7 +21,6 @@ package freemind.modes.common.actions;
 
 import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
-import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
@@ -108,7 +107,7 @@ public class FindAction extends FreemindAction {
         mDialog.dispose();
         // Store "find in notes too" value to prop.
         if (pResult == JOptionPane.OK_OPTION) {
-            Resources.getInstance().getProperties().setProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO, mFindInNotesTooBox.isSelected() ? "true" : "false");
+            controller.getResources().getProperties().setProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO, mFindInNotesTooBox.isSelected() ? "true" : "false");
             mLastSearchString = mSearchField.getText();
         }
     }
@@ -143,10 +142,10 @@ public class FindAction extends FreemindAction {
         mSearchField.selectAll();
         mSearchField.setMinimumSize(new Dimension(500, 14));
         contentPane.add(mSearchField, new GridBagConstraints(2, 0, 10, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
-        ImageIcon findImage = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource("images/filefind_big.png"));
+        ImageIcon findImage = freemind.view.ImageFactory.getInstance().createIcon(controller.getResources().getResource("images/filefind_big.png"));
         contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         mFindInNotesTooBox = new JCheckBox(controller.getText("ExtendedFindDialog.find_search_in_notes_too"));
-        mFindInNotesTooBox.setSelected(Resources.getInstance().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
+        mFindInNotesTooBox.setSelected(controller.getResources().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
         SwingUtils.setLabelAndMnemonic(mFindInNotesTooBox, null);
         contentPane.add(mFindInNotesTooBox, new GridBagConstraints(0, 2, 3, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         JButton okButton = new JButton(controller.getText("ExtendedFindDialog.ok"));
@@ -220,7 +219,7 @@ public class FindAction extends FreemindAction {
 
     private boolean find(LinkedList<MindMapNode> nodes, Collection<String> subterms, boolean caseSensitive) {
         // Precondition: if !caseSensitive then >>what<< is in lowercase.
-        boolean searchInNotesToo = Resources.getInstance().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO);
+        boolean searchInNotesToo = controller.getResources().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO);
 
         if (!findNodesUnfoldedByLastFind.isEmpty()) {
 

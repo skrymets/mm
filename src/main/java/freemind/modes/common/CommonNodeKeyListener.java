@@ -20,7 +20,6 @@
 
 package freemind.modes.common;
 
-import freemind.main.Resources;
 import freemind.modes.ModeController;
 import lombok.extern.slf4j.Slf4j;
 
@@ -69,8 +68,8 @@ public class CommonNodeKeyListener implements KeyListener {
 
         // like in excel - write a letter means edit (PN)
         // on the other hand it doesn't allow key navigation (sdfe)
-        disabledKeyType = Resources.getInstance().getBoolProperty("disable_key_type");
-        keyTypeAddsNew = Resources.getInstance().getBoolProperty("key_type_adds_new");
+        disabledKeyType = c.getResources().getBoolProperty("disable_key_type");
+        keyTypeAddsNew = c.getResources().getBoolProperty("key_type_adds_new");
         keyStrokeUp = KeyStroke.getKeyStroke(up);
         keyStrokeDown = KeyStroke.getKeyStroke(down);
         keyStrokeLeft = KeyStroke.getKeyStroke(left);

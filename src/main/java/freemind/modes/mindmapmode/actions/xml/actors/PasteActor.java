@@ -336,7 +336,7 @@ public class PasteActor extends XmlActorAdapter {
                             replaceAll("(?i)(?s)</?o[^>]*>", "");
             textFromClipboard = "<html><body>" + textFromClipboard + "</body></html>";
             log.trace("directHtmlFlavor: {}", textFromClipboard);
-            if (Resources.getInstance().getBoolProperty(
+            if (mMapFeedback.getResources().getBoolProperty(
                     FreeMind.RESOURCES_PASTE_HTML_STRUCTURE)) {
                 HtmlTools.getInstance().insertHtmlIntoNodes(textFromClipboard,
                         target, mNodeCreator);

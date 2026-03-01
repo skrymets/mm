@@ -20,7 +20,6 @@ package freemind.modes.mindmapmode.services;
 
 import freemind.controller.MindMapNodesSelection;
 import freemind.main.FreeMindXml;
-import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
@@ -80,7 +79,7 @@ public class ClipboardService {
      * Pastes the transferable content at the target node position.
      */
     public boolean paste(Transferable t, MindMapNode target, boolean asSibling, boolean isLeft) {
-        if (!asSibling && target.isFolded() && Resources.getInstance().getBoolProperty(RESOURCE_UNFOLD_ON_PASTE)) {
+        if (!asSibling && target.isFolded() && mapFeedback.getResources().getBoolProperty(RESOURCE_UNFOLD_ON_PASTE)) {
             mapFeedback.setFolded(target, false);
         }
         return actorFactory.getPasteActor().paste(t, target, asSibling, isLeft);

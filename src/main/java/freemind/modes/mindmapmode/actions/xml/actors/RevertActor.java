@@ -22,7 +22,6 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.RevertXmlAction;
 import freemind.controller.actions.XmlAction;
-import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -118,7 +117,7 @@ public class RevertActor extends XmlActorAdapter {
                     String xmlMap = revertAction.getMap();
                     File tempFile = File.createTempFile(filePrefix,
                             freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION,
-                            new File(Resources.getInstance().getFreemindDirectory()));
+                            new File(getExMapFeedback().getResources().getFreemindDirectory()));
                     FileWriter fw = new FileWriter(tempFile);
                     fw.write(xmlMap);
                     fw.close();

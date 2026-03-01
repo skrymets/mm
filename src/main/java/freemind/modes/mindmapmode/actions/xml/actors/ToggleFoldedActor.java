@@ -24,7 +24,7 @@ import freemind.controller.actions.FoldAction;
 import freemind.controller.actions.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;
-import freemind.main.Resources;
+
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.common.CommonToggleFoldedAction;
@@ -107,7 +107,7 @@ public class ToggleFoldedActor extends XmlActorAdapter {
                 node.setFolded(folded);
                 getExMapFeedback().getMap().nodeStructureChanged(node);
             }
-            if (Resources.getInstance().getBoolProperty(
+            if (getExMapFeedback().getResources().getBoolProperty(
                     FreeMind.RESOURCES_SAVE_FOLDING_STATE)) {
                 getExMapFeedback().nodeChanged(node);
             }

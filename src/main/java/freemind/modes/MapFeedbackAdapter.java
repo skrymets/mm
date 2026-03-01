@@ -83,23 +83,28 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
     }
 
     @Override
+    public Resources getResources() {
+        return Resources.getInstance();
+    }
+
+    @Override
     public String getResourceString(String pTextId) {
-        return Resources.getInstance().getResourceString(pTextId);
+        return getResources().getResourceString(pTextId);
     }
 
     @Override
     public String getProperty(String pResourceId) {
-        return Resources.getInstance().getProperty(pResourceId);
+        return getResources().getProperty(pResourceId);
     }
 
     @Override
     public int getIntProperty(String pKey, int pDefaultValue) {
-        return Resources.getInstance().getIntProperty(pKey, pDefaultValue);
+        return getResources().getIntProperty(pKey, pDefaultValue);
     }
 
     @Override
     public void setProperty(String pProperty, String pValue) {
-        Resources.getInstance().getProperties().setProperty(pProperty, pValue);
+        getResources().getProperties().setProperty(pProperty, pValue);
     }
 
     @Override

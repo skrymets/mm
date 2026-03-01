@@ -21,6 +21,7 @@
 package freemind.modes;
 
 import freemind.extensions.NodeHook;
+import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.preferences.FreemindPropertyListener;
@@ -117,6 +118,11 @@ public interface MapFeedback {
      * Registers a listener that will be notified when a FreeMind property changes.
      */
     void addPropertyChangeListener(FreemindPropertyListener listener);
+
+    /**
+     * @return the Resources instance for accessing properties, translations, and file paths.
+     */
+    Resources getResources();
 
 }
 

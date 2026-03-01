@@ -51,6 +51,10 @@ public class StylePatternFactory {
      * @return a List of Pattern elements.
      */
     public static List<Pattern> loadPatterns(String patternsXML) {
+        return loadPatterns(patternsXML, Resources.getInstance());
+    }
+
+    public static List<Pattern> loadPatterns(String patternsXML, Resources resources) {
 
         Patterns patterns = (Patterns) XmlBindingTools.getInstance().unMarshall(patternsXML);
 
@@ -63,7 +67,7 @@ public class StylePatternFactory {
             }
             // make private:
             name = "__pattern_string_" + name.replace(" ", "_");
-            String translatedName = Resources.getInstance().getResourceString(
+            String translatedName = resources.getResourceString(
                     name);
             if (!Objects.equals(translatedName, name)) {
                 // there is a translation:

@@ -611,7 +611,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             if (result && "true"
                     .equals(getProperty(FreeMindCommon.CREATE_THUMBNAIL_ON_SAVE))) {
                 File baseFileName = getModel().getFile();
-                String fileName = Resources.getInstance()
+                String fileName = getResources()
                         .createThumbnailFileName(baseFileName);
                 // due to a windows bug, the file must not be hidden before writing it.
                 Tools.makeFileHidden(new File(fileName), false);
@@ -738,7 +738,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * Creates a file chooser with the last selected directory as default.
      */
     public FreeMindFileDialog getFileChooser(FileFilter filter) {
-        FreeMindFileDialog chooser = Resources.getInstance().getStandardFileChooser(filter);
+        FreeMindFileDialog chooser = getResources().getStandardFileChooser(filter);
         chooser.registerDirectoryResultListener(this);
         File parentFile = getMapsParentFile();
         // choose new lastCurrentDir only, if not previously set.

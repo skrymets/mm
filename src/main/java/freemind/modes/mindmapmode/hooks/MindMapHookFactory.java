@@ -60,7 +60,10 @@ public class MindMapHookFactory extends HookFactoryAdapter {
      */
     protected static HashSet<HookDescriptorRegistration> allRegistrations;
 
-    public MindMapHookFactory() {
+    private final Resources resources;
+
+    public MindMapHookFactory(Resources resources) {
+        this.resources = resources;
         allRegistrationInstances = new HashMap<>();
     }
 
@@ -112,7 +115,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                     // Here, this is not the File.separatorChar!!!
                     xmlPluginFile = xmlPluginFile.replace('\\', '/') + importWizard.lookFor;
                     // this is one of our plugins:
-                    URL pluginURL = Resources.getInstance().getFreeMindClassLoader().getResource(xmlPluginFile);
+                    URL pluginURL = resources.getFreeMindClassLoader().getResource(xmlPluginFile);
                     // unmarshal xml:
                     Plugin plugin;
                     try {

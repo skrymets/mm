@@ -22,10 +22,12 @@ class MindMapHTMLWriter {
     private static final String el = System.getProperty("line.separator");
     private boolean writeFoldingCode;
     private final boolean basedOnHeadings;
+    private final Resources resources;
 
 
-    MindMapHTMLWriter(Writer fileout) {
+    MindMapHTMLWriter(Writer fileout, Resources resources) {
         this.fileout = fileout;
+        this.resources = resources;
         writeFoldingCode = false;
         basedOnHeadings = (getProperty("html_export_folding")
                 .equals("html_export_based_on_headings"));
@@ -444,7 +446,7 @@ class MindMapHTMLWriter {
             fileout.write("<span style=\"" + fontStyle + "\">");
         }
 
-        if (Resources.getInstance().getBoolProperty("export_icons_in_html")) {
+        if (resources.getBoolProperty("export_icons_in_html")) {
             writeIcons(model);
         }
 
@@ -631,7 +633,7 @@ class MindMapHTMLWriter {
     }
 
     private String getProperty(String key) {
-        return Resources.getInstance().getProperty(key);
+        return resources.getProperty(key);
     }
 
 }

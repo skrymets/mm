@@ -179,7 +179,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
     public HookFactory getHookFactory() {
         // lazy creation.
         if (mNodeHookFactory == null) {
-            mNodeHookFactory = new MindMapHookFactory();
+            mNodeHookFactory = new MindMapHookFactory(getResources());
             // initialization
             mNodeHookFactory.getPossibleNodeHooks();
         }

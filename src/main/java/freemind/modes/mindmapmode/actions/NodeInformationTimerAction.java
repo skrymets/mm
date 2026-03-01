@@ -1,6 +1,5 @@
 package freemind.modes.mindmapmode.actions;
 
-import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +72,7 @@ public class NodeInformationTimerAction implements ActionListener {
             }
         }
         if (amountOfSelected > 1) {
-            nodeStatusLine = Resources.getInstance().format("node_status_line_several_selected_nodes", new Object[]{amountOfSelected, sum});
+            nodeStatusLine = controller.getResources().format("node_status_line_several_selected_nodes", new Object[]{amountOfSelected, sum});
         } else {
             MindMapNode sel = selecteds.get(0);
             long amountOfChildren = 0;
@@ -87,7 +86,7 @@ public class NodeInformationTimerAction implements ActionListener {
                 allDescendants.addAll(child.getChildren());
                 allDescendants.remove(0);
             }
-            nodeStatusLine = Resources.getInstance().format("node_status_line", new Object[]{sel.getShortText(controller), Integer.valueOf(sel.getChildCount()), amountOfChildren});
+            nodeStatusLine = controller.getResources().format("node_status_line", new Object[]{sel.getShortText(controller), Integer.valueOf(sel.getChildCount()), amountOfChildren});
         }
         controller.getFrame().setStatusText(nodeStatusLine);
     }

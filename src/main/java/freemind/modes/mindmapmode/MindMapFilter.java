@@ -9,6 +9,12 @@ import java.io.File;
 
 public class MindMapFilter extends FileFilter {
 
+    private final Resources resources;
+
+    public MindMapFilter(Resources resources) {
+        this.resources = resources;
+    }
+
     public boolean accept(File f) {
         if (f.isDirectory()) {
             return true;
@@ -21,6 +27,6 @@ public class MindMapFilter extends FileFilter {
     }
 
     public String getDescription() {
-        return Resources.getInstance().getResourceString("mindmaps_desc");
+        return resources.getResourceString("mindmaps_desc");
     }
 }

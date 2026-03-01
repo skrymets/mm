@@ -107,7 +107,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     private Clipboard selection = null;
 
     @Setter
-    private HookFactory nodeHookFactory = new MindMapHookFactory();
+    private HookFactory nodeHookFactory;
 
     public ApplyPatternAction[] patterns = new ApplyPatternAction[0]; // Make
     // sure
@@ -207,7 +207,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     // Extension Actions
     public final ArrayList<IconAction> iconActions = new ArrayList<>(); // fc
 
-    final FileFilter filefilter = new MindMapFilter();
+    final FileFilter filefilter;
 
     private MenuStructure mMenuStructure;
     private List<HookRegistration> mRegistrations;
@@ -222,6 +222,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     public MindMapController(Mode mode) {
         super(mode);
+        filefilter = new MindMapFilter(getResources());
+        nodeHookFactory = new MindMapHookFactory(getResources());
         // create action factory:
         actionFactory = new ActionRegistry();
         // create node information timer and actions. They don't fire, until called to do so.
@@ -441,7 +443,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      *
      */
     public void loadPatterns(String patternsXML) throws Exception {
-        createPatterns(StylePatternFactory.loadPatterns(patternsXML));
+        createPatterns(StylePatternFactory.loadPatterns(patternsXML, getResources()));
     }
 
     private void createPatterns(List<Pattern> patternsList) {
@@ -520,7 +522,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     private void createIconActions() {
         List<String> iconNames = MindIcon.getAllIconNames();
-        File iconDir = new File(Resources.getInstance().getFreemindDirectory(), "icons");
+        File iconDir = new File(getResources().getFreemindDirectory(), "icons");
         if (iconDir.exists()) {
             String[] userIconArray = iconDir.list((dir, name) -> name.matches(".*\\.png"));
             if (userIconArray != null) {
@@ -1185,12 +1187,12 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     static public void saveHTML(MindMapNodeModel rootNodeOfBranch, File file) throws IOException {
         BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout);
+        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.getInstance());
         htmlWriter.saveHTML(rootNodeOfBranch);
     }
 
     static public void saveHTML(List<MindMapNodeModel> mindMapNodes, Writer fileout) throws IOException {
-        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout);
+        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.getInstance());
         htmlWriter.saveHTML(mindMapNodes);
     }
 

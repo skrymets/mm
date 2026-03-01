@@ -120,7 +120,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     }
 
     protected boolean isTooltipDesired() {
-        return Resources.getInstance().getBoolProperty(NODE_MAP_SHOW_TOOLTIP) && !Objects.equals(mTooltipLocation, "false");
+        return getController().getResources().getBoolProperty(NODE_MAP_SHOW_TOOLTIP) && !Objects.equals(mTooltipLocation, "false");
     }
 
 

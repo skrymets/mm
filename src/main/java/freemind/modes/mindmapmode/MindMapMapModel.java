@@ -56,7 +56,7 @@ public class MindMapMapModel extends MapAdapter {
 
     public MindMapMapModel(MindMapNodeModel root, MapFeedback pMapFeedback) {
         super(pMapFeedback);
-        lockManager = Resources.getInstance().getBoolProperty(
+        lockManager = pMapFeedback.getResources().getBoolProperty(
                 "experimental_file_locking_on") ? new LockManager()
                 : new DummyLockManager();
 
@@ -323,7 +323,7 @@ public class MindMapMapModel extends MapAdapter {
     private void scheduleTimerForAutomaticSaving() {
         int numberOfTempFiles = Integer.parseInt(getMapFeedback().getProperty(
                 "number_of_different_files_for_automatic_save"));
-        boolean filesShouldBeDeletedAfterShutdown = Resources.getInstance()
+        boolean filesShouldBeDeletedAfterShutdown = getMapFeedback().getResources()
                 .getBoolProperty("delete_automatic_saves_at_exit");
         String path = getMapFeedback().getProperty("path_to_automatic_saves");
         /* two standard values: */
@@ -331,7 +331,7 @@ public class MindMapMapModel extends MapAdapter {
             path = null;
         }
         if (Objects.equals(path, "freemind_home")) {
-            path = Resources.getInstance().getFreemindDirectory();
+            path = getMapFeedback().getResources().getFreemindDirectory();
         }
         int delay = Integer.parseInt(getMapFeedback().getProperty(
                 "time_for_automatic_save"));
@@ -552,8 +552,7 @@ public class MindMapMapModel extends MapAdapter {
                     try {
                         model.saveInternal(tempFile, true /* =internal call */);
                         model.getMapFeedback()
-                                .out(Resources
-                                        .getInstance()
+                                .out(model.getMapFeedback().getResources()
                                         .format("automatically_save_message",
                                                 new Object[]{tempFile
                                                         .toString()}));

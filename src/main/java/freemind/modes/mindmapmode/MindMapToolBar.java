@@ -26,7 +26,6 @@ import freemind.controller.StructuredMenuHolder;
 import freemind.controller.ZoomListener;
 import freemind.controller.color.ColorPair;
 import freemind.controller.color.JColorCombo;
-import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
@@ -177,7 +176,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         addIcon("images/format-font-size-more.png");
         add(size);
         JLabel label = addIcon("images/format-text-color.png");
-        label.setToolTipText(Resources.getInstance().getText("mindmapmode_toolbar_font_color"));
+        label.setToolTipText(mindMapController.getResources().getText("mindmapmode_toolbar_font_color"));
         add(colorCombo);
         add(Box.createHorizontalGlue());
         addIcon("images/page-zoom.png");
@@ -188,7 +187,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
     public JLabel addIcon(String iconPath) {
         add(new JToolBar.Separator());
         Icon icon = ImageFactory.getInstance().createIconWithSvgFallback(
-                Resources.getInstance().getResource(iconPath));
+                mindMapController.getResources().getResource(iconPath));
         JLabel label = new JLabel(icon);
         label.setText(" ");
         add(label);
@@ -269,7 +268,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         }
         // new color. add it to the combo box:
         ColorPair pair = new ColorPair(pColor, "user" + userDefinedCounter,
-                Resources.getInstance().format(
+                mindMapController.getResources().format(
                         "mindmapmode_toolbar_font_color_user_defined",
                         new Object[]{userDefinedCounter}));
         userDefinedCounter++;
