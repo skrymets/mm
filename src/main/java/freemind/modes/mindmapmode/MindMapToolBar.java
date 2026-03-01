@@ -202,10 +202,11 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 
     public JLabel addIcon(String iconPath) {
         add(new JToolBar.Separator());
-        JLabel label = new JLabel(ImageFactory.getInstance().createIcon(iconPath));
+        Icon icon = ImageFactory.getInstance().createIconWithSvgFallback(
+                Resources.getInstance().getResource(iconPath));
+        JLabel label = new JLabel(icon);
         label.setText(" ");
         add(label);
-//		add(new JToolBar.Separator());
         return label;
     }
 
