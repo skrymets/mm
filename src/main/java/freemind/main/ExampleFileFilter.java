@@ -60,8 +60,7 @@ package freemind.main;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
  * A convenience implementation of FileFilter that filters out all files except
@@ -82,7 +81,7 @@ import java.util.Hashtable;
  */
 public class ExampleFileFilter extends FileFilter {
 
-    private Hashtable<String, ExampleFileFilter> filters = null;
+    private HashMap<String, ExampleFileFilter> filters = null;
     private String description = null;
     private String fullDescription = null;
     private boolean useExtensionsInDescription = true;
@@ -92,7 +91,7 @@ public class ExampleFileFilter extends FileFilter {
      * accepted.
      */
     public ExampleFileFilter() {
-        this.filters = new Hashtable<>();
+        this.filters = new HashMap<>();
     }
 
     /**
@@ -191,7 +190,7 @@ public class ExampleFileFilter extends FileFilter {
      */
     public void addExtension(String extension) {
         if (filters == null) {
-            filters = new Hashtable<>(5);
+            filters = new HashMap<>(5);
         }
         filters.put(extension.toLowerCase(), this);
         fullDescription = null;
@@ -207,12 +206,13 @@ public class ExampleFileFilter extends FileFilter {
                 fullDescription = description == null ? "(" : description
                         + " (";
                 // build the description from the extension list
-                Enumeration<String> extensions = filters.keys();
-                if (extensions != null) {
-                    fullDescription += "." + extensions.nextElement();
-                    while (extensions.hasMoreElements()) {
-                        fullDescription += ", ."
-                                + extensions.nextElement();
+                boolean first = true;
+                for (String ext : filters.keySet()) {
+                    if (first) {
+                        fullDescription += "." + ext;
+                        first = false;
+                    } else {
+                        fullDescription += ", ." + ext;
                     }
                 }
                 fullDescription += ")";
