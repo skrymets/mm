@@ -94,11 +94,15 @@ public class XmlBindingTools {
     }
 
     public WindowConfigurationStorage decorateDialog(String marshalled, JDialog dialog) {
+        return decorateDialog(marshalled, dialog, Resources.getInstance());
+    }
+
+    public WindowConfigurationStorage decorateDialog(String marshalled, JDialog dialog, Resources resources) {
         if (marshalled != null) {
             WindowConfigurationStorage storage = (WindowConfigurationStorage) unMarshall(marshalled);
             if (storage != null) {
                 Dimension screenSize;
-                if (Resources.getInstance().getBoolProperty(
+                if (resources.getBoolProperty(
                         "place_dialogs_on_first_screen")) {
                     Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
                     screenSize = defaultToolkit.getScreenSize();

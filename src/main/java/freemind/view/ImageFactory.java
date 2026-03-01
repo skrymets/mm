@@ -88,11 +88,15 @@ public class ImageFactory {
     }
 
     public ImageIcon createIcon(String pFilePath) {
+        return createIcon(pFilePath, Resources.getInstance());
+    }
+
+    public ImageIcon createIcon(String pFilePath, Resources resources) {
         if (SwingUtils.getScalingFactorPlain() == 200) {
             // test for existence  of a scaled icon:
             if (pFilePath.endsWith(".png")) {
                 try {
-                    URL url = Resources.getInstance().getResource(pFilePath.replaceAll(".png$", "_32.png"));
+                    URL url = resources.getResource(pFilePath.replaceAll(".png$", "_32.png"));
                     URLConnection connection = url.openConnection();
                     if (connection.getContentLength() > 0) {
                         return createUnscaledIcon(url);
@@ -102,6 +106,6 @@ public class ImageFactory {
                 }
             }
         }
-        return createIcon(Resources.getInstance().getResource(pFilePath));
+        return createIcon(resources.getResource(pFilePath));
     }
 }

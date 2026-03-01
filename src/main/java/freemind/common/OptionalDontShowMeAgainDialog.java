@@ -56,6 +56,7 @@ public class OptionalDontShowMeAgainDialog {
     private final DontShowPropertyHandler mDontShowPropertyHandler;
     private final int mMessageType;
     private final Component mComponent;
+    private final Resources mResources;
 
     public interface DontShowPropertyHandler {
         /**
@@ -100,6 +101,18 @@ public class OptionalDontShowMeAgainDialog {
                                          TextTranslator pTextTranslator,
                                          DontShowPropertyHandler pDontShowPropertyHandler,
                                          int pMessageType) {
+        this(pFrame, pComponent, pMessageId, pTitleId, pTextTranslator,
+                pDontShowPropertyHandler, pMessageType, Resources.getInstance());
+    }
+
+    public OptionalDontShowMeAgainDialog(JFrame pFrame,
+                                         Component pComponent,
+                                         String pMessageId,
+                                         String pTitleId,
+                                         TextTranslator pTextTranslator,
+                                         DontShowPropertyHandler pDontShowPropertyHandler,
+                                         int pMessageType,
+                                         Resources pResources) {
         mComponent = pComponent;
         mParent = pFrame;
         mMessageId = pMessageId;
@@ -107,6 +120,7 @@ public class OptionalDontShowMeAgainDialog {
         mTextTranslator = pTextTranslator;
         mDontShowPropertyHandler = pDontShowPropertyHandler;
         mMessageType = pMessageType;
+        mResources = pResources;
     }
 
     /**
@@ -156,7 +170,7 @@ public class OptionalDontShowMeAgainDialog {
                         GridBagConstraints.WEST, GridBagConstraints.BOTH,
                         new Insets(5, 5, 0, 0), 0, 10));
         // TODO: Replace by usual java question mark.
-        ImageIcon questionMark = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance()
+        ImageIcon questionMark = freemind.view.ImageFactory.getInstance().createIcon(mResources
                 .getResource("images/icons/help.png"));
         mDialog.getContentPane().add(
                 new JLabel(questionMark),

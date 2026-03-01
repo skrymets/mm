@@ -35,8 +35,15 @@ import java.awt.*;
  */
 public class VerticalRootNodeViewLayout extends NodeViewLayoutAdapter {
     private static final String USE_COMMON_OUT_POINT_FOR_ROOT_NODE_STRING = "use_common_out_point_for_root_node";
-    static final boolean USE_COMMON_OUT_POINT_FOR_ROOT_NODE = Resources.getInstance()
-            .getBoolProperty(USE_COMMON_OUT_POINT_FOR_ROOT_NODE_STRING);
+    private static Boolean useCommonOutPointForRootNode;
+
+    static boolean getUseCommonOutPointForRootNode() {
+        if (useCommonOutPointForRootNode == null) {
+            useCommonOutPointForRootNode = Resources.getInstance()
+                    .getBoolProperty(USE_COMMON_OUT_POINT_FOR_ROOT_NODE_STRING);
+        }
+        return useCommonOutPointForRootNode;
+    }
 
     static private VerticalRootNodeViewLayout instance = null;
 
@@ -91,7 +98,7 @@ public class VerticalRootNodeViewLayout extends NodeViewLayoutAdapter {
     public Point getMainViewOutPoint(NodeView view, NodeView targetView,
                                      Point destinationPoint) {
         final MainView mainView = view.getMainView();
-        if (USE_COMMON_OUT_POINT_FOR_ROOT_NODE) {
+        if (getUseCommonOutPointForRootNode()) {
             if (targetView.isLeft()) {
                 return mainView.getLeftPoint();
             } else {

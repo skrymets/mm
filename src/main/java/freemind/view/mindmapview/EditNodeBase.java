@@ -26,7 +26,6 @@ package freemind.view.mindmapview;
 import freemind.controller.Controller;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
-import freemind.main.Resources;
 import freemind.main.MindMapUtils;
 import freemind.modes.ModeController;
 import lombok.Getter;
@@ -45,8 +44,7 @@ import java.util.LinkedList;
  * @author foltin
  */
 public class EditNodeBase {
-    protected static final boolean checkSpelling = Resources.getInstance().
-            getBoolProperty(FreeMindCommon.CHECK_SPELLING);
+    protected static Boolean checkSpelling;
     protected static final int BUTTON_OK = 0;
     protected static final int BUTTON_CANCEL = 1;
     protected static final int BUTTON_SPLIT = 2;
@@ -68,6 +66,9 @@ public class EditNodeBase {
         this.editControl = editControl;
         this.node = node;
         this.text = text;
+        if (checkSpelling == null) {
+            checkSpelling = controller.getResources().getBoolProperty(FreeMindCommon.CHECK_SPELLING);
+        }
     }
 
     abstract static class EditDialog extends JDialog {
@@ -207,7 +208,7 @@ public class EditNodeBase {
     }
 
     protected boolean binOptionIsTrue(String option) {
-        return Resources.getInstance().getBoolProperty(option);
+        return getModeController().getResources().getBoolProperty(option);
     }
 
     protected class EditCopyAction extends AbstractAction {

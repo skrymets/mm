@@ -44,7 +44,7 @@ public class BezierEdgeView extends EdgeView {
         int sign = (getTarget().isLeft()) ? -1 : 1;
         int sourceSign = 1;
         if (getSource().isRoot()
-                && !VerticalRootNodeViewLayout.USE_COMMON_OUT_POINT_FOR_ROOT_NODE) {
+                && !VerticalRootNodeViewLayout.getUseCommonOutPointForRootNode()) {
             sourceSign = 0;
         }
         int xctrl = getMap().getZoomed(sourceSign * sign * XCTRL);

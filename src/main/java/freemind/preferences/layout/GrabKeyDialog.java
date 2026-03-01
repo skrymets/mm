@@ -25,7 +25,6 @@ package freemind.preferences.layout;
 //{{{ Imports
 
 import freemind.main.FreeMindMain;
-import freemind.main.Resources;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -35,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -524,9 +524,9 @@ public class GrabKeyDialog extends JDialog {
 
             // ask whether to override that other shortcut
             int answer = JOptionPane.showConfirmDialog(GrabKeyDialog.this,
-                    Resources.getInstance().format(
-                            "GrabKeyDialog.grab-key.duplicate-shortcut",
-                            new Object[]{bindingReset.name})
+                    new MessageFormat(fmMain.getResourceString(
+                            "GrabKeyDialog.grab-key.duplicate-shortcut"))
+                            .format(new Object[]{bindingReset.name})
                     , null,
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (answer == JOptionPane.YES_OPTION) {

@@ -42,7 +42,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     private boolean isLong = false;
     // the Color of appearing GradientBox on drag over
     protected final static Color dragColor = Color.lightGray;
-    private static final boolean SHOW_ATTRIBUTE_ICON = Resources.getInstance().getBoolProperty("el__show_icon_for_attributes");
+    private static Boolean showAttributeIcon;
 
     public final static int DRAGGED_OVER_NO = 0;
     public final static int DRAGGED_OVER_SON = 1;
@@ -73,12 +73,12 @@ public class NodeView extends JComponent implements TreeModelListener {
     private NodeFoldingComponent mFoldingListener;
 
     protected NodeView(MindMapNode model, int position, MapView map, Container parent) {
-
+        final Resources resources = map.getViewFeedback().getResources();
         if (sListener == null) {
             sListener = (pPropertyName, pNewValue, pOldValue) -> {
                 if (Objects.equals(pPropertyName, FreeMind.TOOLTIP_DISPLAY_TIME)) {
                     // control tooltip times:
-                    ToolTipManager.sharedInstance().setDismissDelay(Resources.getInstance().getIntProperty(FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
+                    ToolTipManager.sharedInstance().setDismissDelay(resources.getIntProperty(FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
                 }
             };
             Resources.addPropertyChangeListenerAndPropagate(sListener);
@@ -327,6 +327,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public ViewFeedback getViewFeedback() {
         return getMap().getViewFeedback();
+    }
+
+    private Resources getResources() {
+        return getViewFeedback().getResources();
     }
 
     boolean isParentHidden() {
@@ -912,9 +916,12 @@ public class NodeView extends JComponent implements TreeModelListener {
 
         }
 
-        if (SHOW_ATTRIBUTE_ICON && (getModel().getAttributeTableLength() > 0)) {
+        if (showAttributeIcon == null) {
+            showAttributeIcon = getResources().getBoolProperty("el__show_icon_for_attributes");
+        }
+        if (showAttributeIcon && (getModel().getAttributeTableLength() > 0)) {
             if (sAttributeIcon == null) {
-                sAttributeIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(Resources.getInstance().getResource(
+                sAttributeIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(getResources().getResource(
                         "images/showAttributes.gif"));
             }
             iconImages.addImage(sAttributeIcon);
@@ -939,7 +946,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             } else if (Tools.executableByExtension(link)) {
                 iconPath = "images/Executable.png";
             }
-            ImageIcon icon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(Resources.getInstance().getResource(iconPath));
+            ImageIcon icon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(getResources().getResource(iconPath));
             iconImages.addImage(icon);
         }
         // /* Folded icon by Matthias Schade (mascha2), fc, 20.12.2003*/
@@ -1472,7 +1479,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public static int getFoldingSymbolWidth() {
         if (FOLDING_SYMBOL_WIDTH == -1) {
-            FOLDING_SYMBOL_WIDTH = Resources.getInstance().getIntProperty("foldingsymbolwidth", 8);
+            FOLDING_SYMBOL_WIDTH = Resources.getInstance().getIntProperty("foldingsymbolwidth", 8);  // static context: lazy one-time init
         }
         return FOLDING_SYMBOL_WIDTH;
     }

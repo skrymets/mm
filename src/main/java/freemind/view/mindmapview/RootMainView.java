@@ -20,8 +20,6 @@
 package freemind.view.mindmapview;
 
 import freemind.main.FreeMind;
-import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 
 import java.awt.*;
@@ -110,7 +108,7 @@ class RootMainView extends MainView {
      * @see freemind.view.mindmapview.NodeView#getStyle()
      */
     String getStyle() {
-        return Resources.getInstance().getProperty(
+        return getNodeView().getViewFeedback().getResources().getProperty(
                 FreeMind.RESOURCES_ROOT_NODE_STYLE);
     }
 

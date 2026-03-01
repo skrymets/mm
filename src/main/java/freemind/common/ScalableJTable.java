@@ -31,7 +31,11 @@ import javax.swing.*;
  */
 public class ScalableJTable extends JTable {
     public ScalableJTable() {
-        int scale = Resources.getInstance().getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
+        this(Resources.getInstance());
+    }
+
+    public ScalableJTable(Resources resources) {
+        int scale = resources.getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
         setRowHeight(getRowHeight() * scale / 100);
     }
 }

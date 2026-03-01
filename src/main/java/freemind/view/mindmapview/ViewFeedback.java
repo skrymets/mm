@@ -21,6 +21,7 @@
 package freemind.view.mindmapview;
 
 import freemind.controller.*;
+import freemind.main.Resources;
 import freemind.model.MindMapNode;
 
 import java.awt.*;
@@ -108,5 +109,9 @@ public interface ViewFeedback {
 
     void deRegisterMouseWheelEventHandler(MouseWheelEventHandler handler);
 
+    /**
+     * @return the Resources instance for accessing properties and localized strings.
+     */
+    Resources getResources();
 
 }

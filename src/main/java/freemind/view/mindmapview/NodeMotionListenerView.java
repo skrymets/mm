@@ -19,8 +19,6 @@
 /*$Id: NodeMotionListenerView.java,v 1.1.4.4.4.9 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.view.mindmapview;
 
-import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +45,7 @@ public class NodeMotionListenerView extends JComponent {
 
         // fc, 16.6.2005: to emphasis the possible movement.
         this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-        final String helpMsg = Resources.getInstance().getResourceString("node_location_help");
+        final String helpMsg = view.getViewFeedback().getResources().getResourceString("node_location_help");
         this.setToolTipText(helpMsg);
     }
 

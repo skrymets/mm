@@ -23,7 +23,6 @@ package freemind.common;
 import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 
 import javax.swing.*;
@@ -41,12 +40,18 @@ public class FreeMindProgressMonitor extends JDialog {
     private static final String PROGRESS_MONITOR_WINDOW_CONFIGURATION_STORAGE = "progress_monitor_window_configuration_storage";
     private final JLabel mLabel;
     private final JProgressBar mProgressBar;
+    private final Resources mResources;
     protected boolean mCanceled = false;
 
     /**
      *
      */
     public FreeMindProgressMonitor(String pTitle) {
+        this(pTitle, Resources.getInstance());
+    }
+
+    public FreeMindProgressMonitor(String pTitle, Resources resources) {
+        mResources = resources;
         setTitle(getString(pTitle));
         mLabel = new JLabel("!");
         mProgressBar = new JProgressBar();
@@ -68,15 +73,15 @@ public class FreeMindProgressMonitor extends JDialog {
         // SwingUtils.addEscapeActionToDialog(this);
         pack();
         setSize(new Dimension(600, 200));
-        String marshaled = Resources.getInstance().getProperty(
+        String marshaled = mResources.getProperty(
                 PROGRESS_MONITOR_WINDOW_CONFIGURATION_STORAGE);
         if (marshaled != null) {
-            XmlBindingTools.getInstance().decorateDialog(marshaled, this);
+            XmlBindingTools.getInstance().decorateDialog(marshaled, this, mResources);
         }
     }
 
     protected String getString(String resource) {
-        return Resources.getInstance().getResourceString(resource);
+        return mResources.getResourceString(resource);
     }
 
     /**
@@ -88,7 +93,7 @@ public class FreeMindProgressMonitor extends JDialog {
     }
 
     public boolean showProgress(int pCurrent, String pName, Object[] pParameters) {
-        final String format = Resources.getInstance().format(pName, pParameters);
+        final String format = mResources.format(pName, pParameters);
         EventQueue.invokeLater(() -> mLabel.setText(format));
         return setProgress(pCurrent);
     }
@@ -102,8 +107,7 @@ public class FreeMindProgressMonitor extends JDialog {
         WindowConfigurationStorage storage = new WindowConfigurationStorage();
         String marshalled = XmlBindingTools.getInstance().storeDialogPositions(
                 storage, this);
-        Resources
-                .getInstance()
+        mResources
                 .getProperties()
                 .setProperty(PROGRESS_MONITOR_WINDOW_CONFIGURATION_STORAGE,
                         marshalled);

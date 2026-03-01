@@ -367,7 +367,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         this.setFocusTraversalPolicyProvider(true);
         // like in excel - write a letter means edit (PN)
         // on the other hand it doesn't allow key navigation (sdfe)
-        disableMoveCursor = Resources.getInstance().getBoolProperty("disable_cursor_move_paper");
+        disableMoveCursor = mFeedback.getResources().getBoolProperty("disable_cursor_move_paper");
 
         addComponentListener(new ResizeListener());
     }
@@ -1348,7 +1348,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
                 setBackground(Color.WHITE);
             }
             boundingRectangle = getInnerBounds();
-            fitToPage = Resources.getInstance().getBoolProperty("fit_to_page");
+            fitToPage = mFeedback.getResources().getBoolProperty("fit_to_page");
         } else {
             log.warn("Called preparePrinting although isPrinting is true.");
         }

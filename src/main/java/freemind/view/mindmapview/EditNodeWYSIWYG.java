@@ -26,8 +26,6 @@ import com.inet.jortho.SpellChecker;
 import com.lightdev.app.shtm.SHTMLPanel;
 import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.main.ColorUtils;
 import freemind.modes.ModeController;
@@ -214,7 +212,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
                     .getHtmlEditorPanel();
             String rule = "BODY {";
             Font font = node.getTextFont();
-            if (Resources.getInstance().getBoolProperty(
+            if (getModeController().getResources().getBoolProperty(
                     "experimental_font_sizing_for_long_node_editors")) {
                 /*
                  * This is a proposal of Dan, but it doesn't work as expected.

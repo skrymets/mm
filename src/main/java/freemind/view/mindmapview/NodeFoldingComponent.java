@@ -20,8 +20,6 @@
 package freemind.view.mindmapview;
 
 import freemind.main.FreeMind;
-import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import lombok.Getter;
@@ -63,7 +61,7 @@ public class NodeFoldingComponent extends JButton {
         setFocusable(false);
         setAlignmentY(Component.TOP_ALIGNMENT);
         setUI(new RoundImageButtonUI());
-        boolean mIsEnabled = Resources.getInstance().getBoolProperty(
+        boolean mIsEnabled = view.getViewFeedback().getResources().getBoolProperty(
                 FreeMind.RESOURCES_DISPLAY_FOLDING_BUTTONS);
         if (mIsEnabled) {
             addMouseListener(new MouseListener() {
