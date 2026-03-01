@@ -25,7 +25,7 @@ import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.ViewAbstraction;
+import freemind.view.mindmapview.MapView;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.view.mindmapview.NodeView;
 import lombok.extern.slf4j.Slf4j;
@@ -258,8 +258,8 @@ public class AddHookActor extends XmlActorAdapter {
         return getViewAbstraction().getNodeView(pNode);
     }
 
-    protected ViewAbstraction getViewAbstraction() {
-        ViewAbstraction viewAbstraction = getExMapFeedback().getViewAbstraction();
+    protected MapView getViewAbstraction() {
+        MapView viewAbstraction = getExMapFeedback().getViewAbstraction();
         if (viewAbstraction == null) {
             throw new IllegalArgumentException("View abstraction not available.");
         }

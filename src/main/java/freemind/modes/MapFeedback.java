@@ -25,6 +25,7 @@ import freemind.main.Resources;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.preferences.FreemindPropertyListener;
+import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.ViewFeedback;
 
 import java.awt.*;
@@ -103,9 +104,9 @@ public interface MapFeedback {
     void invokeHooksRecursively(MindMapNode pNode, MindMap pModel);
 
     /**
-     * @return a ViewAbstraction, if a view is attached, null otherwise.
+     * @return the MapView, if a view is attached, null otherwise.
      */
-    ViewAbstraction getViewAbstraction();
+    MapView getViewAbstraction();
 
     /**
      * @return null, if no feedback is available.

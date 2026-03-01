@@ -27,7 +27,7 @@ import freemind.extensions.PermanentNodeHook;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.ViewAbstraction;
+import freemind.view.mindmapview.MapView;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.actors.PasteActor.NodeCoordinate;
 import freemind.view.mindmapview.NodeView;
@@ -76,7 +76,7 @@ public class DeleteChildActor extends XmlActorAdapter {
         map.getLinkRegistry()
                 .deregisterLinkTarget(selectedNode);
         // deselect
-        ViewAbstraction view = getExMapFeedback().getViewAbstraction();
+        MapView view = getExMapFeedback().getViewAbstraction();
         if (view != null) {
             NodeView nodeView = view.getNodeView(selectedNode);
             view.deselect(nodeView);

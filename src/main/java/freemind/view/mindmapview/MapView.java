@@ -29,7 +29,6 @@ import freemind.model.MindMap;
 import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
 import freemind.modes.MindMapArrowLink;
-import freemind.modes.ViewAbstraction;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.services.*;
 import lombok.Getter;
@@ -55,7 +54,7 @@ import java.util.Timer;
  * This class represents the view of a whole MindMap (in analogy to class JTree).
  */
 @Slf4j
-public class MapView extends JPanel implements ViewAbstraction, Printable, Autoscroll {
+public class MapView extends JPanel implements Printable, Autoscroll {
 
     /**
      * Currently, this listener does nothing. But it should move the map
@@ -504,12 +503,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         return getViewFeedback().getNodeDropListener();
     }
 
-    @Override
     public NodeView getSelected() {
         return selectionService.getSelected();
     }
 
-    @Override
     public LinkedList<NodeView> getSelecteds() {
         return selectionService.getSelecteds();
     }
@@ -522,7 +519,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         return selectionService.getSingleSelectedNodes();
     }
 
-    @Override
     public boolean isSelected(NodeView n) {
         return selectionService.isSelected(n);
     }

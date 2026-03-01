@@ -29,6 +29,7 @@ import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.preferences.FreemindPropertyListener;
+import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
 import lombok.extern.slf4j.Slf4j;
@@ -211,7 +212,7 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
     }
 
     @Override
-    public ViewAbstraction getViewAbstraction() {
+    public MapView getViewAbstraction() {
         return null;
     }
 
