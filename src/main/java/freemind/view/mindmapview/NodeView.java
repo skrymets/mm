@@ -375,7 +375,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return childrenViews;
     }
 
-    protected LinkedList<NodeView> getSiblingViews() {
+    public LinkedList<NodeView> getSiblingViews() {
         return getParentView().getChildrenViews();
     }
 
@@ -467,7 +467,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * Search for a node with the same parent with y position y0+height
      * Scroll the window by height.
      */
-    protected NodeView getNextPage() {
+    public NodeView getNextPage() {
         // from root we cannot jump
         if (getModel().isRoot()) {
             return this; // I'm root
@@ -500,7 +500,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return convertPointToMap(getMainViewInPoint());
     }
 
-    protected NodeView getPreviousPage() {
+    public NodeView getPreviousPage() {
         if (getModel().isRoot()) {
             return this; // I'm root
         }
@@ -525,7 +525,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return sibling; // last on the page
     }
 
-    protected NodeView getNextVisibleSibling() {
+    public NodeView getNextVisibleSibling() {
         NodeView sibling;
         NodeView lastSibling = this;
         // get next sibling even in higher levels
@@ -643,7 +643,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return right;
     }
 
-    protected NodeView getPreviousVisibleSibling() {
+    public NodeView getPreviousVisibleSibling() {
         NodeView sibling;
         NodeView previousSibling = this;
 
@@ -788,7 +788,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         revalidate(); // Because of zoom?
     }
 
-    void repaintSelected() {
+    public void repaintSelected() {
         updateTextColor();
         repaint();
     }

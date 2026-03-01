@@ -30,7 +30,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
 
-class PathBBox {
+public class PathBBox {
     public static Rectangle2D getBBox(Shape s) {
         boolean first = true;
         double[] bounds = new double[4];

@@ -35,12 +35,12 @@ public class ArrowLinkView {
     protected final NodeView source;
     protected final NodeView target;
     protected int iterativeLevel;
-    protected CubicCurve2D arrowLinkCurve;
+    public CubicCurve2D arrowLinkCurve;
     static final Stroke DEF_STROKE = new BasicStroke(1);
 
     /* Note, that source and target are nodeviews and not nodemodels!. */
-    protected ArrowLinkView(MindMapArrowLink arrowLinkModel, NodeView source,
-                            NodeView target) {
+    public ArrowLinkView(MindMapArrowLink arrowLinkModel, NodeView source,
+                         NodeView target) {
         this.arrowLinkModel = arrowLinkModel;
         this.source = source;
         this.target = target;
