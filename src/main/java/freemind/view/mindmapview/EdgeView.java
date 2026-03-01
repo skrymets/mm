@@ -58,7 +58,7 @@ public abstract class EdgeView {
         if (width == EdgeAdapter.WIDTH_THIN) {
             return DEF_STROKE;
         }
-        return new BasicStroke(width * getMap().getZoom(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
+        return new BasicStroke(width * getMap().getZoom(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
     }
 
     public int getWidth() {
