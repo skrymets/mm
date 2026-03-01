@@ -895,7 +895,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             }
             store.setRestorableName(restorable);
             store.setLastZoom(getView().getZoom());
-            Point viewLocation = getView().getViewPosition();
+            Point viewLocation = getView().getGeometryService().getViewPosition();
             if (viewLocation != null) {
                 store.setX(viewLocation.x);
                 store.setY(viewLocation.y);

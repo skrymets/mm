@@ -89,7 +89,7 @@ public class MindMapLayout implements LayoutManager {
     private int calcYBorderSize(MapView map) {
         int yBorderSize;
         final int minBorderHeight = map.getZoomed(MindMapLayout.BORDER);
-        Dimension visibleSize = map.getViewportSize();
+        Dimension visibleSize = map.getGeometryService().getViewportSize();
         if (visibleSize != null) {
             yBorderSize = Math.max(visibleSize.height, minBorderHeight);
         } else {
@@ -100,7 +100,7 @@ public class MindMapLayout implements LayoutManager {
 
     private int calcXBorderSize(MapView map) {
         int xBorderSize;
-        Dimension visibleSize = map.getViewportSize();
+        Dimension visibleSize = map.getGeometryService().getViewportSize();
         final int minBorderWidth = map.getZoomed(MindMapLayout.BORDER
                 + MindMapLayout.MINIMAL_LEAF_WIDTH);
         if (visibleSize != null) {

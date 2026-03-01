@@ -132,7 +132,7 @@ public class ClickableImageCreator {
             holder.alt = node.getShortText(modeController);
             holder.href = node.getObjectId(modeController);
             holder.link = node.getLink() != null ? node.getLink() : "";
-            Point contentXY = mapView.getNodeContentLocation(nodeView);
+            Point contentXY = mapView.getGeometryService().getNodeContentLocation(nodeView);
             final JComponent content = nodeView.getContent();
             holder.coordinates.x = (int) (contentXY.x - innerBounds.getMinX());
             holder.coordinates.y = (int) (contentXY.y - innerBounds.getMinY());

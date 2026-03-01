@@ -15,7 +15,7 @@ public class NodeRenderingService {
     }
 
     public void paintCloudsAndEdges(Graphics2D g) {
-        Object renderingHint = nodeView.getMap().setEdgesRenderingHint(g);
+        Object renderingHint = nodeView.getMap().getRenderingService().setEdgesRenderingHint(g);
         for (int i = 0; i < nodeView.getComponentCount(); i++) {
             final Component component = nodeView.getComponent(i);
             if (!(component instanceof NodeView)) {

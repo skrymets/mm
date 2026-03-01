@@ -496,7 +496,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         if (getModel().isRoot()) {
             return this; // I'm root
         }
-        int y0 = getInPointInMap().y + getMap().getViewportSize().height;
+        int y0 = getInPointInMap().y + getMap().getGeometryService().getViewportSize().height;
         NodeView sibling = getNextVisibleSibling();
         if (sibling == this) {
             return this; // at the end
@@ -528,7 +528,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         if (getModel().isRoot()) {
             return this; // I'm root
         }
-        int y0 = getInPointInMap().y - getMap().getViewportSize().height;
+        int y0 = getInPointInMap().y - getMap().getGeometryService().getViewportSize().height;
         NodeView sibling = getPreviousVisibleSibling();
         if (sibling == this) {
             return this; // at the end
@@ -1405,7 +1405,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     }
 
     private void paintCloudsAndEdges(Graphics2D g) {
-        Object renderingHint = getMap().setEdgesRenderingHint(g);
+        Object renderingHint = getMap().getRenderingService().setEdgesRenderingHint(g);
         for (int i = 0; i < getComponentCount(); i++) {
             final Component component = getComponent(i);
             if (!(component instanceof NodeView)) {

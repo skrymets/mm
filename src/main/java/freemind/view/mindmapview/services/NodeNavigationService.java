@@ -71,7 +71,7 @@ public class NodeNavigationService {
         if (nodeView.getModel().isRoot()) {
             return nodeView;
         }
-        int y0 = nodeView.getInPointInMap().y + nodeView.getMap().getViewportSize().height;
+        int y0 = nodeView.getInPointInMap().y + nodeView.getMap().getGeometryService().getViewportSize().height;
         NodeView sibling = getNextVisibleSibling();
         if (sibling == nodeView) {
             return nodeView;
@@ -92,7 +92,7 @@ public class NodeNavigationService {
         if (nodeView.getModel().isRoot()) {
             return nodeView;
         }
-        int y0 = nodeView.getInPointInMap().y - nodeView.getMap().getViewportSize().height;
+        int y0 = nodeView.getInPointInMap().y - nodeView.getMap().getGeometryService().getViewportSize().height;
         NodeView sibling = getPreviousVisibleSibling();
         if (sibling == nodeView) {
             return nodeView;

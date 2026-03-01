@@ -368,14 +368,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         Resources.addPropertyChangeListener(propertyChangeListener);
     }
 
-    public Object setEdgesRenderingHint(Graphics2D g) {
-        return renderingService.setEdgesRenderingHint(g);
-    }
-
-    public void setTextRenderingHint(Graphics2D g) {
-        renderingService.setTextRenderingHint(g);
-    }
-
     public void initRoot() {
         scrollService.setRootContentLocation(new Point());
         rootView = NodeViewFactory.getInstance().newNodeView(getModel().getRootNode(), 0, this, this);
@@ -583,17 +575,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         return super.getPreferredSize();
     }
 
-    public Point getNodeContentLocation(NodeView nodeView) {
-        return geometryService.getNodeContentLocation(nodeView);
-    }
-
-    public Dimension getViewportSize() {
-        return geometryService.getViewportSize();
-    }
-
-    public Point getViewPosition() {
-        return geometryService.getViewPosition();
-    }
 
 
 
