@@ -23,7 +23,6 @@
  */
 package freemind.controller;
 
-import org.apache.commons.lang3.SystemUtils;
 import freemind.main.SwingUtils;
 
 import javax.swing.*;
@@ -54,11 +53,8 @@ public class FreeMindToolBar extends JToolBar {
         returnValue.setMargin(nullInsets);
         returnValue.setFocusable(false);
 
-        // fc, 20.6.2004: try to make the toolbar looking good under Mac OS X.
-        if (SystemUtils.IS_OS_MAC) {
-            returnValue.setBorderPainted(false);
-        }
-        returnValue.setContentAreaFilled(false);
+        // FlatLaf styling
+        returnValue.putClientProperty("JButton.buttonType", "toolBarButton");
 
         return returnValue;
     }
