@@ -182,7 +182,7 @@ public class EditNodeTextField extends EditNodeBase {
         // screen positionining ---------------------------------------------
 
         // SCROLL if necessary
-        getView().scrollNodeToVisible(nodeView, xExtraWidth);
+        getView().getScrollService().scrollNodeToVisible(nodeView, xExtraWidth);
         Point mPoint = null;
         if (mPoint == null) {
             // NOTE: this must be calculated after scroll because the pane

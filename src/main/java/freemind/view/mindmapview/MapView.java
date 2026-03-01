@@ -400,30 +400,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     // Navigation
     //
 
-    public void centerNode(final NodeView node) {
-        scrollService.centerNode(node);
-    }
-
-    public void scrollNodeToVisible(NodeView node) {
-        scrollService.scrollNodeToVisible(node);
-    }
-
-    public void scrollNodeToVisible(NodeView node, int extraWidth) {
-        scrollService.scrollNodeToVisible(node, extraWidth);
-    }
-
-    public void scrollBy(int x, int y) {
-        scrollService.scrollBy(x, y);
-    }
-
-    public void setViewLocation(int x, int y) {
-        scrollService.setViewLocation(x, y);
-    }
-
-    protected void setViewPosition(Point currentPoint) {
-        scrollService.setViewPosition(currentPoint);
-    }
-
     //
     // get/set methods
     //

@@ -60,7 +60,7 @@ public class FitToPage extends ModeControllerHookAdapter {
     private void scroll() {
         Rectangle rect = view.getInnerBounds();
         Rectangle viewer = view.getVisibleRect();
-        view.scrollBy(shift(rect.x, rect.width, viewer.x, viewer.width), shift(rect.y, rect.height, viewer.y, viewer.height));
+        view.getScrollService().scrollBy(shift(rect.x, rect.width, viewer.x, viewer.width), shift(rect.y, rect.height, viewer.y, viewer.height));
     }
 
     private void zoom() {

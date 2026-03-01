@@ -575,7 +575,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         final NodeView focussedNodeView = getNodeView(primarySelected);
         if (focussedNodeView != null) {
             getView().getSelectionService().selectAsTheOnlyOneSelected(focussedNodeView);
-            getView().scrollNodeToVisible(focussedNodeView);
+            getView().getScrollService().scrollNodeToVisible(focussedNodeView);
             for (MindMapNode node : selecteds) {
                 NodeView nodeView = getNodeView(node);
                 if (nodeView != null) {
@@ -1357,7 +1357,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * Select the node and scroll to it.
      **/
     private void centerNode(NodeView node) {
-        getView().centerNode(node);
+        getView().getScrollService().centerNode(node);
         getView().getSelectionService().selectAsTheOnlyOneSelected(node);
     }
 

@@ -97,10 +97,10 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
             }
             // end zoomchange
         } else if ((e.getModifiers() & HORIZONTAL_SCROLL_MASK) != 0) {
-            ((MapView) e.getComponent()).scrollBy(
+            ((MapView) e.getComponent()).getScrollService().scrollBy(
                     SCROLL_SKIPS * e.getWheelRotation(), 0);
         } else {
-            ((MapView) e.getComponent()).scrollBy(0,
+            ((MapView) e.getComponent()).getScrollService().scrollBy(0,
                     SCROLL_SKIPS * e.getWheelRotation());
         }
     }

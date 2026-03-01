@@ -71,7 +71,7 @@ public class MindMapMouseMotionManager implements MapMouseMotionReceiver {
                 originY = e.getY();
                 mController.getView().repaint();
             } else {
-                mapView.scrollBy(originX - e.getX(), originY - e.getY());
+                mapView.getScrollService().scrollBy(originX - e.getX(), originY - e.getY());
             }
         }
     }

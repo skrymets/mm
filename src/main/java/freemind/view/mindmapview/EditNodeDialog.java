@@ -258,7 +258,7 @@ public class EditNodeDialog extends EditNodeBase {
         dialog.pack(); // calculate the size
 
         // set position
-        getView().scrollNodeToVisible(getNode(), 0);
+        getView().getScrollService().scrollNodeToVisible(getNode(), 0);
         SwingUtils.setDialogLocationRelativeTo(dialog, getNode());
         dialog.setVisible(true);
     }

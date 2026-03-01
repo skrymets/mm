@@ -205,7 +205,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
                 log.error(e.getLocalizedMessage(), e);
             }
             mDemoFrame = new MapView(mMap, mDemoNodeMapFeedback);
-            mDemoFrame.centerNode(mDemoFrame.getViewerRegistryService().getNodeView(mDemoNode));
+            mDemoFrame.getScrollService().centerNode(mDemoFrame.getViewerRegistryService().getNodeView(mDemoNode));
         }
         return mDemoFrame;
     }

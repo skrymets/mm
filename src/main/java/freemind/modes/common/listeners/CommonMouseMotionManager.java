@@ -60,7 +60,7 @@ public class CommonMouseMotionManager implements MapMouseMotionReceiver {
         }
         // Always try to get mouse to the original position in the Map.
         if (originX >= 0 && isEventPointVisible) {
-            ((MapView) e.getComponent()).scrollBy(originX - e.getX(), originY
+            ((MapView) e.getComponent()).getScrollService().scrollBy(originX - e.getX(), originY
                     - e.getY());
         }
     }

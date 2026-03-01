@@ -122,7 +122,7 @@ public final class SwingUtils {
         }
         if (c instanceof NodeView) {
             final NodeView nodeView = (NodeView) c;
-            nodeView.getMap().scrollNodeToVisible(nodeView);
+            nodeView.getMap().getScrollService().scrollNodeToVisible(nodeView);
             c = nodeView.getMainView();
         }
         final Point compLocation = c.getLocationOnScreen();

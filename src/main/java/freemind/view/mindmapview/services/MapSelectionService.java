@@ -30,7 +30,7 @@ public class MapSelectionService {
             log.warn("Select with null NodeView called!");
             return;
         }
-        mapView.scrollNodeToVisible(node);
+        mapView.getScrollService().scrollNodeToVisible(node);
         selectAsTheOnlyOneSelected(node);
         mapView.setSiblingMaxLevel(node.getModel().getNodeLevel());
     }
@@ -45,7 +45,7 @@ public class MapSelectionService {
             ((NodeView) newSelected.getParent()).setPreferredChild(newSelected);
         }
 
-        mapView.scrollNodeToVisible(newSelected);
+        mapView.getScrollService().scrollNodeToVisible(newSelected);
         newSelected.repaintSelected();
 
         for (NodeView oldSelected : oldSelecteds) {
