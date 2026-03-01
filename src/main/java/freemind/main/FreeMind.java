@@ -28,7 +28,9 @@ import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.events.FreeMindEventBus;
 import freemind.main.services.EditServerService;
 import freemind.main.services.WindowService;
+import freemind.extensions.HookDescriptorBase;
 import freemind.modes.ControllerAdapter;
+import freemind.modes.MindIcon;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.StatusBarPanel;
@@ -315,6 +317,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         controller.getMapModuleManager().setEventBus(eventBus);
 
         JColorCombo.initColors(Resources.getInstance());
+        MindIcon.init(Resources.getInstance());
+        HookDescriptorBase.init(Resources.getInstance());
 
         feedback.increase("FreeMind.progress.settingPreferences", null);
         // add a listener for the controller, resource bundle:

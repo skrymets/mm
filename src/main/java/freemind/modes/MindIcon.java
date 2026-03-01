@@ -70,11 +70,16 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     /**
      * Set of all created icons. Name -> MindIcon
      */
+    private static Resources resources;
     private static final HashMap<String, MindIcon> createdIcons = new HashMap<>();
     private static final int UNKNOWN = -1;
     public static final int LAST = UNKNOWN;
     static int nextNumber = UNKNOWN - 1;
     private JComponent component = null;
+
+    public static void init(Resources res) {
+        resources = res;
+    }
 
     private MindIcon(String name) {
         setName(name);
@@ -103,7 +108,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
 
     public String getDescription() {
         String resource = "icon_" + getName();
-        return Resources.getInstance().getResourceString(resource, resource);
+        return resources.getResourceString(resource, resource);
     }
 
     public String getIconFileName() {
@@ -121,7 +126,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     public ImageIcon getIcon() {
         // We need the frame to be able to obtain the resource URL of the icon.
         if (iconNotFound == null) {
-            iconNotFound = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource(
+            iconNotFound = freemind.view.ImageFactory.getInstance().createIcon(resources.getResource(
                     "images/IconNotFound.png"));
         }
 
@@ -129,11 +134,11 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
             return associatedIcon;
         }
         if (name != null) {
-            URL imageURL = Resources.getInstance().getResource(
+            URL imageURL = resources.getResource(
                     getIconFileName());
             if (imageURL == null) { // As standard icon not found, try user's
                 try {
-                    final File file = new File(Resources.getInstance()
+                    final File file = new File(resources
                             .getFreemindDirectory(), "icons/" + getName()
                             + ".png");
                     if (file.canRead()) {
@@ -174,7 +179,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
             return mAllIconNames;
         }
         List<String> mAllIconNames = new ArrayList<>();
-        String icons = Resources.getInstance().getProperty(
+        String icons = resources.getProperty(
                 PROPERTY_STRING_ICONS_LIST);
         StringTokenizer tokenizer = new StringTokenizer(icons, ";");
         while (tokenizer.hasMoreTokens()) {

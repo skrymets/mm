@@ -45,6 +45,12 @@ import java.util.List;
 public class HookDescriptorBase {
     public static final String FREEMIND_BASE_DIR_STRING = "${freemind.base.dir}";
 
+    private static Resources resources;
+
+    public static void init(Resources res) {
+        resources = res;
+    }
+
     @Getter
     protected final Plugin pluginBase;
 
@@ -63,7 +69,7 @@ public class HookDescriptorBase {
             return string;
         }
         if (string.startsWith("%")) {
-            return Resources.getInstance().getResourceString(string.substring(1));
+            return resources.getResourceString(string.substring(1));
         }
         return string;
     }
@@ -73,7 +79,7 @@ public class HookDescriptorBase {
             return string;
         }
         if (string.startsWith("%")) {
-            return Resources.getInstance().getProperty(string.substring(1));
+            return resources.getProperty(string.substring(1));
         }
         return string;
     }
@@ -82,7 +88,7 @@ public class HookDescriptorBase {
      * @return the relative/absolute(?) position of the plugin xml file.
      */
     private String getPluginDirectory() {
-        return Resources.getInstance().getFreemindBaseDir() + "/"
+        return resources.getFreemindBaseDir() + "/"
                 + new File(mXmlPluginFile).getParent();
     }
 
@@ -145,7 +151,7 @@ public class HookDescriptorBase {
                 urls[j++] = Tools.fileToUrl(file);
             }
             ClassLoader loader = new URLClassLoader(urls,
-                    Resources.getInstance().getFreeMindClassLoader());
+                    resources.getFreeMindClassLoader());
             classLoaderCache.put(key, loader);
             return loader;
         } catch (MalformedURLException e) {
