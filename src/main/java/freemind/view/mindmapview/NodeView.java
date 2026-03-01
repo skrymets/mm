@@ -246,10 +246,10 @@ public class NodeView extends JComponent implements TreeModelListener {
                 additionalDistanceForConvexHull += CloudView
                         .getAdditionalHeigth(cloud, this) / 5;
             }
-            final int x = transX + getContent().getX() - getDeltaX();
-            final int y = transY + getContent().getY() - getDeltaY();
-            final int width = getMainViewWidthWithFoldingMark();
-            int heightWithFoldingMark = getMainViewHeightWithFoldingMark();
+            final int x = transX + getContent().getX() - mainView.getDeltaX();
+            final int y = transY + getContent().getY() - mainView.getDeltaY();
+            final int width = mainView.getMainViewWidthWithFoldingMark();
+            int heightWithFoldingMark = mainView.getMainViewHeightWithFoldingMark();
             final int height = Math.max(heightWithFoldingMark, getContent()
                     .getHeight());
             inList.addLast(new Point(-additionalDistanceForConvexHull + x,
@@ -269,45 +269,6 @@ public class NodeView extends JComponent implements TreeModelListener {
             child.getCoordinates(inList, additionalDistanceForConvexHull, true,
                     transX + child.getX(), transY + child.getY());
         }
-    }
-
-    /**
-     *
-     */
-    public void setText(String string) {
-        mainView.setText(string);
-    }
-
-    /**
-     *
-     */
-    public String getText() {
-        return mainView.getText();
-    }
-
-    public int getMainViewWidthWithFoldingMark() {
-        return mainView.getMainViewWidthWithFoldingMark();
-    }
-
-    /**
-     * get height including folding symbol
-     */
-    public int getMainViewHeightWithFoldingMark() {
-        return mainView.getMainViewHeightWithFoldingMark();
-    }
-
-    /**
-     * get x coordinate including folding symbol
-     */
-    public int getDeltaX() {
-        return mainView.getDeltaX();
-    }
-
-    /**
-     * get y coordinate including folding symbol
-     */
-    public int getDeltaY() {
-        return mainView.getDeltaY();
     }
 
     //
@@ -833,7 +794,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             for (String s : lines) {
                 // Compute the width the node would spontaneously take,
                 // by preliminarily setting the text.
-                setText(s);
+                mainView.setText(s);
                 widthMustBeRestricted = mainView.getPreferredSize().width > mapView
                         .getZoomed(mapView.getMaxNodeWidth())
                         + mainView.getIconWidth();
@@ -877,7 +838,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                 // width without actually checking it.
                 // The purpose of that is to speed up rendering of very long
                 // nodes.
-                setText(nodeText);
+                mainView.setText(nodeText);
                 widthMustBeRestricted = mainView.getPreferredSize().width > mapView
                         .getZoomed(mapView.getMaxNodeWidth())
                         + mainView.getIconWidth();
@@ -889,7 +850,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                 nodeText = nodeText.replaceFirst("(?i)<body>", "<body width=\""
                         + mapView.getMaxNodeWidth() + "\">");
             }
-            setText(nodeText);
+            mainView.setText(nodeText);
         } else if (nodeText.startsWith("<table>")) {
             String[] lines = nodeText.split("\n");
             lines[0] = lines[0].substring(7); // remove <table> tag
@@ -902,16 +863,16 @@ public class NodeView extends JComponent implements TreeModelListener {
                 text.append("<tr><td style=\"border-color: white;\">").append(HtmlTools.toXMLEscapedText(lines[line]).replaceAll(
                         "\t", "<td style=\"border-color: white\">"));
             }
-            setText(text.toString());
+            mainView.setText(text.toString());
         } else if (isLong) {
             String text = HtmlTools.plainToHTML(nodeText);
             if (widthMustBeRestricted) {
                 text = text.replaceFirst("(?i)<p>",
                         "<p width=\"" + mapView.getMaxNodeWidth() + "\">");
             }
-            setText(text);
+            mainView.setText(text);
         } else {
-            setText(nodeText);
+            mainView.setText(nodeText);
         }
     }
 
@@ -1065,10 +1026,6 @@ public class NodeView extends JComponent implements TreeModelListener {
         for (NodeView child : getChildrenViews()) {
             child.updateAll();
         }
-    }
-
-    String getStyle() {
-        return mainView.getStyle();
     }
 
     /**

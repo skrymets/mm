@@ -117,7 +117,7 @@ public class NodeUpdateService {
         if (!isHtml) {
             String[] lines = nodeText.split("\n");
             for (String s : lines) {
-                nodeView.setText(s);
+                nodeView.getMainView().setText(s);
                 widthMustBeRestricted = nodeView.getMainView().getPreferredSize().width > mapView
                         .getZoomed(mapView.getMaxNodeWidth())
                         + nodeView.getMainView().getIconWidth();
@@ -148,7 +148,7 @@ public class NodeUpdateService {
                 }
             }
             if (nodeText.length() < 30000) {
-                nodeView.setText(nodeText);
+                nodeView.getMainView().setText(nodeText);
                 widthMustBeRestricted = nodeView.getMainView().getPreferredSize().width > mapView
                         .getZoomed(mapView.getMaxNodeWidth())
                         + nodeView.getMainView().getIconWidth();
@@ -159,7 +159,7 @@ public class NodeUpdateService {
                 nodeText = nodeText.replaceFirst("(?i)<body>", "<body width=\""
                         + mapView.getMaxNodeWidth() + "\">");
             }
-            nodeView.setText(nodeText);
+            nodeView.getMainView().setText(nodeText);
         } else if (nodeText.startsWith("<table>")) {
             String[] lines = nodeText.split("\n");
             lines[0] = lines[0].substring(7);
@@ -169,16 +169,16 @@ public class NodeUpdateService {
                 text.append("<tr><td style=\"border-color: white;\">").append(HtmlTools.toXMLEscapedText(lines[line]).replaceAll(
                         "\t", "<td style=\"border-color: white\">"));
             }
-            nodeView.setText(text.toString());
+            nodeView.getMainView().setText(text.toString());
         } else if (isLong) {
             String text = HtmlTools.plainToHTML(nodeText);
             if (widthMustBeRestricted) {
                 text = text.replaceFirst("(?i)<p>",
                         "<p width=\"" + mapView.getMaxNodeWidth() + "\">");
             }
-            nodeView.setText(text);
+            nodeView.getMainView().setText(text);
         } else {
-            nodeView.setText(nodeText);
+            nodeView.getMainView().setText(nodeText);
         }
     }
 

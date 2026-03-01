@@ -96,7 +96,7 @@ class BubbleMainView extends MainView {
         return in;
     }
 
-    protected int getMainViewWidthWithFoldingMark() {
+    public int getMainViewWidthWithFoldingMark() {
         int width = getWidth();
         int dW = getZoomedFoldingSymbolHalfWidth() * 2;
         if (getNodeView().getModel().isFolded()) {

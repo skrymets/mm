@@ -222,14 +222,14 @@ public abstract class MainView extends JLabel {
     /**
      * get height including folding symbol
      */
-    protected int getMainViewHeightWithFoldingMark() {
+    public int getMainViewHeightWithFoldingMark() {
         return getHeight();
     }
 
     /**
      * get width including folding symbol
      */
-    protected int getMainViewWidthWithFoldingMark() {
+    public int getMainViewWidthWithFoldingMark() {
         return getWidth();
     }
 

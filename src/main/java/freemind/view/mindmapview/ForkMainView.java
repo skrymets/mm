@@ -53,7 +53,7 @@ class ForkMainView extends MainView {
         super.paint(g);
     }
 
-    protected int getMainViewWidthWithFoldingMark() {
+    public int getMainViewWidthWithFoldingMark() {
         int width = getWidth();
         if (getNodeView().getModel().isFolded()) {
             width += getZoomedFoldingSymbolHalfWidth() * 2
@@ -62,7 +62,7 @@ class ForkMainView extends MainView {
         return width;
     }
 
-    protected int getMainViewHeightWithFoldingMark() {
+    public int getMainViewHeightWithFoldingMark() {
         int height = getHeight();
         if (getNodeView().getModel().isFolded()) {
             height += getZoomedFoldingSymbolHalfWidth();

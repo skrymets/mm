@@ -29,10 +29,10 @@ public class NodeGeometryService {
             if (byChildren && cloud != null) {
                 additionalDistanceForConvexHull += CloudView.getAdditionalHeigth(cloud, nodeView) / 5;
             }
-            final int x = transX + nodeView.getContent().getX() - nodeView.getDeltaX();
-            final int y = transY + nodeView.getContent().getY() - nodeView.getDeltaY();
-            final int width = nodeView.getMainViewWidthWithFoldingMark();
-            int heightWithFoldingMark = nodeView.getMainViewHeightWithFoldingMark();
+            final int x = transX + nodeView.getContent().getX() - nodeView.getMainView().getDeltaX();
+            final int y = transY + nodeView.getContent().getY() - nodeView.getMainView().getDeltaY();
+            final int width = nodeView.getMainView().getMainViewWidthWithFoldingMark();
+            int heightWithFoldingMark = nodeView.getMainView().getMainViewHeightWithFoldingMark();
             final int height = Math.max(heightWithFoldingMark, nodeView.getContent().getHeight());
             inList.addLast(new Point(-additionalDistanceForConvexHull + x, -additionalDistanceForConvexHull + y));
             inList.addLast(new Point(-additionalDistanceForConvexHull + x, additionalDistanceForConvexHull + y + height));
