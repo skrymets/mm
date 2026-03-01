@@ -82,7 +82,6 @@ public class ImportWizard {
                 log.trace("looking for plugins in {}", key);
                 foundPlugins.add(key);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 log.error(e.getLocalizedMessage(), e);
             }
             if (classPathFile.exists()) {

@@ -52,7 +52,6 @@ public class BrowseToolBar extends JToolBar {
                 c.load(new URL(urlText));
             } catch (Exception e1) {
                 log.error(e1.getLocalizedMessage(), e1);
-                // FIXME: Give a good error message.
                 c.getController().errorMessage(e1);
             }
         });

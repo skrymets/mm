@@ -41,9 +41,6 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
 
     protected List<String> possibleValues;
 
-    /**
-     * @param pTranslator TODO
-     */
     public ComboProperty(String description, String label, String[] possibles,
                          TextTranslator pTranslator) {
         super();

@@ -305,7 +305,5 @@ public class ArrowLinkView {
      *
      */
     public void changeInclination(int originX, int originY, int newX, int newY) {
-        // TODO Auto-generated method stub
-
     }
 }

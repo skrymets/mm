@@ -69,7 +69,6 @@ public class BrowseHookFactory extends HookFactoryAdapter {
     }
 
     public List<String> getHookMenuPositions(String hookName) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -83,7 +82,6 @@ public class BrowseHookFactory extends HookFactoryAdapter {
      * @see freemind.extensions.HookFactory#getRegistrations()
      */
     public List<RegistrationContainer> getRegistrations() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -93,7 +91,6 @@ public class BrowseHookFactory extends HookFactoryAdapter {
      * @see freemind.extensions.HookFactory#getPluginBaseClass(java.lang.String)
      */
     public Object getPluginBaseClass(String hookName) {
-        // TODO Auto-generated method stub
         return null;
     }
 

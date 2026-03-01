@@ -56,10 +56,6 @@ import java.util.List;
  * @author foltin
  */
 public class OptionPanel implements TextTranslator {
-    // TODO: Cancel and windowClose => Are you sure, or save.
-    // FIXME: key dialog
-    // FIXME: Translate me and html
-
     private static final String TOOLTIP_EXT = ".tooltip";
 
     private static final Color MARKED_BUTTON_COLOR = Color.BLUE;
@@ -483,13 +479,7 @@ public class OptionPanel implements TextTranslator {
         controls.add(new NextLineProperty());
         controls.add(new StringProperty(null, "userproperties")); // user.properties
 
-        // FIXME: Remove autoproperties from Freemind.
-        // controls.add(new StringProperty(null, "autoproperties")); //
-        // auto.properties
         controls.add(new StringProperty(null, "patternsfile")); // patterns.xml
-        // FIXME: Which one? controls.add(new StringProperty(
-        // "The URL of the documentation mindmap (.mm)", "docmapurl")); //
-        // ./doc/freemind.mm
 
         // replaced by browsemode_initial_map?? (See Controller,
         // DocumentationAction).

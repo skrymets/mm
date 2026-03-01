@@ -214,7 +214,6 @@ public class MindMapMapModel extends MapAdapter {
         boolean result;
         synchronized (this) {
             result = saveInternal(file, false);
-            // TODO: Set only, when ok?
             if (result) {
                 setFileTime();
             }
@@ -443,7 +442,7 @@ public class MindMapMapModel extends MapAdapter {
                 lockedSemaphoreFile.delete();
                 lockedSemaphoreFile = null;
             }
-        } // this may fail, TODO: ensure real deletion
+        }
 
         public synchronized void releaseTimer() {
             if (lockTimer != null) {

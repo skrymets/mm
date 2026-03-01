@@ -117,9 +117,6 @@ public class DefaultFilter implements Filter {
                 : getNearestVisibleParent(selectedNode.getParentView());
     }
 
-    /**
-     * @param c TODO
-     */
     private boolean filterChildren(MindMapNode parent, Controller c, boolean isAncestorSelected, boolean isAncestorEclipsed) {
         ListIterator<MindMapNode> iterator = parent.childrenUnfolded();
         boolean isDescendantSelected = false;

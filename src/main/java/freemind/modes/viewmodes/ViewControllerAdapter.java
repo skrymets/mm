@@ -69,7 +69,6 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
     }
 
     public boolean extendSelection(MouseEvent e) {
-        // FIXME: Remove double code
         NodeView newlySelectedNodeView = ((MainView) e.getComponent())
                 .getNodeView();
         // MindMapNode newlySelectedNode = newlySelectedNodeView.getModel();

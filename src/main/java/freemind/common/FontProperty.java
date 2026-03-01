@@ -41,9 +41,6 @@ public class FontProperty extends PropertyBean implements PropertyControl {
 
     private final String[] mAvailableFontFamilyNames;
 
-    /**
-     * TODO TODO
-     */
     public FontProperty(String description, String label,
                         TextTranslator pTranslator) {
         super();

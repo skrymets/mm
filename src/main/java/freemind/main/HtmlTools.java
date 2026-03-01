@@ -109,9 +109,6 @@ public class HtmlTools {
         public final boolean mIsTag;
         public boolean mIsAlreadyAppended = false;
 
-        /**
-         * @param pIsTag TODO
-         */
         public IndexPair(int pOriginalStart, int pOriginalEnd,
                          int pReplacedStart, int pReplacedEnd, boolean pIsTag) {
             super();

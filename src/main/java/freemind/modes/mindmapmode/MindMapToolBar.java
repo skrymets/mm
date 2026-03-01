@@ -80,17 +80,10 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         fonts.setFocusable(false);
         size = new FreeMindComboBox(sizes);
         size.setFocusable(false);
-        // TODO: this is super-dirty, why doesn't the toolbar know the
-        // model?
-        // fc, 27.8.2004: I don't understand, why the ignore type is
-        // resetted here.
-        // let's see: fontFamily_IgnoreChangeEvent = false;
         ItemListener fontsListener = e -> {
             if (e.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
-            // TODO: this is super-dirty, why doesn't the toolbar know the
-            // model?
             if (fontFamily_IgnoreChangeEvent) {
                 // fc, 27.8.2004: I don't understand, why the ignore type is
                 // resetted here.
@@ -104,20 +97,12 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         fonts.addItemListener(fontsListener);
         // System.err.println("ce:"+e);
         // change the font size
-        // TODO: this is super-dirty, why doesn't the toolbar know the
-        // model?
-        // fc, 27.8.2004: I don't understand, why the ignore type is
-        // resetted here.
-        // let's see: fontSize_IgnoreChangeEvent = false;
-        // call action:
         ItemListener sizeListener = e -> {
             // System.err.println("ce:"+e);
             if (e.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
             // change the font size
-            // TODO: this is super-dirty, why doesn't the toolbar know the
-            // model?
             if (fontSize_IgnoreChangeEvent) {
                 // fc, 27.8.2004: I don't understand, why the ignore type is
                 // resetted here.

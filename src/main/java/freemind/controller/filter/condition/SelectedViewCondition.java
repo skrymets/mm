@@ -40,7 +40,6 @@ public class SelectedViewCondition implements Condition {
 
     public SelectedViewCondition() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public String toString() {

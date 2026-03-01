@@ -327,7 +327,7 @@ public interface MindMapNode extends MutableTreeNode {
      * @param writer       the writer to output XML to
      * @param doc          the DOM Document used to create elements
      * @param registry     the link registry for resolving links
-     * @param saveHidden   TODO: Seems not to be used. Remove or fill with live.
+     * @param saveHidden   whether to save hidden nodes
      * @param saveChildren if true, the save recurses to all of the nodes children.
      */
     Element save(Writer writer, Document doc, MindMapLinkRegistry registry,

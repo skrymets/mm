@@ -192,23 +192,17 @@ public class FreeMindMainMock implements FreeMindMain {
     }
 
     public String getAdjustableProperty(String pLabel) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public void setDefaultProperty(String pKey, String pValue) {
-        // TODO Auto-generated method stub
-
     }
 
     public JSplitPane insertComponentIntoSplitPane(JComponent pParameter) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public void removeSplitPane() {
-        // TODO Auto-generated method stub
-
     }
 
     public JComponent getContentComponent() {
@@ -221,8 +215,6 @@ public class FreeMindMainMock implements FreeMindMain {
 
     public void registerStartupDoneListener(
             StartupDoneListener pStartupDoneListener) {
-        // TODO Auto-generated method stub
-
     }
 
     public List getLoggerList() {

@@ -107,9 +107,7 @@ public class BrowseMapModel extends MapAdapter {
      * @see freemind.model.MindMap#getXml(java.io.Writer)
      */
     public void getXml(Writer fileout) {
-        // nothing.
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for browse mode.");
     }
 
     /*
@@ -118,9 +116,7 @@ public class BrowseMapModel extends MapAdapter {
      * @see freemind.model.MindMap#getFilteredXml(java.io.Writer)
      */
     public void getFilteredXml(Writer fileout) {
-        // nothing.
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for browse mode.");
     }
 
 
@@ -146,7 +142,6 @@ public class BrowseMapModel extends MapAdapter {
 
     public ArrowLinkTarget createArrowLinkTarget(NodeAdapter source,
                                                  NodeAdapter target) {
-        // FIXME: Need an implementation here
         return null;
     }
 

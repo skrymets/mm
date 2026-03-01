@@ -467,10 +467,7 @@ class MindMapHTMLWriter {
 
         boolean treatChildrenAsParagraph = false;
         for (ListIterator<MindMapNode> e = model.sortedChildrenUnfolded(); e.hasNext(); ) {
-            if (e.next().toString().length() > 100) { // TODO:
-                // replace
-                // heuristic
-                // constant
+            if (e.next().toString().length() > 100) {
                 treatChildrenAsParagraph = true;
                 break;
             }

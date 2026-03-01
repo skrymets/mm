@@ -100,9 +100,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     public ControllerAdapter(Mode mode) {
         this.setMode(mode);
         // for updates of nodes:
-        // FIXME
-        // do not associate each new ControllerAdapter
-        // with the only one application viewport
         // DropTarget dropTarget = new DropTarget(getFrame().getViewport(),
         // new FileOpener());
     }
@@ -117,7 +114,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * You _must_ implement this if you use one of the following actions:
      * OpenAction, NewMapAction.
      *
-     * @param modeController TODO
      */
     public MapAdapter newModel(ModeController modeController) {
         throw new java.lang.UnsupportedOperationException();
@@ -289,8 +285,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         mNodeLifetimeListeners.add(listener);
         if (pFireCreateEvent) {
             // call create node for all:
-            // TODO: fc, 10.2.08: this event goes to all listeners. It should be for
-            // the new listener only?
             fireRecursiveNodeCreateEvent(getRootNode());
         }
     }

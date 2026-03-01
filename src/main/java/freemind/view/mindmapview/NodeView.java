@@ -28,8 +28,7 @@ import java.util.List;
 public class NodeView extends JComponent implements TreeModelListener {
 
     public void setFocusCycleRoot(boolean pFocusCycleRoot) {
-        // FIXME: On purpose removed. test this!
-        // super.setFocusCycleRoot(pFocusCycleRoot);
+        // Intentionally not calling super - focus cycle root disabled for node views
     }
 
     static private int FOLDING_SYMBOL_WIDTH = -1;
@@ -380,7 +379,6 @@ public class NodeView extends JComponent implements TreeModelListener {
      * Returns the point the edge should start given the point of the child node
      * that should be connected.
      *
-     * @param targetView TODO
      */
     Point getMainViewOutPoint(NodeView targetView, Point destinationPoint) {
         final NodeViewLayout layoutManager = (NodeViewLayout) getLayout();
@@ -555,9 +553,6 @@ public class NodeView extends JComponent implements TreeModelListener {
         return sibling;
     }
 
-    /**
-     * @param startAfter TODO
-     */
     NodeView getFirst(Component startAfter, boolean leftOnly, boolean rightOnly) {
         final Component[] components = getComponents();
         for (Component component : components) {

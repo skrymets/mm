@@ -58,9 +58,6 @@ public interface MindMapArrowLink extends MindMapLink {
      */
     String getEndArrow();
 
-    /**
-     * @param map TODO
-     */
     void changeInclination(MapView map, int originX, int originY,
                            int deltaX, int deltaY);
 

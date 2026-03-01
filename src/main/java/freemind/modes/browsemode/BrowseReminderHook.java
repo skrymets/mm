@@ -56,7 +56,6 @@ public class BrowseReminderHook extends ReminderHookBase {
      * .MindMapNode, java.lang.String, java.lang.String)
      */
     protected void setToolTip(MindMapNode node, String key, String value) {
-        // FIXME: Duplicated code.
         node.setToolTip(key, value);
         nodeRefresh(node);
     }

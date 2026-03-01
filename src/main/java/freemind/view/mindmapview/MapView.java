@@ -1160,8 +1160,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             setViewPosition(viewPosition);
             setScrollMode(scrollMode);
         } else {
-            // FIXME: fc, 7.9.2011: Here, a viewport->repaint was previously.
-            // Test if really needed.
             repaint();
         }
         if (nodeToBeVisible != null) {
@@ -1388,13 +1386,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
     }
 
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
-        // TODO:
-        // ask user for :
-        // - center in page (in page format ?)
-        // - print zoom or maximize (in page format ?)
-        // - print selection only
-        // remember those parameters from one session to another
-        // (as orientation & margin from pf)
 
         // User parameters
 

@@ -166,7 +166,6 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             markerColor = new JColorChooser();
             JButton okButton = getJOKButton();
             JButton cancelButton = getJCancelButton();
-            // FIXME: Example output of dates as list/text
             JLabel examplesLabel = getLabel("CalendarMarkings.Examples");
             mTextArea = new JTextArea();
             mTextArea.setEditable(false);

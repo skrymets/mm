@@ -57,7 +57,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-//FIXME: Reminder: more than once. (later)
 
 /**
  * @author foltin
@@ -455,9 +454,6 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
         // disposeDialog();
     }
 
-    /**
-     * @param pRemindAt TODO
-     */
     private void addHook(MindMapNode node, long pRemindAt) {
         // add the hook:
         Properties properties = new Properties();

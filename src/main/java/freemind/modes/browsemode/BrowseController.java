@@ -451,8 +451,6 @@ public class BrowseController extends ViewControllerAdapter {
      */
     @Override
     public void out(String pFormat) {
-        // TODO Auto-generated method stub
-
     }
 
 

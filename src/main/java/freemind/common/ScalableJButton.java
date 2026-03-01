@@ -57,7 +57,6 @@ public class ScalableJButton extends JButton implements ComponentListener {
 
     @Override
     public void componentResized(ComponentEvent pE) {
-//		// FIXME: This doesn't work in GridBagLayout and GroupLayout.
 //		if (mInitialHeight == 0) {
 //			mInitialHeight = getHeight();
 //		}

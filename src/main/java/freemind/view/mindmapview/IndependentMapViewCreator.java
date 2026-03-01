@@ -66,7 +66,6 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
             System.out.println("Export to " + outputFileName + " done.");
             System.exit(0);
         } catch (URISyntaxException | IOException e) {
-            // TODO Auto-generated catch block
             log.error(e.getLocalizedMessage(), e);
 
         }

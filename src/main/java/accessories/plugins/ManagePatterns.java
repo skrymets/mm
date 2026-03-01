@@ -45,7 +45,6 @@ public class ManagePatterns extends MindMapHookAdapter {
 //                File patternFile = getController().getFrame().getPatternsXML();
 //                StylePatternFactory.savePatterns(new FileWriter(patternFile), formatDialog.getPatternList());
 //                getMindMapController().loadPatterns(getMindMapController().getPatternsXML());
-//                // TODO: seems to be a bad hack:
 //                getMindMapController().getFrame().getFreeMindMenuBar().updateMenus(getMindMapController());
 //            } catch (Exception e) {
 //                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());

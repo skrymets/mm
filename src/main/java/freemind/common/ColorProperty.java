@@ -51,10 +51,6 @@ public class ColorProperty extends PropertyBean implements PropertyControl,
 
     private final TextTranslator mTranslator;
 
-    /**
-     * @param defaultColor TODO
-     * @param pTranslator  TODO
-     */
     public ColorProperty(String description, String label, String defaultColor,
                          TextTranslator pTranslator) {
         super();

@@ -535,7 +535,6 @@ public class PasteActor extends XmlActorAdapter {
      * If there was only one line to be pasted, return the pasted node, null
      * otherwise.
      *
-     * @param isLeft TODO
      */
     private MindMapNode pasteStringWithoutRedisplay(Transferable t,
                                                     MindMapNode parent, boolean asSibling, boolean isLeft)

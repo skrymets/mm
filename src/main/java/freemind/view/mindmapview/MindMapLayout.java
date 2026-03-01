@@ -86,9 +86,6 @@ public class MindMapLayout implements LayoutManager {
                 * calcYBorderSize(mapView) + preferredSize.height);
     }
 
-    /**
-     * @param map TODO
-     */
     private int calcYBorderSize(MapView map) {
         int yBorderSize;
         final int minBorderHeight = map.getZoomed(MindMapLayout.BORDER);

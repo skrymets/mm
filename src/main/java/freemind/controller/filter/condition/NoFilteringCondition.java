@@ -39,7 +39,6 @@ public class NoFilteringCondition implements Condition {
 
     private NoFilteringCondition() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public String toString() {

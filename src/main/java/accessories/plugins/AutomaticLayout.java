@@ -290,7 +290,6 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
                     mindMapController,
                     "accessories/plugins/AutomaticLayout.properties_StyleDialogTitle",
                     choice, null);
-            // FIXME: What's that? (fc, 8,4,2008).
             EventQueue.invokeLater(() -> {
                 if (mDialogIsShown)
                     return;

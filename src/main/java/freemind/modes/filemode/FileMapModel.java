@@ -109,8 +109,7 @@ public class FileMapModel extends MapAdapter {
      */
     public void getXml(Writer fileout) {
         // nothing.
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
     /*
@@ -120,8 +119,7 @@ public class FileMapModel extends MapAdapter {
      */
     public void getFilteredXml(Writer fileout) {
         // nothing.
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
     /* (non-Javadoc)
@@ -129,8 +127,7 @@ public class FileMapModel extends MapAdapter {
      */
     @Override
     public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
     /* (non-Javadoc)
@@ -138,8 +135,7 @@ public class FileMapModel extends MapAdapter {
      */
     @Override
     public EdgeAdapter createEdgeAdapter(NodeAdapter pNode) {
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
     /* (non-Javadoc)
@@ -147,8 +143,7 @@ public class FileMapModel extends MapAdapter {
      */
     @Override
     public CloudAdapter createCloudAdapter(NodeAdapter pNode) {
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
     /* (non-Javadoc)
@@ -157,8 +152,7 @@ public class FileMapModel extends MapAdapter {
     @Override
     public ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter pSource,
                                                    NodeAdapter pTarget) {
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
     /* (non-Javadoc)
@@ -167,8 +161,7 @@ public class FileMapModel extends MapAdapter {
     @Override
     public ArrowLinkTarget createArrowLinkTarget(NodeAdapter pSource,
                                                  NodeAdapter pTarget) {
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
     /* (non-Javadoc)
@@ -176,8 +169,7 @@ public class FileMapModel extends MapAdapter {
      */
     @Override
     public NodeAdapter createEncryptedNode(String pAdditionalInfo) {
-        // FIXME: Implement me if you need me.
-        throw new RuntimeException("Unimplemented method called.");
+        throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
 }

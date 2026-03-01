@@ -183,7 +183,6 @@ public class NodeNoteRegistration implements HookRegistration,
                 return;
             }
             boolean editorContentEmpty = true;
-            // // TODO: Save the style with the note.
             // StyleSheet styleSheet = noteViewerComponent.getDocument()
             // .getStyleSheet();
             // styleSheet.removeStyle("body");

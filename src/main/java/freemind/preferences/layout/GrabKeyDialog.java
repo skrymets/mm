@@ -50,7 +50,6 @@ public class GrabKeyDialog extends JDialog {
          *
          */
         public int getLength() {
-            // TODO Auto-generated method stub
             return 0;
         }
 
@@ -58,7 +57,6 @@ public class GrabKeyDialog extends JDialog {
          *
          */
         public void insert(int length, String string) {
-            // TODO Auto-generated method stub
 
         }
 
@@ -128,7 +126,7 @@ public class GrabKeyDialog extends JDialog {
     public GrabKeyDialog(FreeMindMain fmMain, Dialog parent,
                          KeyBinding binding, List<KeyBinding> allBindings, Buffer debugBuffer,
                          int modifierMask) {
-        super(parent, (/* FIXME: getText */("grab-key.title")), true);
+        super(parent, ("grab-key.title"), true);
         this.fmMain = fmMain;
         this.modifierMask = modifierMask;
         setTitle(getText("grab-key.title"));
@@ -234,8 +232,6 @@ public class GrabKeyDialog extends JDialog {
         setContentPane(content);
 
         new JLabel(debugBuffer == null ? (getText("grab-key.caption") + " " + binding.label)
-                // FIXME: getText("grab-key.caption")+new String[] {
-                // binding.label })
                 : (getText("grab-key.keyboard-test")));
 
         Box input = Box.createHorizontalBox();
@@ -265,7 +261,6 @@ public class GrabKeyDialog extends JDialog {
                 // show "remove" button
                 remove = new JButton((getText("grab-key.remove")));
                 remove.addActionListener(new ActionHandler());
-                // FIXME: REACTIVATE buttons.add(remove);
                 buttons.add(Box.createHorizontalStrut(12));
             }
         }
@@ -275,10 +270,7 @@ public class GrabKeyDialog extends JDialog {
         buttons.add(cancel);
         buttons.add(Box.createGlue());
 
-        // FIXME: REACTIVATE content.add(label);
         content.add(input);
-        // if(debugBuffer == null)
-        // FIXME: REACTIVATE content.add(assignedTo);
         content.add(buttons);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -325,8 +317,6 @@ public class GrabKeyDialog extends JDialog {
         if (kb != null)
             if (kb.isPrefix)
                 text = getText("grab-key.assigned-to.prefix") + " " + shortcut;
-                // FIXME: getText("grab-key.assigned-to.prefix")+
-                // new String[] { shortcut };
             else
                 text = kb.label;
 
@@ -334,9 +324,6 @@ public class GrabKeyDialog extends JDialog {
             ok.setEnabled(kb == null || !kb.isPrefix);
 
         assignedTo.setText((getText("grab-key.assigned-to") + " " + text));
-        // FIXME: assignedTo.setText(
-        // (getText("grab-key.assigned-to")+
-        // new String[] { text }));
     } // }}}
 
     // {{{ getKeyBinding() method
@@ -452,8 +439,7 @@ public class GrabKeyDialog extends JDialog {
             // keyString.append(' ');
 
             if (key.modifiers != null)
-                keyString.append(key.modifiers).append(' '); // TODO: plus ??
-            // .append('+');
+                keyString.append(key.modifiers).append(' ');
 
             if (key.input == ' ')
                 keyString.append("SPACE");

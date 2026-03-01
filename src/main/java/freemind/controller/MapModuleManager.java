@@ -48,7 +48,6 @@ import static java.util.Collections.swap;
  * The information exchange between controller and this class is managed by
  * oberser pattern (the controller observes changes to the map modules here).
  * <p>
- * TODO: Use an vector with the map modules ordered by the screen order.
  */
 public class MapModuleManager {
 
@@ -248,7 +247,6 @@ public class MapModuleManager {
         // there is no map with the given mode open. We have to create an empty
         // one?
         setMapModule(null, mode);
-        // FIXME: Is getting here an error? fc, 25.11.2005.
     }
 
     /**
@@ -307,8 +305,6 @@ public class MapModuleManager {
     public boolean close(boolean force, StringBuilder pRestorable) {
         // (DP) The mode controller does not close the map
         MapModule module = getMapModule();
-        // FIXME: This is not correct, as this class should not ask somebody.
-        // This class is only a list!
         boolean closingNotCancelled = module.getModeController().close(force, this);
 
         if (!closingNotCancelled) {

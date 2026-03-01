@@ -40,7 +40,6 @@ public class FontFamilyActor extends XmlActorAdapter {
      */
     public FontFamilyActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
-        // TODO Auto-generated constructor stub
     }
 
     public Class<FontNodeAction> getDoActionClass() {

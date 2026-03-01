@@ -329,7 +329,6 @@ public class FilterComposerDialog extends JDialog {
         }
 
         private void handleSavingException(Exception ex) {
-            // TODO Auto-generated method stub
 
         }
 
@@ -351,7 +350,6 @@ public class FilterComposerDialog extends JDialog {
         }
 
         private void handleLoadingException(Exception ex) {
-            // TODO Auto-generated method stub
 
         }
 
