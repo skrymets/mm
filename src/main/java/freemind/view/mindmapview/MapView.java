@@ -139,7 +139,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
     static boolean printOnWhiteBackground;
     static Color standardMapBackgroundColor;
-    static Color standardSelectColor;
+    public static Color standardSelectColor;
     public static Color standardSelectRectangleColor;
     public static Color standardNodeTextColor;
     public static boolean standardDrawRectangleForSelection;
@@ -679,7 +679,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
         return super.getPreferredSize();
     }
 
-    void revalidateSelecteds() {
+    public void revalidateSelecteds() {
         selectionService.revalidateSelecteds();
     }
 

@@ -25,7 +25,7 @@ import freemind.model.MindMapNode;
 import javax.swing.*;
 import java.awt.*;
 
-class NodeViewFactory {
+public class NodeViewFactory {
 
     private static class ContentPane extends JComponent {
         static private final LayoutManager layoutManager = new ContentPaneLayout();
@@ -99,14 +99,14 @@ class NodeViewFactory {
     private NodeViewFactory() {
     }
 
-    static NodeViewFactory getInstance() {
+    public static NodeViewFactory getInstance() {
         if (factory == null) {
             factory = new NodeViewFactory();
         }
         return factory;
     }
 
-    EdgeView getEdge(NodeView newView) {
+    public EdgeView getEdge(NodeView newView) {
         final int edgeStyle = newView.getModel().getEdge().getStyleAsInt();
 
         switch (edgeStyle) {
@@ -153,7 +153,7 @@ class NodeViewFactory {
     /**
      * Factory method which creates the right NodeView for the model.
      */
-    NodeView newNodeView(MindMapNode model, int position, MapView map, Container parent) {
+    public NodeView newNodeView(MindMapNode model, int position, MapView map, Container parent) {
         NodeView newView = new NodeView(model, position, map, parent);
 
         if (model.isRoot()) {
@@ -176,7 +176,7 @@ class NodeViewFactory {
         return newView;
     }
 
-    MainView newMainView(MindMapNode model) {
+    public MainView newMainView(MindMapNode model) {
         if (model.isRoot()) {
             return new RootMainView();
         }
@@ -195,7 +195,7 @@ class NodeViewFactory {
                 .onViewCreatedHook(newView);
     }
 
-    JComponent newContentPane(NodeView view) {
+    public JComponent newContentPane(NodeView view) {
         return new ContentPane();
     }
 }

@@ -7,6 +7,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapCloud;
 import freemind.preferences.FreemindPropertyListener;
+import freemind.view.mindmapview.services.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -62,15 +63,30 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     private int maxToolTipWidth;
 
+    @Getter
     private NodeView preferredChild;
     private JComponent contentPane;
 
     @Getter
     protected NodeMotionListenerView motionListenerView;
 
-    static final int SPACE_AROUND = 50;
+    public static final int SPACE_AROUND = 50;
 
     private NodeFoldingComponent mFoldingListener;
+
+    // Services
+    @Getter
+    private final NodeStyleService styleService;
+    @Getter
+    private final NodeGeometryService geometryService;
+    @Getter
+    private final NodeRenderingService renderingService;
+    @Getter
+    private final NodeUpdateService updateService;
+    @Getter
+    private final NodeNavigationService navigationService;
+    @Getter
+    private final NodeTreeSyncService treeSyncService;
 
     protected NodeView(MindMapNode model, int position, MapView map, Container parent) {
         final Resources resources = map.getViewFeedback().getResources();
@@ -93,10 +109,18 @@ public class NodeView extends JComponent implements TreeModelListener {
 
         parent.add(this, index);
 
+        // Initialize services
+        this.styleService = new NodeStyleService(this);
+        this.geometryService = new NodeGeometryService(this);
+        this.renderingService = new NodeRenderingService(this);
+        this.updateService = new NodeUpdateService(this, styleService);
+        this.navigationService = new NodeNavigationService(this);
+        this.treeSyncService = new NodeTreeSyncService(this);
+
         addFoldingListener();
     }
 
-    protected void addFoldingListener() {
+    public void addFoldingListener() {
         if (mFoldingListener == null && getModel().hasVisibleChilds() && !getModel().isRoot()) {
             mFoldingListener = new NodeFoldingComponent(this);
             add(mFoldingListener, getComponentCount() - 1);
@@ -105,7 +129,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         }
     }
 
-    protected void removeFoldingListener() {
+    public void removeFoldingListener() {
         if (mFoldingListener != null) {
             mFoldingListener.dispose();
             remove(mFoldingListener);
@@ -118,7 +142,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     }
 
 
-    void setMainView(MainView newMainView) {
+    public void setMainView(MainView newMainView) {
         if (mainView != null) {
             final Container c = mainView.getParent();
             int i;
@@ -261,14 +285,14 @@ public class NodeView extends JComponent implements TreeModelListener {
         return mainView.getText();
     }
 
-    protected int getMainViewWidthWithFoldingMark() {
+    public int getMainViewWidthWithFoldingMark() {
         return mainView.getMainViewWidthWithFoldingMark();
     }
 
     /**
      * get height including folding symbol
      */
-    protected int getMainViewHeightWithFoldingMark() {
+    public int getMainViewHeightWithFoldingMark() {
         return mainView.getMainViewHeightWithFoldingMark();
     }
 
@@ -384,7 +408,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * that should be connected.
      *
      */
-    Point getMainViewOutPoint(NodeView targetView, Point destinationPoint) {
+    public Point getMainViewOutPoint(NodeView targetView, Point destinationPoint) {
         final NodeViewLayout layoutManager = (NodeViewLayout) getLayout();
         Point out = layoutManager.getMainViewOutPoint(this, targetView,
                 destinationPoint);
@@ -394,7 +418,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     /**
      * Returns the Point where the InEdge should arrive the Node.
      */
-    Point getMainViewInPoint() {
+    public Point getMainViewInPoint() {
         final NodeViewLayout layoutManager = (NodeViewLayout) getLayout();
         Point in = layoutManager.getMainViewInPoint(this);
         return in;
@@ -440,7 +464,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return linkPoint;
     }
 
-    protected Point convertPointToMap(Point p) {
+    public Point convertPointToMap(Point p) {
         return PointUtils.convertPointToAncestor(this, p, getMap());
     }
 
@@ -468,7 +492,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * Scroll the window by height.
      */
     public NodeView getNextPage() {
-        // from root we cannot jump
+        // from root, we cannot jump
         if (getModel().isRoot()) {
             return this; // I'm root
         }
@@ -496,7 +520,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     /**
      * @return the position of the in-point of this node in view coordinates
      */
-    protected Point getInPointInMap() {
+    public Point getInPointInMap() {
         return convertPointToMap(getMainViewInPoint());
     }
 
@@ -557,7 +581,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return sibling;
     }
 
-    NodeView getFirst(Component startAfter, boolean leftOnly, boolean rightOnly) {
+    public NodeView getFirst(Component startAfter, boolean leftOnly, boolean rightOnly) {
         final Component[] components = getComponents();
         for (Component component : components) {
             if (startAfter != null) {
@@ -591,8 +615,8 @@ public class NodeView extends JComponent implements TreeModelListener {
         return getModel().isVisible();
     }
 
-    private NodeView getLast(Component startBefore, boolean leftOnly,
-                             boolean rightOnly) {
+    public NodeView getLast(Component startBefore, boolean leftOnly,
+                            boolean rightOnly) {
         final Component[] components = getComponents();
         for (int i = components.length - 1; i >= 0; i--) {
             if (startBefore != null) {
@@ -619,7 +643,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return null;
     }
 
-    LinkedList<NodeView> getLeft(boolean onlyVisible) {
+    public LinkedList<NodeView> getLeft(boolean onlyVisible) {
         LinkedList<NodeView> all = getChildrenViews();
         LinkedList<NodeView> left = new LinkedList<>();
         for (NodeView node : all) {
@@ -631,7 +655,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return left;
     }
 
-    LinkedList<NodeView> getRight(boolean onlyVisible) {
+    public LinkedList<NodeView> getRight(boolean onlyVisible) {
         LinkedList<NodeView> all = getChildrenViews();
         LinkedList<NodeView> right = new LinkedList<>();
         for (NodeView node : all) {
@@ -674,7 +698,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return sibling;
     }
 
-    protected NodeView getNextSiblingSingle() {
+    public NodeView getNextSiblingSingle() {
         LinkedList<NodeView> v = null;
         if (getParentView().getModel().isRoot()) {
             if (this.isLeft()) {
@@ -700,7 +724,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         return this;
     }
 
-    protected NodeView getPreviousSiblingSingle() {
+    public NodeView getPreviousSiblingSingle() {
         LinkedList<NodeView> v = null;
         if (getParentView().getModel().isRoot()) {
             if (this.isLeft()) {
@@ -730,7 +754,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     // Update from Model
     //
 
-    void insert() {
+    public void insert() {
         ListIterator<MindMapNode> it = getModel().childrenFolded();
         while (it.hasNext()) {
             insert(it.next(), 0);
@@ -742,7 +766,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * attribute according to this view.
      */
 
-    NodeView insert(MindMapNode newNode, int position) {
+    public NodeView insert(MindMapNode newNode, int position) {
         NodeView newView = NodeViewFactory.getInstance().newNodeView(newNode, position, getMap(), this);
         newView.insert();
         return newView;
@@ -753,7 +777,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * is not yet removed. (So do not _really_ delete the model before the view
      * removed (it needs to stay in memory)
      */
-    void remove() {
+    public void remove() {
         for (NodeView nodeView : getChildrenViews()) {
             nodeView.remove();
         }
@@ -765,7 +789,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         mapView.removeViewer(getModel(), this); // Let the model know he is invisible
     }
 
-    void update() {
+    public void update() {
         updateStyle();
         if (!isContentVisible()) {
             // not visible at all
@@ -975,12 +999,12 @@ public class NodeView extends JComponent implements TreeModelListener {
         mainView.setForeground(color);
     }
 
-    boolean useSelectionColors() {
+    public boolean useSelectionColors() {
         return isSelected() && !MapView.standardDrawRectangleForSelection
                 && !mapView.isCurrentlyPrinting();
     }
 
-    void updateStyle() {
+    public void updateStyle() {
         if (mainView != null
                 && (mainView.getStyle().equals(model.getStyle()) || model
                 .isRoot())) {

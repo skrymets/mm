@@ -282,7 +282,7 @@ public abstract class MainView extends JLabel {
                 : xCoord < getSize().width * p;
     }
 
-    abstract String getStyle();
+    public abstract String getStyle();
 
     abstract int getAlignment();
 
@@ -299,7 +299,7 @@ public abstract class MainView extends JLabel {
         return gap + (isLeft && !getNodeView().isRoot() ? 0 : getIconWidth());
     }
 
-    protected int getIconWidth() {
+    public int getIconWidth() {
         final Icon icon = getIcon();
         if (icon == null) {
             return 0;

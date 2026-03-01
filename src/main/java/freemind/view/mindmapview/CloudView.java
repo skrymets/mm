@@ -47,7 +47,7 @@ public class CloudView {
 
     static private final CloudView heightCalculator = new CloudView(null, null);
 
-    protected CloudView(MindMapCloud cloudModel, NodeView source) {
+    public CloudView(MindMapCloud cloudModel, NodeView source) {
         this.cloudModel = cloudModel;
         this.source = source;
     }

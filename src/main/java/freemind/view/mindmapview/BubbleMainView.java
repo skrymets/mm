@@ -117,7 +117,7 @@ class BubbleMainView extends MainView {
      *
      * @see freemind.view.mindmapview.NodeView#getStyle()
      */
-    String getStyle() {
+    public String getStyle() {
         return MindMapNode.STYLE_BUBBLE;
     }
 
