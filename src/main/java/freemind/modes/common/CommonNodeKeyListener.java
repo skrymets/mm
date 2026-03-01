@@ -110,7 +110,7 @@ public class CommonNodeKeyListener implements KeyListener {
             case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_PAGE_UP:
             case KeyEvent.VK_PAGE_DOWN:
-                c.getView().move(e);
+                c.getView().getNavigationService().move(e);
                 return;
 
             case KeyEvent.VK_HOME:
@@ -153,7 +153,7 @@ public class CommonNodeKeyListener implements KeyListener {
             doMove = true;
         }
         if (doMove) {
-            c.getView().move(e);
+            c.getView().getNavigationService().move(e);
             e.consume();
         }
     }

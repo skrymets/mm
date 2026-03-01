@@ -887,7 +887,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                         new Object[]{restoreable.replaceAll(".*/", "")});
                 try {
                     controller.getLastOpenedList().open(restoreable);
-                    controller.getModeController().getView().moveToRoot();
+                    controller.getModeController().getView().getNavigationService().moveToRoot();
                     fileLoaded = true;
                 } catch (Exception e) {
                     log.error(e.getLocalizedMessage(), e);

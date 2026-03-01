@@ -425,19 +425,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     }
 
     //
-    // Node Navigation
-    //
-
-    public void move(KeyEvent e) {
-        navigationService.move(e);
-    }
-
-    public void moveToRoot() {
-        navigationService.moveToRoot();
-    }
-
-
-    //
     // get/set methods
     //
 

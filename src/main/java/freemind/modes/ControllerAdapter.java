@@ -342,7 +342,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         ModeController newModeController = getMode().createModeController();
         MapAdapter newModel = newModel(newModeController);
         newMap(newModel, newModeController);
-        newModeController.getView().moveToRoot();
+        newModeController.getView().getNavigationService().moveToRoot();
         return newModeController;
     }
 
@@ -413,10 +413,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 modeController.select(sel, selected);
             } catch (Exception e) {
                 log.error(e.getLocalizedMessage(), e);
-                modeController.getView().moveToRoot();
+                modeController.getView().getNavigationService().moveToRoot();
             }
         } else {
-            modeController.getView().moveToRoot();
+            modeController.getView().getNavigationService().moveToRoot();
         }
     }
 

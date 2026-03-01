@@ -572,7 +572,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
 
     public void moveToRoot() {
         if (getMapModule() != null) {
-            getView().moveToRoot();
+            getView().getNavigationService().moveToRoot();
         }
     }
 
