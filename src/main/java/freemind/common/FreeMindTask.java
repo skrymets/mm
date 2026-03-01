@@ -20,6 +20,7 @@
 
 package freemind.common;
 
+import freemind.main.Resources;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -65,11 +66,11 @@ public abstract class FreeMindTask extends Thread {
         public final Object[] mProgressParameters;
     }
 
-    public FreeMindTask(RootPaneContainer pRootPaneContainer, int pAmountOfSteps, String pName) {
+    public FreeMindTask(RootPaneContainer pRootPaneContainer, int pAmountOfSteps, String pName, Resources resources) {
         super(pName);
         mFrame = pRootPaneContainer;
         mAmountOfSteps = pAmountOfSteps;
-        mProgressMonitor = new FreeMindProgressMonitor(getName());
+        mProgressMonitor = new FreeMindProgressMonitor(getName(), resources);
         mGlass = new JPanel(new GridLayout(0, 1));
         JLabel padding = new JLabel();
         mGlass.setOpaque(false);

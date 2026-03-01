@@ -96,7 +96,7 @@ public class ToolsTests extends FreeMindTestBase {
                 + "</richcontent>"
                 + "</node>" + "</node>" + "</map>";
         Reader updateReader = Tools.getUpdateReader(new StringReader(input),
-                MapAdapter.FREEMIND_VERSION_UPDATER_XSLT);
+                MapAdapter.FREEMIND_VERSION_UPDATER_XSLT, Resources.getInstance());
         String result = Tools.getFile(updateReader);
         result = HtmlTools.unicodeToHTMLUnicodeEntity(result, true);
         System.out.println(result);
@@ -192,7 +192,7 @@ public class ToolsTests extends FreeMindTestBase {
 
     protected void testCorrectRelativism(File input, String expected,
                                          File mapFile) throws MalformedURLException {
-        String relative = Tools.fileToRelativeUrlString(input, mapFile);
+        String relative = Tools.fileToRelativeUrlString(input, mapFile, Resources.getInstance());
         assertEquals("Correct relative result", expected, relative);
         URL u = new URL(Tools.fileToUrl(mapFile), relative);
         URL e = Tools.fileToUrl(input);
@@ -228,7 +228,7 @@ public class ToolsTests extends FreeMindTestBase {
                 + "<node CREATED=\"1337970913625\" ID=\"ID_1753131052\" MODIFIED=\"1337970913625\" TEXT=\"Neue Mindmap\"/>"
                 + "</map>";
         Reader updateReader = Tools.getUpdateReader(new StringReader(input),
-                MapAdapter.FREEMIND_VERSION_UPDATER_XSLT);
+                MapAdapter.FREEMIND_VERSION_UPDATER_XSLT, Resources.getInstance());
         String output = Tools.getFile(updateReader);
         assertEquals("Correct output",
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + input,

@@ -21,6 +21,7 @@ package freemind.main;
 
 import com.inet.jortho.SpellChecker;
 import freemind.controller.Controller;
+import freemind.controller.StructuredMenuHolder;
 import freemind.controller.color.JColorCombo;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
@@ -32,6 +33,7 @@ import freemind.extensions.HookDescriptorBase;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindIcon;
 import freemind.modes.ModeController;
+import freemind.view.ImageFactory;
 import freemind.view.MapModule;
 import freemind.view.StatusBarPanel;
 import freemind.view.mindmapview.MapView;
@@ -237,6 +239,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private final FreeMindEventBus eventBus;
 
+    private Resources resources;
+
     @Inject
     public FreeMind(@Named("default") Properties defaultPreferences,
                     @Named("user") Properties userPreferences,
@@ -251,6 +255,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
         freeMindCommon = new FreeMindCommon(this);
         Resources.createInstance(this);
+        this.resources = Resources.getInstance();
     }
 
     private void printEnvironmentInfo() {
@@ -312,13 +317,16 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         // Layout everything
         getContentPane().setLayout(new BorderLayout());
 
-        controller = new Controller(this, Resources.getInstance());
+        controller = new Controller(this, resources);
         controller.init();
         controller.getMapModuleManager().setEventBus(eventBus);
 
-        JColorCombo.initColors(Resources.getInstance());
-        MindIcon.init(Resources.getInstance());
-        HookDescriptorBase.init(Resources.getInstance());
+        SwingUtils.init(resources);
+        JColorCombo.initColors(resources);
+        MindIcon.init(resources);
+        HookDescriptorBase.init(resources);
+        StructuredMenuHolder.init(resources);
+        ImageFactory.init(resources);
 
         feedback.increase("FreeMind.progress.settingPreferences", null);
         // add a listener for the controller, resource bundle:
@@ -605,7 +613,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             }
 
             IFreeMindSplash splash = null;
-            editServerService = new EditServerService(this);
+            editServerService = new EditServerService(this, resources);
             editServerService.checkForAnotherInstance(args);
             editServerService.initServer();
             final FeedBack feedBack;
@@ -716,7 +724,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         // Create the scroll pane
         scrollPane = new MapView.ScrollPane();
 
-        if (Resources.getInstance().getBoolProperty("no_scrollbar")) {
+        if (resources.getBoolProperty("no_scrollbar")) {
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
             scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         } else {
@@ -728,7 +736,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
         statusMessageDisplayTimer = new Timer(TIME_TO_DISPLAY_MESSAGES, this);
 
-        boolean shouldUseTabbedPane = Resources.getInstance().getBoolProperty(RESOURCES_USE_TABBED_PANE);
+        boolean shouldUseTabbedPane = resources.getBoolProperty(RESOURCES_USE_TABBED_PANE);
 
         if (shouldUseTabbedPane) {
             // tabbed panes eat control up. This is corrected here.

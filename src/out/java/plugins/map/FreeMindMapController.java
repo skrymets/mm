@@ -2661,7 +2661,7 @@ public class FreeMindMapController extends JMapController implements
         private Place[] mPlaces;
 
         public AddSearchResultsToMapTask(int[] pSelectedRows) {
-            super(mMapDialog, pSelectedRows.length, MAP_DIALOG_PROGRESS_MESSAGE);
+            super(mMapDialog, pSelectedRows.length, MAP_DIALOG_PROGRESS_MESSAGE, Resources.getInstance());
             // deep copy
             mPlaces = new Place[pSelectedRows.length];
             for (int i = 0; i < pSelectedRows.length; i++) {

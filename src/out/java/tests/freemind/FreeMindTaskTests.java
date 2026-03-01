@@ -46,7 +46,7 @@ public class FreeMindTaskTests extends FreeMindTestBase {
         private static final int AMOUNT_OF_TIME = 10;
 
         public TestTask(JFrame pFrame) {
-            super(pFrame, AMOUNT_OF_TIME, "TestTask");
+            super(pFrame, AMOUNT_OF_TIME, "TestTask", Resources.getInstance());
         }
 
         private int i = AMOUNT_OF_TIME;

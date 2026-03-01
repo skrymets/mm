@@ -43,13 +43,6 @@ public class FreeMindProgressMonitor extends JDialog {
     private final Resources mResources;
     protected boolean mCanceled = false;
 
-    /**
-     *
-     */
-    public FreeMindProgressMonitor(String pTitle) {
-        this(pTitle, Resources.getInstance());
-    }
-
     public FreeMindProgressMonitor(String pTitle, Resources resources) {
         mResources = resources;
         setTitle(getString(pTitle));
@@ -120,7 +113,7 @@ public class FreeMindProgressMonitor extends JDialog {
     public static void main(String[] args) throws InterruptedException {
         FreeMindMainMock mock = new FreeMindMainMock();
         Resources.createInstance(mock);
-        FreeMindProgressMonitor progress = new FreeMindProgressMonitor("title");
+        FreeMindProgressMonitor progress = new FreeMindProgressMonitor("title", Resources.getInstance());
         progress.setVisible(true);
         for (int i = 0; i < 10; i++) {
             boolean canceled = progress.showProgress(i, 10, "inhalt {0}",

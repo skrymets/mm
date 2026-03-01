@@ -138,7 +138,7 @@ public class FileManagementService {
         int returnVal = chooser.showOpenDialog(controller.getFrame().getContentPane());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             input = chooser.getSelectedFile();
-            relative = Tools.fileToRelativeUrlString(input, controller.getMap().getFile());
+            relative = Tools.fileToRelativeUrlString(input, controller.getMap().getFile(), controller.getResources());
         }
         return relative;
     }

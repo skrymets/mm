@@ -38,8 +38,14 @@ import java.lang.reflect.InvocationTargetException;
 @Slf4j
 public final class SwingUtils {
 
+    private static Resources resources;
+
     private SwingUtils() {
         // utility class
+    }
+
+    public static void init(Resources res) {
+        resources = res;
     }
 
     // ---- Font methods ----
@@ -274,7 +280,7 @@ public final class SwingUtils {
     }
 
     public static int getScalingFactorPlain() {
-        return Resources.getInstance().getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
+        return resources.getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
     }
 
     // ---- Event methods ----

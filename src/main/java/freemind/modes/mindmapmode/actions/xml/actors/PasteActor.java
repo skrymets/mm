@@ -177,7 +177,7 @@ public class PasteActor extends XmlActorAdapter {
             for (File file : fileList) {
                 MindMapNode node = getExMapFeedback().newNode(file.getName(), target.getMap());
                 node.setLeft(isLeft);
-                node.setLink(Tools.fileToRelativeUrlString(file, getExMapFeedback().getMap().getFile()));
+                node.setLink(Tools.fileToRelativeUrlString(file, getExMapFeedback().getMap().getFile(), getExMapFeedback().getResources()));
                 insertNodeInto((MindMapNodeModel) node, target, asSibling, isLeft, false);
                 // addUndoAction(node);
             }

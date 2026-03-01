@@ -36,9 +36,11 @@ import java.awt.event.InputEvent;
 public class NodeDragListener implements DragGestureListener {
 
     private final Controller c;
+    private final Resources resources;
 
-    public NodeDragListener(Controller controller) {
+    public NodeDragListener(Controller controller, Resources resources) {
         c = controller;
+        this.resources = resources;
     }
 
     public Cursor getCursorByAction(int dragAction) {
@@ -53,7 +55,7 @@ public class NodeDragListener implements DragGestureListener {
     }
 
     public void dragGestureRecognized(DragGestureEvent e) {
-        if (!Resources.getInstance().getBoolProperty("draganddrop"))
+        if (!resources.getBoolProperty("draganddrop"))
             return;
 
         MindMapNode node = ((MainView) e.getComponent()).getNodeView()

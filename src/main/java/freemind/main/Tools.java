@@ -136,13 +136,13 @@ public class Tools {
      * @param pMapFile the file, that input is made relative to
      * @return in case of trouble the absolute path.
      */
-    public static String fileToRelativeUrlString(File input, File pMapFile) {
+    public static String fileToRelativeUrlString(File input, File pMapFile, Resources resources) {
         URL link;
         String relative;
         try {
             link = Tools.fileToUrl(input);
             relative = link.toString();
-            if ("relative".equals(Resources.getInstance().getProperty("links"))) {
+            if ("relative".equals(resources.getProperty("links"))) {
                 // Create relative URL
                 relative = Tools.toRelativeURL(Tools.fileToUrl(pMapFile), link);
             }
@@ -233,7 +233,7 @@ public class Tools {
      * Creates a reader that pipes the input file through a XSLT-Script that
      * updates the version to the current.
      */
-    public static Reader getUpdateReader(Reader pReader, String xsltScript) throws IOException {
+    public static Reader getUpdateReader(Reader pReader, String xsltScript, Resources resources) throws IOException {
         StringWriter writer = null;
         InputStream inputStream = null;
 
@@ -243,7 +243,7 @@ public class Tools {
         try {
             // try to convert map with xslt:
             URL updaterUrl = null;
-            updaterUrl = Resources.getInstance().getResource(xsltScript);
+            updaterUrl = resources.getResource(xsltScript);
             if (updaterUrl == null) {
                 throw new IllegalArgumentException(xsltScript + " not found.");
             }

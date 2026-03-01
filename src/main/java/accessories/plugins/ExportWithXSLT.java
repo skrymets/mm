@@ -336,7 +336,7 @@ public class ExportWithXSLT extends ExportHook {
             // set parameter:
             // relative directory <filename>_files
             trans.setParameter("destination_dir", Tools.fileToRelativeUrlString(new File(resultFile.getAbsolutePath()
-                    + "_files/"), resultFile) + "/");
+                    + "_files/"), resultFile, getController().getResources()) + "/");
             trans.setParameter("area_code", areaCode);
             trans.setParameter("folding_type", getController().getFrame()
                     .getProperty("html_export_folding"));

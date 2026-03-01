@@ -90,11 +90,7 @@ public class XmlBindingTools {
 
     public WindowConfigurationStorage decorateDialog(Controller controller, JDialog dialog, String windowPreferenceStorageProperty) {
         String marshalled = controller.getProperty(windowPreferenceStorageProperty);
-        return decorateDialog(marshalled, dialog);
-    }
-
-    public WindowConfigurationStorage decorateDialog(String marshalled, JDialog dialog) {
-        return decorateDialog(marshalled, dialog, Resources.getInstance());
+        return decorateDialog(marshalled, dialog, controller.getResources());
     }
 
     public WindowConfigurationStorage decorateDialog(String marshalled, JDialog dialog, Resources resources) {

@@ -38,6 +38,11 @@ import java.net.URLConnection;
 @Slf4j
 public class ImageFactory {
     private static ImageFactory mInstance = null;
+    private static Resources resources;
+
+    public static void init(Resources res) {
+        resources = res;
+    }
 
     public static ImageFactory getInstance() {
         if (mInstance == null) {
@@ -88,7 +93,7 @@ public class ImageFactory {
     }
 
     public ImageIcon createIcon(String pFilePath) {
-        return createIcon(pFilePath, Resources.getInstance());
+        return createIcon(pFilePath, resources);
     }
 
     public ImageIcon createIcon(String pFilePath, Resources resources) {

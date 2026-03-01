@@ -58,6 +58,11 @@ public class StructuredMenuHolder {
 
     private int mIndent;
     private static ImageIcon sSelectedIcon;
+    private static Resources resources;
+
+    public static void init(Resources res) {
+        resources = res;
+    }
 
     public StructuredMenuHolder() {
 
@@ -65,7 +70,7 @@ public class StructuredMenuHolder {
         List<String> order = new ArrayList<>();
         menuMap.put(ORDER_NAME, order);
         if (sSelectedIcon == null) {
-            sSelectedIcon = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource(
+            sSelectedIcon = freemind.view.ImageFactory.getInstance().createIcon(resources.getResource(
                     SELECTED_ICON_PATH));
         }
 
@@ -334,7 +339,7 @@ public class StructuredMenuHolder {
         public MenuItemAdder(JMenu pMenuItem) {
             this.myMenuItem = pMenuItem;
             this.mBaseMenuItem = myMenuItem;
-            mAmountOfVisibleMenuItems = Resources.getInstance().getIntProperty(AMOUNT_OF_VISIBLE_MENU_ITEMS, 20);
+            mAmountOfVisibleMenuItems = resources.getIntProperty(AMOUNT_OF_VISIBLE_MENU_ITEMS, 20);
             listener = new StructuredMenuListener();
             pMenuItem.addMenuListener(listener);
         }
@@ -342,7 +347,7 @@ public class StructuredMenuHolder {
         public void addMenuItem(StructuredMenuItemHolder holder) {
             mItemCounter++;
             if (mItemCounter > mAmountOfVisibleMenuItems) {
-                String label = Resources.getInstance().getResourceString("StructuredMenuHolder.next");
+                String label = resources.getResourceString("StructuredMenuHolder.next");
                 if (mMenuCounter > 0) {
                     label += " " + mMenuCounter;
                 }

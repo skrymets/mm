@@ -45,11 +45,13 @@ public class EditServerService {
     private static final String PORT_FILE = "portFile";
 
     private final FreeMindMain frame;
+    private final Resources resources;
 
     private EditServer editServer;
 
-    public EditServerService(FreeMindMain frame) {
+    public EditServerService(FreeMindMain frame, Resources resources) {
         this.frame = frame;
+        this.resources = resources;
     }
 
     /**
@@ -115,7 +117,7 @@ public class EditServerService {
      */
     public String getPortFile() {
         if (editServer == null
-                && Resources.getInstance().getBoolProperty(FreeMind.RESOURCES_DON_T_OPEN_PORT)) {
+                && resources.getBoolProperty(FreeMind.RESOURCES_DON_T_OPEN_PORT)) {
             return null;
         }
         return frame.getFreemindDirectory() + File.separator + frame.getProperty(PORT_FILE);

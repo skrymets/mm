@@ -20,9 +20,6 @@
 
 package freemind.common;
 
-import freemind.main.FreeMind;
-import freemind.main.Resources;
-
 import javax.swing.*;
 
 /**
@@ -30,12 +27,9 @@ import javax.swing.*;
  * {@code @date} 18.06.2015
  */
 public class ScalableJTable extends JTable {
-    public ScalableJTable() {
-        this(Resources.getInstance());
-    }
 
-    public ScalableJTable(Resources resources) {
-        int scale = resources.getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
+    public ScalableJTable() {
+        int scale = freemind.main.SwingUtils.getScalingFactorPlain();
         setRowHeight(getRowHeight() * scale / 100);
     }
 }

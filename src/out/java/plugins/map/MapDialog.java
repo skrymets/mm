@@ -363,7 +363,7 @@ public class MapDialog extends MindMapHookAdapter implements
         mSearchFieldPanel.add(mSearchStringLabel, BorderLayout.WEST);
         mSearchFieldPanel.add(mSearchTerm, BorderLayout.CENTER);
         mSearchFieldPanel.add(clearButton, BorderLayout.EAST);
-        mResultTable = new ScalableJTable();
+        mResultTable = new ScalableJTable(Resources.getInstance());
         mTableOriginalBackgroundColor = mResultTable.getBackground();
 
         mResultTable

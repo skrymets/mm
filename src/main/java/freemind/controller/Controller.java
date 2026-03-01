@@ -204,7 +204,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         nodeMouseMotionListener = new NodeMouseMotionListener(this);
         nodeMotionListener = new NodeMotionListener(this);
         nodeKeyListener = new NodeKeyListener(this);
-        nodeDragListener = new NodeDragListener(this);
+        nodeDragListener = new NodeDragListener(this, resources);
         nodeDropListener = new NodeDropListener(this);
 
         mapMouseMotionListener = new MapMouseMotionListener(this);

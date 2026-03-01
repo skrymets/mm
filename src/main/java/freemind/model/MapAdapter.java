@@ -549,7 +549,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                     throw new IllegalArgumentException("We should not open the reader " + pReaderCreator);
                 }
             }
-            reader = Tools.getUpdateReader(pReaderCreator.createReader(), FREEMIND_VERSION_UPDATER_XSLT);
+            reader = Tools.getUpdateReader(pReaderCreator.createReader(), FREEMIND_VERSION_UPDATER_XSLT, mMapFeedback.getResources());
         }
         try {
             HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();
