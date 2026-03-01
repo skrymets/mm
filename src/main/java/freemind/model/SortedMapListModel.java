@@ -84,9 +84,6 @@ public class SortedMapListModel extends AbstractListModel implements
         return model.last();
     }
 
-    /**
-     *
-     */
     public int getIndexOf(Object o) {
         Iterator<Object> i = iterator();
         int count = -1;
@@ -98,13 +95,6 @@ public class SortedMapListModel extends AbstractListModel implements
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.model.SortedListModel#replace(java.lang.Object,
-     * java.lang.Object)
-     */
     public void replace(Object oldO, Object newO) {
         if (oldO.equals(newO))
             return;
@@ -115,12 +105,6 @@ public class SortedMapListModel extends AbstractListModel implements
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.model.SortedListModel#delete(java.lang.Object)
-     */
     public void remove(Object element) {
         if (model.remove(element)) {
             fireContentsChanged(this, 0, getSize());

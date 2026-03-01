@@ -28,7 +28,6 @@ package accessories.plugins;
 import accessories.plugins.util.html.ClickableImageCreator;
 import accessories.plugins.util.xslt.ExportDialog;
 import freemind.extensions.ExportHook;
-import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -236,7 +235,7 @@ public class ExportWithXSLT extends ExportHook {
             copyFromResource(MindIcon.getIconsPath(),
                     myIcon.getIconBaseFileName(), directoryName2);
         }
-        File iconDir = new File(Resources.getInstance().getFreemindDirectory(),
+        File iconDir = new File(getController().getResources().getFreemindDirectory(),
                 "icons");
         if (iconDir.exists()) {
             String[] userIconArray = iconDir.list((dir, name) -> name.matches(".*\\.png"));

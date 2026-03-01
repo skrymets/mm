@@ -19,9 +19,9 @@ public final class StringEncoder {
      * Encode a string, escaping any invalid XML characters.
      *
      * <p>
-     * Invalid characters are escaped using <code>&#92;uNNNN</code> notation
-     * like Java unicode characters, e.g., <code>0x001f</code> would appear in
-     * the encoded string as <code>&#92;u001f</code>. Backslash characters are
+     * Invalid characters are escaped using {@code &#92;uNNNN} notation
+     * like Java Unicode characters, e.g., {@code 0x001f} would appear in
+     * the encoded string as {@code &#92;u001f}. Backslash characters are
      * themselves encoded with a double backslash.
      *
      * @param value string to encode (possibly null)
@@ -67,7 +67,7 @@ public final class StringEncoder {
      *
      * <p>
      * The parsing is strict; any ill-formed backslash escape sequence (i.e.,
-     * not of the form <code>&#92;uNNNN</code> or <code>\\</code>) will cause an
+     * not of the form {@code &#92;uNNNN} or {@code \\}) will cause an
      * exception to be thrown.
      *
      * @param text string to decode (possibly null)
@@ -122,7 +122,7 @@ public final class StringEncoder {
                 value = (value << 4) | nibble;
             }
 
-            // Append decodec character
+            // Append decode character
             buf.append((char) value);
         }
         return buf.toString();
@@ -134,6 +134,6 @@ public final class StringEncoder {
      * @see <a href="http://www.w3.org/TR/REC-xml/#charsets">The XML 1.0 Specification</a>
      */
     public static boolean isValidXMLChar(char ch) {
-        return (ch >= ' ' && ch <= '\ud7ff') || (ch >= '\ue000' && ch <= '\ufffd');
+        return (ch >= 0x0020 && ch <= 0xD7FF) || (ch >= 0xE000 && ch <= 0xFFFD) || ch == 0x09 || ch == 0x0A || ch == 0x0D;
     }
 }

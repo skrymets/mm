@@ -21,7 +21,6 @@ package freemind.modes.common.actions;
 
 import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
@@ -37,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.ListIterator;
+
+import static freemind.view.ImageFactory.getInstance;
 
 @SuppressWarnings("serial")
 public class FindAction extends FreemindAction {
@@ -142,7 +143,7 @@ public class FindAction extends FreemindAction {
         mSearchField.selectAll();
         mSearchField.setMinimumSize(new Dimension(500, 14));
         contentPane.add(mSearchField, new GridBagConstraints(2, 0, 10, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
-        ImageIcon findImage = freemind.view.ImageFactory.getInstance().createIcon(controller.getResources().getResource("images/filefind_big.png"));
+        ImageIcon findImage = getInstance().createIcon(controller.getResources().getResource("images/filefind_big.png"));
         contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
         mFindInNotesTooBox = new JCheckBox(controller.getText("ExtendedFindDialog.find_search_in_notes_too"));
         mFindInNotesTooBox.setSelected(controller.getResources().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
@@ -164,11 +165,6 @@ public class FindAction extends FreemindAction {
 
     private String getSearchTermAsEscapedString(String messageText) {
         String searchTerm = messageText.startsWith("<html>") ? HtmlTools.toXMLEscapedText(getSearchTerm()) : getSearchTerm();
-        // Fix for
-        // https://sourceforge.net/tracker/?func=detail&aid=3200783&group_id=7118&atid=107118
-        // Patch
-        // https://sourceforge.net/tracker/?func=detail&aid=3276562&group_id=7118&atid=307118,
-        // thanks to the author
         searchTerm = searchTerm.replace("$", "\\$");
         return searchTerm;
     }

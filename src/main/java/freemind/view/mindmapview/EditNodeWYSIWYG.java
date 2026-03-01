@@ -104,7 +104,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 
         private SHTMLPanel createEditorPanel() {
             if (htmlEditorPanel == null) {
-                SHTMLPanel.setResources(new SimplyHtmlResources());
+                SHTMLPanel.setResources(new SimplyHtmlResources(getBase().getModeController().getResources()));
                 htmlEditorPanel = SHTMLPanel.createSHTMLPanel();
 //				htmlEditorPanel.getEditorPane().addMouseListener(new MouseAdapter () {
 //					public void mousePressed(MouseEvent e) {

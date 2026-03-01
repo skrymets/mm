@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-
 package freemind.modes;
 
 import freemind.main.ColorUtils;
@@ -38,9 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-// Daniel: this seems like a description of what pattern should do rather
-// than of that what it actually does.
-
 /**
  * THIS CLASS IS NO LONGER USED!
  * <p>
@@ -50,169 +27,71 @@ import java.util.Objects;
  * applied to all nodes that contain the String saved in "text".
  */
 public class StylePattern {
-    /**
-     * -- GETTER --
-     *  Get the value of name.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of name.
-     *
-     */
+    private static final String COLOR_ATTRIBUTE = "color";
+    private static final String BACKGROUND_COLOR_ATTRIBUTE = "background_color";
+    private static final String STYLE_ATTRIBUTE = "style";
+    private static final String ICON_ATTRIBUTE = "icon";
+    private static final String NAME_ATTRIBUTE = "name";
+    private static final String BOLD_ATTRIBUTE = "bold";
+    private static final String ITALIC_ATTRIBUTE = "italic";
+    private static final String FONT_SIZE_ATTRIBUTE = "size";
     @Setter
     @Getter
     private String name;
-    /**
-     * NOT USED: The idea of recursive is redundant. You have a possibility to
-     * select all nodes in a branch easily.
-     * -- SETTER --
-     *  Set the value of recursive.
-     *
 
-     */
     @Setter
     private boolean recursive;
 
-    /**
-     * -- GETTER --
-     *  Get the value of text.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of text.
-     *
-     */
     @Setter
     @Getter
     private String text;
 
-    /**
-     * -- GETTER --
-     *  Get the value of nodeColor.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of nodeColor.
-     *
-     */
     @Setter
     @Getter
     private Color nodeColor;
+
     @Setter
     @Getter
     private Color nodeBackgroundColor;
-    /**
-     * -- GETTER --
-     *  Get the value of nodeStyle.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of nodeStyle.
-     *
-     */
+
     @Setter
     @Getter
     private String nodeStyle;
 
-    /**
-     * -- GETTER --
-     * <p>
-     *
-     * -- SETTER --
-     *
-     */
     @Setter
     @Getter
     private String nodeFontFamily = null;
-    /**
-     * -- GETTER --
-     * <p>
-     *
-     * -- SETTER --
-     *
-     */
+
     @Setter
     @Getter
     private Integer nodeFontSize = null;
-    /**
-     * -- GETTER --
-     * <p>
-     *
-     * -- SETTER --
-     *
-     */
+
     @Setter
     @Getter
     private Boolean nodeFontBold = null;
-    /**
-     * -- GETTER --
-     * <p>
-     *
-     * -- SETTER --
-     *
-     */
+
     @Setter
     @Getter
     private Boolean nodeFontItalic = null;
 
-    /**
-     * -- GETTER --
-     *  Get the value of icon.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of icon.
-     *
-     */
     @Setter
     @Getter
     private MindIcon nodeIcon;
 
-    /**
-     * -- GETTER --
-     *  Get the value of edgeColor.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of edgeColor.
-     *
-     */
     @Setter
     @Getter
+
     private Color edgeColor;
-    /**
-     * -- GETTER --
-     *  Get the value of edgeStyle.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of edgeStyle.
-     *
-     */
     @Setter
     @Getter
+
     private String edgeStyle;
-    /**
-     * -- GETTER --
-     *  Get the value of edgeWidth.
-     * <p>
-     *
-     * -- SETTER --
-     *  Set the value of edgeWidth.
-     *
-     */
     @Setter
     @Getter
     private Integer edgeWidth;
 
-    /**
-     * Inhertitable patterns, fc, 3.12.2003.
-     */
     private StylePattern mChildrenStylePattern;
 
-    /**
-     * Empty constructor
-     */
     public StylePattern() {
     }
 
@@ -230,15 +109,10 @@ public class StylePattern {
 
         nodeFontBold = Boolean.valueOf(node.isBold());
         nodeFontItalic = Boolean.valueOf(node.isItalic());
-        nodeFontSize = node.getFontSize() == null ? null : Integer.valueOf(node
-                .getFontSize());
+        nodeFontSize = node.getFontSize() == null ? null : Integer.valueOf(node.getFontSize());
         nodeFontFamily = node.getFontFamilyName();
 
         nodeIcon = null;
-        // appliesToNodeIcon = node.getIcons().size()>0;
-        // nodeIcon = (MindIcon)
-        // (node.getIcons().size()==0?null:node.getIcons().get(0));
-
         edgeColor = node.getEdge().getColor();
         edgeStyle = node.getEdge().getStyle();
         edgeWidth = Integer.valueOf(node.getEdge().getWidth());
@@ -319,8 +193,8 @@ public class StylePattern {
 
     protected void loadPattern(Element pattern, List<StylePattern> justConstructedPatterns) {
         // PATTERN
-        if (FreeMindXml.getStringAttribute(pattern, "name") != null) {
-            setName(FreeMindXml.getStringAttribute(pattern, "name"));
+        if (FreeMindXml.getStringAttribute(pattern, NAME_ATTRIBUTE) != null) {
+            setName(FreeMindXml.getStringAttribute(pattern, NAME_ATTRIBUTE));
         }
         if (Objects.equals(FreeMindXml.getStringAttribute(pattern, "recursive"), "true")) {
             setRecursive(true);
@@ -330,24 +204,21 @@ public class StylePattern {
             // this has to be improved!
             // NODE
             if (child.getTagName().equals("node")) {
-                if (FreeMindXml.getStringAttribute(child, "color") != null
-                        && FreeMindXml.getStringAttribute(child, "color").length() == 7) {
-                    setNodeColor(ColorUtils.xmlToColor(FreeMindXml
-                            .getStringAttribute(child, "color")));
+                if (FreeMindXml.getStringAttribute(child, COLOR_ATTRIBUTE) != null
+                        && FreeMindXml.getStringAttribute(child, COLOR_ATTRIBUTE).length() == 7) {
+                    setNodeColor(ColorUtils.xmlToColor(FreeMindXml.getStringAttribute(child, COLOR_ATTRIBUTE)));
                 }
-                if (FreeMindXml.getStringAttribute(child, "background_color") != null
-                        && FreeMindXml.getStringAttribute(child, "background_color")
-                        .length() == 7) {
-                    setNodeBackgroundColor(ColorUtils.xmlToColor(FreeMindXml
-                            .getStringAttribute(child, "background_color")));
+                if (FreeMindXml.getStringAttribute(child, BACKGROUND_COLOR_ATTRIBUTE) != null
+                        && FreeMindXml.getStringAttribute(child, BACKGROUND_COLOR_ATTRIBUTE).length() == 7) {
+                    setNodeBackgroundColor(ColorUtils.xmlToColor(FreeMindXml.getStringAttribute(child, BACKGROUND_COLOR_ATTRIBUTE)));
                 }
-                if (FreeMindXml.getStringAttribute(child, "style") != null) {
-                    setNodeStyle(FreeMindXml.getStringAttribute(child, "style"));
+                if (FreeMindXml.getStringAttribute(child, STYLE_ATTRIBUTE) != null) {
+                    setNodeStyle(FreeMindXml.getStringAttribute(child, STYLE_ATTRIBUTE));
                 }
-                if (FreeMindXml.getStringAttribute(child, "icon") != null) {
-                    setNodeIcon(FreeMindXml.getStringAttribute(child, "icon").equals("none") ? null
+                if (FreeMindXml.getStringAttribute(child, ICON_ATTRIBUTE) != null) {
+                    setNodeIcon(FreeMindXml.getStringAttribute(child, ICON_ATTRIBUTE).equals("none") ? null
                             : MindIcon
-                            .factory(FreeMindXml.getStringAttribute(child, "icon")));
+                            .factory(FreeMindXml.getStringAttribute(child, ICON_ATTRIBUTE)));
                 }
                 setText(FreeMindXml.getStringAttribute(child, "text"));
 
@@ -355,20 +226,17 @@ public class StylePattern {
                     // FONT
                     if (nodeChild.getTagName().equals("font")) {
 
-                        if (FreeMindXml.getStringAttribute(nodeChild, "name") != null) {
-                            setNodeFontFamily(FreeMindXml.getStringAttribute(nodeChild, "name"));
+                        if (FreeMindXml.getStringAttribute(nodeChild, NAME_ATTRIBUTE) != null) {
+                            setNodeFontFamily(FreeMindXml.getStringAttribute(nodeChild, NAME_ATTRIBUTE));
                         }
-                        if (Objects.equals(FreeMindXml.getStringAttribute(nodeChild, "bold"), "true")) {
+                        if (Objects.equals(FreeMindXml.getStringAttribute(nodeChild, BOLD_ATTRIBUTE), "true")) {
                             setNodeFontBold(Boolean.TRUE);
                         }
-                        if (Objects.equals(FreeMindXml.getStringAttribute(nodeChild, "italic"), "true")) {
+                        if (Objects.equals(FreeMindXml.getStringAttribute(nodeChild, ITALIC_ATTRIBUTE), "true")) {
                             setNodeFontItalic(Boolean.TRUE);
                         }
-                        // if (font.getProperty("underline")!=null &&
-                        // nodeChild.getProperty("underline").equals("true"))
-                        // setUnderlined(true);
-                        if (FreeMindXml.getStringAttribute(nodeChild, "size") != null) {
-                            setNodeFontSize(Integer.valueOf(FreeMindXml.getStringAttribute(nodeChild, "size")));
+                        if (FreeMindXml.getStringAttribute(nodeChild, FONT_SIZE_ATTRIBUTE) != null) {
+                            setNodeFontSize(Integer.valueOf(FreeMindXml.getStringAttribute(nodeChild, FONT_SIZE_ATTRIBUTE)));
                         }
 
                     }
@@ -377,19 +245,17 @@ public class StylePattern {
 
             // EDGE
             if (child.getTagName().equals("edge")) {
-                if (FreeMindXml.getStringAttribute(child, "style") != null) {
-                    setEdgeStyle(FreeMindXml.getStringAttribute(child, "style"));
+                if (FreeMindXml.getStringAttribute(child, STYLE_ATTRIBUTE) != null) {
+                    setEdgeStyle(FreeMindXml.getStringAttribute(child, STYLE_ATTRIBUTE));
                 }
-                if (FreeMindXml.getStringAttribute(child, "color") != null) {
-                    setEdgeColor(ColorUtils.xmlToColor(FreeMindXml
-                            .getStringAttribute(child, "color")));
+                if (FreeMindXml.getStringAttribute(child, COLOR_ATTRIBUTE) != null) {
+                    setEdgeColor(ColorUtils.xmlToColor(FreeMindXml.getStringAttribute(child, COLOR_ATTRIBUTE)));
                 }
                 if (FreeMindXml.getStringAttribute(child, "width") != null) {
                     if (FreeMindXml.getStringAttribute(child, "width").equals("thin")) {
-                        setEdgeWidth(Integer.valueOf(EdgeAdapter.WIDTH_THIN));
+                        setEdgeWidth(EdgeAdapter.WIDTH_THIN);
                     } else {
-                        setEdgeWidth(Integer.valueOf(Integer.parseInt(FreeMindXml
-                                .getStringAttribute(child, "width"))));
+                        setEdgeWidth(Integer.parseInt(FreeMindXml.getStringAttribute(child, "width")));
                     }
                 }
             }
@@ -412,63 +278,10 @@ public class StylePattern {
                         setChildrenStylePattern(this);
                         anythingFound = true;
                     }
-                    if (anythingFound == false)
-                        System.err.println("Cannot find the children "
-                                + searchName + " to the pattern " + getName());
+                    if (!anythingFound)
+                        System.err.println("Cannot find the children " + searchName + " to the pattern " + getName());
                 }
             }
         }
     }
-
 }
-
-/*
- * Is saving necessary? public void savePattern(File file) { try { //CODE FOR
- * NANOXML XMLElement pattern = new XMLElement(); pattern.setTagName("pattern");
- * XMLElement node = new XMLElement(); node.setTagName("node");
- * pattern.addChild(node); XMLElement edge = new XMLElement();
- * edge.setTagName("edge"); pattern.addChild(edge);
- *
- *
- * pattern.addChild(((MindMapNodeModel)getRoot()).save());
- *
- * XMLElement node = new XMLElement(); node.setTagName("node");
- *
- * node.addProperty("text",this.toString());
- *
- * // ((MindMapEdgeModel)getEdge()).save(doc,node);
- *
- * XMLElement edge = ((MindMapEdgeModel)getEdge()).save(); if (edge != null) {
- * node.addChild(edge); }
- *
- * if (isFolded()) { node.addProperty("folded","true"); }
- *
- * if (color != null) { node.addProperty("color", ColorUtils.colorToXml(getColor()));
- * }
- *
- * if (style != null) { node.addProperty("style", getStyle()); }
- *
- * //link if (getLink() != null) { node.addProperty("link", getLink()); }
- *
- * //font if (font!=null || font.getSize()!=0 || isBold() || isItalic() ||
- * isUnderlined() ) { XMLElement fontElement = new XMLElement();
- * fontElement.setTagName("font");
- *
- * if (font != null) { fontElement.addProperty("name",getFont().getFontName());
- * } if (font.getSize() != 0) {
- * fontElement.addProperty("size",Integer.toString(getFont().getSize())); } if
- * (isBold()) { fontElement.addProperty("bold","true"); } if (isItalic()) {
- * fontElement.addProperty("italic","true"); } if (isUnderlined()) {
- * fontElement.addProperty("underline","true"); } node.addChild(fontElement); }
- *
- *
- *
- * //Generating output Stream BufferedWriter fileout = new BufferedWriter( new
- * OutputStreamWriter( new FileOutputStream(file) ) ); pattern.write(fileout);
- *
- * fileout.close();
- *
- * } catch(Exception e) {
- * System.err.println("Error in MindMapMapModel.saveXML(): ");
- * freemind.main.Resources.getInstance().logExecption(e); } }
- */

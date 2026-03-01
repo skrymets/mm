@@ -36,8 +36,6 @@ import org.w3c.dom.Element;
 public class ArrowLinkTarget extends ArrowLinkAdapter {
     private String mSourceLabel;
 
-    /**
-     */
     public ArrowLinkTarget(MindMapNode pSource, MindMapNode pTarget,
                            MapFeedback pMapFeedback) {
         super(pSource, pTarget, pMapFeedback);

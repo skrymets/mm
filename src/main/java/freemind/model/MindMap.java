@@ -37,7 +37,6 @@ public interface MindMap extends TreeModel {
 
     MindMapNode getRootNode();
 
-    // nodeChanged has moved to the modeController. (fc, 2.5.2004)
     void nodeChanged(TreeNode node);
 
     void nodeRefresh(TreeNode node);

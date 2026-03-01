@@ -70,15 +70,13 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     public static ImageIcon getMapLocationIcon() {
         // icon
         if (sMapLocationIcon == null) {
-            sMapLocationIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(Resources.getInstance()
-                    .getResource("images/map_location.png"));
+            sMapLocationIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(Resources.getInstance().getResource("images/map_location.png"));
         }
         return sMapLocationIcon;
     }
 
     protected void setStateIcon(MindMapNode node, boolean enabled) {
-        node.setStateIcon(NODE_MAP_LOCATION_ICON,
-                (enabled) ? getMapLocationIcon() : null);
+        node.setStateIcon(NODE_MAP_LOCATION_ICON, (enabled) ? getMapLocationIcon() : null);
     }
 
     /**
@@ -128,8 +126,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
         super.loadFrom(pChild);
         mValues = loadNameValuePairs(pChild);
         // if no value stored, the get method returns null.
-        mTooltipLocation = mValues
-                .get(XML_STORAGE_MAP_TOOLTIP_LOCATION);
+        mTooltipLocation = mValues.get(XML_STORAGE_MAP_TOOLTIP_LOCATION);
     }
 
     public void setTooltip() {
@@ -161,12 +158,7 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     }
 
     public String[] getBarePosition() {
-        return new String[]{mValues.get(XML_STORAGE_POS_LAT),
-                mValues.get(XML_STORAGE_POS_LON),
-                mValues.get(XML_STORAGE_MAP_LAT),
-                mValues.get(XML_STORAGE_MAP_LON),
-                mValues.get(XML_STORAGE_ZOOM),
-                mValues.get(XML_STORAGE_TILE_SOURCE)};
+        return new String[]{mValues.get(XML_STORAGE_POS_LAT), mValues.get(XML_STORAGE_POS_LON), mValues.get(XML_STORAGE_MAP_LAT), mValues.get(XML_STORAGE_MAP_LON), mValues.get(XML_STORAGE_ZOOM), mValues.get(XML_STORAGE_TILE_SOURCE)};
     }
 
 }

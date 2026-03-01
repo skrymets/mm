@@ -29,7 +29,6 @@ import freemind.controller.actions.CalendarMarking;
 import freemind.controller.actions.CalendarMarkings;
 import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.FreeMindCommon;
-import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
@@ -190,8 +189,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
 
         public void actionPerformed(ActionEvent actionEvent) {
             Calendar cal = getCalendar();
-            Resources res = Resources.getInstance();
-            String xml = res.getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
+            String xml = getMindMapController().getResources().getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
             XmlBindingTools bind = XmlBindingTools.getInstance();
             CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
             CalendarMarkingDialog dialog = new CalendarMarkingDialog(getMindMapController());
@@ -215,8 +213,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
 
         public void actionPerformed(ActionEvent actionEvent) {
             Calendar cal = getCalendar();
-            Resources res = Resources.getInstance();
-            String xml = res.getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
+            String xml = getMindMapController().getResources().getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
             XmlBindingTools bind = XmlBindingTools.getInstance();
             CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
             CalendarMarkingEvaluator ev = new CalendarMarkingEvaluator(result);

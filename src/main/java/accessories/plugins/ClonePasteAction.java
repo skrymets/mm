@@ -27,7 +27,6 @@ import freemind.controller.actions.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;
-import freemind.main.Resources;
 import freemind.main.MindMapUtils;
 import freemind.main.MindMapUtils.MindMapNodePair;
 import freemind.main.Tools;
@@ -205,7 +204,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             if (sCloneIcon == null) {
                 sCloneIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(controller.getResource("images/clone.png"));
                 sOriginalIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(controller.getResource("images/clone_original.png"));
-                sShowIcon = Resources.getInstance().getBoolProperty(FreeMind.RESOURCES_DON_T_SHOW_CLONE_ICONS);
+                sShowIcon = controller.getResources().getBoolProperty(FreeMind.RESOURCES_DON_T_SHOW_CLONE_ICONS);
             }
             controller.getActionRegistry().registerFilter(this);
             controller.registerNodeSelectionListener(this, false);

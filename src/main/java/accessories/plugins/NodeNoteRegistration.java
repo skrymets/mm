@@ -58,6 +58,12 @@ import java.util.Objects;
 public class NodeNoteRegistration implements HookRegistration,
         MenuItemSelectedListener {
     public static final class SimplyHtmlResources implements TextResources {
+        private final Resources resources;
+
+        public SimplyHtmlResources(Resources resources) {
+            this.resources = resources;
+        }
+
         public String getString(String pKey) {
             // no splash for SimplyHtml.
             if (Objects.equals("show_splash_screen", pKey)) {
@@ -68,14 +74,11 @@ public class NodeNoteRegistration implements HookRegistration,
             }
             pKey = "simplyhtml." + pKey;
             String resourceString;
-            resourceString = Resources.getInstance().getResourceString(
+            resourceString = resources.getResourceString(
                     pKey, null);
             if (resourceString == null) {
-                resourceString = Resources.getInstance().getProperty(pKey);
+                resourceString = resources.getProperty(pKey);
             }
-//			if(resourceString == null) {
-//				System.err.println("Can't find string " + pKey);
-//			}
             return resourceString;
         }
     }
@@ -229,9 +232,9 @@ public class NodeNoteRegistration implements HookRegistration,
             // update display only, if the node is displayed.
             String newText = node.getNoteText();
             if (node == controller.getSelected()
-                    && (!Objects.equals(newText, getHtmlEditorPanel()
+                    && (!Objects.equals(newText, getHtmlEditorPanel(controller.getResources())
                     .getDocumentText()))) {
-                getHtmlEditorPanel().setCurrentDocumentContent(
+                getHtmlEditorPanel(controller.getResources()).setCurrentDocumentContent(
                         newText == null ? "" : newText);
             }
             setStateIcon(node, !(newText == null || newText.isEmpty()));
@@ -275,17 +278,17 @@ public class NodeNoteRegistration implements HookRegistration,
         // icon
         if (noteIcon == null) {
             noteIcon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(
-                    Resources.getInstance().getResource("images/knotes.png"));
+                    controller.getResources().getResource("images/knotes.png"));
         }
         boolean showIcon = enabled;
-        if (Resources.getInstance().getBoolProperty(
+        if (controller.getResources().getBoolProperty(
                 FreeMind.RESOURCES_DON_T_SHOW_NOTE_ICONS)) {
             showIcon = false;
         }
         node.setStateIcon(NodeNoteBase.NODE_NOTE_ICON, (showIcon) ? noteIcon
                 : null);
         // tooltip, first try.
-        if (!Resources.getInstance().getBoolProperty(
+        if (!controller.getResources().getBoolProperty(
                 FreeMind.RESOURCES_DON_T_SHOW_NOTE_TOOLTIPS)) {
             controller.setToolTip(node, "nodeNoteText",
                     (enabled) ? node.getNoteText() : null);
@@ -356,7 +359,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 FreeMind.RESOURCES_USE_DEFAULT_FONT_FOR_NOTES_TOO))) {
             // set default font for notes:
             Font defaultFont = controller.getController().getDefaultFont();
-            if (Resources.getInstance().getBoolProperty(
+            if (controller.getResources().getBoolProperty(
                     "experimental_font_sizing_for_long_node_editors")) {
                 /*
                  * This is a proposal of Dan, but it doesn't work as expected.
@@ -412,16 +415,16 @@ public class NodeNoteRegistration implements HookRegistration,
     }
 
     protected SHTMLPanel getNoteViewerComponent() {
-        return getHtmlEditorPanel();
+        return getHtmlEditorPanel(controller.getResources());
     }
 
-    public static SHTMLPanel getHtmlEditorPanel() {
+    public static SHTMLPanel getHtmlEditorPanel(Resources resources) {
         if (htmlEditorPanel == null) {
-            SHTMLPanel.setResources(new SimplyHtmlResources());
+            SHTMLPanel.setResources(new SimplyHtmlResources(resources));
             htmlEditorPanel = SHTMLPanel.createSHTMLPanel();
             htmlEditorPanel.setMinimumSize(new Dimension(100, 100));
 
-            boolean checkSpelling = Resources.getInstance().
+            boolean checkSpelling = resources.
                     getBoolProperty(FreeMindCommon.CHECK_SPELLING);
             if (checkSpelling) {
                 SpellChecker.register(htmlEditorPanel.getEditorPane());

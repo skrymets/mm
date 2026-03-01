@@ -30,7 +30,6 @@ import freemind.controller.actions.TimeWindowColumnSetting;
 import freemind.controller.actions.TimeWindowConfigurationStorage;
 import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.HtmlTools;
-import freemind.main.Resources;
 import freemind.main.MindMapUtils;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
@@ -1086,7 +1085,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                 count++;
             }
         }
-        mStatisticsLabel.setText(Resources.getInstance().format("timelist_statistics",
+        mStatisticsLabel.setText(getMindMapController().getResources().format("timelist_statistics",
                 new Integer[]{count, rowCount, mTimeTableModel.getRowCount(), ((mViewFoldedNodes) ? 1 : 0)}));
     }
 }

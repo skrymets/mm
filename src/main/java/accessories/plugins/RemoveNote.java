@@ -68,7 +68,7 @@ public class RemoveNote extends MindMapNodeHookAdapter {
 
     private void removeNote(MindMapNode node) {
         if (getMindMapController().getSelected() == node) {
-            NodeNoteRegistration.getHtmlEditorPanel().setCurrentDocumentContent("");
+            NodeNoteRegistration.getHtmlEditorPanel(getMindMapController().getResources()).setCurrentDocumentContent("");
         }
         getMindMapController().setNoteText(node, null);
     }

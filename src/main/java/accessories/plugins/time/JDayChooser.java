@@ -241,6 +241,8 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
 
     private ICalendarMarkingEvaluator mCalendarMarkingEvaluator;
 
+    private final Resources resources;
+
     /**
      * Default JDayChooser constructor.
      */
@@ -254,10 +256,11 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
      * @param weekOfYearVisible true, if the weeks of a year shall be shown
      */
     public JDayChooser(boolean weekOfYearVisible) {
+        this.resources = Resources.getInstance();
         if (mCalendarMarkingEvaluator == null) {
             CalendarMarkings markings = null;
             try {
-                String marking = Resources.getInstance().getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
+                String marking = resources.getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
                 if (!marking.isEmpty()) {
                     markings = (CalendarMarkings) XmlBindingTools.getInstance().unMarshall(marking);
                 }
@@ -980,8 +983,12 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     public void updateUI() {
         super.updateUI();
         Font font = Font.decode("Dialog Plain 11");
-        int fontSize = Resources.getInstance().getIntProperty(FreeMind.RESOURCES_CALENDAR_FONT_SIZE, 0);
-        int scale = Resources.getInstance().getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
+        if (resources == null) {
+            // updateUI() called by Swing before constructor body completes
+            return;
+        }
+        int fontSize = resources.getIntProperty(FreeMind.RESOURCES_CALENDAR_FONT_SIZE, 0);
+        int scale = resources.getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
         if (fontSize > 0) {
             font = font.deriveFont(fontSize * scale / 100.f);
         } else if (scale != 100) {

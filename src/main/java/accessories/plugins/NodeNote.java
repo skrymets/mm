@@ -79,7 +79,7 @@ public class NodeNote extends MindMapNodeHookAdapter {
         }
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
                 .clearGlobalFocusOwner();
-        NodeNoteRegistration.getHtmlEditorPanel().getMostRecentFocusOwner()
+        NodeNoteRegistration.getHtmlEditorPanel(getMindMapController().getResources()).getMostRecentFocusOwner()
                 .requestFocus();
     }
 

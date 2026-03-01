@@ -20,8 +20,8 @@
 
 package freemind.modes;
 
-import freemind.main.PointUtils;
 import freemind.main.ColorUtils;
+import freemind.main.PointUtils;
 import freemind.model.LinkAdapter;
 import freemind.model.MindMapNode;
 import lombok.Getter;
