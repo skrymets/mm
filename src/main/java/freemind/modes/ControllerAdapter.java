@@ -27,14 +27,13 @@ import freemind.controller.actions.MindmapLastStateStorage;
 import freemind.controller.actions.NodeListMember;
 import freemind.events.FreeMindEventBus;
 import freemind.events.NodeModifiedEvent;
-import freemind.events.NodeSelectionChangedEvent;
-import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
+import freemind.modes.services.NodeLifecycleService;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.IndependentMapViewCreator;
@@ -88,9 +87,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * default controller that does not show a map.
      */
     private MapAdapter mModel;
-    private final HashSet<NodeSelectionListener> mNodeSelectionListeners = new HashSet<>();
-    private final HashSet<NodeLifetimeListener> mNodeLifetimeListeners = new HashSet<>();
-    @Setter
+    @Getter
+    private final NodeLifecycleService nodeLifecycleService = new NodeLifecycleService();
     private FreeMindEventBus eventBus;
     private File lastCurrentDir = null;
 
@@ -99,9 +97,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      */
     public ControllerAdapter(Mode mode) {
         this.setMode(mode);
-        // for updates of nodes:
-        // DropTarget dropTarget = new DropTarget(getFrame().getViewport(),
-        // new FileOpener());
+    }
+
+    public void setEventBus(FreeMindEventBus eventBus) {
+        this.eventBus = eventBus;
+        nodeLifecycleService.setEventBus(eventBus);
     }
 
     public void setModel(MapAdapter model) {
@@ -187,147 +187,66 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * Overwrite this method to perform additional operations to an node update.
      */
     protected void updateNode(MindMapNode node) {
-        for (NodeSelectionListener listener : mNodeSelectionListeners) {
-            listener.onUpdateNodeHook(node);
-        }
+        nodeLifecycleService.updateNode(node);
     }
 
     public void onLostFocusNode(NodeView node) {
-        try {
-            // deselect the old node:
-            HashSet<NodeSelectionListener> copy = new HashSet<>(mNodeSelectionListeners);
-            // we copied the set to be able to remove listeners during a
-            // listener method.
-            for (NodeSelectionListener listener : copy) {
-                listener.onLostFocusNode(node);
-            }
-            for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
-                hook.onLostFocusNode(node);
-            }
-            if (eventBus != null) {
-                eventBus.post(new NodeSelectionChangedEvent(node.getModel(), false));
-            }
-        } catch (RuntimeException e) {
-            log.info("Error in node selection listeners", e);
-        }
-
+        nodeLifecycleService.onLostFocusNode(node);
     }
 
     public void onFocusNode(NodeView node) {
-        try {
-            // select the new node:
-            HashSet<NodeSelectionListener> copy = new HashSet<>(mNodeSelectionListeners);
-            // we copied the set to be able to remove listeners during a
-            // listener method.
-            for (NodeSelectionListener listener : copy) {
-                listener.onFocusNode(node);
-            }
-            for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
-                hook.onFocusNode(node);
-            }
-            if (eventBus != null) {
-                eventBus.post(new NodeSelectionChangedEvent(node.getModel(), true));
-            }
-        } catch (RuntimeException e) {
-            log.info("Error in node selection listeners", e);
-        }
-
+        nodeLifecycleService.onFocusNode(node);
     }
 
     public void changeSelection(NodeView pNode, boolean pIsSelected) {
-        try {
-            HashSet<NodeSelectionListener> copy = new HashSet<>(mNodeSelectionListeners);
-            for (NodeSelectionListener listener : copy) {
-                listener.onSelectionChange(pNode, pIsSelected);
-            }
-        } catch (RuntimeException e) {
-            log.info("Error in node selection listeners", e);
-        }
-
+        nodeLifecycleService.changeSelection(pNode, pIsSelected);
     }
 
     public void onViewCreatedHook(NodeView node) {
-        for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
-            hook.onViewCreatedHook(node);
-        }
+        nodeLifecycleService.onViewCreatedHook(node);
     }
 
     public void onViewRemovedHook(NodeView node) {
-        for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
-            hook.onViewRemovedHook(node);
-        }
+        nodeLifecycleService.onViewRemovedHook(node);
     }
 
     public void registerNodeSelectionListener(NodeSelectionListener listener,
                                               boolean pCallWithCurrentSelection) {
-        mNodeSelectionListeners.add(listener);
-        if (pCallWithCurrentSelection) {
-            try {
-                listener.onFocusNode(getSelectedView());
-            } catch (RuntimeException e) {
-                log.error(e.getLocalizedMessage(), e);
-            }
-            for (NodeView view : getView().getSelectionService().getSelecteds()) {
-                try {
-                    listener.onSelectionChange(view, true);
-                } catch (RuntimeException e) {
-                    log.error(e.getLocalizedMessage(), e);
-                }
-            }
-        }
+        nodeLifecycleService.registerNodeSelectionListener(listener,
+                pCallWithCurrentSelection, getSelectedView(),
+                getView().getSelectionService().getSelecteds());
     }
 
     public void deregisterNodeSelectionListener(NodeSelectionListener listener) {
-        mNodeSelectionListeners.remove(listener);
+        nodeLifecycleService.removeSelectionListener(listener);
     }
 
     public void registerNodeLifetimeListener(NodeLifetimeListener listener, boolean pFireCreateEvent) {
-        mNodeLifetimeListeners.add(listener);
-        if (pFireCreateEvent) {
-            // call create node for all:
-            fireRecursiveNodeCreateEvent(getRootNode());
-        }
+        nodeLifecycleService.registerNodeLifetimeListener(listener, pFireCreateEvent, getRootNode());
     }
 
     public void deregisterNodeLifetimeListener(NodeLifetimeListener listener) {
-        mNodeLifetimeListeners.remove(listener);
+        nodeLifecycleService.removeLifetimeListener(listener);
     }
 
     public HashSet<NodeLifetimeListener> getNodeLifetimeListeners() {
-        return mNodeLifetimeListeners;
+        return nodeLifecycleService.getLifetimeListeners();
     }
 
     public void fireNodePreDeleteEvent(MindMapNode node) {
-        // call lifetime listeners:
-        for (NodeLifetimeListener listener : mNodeLifetimeListeners) {
-            listener.onPreDeleteNode(node);
-        }
+        nodeLifecycleService.fireNodePreDeleteEvent(node);
     }
 
     public void fireNodePostDeleteEvent(MindMapNode node, MindMapNode parent) {
-        // call lifetime listeners:
-        for (NodeLifetimeListener listener : mNodeLifetimeListeners) {
-            listener.onPostDeleteNode(node, parent);
-        }
+        nodeLifecycleService.fireNodePostDeleteEvent(node, parent);
     }
 
     public void fireRecursiveNodeCreateEvent(MindMapNode node) {
-        for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
-            MindMapNode child = i.next();
-            fireRecursiveNodeCreateEvent(child);
-        }
-        // call lifetime listeners:
-        for (NodeLifetimeListener listener : mNodeLifetimeListeners) {
-            listener.onCreateNodeHook(node);
-        }
+        nodeLifecycleService.fireRecursiveNodeCreateEvent(node);
     }
 
     public void firePreSaveEvent(MindMapNode node) {
-        // copy to prevent concurrent modification.
-        HashSet<NodeSelectionListener> listenerCopy = new HashSet<>(mNodeSelectionListeners);
-        for (NodeSelectionListener listener : listenerCopy) {
-            listener.onSaveNode(node);
-        }
+        nodeLifecycleService.firePreSaveEvent(node);
     }
 
     //
