@@ -144,8 +144,7 @@ public class MindMapMapModel extends MapAdapter {
             return true;
 
         } catch (Exception e) {
-            System.err.println("Error in MindMapMapModel.saveTXT(): ");
-            log.error(e.getLocalizedMessage(), e);
+            log.error("Error in MindMapMapModel.saveTXT()", e);
             return false;
         }
     }
@@ -229,7 +228,7 @@ public class MindMapMapModel extends MapAdapter {
     private boolean saveInternal(File file, boolean isInternal) throws IOException {
         if (!isInternal && readOnly) { // unexpected situation, yet it's better
             // to back it up
-            System.err.println("Attempt to save read-only map.");
+            log.error("Attempt to save read-only map.");
             return false;
         }
         try {
@@ -341,8 +340,7 @@ public class MindMapMapModel extends MapAdapter {
             /* existence? */
             if (!dirToStore.isDirectory()) {
                 dirToStore = null;
-                System.err.println("Temporary directory " + path
-                        + " not found. Disabling automatic store.");
+                log.error("Temporary directory {} not found. Disabling automatic store.", path);
                 delay = Integer.MAX_VALUE;
                 return;
             }
@@ -380,7 +378,7 @@ public class MindMapMapModel extends MapAdapter {
                     lock = semaphoreOutputStream.getChannel().tryLock();
                     if (lock == null) {
                         semaphoreOutputStream.close();
-                        System.err.println("Locking failed.");
+                        log.error("Locking failed.");
                         throw new Exception();
                     }
                 } // locking failed

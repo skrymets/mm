@@ -239,15 +239,15 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
         dialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dialog.showOpenDialog(null);
         File selectedFile = dialog.getSelectedFile();
-        System.out.println("Dir '" + dialog.getDirectory() + "', File: '" + dialog.getFile() + "', selected File: '" + selectedFile + "'");
+        log.info("Dir '{}', File: '{}', selected File: '{}'", dialog.getDirectory(), dialog.getFile(), selectedFile);
         System.exit(0);
         dialog.showSaveDialog(null);
         selectedFile = dialog.getSelectedFile();
-        System.out.println("Dir '" + dialog.getDirectory() + "', File: '" + dialog.getFile() + "', selected File: '" + selectedFile + "'");
+        log.info("Dir '{}', File: '{}', selected File: '{}'", dialog.getDirectory(), dialog.getFile(), selectedFile);
         StreamResult streamResult = new StreamResult(new FileOutputStream(selectedFile));
         streamResult.getOutputStream().write("bla".getBytes());
         streamResult.getOutputStream().close();
-        System.out.println("File exists: " + selectedFile.exists());
+        log.info("File exists: {}", selectedFile.exists());
     }
 
     /* (non-Javadoc)

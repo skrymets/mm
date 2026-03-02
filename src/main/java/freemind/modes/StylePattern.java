@@ -6,6 +6,7 @@ import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -26,6 +27,7 @@ import java.util.Objects;
  * the pattern. If a property "text" is given, this pattern is automatically
  * applied to all nodes that contain the String saved in "text".
  */
+@Slf4j
 public class StylePattern {
     private static final String COLOR_ATTRIBUTE = "color";
     private static final String BACKGROUND_COLOR_ATTRIBUTE = "background_color";
@@ -279,7 +281,7 @@ public class StylePattern {
                         anythingFound = true;
                     }
                     if (!anythingFound)
-                        System.err.println("Cannot find the children " + searchName + " to the pattern " + getName());
+                        log.warn("Cannot find the children {} to the pattern {}", searchName, getName());
                 }
             }
         }

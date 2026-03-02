@@ -220,8 +220,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Drop exception:" + e);
-            log.error(e.getLocalizedMessage(), e);
+            log.error("Drop exception", e);
             dtde.dropComplete(false);
             return;
         }
