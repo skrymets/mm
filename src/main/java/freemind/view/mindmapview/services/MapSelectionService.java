@@ -5,6 +5,8 @@ import freemind.main.PointUtils;
 import freemind.model.MindMapNode;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
@@ -17,6 +19,8 @@ public class MapSelectionService {
     private final MapView mapView;
     private final MapPrintingService printingService;
     private final Selected selected = new Selected();
+    @Setter
+    @Getter
     private NodeView shiftSelectionOrigin = null;
     private boolean selectedsValid = true;
 
@@ -102,14 +106,13 @@ public class MapSelectionService {
     public boolean selectContinuous(NodeView newSelected) {
         NodeView oldSelected = null;
         LinkedList<NodeView> selList = getSelecteds();
-        ListIterator<NodeView> j = selList.listIterator();
-        while (j.hasNext()) {
-            NodeView selectedNode = j.next();
+        for (NodeView selectedNode : selList) {
             if (selectedNode != newSelected && newSelected.isSiblingOf(selectedNode)) {
                 oldSelected = selectedNode;
                 break;
             }
         }
+
         if (oldSelected == null) {
             if (!isSelected(newSelected) && newSelected.isContentVisible()) {
                 toggleSelected(newSelected);
@@ -117,8 +120,10 @@ public class MapSelectionService {
             }
             return false;
         }
+
         boolean oldPositionLeft = oldSelected.isLeft();
         boolean newPositionLeft = newSelected.isLeft();
+
         ListIterator<NodeView> i = newSelected.getSiblingViews().listIterator();
         while (i.hasNext()) {
             NodeView nodeView = i.next();
@@ -126,7 +131,9 @@ public class MapSelectionService {
                 break;
             }
         }
+
         ListIterator<NodeView> i_backup = i;
+
         while (i.hasNext()) {
             NodeView nodeView = i.next();
             if ((nodeView.isLeft() == oldPositionLeft || nodeView.isLeft() == newPositionLeft)) {
@@ -136,6 +143,7 @@ public class MapSelectionService {
                     break;
             }
         }
+
         i = i_backup;
         if (i.hasPrevious()) {
             i.previous();
@@ -150,7 +158,7 @@ public class MapSelectionService {
                 }
             }
         }
-        i = newSelected.getSiblingViews().listIterator();
+
         i = newSelected.getSiblingViews().listIterator();
         while (i.hasNext()) {
             NodeView nodeView = i.next();
@@ -160,6 +168,7 @@ public class MapSelectionService {
                 break;
             }
         }
+
         while (i.hasNext()) {
             NodeView nodeView = i.next();
             if ((nodeView.isLeft() == oldPositionLeft || nodeView.isLeft() == newPositionLeft)
@@ -169,6 +178,7 @@ public class MapSelectionService {
                 break;
             }
         }
+
         toggleSelected(oldSelected);
         toggleSelected(oldSelected);
         return true;
@@ -198,7 +208,7 @@ public class MapSelectionService {
         for (int i = 0; i < selected.size(); i++) {
             selectedNodesSet.add(getSelected(i).getModel());
         }
-        LinkedList<Pair> pointNodePairs = new LinkedList<>();
+        LinkedList<Pair<Integer, MindMapNode>> pointNodePairs = new LinkedList<>();
 
         Point point = new Point();
         iteration:
@@ -212,17 +222,17 @@ public class MapSelectionService {
             }
             view.getContent().getLocation(point);
             PointUtils.convertPointToAncestor(view, point, mapView);
-            pointNodePairs.add(new Pair(Integer.valueOf(point.y), node));
+            pointNodePairs.add(new Pair<>(point.y, node));
         }
         pointNodePairs.sort((pair0, pair1) -> {
-            Integer int0 = (Integer) pair0.getFirst();
-            Integer int1 = (Integer) pair1.getFirst();
+            Integer int0 = pair0.first();
+            Integer int1 = pair1.first();
             return int0.compareTo(int1);
         });
 
         ArrayList<MindMapNode> selectedNodes = new ArrayList<>();
-        for (Pair pointNodePair : pointNodePairs) {
-            selectedNodes.add((MindMapNode) pointNodePair.getSecond());
+        for (Pair<Integer, MindMapNode> pointNodePair : pointNodePairs) {
+            selectedNodes.add(pointNodePair.second());
         }
         return selectedNodes;
     }
@@ -243,14 +253,6 @@ public class MapSelectionService {
 
     public void resetShiftSelectionOrigin() {
         shiftSelectionOrigin = null;
-    }
-
-    public NodeView getShiftSelectionOrigin() {
-        return shiftSelectionOrigin;
-    }
-
-    public void setShiftSelectionOrigin(NodeView origin) {
-        this.shiftSelectionOrigin = origin;
     }
 
     public void revalidateSelecteds() {

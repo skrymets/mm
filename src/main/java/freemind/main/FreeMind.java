@@ -317,16 +317,16 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         // Layout everything
         getContentPane().setLayout(new BorderLayout());
 
-        controller = new Controller(this, resources);
-        controller.init();
-        controller.getMapModuleManager().setEventBus(eventBus);
-
         SwingUtils.init(resources);
         JColorCombo.initColors(resources);
         MindIcon.init(resources);
         HookDescriptorBase.init(resources);
         StructuredMenuHolder.init(resources);
         ImageFactory.init(resources);
+
+        controller = new Controller(this, resources);
+        controller.init();
+        controller.getMapModuleManager().setEventBus(eventBus);
 
         feedback.increase("FreeMind.progress.settingPreferences", null);
         // add a listener for the controller, resource bundle:

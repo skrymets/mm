@@ -153,7 +153,7 @@ public class MenuConfigService {
                 String keystroke = action.getKeyRef();
                 try {
                     Action theAction = (Action) MindMapUtils.getField(
-                            new Object[]{controller, controller.getController()}, field);
+                            new Object[]{controller, controller.getActions(), controller.getController()}, field);
                     if (theAction == null) {
                         log.warn("Menu action field '{}' resolved to null", field);
                         continue;

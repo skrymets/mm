@@ -280,6 +280,9 @@ public final class SwingUtils {
     }
 
     public static int getScalingFactorPlain() {
+        if (resources == null) {
+            return 100;
+        }
         return resources.getIntProperty(FreeMind.SCALING_FACTOR_PROPERTY, 100);
     }
 

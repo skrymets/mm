@@ -153,7 +153,6 @@ public class SocketConnectionHook extends SocketBasics implements
      */
     public void setClientCommunication(ClientCommunication pClientCommunication) {
         mClientCommunication = pClientCommunication;
-
     }
 
     /*

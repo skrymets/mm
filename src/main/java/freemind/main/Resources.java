@@ -130,7 +130,25 @@ public class Resources implements TextTranslator {
 
     public HashMap<String, String> getCountryMap() {
         if (countryMap == null) {
-            String[] countryMapArray = new String[]{"de", "DE", "en", "UK", "en", "US", "es", "ES", "es", "MX", "fi", "FI", "fr", "FR", "hu", "HU", "it", "CH", "it", "IT", "nl", "NL", "no", "NO", "pt", "PT", "ru", "RU", "sl", "SI", "uk", "UA", "zh", "CN"};
+            String[] countryMapArray = new String[]{
+                    "de", "DE",
+                    "en", "UK",
+                    "en", "US",
+                    "es", "ES",
+                    "es", "MX",
+                    "fi", "FI",
+                    "fr", "FR",
+                    "hu", "HU",
+                    "it", "CH",
+                    "it", "IT",
+                    "nl", "NL",
+                    "no", "NO",
+                    "pt", "PT",
+                    "ru", "RU",
+                    "sl", "SI",
+                    "uk", "UA",
+                    "zh", "CN"
+            };
 
             countryMap = new HashMap<>();
             for (int i = 0; i < countryMapArray.length; i = i + 2) {
@@ -142,8 +160,7 @@ public class Resources implements TextTranslator {
 
     public String format(String resourceKey, Object[] messageArguments) {
         MessageFormat formatter = new MessageFormat(getResourceString(resourceKey));
-        String stringResult = formatter.format(messageArguments);
-        return stringResult;
+        return formatter.format(messageArguments);
     }
 
     public NamedObject createTranslatedString(String key) {
@@ -164,17 +181,15 @@ public class Resources implements TextTranslator {
         return chooser;
     }
 
-    /**
-     */
     public String createThumbnailFileName(File baseFileName) {
-        String fileName = baseFileName.getParent() + File.separatorChar + "." // hidden
-                + baseFileName.getName().replaceFirst(FreeMindCommon.FREEMIND_FILE_EXTENSION + "$", ".png");
-        return fileName;
+        // hidden
+        return MessageFormat.format(
+                "{0}{1}.{2}",
+                baseFileName.getParent(),
+                File.separatorChar,
+                baseFileName.getName().replaceFirst(FreeMindCommon.FREEMIND_FILE_EXTENSION + "$", ".png")
+        );
     }
-
-    //
-    // Property change listener management (static, accessible from all layers)
-    //
 
     public static Collection<FreemindPropertyListener> getPropertyChangeListeners() {
         return Collections.unmodifiableCollection(propertyChangeListeners);
