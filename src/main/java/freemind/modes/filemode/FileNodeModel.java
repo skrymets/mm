@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: FileNodeModel.java,v 1.11.18.1.4.5 2008/11/01 21:11:43 christianfoltin Exp $*/
-
 package freemind.modes.filemode;
 
 import freemind.main.Tools;
@@ -114,9 +94,6 @@ public class FileNodeModel extends NodeAdapter {
         return !file.isFile() || (children != null && !children.isEmpty());
     }
 
-    /**
-     *
-     */
     public ListIterator<MindMapNode> childrenFolded() {
         if (!isRoot()) {
             if (isFolded() || isLeaf()) {

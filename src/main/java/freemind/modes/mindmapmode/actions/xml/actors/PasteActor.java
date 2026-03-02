@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2014 Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.MindMapNodesSelection;
@@ -49,10 +29,6 @@ import java.util.regex.Pattern;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
-/**
- * @author foltin
- * {@code @date} 20.03.2014
- */
 @Slf4j
 public class PasteActor extends XmlActorAdapter {
 
@@ -243,9 +219,6 @@ public class PasteActor extends XmlActorAdapter {
             mNodeCreator = pNodeCreator;
         }
 
-        /**
-         *
-         */
         private DirectHtmlFlavorHandler() {
             mNodeCreator = new NodeCreator() {
 
@@ -390,9 +363,6 @@ public class PasteActor extends XmlActorAdapter {
         }
     }
 
-    /*
-     *
-     */
     private void _paste(Transferable t, MindMapNode target, boolean asSibling, boolean isLeft) {
         if (t == null) {
             return;
@@ -418,9 +388,6 @@ public class PasteActor extends XmlActorAdapter {
         setWaitingCursor(false);
     }
 
-    /**
-     *
-     */
     private DataFlavorHandler[] getFlavorHandlers() {
         DataFlavorHandler[] dataFlavorHandlerList = new DataFlavorHandler[]{new FileListFlavorHandler(), new MindMapNodesFlavorHandler(), new DirectHtmlFlavorHandler(), new StringFlavorHandler(), new ImageFlavorHandler()};
         // %%% Make dependent on an option?: new HtmlFlavorHandler(),
@@ -595,9 +562,6 @@ public class PasteActor extends XmlActorAdapter {
         return pastedNode;
     }
 
-    /**
-     *
-     */
     private void insertNodeInto(MindMapNodeModel node, MindMapNode parent, int i) {
         getExMapFeedback().insertNodeInto(node, parent, i);
     }
@@ -684,7 +648,6 @@ public class PasteActor extends XmlActorAdapter {
                     String base64String = EncryptionUtils.toBase64(baos.toByteArray());
                     trans.setTransferableAsImage(base64String);
 
-
                     if (pUndoAction != null && !amountAlreadySet) {
                         pUndoAction.setNodeAmount(1);
                         amountAlreadySet = true;
@@ -713,7 +676,6 @@ public class PasteActor extends XmlActorAdapter {
         final int childCount = parent.getChildCount();
         return childCount;
     }
-
 
     /**
      * Only for HTML nodes.
@@ -769,9 +731,6 @@ public class PasteActor extends XmlActorAdapter {
         getExMapFeedback().setWaitingCursor(waitingCursor);
     }
 
-    /**
-     *
-     */
     public void processUnfinishedLinksInHooks(MindMapNode node) {
         for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
             MindMapNode child = i.next();
@@ -781,6 +740,5 @@ public class PasteActor extends XmlActorAdapter {
             hook.processUnfinishedLinks();
         }
     }
-
 
 }

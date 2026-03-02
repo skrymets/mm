@@ -57,8 +57,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Set the list of 'place' element items.
-     *
-     * @param list
      */
     public void setPlaceList(List<Place> list) {
         placeList = list;
@@ -74,7 +72,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Add a 'place' element item.
-     * @param item
      */
     public void addPlace(Place item) {
         placeList.add(item);
@@ -83,7 +80,6 @@ public class Searchresults extends XmlAction
     /**
      * Get 'place' element item by position.
      * @return item
-     * @param index
      */
     public Place getPlace(int index) {
         return placeList.get(index);
@@ -107,8 +103,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Set the 'timestamp' attribute value.
-     *
-     * @param timestamp
      */
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
@@ -125,8 +119,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Set the 'attribution' attribute value.
-     *
-     * @param attribution
      */
     public void setAttribution(String attribution) {
         this.attribution = attribution;
@@ -143,8 +135,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Set the 'querystring' attribute value.
-     *
-     * @param querystring
      */
     public void setQuerystring(String querystring) {
         this.querystring = querystring;
@@ -161,8 +151,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Set the 'polygon' attribute value.
-     *
-     * @param polygon
      */
     public void setPolygon(String polygon) {
         this.polygon = polygon;
@@ -179,8 +167,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Set the 'exclude_place_ids' attribute value.
-     *
-     * @param excludePlaceIds
      */
     public void setExcludePlaceIds(String excludePlaceIds) {
         this.excludePlaceIds = excludePlaceIds;
@@ -197,8 +183,6 @@ public class Searchresults extends XmlAction
 
     /**
      * Set the 'more_url' attribute value.
-     *
-     * @param moreUrl
      */
     public void setMoreUrl(String moreUrl) {
         this.moreUrl = moreUrl;

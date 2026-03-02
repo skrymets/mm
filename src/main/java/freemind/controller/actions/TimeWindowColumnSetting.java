@@ -35,8 +35,6 @@ public class TimeWindowColumnSetting extends TableColumnSettingStore
 
     /**
      * Set the 'placeholder' attribute value.
-     *
-     * @param placeholder
      */
     public void setPlaceholder(Integer placeholder) {
         this.placeholder = placeholder;

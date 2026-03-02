@@ -47,8 +47,6 @@ public class TransferableContent
 
     /**
      * Set the list of 'transferable_file' element items.
-     *
-     * @param list
      */
     public void setTransferableFileList(List<TransferableFile> list) {
         transferableFileList = list;
@@ -64,7 +62,6 @@ public class TransferableContent
 
     /**
      * Add a 'transferable_file' element item.
-     * @param item
      */
     public void addTransferableFile(TransferableFile item) {
         transferableFileList.add(item);
@@ -73,7 +70,6 @@ public class TransferableContent
     /**
      * Get 'transferable_file' element item by position.
      * @return item
-     * @param index
      */
     public TransferableFile getTransferableFile(int index) {
         return transferableFileList.get(index);
@@ -97,8 +93,6 @@ public class TransferableContent
 
     /**
      * Set the 'Transferable' element value.
-     *
-     * @param transferable
      */
     public void setTransferable(String transferable) {
         this.transferable = transferable;
@@ -115,8 +109,6 @@ public class TransferableContent
 
     /**
      * Set the 'TransferableAsPlainText' element value.
-     *
-     * @param transferableAsPlainText
      */
     public void setTransferableAsPlainText(String transferableAsPlainText) {
         this.transferableAsPlainText = transferableAsPlainText;
@@ -133,8 +125,6 @@ public class TransferableContent
 
     /**
      * Set the 'TransferableAsRTF' element value.
-     *
-     * @param transferableAsRTF
      */
     public void setTransferableAsRTF(String transferableAsRTF) {
         this.transferableAsRTF = transferableAsRTF;
@@ -151,8 +141,6 @@ public class TransferableContent
 
     /**
      * Set the 'TransferableAsDrop' element value.
-     *
-     * @param transferableAsDrop
      */
     public void setTransferableAsDrop(String transferableAsDrop) {
         this.transferableAsDrop = transferableAsDrop;
@@ -169,8 +157,6 @@ public class TransferableContent
 
     /**
      * Set the 'TransferableAsHtml' element value.
-     *
-     * @param transferableAsHtml
      */
     public void setTransferableAsHtml(String transferableAsHtml) {
         this.transferableAsHtml = transferableAsHtml;
@@ -187,8 +173,6 @@ public class TransferableContent
 
     /**
      * Set the 'TransferableAsImage' element value.
-     *
-     * @param transferableAsImage
      */
     public void setTransferableAsImage(String transferableAsImage) {
         this.transferableAsImage = transferableAsImage;

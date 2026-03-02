@@ -35,8 +35,6 @@ public class CollaborationReceiveLock extends CollaborationActionBase
 
     /**
      * Set the 'id' attribute value.
-     *
-     * @param id
      */
     public void setId(String id) {
         this.id = id;

@@ -39,8 +39,6 @@ public class AttributeTableProperties extends XmlAction
 
     /**
      * Set the list of 'table_column_order' element items.
-     *
-     * @param list
      */
     public void setTableColumnOrderList(List<TableColumnOrder> list) {
         tableColumnOrderList = list;
@@ -56,7 +54,6 @@ public class AttributeTableProperties extends XmlAction
 
     /**
      * Add a 'table_column_order' element item.
-     * @param item
      */
     public void addTableColumnOrder(TableColumnOrder item) {
         tableColumnOrderList.add(item);
@@ -65,7 +62,6 @@ public class AttributeTableProperties extends XmlAction
     /**
      * Get 'table_column_order' element item by position.
      * @return item
-     * @param index
      */
     public TableColumnOrder getTableColumnOrder(int index) {
         return tableColumnOrderList.get(index);

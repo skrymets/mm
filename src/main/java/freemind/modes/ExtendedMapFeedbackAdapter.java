@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2014 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes;
 
 import freemind.controller.actions.Pattern;
@@ -44,18 +24,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
 
-/**
- * @author foltin
- * {@code @date} 16.03.2014
- */
 public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
         implements ExtendedMapFeedback {
 
-
-    /**
-     * @author foltin
-     * {@code @date} 11.04.2014
-     */
     private static final class DummyTransferable implements Transferable {
         @Override
         public boolean isDataFlavorSupported(DataFlavor pFlavor) {
@@ -79,9 +50,6 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
     protected final XmlActorFactory mActorFactory;
     private MindMapHookFactory mNodeHookFactory;
 
-    /**
-     *
-     */
     public ExtendedMapFeedbackAdapter() {
         super();
         mActionRegistry = new ActionRegistry();
@@ -90,8 +58,6 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
                 new DefaultActionHandler(getActionRegistry()));
     }
 
-    /**
-     */
     @Override
     public NodeAdapter getNodeFromID(String nodeID) {
         NodeAdapter node = (NodeAdapter) getMap().getLinkRegistry()
@@ -124,9 +90,6 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
         getMap().removeNodeFromParent(pSelectedNode);
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.ExtendedMapFeedback#setWaitingCursor(boolean)
-     */
     @Override
     public void setWaitingCursor(boolean pWaiting) {
     }
@@ -167,9 +130,6 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
         return new DummyTransferable();
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.ExtendedMapFeedback#copy(java.util.List, boolean)
-     */
     @Override
     public Transferable copy(List<MindMapNode> pNodeList, boolean pSaveInvisible) {
         return new DummyTransferable();
@@ -191,9 +151,6 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
         mSelectedNode = pFocussed;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.ExtendedMapFeedback#load(java.io.File)
-     */
     @Override
     public MapFeedback load(File pFile) {
         return this;

@@ -35,8 +35,6 @@ public class NodeBackgroundColorFormatAction extends FormatNodeAction
 
     /**
      * Set the 'color' attribute value.
-     *
-     * @param color
      */
     public void setColor(String color) {
         this.color = color;

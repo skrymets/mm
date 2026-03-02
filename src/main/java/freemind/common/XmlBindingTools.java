@@ -1,29 +1,7 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2004  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 23.06.2004
- */
-
 package freemind.common;
 
 import freemind.controller.Controller;
-import freemind.controller.actions.*;;
+import freemind.controller.actions.*;
 import freemind.main.Resources;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -38,11 +16,11 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+;
+
 /**
  * XML serialization facade using JAXB (Jakarta XML Binding).
  * Replaces previous JiBX-based implementation.
- *
- * @author foltin
  */
 @Slf4j
 public class XmlBindingTools {
@@ -58,12 +36,19 @@ public class XmlBindingTools {
             instance = new XmlBindingTools();
             try {
                 jaxbContext = JAXBContext.newInstance(
-                        XmlAction.class, MenuStructure.class, Plugin.class,
-                        MenuCategoryBase.class, MenuSubmenu.class,
-                        MenuAction.class, MenuCheckedAction.class,
-                        MenuRadioAction.class, MenuSeparator.class,
-                        PluginClasspath.class, PluginRegistration.class,
-                        PluginAction.class, PluginStrings.class
+                        XmlAction.class,
+                        MenuStructure.class,
+                        Plugin.class,
+                        MenuCategoryBase.class,
+                        MenuSubmenu.class,
+                        MenuAction.class,
+                        MenuCheckedAction.class,
+                        MenuRadioAction.class,
+                        MenuSeparator.class,
+                        PluginClasspath.class,
+                        PluginRegistration.class,
+                        PluginAction.class,
+                        PluginStrings.class
                 );
             } catch (JAXBException e) {
                 log.error("Failed to initialize JAXB context", e);
@@ -72,10 +57,7 @@ public class XmlBindingTools {
         return instance;
     }
 
-    public void storeDialogPositions(Controller controller,
-                                     JDialog dialog,
-                                     WindowConfigurationStorage storage,
-                                     String window_preference_storage_property) {
+    public void storeDialogPositions(Controller controller, JDialog dialog, WindowConfigurationStorage storage, String window_preference_storage_property) {
         String result = storeDialogPositions(storage, dialog);
         controller.setProperty(window_preference_storage_property, result);
     }
@@ -98,8 +80,7 @@ public class XmlBindingTools {
             WindowConfigurationStorage storage = (WindowConfigurationStorage) unMarshall(marshalled);
             if (storage != null) {
                 Dimension screenSize;
-                if (resources.getBoolProperty(
-                        "place_dialogs_on_first_screen")) {
+                if (resources.getBoolProperty("place_dialogs_on_first_screen")) {
                     Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
                     screenSize = defaultToolkit.getScreenSize();
                 } else {
@@ -108,11 +89,8 @@ public class XmlBindingTools {
                     screenSize.width = Integer.MAX_VALUE;
                 }
                 int delta = 20;
-                dialog.setLocation(
-                        Math.min(storage.getX(), screenSize.width - delta),
-                        Math.min(storage.getY(), screenSize.height - delta));
-                dialog.setSize(new Dimension(storage.getWidth(), storage
-                        .getHeight()));
+                dialog.setLocation(Math.min(storage.getX(), screenSize.width - delta), Math.min(storage.getY(), screenSize.height - delta));
+                dialog.setSize(new Dimension(storage.getWidth(), storage.getHeight()));
                 return storage;
             }
         }

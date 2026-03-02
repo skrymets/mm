@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2014 Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.AddIconAction;
@@ -31,14 +11,8 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 import java.util.List;
 
-/**
- * @author foltin
- * {@code @date} 25.03.2014
- */
 public class RemoveIconActor extends NodeXmlActorAdapter {
 
-    /**
-     */
     public RemoveIconActor(ExtendedMapFeedback pMapFeedback) {
         super(pMapFeedback);
     }
@@ -70,10 +44,6 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
         return node.getIcons().size();
     }
 
-    /**
-     *
-     */
-
     public void act(XmlAction action) {
         if (action instanceof RemoveIconXmlAction) {
             RemoveIconXmlAction removeAction = (RemoveIconXmlAction) action;
@@ -85,9 +55,6 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
         }
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.mindmapmode.actions.NodeActorXml#apply(freemind.model.MindMap, freemind.model.MindMapNode)
-     */
     @Override
     public ActionPair apply(MindMap pModel, MindMapNode pSelected) {
         return apply(pSelected);

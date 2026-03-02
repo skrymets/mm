@@ -53,8 +53,6 @@ public class AddArrowLinkXmlAction extends NodeAction
 
     /**
      * Set the 'destination' attribute value.
-     *
-     * @param destination
      */
     public void setDestination(String destination) {
         this.destination = destination;
@@ -71,8 +69,6 @@ public class AddArrowLinkXmlAction extends NodeAction
 
     /**
      * Set the 'new_id' attribute value.
-     *
-     * @param newId
      */
     public void setNewId(String newId) {
         this.newId = newId;
@@ -89,8 +85,6 @@ public class AddArrowLinkXmlAction extends NodeAction
 
     /**
      * Set the 'color' attribute value.
-     *
-     * @param color
      */
     public void setColor(String color) {
         this.color = color;
@@ -107,8 +101,6 @@ public class AddArrowLinkXmlAction extends NodeAction
 
     /**
      * Set the 'startInclination' attribute value.
-     *
-     * @param startInclination
      */
     public void setStartInclination(String startInclination) {
         this.startInclination = startInclination;
@@ -125,8 +117,6 @@ public class AddArrowLinkXmlAction extends NodeAction
 
     /**
      * Set the 'endInclination' attribute value.
-     *
-     * @param endInclination
      */
     public void setEndInclination(String endInclination) {
         this.endInclination = endInclination;
@@ -143,8 +133,6 @@ public class AddArrowLinkXmlAction extends NodeAction
 
     /**
      * Set the 'startArrow' attribute value.
-     *
-     * @param startArrow
      */
     public void setStartArrow(String startArrow) {
         this.startArrow = startArrow;
@@ -161,8 +149,6 @@ public class AddArrowLinkXmlAction extends NodeAction
 
     /**
      * Set the 'endArrow' attribute value.
-     *
-     * @param endArrow
      */
     public void setEndArrow(String endArrow) {
         this.endArrow = endArrow;

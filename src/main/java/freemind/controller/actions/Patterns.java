@@ -39,8 +39,6 @@ public class Patterns extends XmlAction
 
     /**
      * Set the list of 'pattern' element items.
-     *
-     * @param list
      */
     public void setPatternList(List<Pattern> list) {
         patternList = list;
@@ -56,7 +54,6 @@ public class Patterns extends XmlAction
 
     /**
      * Add a 'pattern' element item.
-     * @param item
      */
     public void addPattern(Pattern item) {
         patternList.add(item);
@@ -65,7 +62,6 @@ public class Patterns extends XmlAction
     /**
      * Get 'pattern' element item by position.
      * @return item
-     * @param index
      */
     public Pattern getPattern(int index) {
         return patternList.get(index);

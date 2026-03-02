@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2012 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes.common.plugins;
 
 import freemind.extensions.PermanentNodeHook;
@@ -35,9 +15,6 @@ import java.util.Objects;
 /**
  * This base class is free of openstreetmap and similar classes.
  * Thus, it doesn't know much about its position.
- *
- * @author foltin
- * {@code @date} 16.08.2012
  */
 
 @Slf4j
@@ -79,30 +56,16 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
         node.setStateIcon(NODE_MAP_LOCATION_ICON, (enabled) ? getMapLocationIcon() : null);
     }
 
-    /**
-     *
-     */
     public MapNodePositionHolderBase() {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.PermanentNodeHookAdapter#shutdownMapHook()
-     */
     public void shutdownMapHook() {
         setStateIcon(getNode(), false);
         hideTooltip();
         super.shutdownMapHook();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.extensions.NodeHookAdapter#invoke(freemind.model.MindMapNode)
-     */
     public void invoke(MindMapNode pNode) {
         super.invoke(pNode);
         setStateIcon(pNode, true);
@@ -120,7 +83,6 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
     protected boolean isTooltipDesired() {
         return getController().getResources().getBoolProperty(NODE_MAP_SHOW_TOOLTIP) && !Objects.equals(mTooltipLocation, "false");
     }
-
 
     public void loadFrom(Element pChild) {
         super.loadFrom(pChild);
@@ -141,9 +103,6 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
         return imageHtml;
     }
 
-    /**
-     *
-     */
     protected void hideTooltip() {
         setToolTip(NODE_MAP_HOOK_NAME, null);
     }

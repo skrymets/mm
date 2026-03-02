@@ -41,8 +41,6 @@ public class ArrowLinkArrowXmlAction extends XmlAction
 
     /**
      * Set the 'id' attribute value.
-     *
-     * @param id
      */
     public void setId(String id) {
         this.id = id;
@@ -59,8 +57,6 @@ public class ArrowLinkArrowXmlAction extends XmlAction
 
     /**
      * Set the 'end_arrow' attribute value.
-     *
-     * @param endArrow
      */
     public void setEndArrow(String endArrow) {
         this.endArrow = endArrow;
@@ -77,8 +73,6 @@ public class ArrowLinkArrowXmlAction extends XmlAction
 
     /**
      * Set the 'start_arrow' attribute value.
-     *
-     * @param startArrow
      */
     public void setStartArrow(String startArrow) {
         this.startArrow = startArrow;

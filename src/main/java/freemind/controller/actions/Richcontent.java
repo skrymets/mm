@@ -38,8 +38,6 @@ public class Richcontent
 
     /**
      * Set the 'html' element value.
-     *
-     * @param html
      */
     public void setHtml(Html html) {
         this.html = html;
@@ -56,8 +54,6 @@ public class Richcontent
 
     /**
      * Set the 'TYPE' attribute value.
-     *
-     * @param TYPE1
      */
     public void setTYPE1(TYPE TYPE1) {
         this.TYPE1 = TYPE1;

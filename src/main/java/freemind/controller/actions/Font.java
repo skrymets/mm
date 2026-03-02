@@ -54,8 +54,6 @@ public class Font
 
     /**
      * Set the 'BOLD' attribute value.
-     *
-     * @param BOLD1
      */
     public void setBOLD1(BOLD BOLD1) {
         this.BOLD1 = BOLD1;
@@ -72,8 +70,6 @@ public class Font
 
     /**
      * Set the 'STRIKETHROUGH' attribute value.
-     *
-     * @param STRIKETHROUGH1
      */
     public void setSTRIKETHROUGH1(STRIKETHROUGH STRIKETHROUGH1) {
         this.STRIKETHROUGH1 = STRIKETHROUGH1;
@@ -90,8 +86,6 @@ public class Font
 
     /**
      * Set the 'ITALIC' attribute value.
-     *
-     * @param ITALIC1
      */
     public void setITALIC1(ITALIC ITALIC1) {
         this.ITALIC1 = ITALIC1;
@@ -108,8 +102,6 @@ public class Font
 
     /**
      * Set the 'NAME' attribute value.
-     *
-     * @param NAME
      */
     public void setNAME(String NAME) {
         this.NAME = NAME;
@@ -126,8 +118,6 @@ public class Font
 
     /**
      * Set the 'SIZE' attribute value.
-     *
-     * @param SIZE
      */
     public void setSIZE(BigInteger SIZE) {
         this.SIZE = SIZE;

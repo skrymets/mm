@@ -28,8 +28,6 @@ public class PatternPropertyBase
 
     /**
      * Set the 'value' attribute value.
-     *
-     * @param value
      */
     public void setValue(String value) {
         this.value = value;

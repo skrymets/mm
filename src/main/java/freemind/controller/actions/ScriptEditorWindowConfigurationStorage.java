@@ -40,8 +40,6 @@ public class ScriptEditorWindowConfigurationStorage
 
     /**
      * Set the 'left_ratio' attribute value.
-     *
-     * @param leftRatio
      */
     public void setLeftRatio(Integer leftRatio) {
         this.leftRatio = leftRatio;
@@ -58,8 +56,6 @@ public class ScriptEditorWindowConfigurationStorage
 
     /**
      * Set the 'top_ratio' attribute value.
-     *
-     * @param topRatio
      */
     public void setTopRatio(Integer topRatio) {
         this.topRatio = topRatio;

@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-
 package freemind.model;
 
 import freemind.main.*;
@@ -169,9 +149,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     // public void close() {
     // }
 
-    /**
-     *
-     */
     private void removeNodes(MindMapNode node) {
         node.removeAllHooks();
         mMapFeedback.fireNodePreDeleteEvent(node);
@@ -294,9 +271,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.tree.DefaultTreeModel#insertNodeInto(javax.swing.tree.MutableTreeNode, javax.swing.tree.MutableTreeNode, int)
-     */
     @Override
     public void insertNodeInto(MindMapNode pNewChild,
                                MindMapNode pParent, int pIndex) {
@@ -475,9 +449,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         return mMapFeedback;
     }
 
-    /**
-     *
-     */
     public SortedMapListModel getIcons() {
         SortedMapListModel mapIcons;
         mapIcons = new SortedMapListModel();
@@ -485,8 +456,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         return mapIcons;
     }
 
-    /**
-     */
     private void addIcons(SortedMapListModel pMapIcons, MindMapNode pNode) {
         pMapIcons.addAll(pNode.getIcons());
         ListIterator<MindMapNode> iterator = pNode.childrenUnfolded();
@@ -564,6 +533,5 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             reader.close();
         }
     }
-
 
 }

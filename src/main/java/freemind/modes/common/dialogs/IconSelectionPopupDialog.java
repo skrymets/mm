@@ -1,25 +1,3 @@
-/**
- * Created on 22.02.2004
- * FreeMind - A Program for creating and viewing Mindmaps
- * Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- * See COPYING for Details
- * <p>
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * @author <a href="mailto:labe@users.sourceforge.net">Lars Berning</a>
- */
 package freemind.modes.common.dialogs;
 
 import freemind.main.FreeMindMain;
@@ -216,11 +194,6 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         return m;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-     */
     public void keyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getKeyCode()) {
             case KeyEvent.VK_RIGHT:
@@ -283,62 +256,26 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         this.dispose();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
-     */
     public void keyReleased(KeyEvent arg0) {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-     */
     public void keyTyped(KeyEvent arg0) {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-     */
     public void mouseClicked(MouseEvent mouseEvent) {
         addIcon(mouseEvent.getModifiers());
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-     */
     public void mouseEntered(MouseEvent arg0) {
         select(getPosition((JLabel) arg0.getSource()));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-     */
     public void mouseExited(MouseEvent arg0) {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-     */
     public void mousePressed(MouseEvent arg0) {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-     */
     public void mouseReleased(MouseEvent arg0) {
     }
 

@@ -36,8 +36,6 @@ public class AttributeLayout
 
     /**
      * Set the 'NAME_WIDTH' attribute value.
-     *
-     * @param NAMEWIDTH
      */
     public void setNAMEWIDTH(BigInteger NAMEWIDTH) {
         this.NAMEWIDTH = NAMEWIDTH;
@@ -54,8 +52,6 @@ public class AttributeLayout
 
     /**
      * Set the 'VALUE_WIDTH' attribute value.
-     *
-     * @param VALUEWIDTH
      */
     public void setVALUEWIDTH(BigInteger VALUEWIDTH) {
         this.VALUEWIDTH = VALUEWIDTH;

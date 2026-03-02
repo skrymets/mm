@@ -76,8 +76,6 @@ public class CompoundAction extends NodeAction
 
     /**
      * Set the list of choice items.
-     *
-     * @param list
      */
     public void setChoiceList(List<Choice> list) {
         choiceList = list;
@@ -94,7 +92,6 @@ public class CompoundAction extends NodeAction
 
     /**
      * Add a choice item.
-     * @param item
      */
     public void addChoice(Choice item) {
         if (choiceList == null) choiceList = new ArrayList<>();
@@ -104,7 +101,6 @@ public class CompoundAction extends NodeAction
     /**
      * Get choice item by position.
      * @return item
-     * @param index
      */
     public Choice getChoice(int index) {
         return choiceList.get(index);
@@ -290,8 +286,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'compound_action' element value.
-         *
-         * @param compoundAction
          */
         public void setCompoundAction(CompoundAction compoundAction) {
             setChoiceListSelect(COMPOUND_ACTION_CHOICE);
@@ -318,8 +312,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'select_node_action' element value.
-         *
-         * @param selectNodeAction
          */
         public void setSelectNodeAction(SelectNodeAction selectNodeAction) {
             setChoiceListSelect(SELECT_NODE_ACTION_CHOICE);
@@ -346,8 +338,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'cut_node_action' element value.
-         *
-         * @param cutNodeAction
          */
         public void setCutNodeAction(CutNodeAction cutNodeAction) {
             setChoiceListSelect(CUT_NODE_ACTION_CHOICE);
@@ -374,8 +364,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'paste_node_action' element value.
-         *
-         * @param pasteNodeAction
          */
         public void setPasteNodeAction(PasteNodeAction pasteNodeAction) {
             setChoiceListSelect(PASTE_NODE_ACTION_CHOICE);
@@ -402,8 +390,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'undo_paste_node_action' element value.
-         *
-         * @param undoPasteNodeAction
          */
         public void setUndoPasteNodeAction(
                 UndoPasteNodeAction undoPasteNodeAction) {
@@ -431,8 +417,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'revert_xml_action' element value.
-         *
-         * @param revertXmlAction
          */
         public void setRevertXmlAction(RevertXmlAction revertXmlAction) {
             setChoiceListSelect(REVERT_XML_ACTION_CHOICE);
@@ -459,8 +443,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'bold_node_action' element value.
-         *
-         * @param boldNodeAction
          */
         public void setBoldNodeAction(BoldNodeAction boldNodeAction) {
             setChoiceListSelect(BOLD_NODE_ACTION_CHOICE);
@@ -487,8 +469,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'strikethrough_node_action' element value.
-         *
-         * @param strikethroughNodeAction
          */
         public void setStrikethroughNodeAction(
                 StrikethroughNodeAction strikethroughNodeAction) {
@@ -516,8 +496,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'italic_node_action' element value.
-         *
-         * @param italicNodeAction
          */
         public void setItalicNodeAction(ItalicNodeAction italicNodeAction) {
             setChoiceListSelect(ITALIC_NODE_ACTION_CHOICE);
@@ -544,8 +522,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'underlined_node_action' element value.
-         *
-         * @param underlinedNodeAction
          */
         public void setUnderlinedNodeAction(
                 UnderlinedNodeAction underlinedNodeAction) {
@@ -573,8 +549,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'font_size_node_action' element value.
-         *
-         * @param fontSizeNodeAction
          */
         public void setFontSizeNodeAction(FontSizeNodeAction fontSizeNodeAction) {
             setChoiceListSelect(FONT_SIZE_NODE_ACTION_CHOICE);
@@ -601,8 +575,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'font_node_action' element value.
-         *
-         * @param fontNodeAction
          */
         public void setFontNodeAction(FontNodeAction fontNodeAction) {
             setChoiceListSelect(FONT_NODE_ACTION_CHOICE);
@@ -629,8 +601,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'node_color_format_action' element value.
-         *
-         * @param nodeColorFormatAction
          */
         public void setNodeColorFormatAction(
                 NodeColorFormatAction nodeColorFormatAction) {
@@ -658,8 +628,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'node_background_color_format_action' element value.
-         *
-         * @param nodeBackgroundColorFormatAction
          */
         public void setNodeBackgroundColorFormatAction(
                 NodeBackgroundColorFormatAction nodeBackgroundColorFormatAction) {
@@ -687,8 +655,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'node_style_format_action' element value.
-         *
-         * @param nodeStyleFormatAction
          */
         public void setNodeStyleFormatAction(
                 NodeStyleFormatAction nodeStyleFormatAction) {
@@ -716,8 +682,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'edge_color_format_action' element value.
-         *
-         * @param edgeColorFormatAction
          */
         public void setEdgeColorFormatAction(
                 EdgeColorFormatAction edgeColorFormatAction) {
@@ -745,8 +709,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'edge_width_format_action' element value.
-         *
-         * @param edgeWidthFormatAction
          */
         public void setEdgeWidthFormatAction(
                 EdgeWidthFormatAction edgeWidthFormatAction) {
@@ -774,8 +736,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'edge_style_format_action' element value.
-         *
-         * @param edgeStyleFormatAction
          */
         public void setEdgeStyleFormatAction(
                 EdgeStyleFormatAction edgeStyleFormatAction) {
@@ -803,8 +763,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'delete_node_action' element value.
-         *
-         * @param deleteNodeAction
          */
         public void setDeleteNodeAction(DeleteNodeAction deleteNodeAction) {
             setChoiceListSelect(DELETE_NODE_ACTION_CHOICE);
@@ -831,8 +789,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'edit_node_action' element value.
-         *
-         * @param editNodeAction
          */
         public void setEditNodeAction(EditNodeAction editNodeAction) {
             setChoiceListSelect(EDIT_NODE_ACTION_CHOICE);
@@ -859,8 +815,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'new_node_action' element value.
-         *
-         * @param newNodeAction
          */
         public void setNewNodeAction(NewNodeAction newNodeAction) {
             setChoiceListSelect(NEW_NODE_ACTION_CHOICE);
@@ -887,8 +841,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'fold_action' element value.
-         *
-         * @param foldAction
          */
         public void setFoldAction(FoldAction foldAction) {
             setChoiceListSelect(FOLD_ACTION_CHOICE);
@@ -915,8 +867,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'move_nodes_action' element value.
-         *
-         * @param moveNodesAction
          */
         public void setMoveNodesAction(MoveNodesAction moveNodesAction) {
             setChoiceListSelect(MOVE_NODES_ACTION_CHOICE);
@@ -943,8 +893,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'hook_node_action' element value.
-         *
-         * @param hookNodeAction
          */
         public void setHookNodeAction(HookNodeAction hookNodeAction) {
             setChoiceListSelect(HOOK_NODE_ACTION_CHOICE);
@@ -971,8 +919,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'add_icon_action' element value.
-         *
-         * @param addIconAction
          */
         public void setAddIconAction(AddIconAction addIconAction) {
             setChoiceListSelect(ADD_ICON_ACTION_CHOICE);
@@ -999,8 +945,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'remove_icon_xml_action' element value.
-         *
-         * @param removeIconXmlAction
          */
         public void setRemoveIconXmlAction(
                 RemoveIconXmlAction removeIconXmlAction) {
@@ -1028,8 +972,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'remove_all_icons_xml_action' element value.
-         *
-         * @param removeAllIconsXmlAction
          */
         public void setRemoveAllIconsXmlAction(
                 RemoveAllIconsXmlAction removeAllIconsXmlAction) {
@@ -1057,8 +999,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'move_node_xml_action' element value.
-         *
-         * @param moveNodeXmlAction
          */
         public void setMoveNodeXmlAction(MoveNodeXmlAction moveNodeXmlAction) {
             setChoiceListSelect(MOVE_NODE_XML_ACTION_CHOICE);
@@ -1085,8 +1025,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'add_cloud_xml_action' element value.
-         *
-         * @param addCloudXmlAction
          */
         public void setAddCloudXmlAction(AddCloudXmlAction addCloudXmlAction) {
             setChoiceListSelect(ADD_CLOUD_XML_ACTION_CHOICE);
@@ -1113,8 +1051,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'cloud_color_xml_action' element value.
-         *
-         * @param cloudColorXmlAction
          */
         public void setCloudColorXmlAction(
                 CloudColorXmlAction cloudColorXmlAction) {
@@ -1142,8 +1078,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'add_arrow_link_xml_action' element value.
-         *
-         * @param addArrowLinkXmlAction
          */
         public void setAddArrowLinkXmlAction(
                 AddArrowLinkXmlAction addArrowLinkXmlAction) {
@@ -1171,8 +1105,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'add_link_xml_action' element value.
-         *
-         * @param addLinkXmlAction
          */
         public void setAddLinkXmlAction(AddLinkXmlAction addLinkXmlAction) {
             setChoiceListSelect(ADD_LINK_XML_ACTION_CHOICE);
@@ -1199,8 +1131,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'remove_arrow_link_xml_action' element value.
-         *
-         * @param removeArrowLinkXmlAction
          */
         public void setRemoveArrowLinkXmlAction(
                 RemoveArrowLinkXmlAction removeArrowLinkXmlAction) {
@@ -1228,8 +1158,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'arrow_link_color_xml_action' element value.
-         *
-         * @param arrowLinkColorXmlAction
          */
         public void setArrowLinkColorXmlAction(
                 ArrowLinkColorXmlAction arrowLinkColorXmlAction) {
@@ -1257,8 +1185,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'arrow_link_arrow_xml_action' element value.
-         *
-         * @param arrowLinkArrowXmlAction
          */
         public void setArrowLinkArrowXmlAction(
                 ArrowLinkArrowXmlAction arrowLinkArrowXmlAction) {
@@ -1286,8 +1212,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'arrow_link_point_xml_action' element value.
-         *
-         * @param arrowLinkPointXmlAction
          */
         public void setArrowLinkPointXmlAction(
                 ArrowLinkPointXmlAction arrowLinkPointXmlAction) {
@@ -1315,8 +1239,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'set_attribute_action' element value.
-         *
-         * @param setAttributeAction
          */
         public void setSetAttributeAction(SetAttributeAction setAttributeAction) {
             setChoiceListSelect(SET_ATTRIBUTE_ACTION_CHOICE);
@@ -1343,8 +1265,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'insert_attribute_action' element value.
-         *
-         * @param insertAttributeAction
          */
         public void setInsertAttributeAction(
                 InsertAttributeAction insertAttributeAction) {
@@ -1372,8 +1292,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'add_attribute_action' element value.
-         *
-         * @param addAttributeAction
          */
         public void setAddAttributeAction(AddAttributeAction addAttributeAction) {
             setChoiceListSelect(ADD_ATTRIBUTE_ACTION_CHOICE);
@@ -1400,8 +1318,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'remove_attribute_action' element value.
-         *
-         * @param removeAttributeAction
          */
         public void setRemoveAttributeAction(
                 RemoveAttributeAction removeAttributeAction) {
@@ -1429,8 +1345,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'edit_note_to_node_action' element value.
-         *
-         * @param editNoteToNodeAction
          */
         public void setEditNoteToNodeAction(
                 EditNoteToNodeAction editNoteToNodeAction) {
@@ -1458,8 +1372,6 @@ public class CompoundAction extends NodeAction
 
         /**
          * Set the 'place_node_xml_action' element value.
-         *
-         * @param placeNodeXmlAction
          */
         public void setPlaceNodeXmlAction(PlaceNodeXmlAction placeNodeXmlAction) {
             setChoiceListSelect(PLACE_NODE_XML_ACTION_CHOICE);

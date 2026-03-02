@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes;
 
 import freemind.main.SwingUtils;
@@ -72,9 +53,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     @Getter
     private Mode mode;
 
-    /**
-     *
-     */
     @Getter
     private final Color selectionColor = new Color(200, 220, 200);
     /**
@@ -143,7 +121,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             getController().setTitle();
         }
     }
-
 
     public void nodeRefresh(MindMapNode node) {
         nodeRefresh(node, false);
@@ -292,9 +269,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         }
     }
 
-    /**
-     *
-     */
     abstract protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, IOException;
 
     /**
@@ -322,13 +296,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         fileIOService.loadURL(relative);
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.ExtendedMapFeedback#setWaitingCursor(boolean)
-     */
     public void setWaitingCursor(boolean pWaiting) {
         getFrame().setWaitingCursor(pWaiting);
     }
-
 
     /**
      * fc, 24.1.2004: having two methods getSelecteds with different return
@@ -457,13 +427,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         fileIOService.open();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.modes.FreeMindFileDialog.DirectoryResultListener#setChosenDirectory
-     * (java.io.File)
-     */
     public void setChosenDirectory(File pDir) {
         fileIOService.setChosenDirectory(pDir);
     }
@@ -490,14 +453,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         return fileIOService.saveAs();
     }
 
-
     /**
      * Return false if user has canceled.
      */
     public boolean close(boolean force, MapModuleManager mapModuleManager) {
         return fileIOService.close(force, mapModuleManager);
     }
-
 
     public void setVisible(boolean visible) {
         NodeView node = getSelectedView();
@@ -606,9 +567,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         return getFrame().getResource(name);
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap.MapFeedback#getResourceString(java.lang.String)
-     */
     @Override
     public String getResourceString(String pTextId) {
         return getFrame().getResourceString(pTextId);
@@ -641,17 +599,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         return mView;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.MapFeedback#getMapView()
-     */
     @Override
     public MapView getMapView() {
         return getView();
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.MapFeedback#getViewFeedback()
-     */
     @Override
     public ViewFeedback getViewFeedback() {
         return this;
@@ -677,7 +629,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             return getView().getSelectionService().getSelected();
         return null;
     }
-
 
     public class OpenAction extends AbstractAction {
         final ControllerAdapter mc;
@@ -862,19 +813,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         return forNodesFlavor;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.modes.ModeController#updatePopupMenu(freemind.controller.
-     * StructuredMenuHolder)
-     */
     public void updatePopupMenu(StructuredMenuHolder holder) {
 
     }
-
-    /**
-     *
-     */
 
     public void shutdownController() {
         setAllActions(false);
@@ -937,25 +878,16 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         nodeRefresh(node);
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap.MapFeedback#getProperty(java.lang.String)
-     */
     @Override
     public String getProperty(String pResourceId) {
         return getController().getProperty(pResourceId);
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap.MapFeedback#getDefaultFont()
-     */
     @Override
     public Font getDefaultFont() {
         return getController().getDefaultFont();
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap.MapFeedback#getFontThroughMap(java.awt.Font)
-     */
     @Override
     public Font getFontThroughMap(Font pFont) {
         return getController().getFontThroughMap(pFont);
@@ -996,10 +928,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         return getController().getMapMouseWheelListener();
     }
 
-
-    /**
-     *
-     */
     @Override
     public NodeAdapter getNodeFromID(String nodeID) {
         NodeAdapter node = (NodeAdapter) getMap().getLinkRegistry().getTargetForId(nodeID);
@@ -1020,6 +948,5 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         // this method fires a property change event to inform others.
         getController().setProperty(pProperty, pValue);
     }
-
 
 }

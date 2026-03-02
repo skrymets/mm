@@ -36,8 +36,6 @@ public class MenuStructure
 
     /**
      * Set the list of 'menu_category' element items.
-     *
-     * @param list
      */
     public void setMenuCategoryList(List<MenuCategoryBase> list) {
         menuCategoryList = list;
@@ -53,7 +51,6 @@ public class MenuStructure
 
     /**
      * Add a 'menu_category' element item.
-     * @param item
      */
     public void addMenuCategory(MenuCategoryBase item) {
         menuCategoryList.add(item);
@@ -62,7 +59,6 @@ public class MenuStructure
     /**
      * Get 'menu_category' element item by position.
      * @return item
-     * @param index
      */
     public MenuCategoryBase getMenuCategory(int index) {
         return menuCategoryList.get(index);

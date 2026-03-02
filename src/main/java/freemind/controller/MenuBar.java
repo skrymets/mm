@@ -1,26 +1,7 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: MenuBar.java,v 1.24.14.17.2.22 2008/11/12 21:44:33 christianfoltin Exp $*/
-
 package freemind.controller;
 
 import freemind.main.FreeMind;
+import freemind.main.FreeMindMain;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import lombok.Getter;
@@ -35,6 +16,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import static java.text.MessageFormat.format;
+
 /**
  * This is the menu bar for FreeMind. Actions are defined in MenuListener.
  * Moreover, the StructuredMenuHolder of all menus are hold here.
@@ -44,16 +27,13 @@ public class MenuBar extends JMenuBar {
 
     public static final String MENU_BAR_PREFIX = "menu_bar/";
     public static final String GENERAL_POPUP_PREFIX = "popup/";
-
     public static final String POPUP_MENU = GENERAL_POPUP_PREFIX + "popup/";
-
     public static final String INSERT_MENU = MENU_BAR_PREFIX + "insert/";
     public static final String NAVIGATE_MENU = MENU_BAR_PREFIX + "navigate/";
     public static final String VIEW_MENU = MENU_BAR_PREFIX + "view/";
     public static final String HELP_MENU = MENU_BAR_PREFIX + "help/";
     public static final String MINDMAP_MENU = MENU_BAR_PREFIX + "mindmaps/";
-    private static final String MENU_MINDMAP_CATEGORY = MINDMAP_MENU
-            + "mindmaps";
+    private static final String MENU_MINDMAP_CATEGORY = MINDMAP_MENU + "mindmaps";
     public static final String MODES_MENU = MINDMAP_MENU;
     // public static final String MODES_MENU = MENU_BAR_PREFIX+"modes/";
     public static final String EDIT_MENU = MENU_BAR_PREFIX + "edit/";
@@ -61,17 +41,15 @@ public class MenuBar extends JMenuBar {
     public static final String FORMAT_MENU = MENU_BAR_PREFIX + "format/";
     public static final String EXTRAS_MENU = MENU_BAR_PREFIX + "extras/";
 
-    /**
-     */
     @Getter
     private StructuredMenuHolder menuHolder;
 
     JPopupMenu mapsPopupMenu;
-    final Controller c;
+    final Controller controller;
     final ActionListener mapsMenuActionListener = new MapsMenuActionListener();
 
     public MenuBar(Controller controller) {
-        this.c = controller;
+        this.controller = controller;
         // updateMenus();
     }// Constructor
 
@@ -85,7 +63,7 @@ public class MenuBar extends JMenuBar {
         menuHolder = new StructuredMenuHolder();
 
         // filemenu
-        menuHolder.addMenu(new JMenu(c.getResourceString("file")), FILE_MENU + ".");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("file")), FILE_MENU + ".");
         // filemenu.setMnemonic(KeyEvent.VK_F);
 
         menuHolder.addCategory(FILE_MENU + "open");
@@ -102,7 +80,7 @@ public class MenuBar extends JMenuBar {
         menuHolder.addCategory(FILE_MENU + "quit");
 
         // editmenu
-        menuHolder.addMenu(new JMenu(c.getResourceString("edit")), EDIT_MENU + ".");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("edit")), EDIT_MENU + ".");
         menuHolder.addCategory(EDIT_MENU + "undo");
         menuHolder.addSeparator(EDIT_MENU);
         menuHolder.addCategory(EDIT_MENU + "select");
@@ -114,31 +92,28 @@ public class MenuBar extends JMenuBar {
         menuHolder.addCategory(EDIT_MENU + "find");
 
         // view menu
-        menuHolder.addMenu(new JMenu(c.getResourceString("menu_view")),
-                VIEW_MENU + ".");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("menu_view")), VIEW_MENU + ".");
 
         // insert menu
-        menuHolder.addMenu(new JMenu(c.getResourceString("menu_insert")),
-                INSERT_MENU + ".");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("menu_insert")), INSERT_MENU + ".");
         menuHolder.addCategory(INSERT_MENU + "nodes");
         menuHolder.addSeparator(INSERT_MENU);
         menuHolder.addCategory(INSERT_MENU + "icons");
         menuHolder.addSeparator(INSERT_MENU);
 
         // format menu
-        menuHolder.addMenu(new JMenu(c.getResourceString("menu_format")), FORMAT_MENU + ".");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("menu_format")), FORMAT_MENU + ".");
 
         // navigate menu
-        menuHolder.addMenu(new JMenu(c.getResourceString("menu_navigate")),
+        menuHolder.addMenu(new JMenu(controller.getResourceString("menu_navigate")),
                 NAVIGATE_MENU + ".");
 
         // extras menu
-        menuHolder.addMenu(new JMenu(c.getResourceString("menu_extras")),
-                EXTRAS_MENU + ".");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("menu_extras")), EXTRAS_MENU + ".");
         menuHolder.addCategory(EXTRAS_MENU + "first");
 
         // Mapsmenu
-        menuHolder.addMenu(new JMenu(c.getResourceString("mindmaps")), MINDMAP_MENU + ".");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("mindmaps")), MINDMAP_MENU + ".");
         // mapsmenu.setMnemonic(KeyEvent.VK_M);
         menuHolder.addCategory(MINDMAP_MENU + "navigate");
         menuHolder.addSeparator(MINDMAP_MENU);
@@ -149,7 +124,7 @@ public class MenuBar extends JMenuBar {
 
         // maps popup menu
         mapsPopupMenu = new FreeMindPopupMenu();
-        mapsPopupMenu.setName(c.getResourceString("mindmaps"));
+        mapsPopupMenu.setName(controller.getResourceString("mindmaps"));
         menuHolder.addCategory(POPUP_MENU + "navigate");
         // menuHolder.addSeparator(POPUP_MENU);
 
@@ -157,20 +132,18 @@ public class MenuBar extends JMenuBar {
         // the menus,
         // we integrated it into the maps menu.
         // JMenu modesmenu = menuHolder.addMenu(new
-        // JMenu(c.getResourceString("modes")), MODES_MENU+".");
+        // JMenu(controller.getResourceString("modes")), MODES_MENU+".");
 
-        menuHolder.addMenu(new JMenu(c.getResourceString("help")), HELP_MENU
-                + ".");
-        menuHolder.addAction(c.documentation, HELP_MENU + "doc/documentation");
-        menuHolder.addAction(c.freemindUrl, HELP_MENU + "doc/freemind");
-        menuHolder.addAction(c.faq, HELP_MENU + "doc/faq");
-        menuHolder.addAction(c.keyDocumentation, HELP_MENU
-                + "doc/keyDocumentation");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("help")), HELP_MENU + ".");
+        menuHolder.addAction(controller.documentation, HELP_MENU + "doc/documentation");
+        menuHolder.addAction(controller.freemindUrl, HELP_MENU + "doc/freemind");
+        menuHolder.addAction(controller.faq, HELP_MENU + "doc/faq");
+        menuHolder.addAction(controller.keyDocumentation, HELP_MENU + "doc/keyDocumentation");
         menuHolder.addSeparator(HELP_MENU);
         menuHolder.addCategory(HELP_MENU + "bugs");
         menuHolder.addSeparator(HELP_MENU);
-        menuHolder.addAction(c.license, HELP_MENU + "about/license");
-        menuHolder.addAction(c.about, HELP_MENU + "about/about");
+        menuHolder.addAction(controller.license, HELP_MENU + "about/license");
+        menuHolder.addAction(controller.about, HELP_MENU + "about/about");
 
         updateFileMenu();
         updateViewMenu();
@@ -189,21 +162,18 @@ public class MenuBar extends JMenuBar {
     private void updateModeMenu() {
         ButtonGroup group = new ButtonGroup();
         ActionListener modesMenuActionListener = new ModesMenuActionListener();
-        List<String> keys = new LinkedList<>(c.getModes());
+        List<String> keys = new LinkedList<>(controller.getModes());
         for (String key : keys) {
-            JRadioButtonMenuItem item = new JRadioButtonMenuItem(
-                    c.getResourceString("mode_" + key));
+            JRadioButtonMenuItem item = new JRadioButtonMenuItem(controller.getResourceString("mode_" + key));
             item.setActionCommand(key);
-            JRadioButtonMenuItem newItem = (JRadioButtonMenuItem) menuHolder
-                    .addMenuItem(item, MODES_MENU + key);
+            JRadioButtonMenuItem newItem = (JRadioButtonMenuItem) menuHolder.addMenuItem(item, MODES_MENU + key);
             group.add(newItem);
-            if (c.getMode() != null) {
-                newItem.setSelected(c.getMode().toString().equals(key));
-            } else {
+            if (controller.getMode() == null) {
                 newItem.setSelected(false);
+            } else {
+                newItem.setSelected(controller.getMode().toString().equals(key));
             }
-            String keystroke = c.getFrame().getAdjustableProperty(
-                    "keystroke_mode_" + key);
+            String keystroke = controller.getFrame().getAdjustableProperty("keystroke_mode_" + key);
             if (keystroke != null) {
                 newItem.setAccelerator(KeyStroke.getKeyStroke(keystroke));
             }
@@ -215,22 +185,20 @@ public class MenuBar extends JMenuBar {
         menuHolder.addSeparator(POPUP_MENU);
         JMenuItem newPopupItem;
 
-        if (c.getFrame().isApplet()) {
+        if (controller.getFrame().isApplet()) {
             // We have enabled hiding of menubar only in applets. It it because
             // when we hide menubar in application, the key accelerators from
             // menubar do not work.
-            newPopupItem = menuHolder.addAction(c.toggleMenubar, POPUP_MENU
-                    + "toggleMenubar");
+            newPopupItem = menuHolder.addAction(controller.toggleMenubar, POPUP_MENU + "toggleMenubar");
             newPopupItem.setForeground(new Color(100, 80, 80));
         }
 
-        newPopupItem = menuHolder.addAction(c.toggleToolbar, POPUP_MENU
-                + "toggleToolbar");
+        newPopupItem = menuHolder.addAction(controller.toggleToolbar, POPUP_MENU + "toggleToolbar");
         newPopupItem.setForeground(new Color(100, 80, 80));
     }
 
     private void updateMapsMenu(StructuredMenuHolder holder, String basicKey) {
-        MapModuleManager mapModuleManager = c.getMapModuleManager();
+        MapModuleManager mapModuleManager = controller.getMapModuleManager();
         List<MapModule> mapModuleVector = mapModuleManager.getMapModuleList();
         if (mapModuleVector == null) {
             return;
@@ -257,107 +225,77 @@ public class MenuBar extends JMenuBar {
 
     private void updateFileMenu() {
 
-        menuHolder.addAction(c.page, FILE_MENU + "print/pageSetup");
-        JMenuItem print = menuHolder.addAction(c.print, FILE_MENU
-                + "print/print");
-        print.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty("keystroke_print")));
+        menuHolder.addAction(controller.page, FILE_MENU + "print/pageSetup");
+        JMenuItem print = menuHolder.addAction(controller.print, FILE_MENU + "print/print");
 
-        JMenuItem printPreview = menuHolder.addAction(c.printPreview, FILE_MENU
-                + "print/printPreview");
-        printPreview.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty("keystroke_print_preview")));
+        final FreeMindMain controllerFrame = controller.getFrame();
 
-        JMenuItem close = menuHolder.addAction(c.close, FILE_MENU
-                + "close/close");
-        close.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty("keystroke_close")));
+        print.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty("keystroke_print")));
 
-        JMenuItem quit = menuHolder.addAction(c.quit, FILE_MENU + "quit/quit");
-        quit.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty("keystroke_quit")));
+        JMenuItem printPreview = menuHolder.addAction(controller.printPreview, FILE_MENU + "print/printPreview");
+        printPreview.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty("keystroke_print_preview")));
+
+        JMenuItem close = menuHolder.addAction(controller.close, FILE_MENU + "close/close");
+        close.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty("keystroke_close")));
+
+        JMenuItem quit = menuHolder.addAction(controller.quit, FILE_MENU + "quit/quit");
+        quit.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty("keystroke_quit")));
         updateLastOpenedList();
     }
 
     private void updateLastOpenedList() {
-        menuHolder.addMenu(new JMenu(c.getResourceString("most_recent_files")),
-                FILE_MENU + "last/.");
+        menuHolder.addMenu(new JMenu(controller.getResourceString("most_recent_files")), FILE_MENU + "last/.");
         boolean firstElement = true;
-        LastOpenedList lst = c.getLastOpenedList();
+        LastOpenedList lst = controller.getLastOpenedList();
+
+        // Populates a recent files menu with accelerated first item and listeners
         for (ListIterator<String> it = lst.listIterator(); it.hasNext(); ) {
             String key = it.next();
             JMenuItem item = new JMenuItem(key);
             if (firstElement) {
                 firstElement = false;
-                item.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                        .getAdjustableProperty(
-                                "keystroke_open_first_in_history")));
+                item.setAccelerator(KeyStroke.getKeyStroke(controller.getFrame().getAdjustableProperty("keystroke_open_first_in_history")));
             }
             item.addActionListener(new LastOpenedActionListener(key));
 
-            menuHolder.addMenuItem(item,
-                    FILE_MENU + "last/" + (key.replace('/', '_')));
+            menuHolder.addMenuItem(item, FILE_MENU + "last/" + (key.replace('/', '_')));
         }
     }
 
     private void updateEditMenu() {
-        JMenuItem moveToRoot = menuHolder.addAction(c.moveToRoot, NAVIGATE_MENU
-                + "nodes/moveToRoot");
-        moveToRoot.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty("keystroke_moveToRoot")));
 
-        JMenuItem previousMap = menuHolder.addAction(c.navigationPreviousMap,
-                MINDMAP_MENU + "navigate/navigationPreviousMap");
-        previousMap.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty(FreeMind.KEYSTROKE_PREVIOUS_MAP)));
+        final FreeMindMain controllerFrame = controller.getFrame();
 
-        JMenuItem nextMap = menuHolder.addAction(c.navigationNextMap,
-                MINDMAP_MENU + "navigate/navigationNextMap");
-        nextMap.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty(FreeMind.KEYSTROKE_NEXT_MAP)));
+        JMenuItem moveToRoot = menuHolder.addAction(controller.moveToRoot, NAVIGATE_MENU + "nodes/moveToRoot");
+        moveToRoot.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty("keystroke_moveToRoot")));
 
-        JMenuItem MoveMapLeft = menuHolder.addAction(
-                c.navigationMoveMapLeftAction, MINDMAP_MENU
-                        + "navigate/navigationMoveMapLeft");
-        MoveMapLeft.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_LEFT)));
+        JMenuItem previousMap = menuHolder.addAction(controller.navigationPreviousMap, MINDMAP_MENU + "navigate/navigationPreviousMap");
+        previousMap.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty(FreeMind.KEYSTROKE_PREVIOUS_MAP)));
 
-        JMenuItem MoveMapRight = menuHolder.addAction(
-                c.navigationMoveMapRightAction, MINDMAP_MENU
-                        + "navigate/navigationMoveMapRight");
-        MoveMapRight.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_RIGHT)));
+        JMenuItem nextMap = menuHolder.addAction(controller.navigationNextMap, MINDMAP_MENU + "navigate/navigationNextMap");
+        nextMap.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty(FreeMind.KEYSTROKE_NEXT_MAP)));
 
-        // option menu item moved to mindmap_menus.xml
+        JMenuItem MoveMapLeft = menuHolder.addAction(controller.navigationMoveMapLeftAction, MINDMAP_MENU + "navigate/navigationMoveMapLeft");
+        MoveMapLeft.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_LEFT)));
 
-        // if (false) {
-        // preferences.add(c.background);
-        // // Background is disabled from preferences, because it has no real
-        // function.
-        // // To complete the function, one would either make sure that the
-        // color is
-        // // saved and read from auto.properties or think about storing the
-        // background
-        // // color into map (just like <map backgroud="#eeeee0">).
-        // }
+        JMenuItem MoveMapRight = menuHolder.addAction(controller.navigationMoveMapRightAction, MINDMAP_MENU + "navigate/navigationMoveMapRight");
+        MoveMapRight.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_RIGHT)));
 
     }
 
     private void updateViewMenu() {
-        menuHolder.addAction(c.toggleToolbar, VIEW_MENU + "toolbars/toggleToolbar");
 
+        menuHolder.addAction(controller.toggleToolbar, VIEW_MENU + "toolbars/toggleToolbar");
         menuHolder.addSeparator(VIEW_MENU);
+        menuHolder.addAction(controller.showSelectionAsRectangle, VIEW_MENU + "general/selectionAsRectangle");
 
-        menuHolder.addAction(c.showSelectionAsRectangle, VIEW_MENU + "general/selectionAsRectangle");
+        final FreeMindMain controllerFrame = controller.getFrame();
 
-        JMenuItem zoomIn = menuHolder.addAction(c.zoomIn, VIEW_MENU + "zoom/zoomIn");
-        zoomIn.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty("keystroke_zoom_in")));
+        JMenuItem zoomIn = menuHolder.addAction(controller.zoomIn, VIEW_MENU + "zoom/zoomIn");
+        zoomIn.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty("keystroke_zoom_in")));
 
-        JMenuItem zoomOut = menuHolder.addAction(c.zoomOut, VIEW_MENU
-                + "zoom/zoomOut");
-        zoomOut.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-                .getAdjustableProperty("keystroke_zoom_out")));
+        JMenuItem zoomOut = menuHolder.addAction(controller.zoomOut, VIEW_MENU + "zoom/zoomOut");
+        zoomOut.setAccelerator(KeyStroke.getKeyStroke(controllerFrame.getAdjustableProperty("keystroke_zoom_out")));
 
         menuHolder.addSeparator(VIEW_MENU);
         menuHolder.addCategory(VIEW_MENU + "note_window");
@@ -369,8 +307,7 @@ public class MenuBar extends JMenuBar {
 
     private class MapsMenuActionListener implements ActionListener {
         public void actionPerformed(final ActionEvent e) {
-            SwingUtilities.invokeLater(() -> c.getMapModuleManager().changeToMapModule(
-                    e.getActionCommand()));
+            SwingUtilities.invokeLater(() -> controller.getMapModuleManager().changeToMapModule(e.getActionCommand()));
         }
     }
 
@@ -383,12 +320,11 @@ public class MenuBar extends JMenuBar {
 
         public void actionPerformed(ActionEvent e) {
 
-            String restoreable = mKey;
+            String restorable = mKey;
             try {
-                c.getLastOpenedList().open(restoreable);
+                controller.getLastOpenedList().open(restorable);
             } catch (Exception ex) {
-                c.errorMessage("An error occured on opening the file: "
-                        + restoreable + ".");
+                controller.errorMessage(format("An error occurred on opening the file: {0}.", restorable));
                 log.error(ex.getLocalizedMessage(), ex);
             }
         }
@@ -396,18 +332,11 @@ public class MenuBar extends JMenuBar {
 
     private class ModesMenuActionListener implements ActionListener {
         public void actionPerformed(final ActionEvent e) {
-            SwingUtilities.invokeLater(() -> c.createNewMode(e.getActionCommand()));
+            SwingUtilities.invokeLater(() -> controller.createNewMode(e.getActionCommand()));
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.JMenuBar#processKeyBinding(javax.swing.KeyStroke,
-     * java.awt.event.KeyEvent, int, boolean)
-     */
-    public boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition,
-                                     boolean pressed) {
+    public boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition, boolean pressed) {
         return super.processKeyBinding(ks, e, condition, pressed);
     }
 

@@ -33,8 +33,6 @@ public class TextNodeAction extends NodeAction
 
     /**
      * Set the 'text' element value.
-     *
-     * @param text
      */
     public void setText(String text) {
         this.text = text;

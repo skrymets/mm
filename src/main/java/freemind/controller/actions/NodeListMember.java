@@ -31,8 +31,6 @@ public class NodeListMember
 
     /**
      * Set the 'node' attribute value.
-     *
-     * @param node
      */
     public void setNode(String node) {
         this.node = node;

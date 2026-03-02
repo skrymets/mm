@@ -41,8 +41,6 @@ public class NewNodeAction extends NodeAction
 
     /**
      * Set the 'position' attribute value.
-     *
-     * @param position
      */
     public void setPosition(String position) {
         this.position = position;
@@ -59,8 +57,6 @@ public class NewNodeAction extends NodeAction
 
     /**
      * Set the 'index' attribute value.
-     *
-     * @param index
      */
     public void setIndex(Integer index) {
         this.index = index;
@@ -77,8 +73,6 @@ public class NewNodeAction extends NodeAction
 
     /**
      * Set the 'newId' attribute value.
-     *
-     * @param newId
      */
     public void setNewId(String newId) {
         this.newId = newId;

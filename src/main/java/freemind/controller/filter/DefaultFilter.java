@@ -1,26 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*
- * Created on 07.05.2005
- *
- */
 package freemind.controller.filter;
 
 import freemind.controller.Controller;
@@ -35,23 +12,18 @@ import freemind.view.mindmapview.NodeView;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-/**
- * @author dimitri 07.05.2005
- */
 public class DefaultFilter implements Filter {
 
     private Condition condition = null;
     private int options = 0;
 
-    /**
-     *
-     */
-    public DefaultFilter(Condition condition, boolean areAnchestorsShown, boolean areDescendantsShown) {
+    public DefaultFilter(Condition condition, boolean areAncestorsShown, boolean areDescendantsShown) {
         super();
 
         this.condition = condition;
         this.options = FilterConstants.FILTER_INITIAL_VALUE | FilterConstants.FILTER_SHOW_MATCHED;
-        if (areAnchestorsShown) {
+
+        if (areAncestorsShown) {
             options += FilterConstants.FILTER_SHOW_ANCESTOR;
         }
 
@@ -61,12 +33,6 @@ public class DefaultFilter implements Filter {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.model.Filter#applyFilter(freemind.model.FilterContext)
-     */
     public void applyFilter(FilterContext context) {
         if (condition == null) {
             return;
@@ -159,12 +125,6 @@ public class DefaultFilter implements Filter {
         return isDescendantSelected;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.model.Filter#isVisible(freemind.model.MindMapNode)
-     */
     public boolean isVisible(MindMapNode node) {
         if (condition == null)
             return true;
@@ -189,47 +149,22 @@ public class DefaultFilter implements Filter {
         node.getFilterInfo().add(flag);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.Filter#areMatchedShown()
-     */
     public boolean areMatchedShown() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.Filter#areHiddenShown()
-     */
     public boolean areHiddenShown() {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.Filter#areAncestorsShown()
-     */
     public boolean areAncestorsShown() {
         return 0 != (options & FilterConstants.FILTER_SHOW_ANCESTOR);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.Filter#areDescendantsShown()
-     */
     public boolean areDescendantsShown() {
         return 0 != (options & FilterConstants.FILTER_SHOW_DESCENDANT);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.Filter#areEclipsedShown()
-     */
     public boolean areEclipsedShown() {
         return true;
     }

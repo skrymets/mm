@@ -39,8 +39,6 @@ public class NodeList extends XmlAction
 
     /**
      * Set the list of 'node_list_member' element items.
-     *
-     * @param list
      */
     public void setNodeListMemberList(List<NodeListMember> list) {
         nodeListMemberList = list;
@@ -56,7 +54,6 @@ public class NodeList extends XmlAction
 
     /**
      * Add a 'node_list_member' element item.
-     * @param item
      */
     public void addNodeListMember(NodeListMember item) {
         nodeListMemberList.add(item);
@@ -65,7 +62,6 @@ public class NodeList extends XmlAction
     /**
      * Get 'node_list_member' element item by position.
      * @return item
-     * @param index
      */
     public NodeListMember getNodeListMember(int index) {
         return nodeListMemberList.get(index);

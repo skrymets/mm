@@ -38,8 +38,6 @@ public class AddCloudXmlAction extends NodeAction
 
     /**
      * Set the 'enabled' attribute value.
-     *
-     * @param enabled
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -56,8 +54,6 @@ public class AddCloudXmlAction extends NodeAction
 
     /**
      * Set the 'color' attribute value.
-     *
-     * @param color
      */
     public void setColor(String color) {
         this.color = color;

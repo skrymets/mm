@@ -35,8 +35,6 @@ public class MenuRadioAction extends MenuActionBase
 
     /**
      * Set the 'selected' attribute value.
-     *
-     * @param selected
      */
     public void setSelected(Boolean selected) {
         this.selected = selected;

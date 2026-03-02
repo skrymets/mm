@@ -35,8 +35,6 @@ public class Map
 
     /**
      * Set the 'node' element value.
-     *
-     * @param node
      */
     public void setNode(Node node) {
         this.node = node;
@@ -53,8 +51,6 @@ public class Map
 
     /**
      * Set the 'version' attribute value.
-     *
-     * @param version
      */
     public void setVersion(String version) {
         this.version = version;

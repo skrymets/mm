@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.view.mindmapview;
 
 import freemind.main.SwingUtils;
@@ -149,13 +130,21 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     private final ViewFeedback mFeedback;
 
     // Services
+    @Getter
     private final ViewerRegistryService viewerRegistryService;
+    @Getter
     private final MapGeometryService geometryService;
+    @Getter
     private final MapPrintingService printingService;
+    @Getter
     private final LinkRenderingService linkRenderingService;
+    @Getter
     private final MapRenderingService renderingService;
+    @Getter
     private final MapSelectionService selectionService;
+    @Getter
     private final ScrollService scrollService;
+    @Getter
     private final NavigationService navigationService;
 
     public MapView(MindMap model, ViewFeedback pFeedback) {
@@ -287,39 +276,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         return mFeedback;
     }
 
-    public ViewerRegistryService getViewerRegistryService() {
-        return viewerRegistryService;
-    }
-
-    public MapGeometryService getGeometryService() {
-        return geometryService;
-    }
-
-    public MapPrintingService getPrintingService() {
-        return printingService;
-    }
-
-    public LinkRenderingService getLinkRenderingService() {
-        return linkRenderingService;
-    }
-
-    public MapRenderingService getRenderingService() {
-        return renderingService;
-    }
-
-    public MapSelectionService getSelectionService() {
-        return selectionService;
-    }
-
-    public ScrollService getScrollService() {
-        return scrollService;
-    }
-
-    public NavigationService getNavigationService() {
-        return navigationService;
-    }
-
-
     private void createPropertyChangeListener() {
 
         propertyChangeListener = (propertyName, newValue, oldValue) -> {
@@ -362,6 +318,8 @@ public class MapView extends JPanel implements Printable, Autoscroll {
                         MapRenderingService.setAntialiasAll(true);
                     }
                     break;
+                default:
+                    break;
             }
 
         };
@@ -388,17 +346,10 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         return maxNodeWidth;
     }
 
-    //
-    // get/set methods
-    //
-
-    // e.g. for dragging cursor (PN)
     public void setMoveCursor(boolean isHand) {
-        int requiredCursor = (isHand && !disableMoveCursor) ? Cursor.MOVE_CURSOR
-                : Cursor.DEFAULT_CURSOR;
+        int requiredCursor = (isHand && !disableMoveCursor) ? Cursor.MOVE_CURSOR : Cursor.DEFAULT_CURSOR;
         if (getCursor().getType() != requiredCursor) {
-            setCursor(requiredCursor != Cursor.DEFAULT_CURSOR ? new Cursor(
-                    requiredCursor) : null);
+            setCursor(requiredCursor != Cursor.DEFAULT_CURSOR ? new Cursor(requiredCursor) : null);
         }
     }
 
@@ -445,11 +396,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
     // private static Image image = null;
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.JComponent#paint(java.awt.Graphics)
-     */
     public void paint(Graphics g) {
         long startMilli = System.currentTimeMillis();
         if (isValid()) {
@@ -530,11 +476,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
     private static final int margin = 20;
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.dnd.Autoscroll#getAutoscrollInsets()
-     */
     public Insets getAutoscrollInsets() {
         Rectangle outer = getBounds();
         Rectangle inner = getParent().getBounds();
@@ -544,11 +485,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
                 + margin);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.dnd.Autoscroll#autoscroll(java.awt.Point)
-     */
     public void autoscroll(Point cursorLocn) {
         Rectangle r = new Rectangle((int) cursorLocn.getX() - margin,
                 (int) cursorLocn.getY() - margin, 1 + 2 * margin,
@@ -556,11 +492,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         scrollRectToVisible(r);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.JComponent#getPreferredSize()
-     */
     public Dimension getPreferredSize() {
         if (!getParent().isValid()) {
             final Dimension preferredLayoutSize = getLayout()

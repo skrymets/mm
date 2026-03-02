@@ -45,8 +45,6 @@ public class ResultBase
 
     /**
      * Set the 'lat' attribute value.
-     *
-     * @param lat
      */
     public void setLat(Double lat) {
         this.lat = lat;
@@ -63,8 +61,6 @@ public class ResultBase
 
     /**
      * Set the 'lon' attribute value.
-     *
-     * @param lon
      */
     public void setLon(Double lon) {
         this.lon = lon;
@@ -81,8 +77,6 @@ public class ResultBase
 
     /**
      * Set the 'osm_id' attribute value.
-     *
-     * @param osmId
      */
     public void setOsmId(BigInteger osmId) {
         this.osmId = osmId;
@@ -99,8 +93,6 @@ public class ResultBase
 
     /**
      * Set the 'osm_type' attribute value.
-     *
-     * @param osmType
      */
     public void setOsmType(String osmType) {
         this.osmType = osmType;
@@ -117,8 +109,6 @@ public class ResultBase
 
     /**
      * Set the 'place_id' attribute value.
-     *
-     * @param placeId
      */
     public void setPlaceId(BigInteger placeId) {
         this.placeId = placeId;
@@ -135,8 +125,6 @@ public class ResultBase
 
     /**
      * Set the 'ref' attribute value.
-     *
-     * @param ref
      */
     public void setRef(String ref) {
         this.ref = ref;

@@ -53,8 +53,6 @@ public class CalendarMarking
 
     /**
      * Set the 'name' attribute value.
-     *
-     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -71,8 +69,6 @@ public class CalendarMarking
 
     /**
      * Set the 'color' attribute value.
-     *
-     * @param color
      */
     public void setColor(String color) {
         this.color = color;
@@ -89,8 +85,6 @@ public class CalendarMarking
 
     /**
      * Set the 'start_date' attribute value.
-     *
-     * @param startDate
      */
     public void setStartDate(long startDate) {
         this.startDate = startDate;
@@ -107,8 +101,6 @@ public class CalendarMarking
 
     /**
      * Set the 'end_date' attribute value.
-     *
-     * @param endDate
      */
     public void setEndDate(Long endDate) {
         this.endDate = endDate;
@@ -125,8 +117,6 @@ public class CalendarMarking
 
     /**
      * Set the 'repeat_type' attribute value.
-     *
-     * @param repeatType
      */
     public void setRepeatType(RepeatType repeatType) {
         this.repeatType = repeatType;
@@ -143,8 +133,6 @@ public class CalendarMarking
 
     /**
      * Set the 'repeat_each_n_occurence' attribute value.
-     *
-     * @param repeatEachNOccurence
      */
     public void setRepeatEachNOccurence(Integer repeatEachNOccurence) {
         this.repeatEachNOccurence = repeatEachNOccurence;
@@ -161,8 +149,6 @@ public class CalendarMarking
 
     /**
      * Set the 'first_occurence' attribute value.
-     *
-     * @param firstOccurence
      */
     public void setFirstOccurence(Integer firstOccurence) {
         this.firstOccurence = firstOccurence;

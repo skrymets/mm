@@ -44,8 +44,6 @@ public class CollaborationUserInformation extends CollaborationActionBase
 
     /**
      * Set the 'user_ids' attribute value.
-     *
-     * @param userIds
      */
     public void setUserIds(String userIds) {
         this.userIds = userIds;
@@ -62,8 +60,6 @@ public class CollaborationUserInformation extends CollaborationActionBase
 
     /**
      * Set the 'master_ip' attribute value.
-     *
-     * @param masterIp
      */
     public void setMasterIp(String masterIp) {
         this.masterIp = masterIp;
@@ -80,8 +76,6 @@ public class CollaborationUserInformation extends CollaborationActionBase
 
     /**
      * Set the 'master_port' attribute value.
-     *
-     * @param masterPort
      */
     public void setMasterPort(int masterPort) {
         this.masterPort = masterPort;
@@ -98,8 +92,6 @@ public class CollaborationUserInformation extends CollaborationActionBase
 
     /**
      * Set the 'master_hostname' attribute value.
-     *
-     * @param masterHostname
      */
     public void setMasterHostname(String masterHostname) {
         this.masterHostname = masterHostname;

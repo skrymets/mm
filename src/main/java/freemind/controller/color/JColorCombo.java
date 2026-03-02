@@ -1,23 +1,3 @@
-/*
- * FreeMind - A Program for creating and viewing MindmapsCopyright (C) 2000-2015
- * Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and
- * others.
- *
- * See COPYING for Details
- *
- * This program is free software; you can redistribute it and/ormodify it under
- * the terms of the GNU General Public Licenseas published by the Free Software
- * Foundation; either version 2of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful,but WITHOUT
- * ANY WARRANTY; without even the implied warranty ofMERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See theGNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public Licensealong with
- * this program; if not, write to the Free SoftwareFoundation, Inc., 59 Temple
- * Place - Suite 330, Boston, MA 02111-1307, USA.
- */
 package freemind.controller.color;
 
 import freemind.main.Resources;
@@ -27,10 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-
 @SuppressWarnings("serial")
 public class JColorCombo extends JComboBox<ColorPair> {
-
 
     public static class ColorIcon extends ImageIcon {
 
@@ -44,7 +22,6 @@ public class JColorCombo extends JComboBox<ColorPair> {
             g.fillRect(0, 0, ICON_SIZE, ICON_SIZE);
             g.dispose();
         }
-
 
     }
 
@@ -140,7 +117,6 @@ public class JColorCombo extends JComboBox<ColorPair> {
             new ColorPair(new Color(0x00b439), "level2"),
             new ColorPair(new Color(0x990000), "level3"),
             new ColorPair(new Color(0x111111), "level4"),
-
 
             // netscape colors
             new ColorPair(new Color(0xFFC0CB), "pink"),

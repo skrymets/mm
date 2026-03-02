@@ -41,8 +41,6 @@ public class UndoPasteNodeAction extends NodeAction
 
     /**
      * Set the 'isLeft' attribute value.
-     *
-     * @param isLeft
      */
     public void setIsLeft(boolean isLeft) {
         this.isLeft = isLeft;
@@ -59,8 +57,6 @@ public class UndoPasteNodeAction extends NodeAction
 
     /**
      * Set the 'asSibling' attribute value.
-     *
-     * @param asSibling
      */
     public void setAsSibling(boolean asSibling) {
         this.asSibling = asSibling;
@@ -77,8 +73,6 @@ public class UndoPasteNodeAction extends NodeAction
 
     /**
      * Set the 'node_amount' attribute value.
-     *
-     * @param nodeAmount
      */
     public void setNodeAmount(int nodeAmount) {
         this.nodeAmount = nodeAmount;

@@ -71,8 +71,6 @@ public class Base
 
     /**
      * Set the 'menu_category' element value.
-     *
-     * @param menuCategory
      */
     public void setMenuCategory(MenuCategoryBase menuCategory) {
         setChoiceSelect(MENU_CATEGORY_CHOICE);
@@ -99,8 +97,6 @@ public class Base
 
     /**
      * Set the 'menu_submenu' element value.
-     *
-     * @param menuSubmenu
      */
     public void setMenuSubmenu(MenuSubmenu menuSubmenu) {
         setChoiceSelect(MENU_SUBMENU_CHOICE);
@@ -127,8 +123,6 @@ public class Base
 
     /**
      * Set the 'menu_action' element value.
-     *
-     * @param menuAction
      */
     public void setMenuAction(MenuAction menuAction) {
         setChoiceSelect(MENU_ACTION_CHOICE);
@@ -155,8 +149,6 @@ public class Base
 
     /**
      * Set the 'menu_checked_action' element value.
-     *
-     * @param menuCheckedAction
      */
     public void setMenuCheckedAction(MenuCheckedAction menuCheckedAction) {
         setChoiceSelect(MENU_CHECKED_ACTION_CHOICE);
@@ -183,8 +175,6 @@ public class Base
 
     /**
      * Set the 'menu_radio_action' element value.
-     *
-     * @param menuRadioAction
      */
     public void setMenuRadioAction(MenuRadioAction menuRadioAction) {
         setChoiceSelect(MENU_RADIO_ACTION_CHOICE);
@@ -211,8 +201,6 @@ public class Base
 
     /**
      * Set the 'menu_separator' element value.
-     *
-     * @param menuSeparator
      */
     public void setMenuSeparator(MenuSeparator menuSeparator) {
         setChoiceSelect(MENU_SEPARATOR_CHOICE);

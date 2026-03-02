@@ -35,8 +35,6 @@ public class FontNodeAction extends FormatNodeAction
 
     /**
      * Set the 'font' attribute value.
-     *
-     * @param font
      */
     public void setFont(String font) {
         this.font = font;

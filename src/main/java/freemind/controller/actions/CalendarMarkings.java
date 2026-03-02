@@ -39,8 +39,6 @@ public class CalendarMarkings extends XmlAction
 
     /**
      * Set the list of 'calendar_marking' element items.
-     *
-     * @param list
      */
     public void setCalendarMarkingList(List<CalendarMarking> list) {
         calendarMarkingList = list;
@@ -56,7 +54,6 @@ public class CalendarMarkings extends XmlAction
 
     /**
      * Add a 'calendar_marking' element item.
-     * @param item
      */
     public void addCalendarMarking(CalendarMarking item) {
         calendarMarkingList.add(item);
@@ -65,7 +62,6 @@ public class CalendarMarkings extends XmlAction
     /**
      * Get 'calendar_marking' element item by position.
      * @return item
-     * @param index
      */
     public CalendarMarking getCalendarMarking(int index) {
         return calendarMarkingList.get(index);

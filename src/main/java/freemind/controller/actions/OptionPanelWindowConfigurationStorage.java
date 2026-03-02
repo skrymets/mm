@@ -37,8 +37,6 @@ public class OptionPanelWindowConfigurationStorage
 
     /**
      * Set the 'panel' attribute value.
-     *
-     * @param panel
      */
     public void setPanel(String panel) {
         this.panel = panel;

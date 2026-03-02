@@ -1,26 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2007  Christian Foltin, Dimitry Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 11.09.2007
- */
-/*$Id: NodeNoteRegistration.java,v 1.1.2.25 2010/10/07 21:19:51 christianfoltin Exp $*/
-
 package accessories.plugins;
 
 import freemind.common.TextTranslator;
@@ -99,8 +76,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
             setModelFromNode(node);
         }
 
-        /**
-         */
         private void setModelFromNode(MindMapNode node) {
             mAttributeTableModel.clear();
             for (int position = 0; position < node.getAttributeTableLength(); position++) {
@@ -198,30 +173,18 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         void removeValue(int pRowIndex);
     }
 
-    /**
-     * @author foltin
-     * {@code @date} 4.09.2014
-     */
     @SuppressWarnings("serial")
     public final class AttributeTableModel extends AbstractTableModel {
-        /**
-         *
-         */
         private final String[] COLUMNS = new String[]{KEY_COLUMN_TEXT,
                 VALUE_COLUMN_TEXT};
         final List<AttributeHolder> mData = new ArrayList<>();
         private final TextTranslator mTextTranslator;
 
-        /**
-         *
-         */
         public AttributeTableModel(TextTranslator pTextTranslator) {
             super();
             mTextTranslator = pTextTranslator;
         }
 
-        /**
-         */
         public void addAttributeHolder(Attribute pAttribute, boolean pMakeMapDirty) {
             AttributeHolder holder = new AttributeHolder();
             holder.mKey = pAttribute.getName();
@@ -229,8 +192,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
             addAttributeHolder(holder, pMakeMapDirty);
         }
 
-        /**
-         */
         public int addAttributeHolder(AttributeHolder pAttribute, boolean pMakeMapDirty) {
             mData.add(pAttribute);
             final int row = mData.size() - 1;
@@ -247,11 +208,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
             fireTableRowsDeleted(pIndex, pIndex);
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-         */
         public Class getColumnClass(int arg0) {
             switch (arg0) {
                 case KEY_COLUMN:
@@ -266,38 +222,18 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
             return mData.get(pIndex);
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.table.AbstractTableModel#getColumnName(int)
-         */
         public String getColumnName(int pColumn) {
             return mTextTranslator.getText(COLUMNS[pColumn]);
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.table.TableModel#getRowCount()
-         */
         public int getRowCount() {
             return mData.size();
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.table.TableModel#getColumnCount()
-         */
         public int getColumnCount() {
             return 2;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.table.TableModel#getValueAt(int, int)
-         */
         public Object getValueAt(int pRowIndex, int pColumnIndex) {
             final AttributeHolder attr = getAttributeHolder(pRowIndex);
             switch (pColumnIndex) {
@@ -309,25 +245,16 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
             return null;
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
-         */
         @Override
         public boolean isCellEditable(int pRowIndex, int pColumnIndex) {
             return true;
         }
 
-        /**
-         *
-         */
         public void clear() {
             mData.clear();
             fireTableDataChanged();
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
-         */
         @Override
         public void setValueAt(Object pAValue, int pRowIndex, int pColumnIndex) {
             AttributeHolder holder;
@@ -465,7 +392,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
 
     }
 
-
     public void deRegister() {
         // store sortings:
         AttributeTableProperties props = new AttributeTableProperties();
@@ -513,9 +439,6 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         mAttributeTable.getSelectionModel().setSelectionInterval(0, 0);
     }
 
-    /**
-     *
-     */
     protected void makeMapDirty() {
         controller.setSaved(false);
     }

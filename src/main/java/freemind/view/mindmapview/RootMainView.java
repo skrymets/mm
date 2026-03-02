@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2007  Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.view.mindmapview;
 
 import freemind.main.FreeMind;
@@ -34,21 +15,21 @@ class RootMainView extends MainView {
     }
 
     public void paint(Graphics graphics) {
-        Graphics2D g = (Graphics2D) graphics;
+        Graphics2D g2d = (Graphics2D) graphics;
 
         if (getNodeView().getModel() == null)
             return;
 
-        Object renderingHint = getNodeView().getMap().getRenderingService().setEdgesRenderingHint(g);
-        paintSelected(g);
-        paintDragOver(g);
+        Object renderingHint = getNodeView().getMap().getRenderingService().setEdgesRenderingHint(g2d);
+        paintSelected(g2d);
+        paintDragOver(g2d);
 
         // Draw a root node
-        g.setColor(Color.gray);
-        g.setStroke(new BasicStroke(1.0f));
-        g.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
-        SwingUtils.restoreAntialiasing(g, renderingHint);
-        super.paint(g);
+        g2d.setColor(Color.gray);
+        g2d.setStroke(new BasicStroke(1.0f));
+        g2d.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
+        SwingUtils.restoreAntialiasing(g2d, renderingHint);
+        super.paint(g2d);
     }
 
     public void paintDragOver(Graphics2D graphics) {
@@ -102,11 +83,6 @@ class RootMainView extends MainView {
                 : NodeView.DRAGGED_OVER_SON);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.view.mindmapview.NodeView#getStyle()
-     */
     public String getStyle() {
         return getNodeView().getMap().getViewFeedback().getResources().getProperty(
                 FreeMind.RESOURCES_ROOT_NODE_STYLE);
@@ -123,11 +99,6 @@ class RootMainView extends MainView {
         return super.getTextWidth() - getWidth() / 10;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.view.mindmapview.NodeView#getTextX()
-     */
     public int getTextX() {
         return getIconWidth() + getWidth() / 20;
     }

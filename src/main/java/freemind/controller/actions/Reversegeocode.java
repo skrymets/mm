@@ -45,8 +45,6 @@ public class Reversegeocode extends XmlAction
 
     /**
      * Set the 'result' element value.
-     *
-     * @param result
      */
     public void setResult(ResultBase result) {
         this.result = result;
@@ -63,8 +61,6 @@ public class Reversegeocode extends XmlAction
 
     /**
      * Set the 'attribution' attribute value.
-     *
-     * @param attribution
      */
     public void setAttribution(String attribution) {
         this.attribution = attribution;
@@ -81,8 +77,6 @@ public class Reversegeocode extends XmlAction
 
     /**
      * Set the 'querystring' attribute value.
-     *
-     * @param querystring
      */
     public void setQuerystring(String querystring) {
         this.querystring = querystring;
@@ -99,8 +93,6 @@ public class Reversegeocode extends XmlAction
 
     /**
      * Set the 'timestamp' attribute value.
-     *
-     * @param timestamp
      */
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;

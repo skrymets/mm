@@ -1,25 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2004  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 22.07.2004
- */
-/*$Id: HookInstantiationMethod.java,v 1.1.4.1.16.3 2007/06/05 20:53:30 dpolivaev Exp $*/
 package freemind.extensions;
 
 import freemind.model.MindMapNode;
@@ -93,8 +71,6 @@ public class HookInstantiationMethod {
      */
     @Getter
     private final boolean isPermanent;
-    /**
-     */
     @Getter
     private final boolean isUndoable;
 
@@ -143,17 +119,11 @@ public class HookInstantiationMethod {
         return res;
     }
 
-    /**
-     *
-     */
     public Collection<MindMapNode> getDestinationNodes(MapFeedback controller,
                                                        MindMapNode focussed, List<MindMapNode> selecteds) {
         return getter.getDestinationNodes(controller, focussed, selecteds);
     }
 
-    /**
-     *
-     */
     public boolean isAlreadyPresent(String hookName, MindMapNode focussed) {
         for (PermanentNodeHook hook : focussed.getActivatedHooks()) {
             if (hookName.equals(hook.getName())) {
@@ -163,9 +133,6 @@ public class HookInstantiationMethod {
         return false;
     }
 
-    /**
-     *
-     */
     public MindMapNode getCenterNode(MapFeedback controller,
                                      MindMapNode focussed, List<MindMapNode> selecteds) {
         return getter.getCenterNode(controller, focussed, selecteds);

@@ -36,8 +36,6 @@ public class Html
 
     /**
      * Set the list of 'html' element items.
-     *
-     * @param list
      */
     public void setAnyList(List<Element> list) {
         anyList = list;
@@ -53,7 +51,6 @@ public class Html
 
     /**
      * Add a 'html' element item.
-     * @param item
      */
     public void addAny(Element item) {
         anyList.add(item);
@@ -62,7 +59,6 @@ public class Html
     /**
      * Get 'html' element item by position.
      * @return item
-     * @param index
      */
     public Element getAny(int index) {
         return anyList.get(index);

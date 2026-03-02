@@ -1,25 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 25.02.2006
- */
-
 package freemind.modes.mindmapmode.dialogs;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -42,9 +20,6 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.List;
 
-/**
- * @author foltin
- */
 public class StylePatternFrame extends JPanel implements TextTranslator,
         PropertyChangeListener {
     public static final class StylePatternFrameType {
@@ -212,8 +187,6 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
     private final StylePatternFrameType mType;
 
-    /**
-     */
     public StylePatternFrame(TextTranslator pTranslator,
                              MindMapController pMindMapController, StylePatternFrameType pType)
             throws HeadlessException {
@@ -503,9 +476,6 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
                 defaultValue, new IdentityTransformer());
     }
 
-    /**
-     *
-     */
     private void setPatternControls(PatternPropertyBase patternProperty,
                                     PropertyBean threeCheckBoxProperty, PropertyBean property,
                                     String defaultValue, ValueTransformator transformer) {
@@ -614,9 +584,6 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
                 transformer);
     }
 
-    /**
-     *
-     */
     private PatternPropertyBase getPatternResult(
             PatternPropertyBase baseProperty,
             ThreeCheckBoxProperty threeCheckBoxProperty, PropertyBean property,

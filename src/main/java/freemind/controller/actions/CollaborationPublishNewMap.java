@@ -44,8 +44,6 @@ public class CollaborationPublishNewMap extends CollaborationActionBase
 
     /**
      * Set the 'user_id' attribute value.
-     *
-     * @param userId
      */
     public void setUserId(String userId) {
         this.userId = userId;
@@ -62,8 +60,6 @@ public class CollaborationPublishNewMap extends CollaborationActionBase
 
     /**
      * Set the 'password' attribute value.
-     *
-     * @param password
      */
     public void setPassword(String password) {
         this.password = password;
@@ -80,8 +76,6 @@ public class CollaborationPublishNewMap extends CollaborationActionBase
 
     /**
      * Set the 'map' attribute value.
-     *
-     * @param map
      */
     public void setMap(String map) {
         this.map = map;
@@ -98,8 +92,6 @@ public class CollaborationPublishNewMap extends CollaborationActionBase
 
     /**
      * Set the 'map_name' attribute value.
-     *
-     * @param mapName
      */
     public void setMapName(String mapName) {
         this.mapName = mapName;

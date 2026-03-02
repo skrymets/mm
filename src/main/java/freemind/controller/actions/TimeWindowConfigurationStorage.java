@@ -42,8 +42,6 @@ public class TimeWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the list of 'time_window_column_setting' element items.
-     *
-     * @param list
      */
     public void setTimeWindowColumnSettingList(
             List<TimeWindowColumnSetting> list) {
@@ -60,7 +58,6 @@ public class TimeWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Add a 'time_window_column_setting' element item.
-     * @param item
      */
     public void addTimeWindowColumnSetting(TimeWindowColumnSetting item) {
         timeWindowColumnSettingList.add(item);
@@ -69,7 +66,6 @@ public class TimeWindowConfigurationStorage extends WindowConfigurationStorage
     /**
      * Get 'time_window_column_setting' element item by position.
      * @return item
-     * @param index
      */
     public TimeWindowColumnSetting getTimeWindowColumnSetting(int index) {
         return timeWindowColumnSettingList.get(index);
@@ -93,8 +89,6 @@ public class TimeWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'view_folded_nodes' attribute value.
-     *
-     * @param viewFoldedNodes
      */
     public void setViewFoldedNodes(Boolean viewFoldedNodes) {
         this.viewFoldedNodes = viewFoldedNodes;

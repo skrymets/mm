@@ -51,8 +51,6 @@ public class CollaborationAction extends XmlAction
 
     /**
      * Set the 'user' attribute value.
-     *
-     * @param user
      */
     public void setUser(String user) {
         this.user = user;
@@ -69,8 +67,6 @@ public class CollaborationAction extends XmlAction
 
     /**
      * Set the 'timestamp' attribute value.
-     *
-     * @param timestamp
      */
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
@@ -87,8 +83,6 @@ public class CollaborationAction extends XmlAction
 
     /**
      * Set the 'cmd' attribute value.
-     *
-     * @param cmd
      */
     public void setCmd(Cmd cmd) {
         this.cmd = cmd;
@@ -105,8 +99,6 @@ public class CollaborationAction extends XmlAction
 
     /**
      * Set the 'map' attribute value.
-     *
-     * @param map
      */
     public void setMap(String map) {
         this.map = map;
@@ -123,8 +115,6 @@ public class CollaborationAction extends XmlAction
 
     /**
      * Set the 'filename' attribute value.
-     *
-     * @param filename
      */
     public void setFilename(String filename) {
         this.filename = filename;

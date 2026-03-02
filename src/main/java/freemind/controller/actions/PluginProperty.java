@@ -34,8 +34,6 @@ public class PluginProperty
 
     /**
      * Set the 'name' attribute value.
-     *
-     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -52,8 +50,6 @@ public class PluginProperty
 
     /**
      * Set the 'value' attribute value.
-     *
-     * @param value
      */
     public void setValue(String value) {
         this.value = value;

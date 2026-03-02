@@ -31,8 +31,6 @@ public class Cloud
 
     /**
      * Set the 'COLOR' attribute value.
-     *
-     * @param COLOR
      */
     public void setCOLOR(String COLOR) {
         this.COLOR = COLOR;

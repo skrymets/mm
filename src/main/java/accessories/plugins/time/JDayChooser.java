@@ -1,23 +1,3 @@
-/*
- *  JDayChooser.java  - A bean for choosing a day
- *  Copyright (C) 2004 Kai Toedter
- *  kai@toedter.com
- *  www.toedter.com
- *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public License
- *  as published by the Free Software Foundation; either version 2
- *  of the License, or (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */
 package accessories.plugins.time;
 
 import freemind.common.ScalableJButton;
@@ -42,9 +22,6 @@ import java.util.*;
 
 /**
  * JDayChooser is a bean for choosing a day.
- *
- * @author Kai Toedter
- * @version $LastChangedDate: 2006-06-04 15:20:45 +0200 (So, 04 Jun 2006) $
  */
 
 @Slf4j
@@ -52,15 +29,10 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
         FocusListener {
 
     public static class ChangeAwareButton extends ScalableJButton {
-        /**
-         */
         public ChangeAwareButton(String pString) {
             super(pString);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.AbstractButton#setText(java.lang.String)
-         */
         @Override
         public void setText(String pText) {
             if (getText().equals(pText))
@@ -68,18 +40,12 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
             super.setText(pText);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.JComponent#setForeground(java.awt.Color)
-         */
         @Override
         public void setForeground(Color pFg) {
             if (!Objects.equals(getForeground(), pFg))
                 super.setForeground(pFg);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.JComponent#setBackground(java.awt.Color)
-         */
         @Override
         public void setBackground(Color pBg) {
             if (!Objects.equals(getBackground(), pBg))
@@ -237,7 +203,6 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     protected JMonthChooser monthChooser = null;
     @Setter
     protected JYearChooser yearChooser = null;
-
 
     private ICalendarMarkingEvaluator mCalendarMarkingEvaluator;
 

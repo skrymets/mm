@@ -41,8 +41,6 @@ public class ArrowLinkPointXmlAction extends XmlAction
 
     /**
      * Set the 'id' attribute value.
-     *
-     * @param id
      */
     public void setId(String id) {
         this.id = id;
@@ -59,8 +57,6 @@ public class ArrowLinkPointXmlAction extends XmlAction
 
     /**
      * Set the 'end_point' attribute value.
-     *
-     * @param endPoint
      */
     public void setEndPoint(String endPoint) {
         this.endPoint = endPoint;
@@ -77,8 +73,6 @@ public class ArrowLinkPointXmlAction extends XmlAction
 
     /**
      * Set the 'start_point' attribute value.
-     *
-     * @param startPoint
      */
     public void setStartPoint(String startPoint) {
         this.startPoint = startPoint;

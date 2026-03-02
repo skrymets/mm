@@ -31,8 +31,6 @@ public class Icon
 
     /**
      * Set the 'BUILTIN' attribute value.
-     *
-     * @param BUILTIN
      */
     public void setBUILTIN(String BUILTIN) {
         this.BUILTIN = BUILTIN;

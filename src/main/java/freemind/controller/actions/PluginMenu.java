@@ -31,8 +31,6 @@ public class PluginMenu
 
     /**
      * Set the 'location' attribute value.
-     *
-     * @param location
      */
     public void setLocation(String location) {
         this.location = location;

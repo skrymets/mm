@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: NodeMotionListenerView.java,v 1.1.4.4.4.9 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.view.mindmapview;
 
 import freemind.main.FreeMind;
@@ -34,9 +15,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 
-/**
- * @author Foltin
- */
 @Slf4j
 public class NodeFoldingComponent extends JButton {
     private static final int TIMER_DELAY = 50;
@@ -110,8 +88,6 @@ public class NodeFoldingComponent extends JButton {
         return getUI().getPreferredSize(this);
     }
 
-    /**
-     */
     private int getZoomedCircleRadius() {
         return nodeView.getZoomedFoldingSymbolHalfWidth();
     }
@@ -239,8 +215,6 @@ public class NodeFoldingComponent extends JButton {
             SwingUtils.restoreAntialiasing(g2, oldRenderingHint);
         }
 
-        /**
-         */
         private Color getColorForCounter() {
             Color color = nodeView.getModel().getEdge().getColor();
 

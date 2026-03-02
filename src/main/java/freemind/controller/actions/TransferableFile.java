@@ -31,8 +31,6 @@ public class TransferableFile
 
     /**
      * Set the 'file_name' attribute value.
-     *
-     * @param fileName
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;

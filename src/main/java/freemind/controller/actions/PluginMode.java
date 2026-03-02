@@ -31,8 +31,6 @@ public class PluginMode
 
     /**
      * Set the 'class_name' attribute value.
-     *
-     * @param className
      */
     public void setClassName(String className) {
         this.className = className;

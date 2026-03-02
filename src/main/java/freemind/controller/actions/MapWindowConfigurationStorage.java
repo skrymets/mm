@@ -83,8 +83,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the list of 'table_column_setting' element items.
-     *
-     * @param list
      */
     public void setTableColumnSettingList(List<TableColumnSettingStore> list) {
         tableColumnSettingList = list;
@@ -100,7 +98,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Add a 'table_column_setting' element item.
-     * @param item
      */
     public void addTableColumnSetting(TableColumnSettingStore item) {
         tableColumnSettingList.add(item);
@@ -109,7 +106,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
     /**
      * Get 'table_column_setting' element item by position.
      * @return item
-     * @param index
      */
     public TableColumnSettingStore getTableColumnSetting(int index) {
         return tableColumnSettingList.get(index);
@@ -133,8 +129,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the list of 'map_location_storage' element items.
-     *
-     * @param list
      */
     public void setMapLocationStorageList(List<MapLocationStorage> list) {
         mapLocationStorageList = list;
@@ -150,7 +144,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Add a 'map_location_storage' element item.
-     * @param item
      */
     public void addMapLocationStorage(MapLocationStorage item) {
         mapLocationStorageList.add(item);
@@ -159,7 +152,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
     /**
      * Get 'map_location_storage' element item by position.
      * @return item
-     * @param index
      */
     public MapLocationStorage getMapLocationStorage(int index) {
         return mapLocationStorageList.get(index);
@@ -183,8 +175,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'map_center_longitude' attribute value.
-     *
-     * @param mapCenterLongitude
      */
     public void setMapCenterLongitude(Double mapCenterLongitude) {
         this.mapCenterLongitude = mapCenterLongitude;
@@ -201,8 +191,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'map_center_latitude' attribute value.
-     *
-     * @param mapCenterLatitude
      */
     public void setMapCenterLatitude(Double mapCenterLatitude) {
         this.mapCenterLatitude = mapCenterLatitude;
@@ -219,8 +207,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'cursor_longitude' attribute value.
-     *
-     * @param cursorLongitude
      */
     public void setCursorLongitude(Double cursorLongitude) {
         this.cursorLongitude = cursorLongitude;
@@ -237,8 +223,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'cursor_latitude' attribute value.
-     *
-     * @param cursorLatitude
      */
     public void setCursorLatitude(Double cursorLatitude) {
         this.cursorLatitude = cursorLatitude;
@@ -255,8 +239,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'zoom' attribute value.
-     *
-     * @param zoom
      */
     public void setZoom(Integer zoom) {
         this.zoom = zoom;
@@ -273,8 +255,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'last_divider_position' attribute value.
-     *
-     * @param lastDividerPosition
      */
     public void setLastDividerPosition(Integer lastDividerPosition) {
         this.lastDividerPosition = lastDividerPosition;
@@ -291,8 +271,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'tile_source' attribute value.
-     *
-     * @param tileSource
      */
     public void setTileSource(String tileSource) {
         this.tileSource = tileSource;
@@ -309,8 +287,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'showMapMarker' attribute value.
-     *
-     * @param showMapMarker
      */
     public void setShowMapMarker(Boolean showMapMarker) {
         this.showMapMarker = showMapMarker;
@@ -327,8 +303,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'tileGridVisible' attribute value.
-     *
-     * @param tileGridVisible
      */
     public void setTileGridVisible(Boolean tileGridVisible) {
         this.tileGridVisible = tileGridVisible;
@@ -345,8 +319,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'zoomControlsVisible' attribute value.
-     *
-     * @param zoomControlsVisible
      */
     public void setZoomControlsVisible(Boolean zoomControlsVisible) {
         this.zoomControlsVisible = zoomControlsVisible;
@@ -363,8 +335,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'searchControlVisible' attribute value.
-     *
-     * @param searchControlVisible
      */
     public void setSearchControlVisible(Boolean searchControlVisible) {
         this.searchControlVisible = searchControlVisible;
@@ -381,8 +351,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'hideFoldedNodes' attribute value.
-     *
-     * @param hideFoldedNodes
      */
     public void setHideFoldedNodes(Boolean hideFoldedNodes) {
         this.hideFoldedNodes = hideFoldedNodes;
@@ -399,8 +367,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'limitSearchToVisibleArea' attribute value.
-     *
-     * @param limitSearchToVisibleArea
      */
     public void setLimitSearchToVisibleArea(Boolean limitSearchToVisibleArea) {
         this.limitSearchToVisibleArea = limitSearchToVisibleArea;
@@ -417,8 +383,6 @@ public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 
     /**
      * Set the 'map_location_storage_index' attribute value.
-     *
-     * @param mapLocationStorageIndex
      */
     public void setMapLocationStorageIndex(Integer mapLocationStorageIndex) {
         this.mapLocationStorageIndex = mapLocationStorageIndex;

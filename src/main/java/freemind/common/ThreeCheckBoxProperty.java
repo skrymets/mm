@@ -1,26 +1,3 @@
-/*
- * FreeMind - A Program for creating and viewing Mindmaps Copyright (C)
- * 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *
- * See COPYING for Details
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * Created on 25.02.2006
- */
-
 package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -30,8 +7,7 @@ import lombok.Getter;
 
 import javax.swing.*;
 
-public class ThreeCheckBoxProperty extends PropertyBean implements
-        PropertyControl {
+public class ThreeCheckBoxProperty extends PropertyBean implements PropertyControl {
     protected final String mFalseValue = "false";
 
     protected final String mTrueValue = "true";
@@ -50,11 +26,9 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
 
     protected static final int FALSE_VALUE_INT = 1;
 
-    private static final ImageIcon PLUS_IMAGE = freemind.view.ImageFactory.getInstance().createIcon(Resources
-            .get().getResource("images/edit_add.png"));
+    private static final ImageIcon PLUS_IMAGE = freemind.view.ImageFactory.getInstance().createIcon(Resources.get().getResource("images/edit_add.png"));
 
-    private static final ImageIcon MINUS_IMAGE = freemind.view.ImageFactory.getInstance().createIcon(Resources
-            .get().getResource("images/edit_remove.png"));
+    private static final ImageIcon MINUS_IMAGE = freemind.view.ImageFactory.getInstance().createIcon(Resources.get().getResource("images/edit_remove.png"));
 
     private static final Icon NO_IMAGE = new BlindIcon(15);
 
@@ -68,9 +42,6 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
 
     final JButton mButton = new JButton();
 
-    /**
-     *
-     */
     public ThreeCheckBoxProperty(String description, String label) {
         super();
         this.description = description;
@@ -87,12 +58,8 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
     }
 
     public void setValue(String value) {
-        if (value == null
-                || !(value.equalsIgnoreCase(mTrueValue)
-                || value.equalsIgnoreCase(mFalseValue) || value
-                .toLowerCase().equals(mDontTouchValue))) {
-            throw new IllegalArgumentException("Cannot set a boolean to "
-                    + value);
+        if (value == null || !(value.equalsIgnoreCase(mTrueValue) || value.equalsIgnoreCase(mFalseValue) || value.toLowerCase().equals(mDontTouchValue))) {
+            throw new IllegalArgumentException("Cannot set a boolean to " + value);
         }
         setState(transformString(value));
     }
@@ -133,9 +100,6 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
         mButton.setEnabled(pEnabled);
     }
 
-    /**
-     *
-     */
     protected void setState(int newState) {
         state = newState;
         Icon[] icons;

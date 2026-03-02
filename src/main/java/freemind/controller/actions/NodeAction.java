@@ -32,8 +32,6 @@ public class NodeAction extends XmlAction
 
     /**
      * Set the 'node' attribute value.
-     *
-     * @param node
      */
     public void setNode(String node) {
         this.node = node;

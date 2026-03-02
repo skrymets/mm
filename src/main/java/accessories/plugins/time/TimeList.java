@@ -1,25 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2005  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 04.02.2005
- */
-
 package accessories.plugins.time;
 
 import freemind.common.ScalableJTable;
@@ -63,7 +41,6 @@ import java.util.Timer;
 import java.util.regex.Pattern;
 
 /**
- * @author foltin
  * <p>
  *         TODO: - Extract HTML from nodes and notes.
  */
@@ -398,9 +375,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         }
     }
 
-    /**
-     *
-     */
     protected void toggleViewFoldedNodes() {
         mViewFoldedNodes = !mViewFoldedNodes;
         updateModel();
@@ -434,16 +408,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         disposeDialog();
     }
 
-    /**
-     * @author foltin
-     * {@code @date} 25.04.2012
-     */
     private static final class MindmapTableModel extends DefaultTableModel {
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-         */
         @Override
         public Class<?> getColumnClass(int arg0) {
             switch (arg0) {
@@ -463,13 +428,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         }
     }
 
-    /**
-     * @author foltin
-     * {@code @date} 25.04.2012
-     */
     private final class ToggleViewFoldedNodesAction extends AbstractAction implements MenuItemSelectedListener {
-        /**
-         */
         private ToggleViewFoldedNodesAction(String pName) {
             super(pName);
         }
@@ -478,9 +437,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             toggleViewFoldedNodes();
         }
 
-        /* (non-Javadoc)
-         * @see freemind.controller.MenuItemSelectedListener#isSelected(javax.swing.JMenuItem, javax.swing.Action)
-         */
         public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
             return mViewFoldedNodes;
         }
@@ -574,9 +530,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         }
     }
 
-    /**
-     *
-     */
     private MindMapNode getMindMapNode(int focussedRow) {
         MindMapNode selectedNode = ((NodeHolder) mTimeTable.getModel()
                 .getValueAt(focussedRow, NODE_TEXT_COLUMN)).node;
@@ -643,9 +596,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         }
     }
 
-    /**
-     *
-     */
     private void disposeDialog() {
         // store window positions:
 
@@ -677,8 +627,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         return text;
     }
 
-    /**
-     */
     private String getText(Document document) {
         try {
             return document.getText(0, document.getLength());
@@ -807,9 +755,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             super.processKeyEvent(e);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.JTable#getToolTipText(java.awt.event.MouseEvent)
-         */
         @Override
         public String getToolTipText(MouseEvent pEvent) {
             Point point = pEvent.getPoint();
@@ -880,9 +825,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
          */
         private String originalNodeText = null;
 
-        /**
-         *
-         */
         public NodeHolder(MindMapNode node) {
             this.node = node;
         }
@@ -921,9 +863,6 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         private String untaggedNotesText = null;
         private String originalNotesText = null;
 
-        /**
-         *
-         */
         public NotesHolder(MindMapNode node) {
             this.node = node;
         }
@@ -1019,60 +958,26 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         return mMyMindMapController;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.controller.MapModuleManager.MapModuleChangeObserver#
-     * isMapModuleChangeAllowed(freemind.view.MapModule, freemind.modes.Mode,
-     * freemind.view.MapModule, freemind.modes.Mode)
-     */
     public boolean isMapModuleChangeAllowed(MapModule pOldMapModule,
                                             Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.controller.MapModuleManager.MapModuleChangeObserver#
-     * beforeMapModuleChange(freemind.view.MapModule, freemind.modes.Mode,
-     * freemind.view.MapModule, freemind.modes.Mode)
-     */
     public void beforeMapModuleChange(MapModule pOldMapModule, Mode pOldMode,
                                       MapModule pNewMapModule, Mode pNewMode) {
 
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.controller.MapModuleManager.MapModuleChangeObserver#afterMapClose
-     * (freemind.view.MapModule, freemind.modes.Mode)
-     */
     public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
         disposeDialog();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.controller.MapModuleManager.MapModuleChangeObserver#
-     * afterMapModuleChange(freemind.view.MapModule, freemind.modes.Mode,
-     * freemind.view.MapModule, freemind.modes.Mode)
-     */
     public void afterMapModuleChange(MapModule pOldMapModule, Mode pOldMode,
                                      MapModule pNewMapModule, Mode pNewMode) {
         disposeDialog();
 
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.controller.MapModuleManager.MapModuleChangeObserver#
-     * numberOfOpenMapInformation(int, int)
-     */
     public void numberOfOpenMapInformation(int pNumber, int pIndex) {
     }
 

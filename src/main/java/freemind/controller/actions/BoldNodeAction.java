@@ -35,8 +35,6 @@ public class BoldNodeAction extends FormatNodeAction
 
     /**
      * Set the 'bold' attribute value.
-     *
-     * @param bold
      */
     public void setBold(boolean bold) {
         this.bold = bold;

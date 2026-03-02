@@ -1,26 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2004  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 21.05.2004
- */
-/*$Id: StructuredMenuHolder.java,v 1.1.4.7.4.11 2010/09/30 22:38:47 christianfoltin Exp $*/
-
 package freemind.controller;
 
 import freemind.main.HtmlTools;
@@ -37,15 +14,9 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author foltin
- */
 @Slf4j
 public class StructuredMenuHolder {
 
-    /**
-     *
-     */
     public static final String AMOUNT_OF_VISIBLE_MENU_ITEMS = "AMOUNT_OF_VISIBLE_MENU_ITEMS";
     public static final int ICON_SIZE = 16;
     private String mOutputString;
@@ -76,17 +47,11 @@ public class StructuredMenuHolder {
 
     }
 
-    /**
-     *
-     */
     public JMenu addMenu(JMenu item, String category) {
         StringTokenizer tokens = new StringTokenizer(category, "/");
         return (JMenu) addMenu(item, tokens);
     }
 
-    /**
-     *
-     */
     public JMenuItem addMenuItem(JMenuItem item, String category) {
         StringTokenizer tokens = new StringTokenizer(category, "/");
         StructuredMenuItemHolder holder = new StructuredMenuItemHolder();
@@ -157,9 +122,6 @@ public class StructuredMenuHolder {
         categoryPair.order.add(categoryPair.token);
     }
 
-    /**
-     *
-     */
     private Object addMenu(Object item, StringTokenizer tokens) {
         MapTokenPair categoryPair = getCategoryMap(tokens, menuMap);
         // add the item:
@@ -283,9 +245,6 @@ public class StructuredMenuHolder {
         }, myMap, new DefaultMenuAdderCreator());
     }
 
-    /**
-     *
-     */
     public void updateMenus(final JToolBar bar, String prefix) {
         MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"),
                 menuMap);
@@ -323,9 +282,6 @@ public class StructuredMenuHolder {
 
     private static class MenuItemAdder implements MenuAdder {
 
-        /**
-         *
-         */
         private int mAmountOfVisibleMenuItems = 20;
         private int mItemCounter = 0;
         private int mMenuCounter = 0;
@@ -379,9 +335,6 @@ public class StructuredMenuHolder {
         }
     }
 
-    /**
-     *
-     */
     static private void adjustMenuItem(JMenuItem item) {
         if (item.getIcon() == null) {
             item.setIcon(blindIcon);
@@ -400,13 +353,6 @@ public class StructuredMenuHolder {
 
     private static class DefaultMenuAdderCreator implements MenuAdderCreator {
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * freemind.controller.StructuredMenuHolder.MenuAdderCreator#createAdder
-         * (javax.swing.JMenu)
-         */
         public MenuAdder createAdder(JMenu baseObject) {
             return new MenuItemAdder(baseObject);
         }
@@ -461,11 +407,6 @@ public class StructuredMenuHolder {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
     public String toString() {
         mIndent = 0;
         mOutputString = "";
@@ -476,13 +417,6 @@ public class StructuredMenuHolder {
 
     private class PrintMenuAdderCreator implements MenuAdderCreator {
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * freemind.controller.StructuredMenuHolder.MenuAdderCreator#createAdder
-         * (javax.swing.JMenu)
-         */
         public MenuAdder createAdder(JMenu baseObject) {
             return new PrintMenuAdder();
         }

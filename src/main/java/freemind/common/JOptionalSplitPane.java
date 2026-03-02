@@ -1,27 +1,6 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2014 Christian Foltin, Joerg Mueller, Daniel Polansky, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.common;
 
 import freemind.frok.patches.FreeMindMainMock;
-import freemind.main.Resources;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,9 +10,6 @@ import java.util.HashMap;
 /**
  * Should display one or two JComponents. If two, it should use a JSplitPane
  * internally. Future: if more than two, it can use a JTabbedPane.
- *
- * @author foltin
- * {@code @date} 26.08.2014
  */
 @SuppressWarnings("serial")
 public class JOptionalSplitPane extends JPanel {
@@ -41,7 +17,6 @@ public class JOptionalSplitPane extends JPanel {
     private final HashMap<Integer, JComponent> mComponentHash = new HashMap<>();
     private JComponent mBasicComponent = null;
     private int mLastDividerPosition = -1;
-
 
     public JOptionalSplitPane() {
         setLayout(new BorderLayout());
@@ -62,7 +37,7 @@ public class JOptionalSplitPane extends JPanel {
             }
         }
         mComponentHash.put(index, pComponent);
-        // correct basic component?
+        // correct a basic component?
         switch (mComponentHash.size()) {
             case 1:
                 if (!(mBasicComponent instanceof JPanel)) {
@@ -75,7 +50,15 @@ public class JOptionalSplitPane extends JPanel {
                 }
                 break;
             case 2:
-                if (!(mBasicComponent instanceof JSplitPane)) {
+                if (mBasicComponent instanceof JSplitPane splitPane) {
+                    // some component has changed:
+                    setLastDividerPosition(splitPane.getDividerLocation());
+                    splitPane.remove(formerComponent);
+                    splitPane.setLeftComponent(mComponentHash.get(0));
+                    splitPane.setRightComponent(mComponentHash.get(1));
+                    splitPane.setDividerLocation(getLastDividerPosition());
+                    revalidate();
+                } else {
                     remove(mBasicComponent);
                     // TODO: Make configurable.
                     JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -88,15 +71,6 @@ public class JOptionalSplitPane extends JPanel {
                     }
                     add(mBasicComponent, BorderLayout.CENTER);
                     revalidate();
-                } else {
-                    // some component has changed:
-                    JSplitPane splitPane = (JSplitPane) mBasicComponent;
-                    setLastDividerPosition(splitPane.getDividerLocation());
-                    splitPane.remove(formerComponent);
-                    splitPane.setLeftComponent(mComponentHash.get(0));
-                    splitPane.setRightComponent(mComponentHash.get(1));
-                    splitPane.setDividerLocation(getLastDividerPosition());
-                    revalidate();
                 }
                 break;
             default:
@@ -104,8 +78,6 @@ public class JOptionalSplitPane extends JPanel {
         }
     }
 
-    /**
-     */
     private void setSingleJPanel(JComponent pComponent) {
         if (mBasicComponent != null) {
             if (mBasicComponent instanceof JSplitPane) {
@@ -145,14 +117,11 @@ public class JOptionalSplitPane extends JPanel {
         }
     }
 
-    /**
-     */
     private void checkIndex(int index) {
         if (index < 0 || index > 1) {
             throw new IllegalArgumentException("Wrong index: " + index);
         }
     }
-
 
     public static void main(String[] args) {
         new FreeMindMainMock();

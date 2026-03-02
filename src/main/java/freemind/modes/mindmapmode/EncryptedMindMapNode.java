@@ -1,23 +1,3 @@
-/*
- * FreeMind - A Program for creating and viewing Mindmaps Copyright (C)
- * 2000-2001 Joerg Mueller <joergmueller@bigfoot.com> See COPYING for Details
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
-
 package freemind.modes.mindmapmode;
 
 import freemind.main.HtmlTools;
@@ -92,9 +72,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     @Setter
     private boolean isShuttingDown = false;
 
-    /**
-     *
-     */
     public EncryptedMindMapNode(Object userObject, MindMap map) {
         super(userObject, map);
         if (encryptedIcon == null) {
@@ -195,9 +172,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         return true;
     }
 
-    /**
-     *
-     */
     private boolean equals(StringBuilder givenPassword, StringBuilder password2) {
         if (givenPassword.length() != password.length())
             return false;
@@ -251,11 +225,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMapNode#getIcons()
-     */
     public void updateIcon() {
         if (isAccessible()) {
             setStateIcon("encrypted", null);
@@ -266,20 +235,12 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         }
     }
 
-    /**
-     *
-     */
-
     public boolean isFolded() {
         if (isAccessible()) {
             return super.isFolded();
         }
         return true;
     }
-
-    /**
-     *
-     */
 
     public void setFolded(boolean folded) {
         if (isAccessible()) {
@@ -288,10 +249,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
             super.setFolded(true);
         }
     }
-
-    /**
-     *
-     */
 
     public void setAdditionalInfo(String info) {
         encryptedContent = info;
@@ -305,10 +262,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         }
         return encryptedContent;
     }
-
-    /**
-     *
-     */
 
     public Element save(Writer writer, Document doc, MindMapLinkRegistry registry,
                          boolean saveHidden, boolean saveChildren) throws IOException {
@@ -335,8 +288,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         return ret;
     }
 
-    /**
-     */
     private void generateEncryptedContent()
             throws IOException {
         setStoringEncryptedContent(true);
@@ -350,9 +301,6 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         }
     }
 
-    /**
-     *
-     */
     private String encryptXml(String childXml) {
         try {
             // Create encrypter/decrypter class

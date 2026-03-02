@@ -38,8 +38,6 @@ public class AddIconAction extends NodeAction
 
     /**
      * Set the 'icon_name' attribute value.
-     *
-     * @param iconName
      */
     public void setIconName(String iconName) {
         this.iconName = iconName;
@@ -56,8 +54,6 @@ public class AddIconAction extends NodeAction
 
     /**
      * Set the 'icon_position' attribute value.
-     *
-     * @param iconPosition
      */
     public void setIconPosition(int iconPosition) {
         this.iconPosition = iconPosition;

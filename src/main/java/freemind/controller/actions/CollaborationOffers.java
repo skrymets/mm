@@ -42,8 +42,6 @@ public class CollaborationOffers extends CollaborationActionBase
 
     /**
      * Set the list of 'collaboration_map_offer' element items.
-     *
-     * @param list
      */
     public void setCollaborationMapOfferList(List<CollaborationMapOffer> list) {
         collaborationMapOfferList = list;
@@ -59,7 +57,6 @@ public class CollaborationOffers extends CollaborationActionBase
 
     /**
      * Add a 'collaboration_map_offer' element item.
-     * @param item
      */
     public void addCollaborationMapOffer(CollaborationMapOffer item) {
         collaborationMapOfferList.add(item);
@@ -68,7 +65,6 @@ public class CollaborationOffers extends CollaborationActionBase
     /**
      * Get 'collaboration_map_offer' element item by position.
      * @return item
-     * @param index
      */
     public CollaborationMapOffer getCollaborationMapOffer(int index) {
         return collaborationMapOfferList.get(index);
@@ -92,8 +88,6 @@ public class CollaborationOffers extends CollaborationActionBase
 
     /**
      * Set the 'is_single_offer' attribute value.
-     *
-     * @param isSingleOffer
      */
     public void setIsSingleOffer(Boolean isSingleOffer) {
         this.isSingleOffer = isSingleOffer;

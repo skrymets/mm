@@ -35,8 +35,6 @@ public class EdgeWidthFormatAction extends FormatNodeAction
 
     /**
      * Set the 'width' attribute value.
-     *
-     * @param width
      */
     public void setWidth(Integer width) {
         this.width = width;

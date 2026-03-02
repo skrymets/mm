@@ -41,8 +41,6 @@ public class PluginRegistration
 
     /**
      * Set the list of 'plugin_mode' element items.
-     *
-     * @param list
      */
     public void setPluginModeList(List<PluginMode> list) {
         pluginModeList = list;
@@ -58,7 +56,6 @@ public class PluginRegistration
 
     /**
      * Add a 'plugin_mode' element item.
-     * @param item
      */
     public void addPluginMode(PluginMode item) {
         pluginModeList.add(item);
@@ -67,7 +64,6 @@ public class PluginRegistration
     /**
      * Get 'plugin_mode' element item by position.
      * @return item
-     * @param index
      */
     public PluginMode getPluginMode(int index) {
         return pluginModeList.get(index);
@@ -91,8 +87,6 @@ public class PluginRegistration
 
     /**
      * Set the 'class_name' attribute value.
-     *
-     * @param className
      */
     public void setClassName(String className) {
         this.className = className;
@@ -109,8 +103,6 @@ public class PluginRegistration
 
     /**
      * Set the 'isPluginBase' attribute value.
-     *
-     * @param isPluginBase
      */
     public void setIsPluginBase(Boolean isPluginBase) {
         this.isPluginBase = isPluginBase;

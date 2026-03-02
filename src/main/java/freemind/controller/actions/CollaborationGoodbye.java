@@ -35,8 +35,6 @@ public class CollaborationGoodbye extends CollaborationActionBase
 
     /**
      * Set the 'user_id' attribute value.
-     *
-     * @param userId
      */
     public void setUserId(String userId) {
         this.userId = userId;

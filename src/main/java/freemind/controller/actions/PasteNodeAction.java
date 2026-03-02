@@ -42,8 +42,6 @@ public class PasteNodeAction extends NodeAction
 
     /**
      * Set the 'transferable_content' element value.
-     *
-     * @param transferableContent
      */
     public void setTransferableContent(TransferableContent transferableContent) {
         this.transferableContent = transferableContent;
@@ -60,8 +58,6 @@ public class PasteNodeAction extends NodeAction
 
     /**
      * Set the 'isLeft' attribute value.
-     *
-     * @param isLeft
      */
     public void setIsLeft(boolean isLeft) {
         this.isLeft = isLeft;
@@ -78,8 +74,6 @@ public class PasteNodeAction extends NodeAction
 
     /**
      * Set the 'asSibling' attribute value.
-     *
-     * @param asSibling
      */
     public void setAsSibling(boolean asSibling) {
         this.asSibling = asSibling;

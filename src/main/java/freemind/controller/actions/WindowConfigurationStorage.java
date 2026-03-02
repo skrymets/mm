@@ -41,8 +41,6 @@ public class WindowConfigurationStorage extends XmlAction
 
     /**
      * Set the 'x' attribute value.
-     *
-     * @param x
      */
     public void setX(int x) {
         X = x;
@@ -59,8 +57,6 @@ public class WindowConfigurationStorage extends XmlAction
 
     /**
      * Set the 'y' attribute value.
-     *
-     * @param y
      */
     public void setY(int y) {
         Y = y;
@@ -77,8 +73,6 @@ public class WindowConfigurationStorage extends XmlAction
 
     /**
      * Set the 'width' attribute value.
-     *
-     * @param width
      */
     public void setWidth(int width) {
         this.width = width;
@@ -95,8 +89,6 @@ public class WindowConfigurationStorage extends XmlAction
 
     /**
      * Set the 'height' attribute value.
-     *
-     * @param height
      */
     public void setHeight(int height) {
         this.height = height;

@@ -37,8 +37,6 @@ public class Edge
 
     /**
      * Set the 'COLOR' attribute value.
-     *
-     * @param COLOR
      */
     public void setCOLOR(String COLOR) {
         this.COLOR = COLOR;
@@ -55,8 +53,6 @@ public class Edge
 
     /**
      * Set the 'STYLE' attribute value.
-     *
-     * @param STYLE
      */
     public void setSTYLE(String STYLE) {
         this.STYLE = STYLE;
@@ -73,8 +69,6 @@ public class Edge
 
     /**
      * Set the 'WIDTH' attribute value.
-     *
-     * @param WIDTH
      */
     public void setWIDTH(String WIDTH) {
         this.WIDTH = WIDTH;

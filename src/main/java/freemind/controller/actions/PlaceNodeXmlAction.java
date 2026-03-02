@@ -50,8 +50,6 @@ public class PlaceNodeXmlAction extends NodeAction
 
     /**
      * Set the 'map_center_longitude' attribute value.
-     *
-     * @param mapCenterLongitude
      */
     public void setMapCenterLongitude(Double mapCenterLongitude) {
         this.mapCenterLongitude = mapCenterLongitude;
@@ -68,8 +66,6 @@ public class PlaceNodeXmlAction extends NodeAction
 
     /**
      * Set the 'map_center_latitude' attribute value.
-     *
-     * @param mapCenterLatitude
      */
     public void setMapCenterLatitude(Double mapCenterLatitude) {
         this.mapCenterLatitude = mapCenterLatitude;
@@ -86,8 +82,6 @@ public class PlaceNodeXmlAction extends NodeAction
 
     /**
      * Set the 'cursor_longitude' attribute value.
-     *
-     * @param cursorLongitude
      */
     public void setCursorLongitude(Double cursorLongitude) {
         this.cursorLongitude = cursorLongitude;
@@ -104,8 +98,6 @@ public class PlaceNodeXmlAction extends NodeAction
 
     /**
      * Set the 'cursor_latitude' attribute value.
-     *
-     * @param cursorLatitude
      */
     public void setCursorLatitude(Double cursorLatitude) {
         this.cursorLatitude = cursorLatitude;
@@ -122,8 +114,6 @@ public class PlaceNodeXmlAction extends NodeAction
 
     /**
      * Set the 'zoom' attribute value.
-     *
-     * @param zoom
      */
     public void setZoom(Integer zoom) {
         this.zoom = zoom;
@@ -140,8 +130,6 @@ public class PlaceNodeXmlAction extends NodeAction
 
     /**
      * Set the 'tile_source' attribute value.
-     *
-     * @param tileSource
      */
     public void setTileSource(String tileSource) {
         this.tileSource = tileSource;

@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2007  Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.view.mindmapview;
 
 import freemind.main.Tools;
@@ -28,11 +9,6 @@ import java.awt.*;
 class BubbleMainView extends MainView {
     final static Stroke DEF_STROKE = new BasicStroke();
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.view.mindmapview.NodeView.MainView#getPreferredSize()
-     */
     public Dimension getPreferredSize() {
         Dimension prefSize = super.getPreferredSize();
         prefSize.width += getNodeView().getMap().getZoomed(5);
@@ -112,11 +88,6 @@ class BubbleMainView extends MainView {
         return super.getDeltaX();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.view.mindmapview.NodeView#getStyle()
-     */
     public String getStyle() {
         return MindMapNode.STYLE_BUBBLE;
     }
@@ -128,20 +99,10 @@ class BubbleMainView extends MainView {
         return NodeView.ALIGN_CENTER;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.view.mindmapview.NodeView#getTextWidth()
-     */
     public int getTextWidth() {
         return super.getTextWidth() + getNodeView().getMap().getZoomed(5);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.view.mindmapview.NodeView#getTextX()
-     */
     public int getTextX() {
         return super.getTextX() + getNodeView().getMap().getZoomed(2);
     }

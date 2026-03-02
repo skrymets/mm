@@ -15,10 +15,7 @@ public class DefaultLocalLinkConverter implements Controller.LocalLinkConverter 
     }
 
     public URL convertLocalLink(String map) throws MalformedURLException {
-        /* new handling for relative urls. fc, 29.10.2003. */
         String applicationPath = frame.getFreemindBaseDir();
-        // remove "." and make url
         return Tools.fileToUrl(new File(applicationPath + map.substring(1)));
-        /* end: new handling for relative urls. fc, 29.10.2003. */
     }
 }

@@ -49,8 +49,6 @@ public class Arrowlink
 
     /**
      * Set the 'COLOR' attribute value.
-     *
-     * @param COLOR
      */
     public void setCOLOR(String COLOR) {
         this.COLOR = COLOR;
@@ -67,8 +65,6 @@ public class Arrowlink
 
     /**
      * Set the 'DESTINATION' attribute value.
-     *
-     * @param DESTINATION
      */
     public void setDESTINATION(String DESTINATION) {
         this.DESTINATION = DESTINATION;
@@ -85,8 +81,6 @@ public class Arrowlink
 
     /**
      * Set the 'ENDARROW' attribute value.
-     *
-     * @param ENDARROW
      */
     public void setENDARROW(String ENDARROW) {
         this.ENDARROW = ENDARROW;
@@ -103,8 +97,6 @@ public class Arrowlink
 
     /**
      * Set the 'ENDINCLINATION' attribute value.
-     *
-     * @param ENDINCLINATION
      */
     public void setENDINCLINATION(String ENDINCLINATION) {
         this.ENDINCLINATION = ENDINCLINATION;
@@ -121,8 +113,6 @@ public class Arrowlink
 
     /**
      * Set the 'ID' attribute value.
-     *
-     * @param ID
      */
     public void setID(String ID) {
         this.ID = ID;
@@ -139,8 +129,6 @@ public class Arrowlink
 
     /**
      * Set the 'STARTARROW' attribute value.
-     *
-     * @param STARTARROW
      */
     public void setSTARTARROW(String STARTARROW) {
         this.STARTARROW = STARTARROW;
@@ -157,8 +145,6 @@ public class Arrowlink
 
     /**
      * Set the 'STARTINCLINATION' attribute value.
-     *
-     * @param STARTINCLINATION
      */
     public void setSTARTINCLINATION(String STARTINCLINATION) {
         this.STARTINCLINATION = STARTINCLINATION;

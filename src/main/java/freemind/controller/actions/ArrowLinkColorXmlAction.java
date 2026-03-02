@@ -38,8 +38,6 @@ public class ArrowLinkColorXmlAction extends XmlAction
 
     /**
      * Set the 'id' attribute value.
-     *
-     * @param id
      */
     public void setId(String id) {
         this.id = id;
@@ -56,8 +54,6 @@ public class ArrowLinkColorXmlAction extends XmlAction
 
     /**
      * Set the 'color' attribute value.
-     *
-     * @param color
      */
     public void setColor(String color) {
         this.color = color;

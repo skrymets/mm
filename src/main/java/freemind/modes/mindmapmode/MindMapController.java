@@ -1,21 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
 package freemind.modes.mindmapmode;
 
 import freemind.main.SwingUtils;
@@ -283,8 +265,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.selectAllAction = new SelectAllAction(this);
     }
 
-
-
     public String getPatternsXML() {
         return getFrame().getPatternsXML();
     }
@@ -335,8 +315,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return model;
     }
 
-
-
     public FileFilter getFileFilter() {
         return filefilter;
     }
@@ -363,14 +341,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         }
     }
 
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.modes.ControllerAdapter#onFocusNode(freemind.view.mindmapview
-     * .NodeView)
-     */
     public void onFocusNode(NodeView pNode) {
         super.onFocusNode(pNode);
         MindMapNode model = pNode.getModel();
@@ -378,25 +348,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         updateNodeInformation();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.modes.ControllerAdapter#onLostFocusNode(freemind.view.mindmapview
-     * .NodeView)
-     */
     public void onLostFocusNode(NodeView pNode) {
         super.onLostFocusNode(pNode);
         updateNodeInformation();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.modes.ControllerAdapter#changeSelection(freemind.view.mindmapview
-     * .NodeView, boolean)
-     */
     public void changeSelection(NodeView pNode, boolean pIsSelected) {
         super.changeSelection(pNode, pIsSelected);
         updateNodeInformation();
@@ -757,9 +713,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return iconService.removeLastIcon(node);
     }
 
-    /**
-     *
-     */
     public void addLink(MindMapNode source, MindMapNode target) {
         linkService.addLink(source, target);
     }
@@ -772,9 +725,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         linkService.setArrowLinkColor(arrowLink, color);
     }
 
-    /**
-     *
-     */
     public void changeArrowsOfArrowLink(MindMapArrowLink arrowLink, boolean hasStartArrow, boolean hasEndArrow) {
         linkService.changeArrowsOfArrowLink(arrowLink, hasStartArrow, hasEndArrow);
     }
@@ -796,23 +746,14 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         editingService.setNodeText(selected, newText);
     }
 
-    /**
-     *
-     */
     public void setEdgeWidth(MindMapNode node, int width) {
         nodeFormattingService.setEdgeWidth(node, width);
     }
 
-    /**
-     *
-     */
     public void setEdgeStyle(MindMapNode node, String style) {
         nodeFormattingService.setEdgeStyle(node, style);
     }
 
-    /**
-     *
-     */
     public void setNodeStyle(MindMapNode node, String style) {
         nodeFormattingService.setNodeStyle(node, style);
     }
@@ -834,13 +775,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         clipboardService.paste(t, parent);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.modes.mindmapmode.actions.MindMapActions#paste(java.awt.datatransfer
-     * .Transferable, freemind.model.MindMapNode, boolean, boolean)
-     */
     public boolean paste(Transferable t, MindMapNode target, boolean asSibling, boolean isLeft) {
         return clipboardService.paste(t, target, asSibling, isLeft);
     }
@@ -877,8 +811,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     public void joinNodes(MindMapNode selectedNode, List<MindMapNode> selectedNodes) {
         actions.joinNodes.joinNodes(selectedNode, selectedNodes);
     }
-
-
 
     public void loadURL(String relative) {
         if (getMap().getFile() == null) {
@@ -960,9 +892,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         htmlWriter.saveHTML(mindMapNodes);
     }
 
-    /**
-     *
-     */
     protected void updateNode(MindMapNode node) {
         super.updateNode(node);
         recursiveCallUpdateHooks(node, node /*
@@ -971,9 +900,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
          */);
     }
 
-    /**
-     *
-     */
     private void recursiveCallUpdateHooks(MindMapNode node, MindMapNode changedNode) {
         // Tell any node hooks that the node is changed:
         if (node instanceof MindMapNode) {
@@ -1036,13 +962,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         getMap().insertNodeInto(newNode, parent, index);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * freemind.model.MindMap#insertNodeInto(javax.swing.tree.MutableTreeNode,
-     * javax.swing.tree.MutableTreeNode)
-     */
     public void insertNodeInto(MindMapNode newChild, MindMapNode parent) {
         insertNodeInto(newChild, parent, parent.getChildCount());
     }

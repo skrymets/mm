@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2012 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes;
 
 import freemind.model.MindMapNode;
@@ -29,9 +9,6 @@ import org.w3c.dom.Element;
 /**
  * Stores targets of arrow links. It is used to enable cut/copy+paste for every
  * parts of links (ie. source, destination or both).
- *
- * @author foltin
- * {@code @date} 27.10.2012
  */
 public class ArrowLinkTarget extends ArrowLinkAdapter {
     private String mSourceLabel;
@@ -65,9 +42,6 @@ public class ArrowLinkTarget extends ArrowLinkAdapter {
         return linkTarget;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.MindMapArrowLink#changeInclination(freemind.view.mindmapview.MapView, int, int, int, int)
-     */
     public void changeInclination(MapView pMap, int pOriginX, int pOriginY,
                                   int pDeltaX, int pDeltaY) {
     }
@@ -77,6 +51,5 @@ public class ArrowLinkTarget extends ArrowLinkAdapter {
         copy(linkAdapter);
         return linkAdapter;
     }
-
 
 }

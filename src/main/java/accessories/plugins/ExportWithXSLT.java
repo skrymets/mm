@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
 /*
  * Created on 08.04.2004
  *
@@ -51,7 +32,6 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 
 /**
- * @author foltin
  * <p>
  * Exports the map using an XSLT script. The parameterization is
  * described in the corresponding Export... .xml-file.
@@ -75,18 +55,10 @@ public class ExportWithXSLT extends ExportHook {
                 nameExtension);
     }
 
-    /**
-     *
-     */
     public ExportWithXSLT() {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.extensions.MindMapHook#startupMapHook()
-     */
     public void startupMapHook() {
         super.startupMapHook();
         ModeController mc = getController();
@@ -191,9 +163,6 @@ public class ExportWithXSLT extends ExportHook {
         return success;
     }
 
-    /**
-     *
-     */
     private boolean copyIcons(String directoryName) {
         boolean success;
         String iconDirectoryName = directoryName + File.separatorChar + "icons";
@@ -205,9 +174,6 @@ public class ExportWithXSLT extends ExportHook {
         return success;
     }
 
-    /**
-     *
-     */
     private void createImageFromMap(String directoryName) {
         // in the test case, we don't have a viewer and skip the image.
         if (getController().getView() == null)
@@ -224,9 +190,6 @@ public class ExportWithXSLT extends ExportHook {
         }
     }
 
-    /**
-     *
-     */
     private void copyIconsToDirectory(String directoryName2) {
         List<String> iconNames = MindIcon.getAllIconNames();
         for (String s : iconNames) {
@@ -250,9 +213,6 @@ public class ExportWithXSLT extends ExportHook {
 
     }
 
-    /**
-     *
-     */
     private void copyFilesFromResourcesToDirectory(String directoryName,
                                                    String files, String filePrefix) {
         StringTokenizer tokenizer = new StringTokenizer(files, ",");
@@ -262,9 +222,6 @@ public class ExportWithXSLT extends ExportHook {
         }
     }
 
-    /**
-     *
-     */
     private boolean createDirectory(String directoryName) {
         File dir = new File(directoryName);
         // create directory, if not exists:
@@ -274,8 +231,6 @@ public class ExportWithXSLT extends ExportHook {
         return true;
     }
 
-    /**
-     */
     private boolean transformMapWithXslt(String xsltFileName, File saveFile,
                                          String areaCode) throws IOException {
         StringWriter writer = getMapXml();
@@ -291,8 +246,6 @@ public class ExportWithXSLT extends ExportHook {
         return transform(new StreamSource(reader), xsltFile, saveFile, areaCode);
     }
 
-    /**
-     */
     private StringWriter getMapXml() throws IOException {
         // get output:
         StringWriter writer = new StringWriter();
@@ -301,8 +254,6 @@ public class ExportWithXSLT extends ExportHook {
         return writer;
     }
 
-    /**
-     */
     private String getAreaCode(boolean create_image) {
         String areaCode = "";
         if (create_image) {

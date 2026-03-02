@@ -41,8 +41,6 @@ public class SetAttributeAction extends NodeAction
 
     /**
      * Set the 'position' attribute value.
-     *
-     * @param position
      */
     public void setPosition(int position) {
         this.position = position;
@@ -59,8 +57,6 @@ public class SetAttributeAction extends NodeAction
 
     /**
      * Set the 'name' attribute value.
-     *
-     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -77,8 +73,6 @@ public class SetAttributeAction extends NodeAction
 
     /**
      * Set the 'value' attribute value.
-     *
-     * @param value
      */
     public void setValue(String value) {
         this.value = value;

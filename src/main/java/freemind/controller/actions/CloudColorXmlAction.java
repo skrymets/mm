@@ -35,8 +35,6 @@ public class CloudColorXmlAction extends NodeAction
 
     /**
      * Set the 'color' attribute value.
-     *
-     * @param color
      */
     public void setColor(String color) {
         this.color = color;

@@ -35,8 +35,6 @@ public class CollaborationHello extends CollaborationActionBase
 
     /**
      * Set the 'map' attribute value.
-     *
-     * @param map
      */
     public void setMap(String map) {
         this.map = map;

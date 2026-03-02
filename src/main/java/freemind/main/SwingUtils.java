@@ -1,27 +1,8 @@
-/*
- * FreeMind - a program for creating and viewing mindmaps
- * Copyright (C) 2000-2006  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- * See COPYING for details
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place - Suite 330, Boston, MA 02111-1307, USA.
- */
 package freemind.main;
 
 import freemind.view.mindmapview.NodeView;
-import org.apache.commons.lang3.SystemUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SystemUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +10,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
@@ -47,8 +29,6 @@ public final class SwingUtils {
     public static void init(Resources res) {
         resources = res;
     }
-
-    // ---- Font methods ----
 
     private static String[] sEnvFonts = null;
 
@@ -93,6 +73,7 @@ public final class SwingUtils {
     public static void addEscapeActionToDialog(final JDialog dialog) {
         class EscapeAction extends AbstractAction {
 
+            @Serial
             private static final long serialVersionUID = 238333614987438806L;
 
             public void actionPerformed(ActionEvent e) {

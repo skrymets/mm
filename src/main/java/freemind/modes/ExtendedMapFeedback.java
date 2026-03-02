@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2014 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes;
 
 import freemind.extensions.HookFactory;
@@ -35,9 +15,6 @@ import java.util.List;
 
 /**
  * MapFeedback extended by the xml based node change management.
- *
- * @author foltin
- * {@code @date} 16.03.2014
  */
 public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     /**
@@ -46,7 +23,6 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     ActionRegistry getActionRegistry();
 
     boolean doTransaction(String pName, ActionPair pPair);
-
 
     /**
      * Given a node identifier, this method returns the corresponding node.
@@ -61,14 +37,10 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
      */
     String getNodeID(MindMapNode selected);
 
-    /**
-     */
     MindMapNode getSelected();
 
     void select(MindMapNode pFocussed, List<MindMapNode> pSelecteds);
 
-    /**
-     */
     void insertNodeInto(MindMapNode pNewNode, MindMapNode pParent, int pIndex);
 
     /**
@@ -77,8 +49,6 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
      */
     MindMapNode newNode(Object pUserObject, MindMap pMap);
 
-    /**
-     */
     void removeNodeFromParent(MindMapNode pSelectedNode);
 
     /**
@@ -110,6 +80,5 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
      * @param pForce true= without save.
      */
     void close(boolean pForce);
-
 
 }

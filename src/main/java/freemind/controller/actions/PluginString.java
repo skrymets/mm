@@ -34,8 +34,6 @@ public class PluginString
 
     /**
      * Set the 'key' attribute value.
-     *
-     * @param key
      */
     public void setKey(String key) {
         this.key = key;
@@ -52,8 +50,6 @@ public class PluginString
 
     /**
      * Set the 'value' attribute value.
-     *
-     * @param value
      */
     public void setValue(String value) {
         this.value = value;

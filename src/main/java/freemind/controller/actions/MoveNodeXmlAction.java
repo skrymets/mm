@@ -41,8 +41,6 @@ public class MoveNodeXmlAction extends NodeAction
 
     /**
      * Set the 'v_gap' attribute value.
-     *
-     * @param vGap
      */
     public void setVGap(int vGap) {
         VGap = vGap;
@@ -59,8 +57,6 @@ public class MoveNodeXmlAction extends NodeAction
 
     /**
      * Set the 'h_gap' attribute value.
-     *
-     * @param hGap
      */
     public void setHGap(int hGap) {
         HGap = hGap;
@@ -77,8 +73,6 @@ public class MoveNodeXmlAction extends NodeAction
 
     /**
      * Set the 'shift_y' attribute value.
-     *
-     * @param shiftY
      */
     public void setShiftY(int shiftY) {
         this.shiftY = shiftY;

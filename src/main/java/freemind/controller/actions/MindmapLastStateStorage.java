@@ -60,8 +60,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the list of 'node_list_member' element items.
-     *
-     * @param list
      */
     public void setNodeListMemberList(List<NodeListMember> list) {
         nodeListMemberList = list;
@@ -77,7 +75,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Add a 'node_list_member' element item.
-     * @param item
      */
     public void addNodeListMember(NodeListMember item) {
         nodeListMemberList.add(item);
@@ -86,7 +83,6 @@ public class MindmapLastStateStorage extends XmlAction
     /**
      * Get 'node_list_member' element item by position.
      * @return item
-     * @param index
      */
     public NodeListMember getNodeListMember(int index) {
         return nodeListMemberList.get(index);
@@ -110,8 +106,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the 'last_changed' attribute value.
-     *
-     * @param lastChanged
      */
     public void setLastChanged(long lastChanged) {
         this.lastChanged = lastChanged;
@@ -128,8 +122,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the 'tab_index' attribute value.
-     *
-     * @param tabIndex
      */
     public void setTabIndex(int tabIndex) {
         this.tabIndex = tabIndex;
@@ -146,8 +138,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the 'restorable_name' attribute value.
-     *
-     * @param restorableName
      */
     public void setRestorableName(String restorableName) {
         this.restorableName = restorableName;
@@ -164,8 +154,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the 'last_zoom' attribute value.
-     *
-     * @param lastZoom
      */
     public void setLastZoom(Float lastZoom) {
         this.lastZoom = lastZoom;
@@ -182,8 +170,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the 'x' attribute value.
-     *
-     * @param x
      */
     public void setX(int x) {
         X = x;
@@ -200,8 +186,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the 'y' attribute value.
-     *
-     * @param y
      */
     public void setY(int y) {
         Y = y;
@@ -218,8 +202,6 @@ public class MindmapLastStateStorage extends XmlAction
 
     /**
      * Set the 'last_selected' attribute value.
-     *
-     * @param lastSelected
      */
     public void setLastSelected(String lastSelected) {
         this.lastSelected = lastSelected;

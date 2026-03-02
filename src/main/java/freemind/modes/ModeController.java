@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes;
 
 import freemind.common.TextTranslator;
@@ -187,9 +168,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
 
     void onViewRemovedHook(NodeView newView);
 
-    /**
-     *
-     */
     interface NodeSelectionListener {
 
         /**
@@ -202,7 +180,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
          * node, there may only be one!).
          */
         void onFocusNode(NodeView node);
-
 
         void onLostFocusNode(NodeView node);
 
@@ -221,8 +198,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
         void onSelectionChange(NodeView pNode, boolean pIsSelected);
     }
 
-    /**
-     */
     void registerNodeSelectionListener(NodeSelectionListener listener,
                                        boolean pCallWithCurrentSelection);
 
@@ -234,9 +209,6 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      */
     void firePreSaveEvent(MindMapNode node);
 
-    /**
-     *
-     */
     interface NodeLifetimeListener {
 
         /**

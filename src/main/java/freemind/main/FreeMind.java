@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: FreeMind.java,v 1.32.14.28.2.147 2011/01/09 21:03:13 christianfoltin Exp $*/
 package freemind.main;
 
 import com.inet.jortho.SpellChecker;
@@ -57,7 +38,6 @@ import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import static javax.swing.JOptionPane.showMessageDialog;
 
-
 @Slf4j
 public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
@@ -72,8 +52,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     private static final String FREE_MIND_PROGRESS_LOAD_MAPS = "FreeMind.progress.loadMaps";
 
     private static final String FREE_MIND_PROGRESS_LOAD_MAPS_NAME = "FreeMind.progress.loadNamedMaps";
-
-
 
     public static final String RESOURCE_LOOKANDFEEL = "lookandfeel";
 
@@ -708,7 +686,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             System.setProperty("http.nonProxyHosts", userPreferences.getProperty(PROXY_EXCEPTION));
         }
     }
-
 
     private void fireStartupDone() {
         startupDone = true;

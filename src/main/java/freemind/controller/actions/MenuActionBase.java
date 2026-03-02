@@ -34,8 +34,6 @@ public class MenuActionBase
 
     /**
      * Set the 'field' attribute value.
-     *
-     * @param field
      */
     public void setField(String field) {
         this.field = field;
@@ -52,8 +50,6 @@ public class MenuActionBase
 
     /**
      * Set the 'key_ref' attribute value.
-     *
-     * @param keyRef
      */
     public void setKeyRef(String keyRef) {
         this.keyRef = keyRef;
@@ -70,8 +66,6 @@ public class MenuActionBase
 
     /**
      * Set the 'name' attribute value.
-     *
-     * @param name
      */
     public void setName(String name) {
         this.name = name;

@@ -89,8 +89,6 @@ public class MenuCategoryBase
 
     /**
      * Set the list of 'base' group items.
-     *
-     * @param list
      */
     public void setBaseList(List<Base> list) {
         baseList = list;
@@ -106,7 +104,6 @@ public class MenuCategoryBase
 
     /**
      * Add a 'base' group item.
-     * @param item
      */
     public void addBase(Base item) {
         baseList.add(item);
@@ -115,7 +112,6 @@ public class MenuCategoryBase
     /**
      * Get 'base' group item by position.
      * @return item
-     * @param index
      */
     public Base getBase(int index) {
         return baseList.get(index);
@@ -139,8 +135,6 @@ public class MenuCategoryBase
 
     /**
      * Set the 'name' attribute value.
-     *
-     * @param name
      */
     public void setName(String name) {
         this.name = name;

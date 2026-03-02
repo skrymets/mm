@@ -34,8 +34,6 @@ public class TableColumnOrder
 
     /**
      * Set the 'column_index' attribute value.
-     *
-     * @param columnIndex
      */
     public void setColumnIndex(int columnIndex) {
         this.columnIndex = columnIndex;
@@ -52,8 +50,6 @@ public class TableColumnOrder
 
     /**
      * Set the 'column_sorting' attribute value.
-     *
-     * @param columnSorting
      */
     public void setColumnSorting(String columnSorting) {
         this.columnSorting = columnSorting;

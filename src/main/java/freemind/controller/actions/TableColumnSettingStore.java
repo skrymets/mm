@@ -32,8 +32,6 @@ public class TableColumnSettingStore
 
     /**
      * Set the 'column_width' attribute value.
-     *
-     * @param columnWidth
      */
     public void setColumnWidth(int columnWidth) {
         this.columnWidth = columnWidth;
@@ -50,8 +48,6 @@ public class TableColumnSettingStore
 
     /**
      * Set the 'column_sorting' attribute value.
-     *
-     * @param columnSorting
      */
     public void setColumnSorting(Integer columnSorting) {
         this.columnSorting = columnSorting;

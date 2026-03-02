@@ -66,8 +66,6 @@ public class Parameters
 
     /**
      * Set the 'REMINDUSERAT' attribute value.
-     *
-     * @param REMINDUSERAT
      */
     public void setREMINDUSERAT(BigInteger REMINDUSERAT) {
         this.REMINDUSERAT = REMINDUSERAT;
@@ -84,8 +82,6 @@ public class Parameters
 
     /**
      * Set the 'ORIGINAL_ID' attribute value.
-     *
-     * @param ORIGINALID
      */
     public void setORIGINALID(String ORIGINALID) {
         this.ORIGINALID = ORIGINALID;
@@ -102,8 +98,6 @@ public class Parameters
 
     /**
      * Set the 'XML_STORAGE_MAP_LAT' attribute value.
-     *
-     * @param XMLSTORAGEMAPLAT
      */
     public void setXMLSTORAGEMAPLAT(String XMLSTORAGEMAPLAT) {
         this.XMLSTORAGEMAPLAT = XMLSTORAGEMAPLAT;
@@ -120,8 +114,6 @@ public class Parameters
 
     /**
      * Set the 'XML_STORAGE_MAP_LON' attribute value.
-     *
-     * @param XMLSTORAGEMAPLON
      */
     public void setXMLSTORAGEMAPLON(String XMLSTORAGEMAPLON) {
         this.XMLSTORAGEMAPLON = XMLSTORAGEMAPLON;
@@ -138,8 +130,6 @@ public class Parameters
 
     /**
      * Set the 'XML_STORAGE_MAP_TOOLTIP_LOCATION' attribute value.
-     *
-     * @param XMLSTORAGEMAPTOOLTIPLOCATION
      */
     public void setXMLSTORAGEMAPTOOLTIPLOCATION(
             String XMLSTORAGEMAPTOOLTIPLOCATION) {
@@ -157,8 +147,6 @@ public class Parameters
 
     /**
      * Set the 'XML_STORAGE_POS_LAT' attribute value.
-     *
-     * @param XMLSTORAGEPOSLAT
      */
     public void setXMLSTORAGEPOSLAT(String XMLSTORAGEPOSLAT) {
         this.XMLSTORAGEPOSLAT = XMLSTORAGEPOSLAT;
@@ -175,8 +163,6 @@ public class Parameters
 
     /**
      * Set the 'XML_STORAGE_POS_LON' attribute value.
-     *
-     * @param XMLSTORAGEPOSLON
      */
     public void setXMLSTORAGEPOSLON(String XMLSTORAGEPOSLON) {
         this.XMLSTORAGEPOSLON = XMLSTORAGEPOSLON;
@@ -193,8 +179,6 @@ public class Parameters
 
     /**
      * Set the 'XML_STORAGE_TILE_SOURCE' attribute value.
-     *
-     * @param XMLSTORAGETILESOURCE
      */
     public void setXMLSTORAGETILESOURCE(String XMLSTORAGETILESOURCE) {
         this.XMLSTORAGETILESOURCE = XMLSTORAGETILESOURCE;
@@ -211,8 +195,6 @@ public class Parameters
 
     /**
      * Set the 'XML_STORAGE_ZOOM' attribute value.
-     *
-     * @param XMLSTORAGEZOOM
      */
     public void setXMLSTORAGEZOOM(String XMLSTORAGEZOOM) {
         this.XMLSTORAGEZOOM = XMLSTORAGEZOOM;
@@ -229,8 +211,6 @@ public class Parameters
 
     /**
      * Set the 'CLONE_ID' attribute value.
-     *
-     * @param CLONEID
      */
     public void setCLONEID(String CLONEID) {
         this.CLONEID = CLONEID;
@@ -247,8 +227,6 @@ public class Parameters
 
     /**
      * Set the 'CLONE_IDS' attribute value.
-     *
-     * @param CLONEIDS
      */
     public void setCLONEIDS(String CLONEIDS) {
         this.CLONEIDS = CLONEIDS;
@@ -265,8 +243,6 @@ public class Parameters
 
     /**
      * Set the 'CLONE_ITSELF' attribute value.
-     *
-     * @param CLONEITSELF
      */
     public void setCLONEITSELF(String CLONEITSELF) {
         this.CLONEITSELF = CLONEITSELF;

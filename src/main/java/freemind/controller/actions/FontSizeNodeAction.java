@@ -35,8 +35,6 @@ public class FontSizeNodeAction extends FormatNodeAction
 
     /**
      * Set the 'size' attribute value.
-     *
-     * @param size
      */
     public void setSize(String size) {
         this.size = size;

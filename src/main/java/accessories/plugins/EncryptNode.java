@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-
 /*
  * Created on 14.12.2004
  *
@@ -40,14 +20,9 @@ import freemind.view.mindmapview.MapView;
 
 import javax.swing.*;
 
-/**
- * @author foltin
- */
 public class EncryptNode extends MindMapNodeHookAdapter {
     /**
      * Enables the encrypt/decrypt menu item only if the map/node is encrypted.
-     *
-     * @author foltin
      */
     public static class Registration implements HookRegistration,
             MenuItemEnabledListener {
@@ -68,13 +43,6 @@ public class EncryptNode extends MindMapNodeHookAdapter {
             enabled = false;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing
-         * .JMenuItem, javax.swing.Action)
-         */
         public boolean isEnabled(JMenuItem item, Action action) {
             String hookName = ((NodeHookAction) action).getHookName();
             if (!enabled)
@@ -104,9 +72,6 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         }
     }
 
-    /**
-     *
-     */
     public EncryptNode() {
         super();
     }
@@ -133,9 +98,6 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         }
     }
 
-    /**
-     *
-     */
     private void newEncryptedMap() {
         final StringBuilder password = getUsersPassword();
         if (password == null) {
@@ -157,9 +119,6 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         mindmapcontroller.newMap(newModel, newModeController);
     }
 
-    /**
-     *
-     */
     private void encrypt(MindMapNode node) {
         final StringBuilder password = getUsersPassword();
         if (password == null) {
@@ -182,9 +141,6 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         mindmapcontroller.setNewNodeCreator(null);
     }
 
-    /**
-     *
-     */
     private StringBuilder getUsersPassword() {
         // get password:
         final EnterPasswordDialog pwdDialog = new EnterPasswordDialog(
@@ -199,9 +155,6 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         return password;
     }
 
-    /**
-     *
-     */
     private void toggleCryptState(MindMapNode node) {
         final MindMapController mindMapController = getMindMapController();
         if (node instanceof EncryptedMindMapNode) {
@@ -229,9 +182,6 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         }
     }
 
-    /**
-     *
-     */
     private void doPasswordCheckAndDecryptNode(EncryptedMindMapNode encNode) {
         while (true) {
             // get password:

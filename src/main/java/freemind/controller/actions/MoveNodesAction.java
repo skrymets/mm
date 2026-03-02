@@ -42,8 +42,6 @@ public class MoveNodesAction extends NodeAction
 
     /**
      * Set the list of 'node_list_member' element items.
-     *
-     * @param list
      */
     public void setNodeListMemberList(List<NodeListMember> list) {
         nodeListMemberList = list;
@@ -59,7 +57,6 @@ public class MoveNodesAction extends NodeAction
 
     /**
      * Add a 'node_list_member' element item.
-     * @param item
      */
     public void addNodeListMember(NodeListMember item) {
         nodeListMemberList.add(item);
@@ -68,7 +65,6 @@ public class MoveNodesAction extends NodeAction
     /**
      * Get 'node_list_member' element item by position.
      * @return item
-     * @param index
      */
     public NodeListMember getNodeListMember(int index) {
         return nodeListMemberList.get(index);
@@ -92,8 +88,6 @@ public class MoveNodesAction extends NodeAction
 
     /**
      * Set the 'direction' attribute value.
-     *
-     * @param direction
      */
     public void setDirection(int direction) {
         this.direction = direction;

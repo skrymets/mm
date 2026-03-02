@@ -41,8 +41,6 @@ public class RevertXmlAction extends XmlAction
 
     /**
      * Set the 'map' attribute value.
-     *
-     * @param map
      */
     public void setMap(String map) {
         this.map = map;
@@ -59,8 +57,6 @@ public class RevertXmlAction extends XmlAction
 
     /**
      * Set the 'localFileName' attribute value.
-     *
-     * @param localFileName
      */
     public void setLocalFileName(String localFileName) {
         this.localFileName = localFileName;
@@ -77,8 +73,6 @@ public class RevertXmlAction extends XmlAction
 
     /**
      * Set the 'filePrefix' attribute value.
-     *
-     * @param filePrefix
      */
     public void setFilePrefix(String filePrefix) {
         this.filePrefix = filePrefix;

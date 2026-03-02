@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
 /*
  * Created on 14.05.2005
  *
@@ -28,47 +9,23 @@ import freemind.model.SortedListModel;
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-/**
- * @author dimitri 14.05.2005
- */
 @SuppressWarnings("serial")
 public class ExtendedComboBoxModel extends DefaultComboBoxModel {
 
     private class ExtensionDataListener implements ListDataListener {
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * javax.swing.event.ListDataListener#intervalAdded(javax.swing.event
-         * .ListDataEvent)
-         */
         public void intervalAdded(ListDataEvent e) {
             int size = getOwnSize();
             fireIntervalAdded(getModel(), size + e.getIndex0(),
                     size + e.getIndex1());
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * javax.swing.event.ListDataListener#intervalRemoved(javax.swing.event
-         * .ListDataEvent)
-         */
         public void intervalRemoved(ListDataEvent e) {
             int size = getOwnSize();
             fireIntervalRemoved(getModel(), size + e.getIndex0(),
                     size + e.getIndex1());
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * javax.swing.event.ListDataListener#contentsChanged(javax.swing.event
-         * .ListDataEvent)
-         */
         public void contentsChanged(ListDataEvent e) {
             int size = getOwnSize();
             fireContentsChanged(getModel(), size + e.getIndex0(),
@@ -80,9 +37,6 @@ public class ExtendedComboBoxModel extends DefaultComboBoxModel {
     private SortedListModel extension = null;
     private final ExtensionDataListener extensionDataListener = new ExtensionDataListener();
 
-    /**
-     *
-     */
     public void setExtensionList(final SortedListModel sortedListModel) {
         final int ownSize = getOwnSize();
         {
@@ -130,9 +84,6 @@ public class ExtendedComboBoxModel extends DefaultComboBoxModel {
         return extension != null ? extension.getSize() : 0;
     }
 
-    /**
-     *
-     */
     private int getOwnSize() {
         return super.getSize();
     }

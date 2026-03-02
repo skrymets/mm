@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2012 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +13,6 @@ import java.io.IOException;
 
 /**
  * File Chooser for Mac
- *
- * @author foltin
- * {@code @date} 23.02.2012
  */
 @Slf4j
 public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDialog {
@@ -44,16 +21,10 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
 
     private final static class NullFilter extends FileFilter {
 
-        /* (non-Javadoc)
-         * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
-         */
         public boolean accept(File pF) {
             return true;
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.filechooser.FileFilter#getDescription()
-         */
         public String getDescription() {
             return "NullFilter";
         }
@@ -66,9 +37,6 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
             return pF.isDirectory();
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.filechooser.FileFilter#getDescription()
-         */
         public String getDescription() {
             return "DirFilter";
         }
@@ -81,9 +49,6 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
             return pF.isFile();
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.filechooser.FileFilter#getDescription()
-         */
         public String getDescription() {
             return "FileFilter";
         }
@@ -104,10 +69,6 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
     private final FreeMindFilenameFilter mFilter;
     private DirectoryResultListener mDirectoryResultListener = null;
 
-    /**
-     * @author foltin
-     * {@code @date} 27.02.2012
-     */
     private static final class FreeMindFilenameFilter implements FilenameFilter {
 
         private FileFilter mCustomFilter = new NullFilter();
@@ -250,9 +211,6 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
         log.info("File exists: {}", selectedFile.exists());
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.FreeMindFileDialog#addChoosableFileFilterAsDefault(javax.swing.filechooser.FileFilter)
-     */
     public void addChoosableFileFilterAsDefault(FileFilter pFilter) {
         addChoosableFileFilter(pFilter);
     }

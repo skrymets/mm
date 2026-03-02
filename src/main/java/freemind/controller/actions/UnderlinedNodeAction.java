@@ -35,8 +35,6 @@ public class UnderlinedNodeAction extends FormatNodeAction
 
     /**
      * Set the 'underlined' attribute value.
-     *
-     * @param underlined
      */
     public void setUnderlined(boolean underlined) {
         this.underlined = underlined;

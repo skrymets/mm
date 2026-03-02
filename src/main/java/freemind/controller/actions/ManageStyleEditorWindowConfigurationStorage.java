@@ -37,8 +37,6 @@ public class ManageStyleEditorWindowConfigurationStorage
 
     /**
      * Set the 'divider_position' attribute value.
-     *
-     * @param dividerPosition
      */
     public void setDividerPosition(Integer dividerPosition) {
         this.dividerPosition = dividerPosition;

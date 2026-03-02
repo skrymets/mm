@@ -84,8 +84,6 @@ public class Node
 
     /**
      * Set the list of choice items.
-     *
-     * @param list
      */
     public void setChoiceList(List<Choice> list) {
         choiceList = list;
@@ -101,7 +99,6 @@ public class Node
 
     /**
      * Add a choice item.
-     * @param item
      */
     public void addChoice(Choice item) {
         choiceList.add(item);
@@ -110,7 +107,6 @@ public class Node
     /**
      * Get choice item by position.
      * @return item
-     * @param index
      */
     public Choice getChoice(int index) {
         return choiceList.get(index);
@@ -134,8 +130,6 @@ public class Node
 
     /**
      * Set the 'BACKGROUND_COLOR' attribute value.
-     *
-     * @param BACKGROUNDCOLOR
      */
     public void setBACKGROUNDCOLOR(String BACKGROUNDCOLOR) {
         this.BACKGROUNDCOLOR = BACKGROUNDCOLOR;
@@ -152,8 +146,6 @@ public class Node
 
     /**
      * Set the 'COLOR' attribute value.
-     *
-     * @param COLOR
      */
     public void setCOLOR(String COLOR) {
         this.COLOR = COLOR;
@@ -170,8 +162,6 @@ public class Node
 
     /**
      * Set the 'FOLDED' attribute value.
-     *
-     * @param FOLDED1
      */
     public void setFOLDED1(FOLDED FOLDED1) {
         this.FOLDED1 = FOLDED1;
@@ -188,8 +178,6 @@ public class Node
 
     /**
      * Set the 'ID' attribute value.
-     *
-     * @param ID
      */
     public void setID(String ID) {
         this.ID = ID;
@@ -206,8 +194,6 @@ public class Node
 
     /**
      * Set the 'LINK' attribute value.
-     *
-     * @param LINK
      */
     public void setLINK(String LINK) {
         this.LINK = LINK;
@@ -224,8 +210,6 @@ public class Node
 
     /**
      * Set the 'POSITION' attribute value.
-     *
-     * @param POSITION1
      */
     public void setPOSITION1(POSITION POSITION1) {
         this.POSITION1 = POSITION1;
@@ -242,8 +226,6 @@ public class Node
 
     /**
      * Set the 'STYLE' attribute value.
-     *
-     * @param STYLE
      */
     public void setSTYLE(String STYLE) {
         this.STYLE = STYLE;
@@ -260,8 +242,6 @@ public class Node
 
     /**
      * Set the 'TEXT' attribute value.
-     *
-     * @param TEXT
      */
     public void setTEXT(String TEXT) {
         this.TEXT = TEXT;
@@ -278,8 +258,6 @@ public class Node
 
     /**
      * Set the 'CREATED' attribute value.
-     *
-     * @param CREATED
      */
     public void setCREATED(BigInteger CREATED) {
         this.CREATED = CREATED;
@@ -296,8 +274,6 @@ public class Node
 
     /**
      * Set the 'MODIFIED' attribute value.
-     *
-     * @param MODIFIED
      */
     public void setMODIFIED(BigInteger MODIFIED) {
         this.MODIFIED = MODIFIED;
@@ -314,8 +290,6 @@ public class Node
 
     /**
      * Set the 'HGAP' attribute value.
-     *
-     * @param HGAP
      */
     public void setHGAP(BigInteger HGAP) {
         this.HGAP = HGAP;
@@ -332,8 +306,6 @@ public class Node
 
     /**
      * Set the 'VGAP' attribute value.
-     *
-     * @param VGAP
      */
     public void setVGAP(BigInteger VGAP) {
         this.VGAP = VGAP;
@@ -350,8 +322,6 @@ public class Node
 
     /**
      * Set the 'VSHIFT' attribute value.
-     *
-     * @param VSHIFT
      */
     public void setVSHIFT(BigInteger VSHIFT) {
         this.VSHIFT = VSHIFT;
@@ -368,8 +338,6 @@ public class Node
 
     /**
      * Set the 'ENCRYPTED_CONTENT' attribute value.
-     *
-     * @param ENCRYPTEDCONTENT
      */
     public void setENCRYPTEDCONTENT(String ENCRYPTEDCONTENT) {
         this.ENCRYPTEDCONTENT = ENCRYPTEDCONTENT;
@@ -454,8 +422,6 @@ public class Node
 
         /**
          * Set the 'arrowlink' element value.
-         *
-         * @param arrowlink
          */
         public void setArrowlink(Arrowlink arrowlink) {
             setChoiceListSelect(ARROWLINK_CHOICE);
@@ -482,8 +448,6 @@ public class Node
 
         /**
          * Set the 'attribute' element value.
-         *
-         * @param attribute
          */
         public void setAttribute(Attribute attribute) {
             setChoiceListSelect(ATTRIBUTE_CHOICE);
@@ -510,8 +474,6 @@ public class Node
 
         /**
          * Set the 'attribute_layout' element value.
-         *
-         * @param attributeLayout
          */
         public void setAttributeLayout(AttributeLayout attributeLayout) {
             setChoiceListSelect(ATTRIBUTE_LAYOUT_CHOICE);
@@ -538,8 +500,6 @@ public class Node
 
         /**
          * Set the 'linktarget' element value.
-         *
-         * @param linktarget
          */
         public void setLinktarget(Linktarget linktarget) {
             setChoiceListSelect(LINKTARGET_CHOICE);
@@ -566,8 +526,6 @@ public class Node
 
         /**
          * Set the 'cloud' element value.
-         *
-         * @param cloud
          */
         public void setCloud(Cloud cloud) {
             setChoiceListSelect(CLOUD_CHOICE);
@@ -594,8 +552,6 @@ public class Node
 
         /**
          * Set the 'edge' element value.
-         *
-         * @param edge
          */
         public void setEdge(Edge edge) {
             setChoiceListSelect(EDGE_CHOICE);
@@ -622,8 +578,6 @@ public class Node
 
         /**
          * Set the 'font' element value.
-         *
-         * @param font
          */
         public void setFont(Font font) {
             setChoiceListSelect(FONT_CHOICE);
@@ -650,8 +604,6 @@ public class Node
 
         /**
          * Set the 'hook' element value.
-         *
-         * @param hook
          */
         public void setHook(Hook hook) {
             setChoiceListSelect(HOOK_CHOICE);
@@ -678,8 +630,6 @@ public class Node
 
         /**
          * Set the 'icon' element value.
-         *
-         * @param icon
          */
         public void setIcon(Icon icon) {
             setChoiceListSelect(ICON_CHOICE);
@@ -706,8 +656,6 @@ public class Node
 
         /**
          * Set the 'node' element value.
-         *
-         * @param node
          */
         public void setNode(Node node) {
             setChoiceListSelect(NODE_CHOICE);
@@ -734,8 +682,6 @@ public class Node
 
         /**
          * Set the 'richcontent' element value.
-         *
-         * @param richcontent
          */
         public void setRichcontent(Richcontent richcontent) {
             setChoiceListSelect(RICHCONTENT_CHOICE);

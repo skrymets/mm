@@ -34,8 +34,6 @@ public class Attribute
 
     /**
      * Set the 'NAME' attribute value.
-     *
-     * @param NAME
      */
     public void setNAME(String NAME) {
         this.NAME = NAME;
@@ -52,8 +50,6 @@ public class Attribute
 
     /**
      * Set the 'VALUE' attribute value.
-     *
-     * @param VALUE
      */
     public void setVALUE(String VALUE) {
         this.VALUE = VALUE;

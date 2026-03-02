@@ -135,8 +135,6 @@ public abstract class NodeAdapter implements MindMapNode {
     @Setter
     @Getter
     private HistoryInformation historyInformation = null;
-    /**
-     */
     @Setter
     @Getter
     private MindMap map = null;
@@ -289,7 +287,6 @@ public abstract class NodeAdapter implements MindMapNode {
             childNode.changeChildCloudIterativeLevels(deltaLevel);
         }
     }
-
 
     public String getBareStyle() {
         return style;
@@ -525,8 +522,6 @@ public abstract class NodeAdapter implements MindMapNode {
     // other
     //
 
-    /**
-     */
     public MapFeedback getMapFeedback() {
         return getMap().getMapFeedback();
     }
@@ -574,11 +569,6 @@ public abstract class NodeAdapter implements MindMapNode {
                 : Collections.EMPTY_LIST.listIterator();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMapNode#sortedChildrenUnfolded()
-     */
     public ListIterator<MindMapNode> sortedChildrenUnfolded() {
         if (children == null)
             return null;
@@ -823,11 +813,6 @@ public abstract class NodeAdapter implements MindMapNode {
         return level;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMapNode#addHook(freemind.modes.NodeHook)
-     */
     public PermanentNodeHook addHook(PermanentNodeHook hook) {
         // add then
         if (hook == null)
@@ -890,22 +875,12 @@ public abstract class NodeAdapter implements MindMapNode {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMapNode#getHooks()
-     */
     public List<PermanentNodeHook> getHooks() {
         if (hooks == null)
             return Collections.emptyList();
         return Collections.unmodifiableList(hooks);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMapNode#getActivatedHooks()
-     */
     public Collection<PermanentNodeHook> getActivatedHooks() {
         if (activatedHooks == null) {
             return Collections.emptyList();
@@ -913,11 +888,6 @@ public abstract class NodeAdapter implements MindMapNode {
         return Collections.unmodifiableCollection(activatedHooks);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMapNode#removeHook(freemind.modes.NodeHook)
-     */
     public void removeHook(PermanentNodeHook hook) {
         // the order is crucial here: the shutdown method should be able to
         // perform "nodeChanged"
@@ -951,9 +921,6 @@ public abstract class NodeAdapter implements MindMapNode {
         }
     }
 
-    /**
-     *
-     */
     public SortedMap<String, String> getToolTip() {
         boolean toolTipChanged = false;
         TreeMap<String, String> result = toolTip;
@@ -1008,9 +975,6 @@ public abstract class NodeAdapter implements MindMapNode {
         return Collections.unmodifiableSortedMap(result);
     }
 
-    /**
-     *
-     */
     public void setToolTip(String key, String string) {
         createToolTip();
         if (string == null) {
@@ -1022,11 +986,6 @@ public abstract class NodeAdapter implements MindMapNode {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMapNode#getNodeId()
-     */
     public String getObjectId(ModeController controller) {
         return controller.getNodeID(this);
     }
@@ -1256,10 +1215,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
     }
 
-    /**
-     *
-     */
-
     public void setAdditionalInfo(String info) {
     }
 
@@ -1347,8 +1302,6 @@ public abstract class NodeAdapter implements MindMapNode {
         return new Attribute(getAttributeVector().get(pPosition));
     }
 
-    /**
-     */
     public void checkAttributePosition(int pPosition) {
         if (mAttributeVector == null || getAttributeTableLength() <= pPosition || pPosition < 0) {
             throw new IllegalArgumentException("Attribute position out of range: " + pPosition);
@@ -1389,18 +1342,12 @@ public abstract class NodeAdapter implements MindMapNode {
         mAttributeVector.set(pPosition, pAttribute);
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMapNode#addAttribute(freemind.modes.attributes.Attribute)
-     */
     @Override
     public int addAttribute(Attribute pAttribute) {
         getAttributeVector().add(pAttribute);
         return getAttributeVector().indexOf(pAttribute);
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMapNode#insertAttribute(int, freemind.modes.attributes.Attribute)
-     */
     @Override
     public void insertAttribute(int pPosition, Attribute pAttribute) {
         checkAttributePosition(pPosition);

@@ -38,8 +38,6 @@ public class PluginStrings
 
     /**
      * Set the list of 'plugin_string' element items.
-     *
-     * @param list
      */
     public void setPluginStringList(List<PluginString> list) {
         pluginStringList = list;
@@ -55,7 +53,6 @@ public class PluginStrings
 
     /**
      * Add a 'plugin_string' element item.
-     * @param item
      */
     public void addPluginString(PluginString item) {
         pluginStringList.add(item);
@@ -64,7 +61,6 @@ public class PluginStrings
     /**
      * Get 'plugin_string' element item by position.
      * @return item
-     * @param index
      */
     public PluginString getPluginString(int index) {
         return pluginStringList.get(index);
@@ -88,8 +84,6 @@ public class PluginStrings
 
     /**
      * Set the 'language' attribute value.
-     *
-     * @param language
      */
     public void setLanguage(String language) {
         this.language = language;

@@ -35,8 +35,6 @@ public class StrikethroughNodeAction extends FormatNodeAction
 
     /**
      * Set the 'strikethrough' attribute value.
-     *
-     * @param strikethrough
      */
     public void setStrikethrough(boolean strikethrough) {
         this.strikethrough = strikethrough;

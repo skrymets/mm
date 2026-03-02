@@ -35,8 +35,6 @@ public class RemoveArrowLinkXmlAction extends XmlAction
 
     /**
      * Set the 'id' attribute value.
-     *
-     * @param id
      */
     public void setId(String id) {
         this.id = id;

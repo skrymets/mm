@@ -84,8 +84,6 @@ public class Plugin
 
     /**
      * Set the list of choice items.
-     *
-     * @param list
      */
     public void setChoiceList(List<Choice> list) {
         choiceList = list;
@@ -101,7 +99,6 @@ public class Plugin
 
     /**
      * Add a choice item.
-     * @param item
      */
     public void addChoice(Choice item) {
         choiceList.add(item);
@@ -110,7 +107,6 @@ public class Plugin
     /**
      * Get choice item by position.
      * @return item
-     * @param index
      */
     public Choice getChoice(int index) {
         return choiceList.get(index);
@@ -134,8 +130,6 @@ public class Plugin
 
     /**
      * Set the 'label' attribute value.
-     *
-     * @param label
      */
     public void setLabel(String label) {
         this.label = label;
@@ -200,8 +194,6 @@ public class Plugin
 
         /**
          * Set the 'plugin_classpath' element value.
-         *
-         * @param pluginClasspath
          */
         public void setPluginClasspath(PluginClasspath pluginClasspath) {
             setChoiceListSelect(PLUGIN_CLASSPATH_CHOICE);
@@ -228,8 +220,6 @@ public class Plugin
 
         /**
          * Set the 'plugin_registration' element value.
-         *
-         * @param pluginRegistration
          */
         public void setPluginRegistration(PluginRegistration pluginRegistration) {
             setChoiceListSelect(PLUGIN_REGISTRATION_CHOICE);
@@ -256,8 +246,6 @@ public class Plugin
 
         /**
          * Set the 'plugin_action' element value.
-         *
-         * @param pluginAction
          */
         public void setPluginAction(PluginAction pluginAction) {
             setChoiceListSelect(PLUGIN_ACTION_CHOICE);
@@ -284,8 +272,6 @@ public class Plugin
 
         /**
          * Set the 'plugin_strings' element value.
-         *
-         * @param pluginStrings
          */
         public void setPluginStrings(PluginStrings pluginStrings) {
             setChoiceListSelect(PLUGIN_STRINGS_CHOICE);

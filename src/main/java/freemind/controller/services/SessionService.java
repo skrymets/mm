@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.controller.services;
 
 import freemind.controller.Controller;
@@ -69,19 +50,17 @@ public class SessionService {
         // move to first map in the window.
         List<MapModule> mapModuleList = controller.getMapModuleManager().getMapModuleList();
         if (!mapModuleList.isEmpty()) {
-            String displayName = mapModuleList.get(0)
-                    .getDisplayName();
+            String displayName = mapModuleList.get(0).getDisplayName();
             controller.getMapModuleManager().changeToMapModule(displayName);
         }
         while (!mapModuleList.isEmpty()) {
             if (controller.getMapModule() != null) {
                 StringBuilder restorableBuffer = new StringBuilder();
-                boolean closingNotCancelled = controller.getMapModuleManager().close(
-                        false, restorableBuffer);
+                boolean closingNotCancelled = controller.getMapModuleManager().close(false, restorableBuffer);
                 if (!closingNotCancelled) {
                     return;
                 }
-                if (restorableBuffer.length() != 0) {
+                if (!restorableBuffer.isEmpty()) {
                     String restorableString = restorableBuffer.toString();
                     log.info("Closed the map {}", restorableString);
                     restorables.add(restorableString);
@@ -113,8 +92,7 @@ public class SessionService {
 
         String lastOpenedString = controller.getLastOpenedList().save();
         controller.setProperty("lastOpened", lastOpenedString);
-        controller.getFrame().setProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED,
-                currentMapRestorable != null ? currentMapRestorable : "");
+        controller.getFrame().setProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED, currentMapRestorable == null ? "" : currentMapRestorable);
         controller.setProperty("toolbarVisible", controller.isToolbarVisible() ? TRUE : FALSE);
         final int winState = controller.getFrame().getWinState();
         if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {

@@ -38,8 +38,6 @@ public class CollaborationGetOffers extends CollaborationActionBase
 
     /**
      * Set the 'user_id' attribute value.
-     *
-     * @param userId
      */
     public void setUserId(String userId) {
         this.userId = userId;
@@ -56,8 +54,6 @@ public class CollaborationGetOffers extends CollaborationActionBase
 
     /**
      * Set the 'password' attribute value.
-     *
-     * @param password
      */
     public void setPassword(String password) {
         this.password = password;

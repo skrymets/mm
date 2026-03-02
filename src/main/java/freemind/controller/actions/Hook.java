@@ -37,8 +37,6 @@ public class Hook
 
     /**
      * Set the 'Parameters' element value.
-     *
-     * @param parameters
      */
     public void setParameters(Parameters parameters) {
         this.parameters = parameters;
@@ -55,8 +53,6 @@ public class Hook
 
     /**
      * Set the 'text' element value.
-     *
-     * @param text
      */
     public void setText(Text text) {
         this.text = text;
@@ -73,8 +69,6 @@ public class Hook
 
     /**
      * Set the 'NAME' attribute value.
-     *
-     * @param NAME
      */
     public void setNAME(String NAME) {
         this.NAME = NAME;

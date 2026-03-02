@@ -35,8 +35,6 @@ public class RemoveAttributeAction extends NodeAction
 
     /**
      * Set the 'position' attribute value.
-     *
-     * @param position
      */
     public void setPosition(int position) {
         this.position = position;

@@ -35,8 +35,6 @@ public class CollaborationWhoAreYou extends CollaborationActionBase
 
     /**
      * Set the 'server_version' attribute value.
-     *
-     * @param serverVersion
      */
     public void setServerVersion(String serverVersion) {
         this.serverVersion = serverVersion;

@@ -1,46 +1,18 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*
- * Created on 05.05.2005
- * Copyright (C) 2005 Dimitri Polivaev
- */
 package freemind.controller.filter;
 
 import freemind.common.NamedObject;
-import org.apache.commons.io.FilenameUtils;
 import freemind.controller.Controller;
-import freemind.controller.filter.condition.Condition;
-import freemind.controller.filter.condition.ConditionFactory;
-import freemind.controller.filter.condition.ConditionNotSatisfiedDecorator;
-import freemind.controller.filter.condition.ConjunctConditions;
-import freemind.controller.filter.condition.DisjunctConditions;
+import freemind.controller.filter.condition.*;
 import freemind.controller.filter.util.ExtendedComboBoxModel;
 import freemind.controller.filter.util.SortedComboBoxModel;
-import freemind.model.SortedListModel;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
+import freemind.model.SortedListModel;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.MindIcon;
 import freemind.modes.attributes.Attribute;
+import org.apache.commons.io.FilenameUtils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -55,25 +27,11 @@ import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author dimitri
- */
 @SuppressWarnings("serial")
 public class FilterComposerDialog extends JDialog {
-    private static final Dimension maxButtonDimension = new Dimension(1000,
-            1000);
+    private static final Dimension maxButtonDimension = new Dimension(1000, 1000);
 
-    /**
-     * @author dimitri 06.05.2005
-     */
     private class AddConditionAction extends AbstractAction {
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
-         */
         AddConditionAction() {
             super();
             SwingUtils.setLabelAndMnemonic(this, mController.getResourceString("filter_add"));
@@ -119,13 +77,6 @@ public class FilterComposerDialog extends JDialog {
     }
 
     private class DeleteConditionAction extends AbstractAction {
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
-         */
         DeleteConditionAction() {
             super();
             SwingUtils.setLabelAndMnemonic(this, mController.getResourceString("filter_delete"));
@@ -150,13 +101,6 @@ public class FilterComposerDialog extends JDialog {
     }
 
     private class CreateNotSatisfiedConditionAction extends AbstractAction {
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
-         */
         CreateNotSatisfiedConditionAction() {
             super();
             SwingUtils.setLabelAndMnemonic(this, mController.getResourceString("filter_not"));
@@ -365,13 +309,6 @@ public class FilterComposerDialog extends JDialog {
     }
 
     private class SelectedAttributeChangeListener implements ItemListener {
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * javax.swing.event.ListSelectionListener#valueChanged(javax.swing.
-         * event.ListSelectionEvent)
-         */
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 if (attributes.getSelectedIndex() == NODE_POSITION) {
@@ -643,9 +580,6 @@ public class FilterComposerDialog extends JDialog {
         return item != null ? item.toString() : "";
     }
 
-    /**
-     *
-     */
     void mapChanged(MindMap newMap) {
         if (newMap != null) {
             icons.setExtensionList(newMap.getIcons());
@@ -680,9 +614,6 @@ public class FilterComposerDialog extends JDialog {
         return false;
     }
 
-    /**
-     *
-     */
     public void setSelectedItem(Object selectedItem) {
         conditionList.setSelectedValue(selectedItem, true);
 

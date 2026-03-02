@@ -1,24 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2005   Christian Foltin.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 06.05.2005
- */
 package freemind.preferences.layout;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
@@ -52,9 +31,6 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
-/**
- * @author foltin
- */
 public class OptionPanel implements TextTranslator {
     private static final String TOOLTIP_EXT = ".tooltip";
 
@@ -89,8 +65,6 @@ public class OptionPanel implements TextTranslator {
 
     private final List<KeyBinding> allBindings;
 
-    /**
-     */
     public OptionPanel(FreeMind fm, JDialog frame, OptionPanelFeedback feedback) {
         super();
         if (fmMain == null) {
@@ -114,9 +88,6 @@ public class OptionPanel implements TextTranslator {
         void writeProperties(Properties props);
     }
 
-    /**
-     *
-     */
     public void setProperties() {
         for (PropertyControl control : controls) {
             if (control instanceof PropertyBean) {
@@ -208,9 +179,6 @@ public class OptionPanel implements TextTranslator {
                 BorderLayout.SOUTH);
     }
 
-    /**
-     *
-     */
     public String getText(String string) {
         if (string == null) {
             return null;
@@ -225,9 +193,6 @@ public class OptionPanel implements TextTranslator {
         }
     }
 
-    /**
-     *
-     */
     private void registerTabButton(JButton tabButton, String name,
                                    ChangeTabAction changeTabAction) {
         tabButtonMap.put(name, tabButton);
@@ -323,9 +288,6 @@ public class OptionPanel implements TextTranslator {
         private RowSpec rowSpec;
         final GrabKeyDialog.KeyBinding kb;
 
-        /**
-         *
-         */
         public KeyProperty(final JDialog frame, String description, String label) {
             super();
             this.description = description;

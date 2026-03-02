@@ -42,8 +42,6 @@ public class MindmapLastStateMapStorage extends XmlAction
 
     /**
      * Set the list of 'mindmap_last_state_storage' element items.
-     *
-     * @param list
      */
     public void setMindmapLastStateStorageList(
             List<MindmapLastStateStorage> list) {
@@ -60,7 +58,6 @@ public class MindmapLastStateMapStorage extends XmlAction
 
     /**
      * Add a 'mindmap_last_state_storage' element item.
-     * @param item
      */
     public void addMindmapLastStateStorage(MindmapLastStateStorage item) {
         mindmapLastStateStorageList.add(item);
@@ -69,7 +66,6 @@ public class MindmapLastStateMapStorage extends XmlAction
     /**
      * Get 'mindmap_last_state_storage' element item by position.
      * @return item
-     * @param index
      */
     public MindmapLastStateStorage getMindmapLastStateStorage(int index) {
         return mindmapLastStateStorageList.get(index);
@@ -93,8 +89,6 @@ public class MindmapLastStateMapStorage extends XmlAction
 
     /**
      * Set the 'last_focused_tab' attribute value.
-     *
-     * @param lastFocusedTab
      */
     public void setLastFocusedTab(Integer lastFocusedTab) {
         this.lastFocusedTab = lastFocusedTab;

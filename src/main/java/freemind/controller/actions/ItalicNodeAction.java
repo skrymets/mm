@@ -35,8 +35,6 @@ public class ItalicNodeAction extends FormatNodeAction
 
     /**
      * Set the 'italic' attribute value.
-     *
-     * @param italic
      */
     public void setItalic(boolean italic) {
         this.italic = italic;

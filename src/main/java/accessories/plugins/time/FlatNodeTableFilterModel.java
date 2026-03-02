@@ -1,25 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006  Joerg Mueller, Daniel Polansky, Dimitri Polivaev, Christian Foltin and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 02.05.2006
- */
-/*$Id: FlatNodeTableFilterModel.java,v 1.1.2.2 2008/11/01 21:11:42 christianfoltin Exp $*/
 package accessories.plugins.time;
 
 import accessories.plugins.time.TimeList.NodeHolder;
@@ -32,9 +10,6 @@ import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-/**
- * @author foltin
- */
 @SuppressWarnings("serial")
 public class FlatNodeTableFilterModel extends AbstractTableModel {
 
@@ -50,8 +25,6 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
     private final int mNodeTextColumn;
     private final int mNoteTextColumn;
 
-    /**
-     */
     public FlatNodeTableFilterModel(TableModel tableModel, int node_text_column, int note_text_column) {
         super();
         this.mTableModel = tableModel;
@@ -92,20 +65,10 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
         mIndexArray = newIndexArray;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.table.TableModel#getRowCount()
-     */
     public int getRowCount() {
         return mIndexArray.size();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.table.TableModel#getColumnCount()
-     */
     public int getColumnCount() {
         return mTableModel.getColumnCount();
     }
@@ -118,11 +81,6 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
         return mTableModel.getColumnClass(arg0);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.swing.table.TableModel#getValueAt(int, int)
-     */
     public Object getValueAt(int row, int column) {
         if (row < 0 || row >= getRowCount()) {
             throw new IllegalArgumentException("Illegal Row specified: " + row);

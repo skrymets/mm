@@ -65,8 +65,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'place_id' attribute value.
-     *
-     * @param placeId
      */
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
@@ -83,8 +81,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'osm_type' attribute value.
-     *
-     * @param osmType
      */
     public void setOsmType(String osmType) {
         this.osmType = osmType;
@@ -101,8 +97,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'osm_id' attribute value.
-     *
-     * @param osmId
      */
     public void setOsmId(String osmId) {
         this.osmId = osmId;
@@ -119,8 +113,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'place_rank' attribute value.
-     *
-     * @param placeRank
      */
     public void setPlaceRank(String placeRank) {
         this.placeRank = placeRank;
@@ -137,8 +129,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'boundingbox' attribute value.
-     *
-     * @param boundingbox
      */
     public void setBoundingbox(String boundingbox) {
         this.boundingbox = boundingbox;
@@ -155,8 +145,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'lat' attribute value.
-     *
-     * @param lat
      */
     public void setLat(Double lat) {
         this.lat = lat;
@@ -173,8 +161,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'lon' attribute value.
-     *
-     * @param lon
      */
     public void setLon(Double lon) {
         this.lon = lon;
@@ -191,8 +177,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'display_name' attribute value.
-     *
-     * @param displayName
      */
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
@@ -209,8 +193,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'class' attribute value.
-     *
-     * @param _class
      */
     public void set_Class(String _class) {
         _Class = _class;
@@ -227,8 +209,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'type' attribute value.
-     *
-     * @param type
      */
     public void setType(String type) {
         this.type = type;
@@ -245,8 +225,6 @@ public class Place extends XmlAction
 
     /**
      * Set the 'icon' attribute value.
-     *
-     * @param icon
      */
     public void setIcon(String icon) {
         this.icon = icon;

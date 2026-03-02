@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-
 package freemind.modes.filemode;
 
 import freemind.main.FreeMindMain;
@@ -60,10 +40,6 @@ public class FileMapModel extends MapAdapter {
         return true;
     }
 
-    /**
-     *
-     */
-
     public void destroy() {
         /*
          * fc, 8.8.2004: don't call super.destroy as this method tries to remove
@@ -94,79 +70,46 @@ public class FileMapModel extends MapAdapter {
         // nodeChanged(node);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMap#setLinkInclinationChanged()
-     */
     public void setLinkInclinationChanged() {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMap#getXml(java.io.Writer)
-     */
     public void getXml(Writer fileout) {
         // nothing.
         throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMap#getFilteredXml(java.io.Writer)
-     */
     public void getFilteredXml(Writer fileout) {
         // nothing.
         throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createNodeAdapter(freemind.model.MindMap, java.lang.String)
-     */
     @Override
     public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
         throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createEdgeAdapter(freemind.model.NodeAdapter)
-     */
     @Override
     public EdgeAdapter createEdgeAdapter(NodeAdapter pNode) {
         throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createCloudAdapter(freemind.model.NodeAdapter)
-     */
     @Override
     public CloudAdapter createCloudAdapter(NodeAdapter pNode) {
         throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createArrowLinkAdapter(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
-     */
     @Override
     public ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter pSource,
                                                    NodeAdapter pTarget) {
         throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createArrowLinkTarget(freemind.model.NodeAdapter, freemind.model.NodeAdapter)
-     */
     @Override
     public ArrowLinkTarget createArrowLinkTarget(NodeAdapter pSource,
                                                  NodeAdapter pTarget) {
         throw new UnsupportedOperationException("Not implemented for file mode.");
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap#createEncryptedNode(java.lang.String)
-     */
     @Override
     public NodeAdapter createEncryptedNode(String pAdditionalInfo) {
         throw new UnsupportedOperationException("Not implemented for file mode.");

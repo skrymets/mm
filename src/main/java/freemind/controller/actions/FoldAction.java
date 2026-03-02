@@ -35,8 +35,6 @@ public class FoldAction extends NodeAction
 
     /**
      * Set the 'folded' attribute value.
-     *
-     * @param folded
      */
     public void setFolded(boolean folded) {
         this.folded = folded;

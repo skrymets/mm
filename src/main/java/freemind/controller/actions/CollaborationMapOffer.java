@@ -31,8 +31,6 @@ public class CollaborationMapOffer
 
     /**
      * Set the 'map' attribute value.
-     *
-     * @param map
      */
     public void setMap(String map) {
         this.map = map;

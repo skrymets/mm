@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
 /*
  * Created on 05.05.2005
  * Copyright (C) 2005 Dimitri Polivaev
@@ -57,13 +38,6 @@ class FilterToolbar extends FreeMindToolBar {
 
     private class FilterChangeListener extends AbstractAction implements
             ItemListener, PropertyChangeListener {
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
-         */
         public FilterChangeListener() {
         }
 
@@ -74,13 +48,6 @@ class FilterToolbar extends FreeMindToolBar {
             DefaultFilter.selectVisibleNode(c.getView());
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent
-         * )
-         */
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED)
                 filterChanged();
@@ -112,13 +79,6 @@ class FilterToolbar extends FreeMindToolBar {
             putValue(SHORT_DESCRIPTION, c.getResourceString("filter_edit_description"));
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
-         */
         private FilterComposerDialog getFilterDialog() {
             if (filterDialog == null) {
                 filterDialog = new FilterComposerDialog(c, FilterToolbar.this);
@@ -138,9 +98,6 @@ class FilterToolbar extends FreeMindToolBar {
     }
 
     private class UnfoldAncestorsAction extends AbstractAction {
-        /**
-         *
-         */
         UnfoldAncestorsAction() {
             super("", freemind.view.ImageFactory.getInstance().createIcon(c.getResource("images/unfold.png")));
         }
@@ -236,9 +193,6 @@ class FilterToolbar extends FreeMindToolBar {
                 .addPropertyChangeListener(filterChangeListener);
     }
 
-    /**
-     *
-     */
     public void resetFilter() {
         activeFilter = null;
 
@@ -259,16 +213,10 @@ class FilterToolbar extends FreeMindToolBar {
         }
     }
 
-    /**
-     *
-     */
     FilterComposerDialog getFilterDialog() {
         return filterDialog;
     }
 
-    /**
-     *
-     */
     void mapChanged(MindMap newMap) {
         if (!isVisible())
             return;

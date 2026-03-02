@@ -35,8 +35,6 @@ public class RemoveIconXmlAction extends NodeAction
 
     /**
      * Set the 'icon_position' attribute value.
-     *
-     * @param iconPosition
      */
     public void setIconPosition(int iconPosition) {
         this.iconPosition = iconPosition;

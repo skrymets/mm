@@ -35,8 +35,6 @@ public class EdgeStyleFormatAction extends FormatNodeAction
 
     /**
      * Set the 'style' attribute value.
-     *
-     * @param style
      */
     public void setStyle(String style) {
         this.style = style;

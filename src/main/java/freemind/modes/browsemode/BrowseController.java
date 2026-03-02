@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-
 package freemind.modes.browsemode;
 
 import freemind.controller.MenuBar;
@@ -113,9 +93,6 @@ public class BrowseController extends ViewControllerAdapter {
             return hook;
         }
 
-        /* (non-Javadoc)
-         * @see freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing.JMenuItem, javax.swing.Action)
-         */
         public boolean isEnabled(JMenuItem pItem, Action pAction) {
             return getHook() != null;
         }
@@ -250,9 +227,6 @@ public class BrowseController extends ViewControllerAdapter {
         return null;
     }
 
-    /**
-     *
-     */
     private GotoLinkNodeAction getGotoLinkNodeAction(MindMapNode destination) {
         return new GotoLinkNodeAction(this, destination);
     }
@@ -382,12 +356,6 @@ public class BrowseController extends ViewControllerAdapter {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.modes.ModeController#updateMenus(freemind.controller.
-     * StructuredMenuHolder)
-     */
     public void updateMenus(StructuredMenuHolder holder) {
         add(holder, MenuBar.EDIT_MENU + "/find/find", find, "keystroke_find");
         add(holder, MenuBar.EDIT_MENU + "/find/findNext", findNext,
@@ -405,9 +373,6 @@ public class BrowseController extends ViewControllerAdapter {
         return mBrowseHookFactory;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.ControllerAdapter#loadInternally(java.net.URL, freemind.model.MapAdapter)
-     */
     @Override
     protected void loadInternally(URL url, MapAdapter pModel)
             throws IOException {
@@ -446,12 +411,8 @@ public class BrowseController extends ViewControllerAdapter {
         }
     }
 
-    /* (non-Javadoc)
-     * @see freemind.model.MindMap.MapFeedback#out(java.lang.String)
-     */
     @Override
     public void out(String pFormat) {
     }
-
 
 }

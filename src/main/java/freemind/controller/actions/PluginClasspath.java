@@ -31,8 +31,6 @@ public class PluginClasspath
 
     /**
      * Set the 'jar' attribute value.
-     *
-     * @param jar
      */
     public void setJar(String jar) {
         this.jar = jar;

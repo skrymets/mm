@@ -35,8 +35,6 @@ public class MenuSubmenu extends MenuCategoryBase
 
     /**
      * Set the 'name_ref' attribute value.
-     *
-     * @param nameRef
      */
     public void setNameRef(String nameRef) {
         this.nameRef = nameRef;

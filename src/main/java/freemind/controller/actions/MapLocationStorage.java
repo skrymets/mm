@@ -37,8 +37,6 @@ public class MapLocationStorage
 
     /**
      * Set the 'cursor_longitude' attribute value.
-     *
-     * @param cursorLongitude
      */
     public void setCursorLongitude(Double cursorLongitude) {
         this.cursorLongitude = cursorLongitude;
@@ -55,8 +53,6 @@ public class MapLocationStorage
 
     /**
      * Set the 'cursor_latitude' attribute value.
-     *
-     * @param cursorLatitude
      */
     public void setCursorLatitude(Double cursorLatitude) {
         this.cursorLatitude = cursorLatitude;
@@ -73,8 +69,6 @@ public class MapLocationStorage
 
     /**
      * Set the 'zoom' attribute value.
-     *
-     * @param zoom
      */
     public void setZoom(Integer zoom) {
         this.zoom = zoom;

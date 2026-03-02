@@ -41,8 +41,6 @@ public class CollaborationTransaction extends CollaborationActionBase
 
     /**
      * Set the 'id' attribute value.
-     *
-     * @param id
      */
     public void setId(String id) {
         this.id = id;
@@ -59,8 +57,6 @@ public class CollaborationTransaction extends CollaborationActionBase
 
     /**
      * Set the 'do_action' attribute value.
-     *
-     * @param doAction
      */
     public void setDoAction(String doAction) {
         this.doAction = doAction;
@@ -77,8 +73,6 @@ public class CollaborationTransaction extends CollaborationActionBase
 
     /**
      * Set the 'undo_action' attribute value.
-     *
-     * @param undoAction
      */
     public void setUndoAction(String undoAction) {
         this.undoAction = undoAction;

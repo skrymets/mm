@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2007  Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.view.mindmapview;
 
 import freemind.main.PointUtils;
@@ -26,10 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * @author foltin
- * {@code @date} 11.07.2013
- */
 @Slf4j
 abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
     protected final int LISTENER_VIEW_WIDTH = 10;
@@ -49,30 +26,15 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
     public void addLayoutComponent(String arg0, Component arg1) {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.LayoutManager#removeLayoutComponent(java.awt.Component)
-     */
     public void removeLayoutComponent(Component arg0) {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.LayoutManager#minimumLayoutSize(java.awt.Container)
-     */
     public Dimension minimumLayoutSize(Container arg0) {
         if (minDimension == null)
             minDimension = new Dimension(0, 0);
         return minDimension;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.LayoutManager#preferredLayoutSize(java.awt.Container)
-     */
     public Dimension preferredLayoutSize(Container c) {
         if (!c.isValid()) {
             c.validate();
@@ -90,9 +52,6 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         shutDown();
     }
 
-    /**
-     *
-     */
     private void layoutOtherItems() {
         final int componentCount = view.getComponentCount();
         for (int i = 0; i < componentCount; i++) {
@@ -367,9 +326,6 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         return spaceAround;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.view.mindmapview.NodeViewLayout#layoutNodeFoldingComponent(freemind.view.mindmapview.NodeFoldingListenerView)
-     */
     public void layoutNodeFoldingComponent(
             NodeFoldingComponent pFoldingComponent) {
         NodeView movedView = pFoldingComponent.getNodeView();

@@ -35,8 +35,6 @@ public class AddLinkXmlAction extends NodeAction
 
     /**
      * Set the 'destination' attribute value.
-     *
-     * @param destination
      */
     public void setDestination(String destination) {
         this.destination = destination;

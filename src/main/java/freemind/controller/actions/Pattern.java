@@ -70,8 +70,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_background_color' element value.
-     *
-     * @param patternNodeBackgroundColor
      */
     public void setPatternNodeBackgroundColor(
             PatternNodeBackgroundColor patternNodeBackgroundColor) {
@@ -89,8 +87,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_color' element value.
-     *
-     * @param patternNodeColor
      */
     public void setPatternNodeColor(PatternNodeColor patternNodeColor) {
         this.patternNodeColor = patternNodeColor;
@@ -107,8 +103,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_style' element value.
-     *
-     * @param patternNodeStyle
      */
     public void setPatternNodeStyle(PatternNodeStyle patternNodeStyle) {
         this.patternNodeStyle = patternNodeStyle;
@@ -125,8 +119,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_text' element value.
-     *
-     * @param patternNodeText
      */
     public void setPatternNodeText(PatternNodeText patternNodeText) {
         this.patternNodeText = patternNodeText;
@@ -143,8 +135,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_font_name' element value.
-     *
-     * @param patternNodeFontName
      */
     public void setPatternNodeFontName(PatternNodeFontName patternNodeFontName) {
         this.patternNodeFontName = patternNodeFontName;
@@ -161,8 +151,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_font_bold' element value.
-     *
-     * @param patternNodeFontBold
      */
     public void setPatternNodeFontBold(PatternNodeFontBold patternNodeFontBold) {
         this.patternNodeFontBold = patternNodeFontBold;
@@ -179,8 +167,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_font_strikethrough' element value.
-     *
-     * @param patternNodeFontStrikethrough
      */
     public void setPatternNodeFontStrikethrough(
             PatternNodeFontStrikethrough patternNodeFontStrikethrough) {
@@ -198,8 +184,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_font_italic' element value.
-     *
-     * @param patternNodeFontItalic
      */
     public void setPatternNodeFontItalic(
             PatternNodeFontItalic patternNodeFontItalic) {
@@ -217,8 +201,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_node_font_size' element value.
-     *
-     * @param patternNodeFontSize
      */
     public void setPatternNodeFontSize(PatternNodeFontSize patternNodeFontSize) {
         this.patternNodeFontSize = patternNodeFontSize;
@@ -235,8 +217,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_icon' element value.
-     *
-     * @param patternIcon
      */
     public void setPatternIcon(PatternIcon patternIcon) {
         this.patternIcon = patternIcon;
@@ -253,8 +233,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_edge_color' element value.
-     *
-     * @param patternEdgeColor
      */
     public void setPatternEdgeColor(PatternEdgeColor patternEdgeColor) {
         this.patternEdgeColor = patternEdgeColor;
@@ -271,8 +249,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_edge_style' element value.
-     *
-     * @param patternEdgeStyle
      */
     public void setPatternEdgeStyle(PatternEdgeStyle patternEdgeStyle) {
         this.patternEdgeStyle = patternEdgeStyle;
@@ -289,8 +265,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_edge_width' element value.
-     *
-     * @param patternEdgeWidth
      */
     public void setPatternEdgeWidth(PatternEdgeWidth patternEdgeWidth) {
         this.patternEdgeWidth = patternEdgeWidth;
@@ -307,8 +281,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_child' element value.
-     *
-     * @param patternChild
      */
     public void setPatternChild(PatternChild patternChild) {
         this.patternChild = patternChild;
@@ -325,8 +297,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'pattern_script' element value.
-     *
-     * @param patternScript
      */
     public void setPatternScript(PatternScript patternScript) {
         this.patternScript = patternScript;
@@ -343,8 +313,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'name' attribute value.
-     *
-     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -361,8 +329,6 @@ public class Pattern extends XmlAction
 
     /**
      * Set the 'original_name' attribute value.
-     *
-     * @param originalName
      */
     public void setOriginalName(String originalName) {
         this.originalName = originalName;

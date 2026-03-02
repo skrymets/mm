@@ -38,8 +38,6 @@ public class CollaborationWelcome extends CollaborationActionBase
 
     /**
      * Set the 'map' attribute value.
-     *
-     * @param map
      */
     public void setMap(String map) {
         this.map = map;
@@ -56,8 +54,6 @@ public class CollaborationWelcome extends CollaborationActionBase
 
     /**
      * Set the 'filename' attribute value.
-     *
-     * @param filename
      */
     public void setFilename(String filename) {
         this.filename = filename;

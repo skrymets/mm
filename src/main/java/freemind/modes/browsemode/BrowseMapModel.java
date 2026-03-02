@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-
 package freemind.modes.browsemode;
 
 import freemind.model.EdgeAdapter;
@@ -93,32 +73,16 @@ public class BrowseMapModel extends MapAdapter {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMap#setLinkInclinationChanged()
-     */
     public void setLinkInclinationChanged() {
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMap#getXml(java.io.Writer)
-     */
     public void getXml(Writer fileout) {
         throw new UnsupportedOperationException("Not implemented for browse mode.");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see freemind.model.MindMap#getFilteredXml(java.io.Writer)
-     */
     public void getFilteredXml(Writer fileout) {
         throw new UnsupportedOperationException("Not implemented for browse mode.");
     }
-
 
     protected NodeAdapter createNodeAdapter(MapFeedback pMapFeedback, String nodeClass) {
         if (nodeClass == ENCRYPTED_BROWSE_NODE) {
@@ -151,9 +115,6 @@ public class BrowseMapModel extends MapAdapter {
         return node;
     }
 
-    /* (non-Javadoc)
-     * @see freemind.modes.XMLElementAdapter#createNodeAdapter(freemind.model.MindMap, java.lang.String)
-     */
     @Override
     public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
         return createNodeAdapter(mMapFeedback, null);

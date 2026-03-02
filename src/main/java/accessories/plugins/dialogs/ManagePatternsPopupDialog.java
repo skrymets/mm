@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2006  Christian Foltin <christianfoltin@users.sourceforge.net>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: ManagePatternsPopupDialog.java,v 1.1.2.4.2.15 2008/07/17 19:16:32 christianfoltin Exp $*/
-
 package accessories.plugins.dialogs;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
@@ -509,11 +489,6 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-     */
     public void keyPressed(KeyEvent keyEvent) {
         // System.out.println("key pressed: " + keyEvent);
         switch (keyEvent.getKeyCode()) {
@@ -524,20 +499,10 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
-     */
     public void keyReleased(KeyEvent keyEvent) {
         // System.out.println("keyReleased: " + keyEvent);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-     */
     public void keyTyped(KeyEvent keyEvent) {
         // System.out.println("keyTyped: " + keyEvent);
     }

@@ -68,8 +68,6 @@ public class PluginAction
 
     /**
      * Set the list of choice items.
-     *
-     * @param list
      */
     public void setChoiceList(List<Choice> list) {
         choiceList = list;
@@ -85,7 +83,6 @@ public class PluginAction
 
     /**
      * Add a choice item.
-     * @param item
      */
     public void addChoice(Choice item) {
         choiceList.add(item);
@@ -94,7 +91,6 @@ public class PluginAction
     /**
      * Get choice item by position.
      * @return item
-     * @param index
      */
     public Choice getChoice(int index) {
         return choiceList.get(index);
@@ -118,8 +114,6 @@ public class PluginAction
 
     /**
      * Set the 'label' attribute value.
-     *
-     * @param label
      */
     public void setLabel(String label) {
         this.label = label;
@@ -136,8 +130,6 @@ public class PluginAction
 
     /**
      * Set the 'name' attribute value.
-     *
-     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -154,8 +146,6 @@ public class PluginAction
 
     /**
      * Set the 'base' attribute value.
-     *
-     * @param base
      */
     public void setBase(String base) {
         this.base = base;
@@ -172,8 +162,6 @@ public class PluginAction
 
     /**
      * Set the 'class_name' attribute value.
-     *
-     * @param className
      */
     public void setClassName(String className) {
         this.className = className;
@@ -190,8 +178,6 @@ public class PluginAction
 
     /**
      * Set the 'documentation' attribute value.
-     *
-     * @param documentation
      */
     public void setDocumentation(String documentation) {
         this.documentation = documentation;
@@ -208,8 +194,6 @@ public class PluginAction
 
     /**
      * Set the 'icon_path' attribute value.
-     *
-     * @param iconPath
      */
     public void setIconPath(String iconPath) {
         this.iconPath = iconPath;
@@ -226,8 +210,6 @@ public class PluginAction
 
     /**
      * Set the 'key_stroke' attribute value.
-     *
-     * @param keyStroke
      */
     public void setKeyStroke(String keyStroke) {
         this.keyStroke = keyStroke;
@@ -244,8 +226,6 @@ public class PluginAction
 
     /**
      * Set the 'instanciation' attribute value.
-     *
-     * @param instanciation
      */
     public void setInstanciation(Instanciation instanciation) {
         this.instanciation = instanciation;
@@ -262,8 +242,6 @@ public class PluginAction
 
     /**
      * Set the 'isSelectable' attribute value.
-     *
-     * @param isSelectable
      */
     public void setIsSelectable(Boolean isSelectable) {
         this.isSelectable = isSelectable;
@@ -324,8 +302,6 @@ public class PluginAction
 
         /**
          * Set the 'plugin_mode' element value.
-         *
-         * @param pluginMode
          */
         public void setPluginMode(PluginMode pluginMode) {
             setChoiceListSelect(PLUGIN_MODE_CHOICE);
@@ -352,8 +328,6 @@ public class PluginAction
 
         /**
          * Set the 'plugin_menu' element value.
-         *
-         * @param pluginMenu
          */
         public void setPluginMenu(PluginMenu pluginMenu) {
             setChoiceListSelect(PLUGIN_MENU_CHOICE);
@@ -380,8 +354,6 @@ public class PluginAction
 
         /**
          * Set the 'plugin_property' element value.
-         *
-         * @param pluginProperty
          */
         public void setPluginProperty(PluginProperty pluginProperty) {
             setChoiceListSelect(PLUGIN_PROPERTY_CHOICE);

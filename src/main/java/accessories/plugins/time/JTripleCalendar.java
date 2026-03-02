@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2007  Christian Foltin <christianfoltin@users.sourceforge.net>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: JTripleCalendar.java,v 1.1.2.2 2007/02/25 21:12:50 christianfoltin Exp $*/
-
 package accessories.plugins.time;
 
 import freemind.frok.patches.FreeMindMainMock;
@@ -125,15 +105,11 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
             dayChooser.setDay(calendar.get(Calendar.DAY_OF_MONTH));
         }
 
-
         public JSwitchableCalendar() {
             super();
             setEnabled(false);
         }
 
-        /* (non-Javadoc)
-         * @see accessories.plugins.time.JCalendar#createJDayChooser(boolean)
-         */
         @Override
         protected JDayChooser createJDayChooser(boolean pWeekOfYearVisible) {
             return new JDayChooser(weekOfYearVisible) {
@@ -150,9 +126,6 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
                     setAlwaysFireDayProperty(true);
                 }
 
-                /* (non-Javadoc)
-                 * @see accessories.plugins.time.JDayChooser#setEnabled(boolean)
-                 */
                 @Override
                 public void setEnabled(boolean pEnabled) {
                     if (pEnabled) {
