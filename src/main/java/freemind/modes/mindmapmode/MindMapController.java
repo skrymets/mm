@@ -114,9 +114,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     final FileFilter filefilter;
 
     private MenuStructure mMenuStructure;
-    private List<HookRegistration> mRegistrations;
-    private List<Pattern> mPatternsList = new ArrayList<>();
-    private long mGetEventIfChangedAfterThisTimeInMillies = 0;
+    private final LifecycleService lifecycleService = new LifecycleService(this);
 
     // Extracted services
     private MenuConfigService menuConfigService;
@@ -181,11 +179,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         // create standard actions:
         createStandardActions();
         // icon actions:
-        createIconActions();
+        lifecycleService.createIconActions();
 
         log.info("createNodeHookActions");
         // node hook actions:
-        createNodeHookActions();
+        lifecycleService.createNodeHookActions();
 
         log.info("mindmap_menus");
         // load menus:
@@ -200,8 +198,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
         log.info("MindMapToolBar");
         toolbar = new MindMapToolBar(this);
-
-        mRegistrations = new ArrayList<>();
 
         actions.propertyAction = getController().propertyAction;
     }
@@ -247,7 +243,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.removeLastIconAction.setIconAction(actions.unknownIconAction);
         actions.removeAllIconsAction = new RemoveAllIconsAction(this, actions.unknownIconAction);
         // load pattern actions:
-        loadPatternActions();
+        lifecycleService.loadPatternActions();
 
         actions.EdgeWidth_WIDTH_PARENT = new EdgeWidthAction(this, EdgeAdapter.WIDTH_PARENT);
         actions.EdgeWidth_WIDTH_THIN = new EdgeWidthAction(this, EdgeAdapter.WIDTH_THIN);
@@ -287,61 +283,14 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.selectAllAction = new SelectAllAction(this);
     }
 
-    /**
-     * Tries to load the user patterns and proposes an update to the new format,
-     * if they are old fashioned (this is determined by having an exception
-     * while reading the pattern file).
-     */
-    private void loadPatternActions() {
-        try {
-            loadPatterns(getPatternsXML());
-        } catch (Exception ex) {
-            log.error("Patterns not loaded", ex);
-//            // repair old patterns:
-//            String repairTitle = "Repair patterns";
-//            File patternsFile = getFrame().getPatternsXML();
-//            int result = JOptionPane.showConfirmDialog(null,
-//                    "<html>The pattern file format has changed, <br>"
-//                            + "and it seems, that your pattern file<br>"
-//                            + "'"
-//                            + patternsFile.getAbsolutePath()
-//                            + "'<br> is formatted in the old way. <br>"
-//                            + "Should I try to repair the pattern file <br>"
-//                            + "(otherwise, you should update it by hand or delete it)?",
-//                    repairTitle, JOptionPane.YES_NO_OPTION);
-//            if (result == JOptionPane.YES_OPTION) {
-//                // try xslt script:
-//                boolean success = false;
-//                try {
-//                    loadPatterns(Tools.getUpdateReader(Tools.getReaderFromFile(patternsFile), "patterns_updater.xslt"));
-//                    // save patterns directly:
-//                    StylePatternFactory.savePatterns(new FileWriter(patternsFile), mPatternsList);
-//                    success = true;
-//                } catch (Exception e) {
-//                    log.error(e.getLocalizedMessage(), e);
-//                }
-//                if (success) {
-//                    JOptionPane.showMessageDialog(null,
-//                            "Successfully repaired the pattern file.",
-//                            repairTitle, JOptionPane.PLAIN_MESSAGE);
-//                } else {
-//                    JOptionPane.showMessageDialog(null,
-//                            "An error occured repairing the pattern file.",
-//                            repairTitle, JOptionPane.WARNING_MESSAGE);
-//                }
-//            }
-        }
-    }
+    // loadPatternActions() moved to LifecycleService
 
     public String getPatternsXML() {
         return getFrame().getPatternsXML();
     }
 
-    /**
-     * @return the patternsList
-     */
     public List<Pattern> getPatternsList() {
-        return mPatternsList;
+        return lifecycleService.getPatternsList();
     }
 
     public boolean isUndoAction() {
@@ -360,28 +309,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return fileManagementService.loadTree(pReaderCreator);
     }
 
-    /**
-     * Creates the patterns actions (saved in array patterns), and the pure
-     * patterns list (saved in mPatternsList).
-     *
-     */
     public void loadPatterns(String patternsXML) throws Exception {
-        createPatterns(StylePatternFactory.loadPatterns(patternsXML, getResources()));
-    }
-
-    private void createPatterns(List<Pattern> patternsList) {
-        mPatternsList = patternsList;
-        actions.patterns = new ApplyPatternAction[patternsList.size()];
-        for (int i = 0; i < actions.patterns.length; i++) {
-            Pattern actualPattern = patternsList.get(i);
-            actions.patterns[i] = new ApplyPatternAction(this, actualPattern);
-
-            // search icons for patterns:
-            PatternIcon patternIcon = actualPattern.getPatternIcon();
-            if (patternIcon != null && patternIcon.getValue() != null) {
-                actions.patterns[i].putValue(Action.SMALL_ICON, MindIcon.factory(patternIcon.getValue()).getIcon());
-            }
-        }
+        lifecycleService.loadPatterns(patternsXML);
     }
 
     /**
@@ -391,50 +320,13 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     public void startupController() {
         super.startupController();
         getToolBar().startup();
-        HookFactory hookFactory = getHookFactory();
-        List<RegistrationContainer> pluginRegistrations = hookFactory.getRegistrations();
-        log.trace("mScheduledActions are executed: {}", pluginRegistrations.size());
-        for (RegistrationContainer container : pluginRegistrations) {
-            // call constructor:
-            try {
-                Class registrationClass = container.hookRegistrationClass;
-                Constructor hookConstructor = registrationClass.getConstructor(ModeController.class, MindMap.class);
-                HookRegistration registrationInstance = (HookRegistration) hookConstructor.newInstance(new Object[]{this, getMap()});
-                // register the instance to enable basePlugins.
-                hookFactory.registerRegistrationContainer(container, registrationInstance);
-                registrationInstance.register();
-                mRegistrations.add(registrationInstance);
-            } catch (Exception e) {
-                log.error(e.getLocalizedMessage(), e);
-            }
-        }
-        invokeHooksRecursively(getRootNode(), getMap());
-
-        // register mouse motion handler:
-        getMapMouseMotionListener().register(new MindMapMouseMotionManager(this));
-        getNodeDropListener().register(new MindMapNodeDropListener(this));
-        getNodeKeyListener().register(new CommonNodeKeyListener(this, MindMapController.this::edit));
-        getNodeMotionListener().register(new MindMapNodeMotionListener(this));
-        getNodeMouseMotionListener().register(new CommonNodeMouseMotionListener(this));
-        getMap().registerMapSourceChangedObserver(this, mGetEventIfChangedAfterThisTimeInMillies);
+        lifecycleService.startup();
     }
 
     public void shutdownController() {
         super.shutdownController();
-        for (HookRegistration registrationInstance : mRegistrations) {
-            registrationInstance.deRegister();
-        }
-        getHookFactory().deregisterAllRegistrationContainer();
-        mRegistrations.clear();
-        // deregister motion handler
-        getMapMouseMotionListener().deregister();
-        getNodeDropListener().deregister();
-        getNodeKeyListener().deregister();
-        getNodeMotionListener().deregister();
-        getNodeMouseMotionListener().deregister();
-        mGetEventIfChangedAfterThisTimeInMillies = getMap().deregisterMapSourceChangedObserver(this);
+        lifecycleService.shutdown();
         getToolBar().shutdown();
-
     }
 
     public MapAdapter newModel(ModeController modeController) {
@@ -443,43 +335,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return model;
     }
 
-    private void createIconActions() {
-        List<String> iconNames = MindIcon.getAllIconNames();
-        File iconDir = new File(getResources().getFreemindDirectory(), "icons");
-        if (iconDir.exists()) {
-            String[] userIconArray = iconDir.list((dir, name) -> name.matches(".*\\.png"));
-            if (userIconArray != null) {
-                for (String s : userIconArray) {
-                    String iconName = s;
-                    iconName = iconName.substring(0, iconName.length() - 4);
-                    if (iconName.isEmpty()) {
-                        continue;
-                    }
-                    iconNames.add(iconName);
-                }
-            }
-        }
-        for (String iconName : iconNames) {
-            MindIcon myIcon = MindIcon.factory(iconName);
-            IconAction myAction = new IconAction(this, myIcon, actions.removeLastIconAction);
-            actions.iconActions.add(myAction);
-        }
-    }
-
-    private void createNodeHookActions() {
-        MindMapHookFactory factory = (MindMapHookFactory) getHookFactory();
-        List<String> nodeHookNames = factory.getPossibleNodeHooks();
-        for (String hookName : nodeHookNames) {
-            // create hook action.
-            NodeHookAction action = new NodeHookAction(hookName, this);
-            actions.hookActions.add(action);
-        }
-        List<String> modeControllerHookNames = factory.getPossibleModeControllerHooks();
-        for (String hookName : modeControllerHookNames) {
-            MindMapControllerHookAction action = new MindMapControllerHookAction(hookName, this);
-            actions.hookActions.add(action);
-        }
-    }
+    // createIconActions() and createNodeHookActions() moved to LifecycleService
 
     public FileFilter getFileFilter() {
         return filefilter;
