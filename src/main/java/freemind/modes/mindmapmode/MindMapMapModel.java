@@ -109,7 +109,7 @@ public class MindMapMapModel extends MapAdapter {
             fileout.close();
 
             return stringWriter.toString();
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
             return null;
         }
@@ -128,7 +128,7 @@ public class MindMapMapModel extends MapAdapter {
             fileout.close();
             return stringWriter.toString();
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
             return null;
         }
@@ -143,7 +143,7 @@ public class MindMapMapModel extends MapAdapter {
             fileout.close();
             return true;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Error in MindMapMapModel.saveTXT()", e);
             return false;
         }
@@ -158,7 +158,7 @@ public class MindMapMapModel extends MapAdapter {
             fileout.close();
 
             return stringWriter.toString();
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
             return null;
         }
@@ -199,7 +199,7 @@ public class MindMapMapModel extends MapAdapter {
 
             fileout.write("}");
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
             return false;
         }
@@ -539,11 +539,8 @@ public class MindMapMapModel extends MapAdapter {
                                     pathToStore);
                             if (filesShouldBeDeletedAfterShutdown)
                                 tempFile.deleteOnExit();
-                        } catch (Exception e) {
-                            System.err
-                                    .println("Error in automatic MindMapMapModel.save(): "
-                                            + e.getMessage());
-                            log.error(e.getLocalizedMessage(), e);
+                        } catch (IOException e) {
+                            log.error("Error in automatic MindMapMapModel.save(): {}", e.getMessage(), e);
                             return;
                         }
                     }
@@ -554,11 +551,8 @@ public class MindMapMapModel extends MapAdapter {
                                         .format("automatically_save_message",
                                                 new Object[]{tempFile
                                                         .toString()}));
-                    } catch (Exception e) {
-                        System.err
-                                .println("Error in automatic MindMapMapModel.save(): "
-                                        + e.getMessage());
-                        log.error(e.getLocalizedMessage(), e);
+                    } catch (IOException e) {
+                        log.error("Error in automatic MindMapMapModel.save(): {}", e.getMessage(), e);
                     }
                     tempFileStack.add(tempFile); // add at the back.
                 });
@@ -585,7 +579,7 @@ public class MindMapMapModel extends MapAdapter {
             NodeAdapter nodeImplementor = (NodeAdapter) constructor
                     .newInstance(constrObjs);
             return nodeImplementor;
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             log.error("Error occurred loading node implementor: {}", nodeClass, e);
             // the best we can do is to return the normal class:
             NodeAdapter node = new MindMapNodeModel(pMap);

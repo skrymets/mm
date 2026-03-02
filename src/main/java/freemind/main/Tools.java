@@ -34,6 +34,7 @@ import javax.swing.*;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -177,7 +178,7 @@ public class Tools {
                     Thread.sleep(10/* miliseconds */);
                     timeOut--;
                 }
-            } catch (Exception e) {
+            } catch (IOException | InterruptedException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
         }
@@ -220,7 +221,7 @@ public class Tools {
     public static Date xmlToDate(String xmlString) {
         try {
             return new Date(Long.valueOf(xmlString).longValue());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return new Date(System.currentTimeMillis());
         }
     }
@@ -283,7 +284,7 @@ public class Tools {
                         trans = transFact.newTransformer(xsltSource);
                         trans.transform(sr, result);
                         successful = true;
-                    } catch (Exception e) {
+                    } catch (TransformerException e) {
                         log.error(e.getLocalizedMessage(), e);
                         errorMessage = e.toString();
                     }
@@ -508,7 +509,7 @@ public class Tools {
             pPaper.setSize(nt(tokenizer), nt(tokenizer));
             pPaper.setImageableArea(nt(tokenizer), nt(tokenizer),
                     nt(tokenizer), nt(tokenizer));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error(e.getLocalizedMessage(), e);
         }
     }
@@ -517,7 +518,7 @@ public class Tools {
         String nextToken = pTokenizer.nextToken();
         try {
             return Double.parseDouble(nextToken);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error(e.getLocalizedMessage(), e);
         }
         return 0;
@@ -607,7 +608,7 @@ public class Tools {
                 }
             }
             in.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
             return new StringBuilder();
         }

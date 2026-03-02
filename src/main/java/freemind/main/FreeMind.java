@@ -271,7 +271,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             Properties buildNumberPros = new Properties();
             buildNumberPros.load(stream);
             info.append("\nBuild: ").append(buildNumberPros.getProperty("build.number")).append("\n");
-        } catch (Exception e) {
+        } catch (IOException e) {
             info.append("Problems reading build number file: ").append(e);
         }
 
@@ -422,11 +422,13 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                     }
                     break;
             }
-        } catch (Exception ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                 | UnsupportedLookAndFeelException ex) {
             log.warn("Unable to set Look & Feel, falling back to system default", ex);
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception fallbackEx) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                     | UnsupportedLookAndFeelException fallbackEx) {
                 log.error("System L&F also failed", fallbackEx);
             }
         }
@@ -509,7 +511,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             try (OutputStream out = new FileOutputStream(propsFile)) {
                 toBeStored.store(out, "FreeMind " + VERSION);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error("Failed to save user properties", ex);
         }
         if (pIsShutdown && editServerService != null) {
@@ -566,7 +568,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
                 // fix for https://sourceforge.net/p/freemind/discussion/22102/thread/cf032151/?limit=25#c631
                 URI uri = new URI(url.toString().replaceAll("^file:////", "file://"));
                 desktop.browse(uri);
-            } catch (Exception e) {
+            } catch (IOException | URISyntaxException e) {
                 log.error("Caught: {}", String.valueOf(e));
             }
         }
@@ -830,7 +832,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             // lazy programming.
             // the mac class has exactly one constructor with a modeController.
             macClass.getConstructors()[0].newInstance(this);
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             log.error(e.getLocalizedMessage(), e);
         }
         return ctrl;
