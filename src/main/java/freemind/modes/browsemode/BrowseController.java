@@ -428,7 +428,7 @@ public class BrowseController extends ViewControllerAdapter {
 
         try {
             urlStreamReader = new InputStreamReader(url.openStream());
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             final String message = format("Could not open URL %s.", url);
             getFrame().getController().errorMessage(message);
             log.error(message, ex);
@@ -440,7 +440,7 @@ public class BrowseController extends ViewControllerAdapter {
             root = (BrowseNodeModel) getMap().createNodeTreeFromXml(urlStreamReader, IDToTarget);
             urlStreamReader.close();
             return root;
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error(ex.getLocalizedMessage(), ex);
             return null;
         }

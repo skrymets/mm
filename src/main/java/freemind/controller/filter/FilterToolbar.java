@@ -40,6 +40,7 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 
 @SuppressWarnings("serial")
@@ -221,7 +222,7 @@ class FilterToolbar extends FreeMindToolBar {
         try {
             mFilterController.loadConditions(mFilterController.getFilterConditionModel(), pathToFilterFile);
 
-        } catch (Exception ignored) {
+        } catch (IOException ignored) {
         }
         addStandardConditions();
         activeFilterConditionComboBox.setSelectedIndex(0);
@@ -294,7 +295,7 @@ class FilterToolbar extends FreeMindToolBar {
     void saveConditions() {
         try {
             mFilterController.saveConditions(mFilterController.getFilterConditionModel(), pathToFilterFile);
-        } catch (Exception ignored) {
+        } catch (IOException ignored) {
         }
     }
 

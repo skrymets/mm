@@ -31,6 +31,7 @@ import org.apache.commons.io.FileUtils;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
@@ -98,7 +99,7 @@ public class EditNodeExternalApplication extends EditNodeBase {
                     // if (bufferedReader != null) {
                     // bufferedReader.close();
                     // }
-                } catch (Exception ignored) {
+                } catch (IOException ignored) {
                 }
             }
             // setBlocked(false);

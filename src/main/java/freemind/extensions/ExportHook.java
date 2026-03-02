@@ -182,7 +182,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             IOUtils.copy(in, out);
             in.close();
             out.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("File not found or could not be copied. Was earching for {}{} and should go to {}", prefix, fileName, destinationDirectory);
             log.error(e.getLocalizedMessage(), e);
         }
@@ -205,7 +205,7 @@ public class ExportHook extends ModeControllerHookAdapter {
             IOUtils.copy(in, out);
             in.close();
             out.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("File not found or could not be copied. Was earching for {}{} and should go to {}", dir, fileName, destinationDirectory);
             log.error(e.getLocalizedMessage(), e);
         }

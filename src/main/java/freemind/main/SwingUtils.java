@@ -336,7 +336,7 @@ public final class SwingUtils {
                     return true;
                 }
             }
-        } catch (Exception ignore) {
+        } catch (ReflectiveOperationException ignore) {
         }
         return false;
     }

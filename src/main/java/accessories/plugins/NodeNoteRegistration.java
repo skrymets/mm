@@ -51,6 +51,7 @@ import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -166,7 +167,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 // Notes view)
                 // => the old method File.toURL() must be used again.
                 document.setBase(node.getMap().getFile().toURI().toURL());
-            } catch (Exception ignored) {
+            } catch (MalformedURLException ignored) {
             }
 
             String note = node.getNoteText();
