@@ -55,7 +55,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
     public static void main(String[] args) {
         System.setProperty("java.awt.headless", "true");
         if (args.length != 2) {
-            System.out.println("Export map to png.\nUsage:\n java -jar lib/freemind.jar freemind.view.mindmapview.IndependentMapViewCreator <map_path>.mm <picture_path>.png");
+            log.info("Export map to png.\nUsage:\n java -jar lib/freemind.jar freemind.view.mindmapview.IndependentMapViewCreator <map_path>.mm <picture_path>.png");
             System.exit(0);
         }
         FreeMindMainMock freeMindMain = new FreeMindMainMock();
@@ -63,13 +63,13 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
         try {
             String outputFileName = args[1];
             creator.exportFileToPng(args[0], outputFileName, freeMindMain);
-            System.out.println("Export to " + outputFileName + " done.");
+            log.info("Export to {} done.", outputFileName);
             System.exit(0);
         } catch (URISyntaxException | IOException e) {
             log.error(e.getLocalizedMessage(), e);
 
         }
-        System.err.println("Error.");
+        log.error("Error.");
         System.exit(1);
     }
 

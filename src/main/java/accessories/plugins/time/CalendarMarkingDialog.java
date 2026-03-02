@@ -63,11 +63,11 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
         dialog.setCalendarMarking(markings.getCalendarMarking(0));
         dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
         dialog.setVisible(true);
-        System.out.println(dialog.getResult());
+        log.debug("Dialog result: {}", dialog.getResult());
         CalendarMarking marking = dialog.getCalendarMarking();
         CalendarMarkings markingsZwo = new CalendarMarkings();
         markingsZwo.addCalendarMarking(marking);
-        System.out.println(Tools.marshall(markingsZwo));
+        log.debug("Markings XML: {}", Tools.marshall(markingsZwo));
     }
 
     public CalendarMarkingDialog(MindMapController pController) {

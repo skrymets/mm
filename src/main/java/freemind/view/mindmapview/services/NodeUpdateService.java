@@ -5,6 +5,7 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindIcon;
 import freemind.view.mindmapview.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+@Slf4j
 public class NodeUpdateService {
 
     private final NodeView nodeView;
@@ -188,7 +190,7 @@ public class NodeUpdateService {
         if (font != null) {
             nodeView.getMainView().setFont(font);
         } else {
-            System.err.println("NodeView.update(): default font is null.");
+            log.warn("NodeView.update(): default font is null.");
         }
     }
 

@@ -856,7 +856,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             mainView.setFont(font);
         } else {
             // We can survive this trouble.
-            System.err.println("NodeView.update(): default font is null.");
+            log.warn("NodeView.update(): default font is null.");
         }
     }
 

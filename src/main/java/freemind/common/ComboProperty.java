@@ -24,12 +24,14 @@ package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class ComboProperty extends PropertyBean implements PropertyControl {
     @Getter
     final String description;
@@ -109,9 +111,7 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
         if (possibleValues.contains(value)) {
             mComboBox.setSelectedIndex(possibleValues.indexOf(value));
         } else {
-            System.err.println("Can't set the value:" + value
-                    + " into the combo box " + getLabel() + "/"
-                    + getDescription());
+            log.warn("Can't set the value: {} into the combo box {}/{}", value, getLabel(), getDescription());
             if (mComboBox.getModel().getSize() > 0) {
                 mComboBox.setSelectedIndex(0);
             }

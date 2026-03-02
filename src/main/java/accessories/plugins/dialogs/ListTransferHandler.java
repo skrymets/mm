@@ -20,6 +20,7 @@
 package accessories.plugins.dialogs;
 
 import freemind.swing.DefaultListModel;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -28,6 +29,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @SuppressWarnings("serial")
 public class ListTransferHandler extends TransferHandler {
 
@@ -39,7 +41,7 @@ public class ListTransferHandler extends TransferHandler {
             localListFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=java.util.List");
             dataFlavors = new DataFlavor[]{localListFlavor};
         } catch (ClassNotFoundException e) {
-            System.out.println("ArrayListTransferHandler: unable to create data flavor");
+            log.warn("ArrayListTransferHandler: unable to create data flavor");
         }
     }
 
@@ -60,10 +62,10 @@ public class ListTransferHandler extends TransferHandler {
         try {
             alist = (List<?>) t.getTransferData(localListFlavor);
         } catch (UnsupportedFlavorException ufe) {
-            System.out.println("importData: unsupported data flavor");
+            log.warn("importData: unsupported data flavor");
             return false;
         } catch (IOException ioe) {
-            System.out.println("importData: I/O exception");
+            log.warn("importData: I/O exception");
             return false;
         }
 

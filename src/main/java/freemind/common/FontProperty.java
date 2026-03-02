@@ -24,10 +24,12 @@ package freemind.common;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
 
+@Slf4j
 public class FontProperty extends PropertyBean implements PropertyControl {
     @Getter
     final String description;
@@ -68,7 +70,7 @@ public class FontProperty extends PropertyBean implements PropertyControl {
                 return;
             }
         }
-        System.err.println("Unknown value:" + pValue);
+        log.warn("Unknown value: {}", pValue);
         if (mFontComboBox.getModel().getSize() > 0) {
             mFontComboBox.setSelectedIndex(0);
         }

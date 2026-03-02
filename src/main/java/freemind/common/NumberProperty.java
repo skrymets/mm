@@ -64,8 +64,7 @@ public class NumberProperty extends PropertyBean implements PropertyControl {
             intValue = parsedIntValue;
             int stepModul = (intValue - min) % step;
             if (intValue < min || intValue > max || (stepModul != 0)) {
-                System.err.println("Actual value of property " + getLabel()
-                        + " is not in the allowed range: " + value);
+                log.warn("Actual value of property {} is not in the allowed range: {}", getLabel(), value);
                 intValue = min;
             }
         } catch (NumberFormatException e) {

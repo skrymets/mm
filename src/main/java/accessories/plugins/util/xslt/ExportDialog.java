@@ -277,7 +277,7 @@ public class ExportDialog extends JFrame {
                     }
 
                 } catch (Exception ex) {
-                    System.out.println("exeption:" + ex);
+                    log.error("Exception in export dialog", ex);
                 }
             }
         }

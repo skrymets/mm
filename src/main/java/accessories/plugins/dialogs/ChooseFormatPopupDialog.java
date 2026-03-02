@@ -295,7 +295,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
     public void keyPressed(KeyEvent keyEvent) {
-        System.out.println("key pressed: " + keyEvent);
+        log.debug("key pressed: {}", keyEvent);
         switch (keyEvent.getKeyCode()) {
             case KeyEvent.VK_ESCAPE:
                 cancelPressed();
@@ -310,7 +310,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
     public void keyReleased(KeyEvent keyEvent) {
-        System.out.println("keyReleased: " + keyEvent);
+        log.debug("keyReleased: {}", keyEvent);
     }
 
     /*
@@ -319,7 +319,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
      * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
      */
     public void keyTyped(KeyEvent keyEvent) {
-        System.out.println("keyTyped: " + keyEvent);
+        log.debug("keyTyped: {}", keyEvent);
     }
 
 }

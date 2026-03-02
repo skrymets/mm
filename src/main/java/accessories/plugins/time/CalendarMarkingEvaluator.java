@@ -409,8 +409,7 @@ public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {
 
     public void printDate(Calendar firstDay) {
         if (firstDay != null) {
-            System.out.println(DateFormat.getDateInstance().format(
-                    firstDay.getTime()));
+            log.debug("Date: {}", DateFormat.getDateInstance().format(firstDay.getTime()));
         }
     }
 

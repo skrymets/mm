@@ -21,10 +21,12 @@ package freemind.view.mindmapview;
 
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
 
+@Slf4j
 public class NodeViewFactory {
 
     private static class ContentPane extends JComponent {
@@ -185,7 +187,7 @@ public class NodeViewFactory {
         } else if (model.getStyle().equals(MindMapNode.STYLE_BUBBLE)) {
             return new BubbleMainView();
         } else {
-            System.err.println("Tried to create a NodeView of unknown Style.");
+            log.warn("Tried to create a NodeView of unknown Style.");
             return new ForkMainView();
         }
     }
