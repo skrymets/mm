@@ -118,9 +118,9 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     // Extracted services
     private MenuConfigService menuConfigService;
-    private FileManagementService fileManagementService;
+    @lombok.Getter private FileManagementService fileManagementService;
     private SelectionService selectionService;
-    private TextOperationService textOperationService;
+    @lombok.Getter private TextOperationService textOperationService;
 
     public MindMapController(Mode mode) {
         super(mode);
@@ -158,8 +158,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.importBranch = new ImportBranchAction(this);
         actions.importLinkedBranch = new ImportLinkedBranchAction(this);
         actions.importLinkedBranchWithoutRoot = new ImportLinkedBranchWithoutRootAction(this);
-        actions.increaseNodeFont = new NodeGeneralAction(this, "increase_node_font_size", null, (map, node) -> increaseFontSize(node, 1));
-        actions.decreaseNodeFont = new NodeGeneralAction(this, "decrease_node_font_size", null, (map, node) -> increaseFontSize(node, -1));
+        actions.increaseNodeFont = new NodeGeneralAction(this, "increase_node_font_size", null, (map, node) -> nodeFormattingService.increaseFontSize(node, 1));
+        actions.decreaseNodeFont = new NodeGeneralAction(this, "decrease_node_font_size", null, (map, node) -> nodeFormattingService.increaseFontSize(node, -1));
 
         // Initialize extracted services
         iconService = new IconService(mActorFactory);
@@ -283,7 +283,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.selectAllAction = new SelectAllAction(this);
     }
 
-    // loadPatternActions() moved to LifecycleService
+
 
     public String getPatternsXML() {
         return getFrame().getPatternsXML();
@@ -335,7 +335,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return model;
     }
 
-    // createIconActions() and createNodeHookActions() moved to LifecycleService
+
 
     public FileFilter getFileFilter() {
         return filefilter;
@@ -707,10 +707,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         nodeFormattingService.setFontSize(node, fontSizeValue);
     }
 
-    public void increaseFontSize(MindMapNode node, int increment) {
-        nodeFormattingService.increaseFontSize(node, increment);
-    }
-
     public void setFontFamily(MindMapNode node, String fontFamilyValue) {
         nodeFormattingService.setFontFamily(node, fontFamilyValue);
     }
@@ -882,17 +878,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.joinNodes.joinNodes(selectedNode, selectedNodes);
     }
 
-    public void setLinkByFileChooser() {
-        fileManagementService.setLinkByFileChooser();
-    }
 
-    public void setImageByFileChooser() {
-        fileManagementService.setImageByFileChooser();
-    }
-
-    protected String getLinkByFileChooser(FileFilter fileFilter) {
-        return fileManagementService.getLinkByFileChooser(fileFilter);
-    }
 
     public void loadURL(String relative) {
         if (getMap().getFile() == null) {
@@ -977,10 +963,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     /**
      *
      */
-    public void splitNode(MindMapNode node, int caretPosition, String newText) {
-        textOperationService.splitNode(node, caretPosition, newText);
-    }
-
     protected void updateNode(MindMapNode node) {
         super.updateNode(node);
         recursiveCallUpdateHooks(node, node /*

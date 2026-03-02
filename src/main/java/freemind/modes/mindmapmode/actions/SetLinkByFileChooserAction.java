@@ -12,6 +12,6 @@ public class SetLinkByFileChooserAction extends MindmapAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        getMindMapController().setLinkByFileChooser();
+        getMindMapController().getFileManagementService().setLinkByFileChooser();
     }
 }

@@ -146,7 +146,7 @@ public class EditAction extends MindmapAction {
                         }
 
                         public void split(String newText, int position) {
-                            mMindMapController.splitNode(node.getModel(),
+                            mMindMapController.getTextOperationService().splitNode(node.getModel(),
                                     position, newText);
                             cancel();
                         }
@@ -173,7 +173,7 @@ public class EditAction extends MindmapAction {
                         }
 
                         public void split(String newText, int position) {
-                            mMindMapController.splitNode(node.getModel(),
+                            mMindMapController.getTextOperationService().splitNode(node.getModel(),
                                     position, newText);
                             cancel();
                         }
@@ -202,7 +202,7 @@ public class EditAction extends MindmapAction {
                         }
 
                         public void split(String newText, int position) {
-                            mMindMapController.splitNode(node.getModel(),
+                            mMindMapController.getTextOperationService().splitNode(node.getModel(),
                                     position, newText);
                             cancel();
                         }

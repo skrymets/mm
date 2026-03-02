@@ -12,7 +12,7 @@ public class SetImageByFileChooserAction extends MindmapAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        getMindMapController().setImageByFileChooser();
+        getMindMapController().getFileManagementService().setImageByFileChooser();
         getMindMapController().getController().obtainFocusForSelected();
     }
 }
