@@ -556,8 +556,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             return createNodeTreeFromXml(reader, IDToTarget);
         } catch (Exception ex) {
             String errorMessage = "Error while parsing file:" + ex;
-            System.err.println(errorMessage);
-            log.error(ex.getLocalizedMessage(), ex);
+            log.error(errorMessage, ex);
             NodeAdapter result = createNodeAdapter(this, null);
             result.setText(errorMessage);
             return result;

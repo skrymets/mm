@@ -350,21 +350,17 @@ public final class SwingUtils {
     }
 
     public static void logTransferable(Transferable t) {
-        System.err.println();
-        System.err.println("BEGIN OF Transferable:\t" + t);
+        log.debug("BEGIN OF Transferable: {}", t);
         DataFlavor[] dataFlavors = t.getTransferDataFlavors();
         for (DataFlavor dataFlavor : dataFlavors) {
-            System.out.println("  Flavor:\t" + dataFlavor);
-            System.out.println("    Supported:\t"
-                    + t.isDataFlavorSupported(dataFlavor));
+            log.debug("  Flavor: {}", dataFlavor);
+            log.debug("    Supported: {}", t.isDataFlavorSupported(dataFlavor));
             try {
-                System.out.println("    Content:\t"
-                        + t.getTransferData(dataFlavor));
+                log.debug("    Content: {}", t.getTransferData(dataFlavor));
             } catch (Exception ignored) {
             }
         }
-        System.err.println("END OF Transferable");
-        System.err.println();
+        log.debug("END OF Transferable");
     }
 
     // ---- Helper inner types for mnemonic handling ----
