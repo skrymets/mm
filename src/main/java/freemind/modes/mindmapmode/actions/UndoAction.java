@@ -78,8 +78,8 @@ public class UndoAction extends AbstractXmlAction {
     }
 
     protected void informUndoPartner(ActionPair pair) {
-        this.controller.redo.add(pair.reverse());
-        this.controller.redo.setEnabled(true);
+        this.controller.getActions().redo.add(pair.reverse());
+        this.controller.getActions().redo.setEnabled(true);
     }
 
     protected void undoDoAction(ActionPair pair) {

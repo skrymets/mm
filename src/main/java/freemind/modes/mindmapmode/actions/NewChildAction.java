@@ -67,7 +67,7 @@ public class NewChildAction extends MindmapAction {
                     newNode = getModeController().addNewNode(parent, childPosition, targetNode.isLeft());
                     final NodeView nodeView = getModeController().getNodeView(newNode);
                     getModeController().select(nodeView);
-                    getModeController().edit.edit(nodeView, getModeController().getNodeView(target), e, true, false,
+                    getModeController().getActions().edit.edit(nodeView, getModeController().getNodeView(target), e, true, false,
                             false);
                     break;
                 } else {
@@ -93,7 +93,7 @@ public class NewChildAction extends MindmapAction {
                 if (newNodeMode == MindMapController.NEW_CHILD) {
                     getModeController().select(nodeView);
                 }
-                getModeController().edit.edit(nodeView, getModeController().getNodeView(target), e, true, parentFolded,
+                getModeController().getActions().edit.edit(nodeView, getModeController().getNodeView(target), e, true, parentFolded,
                         false);
                 break;
             }

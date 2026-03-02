@@ -58,10 +58,10 @@ public class IconSelectionPlugin extends MindMapNodeHookAdapter {
         // we dont need node.
         NodeView focussed = getController().getSelectedView();
         MindMapController controller = getMindMapController();
-        List<IconAction> iconActions = controller.iconActions;
+        List<IconAction> iconActions = controller.getActions().iconActions;
         ArrayList<IconInformation> actions = new ArrayList<>(iconActions);
-        actions.add(controller.removeLastIconAction);
-        actions.add(controller.removeAllIconsAction);
+        actions.add(controller.getActions().removeLastIconAction);
+        actions.add(controller.getActions().removeAllIconsAction);
 
         FreeMind frame = (FreeMind) getController().getFrame();
         IconSelectionPopupDialog selectionDialog = new IconSelectionPopupDialog(frame.getJFrame(), actions, frame);

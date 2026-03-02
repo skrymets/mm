@@ -1099,10 +1099,10 @@ public class OptionPanel implements TextTranslator {
                 .getModeController();
         if (modeController instanceof MindMapController) {
             MindMapController controller = (MindMapController) modeController;
-            List<IconAction> iconActions = controller.iconActions;
+            List<IconAction> iconActions = controller.getActions().iconActions;
             List<IconInformation> actions = new ArrayList<>(iconActions);
-            actions.add(controller.removeLastIconAction);
-            actions.add(controller.removeAllIconsAction);
+            actions.add(controller.getActions().removeLastIconAction);
+            actions.add(controller.getActions().removeAllIconsAction);
             controls.add(new NextLineProperty());
             controls.add(new SeparatorProperty("icons"));
 

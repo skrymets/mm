@@ -98,7 +98,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     private final HashSet<MouseWheelEventHandler> mRegisteredMouseWheelEventHandler = new HashSet<>();
 
     private final ActionRegistry actionFactory;
-    private final ArrayList<HookAction> hookActions = new ArrayList<>();
     // Mode mode;
     private MindMapPopupMenu popupmenu;
     // private JToolBar toolbar;
@@ -109,103 +108,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     @Setter
     private HookFactory nodeHookFactory;
 
-    public ApplyPatternAction[] patterns = new ApplyPatternAction[0]; // Make
-    // sure
-    // it is
-    // initialized
-    public Action newMap = new NewMapAction(this);
-    public Action open = new OpenAction(this);
-    public final Action save = new SaveAction();
-    public final Action saveAs = new SaveAsAction();
-    public final Action exportToHTML = new ExportToHTMLAction(this);
-    public final Action exportBranchToHTML = new ExportBranchToHTMLAction(this);
-
-    public final Action editLong = new EditLongAction(this);
-    public final Action newSibling = new NewSiblingAction(this);
-    public final Action newPreviousSibling = new NewPreviousSiblingAction(this);
-    public final Action setLinkByFileChooser = new SetLinkByFileChooserAction(this);
-    public final Action setImageByFileChooser = new SetImageByFileChooserAction(this);
-    public final Action followLink = new FollowLinkAction(this);
-    public Action openLinkDirectory = new OpenLinkDirectoryAction(this);
-    public final Action exportBranch = new ExportBranchAction(this);
-    public final Action importBranch = new ImportBranchAction(this);
-    public final Action importLinkedBranch = new ImportLinkedBranchAction(this);
-    public final Action importLinkedBranchWithoutRoot = new ImportLinkedBranchWithoutRootAction(this);
-
-    public Action propertyAction = null;
-
-    public final Action increaseNodeFont = new NodeGeneralAction(this, "increase_node_font_size", null, (map, node) -> increaseFontSize(node, 1));
-    public final Action decreaseNodeFont = new NodeGeneralAction(this, "decrease_node_font_size", null, (map, node) -> increaseFontSize(node, -1));
-
-    public UndoAction undo = null;
-    public RedoAction redo = null;
-    public CopyAction copy = null;
-    public Action copySingle = null;
-    public CutAction cut = null;
-    public PasteAction paste = null;
-    public PasteAsPlainTextAction pasteAsPlainText = null;
-    public BoldAction bold = null;
-    public StrikethroughAction strikethrough = null;
-    public ItalicAction italic = null;
-    public UnderlinedAction underlined = null;
-    public FontSizeAction fontSize = null;
-    public FontFamilyAction fontFamily = null;
-    public NodeColorAction nodeColor = null;
-    public EditAction edit = null;
-    public NewChildAction newChild = null;
-    public DeleteChildAction deleteChild = null;
-    public ToggleFoldedAction toggleFolded = null;
-    public ToggleChildrenFoldedAction toggleChildrenFolded = null;
-    public UseRichFormattingAction useRichFormatting = null;
-    public UsePlainTextAction usePlainText = null;
-    public NodeUpAction nodeUp = null;
-    public NodeDownAction nodeDown = null;
-    public EdgeColorAction edgeColor = null;
-    public EdgeWidthAction EdgeWidth_WIDTH_PARENT = null;
-    public EdgeWidthAction EdgeWidth_WIDTH_THIN = null;
-    public EdgeWidthAction EdgeWidth_1 = null;
-    public EdgeWidthAction EdgeWidth_2 = null;
-    public EdgeWidthAction EdgeWidth_4 = null;
-    public EdgeWidthAction EdgeWidth_8 = null;
-    public EdgeWidthAction[] edgeWidths = null;
-    public EdgeStyleAction EdgeStyle_linear = null;
-    public EdgeStyleAction EdgeStyle_bezier = null;
-    public EdgeStyleAction EdgeStyle_sharp_linear = null;
-    public EdgeStyleAction EdgeStyle_sharp_bezier = null;
-    public EdgeStyleAction[] edgeStyles = null;
-    public NodeColorBlendAction nodeColorBlend = null;
-    public NodeStyleAction fork = null;
-    public NodeStyleAction bubble = null;
-    public CloudAction cloud = null;
-    public freemind.modes.mindmapmode.actions.CloudColorAction cloudColor = null;
-    public AddArrowLinkAction addArrowLinkAction = null;
-    public RemoveArrowLinkAction removeArrowLinkAction = null;
-    public ColorArrowLinkAction colorArrowLinkAction = null;
-    public ChangeArrowsInArrowLinkAction changeArrowsInArrowLinkAction = null;
-    public NodeBackgroundColorAction nodeBackgroundColor = null;
-    public RemoveNodeBackgroundColorAction removeNodeBackgroundColor = null;
-
-    public IconAction unknownIconAction = null;
-    public RemoveIconAction removeLastIconAction = null;
-    public RemoveAllIconsAction removeAllIconsAction = null;
-    public SetLinkByTextFieldAction setLinkByTextField = null;
-    public AddLocalLinkAction addLocalLinkAction = null;
-    public GotoLinkNodeAction gotoLinkNodeAction = null;
-    public JoinNodesAction joinNodes = null;
-    public MoveNodeAction moveNodeAction = null;
-    public ImportExplorerFavoritesAction importExplorerFavorites = null;
-    public ImportFolderStructureAction importFolderStructure = null;
-
-    public FindAction find = null;
-    public FindNextAction findNext = null;
-    public SearchAction searchAllMaps = null;
-    public NodeHookAction nodeHookAction = null;
-    public RevertAction revertAction = null;
-    public SelectBranchAction selectBranchAction = null;
-    public SelectAllAction selectAllAction = null;
-
-    // Extension Actions
-    public final ArrayList<IconAction> iconActions = new ArrayList<>(); // fc
+    @lombok.Getter
+    private final ActionContainer actions = new ActionContainer();
 
     final FileFilter filefilter;
 
@@ -237,6 +141,27 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     protected void init() {
         log.info("createXmlActions");
         mActorFactory = new XmlActorFactory(this);
+
+        // Initialize actions that were previously inline field initializers
+        actions.newMap = new NewMapAction(this);
+        actions.open = new OpenAction(this);
+        actions.save = new SaveAction();
+        actions.saveAs = new SaveAsAction();
+        actions.exportToHTML = new ExportToHTMLAction(this);
+        actions.exportBranchToHTML = new ExportBranchToHTMLAction(this);
+        actions.editLong = new EditLongAction(this);
+        actions.newSibling = new NewSiblingAction(this);
+        actions.newPreviousSibling = new NewPreviousSiblingAction(this);
+        actions.setLinkByFileChooser = new SetLinkByFileChooserAction(this);
+        actions.setImageByFileChooser = new SetImageByFileChooserAction(this);
+        actions.followLink = new FollowLinkAction(this);
+        actions.openLinkDirectory = new OpenLinkDirectoryAction(this);
+        actions.exportBranch = new ExportBranchAction(this);
+        actions.importBranch = new ImportBranchAction(this);
+        actions.importLinkedBranch = new ImportLinkedBranchAction(this);
+        actions.importLinkedBranchWithoutRoot = new ImportLinkedBranchWithoutRootAction(this);
+        actions.increaseNodeFont = new NodeGeneralAction(this, "increase_node_font_size", null, (map, node) -> increaseFontSize(node, 1));
+        actions.decreaseNodeFont = new NodeGeneralAction(this, "decrease_node_font_size", null, (map, node) -> increaseFontSize(node, -1));
 
         // Initialize extracted services
         iconService = new IconService(mActorFactory);
@@ -278,90 +203,88 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
         mRegistrations = new ArrayList<>();
 
-        propertyAction = getController().propertyAction;
+        actions.propertyAction = getController().propertyAction;
     }
 
     private void createStandardActions() {
         // prepare undo:
-        undo = new UndoAction(this);
-        redo = new RedoAction(this);
+        actions.undo = new UndoAction(this);
+        actions.redo = new RedoAction(this);
         // register default action handler:
         // the executor must be the first here, because it is executed last then.
         getActionRegistry().registerHandler(new DefaultActionHandler(getActionRegistry()));
-        getActionRegistry().registerUndoHandler(new UndoActionHandler(this, undo, redo));
-        // debug:
-        // getActionFactory().registerHandler(new freemind.modes.mindmapmode.actions.xml.PrintActionHandler(this));
+        getActionRegistry().registerUndoHandler(new UndoActionHandler(this, actions.undo, actions.redo));
 
-        cut = new CutAction(this);
-        paste = new PasteAction(this);
-        pasteAsPlainText = new PasteAsPlainTextAction(this);
-        copy = new CopyAction(this);
-        copySingle = new CopySingleAction(this);
-        bold = new BoldAction(this);
-        strikethrough = new StrikethroughAction(this);
-        italic = new ItalicAction(this);
-        underlined = new UnderlinedAction(this);
-        fontSize = new FontSizeAction(this);
-        fontFamily = new FontFamilyAction(this);
-        edit = new EditAction(this);
-        useRichFormatting = new UseRichFormattingAction(this);
-        usePlainText = new UsePlainTextAction(this);
-        newChild = new NewChildAction(this);
-        deleteChild = new DeleteChildAction(this);
-        toggleFolded = new ToggleFoldedAction(this);
-        toggleChildrenFolded = new ToggleChildrenFoldedAction(this);
-        nodeUp = new NodeUpAction(this);
-        nodeDown = new NodeDownAction(this);
-        edgeColor = new EdgeColorAction(this);
-        nodeColor = new NodeColorAction(this);
-        nodeColorBlend = new NodeColorBlendAction(this);
-        fork = new NodeStyleAction(this, MindMapNode.STYLE_FORK);
-        bubble = new NodeStyleAction(this, MindMapNode.STYLE_BUBBLE);
+        actions.cut = new CutAction(this);
+        actions.paste = new PasteAction(this);
+        actions.pasteAsPlainText = new PasteAsPlainTextAction(this);
+        actions.copy = new CopyAction(this);
+        actions.copySingle = new CopySingleAction(this);
+        actions.bold = new BoldAction(this);
+        actions.strikethrough = new StrikethroughAction(this);
+        actions.italic = new ItalicAction(this);
+        actions.underlined = new UnderlinedAction(this);
+        actions.fontSize = new FontSizeAction(this);
+        actions.fontFamily = new FontFamilyAction(this);
+        actions.edit = new EditAction(this);
+        actions.useRichFormatting = new UseRichFormattingAction(this);
+        actions.usePlainText = new UsePlainTextAction(this);
+        actions.newChild = new NewChildAction(this);
+        actions.deleteChild = new DeleteChildAction(this);
+        actions.toggleFolded = new ToggleFoldedAction(this);
+        actions.toggleChildrenFolded = new ToggleChildrenFoldedAction(this);
+        actions.nodeUp = new NodeUpAction(this);
+        actions.nodeDown = new NodeDownAction(this);
+        actions.edgeColor = new EdgeColorAction(this);
+        actions.nodeColor = new NodeColorAction(this);
+        actions.nodeColorBlend = new NodeColorBlendAction(this);
+        actions.fork = new NodeStyleAction(this, MindMapNode.STYLE_FORK);
+        actions.bubble = new NodeStyleAction(this, MindMapNode.STYLE_BUBBLE);
         // this is an unknown icon and thus corrected by mindicon:
-        removeLastIconAction = new RemoveIconAction(this);
+        actions.removeLastIconAction = new RemoveIconAction(this);
         // this action handles the xml stuff: (undo etc.)
-        unknownIconAction = new IconAction(this, MindIcon.factory(MindIcon.getAllIconNames().get(0)), removeLastIconAction);
-        removeLastIconAction.setIconAction(unknownIconAction);
-        removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
+        actions.unknownIconAction = new IconAction(this, MindIcon.factory(MindIcon.getAllIconNames().get(0)), actions.removeLastIconAction);
+        actions.removeLastIconAction.setIconAction(actions.unknownIconAction);
+        actions.removeAllIconsAction = new RemoveAllIconsAction(this, actions.unknownIconAction);
         // load pattern actions:
         loadPatternActions();
 
-        EdgeWidth_WIDTH_PARENT = new EdgeWidthAction(this, EdgeAdapter.WIDTH_PARENT);
-        EdgeWidth_WIDTH_THIN = new EdgeWidthAction(this, EdgeAdapter.WIDTH_THIN);
-        EdgeWidth_1 = new EdgeWidthAction(this, 1);
-        EdgeWidth_2 = new EdgeWidthAction(this, 2);
-        EdgeWidth_4 = new EdgeWidthAction(this, 4);
-        EdgeWidth_8 = new EdgeWidthAction(this, 8);
-        edgeWidths = new EdgeWidthAction[]{EdgeWidth_WIDTH_PARENT, EdgeWidth_WIDTH_THIN, EdgeWidth_1, EdgeWidth_2, EdgeWidth_4, EdgeWidth_8};
+        actions.EdgeWidth_WIDTH_PARENT = new EdgeWidthAction(this, EdgeAdapter.WIDTH_PARENT);
+        actions.EdgeWidth_WIDTH_THIN = new EdgeWidthAction(this, EdgeAdapter.WIDTH_THIN);
+        actions.EdgeWidth_1 = new EdgeWidthAction(this, 1);
+        actions.EdgeWidth_2 = new EdgeWidthAction(this, 2);
+        actions.EdgeWidth_4 = new EdgeWidthAction(this, 4);
+        actions.EdgeWidth_8 = new EdgeWidthAction(this, 8);
+        actions.edgeWidths = new EdgeWidthAction[]{actions.EdgeWidth_WIDTH_PARENT, actions.EdgeWidth_WIDTH_THIN, actions.EdgeWidth_1, actions.EdgeWidth_2, actions.EdgeWidth_4, actions.EdgeWidth_8};
 
-        EdgeStyle_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_LINEAR);
-        EdgeStyle_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_BEZIER);
-        EdgeStyle_sharp_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_LINEAR);
-        EdgeStyle_sharp_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_BEZIER);
-        edgeStyles = new EdgeStyleAction[]{EdgeStyle_linear, EdgeStyle_bezier, EdgeStyle_sharp_linear, EdgeStyle_sharp_bezier};
+        actions.EdgeStyle_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_LINEAR);
+        actions.EdgeStyle_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_BEZIER);
+        actions.EdgeStyle_sharp_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_LINEAR);
+        actions.EdgeStyle_sharp_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_BEZIER);
+        actions.edgeStyles = new EdgeStyleAction[]{actions.EdgeStyle_linear, actions.EdgeStyle_bezier, actions.EdgeStyle_sharp_linear, actions.EdgeStyle_sharp_bezier};
 
-        cloud = new CloudAction(this);
-        cloudColor = new CloudColorAction(this);
-        addArrowLinkAction = new AddArrowLinkAction(this);
-        removeArrowLinkAction = new RemoveArrowLinkAction(this, null);
-        colorArrowLinkAction = new ColorArrowLinkAction(this, null);
-        changeArrowsInArrowLinkAction = new ChangeArrowsInArrowLinkAction(this, "none", null, null, true, true);
-        nodeBackgroundColor = new NodeBackgroundColorAction(this);
-        removeNodeBackgroundColor = new RemoveNodeBackgroundColorAction(this);
-        setLinkByTextField = new SetLinkByTextFieldAction(this);
-        addLocalLinkAction = new AddLocalLinkAction(this);
-        gotoLinkNodeAction = new GotoLinkNodeAction(this, null);
-        moveNodeAction = new MoveNodeAction(this);
-        joinNodes = new JoinNodesAction(this);
-        importExplorerFavorites = new ImportExplorerFavoritesAction(this);
-        importFolderStructure = new ImportFolderStructureAction(this);
-        find = new FindAction(this);
-        findNext = new FindNextAction(this, find);
-        searchAllMaps = new SearchAction(this);
-        nodeHookAction = new NodeHookAction("no_title", this);
-        revertAction = new RevertAction(this);
-        selectBranchAction = new SelectBranchAction(this);
-        selectAllAction = new SelectAllAction(this);
+        actions.cloud = new CloudAction(this);
+        actions.cloudColor = new CloudColorAction(this);
+        actions.addArrowLinkAction = new AddArrowLinkAction(this);
+        actions.removeArrowLinkAction = new RemoveArrowLinkAction(this, null);
+        actions.colorArrowLinkAction = new ColorArrowLinkAction(this, null);
+        actions.changeArrowsInArrowLinkAction = new ChangeArrowsInArrowLinkAction(this, "none", null, null, true, true);
+        actions.nodeBackgroundColor = new NodeBackgroundColorAction(this);
+        actions.removeNodeBackgroundColor = new RemoveNodeBackgroundColorAction(this);
+        actions.setLinkByTextField = new SetLinkByTextFieldAction(this);
+        actions.addLocalLinkAction = new AddLocalLinkAction(this);
+        actions.gotoLinkNodeAction = new GotoLinkNodeAction(this, null);
+        actions.moveNodeAction = new MoveNodeAction(this);
+        actions.joinNodes = new JoinNodesAction(this);
+        actions.importExplorerFavorites = new ImportExplorerFavoritesAction(this);
+        actions.importFolderStructure = new ImportFolderStructureAction(this);
+        actions.find = new FindAction(this);
+        actions.findNext = new FindNextAction(this, actions.find);
+        actions.searchAllMaps = new SearchAction(this);
+        actions.nodeHookAction = new NodeHookAction("no_title", this);
+        actions.revertAction = new RevertAction(this);
+        actions.selectBranchAction = new SelectBranchAction(this);
+        actions.selectAllAction = new SelectAllAction(this);
     }
 
     /**
@@ -422,7 +345,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public boolean isUndoAction() {
-        return undo.isUndoAction() || redo.isUndoAction();
+        return actions.undo.isUndoAction() || actions.redo.isUndoAction();
     }
 
     protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, IOException {
@@ -448,15 +371,15 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     private void createPatterns(List<Pattern> patternsList) {
         mPatternsList = patternsList;
-        patterns = new ApplyPatternAction[patternsList.size()];
-        for (int i = 0; i < patterns.length; i++) {
+        actions.patterns = new ApplyPatternAction[patternsList.size()];
+        for (int i = 0; i < actions.patterns.length; i++) {
             Pattern actualPattern = patternsList.get(i);
-            patterns[i] = new ApplyPatternAction(this, actualPattern);
+            actions.patterns[i] = new ApplyPatternAction(this, actualPattern);
 
             // search icons for patterns:
             PatternIcon patternIcon = actualPattern.getPatternIcon();
             if (patternIcon != null && patternIcon.getValue() != null) {
-                patterns[i].putValue(Action.SMALL_ICON, MindIcon.factory(patternIcon.getValue()).getIcon());
+                actions.patterns[i].putValue(Action.SMALL_ICON, MindIcon.factory(patternIcon.getValue()).getIcon());
             }
         }
     }
@@ -538,8 +461,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         }
         for (String iconName : iconNames) {
             MindIcon myIcon = MindIcon.factory(iconName);
-            IconAction myAction = new IconAction(this, myIcon, removeLastIconAction);
-            iconActions.add(myAction);
+            IconAction myAction = new IconAction(this, myIcon, actions.removeLastIconAction);
+            actions.iconActions.add(myAction);
         }
     }
 
@@ -549,12 +472,12 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         for (String hookName : nodeHookNames) {
             // create hook action.
             NodeHookAction action = new NodeHookAction(hookName, this);
-            hookActions.add(action);
+            actions.hookActions.add(action);
         }
         List<String> modeControllerHookNames = factory.getPossibleModeControllerHooks();
         for (String hookName : modeControllerHookNames) {
             MindMapControllerHookAction action = new MindMapControllerHookAction(hookName, this);
-            hookActions.add(action);
+            actions.hookActions.add(action);
         }
     }
 
@@ -714,7 +637,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public List<HookAction> getHookActions() {
-        return hookActions;
+        return actions.hookActions;
     }
 
     public MindMapPopupMenu getPopupMenuInternal() {
@@ -748,7 +671,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             JPopupMenu arrowLinkPopup = new JPopupMenu();
             // block the screen while showing popup.
             arrowLinkPopup.addPopupMenuListener(this.popupListenerSingleton);
-            removeArrowLinkAction.setArrowLink(link);
+            actions.removeArrowLinkAction.setArrowLink(link);
             arrowLinkPopup.add(new RemoveArrowLinkAction(this, link));
             arrowLinkPopup.add(new ColorArrowLinkAction(this, link));
             arrowLinkPopup.addSeparator();
@@ -820,84 +743,83 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         log.trace("setAllActions:{}", enabled);
         super.setAllActions(enabled);
         // own actions
-        increaseNodeFont.setEnabled(enabled);
-        decreaseNodeFont.setEnabled(enabled);
-        exportBranch.setEnabled(enabled);
-        exportBranchToHTML.setEnabled(enabled);
-        editLong.setEnabled(enabled);
-        newSibling.setEnabled(enabled);
-        newPreviousSibling.setEnabled(enabled);
-        setLinkByFileChooser.setEnabled(enabled);
-        setImageByFileChooser.setEnabled(enabled);
-        followLink.setEnabled(enabled);
-        for (IconAction iconAction : iconActions) {
+        actions.increaseNodeFont.setEnabled(enabled);
+        actions.decreaseNodeFont.setEnabled(enabled);
+        actions.exportBranch.setEnabled(enabled);
+        actions.exportBranchToHTML.setEnabled(enabled);
+        actions.editLong.setEnabled(enabled);
+        actions.newSibling.setEnabled(enabled);
+        actions.newPreviousSibling.setEnabled(enabled);
+        actions.setLinkByFileChooser.setEnabled(enabled);
+        actions.setImageByFileChooser.setEnabled(enabled);
+        actions.followLink.setEnabled(enabled);
+        for (IconAction iconAction : actions.iconActions) {
             iconAction.setEnabled(enabled);
         }
-        save.setEnabled(enabled);
-        saveAs.setEnabled(enabled);
+        actions.save.setEnabled(enabled);
+        actions.saveAs.setEnabled(enabled);
         getToolBar().setAllActions(enabled);
-        exportBranch.setEnabled(enabled);
-        exportToHTML.setEnabled(enabled);
-        importBranch.setEnabled(enabled);
-        importLinkedBranch.setEnabled(enabled);
-        importLinkedBranchWithoutRoot.setEnabled(enabled);
+        actions.exportBranch.setEnabled(enabled);
+        actions.exportToHTML.setEnabled(enabled);
+        actions.importBranch.setEnabled(enabled);
+        actions.importLinkedBranch.setEnabled(enabled);
+        actions.importLinkedBranchWithoutRoot.setEnabled(enabled);
         // hooks:
-        for (HookAction hookAction : hookActions) {
+        for (HookAction hookAction : actions.hookActions) {
             ((Action) hookAction).setEnabled(enabled);
         }
-        cut.setEnabled(enabled);
-        copy.setEnabled(enabled);
-        copySingle.setEnabled(enabled);
-        paste.setEnabled(enabled);
-        pasteAsPlainText.setEnabled(enabled);
-        undo.setEnabled(enabled);
-        redo.setEnabled(enabled);
-        edit.setEnabled(enabled);
-        newChild.setEnabled(enabled);
-        toggleFolded.setEnabled(enabled);
-        toggleChildrenFolded.setEnabled(enabled);
-        setLinkByTextField.setEnabled(enabled);
-        italic.setEnabled(enabled);
-        bold.setEnabled(enabled);
-        strikethrough.setEnabled(enabled);
-        find.setEnabled(enabled);
-        findNext.setEnabled(enabled);
-        searchAllMaps.setEnabled(enabled);
-        addArrowLinkAction.setEnabled(enabled);
-        addLocalLinkAction.setEnabled(enabled);
-        nodeColorBlend.setEnabled(enabled);
-        nodeUp.setEnabled(enabled);
-        nodeBackgroundColor.setEnabled(enabled);
-        nodeDown.setEnabled(enabled);
-        importExplorerFavorites.setEnabled(enabled);
-        importFolderStructure.setEnabled(enabled);
-        joinNodes.setEnabled(enabled);
-        deleteChild.setEnabled(enabled);
-        cloud.setEnabled(enabled);
-        cloudColor.setEnabled(enabled);
-        // normalFont.setEnabled(enabled);
-        nodeColor.setEnabled(enabled);
-        edgeColor.setEnabled(enabled);
-        removeLastIconAction.setEnabled(enabled);
-        removeAllIconsAction.setEnabled(enabled);
-        selectAllAction.setEnabled(enabled);
-        selectBranchAction.setEnabled(enabled);
-        removeNodeBackgroundColor.setEnabled(enabled);
-        moveNodeAction.setEnabled(enabled);
-        revertAction.setEnabled(enabled);
-        for (EdgeWidthAction edgeWidth : edgeWidths) {
+        actions.cut.setEnabled(enabled);
+        actions.copy.setEnabled(enabled);
+        actions.copySingle.setEnabled(enabled);
+        actions.paste.setEnabled(enabled);
+        actions.pasteAsPlainText.setEnabled(enabled);
+        actions.undo.setEnabled(enabled);
+        actions.redo.setEnabled(enabled);
+        actions.edit.setEnabled(enabled);
+        actions.newChild.setEnabled(enabled);
+        actions.toggleFolded.setEnabled(enabled);
+        actions.toggleChildrenFolded.setEnabled(enabled);
+        actions.setLinkByTextField.setEnabled(enabled);
+        actions.italic.setEnabled(enabled);
+        actions.bold.setEnabled(enabled);
+        actions.strikethrough.setEnabled(enabled);
+        actions.find.setEnabled(enabled);
+        actions.findNext.setEnabled(enabled);
+        actions.searchAllMaps.setEnabled(enabled);
+        actions.addArrowLinkAction.setEnabled(enabled);
+        actions.addLocalLinkAction.setEnabled(enabled);
+        actions.nodeColorBlend.setEnabled(enabled);
+        actions.nodeUp.setEnabled(enabled);
+        actions.nodeBackgroundColor.setEnabled(enabled);
+        actions.nodeDown.setEnabled(enabled);
+        actions.importExplorerFavorites.setEnabled(enabled);
+        actions.importFolderStructure.setEnabled(enabled);
+        actions.joinNodes.setEnabled(enabled);
+        actions.deleteChild.setEnabled(enabled);
+        actions.cloud.setEnabled(enabled);
+        actions.cloudColor.setEnabled(enabled);
+        actions.nodeColor.setEnabled(enabled);
+        actions.edgeColor.setEnabled(enabled);
+        actions.removeLastIconAction.setEnabled(enabled);
+        actions.removeAllIconsAction.setEnabled(enabled);
+        actions.selectAllAction.setEnabled(enabled);
+        actions.selectBranchAction.setEnabled(enabled);
+        actions.removeNodeBackgroundColor.setEnabled(enabled);
+        actions.moveNodeAction.setEnabled(enabled);
+        actions.revertAction.setEnabled(enabled);
+        for (EdgeWidthAction edgeWidth : actions.edgeWidths) {
             edgeWidth.setEnabled(enabled);
         }
-        fork.setEnabled(enabled);
-        bubble.setEnabled(enabled);
-        for (EdgeStyleAction edgeStyle : edgeStyles) {
+        actions.fork.setEnabled(enabled);
+        actions.bubble.setEnabled(enabled);
+        for (EdgeStyleAction edgeStyle : actions.edgeStyles) {
             edgeStyle.setEnabled(enabled);
         }
-        for (ApplyPatternAction pattern : patterns) {
+        for (ApplyPatternAction pattern : actions.patterns) {
             pattern.setEnabled(enabled);
         }
-        useRichFormatting.setEnabled(enabled);
-        usePlainText.setEnabled(enabled);
+        actions.useRichFormatting.setEnabled(enabled);
+        actions.usePlainText.setEnabled(enabled);
     }
 
     //
@@ -959,7 +881,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void applyPattern(MindMapNode node, String patternName) {
-        for (ApplyPatternAction patternAction : patterns) {
+        for (ApplyPatternAction patternAction : actions.patterns) {
             if (patternAction.getPattern().getName().equals(patternName)) {
                 StylePatternFactory.applyPattern(node, patternAction.getPattern(), getPatternsList(), getPlugins(), this);
                 break;
@@ -1015,7 +937,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     // edit begins with home/end or typing (PN 6.2)
     public void edit(KeyEvent e, boolean addNew, boolean editLong) {
-        edit.edit(e, addNew, editLong);
+        actions.edit.edit(e, addNew, editLong);
     }
 
     public void setNodeText(MindMapNode selected, String newText) {
@@ -1076,8 +998,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public MindMapNode addNew(final MindMapNode target, final int newNodeMode, final KeyEvent e) {
-        edit.stopEditing();
-        return newChild.addNew(target, newNodeMode, e);
+        actions.edit.stopEditing();
+        return actions.newChild.addNew(target, newNodeMode, e);
     }
 
     public MindMapNode addNewNode(MindMapNode parent, int index, boolean newNodeIsLeft) {
@@ -1101,7 +1023,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void joinNodes(MindMapNode selectedNode, List<MindMapNode> selectedNodes) {
-        joinNodes.joinNodes(selectedNode, selectedNodes);
+        actions.joinNodes.joinNodes(selectedNode, selectedNodes);
     }
 
     public void setLinkByFileChooser() {

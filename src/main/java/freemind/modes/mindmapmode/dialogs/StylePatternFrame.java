@@ -309,7 +309,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         controls.add(mNodeStyle);
         mIconInformationVector = new ArrayList<>();
         MindMapController controller = mMindMapController;
-        List<IconAction> iconActions = controller.iconActions;
+        List<IconAction> iconActions = controller.getActions().iconActions;
         for (IconAction action : iconActions) {
             MindIcon info = action.getMindIcon();
             mIconInformationVector.add(info);

@@ -40,8 +40,8 @@ public class RedoAction extends UndoAction {
      *
      */
     protected void informUndoPartner(ActionPair pair) {
-        this.controller.undo.add(pair.reverse());
-        this.controller.undo.setEnabled(true);
+        this.controller.getActions().undo.add(pair.reverse());
+        this.controller.getActions().undo.setEnabled(true);
     }
 
 }

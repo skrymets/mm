@@ -35,7 +35,7 @@ public class MapSourceChangeDialog implements Runnable {
             mReturnValue = false;
             return;
         }
-        controller.revertAction.actionPerformed(null);
+        controller.getActions().revertAction.actionPerformed(null);
     }
 
     public boolean getReturnValue() {

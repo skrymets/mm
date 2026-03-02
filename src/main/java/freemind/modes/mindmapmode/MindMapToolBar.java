@@ -90,7 +90,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
                 return;
             }
             fontFamily_IgnoreChangeEvent = true;
-            mindMapController.fontFamily.actionPerformed((String) e.getItem());
+            mindMapController.getActions().fontFamily.actionPerformed((String) e.getItem());
             fontFamily_IgnoreChangeEvent = false;
         };
         fonts.addItemListener(fontsListener);
@@ -109,7 +109,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
                 return;
             }
             // call action:
-            mindMapController.fontSize.actionPerformed((String) e.getItem());
+            mindMapController.getActions().fontSize.actionPerformed((String) e.getItem());
         };
         size.addItemListener(sizeListener);
         userDefinedZoom = controller.getText("user_defined_zoom");

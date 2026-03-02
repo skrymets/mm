@@ -91,11 +91,11 @@ public class MenuConfigService {
      */
     public void addIconsToMenu(StructuredMenuHolder holder, String iconMenuString) {
         JMenu iconMenu = holder.addMenu(new JMenu(controller.getText("icon_menu")), iconMenuString + "/.");
-        holder.addAction(controller.removeLastIconAction, iconMenuString + "/removeLastIcon");
-        holder.addAction(controller.removeAllIconsAction, iconMenuString + "/removeAllIcons");
+        holder.addAction(controller.getActions().removeLastIconAction, iconMenuString + "/removeLastIcon");
+        holder.addAction(controller.getActions().removeAllIconsAction, iconMenuString + "/removeAllIcons");
         holder.addSeparator(iconMenuString);
-        for (int i = 0; i < controller.iconActions.size(); ++i) {
-            holder.addAction(controller.iconActions.get(i), iconMenuString + "/" + i);
+        for (int i = 0; i < controller.getActions().iconActions.size(); ++i) {
+            holder.addAction(controller.getActions().iconActions.get(i), iconMenuString + "/" + i);
         }
     }
 
@@ -103,8 +103,8 @@ public class MenuConfigService {
      * Creates the pattern sub-menu under the given format menu path.
      */
     public void createPatternSubMenu(StructuredMenuHolder holder, String formatMenuString) {
-        for (int i = 0; i < controller.patterns.length; ++i) {
-            JMenuItem item = holder.addAction(controller.patterns[i], formatMenuString + "patterns/patterns/" + i);
+        for (int i = 0; i < controller.getActions().patterns.length; ++i) {
+            JMenuItem item = holder.addAction(controller.getActions().patterns[i], formatMenuString + "patterns/patterns/" + i);
             item.setAccelerator(KeyStroke.getKeyStroke(
                     controller.getFrame().getAdjustableProperty("keystroke_apply_pattern_" + (i + 1))));
         }
