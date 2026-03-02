@@ -264,13 +264,13 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         if (pCallWithCurrentSelection) {
             try {
                 listener.onFocusNode(getSelectedView());
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
             for (NodeView view : getView().getSelectionService().getSelecteds()) {
                 try {
                     listener.onSelectionChange(view, true);
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.error(e.getLocalizedMessage(), e);
                 }
             }
@@ -461,7 +461,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                 String target = relative.substring(1);
                 try {
                     centerNode(getNodeFromID(target));
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.error(e.getLocalizedMessage(), e);
                     // give "not found" message
                     getFrame().setStatusText(
@@ -514,7 +514,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                         // jump to link:
                         newModeController.centerNode(newModeController
                                 .getNodeFromID(ref));
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         log.error(e.getLocalizedMessage(), e);
                         getFrame().setStatusText(
                                 Tools.expandPlaceholders(
@@ -625,9 +625,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             String message = Tools.expandPlaceholders(getText("save_failed"),
                     file.getName());
             getController().errorMessage(message);
-        } catch (Exception e) {
-            log.error("Error in MindMapMapModel.save(): ");
-            log.error(e.getLocalizedMessage(), e);
+        } catch (IOException e) {
+            log.error("Error in MindMapMapModel.save()", e);
         } finally {
             setWaitingCursor(false);
         }
@@ -1322,7 +1321,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             try {
                 MindMapNode dest = getNodeFromID(adaptedText.substring(1));
                 return dest.getShortText(this);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 return getText("link_not_available_any_more");
             }
         }
