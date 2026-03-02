@@ -29,6 +29,7 @@ import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
+import freemind.modes.services.DisplayNavigationService;
 import freemind.modes.services.FileIOService;
 import freemind.modes.services.NodeLifecycleService;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
@@ -85,6 +86,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     private final NodeLifecycleService nodeLifecycleService = new NodeLifecycleService();
     @Getter
     private final FileIOService fileIOService = new FileIOService(this);
+    @Getter
+    private final DisplayNavigationService displayNavigationService = new DisplayNavigationService(this);
     private FreeMindEventBus eventBus;
 
     /**
@@ -893,69 +896,24 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     public String getLinkShortText(MindMapNode node) {
-        String adaptedText = node.getLink();
-        if (adaptedText == null)
-            return null;
-        if (adaptedText.startsWith("#")) {
-            try {
-                MindMapNode dest = getNodeFromID(adaptedText.substring(1));
-                return dest.getShortText(this);
-            } catch (RuntimeException e) {
-                return getText("link_not_available_any_more");
-            }
-        }
-        return adaptedText;
+        return displayNavigationService.getLinkShortText(node);
     }
 
     public void displayNode(MindMapNode node) {
-        displayNode(node, null);
+        displayNavigationService.displayNode(node);
     }
 
-    /**
-     * Display a node in the display (used by find and the goto action by arrow
-     * link actions).
-     */
     public void displayNode(MindMapNode node, ArrayList<MindMapNode> nodesUnfoldedByDisplay) {
-        // Unfold the path to the node
-        Object[] path = getMap().getPathToRoot(node);
-        // Iterate the path with the exception of the last node
-        for (int i = 0; i < path.length - 1; i++) {
-            MindMapNode nodeOnPath = (MindMapNode) path[i];
-            // System.out.println(nodeOnPath);
-            if (nodeOnPath.isFolded()) {
-                if (nodesUnfoldedByDisplay != null)
-                    nodesUnfoldedByDisplay.add(nodeOnPath);
-                setFolded(nodeOnPath, false);
-            }
-        }
-
-    }
-
-    /**
-     * Select the node and scroll to it.
-     **/
-    private void centerNode(NodeView node) {
-        getView().getScrollService().centerNode(node);
-        getView().getSelectionService().selectAsTheOnlyOneSelected(node);
+        displayNavigationService.displayNode(node, nodesUnfoldedByDisplay);
     }
 
     public void centerNode(MindMapNode node) {
-        NodeView view = null;
-        if (node != null) {
-            view = getController().getView().getViewerRegistryService().getNodeView(node);
-        } else {
-            return;
-        }
-        if (view == null) {
-            displayNode(node);
-            view = getController().getView().getViewerRegistryService().getNodeView(node);
-        }
-        centerNode(view);
+        displayNavigationService.centerNode(node);
     }
 
     @Override
     public NodeView getNodeView(MindMapNode node) {
-        return getView().getViewerRegistryService().getNodeView(node);
+        return displayNavigationService.getNodeView(node);
     }
 
     public void loadURL() {
