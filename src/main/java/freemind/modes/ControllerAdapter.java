@@ -20,11 +20,7 @@
 package freemind.modes;
 
 import freemind.main.SwingUtils;
-import org.apache.commons.io.FilenameUtils;
-
 import freemind.controller.*;
-import freemind.controller.actions.MindmapLastStateStorage;
-import freemind.controller.actions.NodeListMember;
 import freemind.events.FreeMindEventBus;
 import freemind.events.NodeModifiedEvent;
 import freemind.main.*;
@@ -33,10 +29,10 @@ import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
+import freemind.modes.services.FileIOService;
 import freemind.modes.services.NodeLifecycleService;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
-import freemind.view.mindmapview.IndependentMapViewCreator;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
@@ -56,9 +52,7 @@ import java.awt.dnd.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
@@ -89,8 +83,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     private MapAdapter mModel;
     @Getter
     private final NodeLifecycleService nodeLifecycleService = new NodeLifecycleService();
+    @Getter
+    private final FileIOService fileIOService = new FileIOService(this);
     private FreeMindEventBus eventBus;
-    private File lastCurrentDir = null;
 
     /**
      * Instantiation order: first me and then the model.
@@ -313,145 +308,15 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     protected void restoreMapsLastState(final ModeController modeController, final MapAdapter model) {
-        // restore zoom, etc.
-        String lastStateMapXml = getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
-        MindmapLastStateStorage store = management.getStorage(model.getRestorable());
-        if (store != null) {
-            // Zoom must be set on combo box, too.
-            getController().setZoom(store.getLastZoom());
-            try {
-                // Selected:
-                MindMapNode sel = modeController.getNodeFromID(store.getLastSelected());
-                modeController.centerNode(sel);
-                List<MindMapNode> selected = new ArrayList<>();
-                for (NodeListMember member : store.getNodeListMemberList()) {
-                    MindMapNode selNode = modeController.getNodeFromID(member.getNode());
-                    selected.add(selNode);
-                }
-                modeController.select(sel, selected);
-            } catch (Exception e) {
-                log.error(e.getLocalizedMessage(), e);
-                modeController.getView().getNavigationService().moveToRoot();
-            }
-        } else {
-            modeController.getView().getNavigationService().moveToRoot();
-        }
+        fileIOService.restoreMapsLastState(modeController, model);
     }
 
     public boolean save() {
-        if (getModel().isSaved())
-            return true;
-        if (getModel().getFile() == null || getModel().isReadOnly()) {
-            return saveAs();
-        } else {
-            return save(getModel().getFile());
-        }
+        return fileIOService.save();
     }
 
     public void loadURL(String relative) {
-        try {
-            log.info("Trying to open {}", relative);
-            URL absolute = null;
-            if (new File(relative).isAbsolute()) {
-                // Protocol can be identified by rexep pattern "[a-zA-Z]://.*".
-                // This should distinguish a protocol path from a file path on
-                // most platforms.
-                // 1) UNIX / Linux - obviously
-                // 2) Windows - relative path does not contain :, in absolute
-                // path is : followed by \.
-                // 3) Mac - cannot remember
-
-                // If relative is an absolute path, then it cannot be a
-                // protocol.
-                // At least on Unix and Windows. But this is not true for Mac!!
-
-                // Here is hidden an assumption that the existence of protocol
-                // implies !Tools.isAbsolutePath(relative).
-                // The code should probably be rewritten to convey more logical
-                // meaning, on the other hand
-                // it works on Windows and Linux.
-
-                // absolute = new URL("file://"+relative); }
-                absolute = Tools.fileToUrl(new File(relative));
-            } else if (relative.startsWith("#")) {
-                // inner map link, fc, 12.10.2004
-                log.trace("found relative link to {}", relative);
-                String target = relative.substring(1);
-                try {
-                    centerNode(getNodeFromID(target));
-                } catch (RuntimeException e) {
-                    log.error(e.getLocalizedMessage(), e);
-                    // give "not found" message
-                    getFrame().setStatusText(
-                            Tools.expandPlaceholders(getText("link_not_found"),
-                                    target));
-                }
-                return;
-
-            } else {
-                /*
-                 * Remark: getMap().getURL() returns URLs like file:/C:/... It
-                 * seems, that it does not cause any problems.
-                 */
-                absolute = new URL(getMap().getURL(), relative);
-            }
-            // look for reference part in URL:
-            URL originalURL = absolute;
-            String ref = absolute.getRef();
-            if (ref != null) {
-                // remove ref from absolute:
-                absolute = Tools.getURLWithoutReference(absolute);
-            }
-            String extension = FilenameUtils.getExtension(absolute.toString()).toLowerCase();
-            if ((extension != null)
-                    && extension
-                    .equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) { // ----
-                // Open
-                // Mind
-                // Map
-                log.info("Trying to open mind map {}", absolute);
-                MapModuleManager mapModuleManager = getController()
-                        .getMapModuleManager();
-                /*
-                 * this can lead to confusion if the user handles multiple maps
-                 * with the same name. Obviously, this is wrong. Get a better
-                 * check whether or not the file is already opened.
-                 */
-                String mapExtensionKey = mapModuleManager
-                        .checkIfFileIsAlreadyOpened(absolute);
-                if (mapExtensionKey == null) {
-                    setWaitingCursor(true);
-                    load(absolute);
-                } else {
-                    mapModuleManager.tryToChangeToMapModule(mapExtensionKey);
-                }
-                if (ref != null) {
-                    try {
-                        ModeController newModeController = getController()
-                                .getModeController();
-                        // jump to link:
-                        newModeController.centerNode(newModeController
-                                .getNodeFromID(ref));
-                    } catch (RuntimeException e) {
-                        log.error(e.getLocalizedMessage(), e);
-                        getFrame().setStatusText(
-                                Tools.expandPlaceholders(
-                                        getText("link_not_found"), ref));
-                    }
-                }
-            } else {
-                // ---- Open URL in browser
-                getFrame().openDocument(originalURL);
-            }
-        } catch (MalformedURLException ex) {
-            log.error(ex.getLocalizedMessage(), ex);
-            getController().errorMessage(getText("url_error") + "\n" + ex);
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage(), e);
-        } finally {
-            setWaitingCursor(false);
-        }
+        fileIOService.loadURL(relative);
     }
 
     /* (non-Javadoc)
@@ -522,37 +387,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * saving as.
      */
     public boolean save(File file) {
-        boolean result = false;
-        try {
-            setWaitingCursor(true);
-            result = getModel().save(file);
-            // create thumbnail if desired.
-            if (result && "true"
-                    .equals(getProperty(FreeMindCommon.CREATE_THUMBNAIL_ON_SAVE))) {
-                File baseFileName = getModel().getFile();
-                String fileName = getResources()
-                        .createThumbnailFileName(baseFileName);
-                // due to a windows bug, the file must not be hidden before writing it.
-                Tools.makeFileHidden(new File(fileName), false);
-                IndependentMapViewCreator.printToFile(getView(), fileName,
-                        true,
-                        getIntProperty(FreeMindCommon.THUMBNAIL_SIZE, 800));
-                Tools.makeFileHidden(new File(fileName), true);
-            }
-        } catch (FileNotFoundException e) {
-            log.error(e.getLocalizedMessage(), e);
-            String message = Tools.expandPlaceholders(getText("save_failed"),
-                    file.getName());
-            getController().errorMessage(message);
-        } catch (IOException e) {
-            log.error("Error in MindMapMapModel.save()", e);
-        } finally {
-            setWaitingCursor(false);
-        }
-        if (result) {
-            setSaved(true);
-        }
-        return result;
+        return fileIOService.save(file);
     }
 
     /**
@@ -616,29 +451,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     //
 
     public void open() {
-        FreeMindFileDialog chooser = getFileChooser();
-        // fc, 24.4.2008: multi selection has problems as setTitle in Controller
-        // doesn't works
-        // chooser.setMultiSelectionEnabled(true);
-        int returnVal = chooser.showOpenDialog(getView());
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File[] selectedFiles;
-            if (chooser.isMultiSelectionEnabled()) {
-                selectedFiles = chooser.getSelectedFiles();
-            } else {
-                selectedFiles = new File[]{chooser.getSelectedFile()};
-            }
-            for (File theFile : selectedFiles) {
-                try {
-                    lastCurrentDir = theFile.getParentFile();
-                    load(theFile);
-                } catch (Exception ex) {
-                    handleLoadingException(ex);
-                    break;
-                }
-            }
-        }
-        getController().setTitle();
+        fileIOService.open();
     }
 
     /*
@@ -649,190 +462,37 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * (java.io.File)
      */
     public void setChosenDirectory(File pDir) {
-        lastCurrentDir = pDir;
+        fileIOService.setChosenDirectory(pDir);
     }
 
     /**
      * Creates a file chooser with the last selected directory as default.
      */
     public FreeMindFileDialog getFileChooser(FileFilter filter) {
-        FreeMindFileDialog chooser = getResources().getStandardFileChooser(filter);
-        chooser.registerDirectoryResultListener(this);
-        File parentFile = getMapsParentFile();
-        // choose new lastCurrentDir only, if not previously set.
-        if (parentFile != null && lastCurrentDir == null) {
-            lastCurrentDir = parentFile;
-        }
-        if (lastCurrentDir != null) {
-            chooser.setCurrentDirectory(lastCurrentDir);
-        }
-        return chooser;
+        return fileIOService.getFileChooser(filter);
     }
 
     public FreeMindFileDialog getFileChooser() {
         return getFileChooser(getFileFilter());
     }
 
-    private File getMapsParentFile() {
-        if ((getMap() != null) && (getMap().getFile() != null)
-                && (getMap().getFile().getParentFile() != null)) {
-            return getMap().getFile().getParentFile();
-        }
-        return null;
-    }
-
     public void handleLoadingException(Exception ex) {
-        String exceptionType = ex.getClass().getName();
-        if (exceptionType.equals("freemind.main.XMLParseException")) {
-            int showDetail = JOptionPane.showConfirmDialog(getView(),
-                    getText("map_corrupted"), "FreeMind",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-            if (showDetail == JOptionPane.YES_OPTION) {
-                getController().errorMessage(ex);
-            }
-        } else if (exceptionType.equals("java.io.FileNotFoundException")) {
-            getController().errorMessage(ex.getMessage());
-        } else {
-            log.error(ex.getLocalizedMessage(), ex);
-            getController().errorMessage(ex);
-        }
+        fileIOService.handleLoadingException(ex);
     }
 
     /**
      * Save as; return false is the action was cancelled
      */
     public boolean saveAs() {
-        File f;
-        FreeMindFileDialog chooser = getFileChooser();
-        if (getMapsParentFile() == null) {
-            chooser.setSelectedFile(new File(getFileNameProposal()
-                    + freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION));
-        }
-        chooser.setDialogTitle(getText("save_as"));
-        boolean repeatSaveAsQuestion;
-        do {
-            repeatSaveAsQuestion = false;
-            int returnVal = chooser.showSaveDialog(getView());
-            if (returnVal != JFileChooser.APPROVE_OPTION) {// not ok pressed
-                return false;
-            }
-
-            // |= Pressed O.K.
-            f = chooser.getSelectedFile();
-            lastCurrentDir = f.getParentFile();
-            // Force the extension to be .mm
-            String ext = FilenameUtils.getExtension(f.getName()).toLowerCase();
-            if (!ext.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) {
-                f = new File(f.getParent(), f.getName()
-                        + freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION);
-            }
-
-            if (f.exists()) { // If file exists, ask before overwriting.
-                int overwriteMap = JOptionPane.showConfirmDialog(getView(),
-                        getText("map_already_exists"), "FreeMind",
-                        JOptionPane.YES_NO_OPTION);
-                if (overwriteMap != JOptionPane.YES_OPTION) {
-                    // repeat the save as dialog.
-                    repeatSaveAsQuestion = true;
-                }
-            }
-        } while (repeatSaveAsQuestion);
-        try { // We have to lock the file of the map even when it does not exist
-            // yet
-            String lockingUser = getModel().tryToLock(f);
-            if (lockingUser != null) {
-                getFrame().getController().informationMessage(
-                        Tools.expandPlaceholders(
-                                getText("map_locked_by_save_as"), f.getName(),
-                                lockingUser));
-                return false;
-            }
-        } catch (Exception e) { // Throwed by tryToLock
-            getFrame().getController().informationMessage(
-                    Tools.expandPlaceholders(
-                            getText("locking_failed_by_save_as"), f.getName()));
-            return false;
-        }
-
-        save(f);
-        // Update the name of the map
-        getController().getMapModuleManager().updateMapModuleName();
-        return true;
+        return fileIOService.saveAs();
     }
 
-    /**
-     * Creates a proposal for a file name to save the map. Removes all illegal
-     * characters.
-     * <p>
-     * Fixed: When creating file names based on the text of the root node, now
-     * all the extra unicode characters are replaced with _. This is not very
-     * good. For chinese content, you would only get a list of ______ as a file
-     * name. Only characters special for building file paths shall be removed
-     * (rather than replaced with _), like : or /. The exact list of dangeous
-     * characters needs to be investigated. 0.8.0RC3.
-     * <p>
-     * <p>
-     * Keywords: suggest file name.
-     */
-    private String getFileNameProposal() {
-        return MindMapUtils.getFileNameProposal(getMap().getRootNode());
-    }
 
     /**
      * Return false if user has canceled.
      */
     public boolean close(boolean force, MapModuleManager mapModuleManager) {
-        // remove old messages.
-        getFrame().setStatusText("");
-        if (!force && !getModel().isSaved()) {
-            String text = getText("save_unsaved") + "\n"
-                    + mapModuleManager.getMapModule().toString();
-            String title = SwingUtils.removeMnemonic(getText("save"));
-            int returnVal = JOptionPane.showOptionDialog(getFrame()
-                            .getContentPane(), text, title,
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, null, null, null);
-            if (returnVal == JOptionPane.YES_OPTION) {
-                boolean savingNotCancelled = save();
-                if (!savingNotCancelled) {
-                    return false;
-                }
-            } else if ((returnVal == JOptionPane.CANCEL_OPTION)
-                    || (returnVal == JOptionPane.CLOSED_OPTION)) {
-                return false;
-            }
-        }
-        final String lastStateMapStorage = getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapStorage);
-
-        String restorable = getModel().getRestorable();
-        if (restorable != null) {
-            MindmapLastStateStorage store = management.getStorage(restorable);
-            if (store == null) {
-                store = new MindmapLastStateStorage();
-            }
-            store.setRestorableName(restorable);
-            store.setLastZoom(getView().getZoom());
-            Point viewLocation = getView().getGeometryService().getViewPosition();
-            if (viewLocation != null) {
-                store.setX(viewLocation.x);
-                store.setY(viewLocation.y);
-            }
-            String lastSelected = this.getNodeID(this.getSelected());
-            store.setLastSelected(lastSelected);
-            store.clearNodeListMemberList();
-            List<MindMapNode> selecteds = this.getSelecteds();
-            for (MindMapNode node : selecteds) {
-                NodeListMember member = new NodeListMember();
-                member.setNode(this.getNodeID(node));
-                store.addNodeListMember(member);
-            }
-            management.changeOrAdd(store);
-            getFrame().setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE, management.getXml());
-        }
-
-        getModel().destroy();
-        return true;
+        return fileIOService.close(force, mapModuleManager);
     }
 
 
