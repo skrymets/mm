@@ -3,6 +3,7 @@ package freemind.view.mindmapview.services;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import freemind.view.mindmapview.*;
 import lombok.extern.slf4j.Slf4j;
@@ -219,10 +220,10 @@ public class NodeUpdateService {
             iconPresent = true;
         }
 
-        List<MindIcon> icons = nodeView.getModel().getIcons();
-        for (MindIcon myIcon : icons) {
+        List<NodeIcon> icons = nodeView.getModel().getIcons();
+        for (NodeIcon myIcon : icons) {
             iconPresent = true;
-            iconImages.addImage(myIcon.getUnscaledIcon());
+            iconImages.addImage(((MindIcon) myIcon).getUnscaledIcon());
         }
         String link = nodeView.getModel().getLink();
         if (link != null) {

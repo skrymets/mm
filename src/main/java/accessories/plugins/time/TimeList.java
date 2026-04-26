@@ -11,6 +11,7 @@ import freemind.main.HtmlTools;
 import freemind.main.MindMapUtils;
 import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
@@ -896,7 +897,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
     static class IconsHolder implements Comparable<IconsHolder> {
         @Getter
-        final List<MindIcon> icons = new ArrayList<>();
+        final List<NodeIcon> icons = new ArrayList<>();
 
         private final List<String> iconNames;
 
@@ -904,7 +905,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             icons.addAll(node.getIcons());
             // sorting the output.
             iconNames = new ArrayList<>();
-            for (MindIcon icon : icons) {
+            for (NodeIcon icon : icons) {
                 iconNames.add(icon.getName());
             }
             Collections.sort(iconNames);
@@ -937,8 +938,8 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             if (value instanceof IconsHolder) {
                 IconsHolder iconsHolder = (IconsHolder) value;
                 MultipleImage iconImages = new MultipleImage(1.0f);
-                for (MindIcon icon : iconsHolder.getIcons()) {
-                    iconImages.addImage(icon.getIcon());
+                for (NodeIcon icon : iconsHolder.getIcons()) {
+                    iconImages.addImage(((MindIcon) icon).getIcon());
                 }
                 if (iconImages.getImageCount() > 0) {
                     setIcon(iconImages);

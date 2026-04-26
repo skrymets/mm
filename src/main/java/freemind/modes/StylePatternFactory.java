@@ -9,6 +9,7 @@ import freemind.main.ColorUtils;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
+import freemind.model.NodeIcon;
 import freemind.modes.mindmapmode.MindMapController.MindMapControllerPlugin;
 import freemind.modes.mindmapmode.actions.ApplyPatternAction.ExternalPatternAction;
 import lombok.extern.slf4j.Slf4j;
@@ -374,9 +375,9 @@ public class StylePatternFactory {
                 }
             } else {
                 // check if icon is already present:
-                List<MindIcon> icons = node.getIcons();
+                List<NodeIcon> icons = node.getIcons();
                 boolean found = false;
-                for (MindIcon icon : icons) {
+                for (NodeIcon icon : icons) {
                     if (icon.getName() != null
                             && icon.getName().equals(iconName)) {
                         found = true;

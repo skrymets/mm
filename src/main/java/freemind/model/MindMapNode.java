@@ -214,11 +214,11 @@ public interface MindMapNode extends MutableTreeNode {
     // fc, 06.10.2003:
 
     /**
-     * Is a vector of MindIcon s
+     * Is a list of NodeIcon s
      */
-    List<MindIcon> getIcons();
+    List<NodeIcon> getIcons();
 
-    void addIcon(MindIcon icon, int position);
+    void addIcon(NodeIcon icon, int position);
 
     /* @return returns the new amount of icons. */
     int removeIcon(int position);

@@ -1,9 +1,10 @@
 package freemind.view.mindmapview;
 
 import freemind.main.*;
-import freemind.model.MindMapNode;
-import freemind.modes.MindIcon;
 import freemind.model.MindMapCloud;
+import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
+import freemind.modes.MindIcon;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.services.*;
 import lombok.Getter;
@@ -836,11 +837,11 @@ public class NodeView extends JComponent implements TreeModelListener {
             iconPresent = true;
         }
 
-        List<MindIcon> icons = getModel().getIcons();
-        for (MindIcon myIcon : icons) {
+        List<NodeIcon> icons = getModel().getIcons();
+        for (NodeIcon myIcon : icons) {
             iconPresent = true;
             // System.out.println("print the icon " + myicon.toString());
-            iconImages.addImage(myIcon.getUnscaledIcon());
+            iconImages.addImage(((MindIcon) myIcon).getUnscaledIcon());
         }
         String link = getModel().getLink();
         if (link != null) {

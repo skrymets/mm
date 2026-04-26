@@ -65,7 +65,7 @@ public abstract class NodeAdapter implements MindMapNode {
     /**
      * stores the icons associated with this node.
      */
-    protected List<MindIcon> icons = null; // lazy, fc, 30.6.2005
+    protected List<NodeIcon> icons = null; // lazy, fc, 30.6.2005
 
     protected TreeMap<String, ImageIcon> stateIcons = null; // lazy, fc,
     // 30.6.2005
@@ -438,15 +438,15 @@ public abstract class NodeAdapter implements MindMapNode {
     }
 
     // fc, 24.9.2003:
-    public List<MindIcon> getIcons() {
+    public List<NodeIcon> getIcons() {
         if (icons == null)
             return Collections.emptyList();
         return icons;
     }
 
-    public void addIcon(MindIcon _icon, int position) {
+    public void addIcon(NodeIcon _icon, int position) {
         createIcons();
-        if (position == MindIcon.LAST) {
+        if (position == NodeIcon.LAST) {
             icons.add(_icon);
         } else {
             icons.add(position, _icon);
@@ -458,7 +458,7 @@ public abstract class NodeAdapter implements MindMapNode {
      */
     public int removeIcon(int position) {
         createIcons();
-        if (position == MindIcon.LAST) {
+        if (position == NodeIcon.LAST) {
             position = icons.size() - 1;
         }
         icons.remove(position);

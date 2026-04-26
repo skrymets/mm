@@ -7,6 +7,7 @@ import freemind.controller.actions.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -47,10 +48,10 @@ public class RemoveAllIconsActor extends NodeXmlActorAdapter {
 
     public ActionPair apply(MindMap model, MindMapNode selected) {
         CompoundAction undoAction = new CompoundAction();
-        for (MindIcon icon : selected.getIcons()) {
+        for (NodeIcon icon : selected.getIcons()) {
             final AddIconAction createAddIconAction = getExMapFeedback().getActorFactory().getAddIconActor().createAddIconAction(
                     selected,
-                    icon,
+                    (MindIcon) icon,
                     MindIcon.LAST);
             CompoundAction.Choice choice = JIBXGeneratedUtil.choiceFromXmlActions(createAddIconAction);
             undoAction.addChoice(choice);

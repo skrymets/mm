@@ -2,6 +2,7 @@ package freemind.modes;
 
 import freemind.main.Resources;
 import freemind.main.Tools;
+import freemind.model.NodeIcon;
 import freemind.view.ScalableImageIcon;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ import java.util.StringTokenizer;
  * This class represents a MindIcon than can be applied to a node or a whole
  * branch.
  */
-public class MindIcon implements Comparable<MindIcon>, IconInformation {
+public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation {
 
     public static final String PROPERTY_STRING_ICONS_LIST = "icons.list";
     /**
@@ -55,7 +56,7 @@ public class MindIcon implements Comparable<MindIcon>, IconInformation {
     private static Resources resources;
     private static final HashMap<String, MindIcon> createdIcons = new HashMap<>();
     private static final int UNKNOWN = -1;
-    public static final int LAST = UNKNOWN;
+    public static final int LAST = NodeIcon.LAST;
     static int nextNumber = UNKNOWN - 1;
     private JComponent component = null;
 

@@ -10,6 +10,8 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.ColorUtils;
 import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
+import freemind.modes.MindIcon;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -603,11 +605,12 @@ class MindMapHTMLWriter {
     }
 
     private void writeIcons(MindMapNodeModel model) throws IOException {
-        for (int i = 0; i < model.getIcons().size(); ++i) {
+        for (NodeIcon nodeIcon : model.getIcons()) {
+            MindIcon icon = (MindIcon) nodeIcon;
             fileout.write("<img src=\""
-                    + model.getIcons().get(i).getIconFileName()
+                    + icon.getIconFileName()
                     + "\" alt=\""
-                    + model.getIcons().get(i).getDescription()
+                    + icon.getDescription()
                     + "\">");
         }
     }

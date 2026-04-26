@@ -2,6 +2,7 @@ package freemind.model;
 
 import freemind.extensions.PermanentNodeHook;
 import freemind.modes.MapFeedback;
+import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import freemind.model.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapNodeModel;
@@ -241,8 +242,8 @@ class NodeAdapterTest {
 
             MindIcon icon1 = MindIcon.factory("button_ok");
             MindIcon icon2 = MindIcon.factory("button_cancel");
-            node.addIcon(icon1, MindIcon.LAST);
-            node.addIcon(icon2, MindIcon.LAST);
+            node.addIcon(icon1, NodeIcon.LAST);
+            node.addIcon(icon2, NodeIcon.LAST);
 
             assertEquals(2, node.getIcons().size());
             int remaining = node.removeIcon(0);

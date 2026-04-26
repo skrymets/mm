@@ -3,6 +3,7 @@ package freemind.main;
 import freemind.controller.MindMapNodesSelection;
 import freemind.model.EdgeAdapter;
 import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.extern.slf4j.Slf4j;
@@ -106,9 +107,9 @@ public final class MindMapUtils {
      * found.
      */
     public static int iconFirstIndex(MindMapNode node, String iconName) {
-        List<MindIcon> icons = node.getIcons();
-        for (ListIterator<MindIcon> i = icons.listIterator(); i.hasNext(); ) {
-            MindIcon nextIcon = i.next();
+        List<NodeIcon> icons = node.getIcons();
+        for (ListIterator<NodeIcon> i = icons.listIterator(); i.hasNext(); ) {
+            NodeIcon nextIcon = i.next();
             if (iconName.equals(nextIcon.getName())) {
                 return i.previousIndex();
             }
@@ -121,10 +122,10 @@ public final class MindMapUtils {
      * found.
      */
     public static int iconLastIndex(MindMapNode node, String iconName) {
-        List<MindIcon> icons = node.getIcons();
-        ListIterator<MindIcon> i = icons.listIterator(icons.size());
+        List<NodeIcon> icons = node.getIcons();
+        ListIterator<NodeIcon> i = icons.listIterator(icons.size());
         while (i.hasPrevious()) {
-            MindIcon nextIcon = i.previous();
+            NodeIcon nextIcon = i.previous();
             if (iconName.equals(nextIcon.getName())) {
                 return i.nextIndex();
             }

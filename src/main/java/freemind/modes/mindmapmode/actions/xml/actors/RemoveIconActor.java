@@ -5,6 +5,7 @@ import freemind.controller.actions.RemoveIconXmlAction;
 import freemind.controller.actions.XmlAction;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -30,11 +31,11 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
     }
 
     private ActionPair apply(MindMapNode selected) {
-        List<MindIcon> icons = selected.getIcons();
+        List<NodeIcon> icons = selected.getIcons();
         if (icons.isEmpty())
             return null;
         AddIconAction undoAction = getXmlActorFactory().getAddIconActor().createAddIconAction(selected,
-                icons.get(icons.size() - 1), MindIcon.LAST);
+                (MindIcon) icons.get(icons.size() - 1), MindIcon.LAST);
         return new ActionPair(
                 createRemoveIconXmlAction(selected, MindIcon.LAST), undoAction);
     }

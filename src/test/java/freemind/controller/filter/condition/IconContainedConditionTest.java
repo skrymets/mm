@@ -3,6 +3,7 @@ package freemind.controller.filter.condition;
 import freemind.controller.Controller;
 import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class IconContainedConditionTest {
 
     @Test
     void checkNode_returnsTrue_whenNodeHasMatchingIcon() {
-        List<MindIcon> icons = List.of(MindIcon.factory("button_ok"), MindIcon.factory("bookmark"));
+        List<NodeIcon> icons = List.of(MindIcon.factory("button_ok"), MindIcon.factory("bookmark"));
         when(node.getIcons()).thenReturn(icons);
 
         IconContainedCondition condition = new IconContainedCondition("bookmark");
@@ -38,7 +39,7 @@ class IconContainedConditionTest {
 
     @Test
     void checkNode_returnsFalse_whenNodeDoesNotHaveIcon() {
-        List<MindIcon> icons = List.of(MindIcon.factory("button_ok"));
+        List<NodeIcon> icons = List.of(MindIcon.factory("button_ok"));
         when(node.getIcons()).thenReturn(icons);
 
         IconContainedCondition condition = new IconContainedCondition("bookmark");
@@ -93,7 +94,7 @@ class IconContainedConditionTest {
         assertInstanceOf(IconContainedCondition.class, loaded);
 
         // Verify loaded condition works correctly
-        List<MindIcon> icons = List.of(MindIcon.factory("bookmark"));
+        List<NodeIcon> icons = List.of(MindIcon.factory("bookmark"));
         when(node.getIcons()).thenReturn(icons);
         assertTrue(loaded.checkNode(controller, node));
     }

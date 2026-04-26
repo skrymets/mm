@@ -2,6 +2,7 @@ package accessories.plugins;
 
 import freemind.extensions.UndoEventReceiver;
 import freemind.model.MindMapNode;
+import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import freemind.view.mindmapview.MultipleImage;
@@ -47,7 +48,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
             addAccumulatedIconsToTreeSet(child, iconSet, nodeIconSets.get(child));
         }
         // remove my icons from the treeset:
-        for (MindIcon icon : node.getIcons()) {
+        for (NodeIcon icon : node.getIcons()) {
             iconSet.remove(icon.getName());
         }
         boolean dirty = true;
@@ -81,7 +82,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
 
     private void addAccumulatedIconsToTreeSet(MindMapNode child,
                                               TreeSet<String> iconSet, TreeSet<String> childsTreeSet) {
-        for (MindIcon icon : child.getIcons()) {
+        for (NodeIcon icon : child.getIcons()) {
             iconSet.add(icon.getName());
         }
         if (childsTreeSet == null)
