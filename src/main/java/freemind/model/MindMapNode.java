@@ -3,7 +3,6 @@ package freemind.model;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.model.attributes.Attribute;
-import freemind.modes.HistoryInformation;
 import freemind.modes.ModeController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

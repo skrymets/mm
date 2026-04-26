@@ -5,7 +5,6 @@ import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.HistoryInformation;
 import freemind.modes.ModeController;
 import freemind.modes.XMLElementAdapter;
 import org.w3c.dom.Document;

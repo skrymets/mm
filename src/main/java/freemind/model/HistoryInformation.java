@@ -1,4 +1,4 @@
-package freemind.modes;
+package freemind.model;
 
 import java.util.Date;
 
