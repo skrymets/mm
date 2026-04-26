@@ -1,12 +1,9 @@
 package freemind.model;
 
 import freemind.main.*;
-import freemind.modes.XMLElementAdapter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.w3c.dom.Document;
-
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -461,19 +458,8 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         }
     }
 
-    /**
-     * Given a valid Xml parameterization of a node (tree), this method returns
-     * freshly created nodes.
-     */
     @Override
-    public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
-        Document doc = FreeMindXml.parse(pReader);
-        XMLElementAdapter xmlAdapter = new XMLElementAdapter((freemind.modes.ModeFeedback) mMapFeedback, new ArrayList<>(), pIDToTarget);
-        xmlAdapter.buildFromDom(doc.getDocumentElement());
-        xmlAdapter.processUnfinishedLinks(getLinkRegistry());
-        MindMapNode node = xmlAdapter.getMapChild();
-        return node;
-    }
+    public abstract MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException;
 
     public static final DontAskUserBeforeUpdateAdapter sDontAskInstance = new DontAskUserBeforeUpdateAdapter();
 

@@ -1,12 +1,18 @@
 package freemind.modes.filemode;
 
 import freemind.main.FreeMindMain;
+import freemind.main.FreeMindXml;
 import freemind.model.*;
 import freemind.modes.*;
 import lombok.Getter;
+import org.w3c.dom.Document;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @Getter
 @SuppressWarnings("serial")
@@ -16,6 +22,7 @@ public class FileMapModel extends MapAdapter implements ModeMap {
     // Other methods
     //
     private final MindMapLinkRegistry linkRegistry;
+    private final ModeFeedback modeFeedback;
 
     //
     // Constructors
@@ -28,6 +35,7 @@ public class FileMapModel extends MapAdapter implements ModeMap {
     public FileMapModel(File root, FreeMindMain frame,
                         ModeController modeController) {
         super(modeController);
+        this.modeFeedback = modeController;
         setRoot(new FileNodeModel(root, this));
         getRootNode().setFolded(false);
         linkRegistry = new MindMapLinkRegistry();
@@ -113,6 +121,15 @@ public class FileMapModel extends MapAdapter implements ModeMap {
     @Override
     public NodeAdapter createEncryptedNode(String pAdditionalInfo) {
         throw new UnsupportedOperationException("Not implemented for file mode.");
+    }
+
+    @Override
+    public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
+        Document doc = FreeMindXml.parse(pReader);
+        XMLElementAdapter xmlAdapter = new XMLElementAdapter(modeFeedback, new ArrayList<>(), pIDToTarget);
+        xmlAdapter.buildFromDom(doc.getDocumentElement());
+        xmlAdapter.processUnfinishedLinks(getLinkRegistry());
+        return xmlAdapter.getMapChild();
     }
 
 }

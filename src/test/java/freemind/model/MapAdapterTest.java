@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.Reader;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -60,6 +62,11 @@ class MapAdapterTest {
         @Override
         public void getFilteredXml(java.io.Writer fileout) {
             // no-op for testing
+        }
+
+        @Override
+        public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) {
+            throw new UnsupportedOperationException("Not implemented in test stub.");
         }
     }
 

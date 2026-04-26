@@ -1,12 +1,18 @@
 package freemind.modes.browsemode;
 
+import freemind.main.FreeMindXml;
 import freemind.model.*;
 import freemind.modes.*;
 import lombok.Getter;
+import org.w3c.dom.Document;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 @SuppressWarnings("serial")
@@ -117,6 +123,15 @@ public class BrowseMapModel extends MapAdapter implements ModeMap {
     @Override
     public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
         return createNodeAdapter(modeFeedback, null);
+    }
+
+    @Override
+    public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
+        Document doc = FreeMindXml.parse(pReader);
+        XMLElementAdapter xmlAdapter = new XMLElementAdapter(modeFeedback, new ArrayList<>(), pIDToTarget);
+        xmlAdapter.buildFromDom(doc.getDocumentElement());
+        xmlAdapter.processUnfinishedLinks(getLinkRegistry());
+        return xmlAdapter.getMapChild();
     }
 
 }

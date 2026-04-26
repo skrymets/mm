@@ -597,4 +597,13 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
         return (ModeFeedback) mMapFeedback;
     }
 
+    @Override
+    public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
+        Document doc = FreeMindXml.parse(pReader);
+        XMLElementAdapter xmlAdapter = new XMLElementAdapter(getMapFeedback(), new ArrayList<>(), pIDToTarget);
+        xmlAdapter.buildFromDom(doc.getDocumentElement());
+        xmlAdapter.processUnfinishedLinks(getLinkRegistry());
+        return xmlAdapter.getMapChild();
+    }
+
 }
