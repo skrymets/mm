@@ -44,8 +44,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
     private HashSet<PermanentNodeHook> activatedHooks;
     private List<PermanentNodeHook> hooks;
-    protected Object userObject = "no text";
-    private String xmlText = "no text";
     @Getter
     private String link = null; // Change this to vector in future for full
     // graph support
@@ -55,6 +53,8 @@ public abstract class NodeAdapter implements MindMapNode {
     private final freemind.model.services.NodeDecorationsService decorationsService = new freemind.model.services.NodeDecorationsService(this);
     @Getter
     private final freemind.model.services.NodeAttributesService attributesService = new freemind.model.services.NodeAttributesService(this);
+    @Getter
+    private final freemind.model.services.NodeContentService contentService = new freemind.model.services.NodeContentService(this);
 
     // these Attributes have default values, so it can be useful to directly
     // access them in
@@ -126,14 +126,12 @@ public abstract class NodeAdapter implements MindMapNode {
     @Setter
     @Getter
     private MindMap map = null;
-    private String noteText;
-    private String xmlNoteText;
     private static FreemindPropertyListener sSaveIdPropertyChangeListener;
     private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
 
     protected NodeAdapter(Object userObject, MindMap pMap) {
         this.map = pMap;
-        setText((String) userObject);
+        contentService.setText((String) userObject);
         hooks = null; // lazy, fc, 30.6.2005.
         activatedHooks = null; // lazy, fc, 30.6.2005
 
@@ -150,31 +148,24 @@ public abstract class NodeAdapter implements MindMapNode {
 
     }
 
+    @Override
     public String getText() {
-        String string = "";
-        if (userObject != null) {
-            string = userObject.toString();
-        }
-        return string;
+        return contentService.getText();
     }
 
+    @Override
     public final void setText(String text) {
-        if (text == null) {
-            userObject = null;
-            xmlText = null;
-            return;
-        }
-        userObject = HtmlTools.makeValidXml(text);
-        xmlText = HtmlTools.getInstance().toXhtml((String) userObject);
+        contentService.setText(text);
     }
 
+    @Override
     public final String getXmlText() {
-        return xmlText;
+        return contentService.getXmlText();
     }
 
+    @Override
     public final void setXmlText(String pXmlText) {
-        this.xmlText = HtmlTools.makeValidXml(pXmlText);
-        userObject = HtmlTools.getInstance().toHtml(xmlText);
+        contentService.setXmlText(pXmlText);
     }
 
     /* ************************************************************
@@ -182,45 +173,35 @@ public abstract class NodeAdapter implements MindMapNode {
      * ************************************************************
      */
 
+    @Override
     public final String getXmlNoteText() {
-        return xmlNoteText;
+        return contentService.getXmlNoteText();
     }
 
+    @Override
     public final String getNoteText() {
-        // log.info("Note html: " + noteText);
-        return noteText;
+        return contentService.getNoteText();
     }
 
+    @Override
     public final void setXmlNoteText(String pXmlNoteText) {
-        if (pXmlNoteText == null) {
-            xmlNoteText = null;
-            noteText = null;
-            return;
-        }
-        this.xmlNoteText = HtmlTools.makeValidXml(pXmlNoteText);
-        noteText = HtmlTools.getInstance().toHtml(xmlNoteText);
+        contentService.setXmlNoteText(pXmlNoteText);
     }
 
+    @Override
     public final void setNoteText(String pNoteText) {
-        if (pNoteText == null) {
-            xmlNoteText = null;
-            noteText = null;
-            return;
-        }
-        this.noteText = HtmlTools.makeValidXml(pNoteText);
-        this.xmlNoteText = HtmlTools.getInstance().toXhtml(noteText);
+        contentService.setNoteText(pNoteText);
     }
 
+    @Override
     public String getPlainTextContent() {
-        // Redefined in MindMapNodeModel.
-        return toString();
+        // MindMapNodeModel overrides this to convert HTML→plain.
+        return contentService.getPlainTextContent();
     }
 
+    @Override
     public String getShortText() {
-        String adaptedText = getPlainTextContent();
-        if (adaptedText.length() > 40)
-            adaptedText = adaptedText.substring(0, 40) + " ...";
-        return adaptedText;
+        return contentService.getShortText();
     }
 
     public void setLink(String link) {
@@ -479,8 +460,9 @@ public abstract class NodeAdapter implements MindMapNode {
         return getMap().getMapFeedback();
     }
 
+    @Override
     public String toString() {
-        return getText();
+        return contentService.toString();
     }
 
     public boolean isDescendantOf(MindMapNode pParentNode) {
@@ -737,8 +719,9 @@ public abstract class NodeAdapter implements MindMapNode {
         parent = newParent;
     }
 
+    @Override
     public void setUserObject(Object object) {
-        setText((String) object);
+        contentService.setText((String) object);
     }
 
     // //////////////
