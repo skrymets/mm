@@ -71,6 +71,9 @@ public class NodeDecorationsService {
         return Collections.unmodifiableSortedMap(stateIcons);
     }
 
+    /**
+     * This method must be synchronized as the underlying TreeMap isn't.
+     */
     public synchronized void setStateIcon(String key, ImageIcon icon) {
         if (stateIcons == null) {
             stateIcons = new TreeMap<>();
@@ -103,9 +106,7 @@ public class NodeDecorationsService {
                 childCloud.changeIterativeLevel(deltaLevel);
             }
             // Recurse via the child's own decorations service.
-            if (childNode instanceof NodeAdapter) {
-                ((NodeAdapter) childNode).getDecorationsService().changeChildCloudIterativeLevels(deltaLevel);
-            }
+            ((NodeAdapter) childNode).getDecorationsService().changeChildCloudIterativeLevels(deltaLevel);
         }
     }
 }
