@@ -21,7 +21,6 @@ import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.io.*;
-import java.net.URL;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +49,8 @@ public abstract class NodeAdapter implements MindMapNode {
     @Getter
     private String link = null; // Change this to vector in future for full
     // graph support
-    private static final String TOOLTIP_PREVIEW_KEY = "preview";
-    private TreeMap<String, String> toolTip = null; // lazy, fc, 30.6.2005
+    @Getter
+    private final freemind.model.services.NodeTooltipService tooltipService = new freemind.model.services.NodeTooltipService(this);
 
     // these Attributes have default values, so it can be useful to directly
     // access them in
@@ -849,12 +848,6 @@ public abstract class NodeAdapter implements MindMapNode {
         }
     }
 
-    private void createToolTip() {
-        if (toolTip == null) {
-            toolTip = new TreeMap<>();
-        }
-    }
-
     private void createHooks() {
         if (hooks == null) {
             hooks = new ArrayList<>();
@@ -920,68 +913,11 @@ public abstract class NodeAdapter implements MindMapNode {
     }
 
     public SortedMap<String, String> getToolTip() {
-        boolean toolTipChanged = false;
-        TreeMap<String, String> result = toolTip;
-        if (result == null)
-            result = new TreeMap<>();
-        // add preview to other map, if appropriate:
-        String link = getLink();
-        // replace jump mark
-        if (link != null && link.matches(".*\\" + FreeMindCommon.FREEMIND_FILE_EXTENSION + "(#.*)?")) {
-            link = link.replaceFirst("#.*?$", "");
-        }
-        if (link != null && link.endsWith(FreeMindCommon.FREEMIND_FILE_EXTENSION)) {
-            String linkHtmlPart = "alt=\"" + link + "\"";
-            boolean addIt = true;
-            // this should be done only once per link, so we have to prevent doing that every time again.
-            if (result.containsKey(TOOLTIP_PREVIEW_KEY)) {
-                // check, if the contained link belongs to the same file (ie. hasn't change in between)
-                String prev = result.get(TOOLTIP_PREVIEW_KEY);
-                if (prev != null && prev.contains(linkHtmlPart)) {
-                    addIt = false;
-                }
-            }
-            if (addIt) {
-                try {
-                    File mmFile = Tools.urlToFile(new URL(getMap().getURL(), link));
-                    String thumbnailFileName = Resources.get().createThumbnailFileName(mmFile);
-                    if (new File(thumbnailFileName).exists()) {
-                        URL thumbUrl = Tools.fileToUrl(new File(thumbnailFileName));
-                        String imgHtml = "<img src=\"" + thumbUrl + "\" " + linkHtmlPart + "/>";
-                        log.info("Adding new tooltip: {}", imgHtml);
-                        result.put(TOOLTIP_PREVIEW_KEY, imgHtml);
-                        toolTipChanged = true;
-                    }
-                } catch (Exception e) {
-                    log.error(e.getLocalizedMessage(), e);
-                }
-            }
-        } else {
-            if (result.containsKey(TOOLTIP_PREVIEW_KEY)) {
-                result.remove(TOOLTIP_PREVIEW_KEY);
-                toolTipChanged = true;
-            }
-        }
-        if (toolTipChanged) {
-            // write back, if changed
-            if (result.isEmpty()) {
-                toolTip = null;
-            } else {
-                toolTip = result;
-            }
-        }
-        return Collections.unmodifiableSortedMap(result);
+        return tooltipService.getToolTip();
     }
 
     public void setToolTip(String key, String string) {
-        createToolTip();
-        if (string == null) {
-            toolTip.remove(key);
-            if (toolTip.isEmpty())
-                toolTip = null;
-        } else {
-            toolTip.put(key, string);
-        }
+        tooltipService.setToolTip(key, string);
     }
 
     public Element save(Writer writer, Document doc, MindMapLinkRegistry registry,
