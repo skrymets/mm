@@ -1,7 +1,7 @@
 package freemind.extensions;
 
 import freemind.model.MindMapNode;
-import freemind.modes.MapFeedback;
+import freemind.modes.ModeFeedback;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -12,30 +12,30 @@ import java.util.List;
 
 public class HookInstantiationMethod {
     private interface DestinationNodesGetter {
-        Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds);
+        Collection<MindMapNode> getDestinationNodes(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds);
 
-        MindMapNode getCenterNode(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds);
+        MindMapNode getCenterNode(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds);
     }
 
     private static class DefaultDestinationNodesGetter implements DestinationNodesGetter {
-        public Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
+        public Collection<MindMapNode> getDestinationNodes(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
             return selecteds;
         }
 
-        public MindMapNode getCenterNode(MapFeedback controller,
+        public MindMapNode getCenterNode(ModeFeedback controller,
                                          MindMapNode focussed, List<MindMapNode> selecteds) {
             return focussed;
         }
     }
 
     private static class RootDestinationNodesGetter implements DestinationNodesGetter {
-        public Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
+        public Collection<MindMapNode> getDestinationNodes(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
             List<MindMapNode> returnValue = new ArrayList<>();
             returnValue.add(controller.getMap().getRootNode());
             return returnValue;
         }
 
-        public MindMapNode getCenterNode(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
+        public MindMapNode getCenterNode(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
             return controller.getMap().getRootNode();
         }
     }
@@ -50,13 +50,13 @@ public class HookInstantiationMethod {
             }
         }
 
-        public Collection<MindMapNode> getDestinationNodes(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
+        public Collection<MindMapNode> getDestinationNodes(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
             List<MindMapNode> returnValue = new ArrayList<>();
             addChilds(controller.getMap().getRootNode(), returnValue);
             return returnValue;
         }
 
-        public MindMapNode getCenterNode(MapFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
+        public MindMapNode getCenterNode(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
             return focussed;
         }
 
@@ -119,7 +119,7 @@ public class HookInstantiationMethod {
         return res;
     }
 
-    public Collection<MindMapNode> getDestinationNodes(MapFeedback controller,
+    public Collection<MindMapNode> getDestinationNodes(ModeFeedback controller,
                                                        MindMapNode focussed, List<MindMapNode> selecteds) {
         return getter.getDestinationNodes(controller, focussed, selecteds);
     }
@@ -133,7 +133,7 @@ public class HookInstantiationMethod {
         return false;
     }
 
-    public MindMapNode getCenterNode(MapFeedback controller,
+    public MindMapNode getCenterNode(ModeFeedback controller,
                                      MindMapNode focussed, List<MindMapNode> selecteds) {
         return getter.getCenterNode(controller, focussed, selecteds);
     }

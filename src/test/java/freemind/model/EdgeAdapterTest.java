@@ -1,7 +1,6 @@
 package freemind.model;
 
 import freemind.main.FreeMind;
-import freemind.modes.MapFeedback;
 import freemind.modes.mindmapmode.MindMapEdgeModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import org.junit.jupiter.api.BeforeEach;

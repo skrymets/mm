@@ -27,7 +27,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
-public interface ModeController extends TextTranslator, MapFeedback, ViewFeedback {
+public interface ModeController extends TextTranslator, ModeFeedback, ViewFeedback {
 
     String NODESEPARATOR = "<nodeseparator>";
 
@@ -36,13 +36,13 @@ public interface ModeController extends TextTranslator, MapFeedback, ViewFeedbac
      *             and the other modes.
      * @return returns the new mode controller created for this url.
      */
-    MapFeedback load(URL file) throws FileNotFoundException, IOException, URISyntaxException;
+    ModeFeedback load(URL file) throws FileNotFoundException, IOException, URISyntaxException;
 
     /**
      * This is the same as load(URL) for those points where you have a file
      * instead of an url (conversion is difficult between them...).
      */
-    MapFeedback load(File file) throws IOException;
+    ModeFeedback load(File file) throws IOException;
 
     /**
      * Opens a link in * the opened map * another map * another file.

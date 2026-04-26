@@ -4,7 +4,7 @@
  */
 package freemind.extensions;
 
-import freemind.modes.MapFeedback;
+import freemind.modes.ModeFeedback;
 import freemind.modes.ModeController;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +33,7 @@ public class HookAdapter implements MindMapHook {
      * plugin_registration/isBaseClass attribute.
      */
     private PluginBaseClassSearcher baseClass;
-    protected MapFeedback mapFeedback;
+    protected ModeFeedback mapFeedback;
 
     public HookAdapter() {
         baseClass = null;
@@ -54,7 +54,7 @@ public class HookAdapter implements MindMapHook {
         return properties;
     }
 
-    public void setController(MapFeedback controller) {
+    public void setController(ModeFeedback controller) {
         this.mapFeedback = controller;
         if (controller instanceof ModeController) {
             this.controller = (ModeController) controller;

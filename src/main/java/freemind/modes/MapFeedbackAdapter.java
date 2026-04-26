@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
-public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
+public abstract class MapFeedbackAdapter implements ModeFeedback, ViewFeedback {
 
     private final HashMap<String, Font> fontMap = new HashMap<>();
 

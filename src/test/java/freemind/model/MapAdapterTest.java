@@ -3,7 +3,6 @@ package freemind.model;
 import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.ArrowLinkTarget;
 import freemind.modes.CloudAdapter;
-import freemind.modes.MapFeedback;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

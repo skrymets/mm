@@ -1,6 +1,6 @@
 package freemind.extensions;
 
-import freemind.modes.MapFeedback;
+import freemind.modes.ModeFeedback;
 
 import java.util.Properties;
 
@@ -29,7 +29,7 @@ public interface MindMapHook {
      */
     String getResourceString(String property);
 
-    void setController(MapFeedback controller);
+    void setController(ModeFeedback controller);
 
     /**
      * If a base class is specified in the plugin declaration via a

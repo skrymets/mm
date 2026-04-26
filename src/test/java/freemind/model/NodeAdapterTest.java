@@ -1,7 +1,6 @@
 package freemind.model;
 
 import freemind.extensions.PermanentNodeHook;
-import freemind.modes.MapFeedback;
 import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import freemind.model.attributes.Attribute;

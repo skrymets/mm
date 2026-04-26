@@ -141,7 +141,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
     }
 
     private MindMapMapModel getMindMapMapModel() {
-        return (MindMapMapModel) getMapFeedback().getMap();
+        return (MindMapMapModel) ((freemind.modes.ModeFeedback) getMapFeedback()).getMap();
     }
 
     public boolean checkPassword(StringBuilder givenPassword) {

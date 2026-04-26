@@ -1,9 +1,9 @@
 package freemind.modes.mindmapmode;
 
 import freemind.main.FreeMindXml;
+import freemind.model.MapFeedback;
 import freemind.model.MindMapNode;
 import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.MapFeedback;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import org.w3c.dom.Document;

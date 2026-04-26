@@ -50,20 +50,20 @@ public class XMLElementAdapter {
     protected final List<ArrowLinkAdapter> mArrowLinkAdapters;
     protected HashMap<String, NodeAdapter> mIdToTarget;
 
-    protected final MapFeedback mMapFeedback;
+    protected final ModeFeedback mModeFeedback;
 
-    public XMLElementAdapter(MapFeedback pMapFeedback) {
-        this(pMapFeedback, new ArrayList<>(), new HashMap<>());
+    public XMLElementAdapter(ModeFeedback pModeFeedback) {
+        this(pModeFeedback, new ArrayList<>(), new HashMap<>());
     }
 
-    public XMLElementAdapter(MapFeedback pMapFeedback, List<ArrowLinkAdapter> arrowLinkAdapters, HashMap<String, NodeAdapter> IDToTarget) {
-        this.mMapFeedback = pMapFeedback;
+    public XMLElementAdapter(ModeFeedback pModeFeedback, List<ArrowLinkAdapter> arrowLinkAdapters, HashMap<String, NodeAdapter> IDToTarget) {
+        this.mModeFeedback = pModeFeedback;
         this.mArrowLinkAdapters = arrowLinkAdapters;
         this.mIdToTarget = IDToTarget;
     }
 
     protected MindMap getMap() {
-        return mMapFeedback.getMap();
+        return mModeFeedback.getMap();
     }
 
     /**
@@ -363,7 +363,7 @@ public class XMLElementAdapter {
                     attr.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
                     font = new Font(attr);
                 }
-                userObject = mMapFeedback.getFontThroughMap(font);
+                userObject = mModeFeedback.getFontThroughMap(font);
                 break;
             }
             case "icon": {
@@ -448,7 +448,7 @@ public class XMLElementAdapter {
         String loadName = hookElement.getAttribute("NAME");
         PermanentNodeHook hook = null;
         try {
-            hook = (PermanentNodeHook) mMapFeedback.createNodeHook(loadName, node);
+            hook = (PermanentNodeHook) mModeFeedback.createNodeHook(loadName, node);
             hook.setNode(node);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);

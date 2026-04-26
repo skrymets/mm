@@ -30,11 +30,11 @@ public class MindMapMapModel extends MapAdapter {
     // Constructors
     //
 
-    public MindMapMapModel(MapFeedback pMapFeedback) {
+    public MindMapMapModel(ModeFeedback pMapFeedback) {
         this(null, pMapFeedback);
     }
 
-    public MindMapMapModel(MindMapNodeModel root, MapFeedback pMapFeedback) {
+    public MindMapMapModel(MindMapNodeModel root, ModeFeedback pMapFeedback) {
         super(pMapFeedback);
         lockManager = pMapFeedback.getResources().getBoolProperty(
                 "experimental_file_locking_on") ? new LockManager()
@@ -586,10 +586,15 @@ public class MindMapMapModel extends MapAdapter {
     }
 
     public NodeAdapter createEncryptedNode(String additionalInfo) {
-        NodeAdapter node = createNodeAdapter(mMapFeedback.getMap(),
+        NodeAdapter node = createNodeAdapter(getMapFeedback().getMap(),
                 EncryptedMindMapNode.class.getName());
         node.setAdditionalInfo(additionalInfo);
         return node;
+    }
+
+    @Override
+    public ModeFeedback getMapFeedback() {
+        return (ModeFeedback) mMapFeedback;
     }
 
 }

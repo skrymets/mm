@@ -3,6 +3,7 @@ package freemind.modes;
 import freemind.main.FreeMind;
 import freemind.main.ColorUtils;
 import freemind.model.LineAdapter;
+import freemind.model.MapFeedback;
 import freemind.model.MindMapCloud;
 import freemind.model.MindMapNode;
 import freemind.preferences.FreemindPropertyListener;

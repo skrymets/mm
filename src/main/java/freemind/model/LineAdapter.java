@@ -1,7 +1,6 @@
 package freemind.model;
 
 import freemind.main.ColorUtils;
-import freemind.modes.MapFeedback;
 import lombok.Getter;
 import lombok.Setter;
 

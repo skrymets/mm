@@ -250,7 +250,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * You may decide to overload this or take the default and implement the
      * functionality in your MapModel (implements MindMap)
      */
-    public MapFeedback load(URL file) throws
+    public ModeFeedback load(URL file) throws
             IOException, URISyntaxException {
         String mapDisplayName = getController().getMapModuleManager()
                 .checkIfFileIsAlreadyOpened(file);
@@ -275,7 +275,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * You may decide to overload this or take the default and implement the
      * functionality in your MapModel (implements MindMap)
      */
-    public MapFeedback load(File file) {
+    public ModeFeedback load(File file) {
         try {
             return load(Tools.fileToUrl(file));
         } catch (URISyntaxException | IOException e) {

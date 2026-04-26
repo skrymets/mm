@@ -2,7 +2,6 @@ package freemind.model;
 
 import freemind.main.FreeMind;
 import freemind.main.ColorUtils;
-import freemind.modes.MapFeedback;
 import freemind.preferences.FreemindPropertyListener;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

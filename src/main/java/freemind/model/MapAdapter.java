@@ -1,7 +1,6 @@
 package freemind.model;
 
 import freemind.main.*;
-import freemind.modes.MapFeedback;
 import freemind.modes.XMLElementAdapter;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +18,6 @@ import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -471,7 +468,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     @Override
     public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
         Document doc = FreeMindXml.parse(pReader);
-        XMLElementAdapter xmlAdapter = new XMLElementAdapter(mMapFeedback, new ArrayList<>(), pIDToTarget);
+        XMLElementAdapter xmlAdapter = new XMLElementAdapter((freemind.modes.ModeFeedback) mMapFeedback, new ArrayList<>(), pIDToTarget);
         xmlAdapter.buildFromDom(doc.getDocumentElement());
         xmlAdapter.processUnfinishedLinks(getLinkRegistry());
         MindMapNode node = xmlAdapter.getMapChild();

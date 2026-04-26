@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * MapFeedback extended by the xml based node change management.
  */
-public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
+public interface ExtendedMapFeedback extends ModeFeedback, MindMapActions {
     /**
      * @return the action factory that contains the actors definitions.
      */
@@ -72,7 +72,7 @@ public interface ExtendedMapFeedback extends MapFeedback, MindMapActions {
     /**
      * @param pFile loads a file into a new map.
      */
-    MapFeedback load(File pFile);
+    ModeFeedback load(File pFile);
 
     /**
      * Closes the actual map.

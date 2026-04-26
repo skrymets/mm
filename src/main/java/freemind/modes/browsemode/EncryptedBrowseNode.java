@@ -3,7 +3,7 @@ package freemind.modes.browsemode;
 import freemind.main.EncryptionUtils.SingleDesEncrypter;
 import freemind.model.MindMap;
 import freemind.model.NodeAdapter;
-import freemind.modes.MapFeedback;
+import freemind.modes.ModeFeedback;
 import freemind.modes.MindIcon;
 import freemind.modes.ModeController;
 import freemind.modes.common.dialogs.EnterPasswordDialog;
@@ -25,15 +25,15 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
 
     private boolean isDecrypted = false;
 
-    private final MapFeedback mMapFeedback;
+    private final ModeFeedback mModeFeedback;
 
-    public EncryptedBrowseNode(MapFeedback pMapFeedback) {
-        this(null, pMapFeedback);
+    public EncryptedBrowseNode(ModeFeedback pModeFeedback) {
+        this(null, pModeFeedback);
     }
 
-    public EncryptedBrowseNode(Object userObject, MapFeedback pMapFeedback) {
-        super(userObject, pMapFeedback.getMap());
-        this.mMapFeedback = pMapFeedback;
+    public EncryptedBrowseNode(Object userObject, ModeFeedback pModeFeedback) {
+        super(userObject, pModeFeedback.getMap());
+        this.mModeFeedback = pModeFeedback;
         if (encryptedIcon == null) {
             encryptedIcon = MindIcon.factory("encrypted").getIcon();
         }
@@ -55,7 +55,7 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
         }
         // get password:
         final EnterPasswordDialog pwdDialog = new EnterPasswordDialog(null,
-                mMapFeedback::getResourceString, false);
+                mModeFeedback::getResourceString, false);
         pwdDialog.setModal(true);
         pwdDialog.setVisible(true);
         if (pwdDialog.getResult() == EnterPasswordDialog.CANCEL) {
@@ -81,12 +81,12 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
                         .createNodeTreeFromXml(new StringReader(string), IDToTarget);
                 // now, the import is finished. We can inform others about
                 // the new nodes:
-                MindMap model = mMapFeedback.getMap();
+                MindMap model = mModeFeedback.getMap();
                 model.insertNodeInto(node, this, this.getChildCount());
-                mMapFeedback.invokeHooksRecursively(node, model);
+                mModeFeedback.invokeHooksRecursively(node, model);
                 super.setFolded(folded);
-                mMapFeedback.nodeChanged(this);
-                //mMapFeedback.nodeStructureChanged(this);
+                mModeFeedback.nodeChanged(this);
+                //mModeFeedback.nodeStructureChanged(this);
                 isDecrypted = true;
                 updateIcon();
             } catch (RuntimeException | IOException e) {

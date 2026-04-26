@@ -2,7 +2,7 @@ package freemind.modes.mindmapmode.services;
 
 import freemind.extensions.ModeControllerHook;
 import freemind.model.MindMapNode;
-import freemind.modes.MapFeedback;
+import freemind.modes.ModeFeedback;
 import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +39,7 @@ public class HookService {
     /**
      * Invokes a mode controller hook: initializes it, runs it, and shuts it down.
      */
-    public void invokeHook(ModeControllerHook hook, MapFeedback controller) {
+    public void invokeHook(ModeControllerHook hook, ModeFeedback controller) {
         try {
             hook.setController(controller);
             hook.startupMapHook();

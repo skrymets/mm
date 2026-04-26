@@ -152,7 +152,7 @@ public abstract class ExtendedMapFeedbackAdapter extends MapFeedbackAdapter
     }
 
     @Override
-    public MapFeedback load(File pFile) {
+    public ModeFeedback load(File pFile) {
         return this;
     }
 

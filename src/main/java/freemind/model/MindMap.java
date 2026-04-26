@@ -1,7 +1,9 @@
 package freemind.model;
 
 import freemind.main.Tools;
-import freemind.modes.*;
+import freemind.modes.ArrowLinkAdapter;
+import freemind.modes.ArrowLinkTarget;
+import freemind.modes.CloudAdapter;
 
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;

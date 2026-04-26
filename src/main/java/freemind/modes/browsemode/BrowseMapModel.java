@@ -20,9 +20,11 @@ public class BrowseMapModel extends MapAdapter {
     //
     @Getter
     private final MindMapLinkRegistry linkRegistry;
+    private final ModeFeedback modeFeedback;
 
     public BrowseMapModel(BrowseNodeModel root, ModeController modeController) {
         super(modeController);
+        this.modeFeedback = modeController;
         setRoot(Objects.requireNonNullElseGet(root, () -> new BrowseNodeModel(modeController.getResourceString(
                 "new_mindmap"), this)));
         // register new LinkRegistryAdapter
@@ -81,11 +83,11 @@ public class BrowseMapModel extends MapAdapter {
         throw new UnsupportedOperationException("Not implemented for browse mode.");
     }
 
-    protected NodeAdapter createNodeAdapter(MapFeedback pMapFeedback, String nodeClass) {
+    protected NodeAdapter createNodeAdapter(ModeFeedback pModeFeedback, String nodeClass) {
         if (nodeClass == ENCRYPTED_BROWSE_NODE) {
-            return new EncryptedBrowseNode(null, pMapFeedback);
+            return new EncryptedBrowseNode(null, pModeFeedback);
         }
-        return new BrowseNodeModel(null, pMapFeedback.getMap());
+        return new BrowseNodeModel(null, pModeFeedback.getMap());
     }
 
     public EdgeAdapter createEdgeAdapter(NodeAdapter node) {
@@ -107,14 +109,14 @@ public class BrowseMapModel extends MapAdapter {
     }
 
     public NodeAdapter createEncryptedNode(String additionalInfo) {
-        NodeAdapter node = createNodeAdapter(mMapFeedback, ENCRYPTED_BROWSE_NODE);
+        NodeAdapter node = createNodeAdapter(modeFeedback, ENCRYPTED_BROWSE_NODE);
         node.setAdditionalInfo(additionalInfo);
         return node;
     }
 
     @Override
     public NodeAdapter createNodeAdapter(MindMap pMap, String pNodeClass) {
-        return createNodeAdapter(mMapFeedback, null);
+        return createNodeAdapter(modeFeedback, null);
     }
 
 }

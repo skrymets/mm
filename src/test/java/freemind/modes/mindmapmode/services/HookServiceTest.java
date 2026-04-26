@@ -2,7 +2,7 @@ package freemind.modes.mindmapmode.services;
 
 import freemind.extensions.ModeControllerHook;
 import freemind.model.MindMapNode;
-import freemind.modes.MapFeedback;
+import freemind.modes.ModeFeedback;
 import freemind.modes.mindmapmode.actions.xml.actors.AddHookActor;
 import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -125,7 +125,7 @@ class HookServiceTest {
     @Test
     void invokeHookCallsSetControllerStartupAndShutdown() {
         ModeControllerHook hook = mock(ModeControllerHook.class);
-        MapFeedback controller = mock(MapFeedback.class);
+        ModeFeedback controller = mock(ModeFeedback.class);
 
         service.invokeHook(hook, controller);
 
@@ -138,7 +138,7 @@ class HookServiceTest {
     @Test
     void invokeHookDoesNotUseActorFactory() {
         ModeControllerHook hook = mock(ModeControllerHook.class);
-        MapFeedback controller = mock(MapFeedback.class);
+        ModeFeedback controller = mock(ModeFeedback.class);
 
         service.invokeHook(hook, controller);
 
@@ -148,7 +148,7 @@ class HookServiceTest {
     @Test
     void invokeHookHandlesExceptionInStartup() {
         ModeControllerHook hook = mock(ModeControllerHook.class);
-        MapFeedback controller = mock(MapFeedback.class);
+        ModeFeedback controller = mock(ModeFeedback.class);
         doThrow(new RuntimeException("startup error")).when(hook).startupMapHook();
 
         // Should not throw - exception is caught and logged
@@ -158,7 +158,7 @@ class HookServiceTest {
     @Test
     void invokeHookHandlesExceptionInShutdown() {
         ModeControllerHook hook = mock(ModeControllerHook.class);
-        MapFeedback controller = mock(MapFeedback.class);
+        ModeFeedback controller = mock(ModeFeedback.class);
         doThrow(new RuntimeException("shutdown error")).when(hook).shutdownMapHook();
 
         assertDoesNotThrow(() -> service.invokeHook(hook, controller));
@@ -167,7 +167,7 @@ class HookServiceTest {
     @Test
     void invokeHookHandlesExceptionInSetController() {
         ModeControllerHook hook = mock(ModeControllerHook.class);
-        MapFeedback controller = mock(MapFeedback.class);
+        ModeFeedback controller = mock(ModeFeedback.class);
         doThrow(new RuntimeException("controller error")).when(hook).setController(any());
 
         assertDoesNotThrow(() -> service.invokeHook(hook, controller));
@@ -176,7 +176,7 @@ class HookServiceTest {
     @Test
     void invokeHookStartupNotCalledWhenSetControllerThrows() {
         ModeControllerHook hook = mock(ModeControllerHook.class);
-        MapFeedback controller = mock(MapFeedback.class);
+        ModeFeedback controller = mock(ModeFeedback.class);
         doThrow(new RuntimeException("controller error")).when(hook).setController(any());
 
         service.invokeHook(hook, controller);
@@ -189,7 +189,7 @@ class HookServiceTest {
     @Test
     void invokeHookShutdownNotCalledWhenStartupThrows() {
         ModeControllerHook hook = mock(ModeControllerHook.class);
-        MapFeedback controller = mock(MapFeedback.class);
+        ModeFeedback controller = mock(ModeFeedback.class);
         doThrow(new RuntimeException("startup error")).when(hook).startupMapHook();
 
         service.invokeHook(hook, controller);

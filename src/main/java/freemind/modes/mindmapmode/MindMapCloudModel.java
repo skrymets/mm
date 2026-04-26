@@ -1,8 +1,8 @@
 package freemind.modes.mindmapmode;
 
+import freemind.model.MapFeedback;
 import freemind.model.MindMapNode;
 import freemind.modes.CloudAdapter;
-import freemind.modes.MapFeedback;
 
 public class MindMapCloudModel extends CloudAdapter {
 
