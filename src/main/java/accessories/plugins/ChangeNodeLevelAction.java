@@ -56,13 +56,13 @@ public class ChangeNodeLevelAction extends MindMapNodeHookAdapter {
         }
 
         // collect node ids:
-        String selectedNodeId = selectedNode.getObjectId(getController());
+        String selectedNodeId = getController().getNodeID(selectedNode);
         // WORKAROUND: Make target of local hyperlinks for the case, that ids
         // are not stored persistently.
         getMap().getLinkRegistry().registerLocalHyperlinkId(selectedNodeId);
         List<String> selectedNodesId = new ArrayList<>();
         for (MindMapNode node : selectedNodes) {
-            String nodeId = node.getObjectId(getController());
+            String nodeId = getController().getNodeID(node);
             // WORKAROUND: Make target of local hyperlinks for the case, that
             // ids are not stored persistently.
             getMap().getLinkRegistry().registerLocalHyperlinkId(nodeId);

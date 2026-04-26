@@ -90,7 +90,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
             setToolTip(node, getName(), message);
             displayState(CLOCK_VISIBLE, getNode(), false);
         }
-        log.info("Invoke for node: {}", node.getObjectId(getController()));
+        log.info("Invoke for node: {}", getController().getNodeID(node));
     }
 
     private void scheduleTimer() {

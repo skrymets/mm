@@ -43,7 +43,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 
         public NodeHolder(MindMapNode pNode,
                           MindMapController pMindMapController) {
-            mNodeId = pNode.getObjectId(pMindMapController);
+            mNodeId = pMindMapController.getNodeID(pNode);
             MapModule mapModule = pMindMapController.getMapModule();
             if (mapModule == null) {
                 throw new IllegalArgumentException(
@@ -88,7 +88,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 
         public boolean isIdentical(MindMapNode pNode,
                                    MindMapController pMindMapController) {
-            String id = pNode.getObjectId(pMindMapController);
+            String id = pMindMapController.getNodeID(pNode);
             MapModule mapModule = pMindMapController.getMapModule();
             if (mapModule != null) {
                 return id.equals(mNodeId);

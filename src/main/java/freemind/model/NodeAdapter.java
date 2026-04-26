@@ -988,10 +988,6 @@ public abstract class NodeAdapter implements MindMapNode {
         }
     }
 
-    public String getObjectId(ModeController controller) {
-        return controller.getNodeID(this);
-    }
-
     public Element save(Writer writer, Document doc, MindMapLinkRegistry registry,
                          boolean saveInvisible, boolean saveChildren) throws IOException {
         // pre save event to save all contents of the node:

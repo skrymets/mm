@@ -74,12 +74,6 @@ public interface MindMapNode extends MutableTreeNode {
     void setNoteText(String noteText);
 
     /**
-     * @return returns the unique id of the node. It is generated using the
-     * LinkRegistry.
-     */
-    String getObjectId(ModeController controller);
-
-    /**
      * @return returns a ListIterator of all children of the node if the node is
      * unfolded. EMPTY_LIST_ITERATOR otherwise.
      */

@@ -319,7 +319,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
     }
 
     private void setStyle(MindMapNode node) {
-        log.trace("updating node id={} and text:{}", node.getObjectId(getMindMapController()), node);
+        log.trace("updating node id={} and text:{}", getMindMapController().getNodeID(node), node);
         int depth = depth(node);
         log.trace("COLOR, depth={}", depth);
         reloadPatterns();
