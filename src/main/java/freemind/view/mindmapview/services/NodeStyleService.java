@@ -58,7 +58,7 @@ public class NodeStyleService {
     }
 
     private Color getBackgroundColor() {
-        final freemind.modes.MindMapCloud cloud = nodeView.getModel().getCloud();
+        final freemind.model.MindMapCloud cloud = nodeView.getModel().getCloud();
         if (cloud != null) {
             return cloud.getColor();
         }

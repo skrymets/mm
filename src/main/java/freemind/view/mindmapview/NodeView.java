@@ -3,7 +3,7 @@ package freemind.view.mindmapview;
 import freemind.main.*;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMapCloud;
+import freemind.model.MindMapCloud;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.services.*;
 import lombok.Getter;

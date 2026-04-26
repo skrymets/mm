@@ -1,6 +1,6 @@
 package freemind.view.mindmapview;
 
-import freemind.modes.MindMapCloud;
+import freemind.model.MindMapCloud;
 
 import java.awt.*;
 import java.awt.geom.QuadCurve2D;

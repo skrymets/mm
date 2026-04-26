@@ -1,6 +1,5 @@
-package freemind.modes;
+package freemind.model;
 
-import freemind.model.MindMapLine;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

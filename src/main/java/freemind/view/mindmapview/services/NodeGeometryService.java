@@ -1,7 +1,7 @@
 package freemind.view.mindmapview.services;
 
 import freemind.main.PointUtils;
-import freemind.modes.MindMapCloud;
+import freemind.model.MindMapCloud;
 import freemind.view.mindmapview.CloudView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
