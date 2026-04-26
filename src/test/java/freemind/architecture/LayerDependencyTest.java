@@ -3,7 +3,6 @@ package freemind.architecture;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
-import com.tngtech.archunit.library.freeze.FreezingArchRule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -38,12 +37,9 @@ class LayerDependencyTest {
 
     @Test
     void modelShouldNotDependOnModes() {
-        // model classes still import freemind.modes (MapFeedback, MindMapLinkRegistry, etc.)
-        // Using FreezingArchRule to record known violations as a baseline
-        FreezingArchRule.freeze(
-                noClasses()
-                        .that().resideInAPackage("freemind.model..")
-                        .should().dependOnClassesThat().resideInAPackage("freemind.modes..")
-        ).check(classes);
+        noClasses()
+                .that().resideInAPackage("freemind.model..")
+                .should().dependOnClassesThat().resideInAPackage("freemind.modes..")
+                .check(classes);
     }
 }
