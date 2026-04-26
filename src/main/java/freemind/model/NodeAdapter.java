@@ -51,6 +51,8 @@ public abstract class NodeAdapter implements MindMapNode {
     // graph support
     @Getter
     private final freemind.model.services.NodeTooltipService tooltipService = new freemind.model.services.NodeTooltipService(this);
+    @Getter
+    private final freemind.model.services.NodeDecorationsService decorationsService = new freemind.model.services.NodeDecorationsService(this);
 
     // these Attributes have default values, so it can be useful to directly
     // access them in
@@ -60,20 +62,6 @@ public abstract class NodeAdapter implements MindMapNode {
     // example.
     @Setter
     protected String style;
-    /**
-     * stores the icons associated with this node.
-     */
-    protected List<NodeIcon> icons = null; // lazy, fc, 30.6.2005
-
-    protected TreeMap<String, ImageIcon> stateIcons = null; // lazy, fc,
-    // 30.6.2005
-    // /**stores the label associated with this node:*/
-    // protected String mLabel;
-    /**
-     * parameters of an eventually associated cloud
-     */
-    @Getter
-    protected MindMapCloud cloud;
 
     /**
      * -- GETTER --
@@ -261,28 +249,14 @@ public abstract class NodeAdapter implements MindMapNode {
         return treePath;
     }
 
-    public void setCloud(MindMapCloud cloud) {
-        // Take care to keep the calculated iterative levels consistent
-        if (cloud != null && this.cloud == null) {
-            changeChildCloudIterativeLevels(1);
-        } else if (cloud == null && this.cloud != null) {
-            changeChildCloudIterativeLevels(-1);
-        }
-        this.cloud = cloud;
+    @Override
+    public MindMapCloud getCloud() {
+        return decorationsService.getCloud();
     }
 
-    /**
-     * Correct iterative level values of children
-     */
-    private void changeChildCloudIterativeLevels(int deltaLevel) {
-        for (ListIterator<NodeAdapter> e = childrenUnfolded(); e.hasNext(); ) {
-            NodeAdapter childNode = e.next();
-            MindMapCloud childCloud = childNode.getCloud();
-            if (childCloud != null) {
-                childCloud.changeIterativeLevel(deltaLevel);
-            }
-            childNode.changeChildCloudIterativeLevels(deltaLevel);
-        }
+    @Override
+    public void setCloud(MindMapCloud cloud) {
+        decorationsService.setCloud(cloud);
     }
 
     public String getBareStyle() {
@@ -434,39 +408,20 @@ public abstract class NodeAdapter implements MindMapNode {
         return false;
     }
 
-    // fc, 24.9.2003:
+    @Override
     public List<NodeIcon> getIcons() {
-        if (icons == null)
-            return Collections.emptyList();
-        return icons;
+        return decorationsService.getIcons();
     }
 
-    public void addIcon(NodeIcon _icon, int position) {
-        createIcons();
-        if (position == NodeIcon.LAST) {
-            icons.add(_icon);
-        } else {
-            icons.add(position, _icon);
-        }
+    @Override
+    public void addIcon(NodeIcon icon, int position) {
+        decorationsService.addIcon(icon, position);
     }
 
-    /**
-     * @return returns the number of remaining icons.
-     */
+    @Override
     public int removeIcon(int position) {
-        createIcons();
-        if (position == NodeIcon.LAST) {
-            position = icons.size() - 1;
-        }
-        icons.remove(position);
-        int returnSize = icons.size();
-        if (returnSize == 0) {
-            icons = null;
-        }
-        return returnSize;
+        return decorationsService.removeIcon(position);
     }
-
-    // end, fc, 24.9.2003
 
     /**
      * True iff one of node's <i>strict</i> descendants is folded. A node N is
@@ -854,18 +809,6 @@ public abstract class NodeAdapter implements MindMapNode {
         }
     }
 
-    private void createStateIcons() {
-        if (stateIcons == null) {
-            stateIcons = new TreeMap<>();
-        }
-    }
-
-    private void createIcons() {
-        if (icons == null) {
-            icons = new ArrayList<>();
-        }
-    }
-
     public List<PermanentNodeHook> getHooks() {
         if (hooks == null)
             return Collections.emptyList();
@@ -1152,23 +1095,14 @@ public abstract class NodeAdapter implements MindMapNode {
         return null;
     }
 
-    /**
-     * This method must be synchronized as the TreeMap isn't.
-     */
-    public synchronized void setStateIcon(String key, ImageIcon icon) {
-        // log.info("Set state of key:"+key+", icon "+icon);
-        createStateIcons();
-        if (icon != null) {
-            stateIcons.put(key, icon);
-        } else stateIcons.remove(key);
-        if (stateIcons.isEmpty())
-            stateIcons = null;
+    @Override
+    public void setStateIcon(String key, ImageIcon icon) {
+        decorationsService.setStateIcon(key, icon);
     }
 
+    @Override
     public Map<String, ImageIcon> getStateIcons() {
-        if (stateIcons == null)
-            return Collections.emptyMap();
-        return Collections.unmodifiableSortedMap(stateIcons);
+        return decorationsService.getStateIcons();
     }
 
     public void setVGap(int gap) {
