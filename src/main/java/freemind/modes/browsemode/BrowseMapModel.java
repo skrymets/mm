@@ -1,9 +1,6 @@
 package freemind.modes.browsemode;
 
-import freemind.model.EdgeAdapter;
-import freemind.model.MapAdapter;
-import freemind.model.MindMap;
-import freemind.model.NodeAdapter;
+import freemind.model.*;
 import freemind.modes.*;
 import lombok.Getter;
 

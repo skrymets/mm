@@ -11,7 +11,7 @@ import freemind.model.MindMapNode;
 import freemind.model.SortedListModel;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.MindIcon;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.swing.*;

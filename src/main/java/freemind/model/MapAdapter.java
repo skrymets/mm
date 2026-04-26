@@ -2,7 +2,6 @@ package freemind.model;
 
 import freemind.main.*;
 import freemind.modes.MapFeedback;
-import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.XMLElementAdapter;
 import lombok.Getter;
 import lombok.Setter;

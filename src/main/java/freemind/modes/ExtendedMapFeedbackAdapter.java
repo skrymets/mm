@@ -6,7 +6,7 @@ import freemind.model.MindMap;
 import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
 import freemind.modes.mindmapmode.actions.xml.DefaultActionHandler;

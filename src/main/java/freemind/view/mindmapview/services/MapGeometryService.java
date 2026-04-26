@@ -4,9 +4,11 @@ import freemind.main.PointUtils;
 import freemind.view.mindmapview.ArrowLinkView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+import freemind.view.mindmapview.PathBBox;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.CubicCurve2D;
 import java.util.List;
 
 public class MapGeometryService {
@@ -46,14 +48,13 @@ public class MapGeometryService {
         innerBounds.y += mapView.getRoot().getY();
         final Rectangle maxBounds = new Rectangle(0, 0, mapView.getWidth(), mapView.getHeight());
         for (ArrowLinkView arrowView : arrowLinkViews) {
-            final java.awt.geom.CubicCurve2D arrowLinkCurve = arrowView.arrowLinkCurve;
+            final CubicCurve2D arrowLinkCurve = arrowView.arrowLinkCurve;
             if (arrowLinkCurve == null) {
                 continue;
             }
             Rectangle arrowViewBigBounds = arrowLinkCurve.getBounds();
             if (!innerBounds.contains(arrowViewBigBounds)) {
-                Rectangle arrowViewBounds = freemind.view.mindmapview.PathBBox.getBBox(arrowLinkCurve)
-                        .getBounds();
+                Rectangle arrowViewBounds = PathBBox.getBBox(arrowLinkCurve).getBounds();
                 innerBounds.add(arrowViewBounds);
             }
         }

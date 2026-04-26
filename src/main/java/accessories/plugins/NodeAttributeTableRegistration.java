@@ -13,7 +13,7 @@ import freemind.model.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.ModeController.NodeLifetimeListener;
 import freemind.modes.ModeController.NodeSelectionListener;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
 import lombok.extern.slf4j.Slf4j;

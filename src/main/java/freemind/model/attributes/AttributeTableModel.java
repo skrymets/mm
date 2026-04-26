@@ -2,7 +2,7 @@
  * Created on 10.07.2005
  * Copyright (C) 2005 Dimitri Polivaev
  */
-package freemind.modes.attributes;
+package freemind.model.attributes;
 
 import freemind.model.MindMapNode;
 

@@ -1,9 +1,6 @@
-package freemind.modes;
+package freemind.model;
 
 import freemind.main.MindMapUtils;
-import freemind.model.LinkAdapter;
-import freemind.model.MindMapLink;
-import freemind.model.MindMapNode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ import java.util.ListIterator;
 @Slf4j
 public class MindMapLinkRegistry {
     /**
-     * All elements put into this sort of vectors are put into the
+     * All elements put into these sorts of vectors are put into the
      * SourceToLinks, too. This structure is kept synchronous to the IDToLinks
      * structure, but reversed.
      */
@@ -30,15 +27,12 @@ public class MindMapLinkRegistry {
     private class SynchronousLinksList extends ArrayList<MindMapLink> {
 
         @Override
-        public boolean add(MindMapLink pE) {
-            boolean added = super.add(pE);
-            if (pE instanceof MindMapLink) {
-                MindMapLink link = pE;
+        public boolean add(MindMapLink link) {
+            boolean added = super.add(link);
+            if (link != null) {
                 MindMapNode source = link.getSource();
-                if (!mSourceToLinks.containsKey(source)) {
-                    mSourceToLinks.put(source, new ArrayList<>());
-                }
-                mSourceToLinks.get(source).add(pE);
+                mSourceToLinks.computeIfAbsent(source, k -> new ArrayList<>());
+                mSourceToLinks.get(source).add(link);
             }
             return added;
         }

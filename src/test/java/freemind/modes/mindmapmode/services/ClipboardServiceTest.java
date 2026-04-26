@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.services;
 
 import freemind.model.MindMap;
-import freemind.modes.MindMapLinkRegistry;
+import freemind.model.MindMapLinkRegistry;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.actors.CutActor;

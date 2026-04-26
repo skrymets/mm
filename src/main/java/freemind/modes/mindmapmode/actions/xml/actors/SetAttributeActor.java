@@ -5,7 +5,7 @@ import freemind.controller.actions.XmlAction;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 public class SetAttributeActor extends XmlActorAdapter {

@@ -2,26 +2,19 @@ package freemind.modes.mindmapmode;
 
 import freemind.main.SwingUtils;
 
-import org.apache.commons.lang3.SystemUtils;
-
-import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.common.XmlBindingTools;
-import freemind.controller.MenuBar;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.*;
 import freemind.extensions.*;
-import freemind.extensions.HookFactory.RegistrationContainer;
 import freemind.main.*;
 import freemind.model.*;
 import freemind.model.MindMap.MapSourceChangedObserver;
 import freemind.modes.*;
-import freemind.modes.attributes.Attribute;
-import freemind.modes.common.CommonNodeKeyListener;
+import freemind.model.attributes.Attribute;
 import freemind.modes.common.GotoLinkNodeAction;
 import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
 import freemind.modes.common.actions.NewMapAction;
-import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.modes.mindmapmode.actions.*;
 import freemind.modes.mindmapmode.actions.NodeBackgroundColorAction.RemoveNodeBackgroundColorAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -30,42 +23,26 @@ import freemind.modes.mindmapmode.actions.xml.DefaultActionHandler;
 import freemind.modes.mindmapmode.actions.xml.UndoActionHandler;
 import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
 import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
-import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
-import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
-import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
 import freemind.modes.mindmapmode.services.*;
 import freemind.view.MapModule;
-import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.*;
-import java.lang.reflect.Constructor;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @SuppressWarnings("serial")
 @Slf4j

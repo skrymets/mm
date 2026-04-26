@@ -7,7 +7,7 @@ import freemind.main.*;
 import freemind.modes.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import freemind.preferences.FreemindPropertyListener;
 import lombok.Getter;
 import lombok.Setter;

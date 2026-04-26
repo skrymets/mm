@@ -7,7 +7,7 @@ package freemind.controller.filter.condition;
 import freemind.controller.Controller;
 import freemind.main.FreeMindXml;
 import freemind.model.MindMapNode;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

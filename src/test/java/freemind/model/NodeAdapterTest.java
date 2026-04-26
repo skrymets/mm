@@ -3,7 +3,7 @@ package freemind.model;
 import freemind.extensions.PermanentNodeHook;
 import freemind.modes.MapFeedback;
 import freemind.modes.MindIcon;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

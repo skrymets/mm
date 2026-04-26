@@ -4,17 +4,14 @@ import freemind.extensions.PermanentNodeHook;
 import freemind.extensions.PermanentNodeHookSubstituteUnknown;
 import freemind.main.*;
 import freemind.model.*;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,5 +1,6 @@
 package freemind.modes;
 
+import freemind.model.MindMapLinkRegistry;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapArrowLinkModel;
 import freemind.view.mindmapview.MapView;

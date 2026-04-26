@@ -3,6 +3,7 @@ package freemind.modes;
 import freemind.main.ColorUtils;
 import freemind.main.PointUtils;
 import freemind.model.LinkAdapter;
+import freemind.model.MindMapLinkRegistry;
 import freemind.model.MindMapNode;
 import lombok.Getter;
 import lombok.Setter;

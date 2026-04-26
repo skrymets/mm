@@ -7,7 +7,7 @@ import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMapLinkRegistry;
+import freemind.model.MindMapLinkRegistry;
 import freemind.modes.ModeController;
 import lombok.Getter;
 import lombok.Setter;

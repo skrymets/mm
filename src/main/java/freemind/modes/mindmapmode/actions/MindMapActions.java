@@ -7,7 +7,7 @@ import freemind.model.MindMapLink;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapArrowLink;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 
 import java.awt.*;
 import java.awt.datatransfer.Transferable;

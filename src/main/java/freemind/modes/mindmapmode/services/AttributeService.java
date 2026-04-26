@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.services;
 
 import freemind.model.MindMapNode;
-import freemind.modes.attributes.Attribute;
+import freemind.model.attributes.Attribute;
 import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
 
 /**
