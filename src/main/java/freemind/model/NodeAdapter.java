@@ -53,6 +53,8 @@ public abstract class NodeAdapter implements MindMapNode {
     private final freemind.model.services.NodeTooltipService tooltipService = new freemind.model.services.NodeTooltipService(this);
     @Getter
     private final freemind.model.services.NodeDecorationsService decorationsService = new freemind.model.services.NodeDecorationsService(this);
+    @Getter
+    private final freemind.model.services.NodeAttributesService attributesService = new freemind.model.services.NodeAttributesService(this);
 
     // these Attributes have default values, so it can be useful to directly
     // access them in
@@ -128,7 +130,6 @@ public abstract class NodeAdapter implements MindMapNode {
     private String xmlNoteText;
     private static FreemindPropertyListener sSaveIdPropertyChangeListener;
     private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
-    private List<Attribute> mAttributeVector = null;
 
     protected NodeAdapter(Object userObject, MindMap pMap) {
         this.map = pMap;
@@ -1023,13 +1024,11 @@ public abstract class NodeAdapter implements MindMapNode {
             permHook.save(doc, hookElement);
             node.appendChild(hookElement);
         }
-        if (mAttributeVector != null) {
-            for (Attribute attribute : mAttributeVector) {
-                Element attributeElement = doc.createElement(XmlNodeConstants.XML_NODE_ATTRIBUTE);
-                attributeElement.setAttribute("NAME", attribute.getName());
-                attributeElement.setAttribute("VALUE", attribute.getValue());
-                node.appendChild(attributeElement);
-            }
+        for (Attribute attribute : getAttributes()) {
+            Element attributeElement = doc.createElement(XmlNodeConstants.XML_NODE_ATTRIBUTE);
+            attributeElement.setAttribute("NAME", attribute.getName());
+            attributeElement.setAttribute("VALUE", attribute.getValue());
+            node.appendChild(attributeElement);
         }
 
         if (saveChildren && childrenUnfolded().hasNext()) {
@@ -1134,100 +1133,55 @@ public abstract class NodeAdapter implements MindMapNode {
 
     @Override
     public List<String> getAttributeKeyList() {
-        if (mAttributeVector == null) {
-            return Collections.emptyList();
-        }
-        List<String> returnValue = new ArrayList<>();
-        for (Attribute attr : mAttributeVector) {
-            returnValue.add(attr.getName());
-        }
-        return returnValue;
+        return attributesService.getAttributeKeyList();
     }
 
     @Override
     public List<Attribute> getAttributes() {
-        if (mAttributeVector == null) {
-            return Collections.emptyList();
-        }
-        return Collections.unmodifiableList(mAttributeVector);
+        return attributesService.getAttributes();
     }
 
     @Override
     public int getAttributeTableLength() {
-        if (mAttributeVector == null) {
-            return 0;
-        }
-        return mAttributeVector.size();
+        return attributesService.getAttributeTableLength();
     }
 
     @Override
-    public Attribute getAttribute(int pPosition) {
-        checkAttributePosition(pPosition);
-        return new Attribute(getAttributeVector().get(pPosition));
-    }
-
-    public void checkAttributePosition(int pPosition) {
-        if (mAttributeVector == null || getAttributeTableLength() <= pPosition || pPosition < 0) {
-            throw new IllegalArgumentException("Attribute position out of range: " + pPosition);
-        }
+    public Attribute getAttribute(int position) {
+        return attributesService.getAttribute(position);
     }
 
     @Override
-    public String getAttribute(String pKey) {
-        if (mAttributeVector == null) {
-            return null;
-        }
-        for (Attribute attr : mAttributeVector) {
-            if (Objects.equals(attr.getName(), pKey)) {
-                return attr.getValue();
-            }
-        }
-        return null;
+    public String getAttribute(String key) {
+        return attributesService.getAttribute(key);
     }
 
     @Override
-    public int getAttributePosition(String pKey) {
-        if (mAttributeVector == null) {
-            return -1;
-        }
-        int index = 0;
-        for (Attribute attr : mAttributeVector) {
-            if (Objects.equals(attr.getName(), pKey)) {
-                return index;
-            }
-            index++;
-        }
-        return -1;
+    public int getAttributePosition(String key) {
+        return attributesService.getAttributePosition(key);
     }
 
     @Override
-    public void setAttribute(int pPosition, Attribute pAttribute) {
-        checkAttributePosition(pPosition);
-        mAttributeVector.set(pPosition, pAttribute);
+    public void setAttribute(int position, Attribute attribute) {
+        attributesService.setAttribute(position, attribute);
     }
 
     @Override
-    public int addAttribute(Attribute pAttribute) {
-        getAttributeVector().add(pAttribute);
-        return getAttributeVector().indexOf(pAttribute);
+    public int addAttribute(Attribute attribute) {
+        return attributesService.addAttribute(attribute);
     }
 
     @Override
-    public void insertAttribute(int pPosition, Attribute pAttribute) {
-        checkAttributePosition(pPosition);
-        getAttributeVector().add(pPosition, pAttribute);
+    public void insertAttribute(int position, Attribute attribute) {
+        attributesService.insertAttribute(position, attribute);
     }
 
     @Override
-    public void removeAttribute(int pPosition) {
-        checkAttributePosition(pPosition);
-        mAttributeVector.remove(pPosition);
+    public void removeAttribute(int position) {
+        attributesService.removeAttribute(position);
     }
 
-    private List<Attribute> getAttributeVector() {
-        if (mAttributeVector == null) {
-            mAttributeVector = new ArrayList<>();
-        }
-        return mAttributeVector;
+    public void checkAttributePosition(int position) {
+        attributesService.checkAttributePosition(position);
     }
 }
