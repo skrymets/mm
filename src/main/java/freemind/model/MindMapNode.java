@@ -4,7 +4,6 @@ import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.modes.*;
 import freemind.model.attributes.Attribute;
-import freemind.modes.mindmapmode.actions.MindMapActions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -390,13 +389,13 @@ public interface MindMapNode extends MutableTreeNode {
 
     /**
      * Sets the attribute to the given value.
-     * Don't set the attributes directly here. Use the {@link MindMapActions} methods instead.
+     * Don't set the attributes directly here. Use the MindMapActions methods instead.
      */
     void setAttribute(int pPosition, Attribute pAttribute);
 
     /**
      * Insert the attribute to the given value.
-     * Don't set the attributes directly here. Use the {@link MindMapActions} methods instead.
+     * Don't set the attributes directly here. Use the MindMapActions methods instead.
      */
     void insertAttribute(int pPosition, Attribute pAttribute);
 
