@@ -1,10 +1,6 @@
 package freemind.model;
 
 import freemind.main.Tools;
-import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.ArrowLinkTarget;
-import freemind.modes.CloudAdapter;
-
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.io.File;
@@ -155,12 +151,6 @@ public interface MindMap extends TreeModel {
     NodeAdapter createNodeAdapter(MindMap pMap, String nodeClass);
 
     EdgeAdapter createEdgeAdapter(NodeAdapter node);
-
-    CloudAdapter createCloudAdapter(NodeAdapter node);
-
-    ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter source, NodeAdapter target);
-
-    ArrowLinkTarget createArrowLinkTarget(NodeAdapter source, NodeAdapter target);
 
     MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws IOException;
 

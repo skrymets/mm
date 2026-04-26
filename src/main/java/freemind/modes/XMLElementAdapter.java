@@ -66,6 +66,10 @@ public class XMLElementAdapter {
         return mModeFeedback.getMap();
     }
 
+    private ModeMap modeMap() {
+        return (ModeMap) getMap();
+    }
+
     /**
      * Build the FreeMind model tree from a DOM Element (typically the document element).
      * This replaces the old parseFromReader() + callback approach.
@@ -161,11 +165,11 @@ public class XMLElementAdapter {
             case "edge":
                 return getMap().createEdgeAdapter(null);
             case "cloud":
-                return getMap().createCloudAdapter(null);
+                return modeMap().createCloudAdapter(null);
             case "arrowlink":
-                return getMap().createArrowLinkAdapter(null, null);
+                return modeMap().createArrowLinkAdapter(null, null);
             case "linktarget":
-                return getMap().createArrowLinkTarget(null, null);
+                return modeMap().createArrowLinkTarget(null, null);
             case "font":
             case "icon":
             case XML_NODE_REGISTERED_ATTRIBUTE_VALUE:

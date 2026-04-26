@@ -10,7 +10,7 @@ import java.io.Writer;
 
 @Getter
 @SuppressWarnings("serial")
-public class FileMapModel extends MapAdapter {
+public class FileMapModel extends MapAdapter implements ModeMap {
 
     //
     // Other methods

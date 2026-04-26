@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Objects;
 
 @SuppressWarnings("serial")
-public class BrowseMapModel extends MapAdapter {
+public class BrowseMapModel extends MapAdapter implements ModeMap {
 
     private static final String ENCRYPTED_BROWSE_NODE = EncryptedBrowseNode.class
             .getName();

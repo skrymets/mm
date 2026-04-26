@@ -17,7 +17,7 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 @Slf4j
-public class MindMapMapModel extends MapAdapter {
+public class MindMapMapModel extends MapAdapter implements ModeMap {
 
     public static final String RESTORE_MODE_MIND_MAP = "MindMap:";
 

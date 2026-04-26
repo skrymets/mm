@@ -1,8 +1,5 @@
 package freemind.model;
 
-import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.ArrowLinkTarget;
-import freemind.modes.CloudAdapter;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,21 +39,6 @@ class MapAdapterTest {
 
         @Override
         public EdgeAdapter createEdgeAdapter(NodeAdapter node) {
-            return null;
-        }
-
-        @Override
-        public CloudAdapter createCloudAdapter(NodeAdapter node) {
-            return null;
-        }
-
-        @Override
-        public ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter source, NodeAdapter target) {
-            return null;
-        }
-
-        @Override
-        public ArrowLinkTarget createArrowLinkTarget(NodeAdapter source, NodeAdapter target) {
             return null;
         }
 
