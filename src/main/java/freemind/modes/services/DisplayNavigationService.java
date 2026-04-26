@@ -28,7 +28,7 @@ public class DisplayNavigationService {
         if (adaptedText.startsWith("#")) {
             try {
                 MindMapNode dest = adapter.getNodeFromID(adaptedText.substring(1));
-                return dest.getShortText(adapter);
+                return dest.getShortText();
             } catch (RuntimeException e) {
                 return adapter.getText("link_not_available_any_more");
             }

@@ -68,7 +68,7 @@ public final class MindMapUtils {
      */
     public static String getNodeTextHierarchy(MindMapNode pNode,
                                               MindMapController pMindMapController) {
-        return pNode.getShortText(pMindMapController)
+        return pNode.getShortText()
                 + ((pNode.isRoot()) ? "" : (" <- " + getNodeTextHierarchy(
                 pNode.getParentNode(), pMindMapController)));
     }

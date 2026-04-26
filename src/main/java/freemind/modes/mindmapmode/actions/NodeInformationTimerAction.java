@@ -86,7 +86,7 @@ public class NodeInformationTimerAction implements ActionListener {
                 allDescendants.addAll(child.getChildren());
                 allDescendants.remove(0);
             }
-            nodeStatusLine = controller.getResources().format("node_status_line", new Object[]{sel.getShortText(controller), Integer.valueOf(sel.getChildCount()), amountOfChildren});
+            nodeStatusLine = controller.getResources().format("node_status_line", new Object[]{sel.getShortText(), Integer.valueOf(sel.getChildCount()), amountOfChildren});
         }
         controller.getFrame().setStatusText(nodeStatusLine);
     }

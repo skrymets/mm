@@ -24,7 +24,7 @@ public class GotoLinkNodeAction extends AbstractAction {
         this.source = source;
         // source is for the controllerAdapter == null,
         if (source != null) {
-            String adaptedText = source.getShortText(controller);
+            String adaptedText = source.getShortText();
             putValue(Action.NAME, controller.getText("follow_graphical_link")
                     + adaptedText);
             putValue(Action.SHORT_DESCRIPTION, source.toString());

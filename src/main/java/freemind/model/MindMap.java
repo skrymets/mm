@@ -39,10 +39,6 @@ public interface MindMap extends TreeModel {
 
     boolean save(File file) throws IOException;
 
-    // see ModeController.
-    // public void load(URL file) throws FileNotFoundException, IOException,
-    // XMLParseException, URISyntaxException;
-
     /**
      * Return URL of the map (whether as local file or a web location)
      */

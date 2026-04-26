@@ -576,7 +576,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
         private String printNodeId(MindMapNode pCloneNode) {
             try {
                 return controller.getNodeID(pCloneNode) + ": '"
-                        + (pCloneNode.getShortText(controller)) + "'";
+                        + (pCloneNode.getShortText()) + "'";
             } catch (Exception e) {
                 return "NOT FOUND: '" + pCloneNode + "'";
             }

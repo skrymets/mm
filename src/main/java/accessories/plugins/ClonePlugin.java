@@ -234,7 +234,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
     private String printNodeId(MindMapNode pCloneNode) {
         try {
             return getMindMapController().getNodeID(pCloneNode) + ": '"
-                    + (pCloneNode.getShortText(getMindMapController())) + "'";
+                    + (pCloneNode.getShortText()) + "'";
         } catch (Exception e) {
             return "NOT FOUND: '" + pCloneNode + "'";
         }

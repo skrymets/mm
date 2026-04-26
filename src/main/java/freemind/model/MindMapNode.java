@@ -3,7 +3,6 @@ package freemind.model;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.model.attributes.Attribute;
-import freemind.modes.ModeController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -115,7 +114,7 @@ public interface MindMapNode extends MutableTreeNode {
      * returns a short textual description of the text contained in the node.
      * Html is filtered out.
      */
-    String getShortText(ModeController controller);
+    String getShortText();
 
     MindMapEdge getEdge();
 

@@ -5,7 +5,6 @@ import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.ModeController;
 import freemind.modes.XMLElementAdapter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -231,9 +230,8 @@ public abstract class NodeAdapter implements MindMapNode {
         return toString();
     }
 
-    public String getShortText(ModeController controller) {
+    public String getShortText() {
         String adaptedText = getPlainTextContent();
-        // adaptedText = adaptedText.replaceAll("<html>", "");
         if (adaptedText.length() > 40)
             adaptedText = adaptedText.substring(0, 40) + " ...";
         return adaptedText;
