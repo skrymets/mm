@@ -4,7 +4,6 @@ import freemind.extensions.DontSaveMarker;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
-import freemind.modes.ArrowLinkAdapter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import freemind.model.attributes.Attribute;
@@ -1028,8 +1027,8 @@ public abstract class NodeAdapter implements MindMapNode {
 
         List<MindMapLink> linkVector = registry.getAllLinksFromMe(this);
         for (MindMapLink mapLink : linkVector) {
-            if (mapLink instanceof ArrowLinkAdapter) {
-                Element arrowLinkElement = ((ArrowLinkAdapter) mapLink).save(doc);
+            Element arrowLinkElement = mapLink.saveLink(doc);
+            if (arrowLinkElement != null) {
                 node.appendChild(arrowLinkElement);
             }
         }
@@ -1037,8 +1036,8 @@ public abstract class NodeAdapter implements MindMapNode {
         // virtual link targets:
         List<MindMapLink> targetVector = registry.getAllLinksIntoMe(this);
         for (MindMapLink mindMapLink : targetVector) {
-            if (mindMapLink instanceof ArrowLinkAdapter) {
-                Element arrowLinkTargetElement = ((ArrowLinkAdapter) mindMapLink).createArrowLinkTarget(registry).save(doc);
+            Element arrowLinkTargetElement = mindMapLink.saveTarget(doc, registry);
+            if (arrowLinkTargetElement != null) {
                 node.appendChild(arrowLinkTargetElement);
             }
         }

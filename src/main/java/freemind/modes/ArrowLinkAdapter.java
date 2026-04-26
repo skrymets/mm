@@ -123,6 +123,16 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArr
         return arrowLink;
     }
 
+    @Override
+    public Element saveLink(Document doc) {
+        return save(doc);
+    }
+
+    @Override
+    public Element saveTarget(Document doc, MindMapLinkRegistry registry) {
+        return createArrowLinkTarget(registry).save(doc);
+    }
+
     public ArrowLinkTarget createArrowLinkTarget(MindMapLinkRegistry pRegistry) {
         ArrowLinkTarget linkTarget = new ArrowLinkTarget(source, target, mMapFeedback);
         linkTarget.setSourceLabel(pRegistry.getLabel(source));
