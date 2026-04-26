@@ -5,7 +5,6 @@ import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.XMLElementAdapter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import freemind.model.attributes.Attribute;
@@ -990,30 +989,30 @@ public abstract class NodeAdapter implements MindMapNode {
                          boolean saveInvisible, boolean saveChildren) throws IOException {
         // pre save event to save all contents of the node:
         getMapFeedback().firePreSaveEvent(this);
-        Element node = doc.createElement(XMLElementAdapter.XML_NODE);
+        Element node = doc.createElement(XmlNodeConstants.XML_NODE);
 
         /* fc, 12.6.2005: XML must not contain any zero characters. */
         String text = this.toString().replace('\0', ' ');
         if (!HtmlTools.isHtmlNode(text)) {
-            node.setAttribute(XMLElementAdapter.XML_NODE_TEXT, text);
+            node.setAttribute(XmlNodeConstants.XML_NODE_TEXT, text);
         } else {
             // save <content> tag:
-            Element htmlElement = doc.createElement(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
-            htmlElement.setAttribute(XMLElementAdapter.XML_NODE_XHTML_TYPE_TAG,
-                    XMLElementAdapter.XML_NODE_XHTML_TYPE_NODE);
+            Element htmlElement = doc.createElement(XmlNodeConstants.XML_NODE_XHTML_CONTENT_TAG);
+            htmlElement.setAttribute(XmlNodeConstants.XML_NODE_XHTML_TYPE_TAG,
+                    XmlNodeConstants.XML_NODE_XHTML_TYPE_NODE);
             FreeMindXml.setEncodedContent(htmlElement, convertToEncodedContent(getXmlText()));
             node.appendChild(htmlElement);
         }
         if (getXmlNoteText() != null) {
-            Element htmlElement = doc.createElement(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
-            htmlElement.setAttribute(XMLElementAdapter.XML_NODE_XHTML_TYPE_TAG,
-                    XMLElementAdapter.XML_NODE_XHTML_TYPE_NOTE);
+            Element htmlElement = doc.createElement(XmlNodeConstants.XML_NODE_XHTML_CONTENT_TAG);
+            htmlElement.setAttribute(XmlNodeConstants.XML_NODE_XHTML_TYPE_TAG,
+                    XmlNodeConstants.XML_NODE_XHTML_TYPE_NOTE);
             FreeMindXml.setEncodedContent(htmlElement, convertToEncodedContent(getXmlNoteText()));
             node.appendChild(htmlElement);
         }
         // save additional info:
         if (getAdditionalInfo() != null) {
-            node.setAttribute(XMLElementAdapter.XML_NODE_ENCRYPTED_CONTENT,
+            node.setAttribute(XmlNodeConstants.XML_NODE_ENCRYPTED_CONTENT,
                     getAdditionalInfo());
         }
 
@@ -1099,10 +1098,10 @@ public abstract class NodeAdapter implements MindMapNode {
 
         // history information, fc, 11.4.2005
         if (historyInformation != null) {
-            node.setAttribute(XMLElementAdapter.XML_NODE_HISTORY_CREATED_AT,
+            node.setAttribute(XmlNodeConstants.XML_NODE_HISTORY_CREATED_AT,
                     Tools.dateToString(getHistoryInformation().getCreatedAt()));
             node.setAttribute(
-                    XMLElementAdapter.XML_NODE_HISTORY_LAST_MODIFIED_AT, Tools
+                    XmlNodeConstants.XML_NODE_HISTORY_LAST_MODIFIED_AT, Tools
                             .dateToString(getHistoryInformation()
                                     .getLastModifiedAt()));
         }
@@ -1148,7 +1147,7 @@ public abstract class NodeAdapter implements MindMapNode {
         }
         if (mAttributeVector != null) {
             for (Attribute attribute : mAttributeVector) {
-                Element attributeElement = doc.createElement(XMLElementAdapter.XML_NODE_ATTRIBUTE);
+                Element attributeElement = doc.createElement(XmlNodeConstants.XML_NODE_ATTRIBUTE);
                 attributeElement.setAttribute("NAME", attribute.getName());
                 attributeElement.setAttribute("VALUE", attribute.getValue());
                 node.appendChild(attributeElement);

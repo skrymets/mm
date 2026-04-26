@@ -28,23 +28,23 @@ public class XMLElementAdapter {
     @Getter
     private NodeAdapter mapChild = null;
 
-    public static final String XML_NODE_TEXT = "TEXT";
-    public static final String XML_NODE = "node";
-    public static final String XML_NODE_ATTRIBUTE = "attribute";
+    public static final String XML_NODE_TEXT = XmlNodeConstants.XML_NODE_TEXT;
+    public static final String XML_NODE = XmlNodeConstants.XML_NODE;
+    public static final String XML_NODE_ATTRIBUTE = XmlNodeConstants.XML_NODE_ATTRIBUTE;
     public static final String XML_NODE_ATTRIBUTE_LAYOUT = "attribute_layout";
     public static final String XML_NODE_ATTRIBUTE_REGISTRY = "attribute_registry";
     public static final String XML_NODE_REGISTERED_ATTRIBUTE_NAME = "attribute_name";
     public static final String XML_NODE_REGISTERED_ATTRIBUTE_VALUE = "attribute_value";
     public static final String XML_NODE_CLASS = "AA_NODE_CLASS";
     public static final String XML_NODE_ADDITIONAL_INFO = "ADDITIONAL_INFO";
-    public static final String XML_NODE_ENCRYPTED_CONTENT = "ENCRYPTED_CONTENT";
-    public static final String XML_NODE_HISTORY_CREATED_AT = "CREATED";
-    public static final String XML_NODE_HISTORY_LAST_MODIFIED_AT = "MODIFIED";
+    public static final String XML_NODE_ENCRYPTED_CONTENT = XmlNodeConstants.XML_NODE_ENCRYPTED_CONTENT;
+    public static final String XML_NODE_HISTORY_CREATED_AT = XmlNodeConstants.XML_NODE_HISTORY_CREATED_AT;
+    public static final String XML_NODE_HISTORY_LAST_MODIFIED_AT = XmlNodeConstants.XML_NODE_HISTORY_LAST_MODIFIED_AT;
 
-    public static final String XML_NODE_XHTML_CONTENT_TAG = "richcontent";
-    public static final String XML_NODE_XHTML_TYPE_TAG = "TYPE";
-    public static final String XML_NODE_XHTML_TYPE_NODE = "NODE";
-    public static final String XML_NODE_XHTML_TYPE_NOTE = "NOTE";
+    public static final String XML_NODE_XHTML_CONTENT_TAG = XmlNodeConstants.XML_NODE_XHTML_CONTENT_TAG;
+    public static final String XML_NODE_XHTML_TYPE_TAG = XmlNodeConstants.XML_NODE_XHTML_TYPE_TAG;
+    public static final String XML_NODE_XHTML_TYPE_NODE = XmlNodeConstants.XML_NODE_XHTML_TYPE_NODE;
+    public static final String XML_NODE_XHTML_TYPE_NOTE = XmlNodeConstants.XML_NODE_XHTML_TYPE_NOTE;
 
     // arrow link attributes:
     protected final List<ArrowLinkAdapter> mArrowLinkAdapters;
