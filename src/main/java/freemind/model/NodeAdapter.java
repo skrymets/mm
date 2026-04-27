@@ -1,13 +1,10 @@
 package freemind.model;
 
-import freemind.extensions.DontSaveMarker;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
-import freemind.main.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import freemind.model.attributes.Attribute;
-import freemind.preferences.FreemindPropertyListener;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +16,8 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +54,8 @@ public abstract class NodeAdapter implements MindMapNode {
     private final freemind.model.services.NodeStyleService styleService = new freemind.model.services.NodeStyleService(this);
     @Getter
     private final freemind.model.services.NodeHooksService hooksService = new freemind.model.services.NodeHooksService(this);
+    @Getter
+    private final freemind.model.services.NodeXmlSerializerService xmlSerializerService = new freemind.model.services.NodeXmlSerializerService(this);
 
     @Setter
     @Getter
@@ -99,8 +99,6 @@ public abstract class NodeAdapter implements MindMapNode {
     @Setter
     @Getter
     private MindMap map = null;
-    private static FreemindPropertyListener sSaveIdPropertyChangeListener;
-    private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
 
     protected NodeAdapter(Object userObject, MindMap pMap) {
         this.map = pMap;
@@ -108,15 +106,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
         // create creation time:
         setHistoryInformation(new HistoryInformation());
-        if (sSaveIdPropertyChangeListener == null) {
-            sSaveIdPropertyChangeListener = (propertyName, newValue, oldValue) -> {
-                if (propertyName.equals(FreeMindCommon.SAVE_ONLY_INTRISICALLY_NEEDED_IDS)) {
-                    sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(newValue).booleanValue();
-                }
-            };
-            Resources.addPropertyChangeListenerAndPropagate(sSaveIdPropertyChangeListener);
-        }
-
     }
 
     @Override
@@ -378,21 +367,9 @@ public abstract class NodeAdapter implements MindMapNode {
         return getParentNode().hasFoldedParents();
     }
 
+    @Override
     public MindMapNode shallowCopy() {
-        try {
-            // get XML from me.
-            StringWriter writer = new StringWriter();
-            Document doc = FreeMindXml.newDocument();
-            this.save(writer, doc, this.getMap().getLinkRegistry(), true, false);
-            String result = writer.toString();
-            HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();
-            MindMapNode copy = getMap().createNodeTreeFromXml(new StringReader(result), IDToTarget);
-            copy.setFolded(false);
-            return copy;
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage(), e);
-            return null;
-        }
+        return xmlSerializerService.shallowCopy();
     }
 
     //
@@ -730,196 +707,14 @@ public abstract class NodeAdapter implements MindMapNode {
         tooltipService.setToolTip(key, string);
     }
 
+    @Override
     public Element save(Writer writer, Document doc, MindMapLinkRegistry registry,
                          boolean saveInvisible, boolean saveChildren) throws IOException {
-        // pre save event to save all contents of the node:
-        getMapFeedback().firePreSaveEvent(this);
-        Element node = doc.createElement(XmlNodeConstants.XML_NODE);
-
-        /* fc, 12.6.2005: XML must not contain any zero characters. */
-        String text = this.toString().replace('\0', ' ');
-        if (!HtmlTools.isHtmlNode(text)) {
-            node.setAttribute(XmlNodeConstants.XML_NODE_TEXT, text);
-        } else {
-            // save <content> tag:
-            Element htmlElement = doc.createElement(XmlNodeConstants.XML_NODE_XHTML_CONTENT_TAG);
-            htmlElement.setAttribute(XmlNodeConstants.XML_NODE_XHTML_TYPE_TAG,
-                    XmlNodeConstants.XML_NODE_XHTML_TYPE_NODE);
-            FreeMindXml.setEncodedContent(htmlElement, convertToEncodedContent(getXmlText()));
-            node.appendChild(htmlElement);
-        }
-        if (getXmlNoteText() != null) {
-            Element htmlElement = doc.createElement(XmlNodeConstants.XML_NODE_XHTML_CONTENT_TAG);
-            htmlElement.setAttribute(XmlNodeConstants.XML_NODE_XHTML_TYPE_TAG,
-                    XmlNodeConstants.XML_NODE_XHTML_TYPE_NOTE);
-            FreeMindXml.setEncodedContent(htmlElement, convertToEncodedContent(getXmlNoteText()));
-            node.appendChild(htmlElement);
-        }
-        // save additional info:
-        if (getAdditionalInfo() != null) {
-            node.setAttribute(XmlNodeConstants.XML_NODE_ENCRYPTED_CONTENT,
-                    getAdditionalInfo());
-        }
-
-        Element edge = (getEdge()).save(doc);
-        if (edge != null) {
-            node.appendChild(edge);
-        }
-
-        if (getCloud() != null) {
-            Element cloud = (getCloud()).save(doc);
-            node.appendChild(cloud);
-        }
-
-        List<MindMapLink> linkVector = registry.getAllLinksFromMe(this);
-        for (MindMapLink mapLink : linkVector) {
-            Element arrowLinkElement = mapLink.saveLink(doc);
-            if (arrowLinkElement != null) {
-                node.appendChild(arrowLinkElement);
-            }
-        }
-
-        // virtual link targets:
-        List<MindMapLink> targetVector = registry.getAllLinksIntoMe(this);
-        for (MindMapLink mindMapLink : targetVector) {
-            Element arrowLinkTargetElement = mindMapLink.saveTarget(doc, registry);
-            if (arrowLinkTargetElement != null) {
-                node.appendChild(arrowLinkTargetElement);
-            }
-        }
-
-        if (isFolded()) {
-            node.setAttribute("FOLDED", "true");
-        }
-
-        // fc, 17.12.2003: Remove the left/right bug.
-        // VVV save if and only if parent is root.
-        if (!(isRoot()) && (getParentNode().isRoot())) {
-            node.setAttribute("POSITION", isLeft() ? "left" : "right");
-        }
-
-        // the id is used, if there is a local hyperlink pointing to me or a
-        // real link.
-        String label = registry.getLabel(this);
-        if (!sSaveOnlyIntrinsicallyNeededIds
-                || (registry.isTargetOfLocalHyperlinks(label) || (!registry
-                .getAllLinksIntoMe(this).isEmpty()))) {
-            if (label != null) {
-                node.setAttribute("ID", label);
-            }
-        }
-        if (getColor() != null) {
-            node.setAttribute("COLOR", ColorUtils.colorToXml(getColor()));
-        }
-
-        // new background color.
-        if (getBackgroundColor() != null) {
-            node.setAttribute("BACKGROUND_COLOR",
-                    ColorUtils.colorToXml(getBackgroundColor()));
-        }
-
-        if (hasStyle()) {
-            node.setAttribute("STYLE", this.getStyle());
-        }
-        // ^ Here cannot be just getStyle() without super. This is because
-        // getStyle's style depends on folded / unfolded. For example, when
-        // real style is fork and node is folded, getStyle returns
-        // MindMapNode.STYLE_BUBBLE, which is not what we want to save.
-
-        // layout
-        if (vGap != VGAP) {
-            node.setAttribute("VGAP", Integer.toString(vGap));
-        }
-        if (hGap != HGAP) {
-            node.setAttribute("HGAP", Integer.toString(hGap));
-        }
-        if (shiftY != 0) {
-            node.setAttribute("VSHIFT", Integer.toString(shiftY));
-        }
-        // link
-        if (getLink() != null) {
-            node.setAttribute("LINK", getLink());
-        }
-
-        // history information, fc, 11.4.2005
-        if (historyInformation != null) {
-            node.setAttribute(XmlNodeConstants.XML_NODE_HISTORY_CREATED_AT,
-                    Tools.dateToString(getHistoryInformation().getCreatedAt()));
-            node.setAttribute(
-                    XmlNodeConstants.XML_NODE_HISTORY_LAST_MODIFIED_AT, Tools
-                            .dateToString(getHistoryInformation()
-                                    .getLastModifiedAt()));
-        }
-        // font
-        if (getFont() != null) {
-            Element fontElement = doc.createElement("font");
-
-            fontElement.setAttribute("NAME", getFont().getFamily());
-            if (getFont().getSize() != 0) {
-                fontElement.setAttribute("SIZE",
-                        Integer.toString(getFont().getSize()));
-            }
-            if (isBold()) {
-                fontElement.setAttribute("BOLD", "true");
-            }
-            if (isStrikethrough()) {
-                fontElement.setAttribute("STRIKETHROUGH", "true");
-            }
-            if (isItalic()) {
-                fontElement.setAttribute("ITALIC", "true");
-            }
-            if (isUnderlined()) {
-                fontElement.setAttribute("UNDERLINE", "true");
-            }
-            node.appendChild(fontElement);
-        }
-        for (int i = 0; i < getIcons().size(); ++i) {
-            Element iconElement = doc.createElement("icon");
-            iconElement.setAttribute("BUILTIN",
-                    getIcons().get(i).getName());
-            node.appendChild(iconElement);
-        }
-
-        for (PermanentNodeHook permHook : getActivatedHooks()) {
-            if (permHook instanceof DontSaveMarker) {
-                continue;
-            }
-            Element hookElement = doc.createElement("hook");
-            permHook.save(doc, hookElement);
-            node.appendChild(hookElement);
-        }
-        for (Attribute attribute : getAttributes()) {
-            Element attributeElement = doc.createElement(XmlNodeConstants.XML_NODE_ATTRIBUTE);
-            attributeElement.setAttribute("NAME", attribute.getName());
-            attributeElement.setAttribute("VALUE", attribute.getValue());
-            node.appendChild(attributeElement);
-        }
-
-        if (saveChildren && childrenUnfolded().hasNext()) {
-            FreeMindXml.writeFreeMindElement(node, writer, false);
-            // recursive
-            saveChildren(writer, doc, registry, this, saveInvisible);
-            FreeMindXml.writeFreeMindClosingTag(node, writer);
-        } else {
-            FreeMindXml.writeFreeMindElement(node, writer, true);
-        }
-        return node;
+        return xmlSerializerService.save(writer, doc, registry, saveInvisible, saveChildren);
     }
 
-    public static String convertToEncodedContent(String xmlText2) {
-        String replace = HtmlTools.makeValidXml(xmlText2);
-        return HtmlTools.unicodeToHTMLUnicodeEntity(replace, true);
-    }
-
-    private void saveChildren(Writer writer, Document doc, MindMapLinkRegistry registry,
-                              NodeAdapter node, boolean saveHidden) throws IOException {
-        for (ListIterator<NodeAdapter> e = node.childrenUnfolded(); e.hasNext(); ) {
-            NodeAdapter child = e.next();
-            if (saveHidden || child.isVisible())
-                child.save(writer, doc, registry, saveHidden, true);
-            else
-                saveChildren(writer, doc, registry, child, saveHidden);
-        }
+    public static String convertToEncodedContent(String xmlText) {
+        return freemind.model.services.NodeXmlSerializerService.convertToEncodedContent(xmlText);
     }
 
     public boolean hasExactlyOneVisibleChild() {
