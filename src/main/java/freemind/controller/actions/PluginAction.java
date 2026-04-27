@@ -37,7 +37,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "plugin_action")
 public class PluginAction
 {
-    private List<Choice> choiceList = new ArrayList<Choice>();
+    private List<Choice> choiceList = new ArrayList<>();
     @XmlAttribute(name = "label")
     private String label;
     @XmlAttribute(name = "name")

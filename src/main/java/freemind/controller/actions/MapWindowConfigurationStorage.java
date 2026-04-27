@@ -41,8 +41,8 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "map_window_configuration_storage")
 public class MapWindowConfigurationStorage extends WindowConfigurationStorage
 {
-    private List<TableColumnSettingStore> tableColumnSettingList = new ArrayList<TableColumnSettingStore>();
-    private List<MapLocationStorage> mapLocationStorageList = new ArrayList<MapLocationStorage>();
+    private List<TableColumnSettingStore> tableColumnSettingList = new ArrayList<>();
+    private List<MapLocationStorage> mapLocationStorageList = new ArrayList<>();
     @XmlAttribute(name = "map_center_longitude")
     private Double mapCenterLongitude;
     @XmlAttribute(name = "map_center_latitude")

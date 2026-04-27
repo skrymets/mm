@@ -27,7 +27,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "move_nodes_action")
 public class MoveNodesAction extends NodeAction
 {
-    private List<NodeListMember> nodeListMemberList = new ArrayList<NodeListMember>();
+    private List<NodeListMember> nodeListMemberList = new ArrayList<>();
     @XmlAttribute(name = "direction")
     private int direction;
 

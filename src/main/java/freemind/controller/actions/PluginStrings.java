@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "plugin_strings")
 public class PluginStrings
 {
-    private List<PluginString> pluginStringList = new ArrayList<PluginString>();
+    private List<PluginString> pluginStringList = new ArrayList<>();
     @XmlAttribute(name = "language")
     private String language;
 

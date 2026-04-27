@@ -27,7 +27,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "mindmap_last_state_map_storage")
 public class MindmapLastStateMapStorage extends XmlAction
 {
-    private List<MindmapLastStateStorage> mindmapLastStateStorageList = new ArrayList<MindmapLastStateStorage>();
+    private List<MindmapLastStateStorage> mindmapLastStateStorageList = new ArrayList<>();
     @XmlAttribute(name = "last_focused_tab")
     private Integer lastFocusedTab;
 

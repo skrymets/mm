@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "patterns")
 public class Patterns extends XmlAction
 {
-    private List<Pattern> patternList = new ArrayList<Pattern>();
+    private List<Pattern> patternList = new ArrayList<>();
 
     /**
      * Get the list of 'pattern' element items.

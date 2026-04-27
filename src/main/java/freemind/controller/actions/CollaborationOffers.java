@@ -27,7 +27,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "collaboration_offers")
 public class CollaborationOffers extends CollaborationActionBase
 {
-    private List<CollaborationMapOffer> collaborationMapOfferList = new ArrayList<CollaborationMapOffer>();
+    private List<CollaborationMapOffer> collaborationMapOfferList = new ArrayList<>();
     @XmlAttribute(name = "is_single_offer")
     private Boolean isSingleOffer;
 

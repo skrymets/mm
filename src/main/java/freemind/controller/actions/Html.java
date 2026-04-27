@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "html")
 public class Html
 {
-    private List<Element> anyList = new ArrayList<Element>();
+    private List<Element> anyList = new ArrayList<>();
 
     /**
      * Get the list of 'html' element items.

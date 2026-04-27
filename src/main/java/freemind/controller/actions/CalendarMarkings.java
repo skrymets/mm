@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "calendar_markings")
 public class CalendarMarkings extends XmlAction
 {
-    private List<CalendarMarking> calendarMarkingList = new ArrayList<CalendarMarking>();
+    private List<CalendarMarking> calendarMarkingList = new ArrayList<>();
 
     /**
      * Get the list of 'calendar_marking' element items.

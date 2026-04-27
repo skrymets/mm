@@ -28,8 +28,8 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "hook_node_action")
 public class HookNodeAction extends NodeAction
 {
-    private List<NodeListMember> nodeListMemberList = new ArrayList<NodeListMember>();
-    private List<NodeChildParameter> nodeChildParameterList = new ArrayList<NodeChildParameter>();
+    private List<NodeListMember> nodeListMemberList = new ArrayList<>();
+    private List<NodeChildParameter> nodeChildParameterList = new ArrayList<>();
     @XmlAttribute(name = "hook_name")
     private String hookName;
 

@@ -27,7 +27,7 @@ import jakarta.xml.bind.annotation.*;
 public class CompoundAction extends NodeAction
 {
     @XmlTransient
-    private List<Choice> choiceList = new ArrayList<Choice>();
+    private List<Choice> choiceList = new ArrayList<>();
 
     /**
      * JAXB-visible accessor for the action list. Converts between Choice wrappers

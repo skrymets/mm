@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.*;
 public class MenuCategoryBase
 {
     @XmlTransient
-    private List<Base> baseList = new ArrayList<Base>();
+    private List<Base> baseList = new ArrayList<>();
 
     @XmlElements({
         @XmlElement(name = "menu_category", type = MenuCategoryBase.class),

@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.*;
 public class Plugin
 {
     @XmlTransient
-    private List<Choice> choiceList = new ArrayList<Choice>();
+    private List<Choice> choiceList = new ArrayList<>();
 
     @XmlElements({
         @XmlElement(name = "plugin_classpath", type = PluginClasspath.class),

@@ -33,7 +33,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "mindmap_last_state_storage")
 public class MindmapLastStateStorage extends XmlAction
 {
-    private List<NodeListMember> nodeListMemberList = new ArrayList<NodeListMember>();
+    private List<NodeListMember> nodeListMemberList = new ArrayList<>();
     @XmlAttribute(name = "last_changed")
     private long lastChanged;
     @XmlAttribute(name = "tab_index")

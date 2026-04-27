@@ -28,7 +28,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "transferable_content")
 public class TransferableContent
 {
-    private List<TransferableFile> transferableFileList = new ArrayList<TransferableFile>();
+    private List<TransferableFile> transferableFileList = new ArrayList<>();
     private String transferable;
     private String transferableAsPlainText;
     private String transferableAsRTF;

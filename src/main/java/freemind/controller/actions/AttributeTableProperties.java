@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "attribute_table_properties")
 public class AttributeTableProperties extends XmlAction
 {
-    private List<TableColumnOrder> tableColumnOrderList = new ArrayList<TableColumnOrder>();
+    private List<TableColumnOrder> tableColumnOrderList = new ArrayList<>();
 
     /**
      * Get the list of 'table_column_order' element items.

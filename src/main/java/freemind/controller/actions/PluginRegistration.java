@@ -24,7 +24,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "plugin_registration")
 public class PluginRegistration
 {
-    private List<PluginMode> pluginModeList = new ArrayList<PluginMode>();
+    private List<PluginMode> pluginModeList = new ArrayList<>();
     @XmlAttribute(name = "class_name")
     private String className;
     @XmlAttribute(name = "isPluginBase")

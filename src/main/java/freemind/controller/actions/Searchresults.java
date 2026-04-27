@@ -32,7 +32,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "searchresults")
 public class Searchresults extends XmlAction
 {
-    private List<Place> placeList = new ArrayList<Place>();
+    private List<Place> placeList = new ArrayList<>();
     @XmlAttribute(name = "timestamp")
     private String timestamp;
     @XmlAttribute(name = "attribution")

@@ -45,7 +45,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "node")
 public class Node
 {
-    private List<Choice> choiceList = new ArrayList<Choice>();
+    private List<Choice> choiceList = new ArrayList<>();
     @XmlAttribute(name = "BACKGROUND_COLOR")
     private String BACKGROUNDCOLOR;
     @XmlAttribute(name = "COLOR")

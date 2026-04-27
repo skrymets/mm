@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.*;
 public class MenuStructure
 {
     @XmlElement(name = "menu_category")
-    private List<MenuCategoryBase> menuCategoryList = new ArrayList<MenuCategoryBase>();
+    private List<MenuCategoryBase> menuCategoryList = new ArrayList<>();
 
     /**
      * Get the list of 'menu_category' element items.

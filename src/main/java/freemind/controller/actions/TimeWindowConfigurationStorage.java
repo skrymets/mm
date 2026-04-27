@@ -27,7 +27,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "time_window_configuration_storage")
 public class TimeWindowConfigurationStorage extends WindowConfigurationStorage
 {
-    private List<TimeWindowColumnSetting> timeWindowColumnSettingList = new ArrayList<TimeWindowColumnSetting>();
+    private List<TimeWindowColumnSetting> timeWindowColumnSettingList = new ArrayList<>();
     @XmlAttribute(name = "view_folded_nodes")
     private Boolean viewFoldedNodes;
 

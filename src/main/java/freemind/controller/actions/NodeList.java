@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "node_list")
 public class NodeList extends XmlAction
 {
-    private List<NodeListMember> nodeListMemberList = new ArrayList<NodeListMember>();
+    private List<NodeListMember> nodeListMemberList = new ArrayList<>();
 
     /**
      * Get the list of 'node_list_member' element items.
