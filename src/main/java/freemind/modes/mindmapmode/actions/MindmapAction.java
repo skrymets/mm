@@ -3,6 +3,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.modes.FreemindAction;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import freemind.view.ImageFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -14,22 +15,21 @@ import javax.swing.*;
 @Slf4j
 public abstract class MindmapAction extends FreemindAction {
 
-    private final MindMapController pMindMapController;
+    private final transient MindMapController mindMapController;
 
     /**
      * @param title is a fixed title (no translation is done via resources)
      */
-    public MindmapAction(String title, Icon icon,
-                         MindMapController mindMapController) {
+    protected MindmapAction(String title, Icon icon, MindMapController mindMapController) {
         super(title, icon, mindMapController);
-        this.pMindMapController = mindMapController;
+        this.mindMapController = mindMapController;
 
     }
 
     /**
      * @param title Title is a resource.
      */
-    public MindmapAction(String title, MindMapController mindMapController) {
+    protected MindmapAction(String title, MindMapController mindMapController) {
         this(title, (String) null, mindMapController);
     }
 
@@ -37,21 +37,16 @@ public abstract class MindmapAction extends FreemindAction {
      * @param title    Title is a resource.
      * @param iconPath is a path to an icon.
      */
-    public MindmapAction(String title, String iconPath, final MindMapController mindMapController) {
-        this(mindMapController.getText(title),
-                (iconPath == null)
-                        ? null
-                        : freemind.view.ImageFactory.getInstance().createIconWithSvgFallback(mindMapController.getResource(iconPath)),
-                mindMapController);
+    protected MindmapAction(String title, String iconPath, final MindMapController mindMapController) {
+        this(mindMapController.getText(title), (iconPath == null) ? null : ImageFactory.getInstance().createIconWithSvgFallback(mindMapController.getResource(iconPath)), mindMapController);
     }
 
     public void addActor(ActorXml actor) {
-        // registration:
-        pMindMapController.getActionRegistry().registerActor(actor, actor.getDoActionClass());
+        mindMapController.getActionRegistry().registerActor(actor, actor.getDoActionClass());
     }
 
     public MindMapController getMindMapController() {
-        return pMindMapController;
+        return mindMapController;
     }
 
 }

@@ -11,9 +11,9 @@ import java.awt.event.ActionEvent;
 public abstract class AbstractXmlAction extends MindmapAction {
 
     @Getter
-    private ActorXml actor;
+    private transient ActorXml actor;
 
-    private final MindMapController controller;
+    private final transient MindMapController controller;
 
     protected AbstractXmlAction(String name, Icon icon, MindMapController controller) {
         super(name, icon, controller);
@@ -30,17 +30,18 @@ public abstract class AbstractXmlAction extends MindmapAction {
 
     protected abstract void xmlActionPerformed(ActionEvent arg0);
 
+    @Override
     public MindMapController getMindMapController() {
         return controller;
     }
 
+    @Override
     public void addActor(ActorXml actor) {
         this.actor = actor;
-        if (actor != null) {
-            // registration:
-            getMindMapController().getActionRegistry().registerActor(actor,
-                    actor.getDoActionClass());
+        if (actor == null) {
+            return;
         }
+        getMindMapController().getActionRegistry().registerActor(actor, actor.getDoActionClass());
     }
 
 }

@@ -3,6 +3,7 @@ package freemind.modes;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.model.NodeIcon;
+import freemind.view.ImageFactory;
 import freemind.view.ScalableImageIcon;
 import lombok.Setter;
 
@@ -21,11 +22,7 @@ import java.util.StringTokenizer;
 public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation {
 
     public static final String PROPERTY_STRING_ICONS_LIST = "icons.list";
-    /**
-     * -- SETTER --
-     *  Set the value of name.
-     *
-     */ /* here, we must check, whether the name is allowed. */ // DanPolansky: I suggest to avoid any checking. If the icon with the
+    /* here, we must check, whether the name is allowed. */ // DanPolansky: I suggest to avoid any checking. If the icon with the
     // name
     // does not exist, let's keep the name and save it again anyway. Let us
     // imagine the set of icons expanding and changing in the future.
@@ -109,29 +106,24 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
     public ImageIcon getIcon() {
         // We need the frame to be able to obtain the resource URL of the icon.
         if (iconNotFound == null) {
-            iconNotFound = freemind.view.ImageFactory.getInstance().createIcon(resources.getResource(
-                    "images/IconNotFound.png"));
+            iconNotFound = ImageFactory.getInstance().createIcon(resources.getResource("images/IconNotFound.png"));
         }
 
         if (associatedIcon != null) {
             return associatedIcon;
         }
         if (name != null) {
-            URL imageURL = resources.getResource(
-                    getIconFileName());
+            URL imageURL = resources.getResource(getIconFileName());
             if (imageURL == null) { // As standard icon not found, try user's
                 try {
-                    final File file = new File(resources
-                            .getFreemindDirectory(), "icons/" + getName()
-                            + ".png");
+                    final File file = new File(resources.getFreemindDirectory(), "icons/" + getName() + ".png");
                     if (file.canRead()) {
                         imageURL = Tools.fileToUrl(file);
                     }
                 } catch (Exception ignored) {
                 }
             }
-            ImageIcon icon = imageURL == null ? iconNotFound : freemind.view.ImageFactory.getInstance().createIcon(
-                    imageURL);
+            ImageIcon icon = imageURL == null ? iconNotFound : ImageFactory.getInstance().createIcon(imageURL);
             setIcon(icon);
             return icon;
         } else {
@@ -150,8 +142,7 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
     }
 
     public ImageIcon getUnscaledIcon() {
-        if (associatedIcon instanceof ScalableImageIcon) {
-            ScalableImageIcon scalableIcon = (ScalableImageIcon) associatedIcon;
+        if (associatedIcon instanceof ScalableImageIcon scalableIcon) {
             return scalableIcon.getUnscaledIcon();
         }
         return associatedIcon;
@@ -162,8 +153,7 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
             return mAllIconNames;
         }
         List<String> mAllIconNames = new ArrayList<>();
-        String icons = resources.getProperty(
-                PROPERTY_STRING_ICONS_LIST);
+        String icons = resources.getProperty(PROPERTY_STRING_ICONS_LIST);
         StringTokenizer tokenizer = new StringTokenizer(icons, ";");
         while (tokenizer.hasMoreTokens()) {
             mAllIconNames.add(tokenizer.nextToken());
@@ -193,7 +183,7 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
     public int compareTo(MindIcon icon) {
         int i1 = getNumber();
         int i2 = icon.getNumber();
-        return i1 < i2 ? -1 : i1 == i2 ? 0 : +1;
+        return Integer.compare(i1, i2);
     }
 
     private int getNumber() {

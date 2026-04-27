@@ -1,19 +1,20 @@
 package freemind.modes;
 
-import freemind.main.SwingUtils;
 import freemind.controller.*;
 import freemind.events.FreeMindEventBus;
 import freemind.events.NodeModifiedEvent;
-import freemind.main.*;
+import freemind.main.FreeMindMain;
+import freemind.main.SwingUtils;
+import freemind.main.Tools;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
+import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.modes.services.DisplayNavigationService;
 import freemind.modes.services.FileIOService;
 import freemind.modes.services.NodeLifecycleService;
-import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
@@ -107,6 +108,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * Currently, this method is called by the mapAdapter. This is buggy, and is
      * to be changed.
      */
+    @Override
     public void nodeChanged(MindMapNode node) {
         setSaved(false);
         nodeRefresh(node, true);
@@ -122,6 +124,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         }
     }
 
+    @Override
     public void nodeRefresh(MindMapNode node) {
         nodeRefresh(node, false);
     }
@@ -165,28 +168,32 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         nodeLifecycleService.updateNode(node);
     }
 
+    @Override
     public void onLostFocusNode(NodeView node) {
         nodeLifecycleService.onLostFocusNode(node);
     }
 
+    @Override
     public void onFocusNode(NodeView node) {
         nodeLifecycleService.onFocusNode(node);
     }
 
+    @Override
     public void changeSelection(NodeView pNode, boolean pIsSelected) {
         nodeLifecycleService.changeSelection(pNode, pIsSelected);
     }
 
+    @Override
     public void onViewCreatedHook(NodeView node) {
         nodeLifecycleService.onViewCreatedHook(node);
     }
 
+    @Override
     public void onViewRemovedHook(NodeView node) {
         nodeLifecycleService.onViewRemovedHook(node);
     }
 
-    public void registerNodeSelectionListener(NodeSelectionListener listener,
-                                              boolean pCallWithCurrentSelection) {
+    public void registerNodeSelectionListener(NodeSelectionListener listener, boolean pCallWithCurrentSelection) {
         nodeLifecycleService.registerNodeSelectionListener(listener,
                 pCallWithCurrentSelection, getSelectedView(),
                 getView().getSelectionService().getSelecteds());
@@ -208,18 +215,22 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         return nodeLifecycleService.getLifetimeListeners();
     }
 
+    @Override
     public void fireNodePreDeleteEvent(MindMapNode node) {
         nodeLifecycleService.fireNodePreDeleteEvent(node);
     }
 
+    @Override
     public void fireNodePostDeleteEvent(MindMapNode node, MindMapNode parent) {
         nodeLifecycleService.fireNodePostDeleteEvent(node, parent);
     }
 
+    @Override
     public void fireRecursiveNodeCreateEvent(MindMapNode node) {
         nodeLifecycleService.fireRecursiveNodeCreateEvent(node);
     }
 
+    @Override
     public void firePreSaveEvent(MindMapNode node) {
         nodeLifecycleService.firePreSaveEvent(node);
     }
@@ -704,19 +715,19 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
             return false;
         }
 
-        public void drop(DropTargetDropEvent dtde) {
-            if (!isDropAcceptable(dtde)) {
-                dtde.rejectDrop();
+        public void drop(DropTargetDropEvent dropEvent) {
+            if (!isDropAcceptable(dropEvent)) {
+                dropEvent.rejectDrop();
                 return;
             }
-            dtde.acceptDrop(DnDConstants.ACTION_COPY);
+            dropEvent.acceptDrop(DnDConstants.ACTION_COPY);
             try {
-                Object data = dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+                Object data = dropEvent.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
                 if (data == null) {
                     // Shouldn't happen because dragEnter() rejects drags w/out
                     // at least
                     // one javaFileListFlavor. But just in case it does ...
-                    dtde.dropComplete(false);
+                    dropEvent.dropComplete(false);
                     return;
                 }
                 Iterator<File> iterator = ((List<File>) data).iterator();
@@ -731,10 +742,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                                 + e.getMessage()
                         // getText("file_not_found")
                 );
-                dtde.dropComplete(false);
+                dropEvent.dropComplete(false);
                 return;
             }
-            dtde.dropComplete(true);
+            dropEvent.dropComplete(true);
         }
 
         public void dragEnter(DropTargetDragEvent dtde) {
