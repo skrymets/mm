@@ -50,8 +50,7 @@ public class FilterComposerDialog extends JDialog {
             boolean ignoreCase = caseInsensitive.isSelected();
 
             Object selectedItem = attributes.getSelectedItem();
-            if (selectedItem instanceof NamedObject) {
-                NamedObject attribute = (NamedObject) selectedItem;
+            if (selectedItem instanceof NamedObject attribute) {
                 newCond = FilterController.getConditionFactory().createCondition(attribute,
                         simpleCond, value, ignoreCase);
             } else {

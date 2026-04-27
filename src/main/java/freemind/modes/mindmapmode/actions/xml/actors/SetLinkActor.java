@@ -18,8 +18,7 @@ public class SetLinkActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof AddLinkXmlAction) {
-            AddLinkXmlAction linkAction = (AddLinkXmlAction) action;
+        if (action instanceof AddLinkXmlAction linkAction) {
             NodeAdapter node = getNodeFromID(linkAction.getNode());
             node.setLink(linkAction.getDestination());
             getExMapFeedback().nodeChanged(node);

@@ -28,8 +28,7 @@ public class ChangeArrowLinkEndPointsActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof ArrowLinkPointXmlAction) {
-            ArrowLinkPointXmlAction pointAction = (ArrowLinkPointXmlAction) action;
+        if (action instanceof ArrowLinkPointXmlAction pointAction) {
             MindMapArrowLink link = (MindMapArrowLink) getLinkRegistry()
                     .getLinkForId(pointAction.getId());
             link.setStartInclination(PointUtils.xmlToPoint(pointAction

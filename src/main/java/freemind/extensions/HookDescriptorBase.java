@@ -69,8 +69,7 @@ public class HookDescriptorBase {
         List<PluginClasspath> returnValue = new ArrayList<>();
         List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(pluginBase);
         for (Object obj : pluginChoice) {
-            if (obj instanceof PluginClasspath) {
-                PluginClasspath pluginClasspath = (PluginClasspath) obj;
+            if (obj instanceof PluginClasspath pluginClasspath) {
                 returnValue.add(pluginClasspath);
             }
         }

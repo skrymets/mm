@@ -105,8 +105,7 @@ public class NodeUpActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof MoveNodesAction) {
-            MoveNodesAction moveAction = (MoveNodesAction) action;
+        if (action instanceof MoveNodesAction moveAction) {
             MindMapNode selected = getNodeFromID(moveAction
                     .getNode());
             List<MindMapNode> selecteds = new ArrayList<>();

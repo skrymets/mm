@@ -27,8 +27,7 @@ public class RemoveArrowLinkActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof RemoveArrowLinkXmlAction) {
-            RemoveArrowLinkXmlAction removeAction = (RemoveArrowLinkXmlAction) action;
+        if (action instanceof RemoveArrowLinkXmlAction removeAction) {
             MindMapLink arrowLink = getLinkRegistry().getLinkForId(
                     removeAction.getId());
             if (arrowLink == null) {
@@ -58,8 +57,7 @@ public class RemoveArrowLinkActor extends XmlActorAdapter {
         action.setDestination(getNodeID(link.getTarget()));
         action.setNewId(link.getUniqueId());
         action.setColor(ColorUtils.colorToXml(link.getColor()));
-        if (link instanceof MindMapArrowLink) {
-            MindMapArrowLink arrowLink = (MindMapArrowLink) link;
+        if (link instanceof MindMapArrowLink arrowLink) {
             action.setEndArrow(arrowLink.getEndArrow());
             action.setEndInclination(PointUtils.PointToXml(arrowLink
                     .getEndInclination()));

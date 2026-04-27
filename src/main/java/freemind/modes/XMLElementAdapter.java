@@ -80,15 +80,15 @@ public class XMLElementAdapter {
             // Process child elements of the map element
             for (Element child : FreeMindXml.getChildElements(domElement)) {
                 BuildResult childResult = buildElement(child);
-                if (childResult != null && childResult.userObject instanceof NodeAdapter) {
-                    mapChild = (NodeAdapter) childResult.userObject;
+                if (childResult != null && childResult.userObject instanceof NodeAdapter node) {
+                    mapChild = node;
                 }
             }
         } else if (XML_NODE.equals(tagName)) {
             // Direct node element (e.g. from clipboard paste)
             BuildResult result = buildElement(domElement);
-            if (result != null && result.userObject instanceof NodeAdapter) {
-                mapChild = (NodeAdapter) result.userObject;
+            if (result != null && result.userObject instanceof NodeAdapter node) {
+                mapChild = node;
             }
         }
     }
@@ -146,8 +146,8 @@ public class XMLElementAdapter {
         userObject = completed[0];
 
         // Track mapChild for top-level node
-        if (XML_NODE.equals(name) && mapChild == null && userObject instanceof NodeAdapter) {
-            mapChild = (NodeAdapter) userObject;
+        if (XML_NODE.equals(name) && mapChild == null && userObject instanceof NodeAdapter node) {
+            mapChild = node;
         }
 
         BuildResult result = new BuildResult(name, userObject);
@@ -191,8 +191,7 @@ public class XMLElementAdapter {
      */
     private Object applyAttribute(String elementName, Object userObject, String attrName, String sValue,
                                    HashMap<String, String> nodeAttributes) {
-        if (userObject instanceof NodeAdapter) {
-            NodeAdapter node = (NodeAdapter) userObject;
+        if (userObject instanceof NodeAdapter node) {
             NodeAdapter result = setNodeAttribute(attrName, sValue, node);
             nodeAttributes.put(attrName, sValue);
             if (result != node) {
@@ -203,8 +202,7 @@ public class XMLElementAdapter {
             return result;
         }
 
-        if (userObject instanceof EdgeAdapter) {
-            EdgeAdapter edge = (EdgeAdapter) userObject;
+        if (userObject instanceof EdgeAdapter edge) {
             switch (attrName) {
                 case "STYLE":
                     edge.setStyle(sValue);
@@ -223,8 +221,7 @@ public class XMLElementAdapter {
             return userObject;
         }
 
-        if (userObject instanceof CloudAdapter) {
-            CloudAdapter cloud = (CloudAdapter) userObject;
+        if (userObject instanceof CloudAdapter cloud) {
             switch (attrName) {
                 case "STYLE":
                     cloud.setStyle(sValue);
@@ -239,8 +236,7 @@ public class XMLElementAdapter {
             return userObject;
         }
 
-        if (userObject instanceof ArrowLinkAdapter) {
-            ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) userObject;
+        if (userObject instanceof ArrowLinkAdapter arrowLink) {
             switch (attrName) {
                 case "STYLE":
                     arrowLink.setStyle(sValue);
@@ -273,8 +269,7 @@ public class XMLElementAdapter {
                     arrowLink.setWidth(Integer.parseInt(sValue));
                     break;
             }
-            if (userObject instanceof ArrowLinkTarget) {
-                ArrowLinkTarget arrowLinkTarget = (ArrowLinkTarget) userObject;
+            if (userObject instanceof ArrowLinkTarget arrowLinkTarget) {
                 if (attrName.equals("SOURCE")) {
                     arrowLinkTarget.setSourceLabel(sValue);
                 }
@@ -390,30 +385,25 @@ public class XMLElementAdapter {
      */
     private void addChildResult(String parentName, Object parentUserObject, BuildResult child) {
         if ("map".equals(parentName)) {
-            if (child.userObject instanceof NodeAdapter) {
-                mapChild = (NodeAdapter) child.userObject;
+            if (child.userObject instanceof NodeAdapter childNode) {
+                mapChild = childNode;
             }
             return;
         }
 
-        if (parentUserObject instanceof NodeAdapter) {
-            NodeAdapter node = (NodeAdapter) parentUserObject;
-            if (child.userObject instanceof NodeAdapter) {
-                node.insert((NodeAdapter) child.userObject, -1);
-            } else if (child.userObject instanceof EdgeAdapter) {
-                EdgeAdapter edge = (EdgeAdapter) child.userObject;
+        if (parentUserObject instanceof NodeAdapter node) {
+            if (child.userObject instanceof NodeAdapter childNode) {
+                node.insert(childNode, -1);
+            } else if (child.userObject instanceof EdgeAdapter edge) {
                 edge.setTarget(node);
                 node.setEdge(edge);
-            } else if (child.userObject instanceof CloudAdapter) {
-                CloudAdapter cloud = (CloudAdapter) child.userObject;
+            } else if (child.userObject instanceof CloudAdapter cloud) {
                 cloud.setTarget(node);
                 node.setCloud(cloud);
-            } else if (child.userObject instanceof ArrowLinkTarget) {
-                ArrowLinkTarget arrowLinkTarget = (ArrowLinkTarget) child.userObject;
+            } else if (child.userObject instanceof ArrowLinkTarget arrowLinkTarget) {
                 arrowLinkTarget.setTarget(node);
                 mArrowLinkAdapters.add(arrowLinkTarget);
-            } else if (child.userObject instanceof ArrowLinkAdapter) {
-                ArrowLinkAdapter arrowLink = (ArrowLinkAdapter) child.userObject;
+            } else if (child.userObject instanceof ArrowLinkAdapter arrowLink) {
                 arrowLink.setSource(node);
                 mArrowLinkAdapters.add(arrowLink);
             } else if (child.name.equals("font")) {
@@ -565,8 +555,7 @@ public class XMLElementAdapter {
         }
         // complete arrow links with right labels:
         for (ArrowLinkAdapter arrowObject : mArrowLinkAdapters) {
-            if (arrowObject instanceof ArrowLinkTarget) {
-                ArrowLinkTarget linkTarget = (ArrowLinkTarget) arrowObject;
+            if (arrowObject instanceof ArrowLinkTarget linkTarget) {
                 String oldId = linkTarget.getSourceLabel();
                 MindMapNode source = registry.getTargetForId(oldId);
                 if (mIdToTarget.containsKey(oldId)) {

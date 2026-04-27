@@ -137,8 +137,7 @@ public class AddHookActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof HookNodeAction) {
-            HookNodeAction hookNodeAction = (HookNodeAction) action;
+        if (action instanceof HookNodeAction hookNodeAction) {
             MindMapNode selected = getNodeFromID(hookNodeAction.getNode());
             List<MindMapNode> selectedMindMapNodes = new ArrayList<>();
             for (NodeListMember node : hookNodeAction.getNodeListMemberList()) {
@@ -206,13 +205,12 @@ public class AddHookActor extends XmlActorAdapter {
                 NodeHook hook = getExMapFeedback().createNodeHook(hookName, currentDestinationNode);
                 log.trace("created hook {}", hookName);
                 // set parameters, if present
-                if (pXmlParent != null && hook instanceof PermanentNodeHook) {
-                    ((PermanentNodeHook) hook).loadFrom(pXmlParent);
+                if (pXmlParent != null && hook instanceof PermanentNodeHook permHookForLoad) {
+                    permHookForLoad.loadFrom(pXmlParent);
                 }
                 // call invoke.
                 currentDestinationNode.invokeHook(hook);
-                if (hook instanceof PermanentNodeHook) {
-                    PermanentNodeHook permHook = (PermanentNodeHook) hook;
+                if (hook instanceof PermanentNodeHook permHook) {
                     log.trace("This is a permanent hook {}", hookName);
                     // the focused receives the focus:
                     if (currentDestinationNode == adaptedFocussedNode) {

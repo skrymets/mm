@@ -218,8 +218,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     public void addListeners() {
         // add listeners:
         for (PropertyControl control : mControls) {
-            if (control instanceof PropertyBean) {
-                PropertyBean bean = (PropertyBean) control;
+            if (control instanceof PropertyBean bean) {
                 bean.addPropertyChangeListener(this);
             }
         }

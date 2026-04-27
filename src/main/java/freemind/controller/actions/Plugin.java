@@ -44,14 +44,14 @@ public class Plugin
             choiceList = new ArrayList<>();
             for (Object obj : xmlElements) {
                 Choice choice = new Choice();
-                if (obj instanceof PluginClasspath) {
-                    choice.setPluginClasspath((PluginClasspath) obj);
-                } else if (obj instanceof PluginRegistration) {
-                    choice.setPluginRegistration((PluginRegistration) obj);
-                } else if (obj instanceof PluginAction) {
-                    choice.setPluginAction((PluginAction) obj);
-                } else if (obj instanceof PluginStrings) {
-                    choice.setPluginStrings((PluginStrings) obj);
+                if (obj instanceof PluginClasspath pc) {
+                    choice.setPluginClasspath(pc);
+                } else if (obj instanceof PluginRegistration pr) {
+                    choice.setPluginRegistration(pr);
+                } else if (obj instanceof PluginAction pa) {
+                    choice.setPluginAction(pa);
+                } else if (obj instanceof PluginStrings ps) {
+                    choice.setPluginStrings(ps);
                 }
                 choiceList.add(choice);
             }

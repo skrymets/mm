@@ -935,8 +935,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         }
 
         public void setValue(Object value) {
-            if (value instanceof IconsHolder) {
-                IconsHolder iconsHolder = (IconsHolder) value;
+            if (value instanceof IconsHolder iconsHolder) {
                 MultipleImage iconImages = new MultipleImage(1.0f);
                 for (NodeIcon icon : iconsHolder.getIcons()) {
                     iconImages.addImage(((MindIcon) icon).getIcon());

@@ -40,8 +40,7 @@ public class OptionPanel implements TextTranslator {
 
     private KeyProperty findControlByKB(KeyBinding binding) {
         for (PropertyControl control : controls) {
-            if (control instanceof KeyProperty) {
-                KeyProperty k = (KeyProperty) control;
+            if (control instanceof KeyProperty k) {
                 if (k.kb.equals(binding)) {
                     return k;
                 }
@@ -76,8 +75,7 @@ public class OptionPanel implements TextTranslator {
         WindowConfigurationStorage storage = XmlBindingTools.getInstance()
                 .decorateDialog(fm.getController(), frame,
                         PREFERENCE_STORAGE_PROPERTY);
-        if (storage instanceof OptionPanelWindowConfigurationStorage) {
-            OptionPanelWindowConfigurationStorage oWindowSettings = (OptionPanelWindowConfigurationStorage) storage;
+        if (storage instanceof OptionPanelWindowConfigurationStorage oWindowSettings) {
             selectedPanel = oWindowSettings.getPanel();
         }
         allBindings = new ArrayList<>();
@@ -90,8 +88,7 @@ public class OptionPanel implements TextTranslator {
 
     public void setProperties() {
         for (PropertyControl control : controls) {
-            if (control instanceof PropertyBean) {
-                PropertyBean bean = (PropertyBean) control;
+            if (control instanceof PropertyBean bean) {
                 // System.out.println("grep -n -e \""+bean.getLabel()+"\" -r * |
                 // grep -e \"\\.(java|xml):\"");
                 final String label = bean.getLabel();
@@ -106,8 +103,7 @@ public class OptionPanel implements TextTranslator {
     private Properties getOptionProperties() {
         Properties p = new Properties();
         for (PropertyControl control : controls) {
-            if (control instanceof PropertyBean) {
-                PropertyBean bean = (PropertyBean) control;
+            if (control instanceof PropertyBean bean) {
                 final String value = bean.getValue();
                 if (value != null) {
                     p.setProperty(bean.getLabel(), value);
@@ -133,8 +129,7 @@ public class OptionPanel implements TextTranslator {
         for (PropertyControl control : controls) {
             // System.out.println("layouting : " + control.getLabel());
 
-            if (control instanceof NewTabProperty) {
-                NewTabProperty newTab = (NewTabProperty) control;
+            if (control instanceof NewTabProperty newTab) {
                 if (rightBuilder != null) {
                     // terminate old panel:
                     rightStack.add(rightBuilder.getPanel(), lastTabName);
@@ -1059,8 +1054,7 @@ public class OptionPanel implements TextTranslator {
 
         final ModeController modeController = fmMain.getController()
                 .getModeController();
-        if (modeController instanceof MindMapController) {
-            MindMapController controller = (MindMapController) modeController;
+        if (modeController instanceof MindMapController controller) {
             List<IconAction> iconActions = controller.getActions().iconActions;
             List<IconInformation> actions = new ArrayList<>(iconActions);
             actions.add(controller.getActions().removeLastIconAction);

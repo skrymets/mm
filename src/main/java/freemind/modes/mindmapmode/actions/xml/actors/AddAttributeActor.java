@@ -16,8 +16,7 @@ public class AddAttributeActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof AddAttributeAction) {
-            AddAttributeAction addAttributeAction = (AddAttributeAction) action;
+        if (action instanceof AddAttributeAction addAttributeAction) {
             NodeAdapter node = getNodeFromID(addAttributeAction.getNode());
             Attribute newAttribute = new Attribute(
                     addAttributeAction.getName(), addAttributeAction.getValue());

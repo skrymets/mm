@@ -299,15 +299,13 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 
         private XmlAction cloneAction(XmlAction doAction) {
             log.trace("Found do action: {}", doAction.getClass().getName());
-            if (doAction instanceof NodeAction) {
-                NodeAction nodeAction = (NodeAction) doAction;
+            if (doAction instanceof NodeAction nodeAction) {
                 MindMapNode node = controller.getNodeFromID(nodeAction
                         .getNode());
                 // check for clone or original?
                 doAction = cloneAction(nodeAction, node);
             } else {
-                if (doAction instanceof CompoundAction) {
-                    CompoundAction compoundAction = (CompoundAction) doAction;
+                if (doAction instanceof CompoundAction compoundAction) {
 
                     List<XmlAction> choiceList = JIBXGeneratedUtil.listXmlActions(compoundAction);
 
@@ -345,8 +343,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
             NodeAction copiedNodeAction = (NodeAction) Tools
                     .deepCopy(nodeAction);
             // special cases:
-            if (copiedNodeAction instanceof MoveNodesAction) {
-                MoveNodesAction moveAction = (MoveNodesAction) copiedNodeAction;
+            if (copiedNodeAction instanceof MoveNodesAction moveAction) {
                 for (int i = 0; i < moveAction.getNodeListMemberList()
                         .size(); i++) {
                     NodeListMember member = moveAction.getNodeListMember(i);
@@ -354,8 +351,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                             member);
                 }
             }
-            if (copiedNodeAction instanceof HookNodeAction) {
-                HookNodeAction hookAction = (HookNodeAction) copiedNodeAction;
+            if (copiedNodeAction instanceof HookNodeAction hookAction) {
                 for (int i = 0; i < hookAction.getNodeListMemberList()
                         .size(); i++) {
                     NodeListMember member = hookAction.getNodeListMember(i);
@@ -363,8 +359,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                             member);
                 }
             }
-            if (copiedNodeAction instanceof NewNodeAction) {
-                NewNodeAction newNodeAction = (NewNodeAction) copiedNodeAction;
+            if (copiedNodeAction instanceof NewNodeAction newNodeAction) {
                 String newId = mMap.getLinkRegistry().generateUniqueID(null);
                 newNodeAction.setNewId(newId);
             }
@@ -424,8 +419,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                         // careful:
                         // clone only, if parents are clones:
                         startWithParent = true;
-                    } else if (nodeAction instanceof PasteNodeAction) {
-                        PasteNodeAction pna = (PasteNodeAction) nodeAction;
+                    } else if (nodeAction instanceof PasteNodeAction pna) {
                         if (pna.isAsSibling()) {
                             // sibling means, that the paste goes below the
                             // clone.
@@ -436,8 +430,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                             // are
                             // subject to cloning.
                         }
-                    } else if (nodeAction instanceof UndoPasteNodeAction) {
-                        UndoPasteNodeAction pna = (UndoPasteNodeAction) nodeAction;
+                    } else if (nodeAction instanceof UndoPasteNodeAction pna) {
                         if (pna.isAsSibling()) {
                             // sibling means, that the paste goes below the
                             // clone.
@@ -458,8 +451,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                     if (nodeAction instanceof NewNodeAction) {
                         // here, the action changes the children, thus, they are
                         // subject to cloning.
-                    } else if (nodeAction instanceof PasteNodeAction) {
-                        PasteNodeAction pna = (PasteNodeAction) nodeAction;
+                    } else if (nodeAction instanceof PasteNodeAction pna) {
                         if (pna.isAsSibling()) {
                             // sibling means, that the paste goes below the
                             // clone.
@@ -470,8 +462,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                             // are
                             // subject to cloning.
                         }
-                    } else if (nodeAction instanceof UndoPasteNodeAction) {
-                        UndoPasteNodeAction pna = (UndoPasteNodeAction) nodeAction;
+                    } else if (nodeAction instanceof UndoPasteNodeAction pna) {
                         if (pna.isAsSibling()) {
                             // sibling means, that the paste goes below the
                             // clone.

@@ -31,8 +31,7 @@ public class NamedObject {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof NamedObject) {
-            NamedObject ts = (NamedObject) o;
+        if (o instanceof NamedObject ts) {
             return object.equals(ts.object);
         }
         return object.equals(o);

@@ -26,17 +26,15 @@ public class MapGeometryService {
     }
 
     public Dimension getViewportSize() {
-        if (mapView.getParent() instanceof JViewport) {
-            JViewport mapViewport = (JViewport) mapView.getParent();
-            return mapViewport == null ? null : mapViewport.getSize();
+        if (mapView.getParent() instanceof JViewport mapViewport) {
+            return mapViewport.getSize();
         }
         return null;
     }
 
     public Point getViewPosition() {
         Point viewPosition = new Point(0, 0);
-        if (mapView.getParent() instanceof JViewport) {
-            JViewport mapViewport = (JViewport) mapView.getParent();
+        if (mapView.getParent() instanceof JViewport mapViewport) {
             viewPosition = mapViewport.getViewPosition();
         }
         return viewPosition;

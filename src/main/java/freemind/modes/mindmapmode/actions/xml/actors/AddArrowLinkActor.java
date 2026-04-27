@@ -19,8 +19,7 @@ public class AddArrowLinkActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof AddArrowLinkXmlAction) {
-            AddArrowLinkXmlAction arrowAction = (AddArrowLinkXmlAction) action;
+        if (action instanceof AddArrowLinkXmlAction arrowAction) {
             MindMapNode source = getNodeFromID(arrowAction.getNode());
             MindMapNode target = getNodeFromID(arrowAction.getDestination());
             if (source == target) {

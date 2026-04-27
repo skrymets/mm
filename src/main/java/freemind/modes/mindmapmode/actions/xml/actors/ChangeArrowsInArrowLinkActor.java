@@ -28,8 +28,7 @@ public class ChangeArrowsInArrowLinkActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof ArrowLinkArrowXmlAction) {
-            ArrowLinkArrowXmlAction arrowAction = (ArrowLinkArrowXmlAction) action;
+        if (action instanceof ArrowLinkArrowXmlAction arrowAction) {
             MindMapLink link = getLinkRegistry().getLinkForId(
                     arrowAction.getId());
             ((ArrowLinkAdapter) link)

@@ -102,8 +102,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
         }
 
         private void detectFormatChanges(XmlAction doAction) {
-            if (doAction instanceof CompoundAction) {
-                CompoundAction compAction = (CompoundAction) doAction;
+            if (doAction instanceof CompoundAction compAction) {
                 List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compAction);
                 for (XmlAction childAction : xmlActions) {
                     detectFormatChanges(childAction);
@@ -111,15 +110,13 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
             } else if ((doAction instanceof NodeAction)
                     && !(doAction instanceof FoldAction)) {
                 // remove myself:
-                if (doAction instanceof HookNodeAction) {
-                    HookNodeAction hookAction = (HookNodeAction) doAction;
+                if (doAction instanceof HookNodeAction hookAction) {
                     if (Objects.equals(hookAction.getHookName(), PLUGIN_NAME)) {
                         return;
                     }
                 }
                 String lastLocation = ((NodeAction) doAction).getNode();
-                if (doAction instanceof NewNodeAction) {
-                    NewNodeAction newNodeAction = (NewNodeAction) doAction;
+                if (doAction instanceof NewNodeAction newNodeAction) {
                     lastLocation = newNodeAction.getNewId();
                 }
                 // prevent double entries

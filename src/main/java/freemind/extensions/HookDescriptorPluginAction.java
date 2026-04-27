@@ -36,16 +36,13 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
         List<Object> pluginActions = JIBXGeneratedUtil.listPluginActions(pluginAction);
 
         for (Object obj : pluginActions) {
-            if (obj instanceof PluginMenu) {
-                PluginMenu menu = (PluginMenu) obj;
+            if (obj instanceof PluginMenu menu) {
                 menuPositions.add(menu.getLocation());
             }
-            if (obj instanceof PluginProperty) {
-                PluginProperty property = (PluginProperty) obj;
+            if (obj instanceof PluginProperty property) {
                 properties.put(property.getName(), property.getValue());
             }
-            if (obj instanceof PluginMode) {
-                PluginMode mode = (PluginMode) obj;
+            if (obj instanceof PluginMode mode) {
                 modes.add(mode.getClassName());
             }
         }

@@ -20,12 +20,10 @@ public class StructuredMenuItemHolder {
 
     public void setAction(Action action) {
         this.action = action;
-        if (action instanceof MenuItemEnabledListener) {
-            MenuItemEnabledListener listener = (MenuItemEnabledListener) action;
+        if (action instanceof MenuItemEnabledListener listener) {
             setEnabledListener(listener);
         }
-        if (action instanceof MenuItemSelectedListener) {
-            MenuItemSelectedListener listener = (MenuItemSelectedListener) action;
+        if (action instanceof MenuItemSelectedListener listener) {
             setSelectionListener(listener);
         }
     }

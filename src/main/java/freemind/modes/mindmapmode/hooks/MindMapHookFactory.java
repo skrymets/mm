@@ -110,13 +110,11 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 
                     List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(plugin);
                     for (Object obj : pluginChoice) {
-                        if (obj instanceof PluginAction) {
-                            PluginAction action = (PluginAction) obj;
+                        if (obj instanceof PluginAction action) {
                             pluginInfo.put(action.getLabel(), new HookDescriptorPluginAction(xmlPluginFile, plugin, action));
                             allPlugins.add(action.getLabel());
 
-                        } else if (obj instanceof PluginRegistration) {
-                            PluginRegistration registration = (PluginRegistration) obj;
+                        } else if (obj instanceof PluginRegistration registration) {
                             allRegistrations.add(new HookDescriptorRegistration(xmlPluginFile, plugin, registration));
                         }
                     }

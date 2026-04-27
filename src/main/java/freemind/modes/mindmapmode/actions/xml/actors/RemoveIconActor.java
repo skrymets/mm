@@ -46,8 +46,7 @@ public class RemoveIconActor extends NodeXmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof RemoveIconXmlAction) {
-            RemoveIconXmlAction removeAction = (RemoveIconXmlAction) action;
+        if (action instanceof RemoveIconXmlAction removeAction) {
             MindMapNode node = getNodeFromID(removeAction
                     .getNode());
             int position = removeAction.getIconPosition();

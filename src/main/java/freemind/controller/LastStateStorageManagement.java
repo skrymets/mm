@@ -24,10 +24,8 @@ public class LastStateStorageManagement {
     public LastStateStorageManagement(String pXml) {
         try {
             XmlAction action = Tools.unMarshall(pXml);
-            if (action != null) {
-                if (action instanceof MindmapLastStateMapStorage) {
-                    mLastStatesMap = (MindmapLastStateMapStorage) action;
-                }
+            if (action instanceof MindmapLastStateMapStorage storage) {
+                mLastStatesMap = storage;
             }
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);

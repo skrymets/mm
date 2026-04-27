@@ -34,8 +34,7 @@ public class NodeColorActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof NodeColorFormatAction) {
-            NodeColorFormatAction nodeColorAction = (NodeColorFormatAction) action;
+        if (action instanceof NodeColorFormatAction nodeColorAction) {
             Color color = ColorUtils.xmlToColor(nodeColorAction.getColor());
             MindMapNode node = getNodeFromID(nodeColorAction
                     .getNode());

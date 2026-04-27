@@ -135,10 +135,9 @@ public class NodeNavigationService {
             NodeView newSelected = null;
             for (int i = 0; i < nodeView.getComponentCount(); i++) {
                 Component c = nodeView.getComponent(i);
-                if (!(c instanceof NodeView)) {
+                if (!(c instanceof NodeView childView)) {
                     continue;
                 }
-                NodeView childView = (NodeView) c;
                 if (!(childView.isLeft() == left)) {
                     continue;
                 }
@@ -171,8 +170,8 @@ public class NodeNavigationService {
         final Container parent = nodeView.getParent();
         if (view == null) {
             // nothing
-        } else if (parent instanceof NodeView) {
-            ((NodeView) parent).setPreferredChild(nodeView);
+        } else if (parent instanceof NodeView parentView) {
+            parentView.setPreferredChild(nodeView);
         }
     }
 

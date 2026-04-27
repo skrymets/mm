@@ -81,8 +81,7 @@ public class FixedHTMLWriter extends HTMLWriter {
 
     protected void writeAttributes(AttributeSet attr) throws IOException {
         // translate css attributes to html
-        if (attr instanceof Element) {
-            Element elem = (Element) attr;
+        if (attr instanceof Element elem) {
             if (elem.isLeaf() || elem.getName().equalsIgnoreCase("p-implied")) {
                 super.writeAttributes(attr);
                 return;

@@ -13,8 +13,7 @@ public class UndoPasteActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction pAction) {
-        if (pAction instanceof UndoPasteNodeAction) {
-            UndoPasteNodeAction undoAction = (UndoPasteNodeAction) pAction;
+        if (pAction instanceof UndoPasteNodeAction undoAction) {
             MindMapNode selectedNode = getNodeFromID(undoAction.getNode());
             int amount = undoAction.getNodeAmount();
             while (amount > 0) {

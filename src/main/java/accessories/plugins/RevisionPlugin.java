@@ -40,9 +40,8 @@ public class RevisionPlugin extends PermanentMindMapNodeHookAdapter implements
     }
 
     public void executeAction(XmlAction action) {
-        if (action instanceof EditNodeAction) {
+        if (action instanceof EditNodeAction editAction) {
             // there is an edit action.
-            EditNodeAction editAction = (EditNodeAction) action;
             NodeAdapter node = getMindMapController().getNodeFromID(
                     editAction.getNode());
             node.setBackgroundColor(color);

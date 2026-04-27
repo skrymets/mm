@@ -57,7 +57,7 @@ public class NewChildAction extends MindmapAction {
 
             case MindMapController.NEW_CHILD:
             case MindMapController.NEW_CHILD_WITHOUT_FOCUS: {
-                if (targetNode instanceof EncryptedMindMapNode && !((EncryptedMindMapNode) targetNode).isAccessible())
+                if (targetNode instanceof EncryptedMindMapNode encryptedNode && !encryptedNode.isAccessible())
                     break;
                 final boolean parentFolded = targetNode.isFolded();
                 if (parentFolded) {

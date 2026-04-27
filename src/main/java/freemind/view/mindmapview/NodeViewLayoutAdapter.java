@@ -56,11 +56,9 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         final int componentCount = view.getComponentCount();
         for (int i = 0; i < componentCount; i++) {
             final Component component = view.getComponent(i);
-            if (component instanceof NodeMotionListenerView) {
-                NodeMotionListenerView nodeMotionListenerView = (NodeMotionListenerView) component;
+            if (component instanceof NodeMotionListenerView nodeMotionListenerView) {
                 layoutNodeMotionListenerView(nodeMotionListenerView);
-            } else if (component instanceof NodeFoldingComponent) {
-                NodeFoldingComponent foldingComponent = (NodeFoldingComponent) component;
+            } else if (component instanceof NodeFoldingComponent foldingComponent) {
                 layoutNodeFoldingComponent(foldingComponent);
             }
         }
@@ -136,8 +134,7 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         int count = 0;
         for (int i = 0; i < childCount; i++) {
             Component component = getView().getComponent(i);
-            if (component instanceof NodeView) {
-                NodeView child = (NodeView) component;
+            if (component instanceof NodeView child) {
                 if (child.isLeft() == isLeft) {
                     final int additionalCloudHeigth = child
                             .getAdditionalCloudHeigth();
@@ -159,8 +156,7 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         boolean foundNodeView = false;
         for (int i = 0; i < getChildCount(); i++) {
             Component component = getView().getComponent(i);
-            if (component instanceof NodeView) {
-                NodeView child = (NodeView) component;
+            if (component instanceof NodeView child) {
                 if (child.isLeft() == isLeft) {
                     final int childShift = child.getShift();
                     if (childShift < 0 || isFirstNodeView) {
@@ -184,8 +180,7 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         int shift = 0;
         for (int i = 0; i < getChildCount(); i++) {
             Component component = getView().getComponent(i);
-            if (component instanceof NodeView) {
-                NodeView child = (NodeView) component;
+            if (component instanceof NodeView child) {
                 int shiftCandidate;
                 if (child.isLeft()) {
                     shiftCandidate = -child.getContent().getX()
@@ -219,8 +214,7 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         NodeView child = null;
         for (int i = 0; i < getChildCount(); i++) {
             Component componentC = getView().getComponent(i);
-            if (componentC instanceof NodeView) {
-                NodeView component = (NodeView) componentC;
+            if (componentC instanceof NodeView component) {
                 if (component.isLeft()) {
                     continue;
                 }
@@ -272,8 +266,7 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
         NodeView child = null;
         for (int i = 0; i < getChildCount(); i++) {
             Component componentC = getView().getComponent(i);
-            if (componentC instanceof NodeView) {
-                NodeView component = (NodeView) componentC;
+            if (componentC instanceof NodeView component) {
                 if (!component.isLeft()) {
                     continue;
                 }

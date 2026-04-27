@@ -451,8 +451,7 @@ public class StylePatternFactory {
             }
         }
         for (MindMapControllerPlugin plugin : pPlugins) {
-            if (plugin instanceof ExternalPatternAction) {
-                ExternalPatternAction externalAction = (ExternalPatternAction) plugin;
+            if (plugin instanceof ExternalPatternAction externalAction) {
                 externalAction.act(node, pattern);
             }
         }

@@ -69,8 +69,7 @@ public class ToggleFoldedActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof FoldAction) {
-            FoldAction foldAction = (FoldAction) action;
+        if (action instanceof FoldAction foldAction) {
             MindMapNode node = getNodeFromID(foldAction
                     .getNode());
             boolean folded = foldAction.isFolded();

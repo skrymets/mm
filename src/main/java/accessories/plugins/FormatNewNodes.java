@@ -48,8 +48,7 @@ public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistra
 
     private void detectFormatChanges(XmlAction doAction) {
 
-        if (doAction instanceof CompoundAction) {
-            CompoundAction compAction = (CompoundAction) doAction;
+        if (doAction instanceof CompoundAction compAction) {
 
             List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compAction);
 
@@ -69,8 +68,7 @@ public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistra
     }
 
     public ActionPair filterAction(ActionPair pair) {
-        if (pair.getDoAction() instanceof NewNodeAction) {
-            NewNodeAction newNodeAction = (NewNodeAction) pair.getDoAction();
+        if (pair.getDoAction() instanceof NewNodeAction newNodeAction) {
             // add to a compound the newNodeAction and the other formats we
             // have:
             CompoundAction compound = new CompoundAction();

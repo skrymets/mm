@@ -15,8 +15,7 @@ public class BoldNodeActor extends NodeXmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof BoldNodeAction) {
-            BoldNodeAction boldact = (BoldNodeAction) action;
+        if (action instanceof BoldNodeAction boldact) {
             NodeAdapter node = getNodeFromID(boldact.getNode());
             if (node.isBold() != boldact.isBold()) {
                 node.setBold(boldact.isBold());

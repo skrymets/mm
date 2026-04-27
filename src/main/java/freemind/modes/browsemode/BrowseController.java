@@ -196,9 +196,8 @@ public class BrowseController extends ViewControllerAdapter {
      * least removelink available.
      */
     public JPopupMenu getPopupForModel(java.lang.Object obj) {
-        if (obj instanceof BrowseArrowLinkModel) {
+        if (obj instanceof BrowseArrowLinkModel link) {
             // yes, this is a link.
-            BrowseArrowLinkModel link = (BrowseArrowLinkModel) obj;
             JPopupMenu arrowLinkPopup = new JPopupMenu();
 
             arrowLinkPopup.add(getGotoLinkNodeAction(link.getSource()));

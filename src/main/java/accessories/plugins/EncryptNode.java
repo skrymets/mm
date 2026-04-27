@@ -53,11 +53,8 @@ public class EncryptNode extends MindMapNodeHookAdapter {
             }
             boolean isEncryptedNode = false;
             boolean isOpened = false;
-            if (controller.getSelected() != null
-                    && controller.getSelected() instanceof EncryptedMindMapNode) {
+            if (controller.getSelected() instanceof EncryptedMindMapNode enode) {
                 isEncryptedNode = true;
-                EncryptedMindMapNode enode = (EncryptedMindMapNode) controller
-                        .getSelected();
                 isOpened = enode.isAccessible();
             }
             if (hookName.equals("accessories/plugins/EnterPassword.properties")) {
@@ -157,8 +154,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
 
     private void toggleCryptState(MindMapNode node) {
         final MindMapController mindMapController = getMindMapController();
-        if (node instanceof EncryptedMindMapNode) {
-            EncryptedMindMapNode encNode = (EncryptedMindMapNode) node;
+        if (node instanceof EncryptedMindMapNode encNode) {
             if (encNode.isAccessible()) {
                 // to remove all children views:
                 encNode.encrypt();

@@ -59,8 +59,7 @@ public class NodeHookAction extends MindmapAction implements HookAction, MenuIte
         HookFactory factory = getHookFactory();
         Object baseClass = factory.getPluginBaseClass(_hookName);
         if (baseClass != null) {
-            if (baseClass instanceof MenuItemEnabledListener) {
-                MenuItemEnabledListener listener = (MenuItemEnabledListener) baseClass;
+            if (baseClass instanceof MenuItemEnabledListener listener) {
                 return listener.isEnabled(item, action);
             }
         }
@@ -76,8 +75,7 @@ public class NodeHookAction extends MindmapAction implements HookAction, MenuIte
         HookFactory factory = getHookFactory();
         Object baseClass = factory.getPluginBaseClass(_hookName);
         if (baseClass != null) {
-            if (baseClass instanceof MenuItemSelectedListener) {
-                MenuItemSelectedListener listener = (MenuItemSelectedListener) baseClass;
+            if (baseClass instanceof MenuItemSelectedListener listener) {
                 return listener.isSelected(pCheckItem, pAction);
             }
         }

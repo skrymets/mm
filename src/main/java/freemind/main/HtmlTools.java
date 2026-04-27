@@ -717,8 +717,7 @@ public class HtmlTools {
         @Override
         public void head(Node node, int depth) {
             try {
-                if (node instanceof TextNode) {
-                    TextNode textNode = (TextNode) node;
+                if (node instanceof TextNode textNode) {
                     String text = textNode.text().replace('\u00A0', ' ').strip();
                     if (!text.isEmpty()) {
                         if (mCurrentNode == null) {
@@ -733,8 +732,7 @@ public class HtmlTools {
                         }
                         isNewline = false;
                     }
-                } else if (node instanceof Element) {
-                    Element element = (Element) node;
+                } else if (node instanceof Element element) {
                     if ("a".equals(element.tagName())) {
                         mLink = element.attr("href");
                     }
@@ -779,8 +777,7 @@ public class HtmlTools {
         @Override
         public void tail(Node node, int depth) {
             try {
-                if (node instanceof Element) {
-                    Element element = (Element) node;
+                if (node instanceof Element element) {
                     if (element.tagName().equals("ul")) {
                         backToParent();
                     }

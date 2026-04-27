@@ -51,9 +51,9 @@ public class LinkRenderingService {
 
         for (MindMapLink ref : vec) {
             if (linkAlreadyVisited.add(ref)) {
-                if (ref instanceof MindMapArrowLink) {
+                if (ref instanceof MindMapArrowLink arrowLinkRef) {
                     ArrowLinkView arrowLink = new ArrowLinkView(
-                            (MindMapArrowLink) ref,
+                            arrowLinkRef,
                             mapView.getViewerRegistryService().getNodeView(ref.getSource()),
                             mapView.getViewerRegistryService().getNodeView(ref.getTarget()));
 

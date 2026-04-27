@@ -15,8 +15,7 @@ public class StrikethroughNodeActor extends NodeXmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof StrikethroughNodeAction) {
-            StrikethroughNodeAction strikethroughact = (StrikethroughNodeAction) action;
+        if (action instanceof StrikethroughNodeAction strikethroughact) {
             NodeAdapter node = getNodeFromID(strikethroughact.getNode());
             if (node.isStrikethrough() != strikethroughact.isStrikethrough()) {
                 node.setStrikethrough(strikethroughact.isStrikethrough());

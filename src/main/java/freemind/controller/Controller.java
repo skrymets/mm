@@ -290,8 +290,8 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
 
     public JFrame getJFrame() {
         FreeMindMain f = getFrame();
-        if (f instanceof JFrame)
-            return (JFrame) f;
+        if (f instanceof JFrame jFrame)
+            return jFrame;
         return null;
     }
 

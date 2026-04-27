@@ -80,8 +80,8 @@ public class JOptionalSplitPane extends JPanel {
 
     private void setSingleJPanel(JComponent pComponent) {
         if (mBasicComponent != null) {
-            if (mBasicComponent instanceof JSplitPane) {
-                setLastDividerPosition(((JSplitPane) mBasicComponent).getDividerLocation());
+            if (mBasicComponent instanceof JSplitPane splitPane) {
+                setLastDividerPosition(splitPane.getDividerLocation());
             }
             remove(mBasicComponent);
         }
@@ -190,8 +190,7 @@ public class JOptionalSplitPane extends JPanel {
      * @return the dividerPosition or last location is currently no split pane is visible
      */
     public int getDividerPosition() {
-        if (mBasicComponent instanceof JSplitPane) {
-            JSplitPane pane = (JSplitPane) mBasicComponent;
+        if (mBasicComponent instanceof JSplitPane pane) {
             return pane.getDividerLocation();
         }
         return mLastDividerPosition;

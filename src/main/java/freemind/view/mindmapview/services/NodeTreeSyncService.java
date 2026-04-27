@@ -54,10 +54,9 @@ public class NodeTreeSyncService {
                 nodeView.setPreferredChild(null);
                 for (int j = index + 1; j < nodeView.getComponentCount(); j++) {
                     final Component c = nodeView.getComponent(j);
-                    if (!(c instanceof NodeView)) {
+                    if (!(c instanceof NodeView candidate)) {
                         break;
                     }
-                    NodeView candidate = (NodeView) c;
                     if (candidate.isVisible()
                             && node.isLeft() == candidate.isLeft()) {
                         nodeView.setPreferredChild(candidate);
@@ -67,10 +66,9 @@ public class NodeTreeSyncService {
                 if (nodeView.getPreferredChild() == null) {
                     for (int j = index - 1; j >= 0; j--) {
                         final Component c = nodeView.getComponent(j);
-                        if (!(c instanceof NodeView)) {
+                        if (!(c instanceof NodeView candidate)) {
                             break;
                         }
-                        NodeView candidate = (NodeView) c;
                         if (candidate.isVisible()
                                 && node.isLeft() == candidate.isLeft()) {
                             nodeView.setPreferredChild(candidate);

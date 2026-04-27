@@ -15,8 +15,7 @@ public class RemoveAttributeActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof RemoveAttributeAction) {
-            RemoveAttributeAction removeAttributeAction = (RemoveAttributeAction) action;
+        if (action instanceof RemoveAttributeAction removeAttributeAction) {
             NodeAdapter node = getNodeFromID(removeAttributeAction.getNode());
             int position = removeAttributeAction.getPosition();
             node.checkAttributePosition(position);

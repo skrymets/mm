@@ -222,8 +222,7 @@ public class StructuredMenuHolder {
                 JMenuItem menuItem = holder.getMenuItem();
                 adjustMenuItem(menuItem);
                 myItem.add(menuItem);
-                if (myItem instanceof MenuEventSupplier) {
-                    MenuEventSupplier receiver = (MenuEventSupplier) myItem;
+                if (myItem instanceof MenuEventSupplier receiver) {
                     receiver.addMenuListener(listener);
                     listener.addItem(holder);
                 }
@@ -377,8 +376,7 @@ public class StructuredMenuHolder {
                 menuAdder.addSeparator();
                 continue;
             }
-            if (nextObject instanceof StructuredMenuItemHolder) {
-                StructuredMenuItemHolder holder = (StructuredMenuItemHolder) nextObject;
+            if (nextObject instanceof StructuredMenuItemHolder holder) {
                 menuAdder.addMenuItem(holder);
             }/*
              * if(nextObject instanceof JMenuItem) {
@@ -386,9 +384,8 @@ public class StructuredMenuHolder {
              *//*
              * else if(nextObject instanceof Action){
              * menuAdder.addAction((Action) nextObject); }
-             */ else if (nextObject instanceof Map) {
+             */ else if (nextObject instanceof Map nextMap) {
                 menuAdder.addCategory(category);
-                Map nextMap = (Map) nextObject;
                 MenuAdder nextItem;
                 if (nextMap.containsKey(".")) {
                     // add this item to the current place:
@@ -468,8 +465,7 @@ public class StructuredMenuHolder {
                     } catch (Exception e) {
                         log.error(e.getLocalizedMessage(), e);
                     }
-                    if (menuItem instanceof JCheckBoxMenuItem) {
-                        JCheckBoxMenuItem checkItem = (JCheckBoxMenuItem) menuItem;
+                    if (menuItem instanceof JCheckBoxMenuItem checkItem) {
                         checkItem.setSelected(selected);
                     } else {
                         // Do icon change if not a check box menu!

@@ -46,8 +46,7 @@ public class EdgeWidthActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof EdgeWidthFormatAction) {
-            EdgeWidthFormatAction edgeWithAction = (EdgeWidthFormatAction) action;
+        if (action instanceof EdgeWidthFormatAction edgeWithAction) {
             MindMapNode node = getNodeFromID(edgeWithAction.getNode());
             int width = edgeWithAction.getWidth();
             EdgeAdapter edge = (EdgeAdapter) node.getEdge();

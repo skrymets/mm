@@ -56,8 +56,7 @@ public class ScriptEditorProperty extends PropertyBean implements PropertyContro
     public void actionPerformed(ActionEvent arg0) {
         // search for plugin that handles the script editor.
         for (MindMapControllerPlugin plugin : mMindMapController.getPlugins()) {
-            if (plugin instanceof ScriptEditorStarter) {
-                ScriptEditorStarter starter = (ScriptEditorStarter) plugin;
+            if (plugin instanceof ScriptEditorStarter starter) {
                 String resultScript = starter.startEditor(script);
                 if (resultScript != null) {
                     script = resultScript;

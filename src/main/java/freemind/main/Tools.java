@@ -513,9 +513,9 @@ public class Tools {
     public static String printXmlAction(XmlAction pAction) {
         final String classString = pAction.getClass().getName().replaceAll(".*\\.", "");
 
-        if (pAction instanceof CompoundAction) {
+        if (pAction instanceof CompoundAction compoundAction) {
 
-            List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions((CompoundAction) pAction);
+            List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compoundAction);
 
             StringBuilder buf = new StringBuilder("[");
 

@@ -28,8 +28,7 @@ public class EdgeColorActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof EdgeColorFormatAction) {
-            EdgeColorFormatAction edgeAction = (EdgeColorFormatAction) action;
+        if (action instanceof EdgeColorFormatAction edgeAction) {
             Color color = ColorUtils.xmlToColor(edgeAction.getColor());
             MindMapNode node = getNodeFromID(edgeAction.getNode());
             Color oldColor = ((EdgeAdapter) node.getEdge()).getRealColor();

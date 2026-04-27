@@ -55,8 +55,7 @@ public class CloudActor extends NodeXmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof AddCloudXmlAction) {
-            AddCloudXmlAction nodecloudAction = (AddCloudXmlAction) action;
+        if (action instanceof AddCloudXmlAction nodecloudAction) {
             MindMapNode node = getNodeFromID(nodecloudAction.getNode());
             if ((node.getCloud() == null) == nodecloudAction.isEnabled()) {
                 if (nodecloudAction.isEnabled()) {

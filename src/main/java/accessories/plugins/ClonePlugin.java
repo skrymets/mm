@@ -275,8 +275,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
             return null;
         }
         for (PermanentNodeHook hook : originalNode.getActivatedHooks()) {
-            if (hook instanceof ClonePlugin) {
-                ClonePlugin cloneHook = (ClonePlugin) hook;
+            if (hook instanceof ClonePlugin cloneHook) {
                 return cloneHook;
             }
         }

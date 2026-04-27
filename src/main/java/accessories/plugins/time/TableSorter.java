@@ -118,9 +118,9 @@ public class TableSorter extends AbstractTableModel {
             this.tableHeader.removeMouseListener(mouseListener);
             TableCellRenderer defaultRenderer = this.tableHeader
                     .getDefaultRenderer();
-            if (defaultRenderer instanceof SortableHeaderRenderer) {
+            if (defaultRenderer instanceof SortableHeaderRenderer sortableRenderer) {
                 this.tableHeader
-                        .setDefaultRenderer(((SortableHeaderRenderer) defaultRenderer).tableCellRenderer);
+                        .setDefaultRenderer(sortableRenderer.tableCellRenderer);
             }
         }
         this.tableHeader = tableHeader;
@@ -449,8 +449,7 @@ public class TableSorter extends AbstractTableModel {
                                                        int column) {
             Component c = tableCellRenderer.getTableCellRendererComponent(
                     table, value, isSelected, hasFocus, row, column);
-            if (c instanceof JLabel) {
-                JLabel l = (JLabel) c;
+            if (c instanceof JLabel l) {
                 l.setHorizontalTextPosition(JLabel.LEFT);
                 int modelColumn = table.convertColumnIndexToModel(column);
                 l.setIcon(getHeaderRendererIcon(modelColumn, l.getFont()

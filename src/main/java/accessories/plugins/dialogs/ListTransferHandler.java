@@ -129,8 +129,8 @@ public class ListTransferHandler extends TransferHandler {
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        if (c instanceof JList) {
-            source = (JList<?>) c;
+        if (c instanceof JList<?> list) {
+            source = list;
             indices = source.getSelectedIndices();
             return new ListTransferable(source.getSelectedValuesList());
         }

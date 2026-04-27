@@ -26,8 +26,7 @@ public class ColorArrowLinkActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof ArrowLinkColorXmlAction) {
-            ArrowLinkColorXmlAction colorAction = (ArrowLinkColorXmlAction) action;
+        if (action instanceof ArrowLinkColorXmlAction colorAction) {
             MindMapLink link = getLinkRegistry().getLinkForId(
                     colorAction.getId());
             ((LineAdapter) link).setColor(ColorUtils.xmlToColor(colorAction

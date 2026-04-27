@@ -454,9 +454,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
      * least removelink available.
      */
     public JPopupMenu getPopupForModel(java.lang.Object obj) {
-        if (obj instanceof MindMapArrowLinkModel) {
+        if (obj instanceof MindMapArrowLinkModel link) {
             // yes, this is a link.
-            MindMapArrowLinkModel link = (MindMapArrowLinkModel) obj;
             JPopupMenu arrowLinkPopup = new JPopupMenu();
             // block the screen while showing popup.
             arrowLinkPopup.addPopupMenuListener(this.popupListenerSingleton);
@@ -832,8 +831,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         hook.setController(this);
         hook.setMap(getMap());
 
-        if (hook instanceof PermanentNodeHook) {
-            PermanentNodeHook permHook = (PermanentNodeHook) hook;
+        if (hook instanceof PermanentNodeHook permHook) {
             if (hookFactory.getInstantiationMethod(hookName).isSingleton()) {
                 // search for already instantiated hooks of this type:
                 PermanentNodeHook otherHook = hookFactory.getHookInNode(node, hookName);

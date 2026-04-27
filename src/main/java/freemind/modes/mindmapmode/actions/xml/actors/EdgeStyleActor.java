@@ -67,8 +67,7 @@ public class EdgeStyleActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof EdgeStyleFormatAction) {
-            EdgeStyleFormatAction edgeStyleAction = (EdgeStyleFormatAction) action;
+        if (action instanceof EdgeStyleFormatAction edgeStyleAction) {
             MindMapNode node = getNodeFromID(edgeStyleAction.getNode());
             String newStyle = edgeStyleAction.getStyle();
             MindMapEdge edge = node.getEdge();

@@ -299,8 +299,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public NodeView getParentView() {
         final Container parent = getParent();
-        if (parent instanceof NodeView)
-            return (NodeView) parent;
+        if (parent instanceof NodeView parentView)
+            return parentView;
         return null;
     }
 
@@ -491,10 +491,9 @@ public class NodeView extends JComponent implements TreeModelListener {
                 }
                 continue;
             }
-            if (!(component instanceof NodeView)) {
+            if (!(component instanceof NodeView view)) {
                 continue;
             }
-            NodeView view = (NodeView) component;
             if (leftOnly && !view.isLeft() || rightOnly && view.isLeft()) {
                 continue;
             }
@@ -1078,10 +1077,9 @@ public class NodeView extends JComponent implements TreeModelListener {
             NodeView newSelected = null;
             for (int i = 0; i < getComponentCount(); i++) {
                 Component c = getComponent(i);
-                if (!(c instanceof NodeView)) {
+                if (!(c instanceof NodeView childView)) {
                     continue;
                 }
-                NodeView childView = (NodeView) c;
                 if (!(childView.isLeft() == left)) {
                     continue;
                 }
@@ -1113,9 +1111,9 @@ public class NodeView extends JComponent implements TreeModelListener {
         this.preferredChild = view;
         final Container parent = this.getParent();
         if (view == null) {
-        } else if (parent instanceof NodeView) {
+        } else if (parent instanceof NodeView parentView) {
             // set also preffered child of parents...
-            ((NodeView) parent).setPreferredChild(this);
+            parentView.setPreferredChild(this);
         }
     }
 
@@ -1157,10 +1155,9 @@ public class NodeView extends JComponent implements TreeModelListener {
                 this.preferredChild = null;
                 for (int j = index + 1; j < getComponentCount(); j++) {
                     final Component c = getComponent(j);
-                    if (!(c instanceof NodeView)) {
+                    if (!(c instanceof NodeView candidate)) {
                         break;
                     }
-                    NodeView candidate = (NodeView) c;
                     if (candidate.isVisible()
                             && node.isLeft() == candidate.isLeft()) {
                         this.preferredChild = candidate;
@@ -1170,10 +1167,9 @@ public class NodeView extends JComponent implements TreeModelListener {
                 if (this.preferredChild == null) {
                     for (int j = index - 1; j >= 0; j--) {
                         final Component c = getComponent(j);
-                        if (!(c instanceof NodeView)) {
+                        if (!(c instanceof NodeView candidate)) {
                             break;
                         }
-                        NodeView candidate = (NodeView) c;
                         if (candidate.isVisible()
                                 && node.isLeft() == candidate.isLeft()) {
                             this.preferredChild = candidate;
@@ -1257,10 +1253,9 @@ public class NodeView extends JComponent implements TreeModelListener {
         Object renderingHint = getMap().getRenderingService().setEdgesRenderingHint(g);
         for (int i = 0; i < getComponentCount(); i++) {
             final Component component = getComponent(i);
-            if (!(component instanceof NodeView)) {
+            if (!(component instanceof NodeView nodeView)) {
                 continue;
             }
-            NodeView nodeView = (NodeView) component;
             if (nodeView.isContentVisible()) {
                 Point p = new Point();
                 PointUtils.convertPointToAncestor(nodeView, p, this);

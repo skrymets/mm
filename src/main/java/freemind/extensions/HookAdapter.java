@@ -56,8 +56,8 @@ public class HookAdapter implements MindMapHook {
 
     public void setController(ModeFeedback controller) {
         this.mapFeedback = controller;
-        if (controller instanceof ModeController) {
-            this.controller = (ModeController) controller;
+        if (controller instanceof ModeController modeController) {
+            this.controller = modeController;
         }
     }
 

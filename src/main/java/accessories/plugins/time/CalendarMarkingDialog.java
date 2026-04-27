@@ -321,11 +321,10 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 
     @Override
     public void propertyChange(PropertyChangeEvent pEvt) {
-        if (pEvt.getNewValue() instanceof Calendar && pEvt.getSource() instanceof JSwitchableCalendar) {
+        if (pEvt.getNewValue() instanceof Calendar cal && pEvt.getSource() instanceof JSwitchableCalendar source) {
             if (!ignoreNextEvent) {
-                Calendar cal = (Calendar) pEvt.getNewValue();
                 ignoreNextEvent = true;
-                ((JSwitchableCalendar) pEvt.getSource()).setCalendar(cal);
+                source.setCalendar(cal);
             } else {
                 ignoreNextEvent = false;
             }

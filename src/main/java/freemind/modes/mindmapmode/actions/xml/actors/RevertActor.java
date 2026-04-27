@@ -67,9 +67,8 @@ public class RevertActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof RevertXmlAction) {
+        if (action instanceof RevertXmlAction revertAction) {
             try {
-                RevertXmlAction revertAction = (RevertXmlAction) action;
 
                 // close the old map.
                 getExMapFeedback().close(true);

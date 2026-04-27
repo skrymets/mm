@@ -50,11 +50,11 @@ public class NodeHooksService {
             log.error(e.getLocalizedMessage(), e);
             return;
         }
-        if (hook instanceof PermanentNodeHook) {
+        if (hook instanceof PermanentNodeHook permHook) {
             if (activatedHooks == null) {
                 activatedHooks = new HashSet<>();
             }
-            activatedHooks.add((PermanentNodeHook) hook);
+            activatedHooks.add(permHook);
         } else {
             hook.shutdownMapHook();
         }

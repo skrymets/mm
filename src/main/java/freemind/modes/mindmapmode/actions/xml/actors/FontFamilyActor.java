@@ -42,8 +42,7 @@ public class FontFamilyActor extends XmlActorAdapter {
     }
 
     public void act(XmlAction action) {
-        if (action instanceof FontNodeAction) {
-            FontNodeAction fontFamilyAction = (FontNodeAction) action;
+        if (action instanceof FontNodeAction fontFamilyAction) {
             NodeAdapter node = getNodeFromID(fontFamilyAction.getNode());
             String fontFamily = fontFamilyAction.getFont();
             if (!Objects.equals(node.getFontFamilyName(), fontFamily)) {

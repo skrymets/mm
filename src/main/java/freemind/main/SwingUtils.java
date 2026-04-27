@@ -107,8 +107,7 @@ public final class SwingUtils {
             // perhaps, the component is not yet existing.
             return;
         }
-        if (c instanceof NodeView) {
-            final NodeView nodeView = (NodeView) c;
+        if (c instanceof NodeView nodeView) {
             nodeView.getMap().getScrollService().scrollNodeToVisible(nodeView);
             c = nodeView.getMainView();
         }
@@ -242,8 +241,7 @@ public final class SwingUtils {
 
     public static void scaleAllFonts(float pScale) {
         for (Object next : UIManager.getLookAndFeelDefaults().keySet()) {
-            if (next instanceof String) {
-                String key = (String) next;
+            if (next instanceof String key) {
                 if (key.endsWith(".font")) {
                     Font font = UIManager.getFont(key);
                     Font biggerFont = font.deriveFont(pScale * font.getSize2D());

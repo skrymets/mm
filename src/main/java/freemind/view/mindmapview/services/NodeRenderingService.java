@@ -18,10 +18,9 @@ public class NodeRenderingService {
         Object renderingHint = nodeView.getMap().getRenderingService().setEdgesRenderingHint(g);
         for (int i = 0; i < nodeView.getComponentCount(); i++) {
             final Component component = nodeView.getComponent(i);
-            if (!(component instanceof NodeView)) {
+            if (!(component instanceof NodeView childView)) {
                 continue;
             }
-            NodeView childView = (NodeView) component;
             if (childView.isContentVisible()) {
                 Point p = new Point();
                 PointUtils.convertPointToAncestor(childView, p, nodeView);

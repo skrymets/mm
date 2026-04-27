@@ -112,8 +112,7 @@ public class ScrollService {
     }
 
     public void setViewPosition(Point currentPoint) {
-        if (mapView.getParent() instanceof JViewport) {
-            JViewport mapViewport = (JViewport) mapView.getParent();
+        if (mapView.getParent() instanceof JViewport mapViewport) {
             mapViewport.setViewPosition(currentPoint);
         }
     }
@@ -163,32 +162,28 @@ public class ScrollService {
     }
 
     private Dimension getViewportSize() {
-        if (mapView.getParent() instanceof JViewport) {
-            JViewport mapViewport = (JViewport) mapView.getParent();
-            return mapViewport == null ? null : mapViewport.getSize();
+        if (mapView.getParent() instanceof JViewport mapViewport) {
+            return mapViewport.getSize();
         }
         return null;
     }
 
     private Point getViewPosition() {
         Point viewPosition = new Point(0, 0);
-        if (mapView.getParent() instanceof JViewport) {
-            JViewport mapViewport = (JViewport) mapView.getParent();
+        if (mapView.getParent() instanceof JViewport mapViewport) {
             viewPosition = mapViewport.getViewPosition();
         }
         return viewPosition;
     }
 
     private void setScrollMode(int mode) {
-        if (mapView.getParent() instanceof JViewport) {
-            JViewport mapViewport = (JViewport) mapView.getParent();
+        if (mapView.getParent() instanceof JViewport mapViewport) {
             mapViewport.setScrollMode(mode);
         }
     }
 
     private int getScrollMode() {
-        if (mapView.getParent() instanceof JViewport) {
-            JViewport mapViewport = (JViewport) mapView.getParent();
+        if (mapView.getParent() instanceof JViewport mapViewport) {
             return mapViewport.getScrollMode();
         }
         return 0;

@@ -74,8 +74,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
         }
 
         public void act(XmlAction pAction) {
-            if (pAction instanceof ChangeRootNodeAction) {
-                ChangeRootNodeAction rootNodeAction = (ChangeRootNodeAction) pAction;
+            if (pAction instanceof ChangeRootNodeAction rootNodeAction) {
                 MindMapNode focussed = controller.getNodeFromID(rootNodeAction.getNode());
                 if (focussed.isRoot()) {
                     // node is already root. Everything ok.

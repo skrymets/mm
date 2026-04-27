@@ -43,18 +43,18 @@ public class MenuCategoryBase
             baseList = new ArrayList<>();
             for (Object obj : xmlElements) {
                 Base base = new Base();
-                if (obj instanceof MenuCategoryBase) {
-                    base.setMenuCategory((MenuCategoryBase) obj);
-                } else if (obj instanceof MenuSubmenu) {
-                    base.setMenuSubmenu((MenuSubmenu) obj);
-                } else if (obj instanceof MenuAction) {
-                    base.setMenuAction((MenuAction) obj);
-                } else if (obj instanceof MenuCheckedAction) {
-                    base.setMenuCheckedAction((MenuCheckedAction) obj);
-                } else if (obj instanceof MenuRadioAction) {
-                    base.setMenuRadioAction((MenuRadioAction) obj);
-                } else if (obj instanceof MenuSeparator) {
-                    base.setMenuSeparator((MenuSeparator) obj);
+                if (obj instanceof MenuCategoryBase mcb) {
+                    base.setMenuCategory(mcb);
+                } else if (obj instanceof MenuSubmenu sub) {
+                    base.setMenuSubmenu(sub);
+                } else if (obj instanceof MenuAction ma) {
+                    base.setMenuAction(ma);
+                } else if (obj instanceof MenuCheckedAction mca) {
+                    base.setMenuCheckedAction(mca);
+                } else if (obj instanceof MenuRadioAction mra) {
+                    base.setMenuRadioAction(mra);
+                } else if (obj instanceof MenuSeparator sep) {
+                    base.setMenuSeparator(sep);
                 }
                 baseList.add(base);
             }
