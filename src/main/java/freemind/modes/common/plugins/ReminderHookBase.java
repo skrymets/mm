@@ -43,8 +43,6 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
 
     private static ImageIcon flagIcon;
 
-    // private Vector dateVector = new Vector();
-
     public ReminderHookBase() {
         super();
     }

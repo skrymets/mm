@@ -31,7 +31,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -341,9 +341,9 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
                         .valueOf(setting.getColumnSorting())));
             }
         }
-        Enumeration<TableColumn> columns = mAttributeTable.getColumnModel().getColumns();
-        while (columns.hasMoreElements()) {
-            columns.nextElement().setCellEditor(cellEditor);
+        Iterator<TableColumn> columns = mAttributeTable.getColumnModel().getColumns().asIterator();
+        while (columns.hasNext()) {
+            columns.next().setCellEditor(cellEditor);
         }
         sorter.setSortKeys(keys);
         mAttributeTable.setRowSorter(sorter);

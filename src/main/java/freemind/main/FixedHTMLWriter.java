@@ -16,7 +16,7 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Enumeration;
+import java.util.Iterator;
 
 /**
  * Create a new XHTMLWriter which is able to save a HTMLDocument as XHTML.
@@ -60,10 +60,10 @@ public class FixedHTMLWriter extends HTMLWriter {
         if (from == null) {
             return;
         }
-        Enumeration<?> keys = from.getAttributeNames();
+        Iterator<?> keys = from.getAttributeNames().asIterator();
         StringBuilder value = new StringBuilder();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
+        while (keys.hasNext()) {
+            Object key = keys.next();
             if (key instanceof CSS.Attribute) {
                 // default is to store in a HTML style attribute
                 if (value.length() > 0) {
@@ -91,9 +91,9 @@ public class FixedHTMLWriter extends HTMLWriter {
         convAttr.removeAttributes(convAttr);
         convertToHTML(attr, convAttr);
 
-        Enumeration<?> names = convAttr.getAttributeNames();
-        while (names.hasMoreElements()) {
-            Object name = names.nextElement();
+        Iterator<?> names = convAttr.getAttributeNames().asIterator();
+        while (names.hasNext()) {
+            Object name = names.next();
             if (name instanceof HTML.Tag || name instanceof StyleConstants
                     || name == HTML.Attribute.ENDTAG) {
                 continue;

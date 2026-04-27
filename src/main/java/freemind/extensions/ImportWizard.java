@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -87,20 +86,12 @@ public class ImportWizard {
      * @param classPathFile the File to scan as a zip file
      */
     public void addClassesFromZip(List<String> classList, File classPathFile) {
-        // System.out.println("Processing jar/zip file: " + classPathFile);
-
-        try {
-            ZipFile zipFile = new ZipFile(classPathFile);
-            Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-            while (enumeration.hasMoreElements()) {
-                ZipEntry zipEntry = enumeration.nextElement();
-                String current = zipEntry.getName();
-                if (isInteresting(current)) {
-                    current = current.substring(0,
-                            current.length() - lookFor.length());
-                    classList.add(current);
-                }
-            }
+        try (ZipFile zipFile = new ZipFile(classPathFile)) {
+            zipFile.stream()
+                    .map(ZipEntry::getName)
+                    .filter(this::isInteresting)
+                    .map(name -> name.substring(0, name.length() - lookFor.length()))
+                    .forEach(classList::add);
         } catch (Exception ex) {
             log.error("Problem opening {} with zip.", classPathFile, ex);
         }
