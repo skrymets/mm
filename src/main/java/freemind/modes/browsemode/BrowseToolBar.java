@@ -25,7 +25,7 @@ public class BrowseToolBar extends JToolBar {
 
         urlfield.addActionListener(e -> {
             String urlText = urlfield.getText();
-            if ("".equals(urlText)
+            if (urlText.isEmpty()
                     || e.getActionCommand().equals("comboBoxEdited"))
                 return;
             try {

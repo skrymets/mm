@@ -41,9 +41,7 @@ public class MindMapNodeModel extends NodeAdapter {
 
     public void saveTXT(Writer fileout, int depth) throws IOException {
         String plainTextContent = getPlainTextContent();
-        for (int i = 0; i < depth; ++i) {
-            fileout.write("    ");
-        }
+        fileout.write("    ".repeat(depth));
         if (plainTextContent.matches(" *")) {
             fileout.write("o");
         } else {

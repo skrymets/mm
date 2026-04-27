@@ -317,7 +317,7 @@ public class FreeMindCommon {
         if (value.startsWith("?") && !value.equals("?")) {
             // try to look in the language specific properties
             String localValue = ((FreeMindResourceBundle) getResources()).getResourceString(LOCAL_PROPERTIES + label, null);
-            value = localValue == null ? value.substring(1).trim() : localValue;
+            value = localValue == null ? value.substring(1).strip() : localValue;
             setDefaultProperty(label, value);
         }
         return value;

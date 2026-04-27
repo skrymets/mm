@@ -323,7 +323,7 @@ public class KeyEventTranslator {
             buf.append(getSymbolicModifierName(InputEvent.META_MASK));
         if (evt.isShiftDown())
             buf.append(getSymbolicModifierName(InputEvent.SHIFT_MASK));
-        return (buf.length() == 0 ? null : buf.toString());
+        return (buf.isEmpty() ? null : buf.toString());
     } // }}}
 
     static int c, a, m, s;

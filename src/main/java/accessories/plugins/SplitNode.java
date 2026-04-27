@@ -91,7 +91,7 @@ public class SplitNode extends MindMapNodeHookAdapter {
                     final int start = current.getStartOffset();
                     final int end = current.getEndOffset();
                     final String paragraphText = doc
-                            .getText(start, end - start).trim();
+                            .getText(start, end - start).strip();
                     if (!paragraphText.isEmpty()) {
                         StringWriter out = new StringWriter();
                         new FixedHTMLWriter(out, doc, start, end - start)

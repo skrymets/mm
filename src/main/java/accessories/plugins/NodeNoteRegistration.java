@@ -430,7 +430,7 @@ public class NodeNoteRegistration implements HookRegistration,
         if (input == null)
             input = NodeNote.EMPTY_EDITOR_STRING;
         // return null;
-        return input.replaceAll("\\s+", " ").replaceAll("  +", " ").trim();
+        return input.replaceAll("\\s+", " ").replaceAll("  +", " ").strip();
     }
 
     protected HTMLDocument getDocument() {

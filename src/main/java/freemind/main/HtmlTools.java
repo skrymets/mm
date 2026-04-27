@@ -719,7 +719,7 @@ public class HtmlTools {
             try {
                 if (node instanceof TextNode) {
                     TextNode textNode = (TextNode) node;
-                    String text = textNode.text().replace('\u00A0', ' ').trim();
+                    String text = textNode.text().replace('\u00A0', ' ').strip();
                     if (!text.isEmpty()) {
                         if (mCurrentNode == null) {
                             // create a new sibling:

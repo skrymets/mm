@@ -41,7 +41,7 @@ public class SearchAction extends FreemindAction {
                 controller.getText("search_all_maps"),
                 JOptionPane.QUESTION_MESSAGE);
 
-        if (query == null || query.trim().isEmpty()) {
+        if (query == null || query.isBlank()) {
             return;
         }
 
@@ -54,7 +54,7 @@ public class SearchAction extends FreemindAction {
             }
         }
 
-        List<SearchResult> results = searchService.searchNodes(rootNodes, query.trim(), false);
+        List<SearchResult> results = searchService.searchNodes(rootNodes, query.strip(), false);
 
         if (results.isEmpty()) {
             JOptionPane.showMessageDialog(

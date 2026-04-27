@@ -475,12 +475,12 @@ public class XMLElementAdapter {
                 sb.append(FreeMindXml.toString((Element) child));
             } else if (child.getNodeType() == org.w3c.dom.Node.TEXT_NODE) {
                 String text = child.getNodeValue();
-                if (text != null && !text.trim().isEmpty()) {
+                if (text != null && !text.isBlank()) {
                     sb.append(text);
                 }
             }
         }
-        return sb.toString().trim();
+        return sb.toString().strip();
     }
 
     private NodeAdapter setNodeAttribute(String name, String sValue, NodeAdapter node) {

@@ -484,7 +484,7 @@ public class PasteActor extends XmlActorAdapter {
             while (depth < text.length() && text.charAt(depth) == ' ') {
                 ++depth;
             }
-            StringBuilder visibleText = new StringBuilder(text.trim());
+            StringBuilder visibleText = new StringBuilder(text.strip());
 
             // If the text is a recognizable link (e.g.
             // http://www.google.com/index.html),
