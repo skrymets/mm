@@ -7,12 +7,13 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileReader;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static java.lang.Integer.parseInt;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -59,29 +60,26 @@ public class EditServerService {
         }
 
         try {
-            try (BufferedReader in = new BufferedReader(new FileReader(portFile))) {
-                String check = in.readLine();
-                if (!"b".equals(check)) {
-                    throw new Exception("Wrong port file format");
-                }
+            String[] lines = Files.readString(Paths.get(portFile), StandardCharsets.UTF_8)
+                    .split("\\R", -1);
+            if (lines.length < 3 || !"b".equals(lines[0])) {
+                throw new Exception("Wrong port file format");
+            }
 
-                int port = parseInt(in.readLine());
-                int key = parseInt(in.readLine());
+            int port = parseInt(lines[1]);
+            int key = parseInt(lines[2]);
 
-                Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), port);
-                try (DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
-                    out.writeInt(key);
+            Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), port);
+            try (DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+                out.writeInt(key);
 
-                    String script = Tools.arrayToUrls(pArgs);
-                    out.writeUTF(script);
+                String script = Tools.arrayToUrls(pArgs);
+                out.writeUTF(script);
 
-                    log.info("Waiting for server");
-                    try {
-                        socket.getInputStream().read();
-                    } catch (Exception ignored) {
-                    }
-
-                    in.close();
+                log.info("Waiting for server");
+                try {
+                    socket.getInputStream().read();
+                } catch (Exception ignored) {
                 }
             }
 

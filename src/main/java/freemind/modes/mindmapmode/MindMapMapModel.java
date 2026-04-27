@@ -12,6 +12,9 @@ import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.FileLock;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.util.*;
 import java.util.List;
 
@@ -387,21 +390,20 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
                 return null;
             }
             try {
-                try (BufferedReader semaphoreReader = new BufferedReader(new FileReader(semaphoreFile))) {
-                    String lockingUser = semaphoreReader.readLine();
+                String[] semaphoreLines = Files.readString(semaphoreFile.toPath(), StandardCharsets.UTF_8)
+                        .split("\\R", -1);
+                String lockingUser = semaphoreLines.length > 0 ? semaphoreLines[0] : "";
 
-                    long lockTime = Long.parseLong(semaphoreReader.readLine());
-                    long timeDifference = System.currentTimeMillis() - lockTime;
-                    // catch (NumberFormatException enf) {} // This means that the
-                    // time was not written at all - lock is corrupt
-                    if (timeDifference > lockSafetyPeriod) { // the lock is old
-                        semaphoreReader.close();
-                        lockingUserOfOldLock = lockingUser;
-                        semaphoreFile.delete();
-                    } else
-                        return lockingUser;
-                }
-            } catch (FileNotFoundException ignored) {
+                long lockTime = Long.parseLong(semaphoreLines[1]);
+                long timeDifference = System.currentTimeMillis() - lockTime;
+                // catch (NumberFormatException enf) {} // This means that the
+                // time was not written at all - lock is corrupt
+                if (timeDifference > lockSafetyPeriod) { // the lock is old
+                    lockingUserOfOldLock = lockingUser;
+                    semaphoreFile.delete();
+                } else
+                    return lockingUser;
+            } catch (FileNotFoundException | NoSuchFileException ignored) {
             }
 
             writeSemaphoreFile(semaphoreFile);

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.nio.charset.Charset;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -78,7 +79,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
                                 FilenameUtils.removeExtension(file.getName()));
                         // For each line: Is it URL? => Set it as link
                         BufferedReader in = new BufferedReader(new FileReader(
-                                file));
+                                file, Charset.defaultCharset()));
                         while (in.ready()) {
                             String line = in.readLine();
                             if (line.startsWith("URL=")) {
