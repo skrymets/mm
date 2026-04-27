@@ -19,7 +19,6 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.awt.font.TextAttribute;
 import java.io.*;
 import java.util.*;
 import java.util.ArrayList;
@@ -55,27 +54,9 @@ public abstract class NodeAdapter implements MindMapNode {
     private final freemind.model.services.NodeAttributesService attributesService = new freemind.model.services.NodeAttributesService(this);
     @Getter
     private final freemind.model.services.NodeContentService contentService = new freemind.model.services.NodeContentService(this);
-
-    // these Attributes have default values, so it can be useful to directly
-    // access them in
-    // the save() method instead of using getXXX(). This way the stored file is
-    // smaller and looks better.
-    // (if the default is used, it is not stored) Look at mindmapmode for an
-    // example.
-    @Setter
-    protected String style;
-
-    /**
-     * -- GETTER --
-     *  The Foreground/Font Color
-     */
-    @Setter
     @Getter
-    protected Color color;
-    // fc, 24.2.2004: background color:
-    @Setter
-    @Getter
-    protected Color backgroundColor;
+    private final freemind.model.services.NodeStyleService styleService = new freemind.model.services.NodeStyleService(this);
+
     @Setter
     @Getter
     protected boolean folded;
@@ -97,14 +78,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
     protected List<MindMapNode> children;
     private MindMapNode preferredChild;
-
-    @Setter
-    @Getter
-    protected Font font;
-    // not implemented
-    @Setter
-    @Getter
-    protected boolean underlined = false;
 
     @Getter
     private final FilterInfo filterInfo = new FilterInfo();
@@ -241,153 +214,120 @@ public abstract class NodeAdapter implements MindMapNode {
         decorationsService.setCloud(cloud);
     }
 
-    public String getBareStyle() {
-        return style;
-    }
-
-    /**
-     * A Node-Style like MindMapNode.STYLE_FORK or MindMapNode.STYLE_BUBBLE
-     */
+    @Override
     public String getStyle() {
-        String returnedString = style; /* Style string returned */
-        if (style == null) {
-            if (this.isRoot()) {
-                returnedString = getMapFeedback().getProperty(
-                        FreeMind.RESOURCES_ROOT_NODE_STYLE);
-            } else {
-                String stdstyle = getMapFeedback().getProperty(
-                        FreeMind.RESOURCES_NODE_STYLE);
-                if (stdstyle.equals(MindMapNode.STYLE_AS_PARENT)) {
-                    returnedString = getParentNode().getStyle();
-                } else {
-                    returnedString = stdstyle;
-                }
-            }
-        } else if (this.isRoot() && style.equals(MindMapNode.STYLE_AS_PARENT)) {
-            returnedString = getMapFeedback().getProperty(
-                    FreeMind.RESOURCES_ROOT_NODE_STYLE);
-        } else if (style.equals(MindMapNode.STYLE_AS_PARENT)) {
-            returnedString = getParentNode().getStyle();
-        }
-
-        // Handle the combined node style
-        if (returnedString.equals(MindMapNode.STYLE_COMBINED)) {
-            if (this.isFolded()) {
-                return MindMapNode.STYLE_BUBBLE;
-            } else {
-                return MindMapNode.STYLE_FORK;
-            }
-        }
-        return returnedString;
+        return styleService.getStyle();
     }
 
+    public void setStyle(String style) {
+        styleService.setStyle(style);
+    }
+
+    @Override
+    public String getBareStyle() {
+        return styleService.getBareStyle();
+    }
+
+    @Override
     public boolean hasStyle() {
-        return style != null;
+        return styleService.hasStyle();
     }
-
-    // ////
-    // The set methods. I'm not sure if they should be here or in the
-    // implementing class.
-    // ///
-
-    //
-    // font handling
-    //
-
-    // Remark to setBold and setItalic implementation
-    //
-    // Using deriveFont() is a bad idea, because it does not really choose
-    // the appropriate face. For example, instead of choosing face
-    // "Arial Bold", it derives the bold face from "Arial".
-
-    // Node holds font only in the case that the font is not default.
 
     public void establishOwnFont() {
-        font = (font != null) ? font : getMapFeedback().getDefaultFont();
+        styleService.establishOwnFont();
     }
 
     public void setBold(boolean bold) {
-        if (bold != isBold()) {
-            toggleBold();
-        }
-    }
-
-    public void setStrikethrough(boolean strikethrough) {
-        if (strikethrough != isStrikethrough()) {
-            toggleStrikethrough();
-        }
-    }
-
-    public void toggleStrikethrough() {
-        establishOwnFont();
-        @SuppressWarnings("unchecked")
-        Map<TextAttribute, Object> attributes = (Map<TextAttribute, Object>) font.getAttributes();
-        if (attributes.containsKey(TextAttribute.STRIKETHROUGH) && attributes.get(TextAttribute.STRIKETHROUGH) == TextAttribute.STRIKETHROUGH_ON) {
-            attributes.remove(TextAttribute.STRIKETHROUGH);
-        } else {
-            attributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
-        }
-        setFont(new Font(attributes));
+        styleService.setBold(bold);
     }
 
     public void toggleBold() {
-        establishOwnFont();
-        setFont(getMapFeedback().getFontThroughMap(font.deriveFont(font.getStyle() ^ Font.BOLD)));
+        styleService.toggleBold();
     }
 
     public void setItalic(boolean italic) {
-        if (italic != isItalic()) {
-            toggleItalic();
-        }
+        styleService.setItalic(italic);
     }
 
     public void toggleItalic() {
-        establishOwnFont();
-        setFont(getMapFeedback().getFontThroughMap(font.deriveFont(font.getStyle() ^ Font.ITALIC)));
+        styleService.toggleItalic();
+    }
+
+    public void setStrikethrough(boolean strikethrough) {
+        styleService.setStrikethrough(strikethrough);
+    }
+
+    public void toggleStrikethrough() {
+        styleService.toggleStrikethrough();
+    }
+
+    @Override
+    public boolean isBold() {
+        return styleService.isBold();
+    }
+
+    @Override
+    public boolean isItalic() {
+        return styleService.isItalic();
+    }
+
+    @Override
+    public boolean isStrikethrough() {
+        return styleService.isStrikethrough();
+    }
+
+    @Override
+    public boolean isUnderlined() {
+        return styleService.isUnderlined();
+    }
+
+    public void setUnderlined(boolean underlined) {
+        styleService.setUnderlined(underlined);
+    }
+
+    public void setFontSize(int fontSize) {
+        styleService.setFontSize(fontSize);
+    }
+
+    @Override
+    public String getFontSize() {
+        return styleService.getFontSize();
+    }
+
+    @Override
+    public String getFontFamilyName() {
+        return styleService.getFontFamilyName();
+    }
+
+    @Override
+    public Color getColor() {
+        return styleService.getColor();
+    }
+
+    public void setColor(Color color) {
+        styleService.setColor(color);
+    }
+
+    @Override
+    public Color getBackgroundColor() {
+        return styleService.getBackgroundColor();
+    }
+
+    public void setBackgroundColor(Color color) {
+        styleService.setBackgroundColor(color);
+    }
+
+    @Override
+    public Font getFont() {
+        return styleService.getFont();
+    }
+
+    public void setFont(Font font) {
+        styleService.setFont(font);
     }
 
     public MindMapNode getParentNode() {
         return parent;
-    }
-
-    public void setFontSize(int fontSize) {
-        establishOwnFont();
-        setFont(getMapFeedback().getFontThroughMap(
-                font.deriveFont((float) fontSize)));
-    }
-
-    public String getFontSize() {
-        if (getFont() != null) {
-            return Integer.toString(getFont().getSize());
-        } else {
-            return getMapFeedback().getProperty("defaultfontsize");
-        }
-    }
-
-    public String getFontFamilyName() {
-        if (getFont() != null) {
-            return getFont().getFamily();
-        } else {
-            return getMapFeedback().getProperty("defaultfont");
-        }
-    }
-
-    public boolean isBold() {
-        return font != null ? font.isBold() : false;
-    }
-
-    public boolean isItalic() {
-        return font != null ? font.isItalic() : false;
-    }
-
-    public boolean isStrikethrough() {
-        if (font != null) {
-            Map<TextAttribute, ?> attr = font.getAttributes();
-            if (attr.containsKey(TextAttribute.STRIKETHROUGH)) {
-                return attr.get(TextAttribute.STRIKETHROUGH) == TextAttribute.STRIKETHROUGH_ON;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -925,7 +865,7 @@ public abstract class NodeAdapter implements MindMapNode {
                 node.setAttribute("ID", label);
             }
         }
-        if (color != null) {
+        if (getColor() != null) {
             node.setAttribute("COLOR", ColorUtils.colorToXml(getColor()));
         }
 
@@ -935,7 +875,7 @@ public abstract class NodeAdapter implements MindMapNode {
                     ColorUtils.colorToXml(getBackgroundColor()));
         }
 
-        if (style != null) {
+        if (hasStyle()) {
             node.setAttribute("STYLE", this.getStyle());
         }
         // ^ Here cannot be just getStyle() without super. This is because
@@ -968,15 +908,13 @@ public abstract class NodeAdapter implements MindMapNode {
                                     .getLastModifiedAt()));
         }
         // font
-        if (font != null) {
+        if (getFont() != null) {
             Element fontElement = doc.createElement("font");
 
-            if (font != null) {
-                fontElement.setAttribute("NAME", font.getFamily());
-            }
-            if (font.getSize() != 0) {
+            fontElement.setAttribute("NAME", getFont().getFamily());
+            if (getFont().getSize() != 0) {
                 fontElement.setAttribute("SIZE",
-                        Integer.toString(font.getSize()));
+                        Integer.toString(getFont().getSize()));
             }
             if (isBold()) {
                 fontElement.setAttribute("BOLD", "true");

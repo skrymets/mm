@@ -90,7 +90,7 @@ public class MindMapNodeModel extends NodeAdapter {
     }
 
     public void collectColors(HashSet<Color> colors) {
-        if (color != null) {
+        if (getColor() != null) {
             colors.add(getColor());
         }
         for (ListIterator e = childrenUnfolded(); e.hasNext(); ) {
@@ -140,7 +140,7 @@ public class MindMapNodeModel extends NodeAdapter {
             level = "";
         }
         String fontsize = "";
-        if (color != null) {
+        if (getColor() != null) {
             pre += "\\cf" + colorTable.get(getColor());
         }
 
@@ -153,7 +153,7 @@ public class MindMapNodeModel extends NodeAdapter {
         if (isStrikethrough()) {
             pre += "\\strike ";
         }
-        if (font != null && font.getSize() != 0) {
+        if (getFont() != null && getFont().getSize() != 0) {
             fontsize = "\\fs" + Math.round(1.5 * getFont().getSize());
             pre += fontsize;
         }
