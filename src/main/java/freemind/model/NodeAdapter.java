@@ -41,8 +41,6 @@ public abstract class NodeAdapter implements MindMapNode {
     public final static int RIGHT_POSITION = 1;
     public final static int UNKNOWN_POSITION = 0;
 
-    private HashSet<PermanentNodeHook> activatedHooks;
-    private List<PermanentNodeHook> hooks;
     @Getter
     private String link = null; // Change this to vector in future for full
     // graph support
@@ -56,6 +54,8 @@ public abstract class NodeAdapter implements MindMapNode {
     private final freemind.model.services.NodeContentService contentService = new freemind.model.services.NodeContentService(this);
     @Getter
     private final freemind.model.services.NodeStyleService styleService = new freemind.model.services.NodeStyleService(this);
+    @Getter
+    private final freemind.model.services.NodeHooksService hooksService = new freemind.model.services.NodeHooksService(this);
 
     @Setter
     @Getter
@@ -105,8 +105,6 @@ public abstract class NodeAdapter implements MindMapNode {
     protected NodeAdapter(Object userObject, MindMap pMap) {
         this.map = pMap;
         contentService.setText((String) userObject);
-        hooks = null; // lazy, fc, 30.6.2005.
-        activatedHooks = null; // lazy, fc, 30.6.2005
 
         // create creation time:
         setHistoryInformation(new HistoryInformation());
@@ -694,94 +692,34 @@ public abstract class NodeAdapter implements MindMapNode {
         return level;
     }
 
+    @Override
     public PermanentNodeHook addHook(PermanentNodeHook hook) {
-        // add then
-        if (hook == null)
-            throw new IllegalArgumentException("Added null hook.");
-        createHooks();
-        hooks.add(hook);
-        return hook;
+        return hooksService.addHook(hook);
     }
 
+    @Override
     public void invokeHook(NodeHook hook) {
-        // initialize:
-        hook.startupMapHook();
-        // the main invocation:
-        hook.setNode(this);
-        try {
-            hook.invoke(this);
-        } catch (Exception e) {
-            // FIXME: Do something special here, but in any case, do not add the
-            // hook
-            // to the activatedHooks:
-            log.error(e.getLocalizedMessage(), e);
-            return;
-        }
-        if (hook instanceof PermanentNodeHook) {
-            createActivatedHooks();
-            activatedHooks.add((PermanentNodeHook) hook);
-        } else {
-            // end of its short life:
-            hook.shutdownMapHook();
-        }
+        hooksService.invokeHook(hook);
     }
 
-    private void createActivatedHooks() {
-        if (activatedHooks == null) {
-            activatedHooks = new HashSet<>();
-        }
-    }
-
-    private void createHooks() {
-        if (hooks == null) {
-            hooks = new ArrayList<>();
-        }
-    }
-
+    @Override
     public List<PermanentNodeHook> getHooks() {
-        if (hooks == null)
-            return Collections.emptyList();
-        return Collections.unmodifiableList(hooks);
+        return hooksService.getHooks();
     }
 
+    @Override
     public Collection<PermanentNodeHook> getActivatedHooks() {
-        if (activatedHooks == null) {
-            return Collections.emptyList();
-        }
-        return Collections.unmodifiableCollection(activatedHooks);
+        return hooksService.getActivatedHooks();
     }
 
+    @Override
     public void removeHook(PermanentNodeHook hook) {
-        // the order is crucial here: the shutdown method should be able to
-        // perform "nodeChanged"
-        // calls without having its own updateNodeHook method to be called
-        // again.
-        String name = hook.getName();
-        createActivatedHooks();
-        if (activatedHooks.contains(hook)) {
-            activatedHooks.remove(hook);
-            if (activatedHooks.isEmpty()) {
-                activatedHooks = null;
-            }
-            hook.shutdownMapHook();
-        }
-        createHooks();
-        hooks.remove(hook);
-        if (hooks.isEmpty())
-            hooks = null;
-        log.trace("Removed hook {} at {}.", name, hook);
+        hooksService.removeHook(hook);
     }
 
+    @Override
     public void removeAllHooks() {
-        int timeout = getHooks().size() * 2;
-        while (!getHooks().isEmpty() && timeout-- > 0) {
-            PermanentNodeHook hook = getHooks().get(0);
-            try {
-                removeHook(hook);
-            } catch (Exception e) {
-                log.error(e.getLocalizedMessage(), e);
-            }
-        }
+        hooksService.removeAllHooks();
     }
 
     public SortedMap<String, String> getToolTip() {
