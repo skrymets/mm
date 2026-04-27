@@ -219,6 +219,7 @@ public abstract class NodeAdapter implements MindMapNode {
         return styleService.getStyle();
     }
 
+    @Override
     public void setStyle(String style) {
         styleService.setStyle(style);
     }
@@ -285,6 +286,7 @@ public abstract class NodeAdapter implements MindMapNode {
         styleService.setUnderlined(underlined);
     }
 
+    @Override
     public void setFontSize(int fontSize) {
         styleService.setFontSize(fontSize);
     }
@@ -304,6 +306,7 @@ public abstract class NodeAdapter implements MindMapNode {
         return styleService.getColor();
     }
 
+    @Override
     public void setColor(Color color) {
         styleService.setColor(color);
     }
@@ -313,6 +316,7 @@ public abstract class NodeAdapter implements MindMapNode {
         return styleService.getBackgroundColor();
     }
 
+    @Override
     public void setBackgroundColor(Color color) {
         styleService.setBackgroundColor(color);
     }
@@ -322,6 +326,7 @@ public abstract class NodeAdapter implements MindMapNode {
         return styleService.getFont();
     }
 
+    @Override
     public void setFont(Font font) {
         styleService.setFont(font);
     }
