@@ -21,9 +21,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import javax.swing.*;
 import java.io.InputStream;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Service for menu configuration and construction.
@@ -44,7 +41,7 @@ public class MenuConfigService {
      */
     public void updateMenus(StructuredMenuHolder holder) {
         List<Object> objects = controller.getMenuStructure().getMenuCategoryList()
-                .stream().map(mcb -> (Object) mcb).collect(Collectors.toList());
+                .stream().map(mcb -> (Object) mcb).toList();
 
         processMenuCategory(holder, objects, "");
 
@@ -122,7 +119,7 @@ public class MenuConfigService {
 
                 List<?> baseList = cat.getBaseList();
                 if (CollectionUtils.isNotEmpty(baseList)) {
-                    List<Object> objects = baseList.stream().map(mcb -> (Object) mcb).collect(toList());
+                    List<Object> objects = baseList.stream().map(mcb -> (Object) mcb).toList();
                     processMenuCategory(holder, objects, newCategory);
                 }
             } else if (unwrapped instanceof MenuActionBase) {

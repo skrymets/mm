@@ -16,7 +16,6 @@ import javax.swing.*;
 import java.util.List;
 
 import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
 
 public class ConjunctConditions implements Condition {
 
@@ -59,7 +58,7 @@ public class ConjunctConditions implements Condition {
     static Condition load(Element element) {
         final List<Condition> conditions = FreeMindXml.getChildElements(element).stream()
                 .map(childEl -> FilterController.getConditionFactory().loadCondition(childEl))
-                .collect(toList());
+                .toList();
 
         return new ConjunctConditions(conditions);
     }

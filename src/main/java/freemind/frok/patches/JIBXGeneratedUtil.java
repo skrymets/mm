@@ -5,7 +5,6 @@ import freemind.controller.actions.*;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.stream.Collectors.toList;
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
 public class JIBXGeneratedUtil {
@@ -26,7 +25,7 @@ public class JIBXGeneratedUtil {
                         ret = choice.getPluginRegistration();
                     }
                     return ret;
-                }).collect(toList());
+                }).toList();
         return pluginChoice;
 
     }
@@ -44,7 +43,7 @@ public class JIBXGeneratedUtil {
                         ret = choice.getPluginProperty();
                     }
                     return ret;
-                }).collect(toList());
+                }).toList();
         return pluginActions;
     }
 
@@ -291,7 +290,7 @@ public class JIBXGeneratedUtil {
                     }
                 })
                 .filter(Objects::nonNull)
-                .collect(toList());
+                .toList();
         return xmlActions;
     }
 

@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.TreeMap;
 
 import static java.util.Comparator.comparingInt;
-import static java.util.stream.Collectors.toList;
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
 @Slf4j
@@ -118,7 +117,7 @@ public class LastStateStorageManagement {
                 .stream()
                 .filter(storage -> storage.getTabIndex() >= 0)
                 .sorted(comparingInt(MindmapLastStateStorage::getTabIndex))
-                .collect(toList());
+                .toList();
 
     }
 
