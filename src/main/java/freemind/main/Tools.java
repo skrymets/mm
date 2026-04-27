@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributes;
+import java.time.Instant;
 import java.util.*;
 import java.util.List;
 
@@ -196,16 +197,16 @@ public class Tools {
     /**
      * Extracts a long from xml. Only useful for dates.
      */
-    public static Date xmlToDate(String xmlString) {
+    public static Instant xmlToInstant(String xmlString) {
         try {
-            return new Date(Long.valueOf(xmlString).longValue());
+            return Instant.ofEpochMilli(Long.parseLong(xmlString));
         } catch (NumberFormatException e) {
-            return new Date(System.currentTimeMillis());
+            return Instant.now();
         }
     }
 
-    public static String dateToString(Date date) {
-        return Long.toString(date.getTime());
+    public static String dateToString(Instant instant) {
+        return Long.toString(instant.toEpochMilli());
     }
 
     /**

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Instant;
 import java.util.*;
 
 @SuppressWarnings("serial")
@@ -79,7 +80,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             }
             if (shouldFire) {
                 for (MapSourceChangedObserver observer : mMapSourceChangedObserverSet) {
-                    log.info("File {} changed on disk as it was last modified at {}", getFile(), new Date(lastModified));
+                    log.info("File {} changed on disk as it was last modified at {}", getFile(), Instant.ofEpochMilli(lastModified));
                     try {
                         boolean changeAccepted = observer.mapSourceChanged(MapAdapter.this);
                         if (!changeAccepted) {

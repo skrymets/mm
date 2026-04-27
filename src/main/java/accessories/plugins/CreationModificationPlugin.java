@@ -9,6 +9,7 @@ import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 @Slf4j
@@ -22,8 +23,8 @@ public class CreationModificationPlugin extends PermanentMindMapNodeHookAdapter 
 
     private void setStyle(MindMapNode node) {
         Object[] messageArguments = {
-                node.getHistoryInformation().getCreatedAt(),
-                node.getHistoryInformation().getLastModifiedAt()};
+                Date.from(node.getHistoryInformation().getCreatedAt()),
+                Date.from(node.getHistoryInformation().getLastModifiedAt())};
         if (tooltipFormat == null) {
             tooltipFormat = getResourceString("tooltip_format");
         }

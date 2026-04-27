@@ -583,8 +583,8 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             }
             model.addRow(new Object[]{date, new NodeHolder(node),
                     new IconsHolder(node),
-                    node.getHistoryInformation().getCreatedAt(),
-                    node.getHistoryInformation().getLastModifiedAt(),
+                    Date.from(node.getHistoryInformation().getCreatedAt()),
+                    Date.from(node.getHistoryInformation().getLastModifiedAt()),
                     new NotesHolder(node)});
         }
         if ((!mViewFoldedNodes) && node.isFolded()) {

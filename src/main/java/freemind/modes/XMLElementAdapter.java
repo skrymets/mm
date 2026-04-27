@@ -496,13 +496,13 @@ public class XMLElementAdapter {
                 if (node.getHistoryInformation() == null) {
                     node.setHistoryInformation(new HistoryInformation());
                 }
-                node.getHistoryInformation().setCreatedAt(Tools.xmlToDate(sValue));
+                node.getHistoryInformation().setCreatedAt(Tools.xmlToInstant(sValue));
                 break;
             case XML_NODE_HISTORY_LAST_MODIFIED_AT:
                 if (node.getHistoryInformation() == null) {
                     node.setHistoryInformation(new HistoryInformation());
                 }
-                node.getHistoryInformation().setLastModifiedAt(Tools.xmlToDate(sValue));
+                node.getHistoryInformation().setLastModifiedAt(Tools.xmlToInstant(sValue));
                 break;
             case "FOLDED":
                 if (sValue.equals("true")) {

@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.Instant;
 import java.util.*;
 import java.util.List;
 
@@ -134,7 +135,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         if (isUpdate) {
             // update modification times:
             if (node.getHistoryInformation() != null) {
-                node.getHistoryInformation().setLastModifiedAt(new Date());
+                node.getHistoryInformation().setLastModifiedAt(Instant.now());
             }
             // Tell any node hooks that the node is changed:
             updateNode(node);

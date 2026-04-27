@@ -11,9 +11,9 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.awt.Color;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -255,32 +255,32 @@ class ToolsTest {
     class DateConversion {
 
         @Test
-        void xmlToDate_validTimestamp() {
+        void xmlToInstant_validTimestamp() {
             long timestamp = 1000000000000L;
-            Date result = Tools.xmlToDate(String.valueOf(timestamp));
-            assertEquals(timestamp, result.getTime());
+            Instant result = Tools.xmlToInstant(String.valueOf(timestamp));
+            assertEquals(timestamp, result.toEpochMilli());
         }
 
         @Test
-        void xmlToDate_invalidString_returnsCurrentDate() {
-            Date before = new Date();
-            Date result = Tools.xmlToDate("not-a-number");
-            Date after = new Date();
-            assertTrue(result.getTime() >= before.getTime());
-            assertTrue(result.getTime() <= after.getTime());
+        void xmlToInstant_invalidString_returnsCurrentInstant() {
+            Instant before = Instant.now();
+            Instant result = Tools.xmlToInstant("not-a-number");
+            Instant after = Instant.now();
+            assertTrue(result.toEpochMilli() >= before.toEpochMilli());
+            assertTrue(result.toEpochMilli() <= after.toEpochMilli());
         }
 
         @Test
         void dateToString_basic() {
-            Date date = new Date(1000000000000L);
-            assertEquals("1000000000000", Tools.dateToString(date));
+            Instant instant = Instant.ofEpochMilli(1000000000000L);
+            assertEquals("1000000000000", Tools.dateToString(instant));
         }
 
         @Test
         void dateRoundtrip() {
-            Date original = new Date(1234567890123L);
-            Date roundtripped = Tools.xmlToDate(Tools.dateToString(original));
-            assertEquals(original.getTime(), roundtripped.getTime());
+            Instant original = Instant.ofEpochMilli(1234567890123L);
+            Instant roundtripped = Tools.xmlToInstant(Tools.dateToString(original));
+            assertEquals(original.toEpochMilli(), roundtripped.toEpochMilli());
         }
     }
 

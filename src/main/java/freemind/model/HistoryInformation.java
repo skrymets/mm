@@ -1,6 +1,6 @@
 package freemind.model;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Here, the creation and modification times of objects (by now, only for nodes)
@@ -17,29 +17,29 @@ public class HistoryInformation {
      * Initializes to today.
      */
     public HistoryInformation() {
-        long now = new Date().getTime();
+        long now = Instant.now().toEpochMilli();
         createdAt = now;
         lastModifiedAt = now;
     }
 
-    public HistoryInformation(Date createdAt, Date lastModifiedAt) {
-        this.createdAt = createdAt.getTime();
-        this.lastModifiedAt = lastModifiedAt.getTime();
+    public HistoryInformation(Instant createdAt, Instant lastModifiedAt) {
+        this.createdAt = createdAt.toEpochMilli();
+        this.lastModifiedAt = lastModifiedAt.toEpochMilli();
     }
 
-    public Date getCreatedAt() {
-        return new Date(createdAt);
+    public Instant getCreatedAt() {
+        return Instant.ofEpochMilli(createdAt);
     }
 
-    public Date getLastModifiedAt() {
-        return new Date(lastModifiedAt);
+    public Instant getLastModifiedAt() {
+        return Instant.ofEpochMilli(lastModifiedAt);
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt.getTime();
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt.toEpochMilli();
     }
 
-    public void setLastModifiedAt(Date lastModifiedAt) {
-        this.lastModifiedAt = lastModifiedAt.getTime();
+    public void setLastModifiedAt(Instant lastModifiedAt) {
+        this.lastModifiedAt = lastModifiedAt.toEpochMilli();
     }
 }

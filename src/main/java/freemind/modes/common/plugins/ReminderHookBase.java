@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -80,7 +81,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
         }
         if (timer == null) {
             scheduleTimer();
-            Date date = new Date(remindUserAt);
+            Date date = Date.from(Instant.ofEpochMilli(remindUserAt));
             Object[] messageArguments = {date};
             MessageFormat formatter = new MessageFormat(
                     getResourceString("plugins/TimeManagement.xml_reminderNode_tooltip"));
