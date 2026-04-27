@@ -370,9 +370,9 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
                 // locking in that case.
                 // ^ just like above.
                 // ^ On Windows95, the necessary libraries are missing.
-                semaphoreOutputStream.write(System.getProperty("user.name").getBytes());
-                semaphoreOutputStream.write('\n');
-                semaphoreOutputStream.write(String.valueOf(System.currentTimeMillis()).getBytes());
+                semaphoreOutputStream.write(System.getProperty("user.name").getBytes(StandardCharsets.UTF_8));
+                semaphoreOutputStream.write("\n".getBytes(StandardCharsets.UTF_8));
+                semaphoreOutputStream.write(String.valueOf(System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
             }
             Tools.setHidden(inSemaphoreFile, true, /* synchro= */false); // Exception
             // free
@@ -394,6 +394,9 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
                         .split("\\R", -1);
                 String lockingUser = semaphoreLines.length > 0 ? semaphoreLines[0] : "";
 
+                if (semaphoreLines.length < 2) {
+                    throw new NumberFormatException("Semaphore file has missing timestamp line");
+                }
                 long lockTime = Long.parseLong(semaphoreLines[1]);
                 long timeDifference = System.currentTimeMillis() - lockTime;
                 // catch (NumberFormatException enf) {} // This means that the
