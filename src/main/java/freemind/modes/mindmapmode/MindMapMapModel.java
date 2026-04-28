@@ -163,10 +163,10 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
 
             HashMap<Color, Integer> colorTable = new HashMap<>();
             int colorPosition = 2;
-            for (Iterator<Color> it = colors.iterator(); it.hasNext(); ++colorPosition) {
-                Color color = it.next();
+            for (Color color : colors) {
                 colorTableString.append("\\red").append(color.getRed()).append("\\green").append(color.getGreen()).append("\\blue").append(color.getBlue()).append(";");
                 colorTable.put(color, Integer.valueOf(colorPosition));
+                ++colorPosition;
             }
             colorTableString.append("}");
 

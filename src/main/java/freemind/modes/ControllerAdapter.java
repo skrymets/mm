@@ -321,12 +321,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      */
     public List<MindMapNode> getSelecteds() {
         LinkedList<MindMapNode> selecteds = new LinkedList<>();
-        ListIterator<NodeView> it = getView().getSelectionService().getSelecteds().listIterator();
-        if (it != null) {
-            while (it.hasNext()) {
-                NodeView selected = it.next();
-                selecteds.add(selected.getModel());
-            }
+        for (NodeView selected : getView().getSelectionService().getSelecteds()) {
+            selecteds.add(selected.getModel());
         }
         return selecteds;
     }
@@ -731,9 +727,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                     dropEvent.dropComplete(false);
                     return;
                 }
-                Iterator<File> iterator = ((List<File>) data).iterator();
-                while (iterator.hasNext()) {
-                    File file = iterator.next();
+                for (File file : (List<File>) data) {
                     load(file);
                 }
             } catch (Exception e) {

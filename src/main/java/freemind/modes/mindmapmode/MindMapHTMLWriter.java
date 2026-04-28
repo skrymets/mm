@@ -96,9 +96,7 @@ class MindMapHTMLWriter {
         fileout.write("<html>" + el + "<head>" + el);
         writeStyle();
         fileout.write(el + "</head>" + el + "<body>" + el);
-        Iterator<MindMapNodeModel> iterator = mindMapNodes.iterator();
-        while (iterator.hasNext()) {
-            MindMapNodeModel node = iterator.next();
+        for (MindMapNodeModel node : mindMapNodes) {
             saveHTML(node, "1", 0, /* isRoot */true, true, /* depth */1);
         }
         fileout.write("</body>" + el);

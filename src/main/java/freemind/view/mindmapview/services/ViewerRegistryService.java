@@ -20,10 +20,7 @@ public class ViewerRegistryService {
         if (node == null) {
             return null;
         }
-        Collection<NodeView> viewers = getViewers(node);
-        final Iterator<NodeView> iterator = viewers.iterator();
-        while (iterator.hasNext()) {
-            NodeView candidateView = iterator.next();
+        for (NodeView candidateView : getViewers(node)) {
             if (candidateView.getMap() == mapView) {
                 return candidateView;
             }

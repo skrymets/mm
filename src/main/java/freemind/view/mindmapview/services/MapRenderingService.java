@@ -7,7 +7,6 @@ import freemind.view.mindmapview.NodeView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 
 public class MapRenderingService {
 
@@ -78,9 +77,7 @@ public class MapRenderingService {
         }
         g.setStroke(standardSelectionStroke);
         Object renderingHint = setEdgesRenderingHint(g);
-        final Iterator<NodeView> i = mapView.getSelectionService().getSelecteds().iterator();
-        while (i.hasNext()) {
-            NodeView selected = i.next();
+        for (NodeView selected : mapView.getSelectionService().getSelecteds()) {
             paintSelected(g, selected);
         }
         SwingUtils.restoreAntialiasing(g, renderingHint);

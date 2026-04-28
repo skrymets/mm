@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 @Slf4j
@@ -77,9 +76,7 @@ public class MapPrintingService {
     }
 
     public void repaintSelecteds() {
-        final Iterator<NodeView> iterator = mapView.getSelectionService().getSelecteds().iterator();
-        while (iterator.hasNext()) {
-            NodeView next = iterator.next();
+        for (NodeView next : mapView.getSelectionService().getSelecteds()) {
             next.repaintSelected();
         }
     }

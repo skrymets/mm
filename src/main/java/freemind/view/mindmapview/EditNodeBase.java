@@ -14,7 +14,6 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class EditNodeBase {
@@ -240,9 +239,7 @@ public class EditNodeBase {
             public void focusGained(FocusEvent e) {
                 e.getComponent().removeFocusListener(this);
                 currentKeyboardFocusManager.removeKeyEventDispatcher(this);
-                final Iterator<KeyEvent> iterator = events.iterator();
-                while (iterator.hasNext()) {
-                    final KeyEvent ke = iterator.next();
+                for (final KeyEvent ke : events) {
                     ke.setSource(textComponent);
                     textComponent.dispatchEvent(ke);
                 }

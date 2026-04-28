@@ -70,8 +70,8 @@ public class LastOpenedList {
      */
     public String save() {
         String str = "";
-        for (ListIterator<String> it = listIterator(); it.hasNext(); ) {
-            str = str.concat(it.next() + ";");
+        for (String entry : mlastOpenedList) {
+            str = str.concat(entry + ";");
         }
         return str;
     }

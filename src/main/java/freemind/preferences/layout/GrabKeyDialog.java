@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -295,11 +294,8 @@ public class GrabKeyDialog extends JDialog {
             return null;
 
         String spacedShortcut = shortcut + " ";
-        Iterator<KeyBinding> e = allBindings.iterator();
 
-        while (e.hasNext()) {
-            KeyBinding kb = e.next();
-
+        for (KeyBinding kb : allBindings) {
             if (!kb.isAssigned())
                 continue;
 
