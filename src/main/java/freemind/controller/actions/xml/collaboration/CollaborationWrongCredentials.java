@@ -1,5 +1,5 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.collaboration;
 
 /**
  * Schema fragment(s) for this class:

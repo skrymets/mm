@@ -3,6 +3,7 @@ package freemind.controller.actions;
 
 import freemind.controller.actions.xml.clipboard.TransferableContent;
 import freemind.controller.actions.xml.clipboard.TransferableFile;
+import freemind.controller.actions.xml.collaboration.*;
 import jakarta.xml.bind.annotation.*;
 
 /**
