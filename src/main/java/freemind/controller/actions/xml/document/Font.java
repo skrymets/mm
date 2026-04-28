@@ -1,5 +1,5 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.document;
 
 import java.math.BigInteger;
 

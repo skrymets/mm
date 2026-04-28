@@ -1,6 +1,7 @@
 
 package freemind.controller.actions;
 
+import freemind.controller.actions.xml.document.NodeListMember;
 import java.util.ArrayList;
 import java.util.List;
 

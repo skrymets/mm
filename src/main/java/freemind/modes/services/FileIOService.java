@@ -2,7 +2,7 @@ package freemind.modes.services;
 
 import freemind.controller.MapModuleManager;
 import freemind.controller.actions.xml.storage.MindmapLastStateStorage;
-import freemind.controller.actions.NodeListMember;
+import freemind.controller.actions.xml.document.NodeListMember;
 import freemind.main.*;
 import freemind.model.MapAdapter;
 import freemind.model.MindMapNode;

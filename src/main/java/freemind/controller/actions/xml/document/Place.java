@@ -1,5 +1,5 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.document;
 
 /**
  * Schema fragment(s) for this class:
@@ -25,6 +25,7 @@ package freemind.controller.actions;
  * &lt;/xs:element>
  * </pre>
  */
+import freemind.controller.actions.XmlAction;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)

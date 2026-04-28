@@ -1,6 +1,7 @@
 
 package freemind.controller.actions;
 
+import freemind.controller.actions.xml.document.*;
 import freemind.controller.actions.xml.clipboard.TransferableContent;
 import freemind.controller.actions.xml.clipboard.TransferableFile;
 import freemind.controller.actions.xml.collaboration.*;

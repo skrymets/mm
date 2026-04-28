@@ -1,7 +1,7 @@
 
 package freemind.controller.actions.xml.storage;
 
-import freemind.controller.actions.NodeListMember;
+import freemind.controller.actions.xml.document.NodeListMember;
 import freemind.controller.actions.XmlAction;
 import jakarta.xml.bind.annotation.*;
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.document.*;
 import freemind.extensions.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMindXml;
