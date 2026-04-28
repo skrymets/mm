@@ -104,7 +104,7 @@ public class JumpLastEditLocation extends MindMapNodeHookAdapter {
         private void detectFormatChanges(XmlAction doAction) {
             if (doAction instanceof CompoundAction compAction) {
                 List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compAction);
-                for (XmlAction childAction : xmlActions) {
+                for (var childAction : xmlActions) {
                     detectFormatChanges(childAction);
                 }
             } else if ((doAction instanceof NodeAction)

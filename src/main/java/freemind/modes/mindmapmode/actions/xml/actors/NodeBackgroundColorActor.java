@@ -26,7 +26,7 @@ public class NodeBackgroundColorActor extends XmlActorAdapter {
 
     public NodeBackgroundColorFormatAction createNodeBackgroundColorFormatAction(
             MindMapNode node, Color color) {
-        NodeBackgroundColorFormatAction nodeAction = new NodeBackgroundColorFormatAction();
+        var nodeAction = new NodeBackgroundColorFormatAction();
         nodeAction.setNode(getNodeID(node));
         nodeAction.setColor(ColorUtils.colorToXml(color));
         return nodeAction;

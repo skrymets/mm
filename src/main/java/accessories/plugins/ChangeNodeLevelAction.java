@@ -44,7 +44,7 @@ public class ChangeNodeLevelAction extends MindMapNodeHookAdapter {
         // possibly be removed in the future, when we have undo)
         // Also make sure that none of the selected nodes are the root node
         MindMapNode selectedParent = selectedNode.getParentNode();
-        for (MindMapNode node : selectedNodes) {
+        for (var node : selectedNodes) {
             if (node.getParentNode() != selectedParent) {
                 getMindMapController().getController().errorMessage(getResourceString("cannot_add_parent_diff_parents"));
                 return;
@@ -60,8 +60,8 @@ public class ChangeNodeLevelAction extends MindMapNodeHookAdapter {
         // WORKAROUND: Make target of local hyperlinks for the case, that ids
         // are not stored persistently.
         getMap().getLinkRegistry().registerLocalHyperlinkId(selectedNodeId);
-        List<String> selectedNodesId = new ArrayList<>();
-        for (MindMapNode node : selectedNodes) {
+        var selectedNodesId = new ArrayList<String>();
+        for (var node : selectedNodes) {
             String nodeId = getController().getNodeID(node);
             // WORKAROUND: Make target of local hyperlinks for the case, that
             // ids are not stored persistently.
@@ -124,8 +124,8 @@ public class ChangeNodeLevelAction extends MindMapNodeHookAdapter {
     private void select(String selectedNodeId, List<String> selectedNodesIds) {
         // get new nodes by object id:
         MindMapNode newInstanceOfSelectedNode = getMindMapController().getNodeFromID(selectedNodeId);
-        List<MindMapNode> newSelecteds = new LinkedList<>();
-        for (String nodeId : selectedNodesIds) {
+        var newSelecteds = new LinkedList<MindMapNode>();
+        for (var nodeId : selectedNodesIds) {
             newSelecteds.add(getMindMapController().getNodeFromID(nodeId));
         }
         getMindMapController().select(newInstanceOfSelectedNode, newSelecteds);

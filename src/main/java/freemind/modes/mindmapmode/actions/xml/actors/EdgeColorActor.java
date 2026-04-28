@@ -41,7 +41,7 @@ public class EdgeColorActor extends XmlActorAdapter {
 
     public EdgeColorFormatAction createEdgeColorFormatAction(MindMapNode node,
                                                              Color color) {
-        EdgeColorFormatAction edgeAction = new EdgeColorFormatAction();
+        var edgeAction = new EdgeColorFormatAction();
         edgeAction.setNode(getNodeID(node));
         if (color != null) {
             edgeAction.setColor(ColorUtils.colorToXml(color));

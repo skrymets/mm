@@ -23,7 +23,7 @@ public class EdgeColorAction extends MindmapAction {
                 .getEdge().getColor());
         if (color == null)
             return;
-        for (MindMapNode selected : controller.getSelecteds()) {
+        for (var selected : controller.getSelecteds()) {
 
             controller.setEdgeColor(selected, color);
         }

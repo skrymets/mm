@@ -115,10 +115,10 @@ public class FileNodeModel extends NodeAdapter {
                 children = new LinkedList<>();
 
                 String path = file.getPath();
-                for (String s : files) {
-                    File childFile = new File(path, s);
+                for (var s : files) {
+                    var childFile = new File(path, s);
                     if (!childFile.isHidden()) {
-                        final FileNodeModel fileNodeModel = new FileNodeModel(
+                        final var fileNodeModel = new FileNodeModel(
                                 childFile, getMap());
                         fileNodeModel.setLeft(isNewChildLeft());
                         insert(fileNodeModel, getChildCount());

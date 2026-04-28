@@ -33,7 +33,7 @@ public final class StringEncoder {
         if (value == null) {
             return null;
         }
-        StringBuilder buf = new StringBuilder(value.length() + 4);
+        var buf = new StringBuilder(value.length() + 4);
         final int limit = value.length();
         for (int i = 0; i < limit; i++) {
             final char ch = value.charAt(i);
@@ -80,7 +80,7 @@ public final class StringEncoder {
         if (text == null) {
             return null;
         }
-        StringBuilder buf = new StringBuilder(text.length());
+        var buf = new StringBuilder(text.length());
         final int limit = text.length();
         for (int i = 0; i < limit; i++) {
             char ch = text.charAt(i);

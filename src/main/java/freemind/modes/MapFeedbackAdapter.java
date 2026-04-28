@@ -103,7 +103,7 @@ public abstract class MapFeedbackAdapter implements ModeFeedback, ViewFeedback {
 
     @Override
     public NodeHook createNodeHook(String pLoadName, MindMapNode pNode) {
-        PermanentNodeHookSubstituteUnknown hook = new PermanentNodeHookSubstituteUnknown(pLoadName);
+        var hook = new PermanentNodeHookSubstituteUnknown(pLoadName);
         hook.setMap(getMap());
         pNode.addHook(hook);
         return hook;
@@ -115,7 +115,7 @@ public abstract class MapFeedbackAdapter implements ModeFeedback, ViewFeedback {
             NodeAdapter child = (NodeAdapter) i.next();
             invokeHooksRecursively(child, getMap());
         }
-        for (PermanentNodeHook hook : pNode.getHooks()) {
+        for (var hook : pNode.getHooks()) {
             hook.setController(this);
             hook.setMap(getMap());
             pNode.invokeHook(hook);

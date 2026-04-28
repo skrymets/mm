@@ -26,8 +26,8 @@ public class SaveAll extends ModeControllerHookAdapter {
         MapModule initialMapModule = mainController.getMapModule();
         Map<String, MapModule> modules = getMapModules();
         // to prevent concurrent modification:
-        List<MapModule> v = new ArrayList<>(modules.values());
-        for (MapModule module : v) {
+        var v = new ArrayList<MapModule>(modules.values());
+        for (var module : v) {
             // change to module to display map properly.
             mainController.getMapModuleManager().changeToMapModule(module.toString());
             if (!module.getModeController().save()) {

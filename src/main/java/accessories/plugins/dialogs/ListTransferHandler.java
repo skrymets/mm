@@ -111,7 +111,7 @@ public class ListTransferHandler extends TransferHandler {
     }
 
     private boolean hasLocalListFlavor(DataFlavor[] flavors) {
-        for (DataFlavor flavor : flavors) {
+        for (var flavor : flavors) {
             if (flavor.equals(localListFlavor)) {
                 return true;
             }

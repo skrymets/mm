@@ -183,7 +183,7 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
 
         setLayout(new BorderLayout());
 
-        JPanel monthYearPanel = new JPanel();
+        var monthYearPanel = new JPanel();
         monthYearPanel.setLayout(new BorderLayout());
 
         monthChooser = new JMonthChooser(monthSpinner);
@@ -225,9 +225,9 @@ public class JCalendar extends JPanel implements PropertyChangeListener {
      * @param s The command line arguments
      */
     public static void main(String[] s) {
-        JFrame frame = new JFrame("JCalendar");
+        var frame = new JFrame("JCalendar");
 
-        JCalendar jcalendar = new JCalendar();
+        var jcalendar = new JCalendar();
         frame.getContentPane().add(jcalendar);
         frame.pack();
         frame.setVisible(true);

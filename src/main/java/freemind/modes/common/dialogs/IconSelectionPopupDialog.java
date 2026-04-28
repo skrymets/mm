@@ -47,10 +47,10 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
         else
             yDimension = xDimension;
 
-        GridLayout gridlayout = new GridLayout(0, xDimension);
+        var gridlayout = new GridLayout(0, xDimension);
         gridlayout.setHgap(3);
         gridlayout.setVgap(3);
-        JPanel iconPanel = new JPanel();
+        var iconPanel = new JPanel();
         iconPanel.setLayout(gridlayout);
 
         iconLabels = new JLabel[numOfIcons];
@@ -146,28 +146,28 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
     }
 
     private void cursorLeft() {
-        Position newPosition = new Position(getSelectedPosition().getX() - 1,
+        var newPosition = new Position(getSelectedPosition().getX() - 1,
                 getSelectedPosition().getY());
         if (canSelect(newPosition))
             select(newPosition);
     }
 
     private void cursorRight() {
-        Position newPosition = new Position(getSelectedPosition().getX() + 1,
+        var newPosition = new Position(getSelectedPosition().getX() + 1,
                 getSelectedPosition().getY());
         if (canSelect(newPosition))
             select(newPosition);
     }
 
     private void cursorUp() {
-        Position newPosition = new Position(getSelectedPosition().getX(),
+        var newPosition = new Position(getSelectedPosition().getX(),
                 getSelectedPosition().getY() - 1);
         if (canSelect(newPosition))
             select(newPosition);
     }
 
     private void cursorDown() {
-        Position newPosition = new Position(getSelectedPosition().getX(),
+        var newPosition = new Position(getSelectedPosition().getX(),
                 getSelectedPosition().getY() + 1);
         if (canSelect(newPosition))
             select(newPosition);

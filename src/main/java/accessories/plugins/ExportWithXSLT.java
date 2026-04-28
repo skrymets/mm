@@ -156,7 +156,7 @@ public class ExportWithXSLT extends ExportHook {
     private boolean copyMap(String pDirectoryName) throws IOException {
         boolean success = true;
         // Generating output Stream
-        BufferedWriter fileout = new BufferedWriter(
+        var fileout = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(pDirectoryName
                         + File.separator + "map.mm")));
         getController().getMap().getFilteredXml(fileout);
@@ -181,7 +181,7 @@ public class ExportWithXSLT extends ExportHook {
         // create image:
         BufferedImage image = createBufferedImage();
         try {
-            FileOutputStream out = new FileOutputStream(directoryName
+            var out = new FileOutputStream(directoryName
                     + File.separator + "image.png");
             ImageIO.write(image, "png", out);
             out.close();
@@ -192,17 +192,17 @@ public class ExportWithXSLT extends ExportHook {
 
     private void copyIconsToDirectory(String directoryName2) {
         List<String> iconNames = MindIcon.getAllIconNames();
-        for (String s : iconNames) {
+        for (var s : iconNames) {
             String iconName = s;
             MindIcon myIcon = MindIcon.factory(iconName);
             copyFromResource(MindIcon.getIconsPath(),
                     myIcon.getIconBaseFileName(), directoryName2);
         }
-        File iconDir = new File(getController().getResources().getFreemindDirectory(),
+        var iconDir = new File(getController().getResources().getFreemindDirectory(),
                 "icons");
         if (iconDir.exists()) {
             String[] userIconArray = iconDir.list((dir, name) -> name.matches(".*\\.png"));
-            for (String iconName : userIconArray) {
+            for (var iconName : userIconArray) {
                 if (iconName.length() == 4) {
                     continue;
                 }
@@ -215,7 +215,7 @@ public class ExportWithXSLT extends ExportHook {
 
     private void copyFilesFromResourcesToDirectory(String directoryName,
                                                    String files, String filePrefix) {
-        StringTokenizer tokenizer = new StringTokenizer(files, ",");
+        var tokenizer = new StringTokenizer(files, ",");
         while (tokenizer.hasMoreTokens()) {
             String next = tokenizer.nextToken();
             copyFromResource(filePrefix, next, directoryName);
@@ -223,7 +223,7 @@ public class ExportWithXSLT extends ExportHook {
     }
 
     private boolean createDirectory(String directoryName) {
-        File dir = new File(directoryName);
+        var dir = new File(directoryName);
         // create directory, if not exists:
         if (!dir.exists()) {
             return dir.mkdir();
@@ -234,7 +234,7 @@ public class ExportWithXSLT extends ExportHook {
     private boolean transformMapWithXslt(String xsltFileName, File saveFile,
                                          String areaCode) throws IOException {
         StringWriter writer = getMapXml();
-        StringReader reader = new StringReader(writer.getBuffer().toString());
+        var reader = new StringReader(writer.getBuffer().toString());
         // search for xslt file:
         URL xsltUrl = getResource(xsltFileName);
         if (xsltUrl == null) {
@@ -248,7 +248,7 @@ public class ExportWithXSLT extends ExportHook {
 
     private StringWriter getMapXml() throws IOException {
         // get output:
-        StringWriter writer = new StringWriter();
+        var writer = new StringWriter();
         // get XML
         getController().getMap().getFilteredXml(writer);
         return writer;
@@ -258,7 +258,7 @@ public class ExportWithXSLT extends ExportHook {
         String areaCode = "";
         if (create_image) {
             MindMapNode root = getController().getMap().getRootNode();
-            ClickableImageCreator creator = new ClickableImageCreator(root,
+            var creator = new ClickableImageCreator(root,
                     getController(),
                     getResourceString("link_replacement_format_string"));
             areaCode = creator.generateHtml();
@@ -267,16 +267,16 @@ public class ExportWithXSLT extends ExportHook {
     }
 
     private void export(File file) {
-        ExportDialog exp = new ExportDialog(file, getController());
+        var exp = new ExportDialog(file, getController());
         exp.setVisible(true);
     }
 
     public boolean transform(Source xmlSource, InputStream xsltStream,
                              File resultFile, String areaCode) throws FileNotFoundException {
         // System.out.println("set xsl");
-        Source xsltSource = new StreamSource(xsltStream);
+        var xsltSource = new StreamSource(xsltStream);
         // System.out.println("set result");
-        Result result = new StreamResult(new FileOutputStream(resultFile));
+        var result = new StreamResult(new FileOutputStream(resultFile));
 
         // create an instance of TransformerFactory
         try {

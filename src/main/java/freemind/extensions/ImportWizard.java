@@ -47,11 +47,11 @@ public class ImportWizard {
                 + classPath;
         log.info("Classpath for plugins:{}", classPath);
         // to remove duplicates
-        HashSet<String> foundPlugins = new HashSet<>();
-        StringTokenizer st = new StringTokenizer(classPath, classPathSeparator);
+        var foundPlugins = new HashSet<String>();
+        var st = new StringTokenizer(classPath, classPathSeparator);
         while (st.hasMoreTokens()) {
             String classPathEntry = st.nextToken();
-            File classPathFile = new File(classPathEntry);
+            var classPathFile = new File(classPathEntry);
             try {
                 String key = classPathFile.getCanonicalPath();
                 if (foundPlugins.contains(key))
@@ -86,7 +86,7 @@ public class ImportWizard {
      * @param classPathFile the File to scan as a zip file
      */
     public void addClassesFromZip(List<String> classList, File classPathFile) {
-        try (ZipFile zipFile = new ZipFile(classPathFile)) {
+        try (var zipFile = new ZipFile(classPathFile)) {
             zipFile.stream()
                     .map(ZipEntry::getName)
                     .filter(this::isInteresting)
@@ -122,7 +122,7 @@ public class ImportWizard {
         }
         String[] files = currentDir.list();
         if (files != null) {
-            for (String file : files) {
+            for (var file : files) {
                 String current = file;
                 log.trace("looking at: {}", current);
                 if (isInteresting(current)) {
@@ -149,7 +149,7 @@ public class ImportWizard {
                     }
                 } else {
                     // Check if it's a directory to recurse into
-                    File currentFile = new File(currentDir, current);
+                    var currentFile = new File(currentDir, current);
                     if (currentFile.isDirectory()) {
                         addClassesFromDir(classList, rootDir, currentFile,
                                 recursionLevel + 1);

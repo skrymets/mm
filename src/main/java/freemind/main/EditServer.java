@@ -68,7 +68,7 @@ public class EditServer extends Thread {
             authKey = new Random().nextInt(Integer.MAX_VALUE);
             int port = socket.getLocalPort();
 
-            try (FileWriter out = new FileWriter(portFile)) {
+            try (var out = new FileWriter(portFile)) {
                 out.write("b\n");
                 out.write(String.valueOf(port));
                 out.write("\n");
@@ -108,7 +108,7 @@ public class EditServer extends Thread {
 
                 log.info("{}: connected", client);
 
-                DataInputStream in = new DataInputStream(
+                var in = new DataInputStream(
                         client.getInputStream());
 
                 if (!handleClient(client, in))
@@ -179,7 +179,7 @@ public class EditServer extends Thread {
             SwingUtilities.invokeLater(() -> {
                 try {
                     List<URL> urls = Tools.urlStringToUrls(script);
-                    for (URL urli : urls) {
+                    for (var urli : urls) {
                         mFrame.getController().getModeController()
                                 .load(urli);
                     }

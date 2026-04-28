@@ -28,7 +28,7 @@ public class ExportHook extends ModeControllerHookAdapter {
 
     public static File chooseImageFile(String type, String description, String nameExtension, ModeController controller) {
         Container component = controller.getFrame().getContentPane();
-        final ImageFilter filter = new ImageFilter(type, description);
+        final var filter = new ImageFilter(type, description);
         FreeMindFileDialog chooser = null;
         chooser = controller.getFileChooser(filter);
         File mmFile = controller.getMap().getFile();
@@ -149,7 +149,7 @@ public class ExportHook extends ModeControllerHookAdapter {
                 return;
             }
             InputStream in = resource.openStream();
-            OutputStream out = new FileOutputStream(destinationDirectory + "/"
+            var out = new FileOutputStream(destinationDirectory + "/"
                     + fileName);
 
             // Transfer bytes from in to out
@@ -170,9 +170,9 @@ public class ExportHook extends ModeControllerHookAdapter {
         // If the dst file does not exist, it is created
         try {
             log.trace("searching for {}{}", dir, fileName);
-            File resource = new File(dir, fileName);
-            InputStream in = new FileInputStream(resource);
-            OutputStream out = new FileOutputStream(destinationDirectory + "/"
+            var resource = new File(dir, fileName);
+            var in = new FileInputStream(resource);
+            var out = new FileOutputStream(destinationDirectory + "/"
                     + fileName);
 
             // Transfer bytes from in to out

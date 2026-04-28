@@ -54,7 +54,7 @@ public class ChangeArrowsInArrowLinkActor extends XmlActorAdapter {
     private ArrowLinkArrowXmlAction createArrowLinkArrowXmlAction(
             MindMapArrowLink arrowLink, String hasStartArrow,
             String hasEndArrow) {
-        ArrowLinkArrowXmlAction action = new ArrowLinkArrowXmlAction();
+        var action = new ArrowLinkArrowXmlAction();
         action.setStartArrow(hasStartArrow);
         action.setEndArrow(hasEndArrow);
         action.setId(arrowLink.getUniqueId());

@@ -26,7 +26,7 @@ public class CloudColorActor extends XmlActorAdapter {
 
     public CloudColorXmlAction createCloudColorXmlAction(MindMapNode node,
                                                          Color color) {
-        CloudColorXmlAction nodeAction = new CloudColorXmlAction();
+        var nodeAction = new CloudColorXmlAction();
         nodeAction.setNode(getNodeID(node));
         nodeAction.setColor(ColorUtils.colorToXml(color));
         return nodeAction;

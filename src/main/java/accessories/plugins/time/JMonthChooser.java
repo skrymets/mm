@@ -129,7 +129,7 @@ public class JMonthChooser extends JPanel implements ItemListener,
     public void initNames() {
         localInitialize = true;
 
-        DateFormatSymbols dateFormatSymbols = new DateFormatSymbols(locale);
+        var dateFormatSymbols = new DateFormatSymbols(locale);
         String[] monthNames = dateFormatSymbols.getMonths();
 
         if (comboBox.getItemCount() == 12) {
@@ -324,7 +324,7 @@ public class JMonthChooser extends JPanel implements ItemListener,
      * @see javax.swing.JPanel#updateUI()
      */
     public void updateUI() {
-        final JSpinner testSpinner = new JSpinner();
+        final var testSpinner = new JSpinner();
         if (spinner != null) {
             if ("Windows".equals(UIManager.getLookAndFeel().getID())) {
                 spinner.setBorder(testSpinner.getBorder());
@@ -340,7 +340,7 @@ public class JMonthChooser extends JPanel implements ItemListener,
      * @param s The command line arguments
      */
     public static void main(String[] s) {
-        JFrame frame = new JFrame("MonthChooser");
+        var frame = new JFrame("MonthChooser");
         frame.getContentPane().add(new JMonthChooser());
         frame.pack();
         frame.setVisible(true);

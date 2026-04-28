@@ -148,15 +148,15 @@ public class EnterPasswordDialog extends JDialog {
     private javax.swing.JPanel getJContentPane() {
         if (jContentPane == null) {
 
-            JLabel jLabel1 = new JLabel();
-            JLabel jLabel = new JLabel();
-            GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
-            GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
-            GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
-            GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
+            var jLabel1 = new JLabel();
+            var jLabel = new JLabel();
+            var gridBagConstraints1 = new GridBagConstraints();
+            var gridBagConstraints2 = new GridBagConstraints();
+            var gridBagConstraints3 = new GridBagConstraints();
+            var gridBagConstraints4 = new GridBagConstraints();
 
-            GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
-            GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
+            var gridBagConstraints6 = new GridBagConstraints();
+            var gridBagConstraints7 = new GridBagConstraints();
             jContentPane = new javax.swing.JPanel();
             jContentPane.setLayout(new GridBagLayout());
             gridBagConstraints1.gridx = 0;

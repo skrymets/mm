@@ -43,7 +43,7 @@ public class CompoundAction extends NodeAction
     void afterUnmarshal(jakarta.xml.bind.Unmarshaller u, Object parent) {
         if (actionList != null && !actionList.isEmpty()) {
             choiceList = new ArrayList<>();
-            for (XmlAction action : actionList) {
+            for (var action : actionList) {
                 choiceList.add(freemind.frok.patches.JIBXGeneratedUtil.xmlActionToChoice(action));
             }
         }
@@ -55,7 +55,7 @@ public class CompoundAction extends NodeAction
     boolean beforeMarshal(jakarta.xml.bind.Marshaller m) {
         if (choiceList != null && !choiceList.isEmpty()) {
             actionList = new ArrayList<>();
-            for (Choice c : choiceList) {
+            for (var c : choiceList) {
                 XmlAction a = freemind.frok.patches.JIBXGeneratedUtil.choiceToXmlAction(c);
                 if (a != null) actionList.add(a);
             }

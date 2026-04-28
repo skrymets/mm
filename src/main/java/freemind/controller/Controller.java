@@ -222,7 +222,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         moveToRoot = new MoveToRootAction(this);
 
         // Create the ToolBar
-        JPanel northToolbarPanel = new JPanel(new BorderLayout());
+        var northToolbarPanel = new JPanel(new BorderLayout());
         toolbar = new MainToolBar(this);
         filterController = new FilterController(this);
         JToolBar filterToolbar = filterController.getFilterToolbar();
@@ -526,7 +526,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         setTitle();
         getMode().activate();
 
-        MessageFormat formatter = new MessageFormat(getResourceString("mode_status"));
+        var formatter = new MessageFormat(getResourceString("mode_status"));
         getFrame().setStatusText(formatter.format(new Object[]{getMode().toLocalizedString()}));
 
         return true;

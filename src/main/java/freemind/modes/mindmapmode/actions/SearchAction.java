@@ -47,8 +47,8 @@ public class SearchAction extends FreemindAction {
 
         MapModuleManager mapModuleManager = controller.getController().getMapModuleManager();
         List<MapModule> modules = mapModuleManager.getMapModuleList();
-        List<MindMapNode> rootNodes = new ArrayList<>();
-        for (MapModule module : modules) {
+        var rootNodes = new ArrayList<MindMapNode>();
+        for (var module : modules) {
             if (module.getModel() != null && module.getModel().getRootNode() != null) {
                 rootNodes.add(module.getModel().getRootNode());
             }
@@ -70,10 +70,10 @@ public class SearchAction extends FreemindAction {
 
     private void showResultsDialog(JFrame frame, List<SearchResult> results,
                                    MapModuleManager mapModuleManager) {
-        JDialog dialog = new JDialog(frame, controller.getText("search_all_maps"), false);
+        var dialog = new JDialog(frame, controller.getText("search_all_maps"), false);
 
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (SearchResult result : results) {
+        var listModel = new DefaultListModel<String>();
+        for (var result : results) {
             String nodeText = result.node().getPlainTextContent();
             if (nodeText == null) {
                 nodeText = "(no text)";
@@ -82,7 +82,7 @@ public class SearchAction extends FreemindAction {
             listModel.addElement(display);
         }
 
-        JList<String> resultList = new JList<>(listModel);
+        var resultList = new JList<String>(listModel);
         resultList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         resultList.addMouseListener(new MouseAdapter() {
@@ -97,7 +97,7 @@ public class SearchAction extends FreemindAction {
             }
         });
 
-        JButton goButton = new JButton("Go");
+        var goButton = new JButton("Go");
         goButton.addActionListener(evt -> {
             int index = resultList.getSelectedIndex();
             if (index >= 0 && index < results.size()) {
@@ -105,7 +105,7 @@ public class SearchAction extends FreemindAction {
             }
         });
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        var buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(goButton);
 
         dialog.getContentPane().setLayout(new BorderLayout());
@@ -125,7 +125,7 @@ public class SearchAction extends FreemindAction {
         }
 
         // Switch to the correct map module
-        for (MapModule module : mapModuleManager.getMapModuleList()) {
+        for (var module : mapModuleManager.getMapModuleList()) {
             if (module.getModel() != null && module.getModel().getRootNode() == root) {
                 mapModuleManager.changeToMapModule(module);
                 break;

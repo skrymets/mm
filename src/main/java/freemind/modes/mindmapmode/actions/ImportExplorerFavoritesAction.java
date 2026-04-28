@@ -53,7 +53,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
         if (folder.isDirectory()) {
             File[] list = folder.listFiles();
             // Go recursively to subfolders
-            for (File value : list) {
+            for (var value : list) {
                 if (value.isDirectory()) {
                     // Insert a new node
                     String nodeContent = value.getName();
@@ -70,7 +70,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
             }
 
             // For each .url file: add it
-            for (File file : list) {
+            for (var file : list) {
                 if (!file.isDirectory()
                         && FilenameUtils.getExtension(file.toString()).equalsIgnoreCase("url")) {
                     favoritesFound = true;
@@ -78,7 +78,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
                         MindMapNode node = addNode(target,
                                 FilenameUtils.removeExtension(file.getName()));
                         // For each line: Is it URL? => Set it as link
-                        BufferedReader in = new BufferedReader(new FileReader(
+                        var in = new BufferedReader(new FileReader(
                                 file, Charset.defaultCharset()));
                         while (in.ready()) {
                             String line = in.readLine();

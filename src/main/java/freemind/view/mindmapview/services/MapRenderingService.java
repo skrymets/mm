@@ -77,7 +77,7 @@ public class MapRenderingService {
         }
         g.setStroke(standardSelectionStroke);
         Object renderingHint = setEdgesRenderingHint(g);
-        for (NodeView selected : mapView.getSelectionService().getSelecteds()) {
+        for (var selected : mapView.getSelectionService().getSelecteds()) {
             paintSelected(g, selected);
         }
         SwingUtils.restoreAntialiasing(g, renderingHint);
@@ -88,7 +88,7 @@ public class MapRenderingService {
     private void paintSelected(Graphics2D g, NodeView selected) {
         final int arcWidth = 4;
         final JComponent content = selected.getContent();
-        Point contentLocation = new Point();
+        var contentLocation = new Point();
         PointUtils.convertPointToAncestor(content, contentLocation, mapView);
         g.drawRoundRect(contentLocation.x - arcWidth, contentLocation.y
                         - arcWidth, content.getWidth() + 2 * arcWidth,

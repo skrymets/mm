@@ -35,7 +35,7 @@ public class AddIconActor extends XmlActorAdapter {
 
     public AddIconAction createAddIconAction(MindMapNode node, MindIcon icon,
                                              int iconPosition) {
-        AddIconAction action = new AddIconAction();
+        var action = new AddIconAction();
         action.setNode(getNodeID(node));
         action.setIconName(icon.getName());
         action.setIconPosition(iconPosition);

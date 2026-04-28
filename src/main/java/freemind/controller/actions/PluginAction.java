@@ -388,7 +388,7 @@ public class PluginAction
         }
 
         public static Instanciation convert(String value) {
-            for (Instanciation inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }

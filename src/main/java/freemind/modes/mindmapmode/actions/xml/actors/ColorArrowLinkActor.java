@@ -41,7 +41,7 @@ public class ColorArrowLinkActor extends XmlActorAdapter {
 
     private ArrowLinkColorXmlAction createArrowLinkColorXmlAction(
             MindMapLink arrowLink, Color color) {
-        ArrowLinkColorXmlAction action = new ArrowLinkColorXmlAction();
+        var action = new ArrowLinkColorXmlAction();
         action.setColor(ColorUtils.colorToXml(color));
         action.setId(arrowLink.getUniqueId());
         return action;

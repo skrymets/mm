@@ -35,7 +35,7 @@ public class EditActor extends XmlActorAdapter {
         EditAction.setNode(nodeID);
         EditAction.setText(newText);
 
-        EditNodeAction undoEditAction = new EditNodeAction();
+        var undoEditAction = new EditNodeAction();
         undoEditAction.setNode(nodeID);
         undoEditAction.setText(oldText);
 

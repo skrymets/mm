@@ -36,7 +36,7 @@ public class FontSizeActor extends XmlActorAdapter {
 
     private FontSizeNodeAction createFontSizeNodeAction(MindMapNode node,
                                                         String fontSizeValue) {
-        FontSizeNodeAction fontSizeAction = new FontSizeNodeAction();
+        var fontSizeAction = new FontSizeNodeAction();
         fontSizeAction.setNode(getNodeID(node));
         fontSizeAction.setSize(fontSizeValue);
         return fontSizeAction;

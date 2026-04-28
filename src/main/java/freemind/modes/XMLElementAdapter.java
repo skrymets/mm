@@ -78,7 +78,7 @@ public class XMLElementAdapter {
         String tagName = domElement.getTagName();
         if ("map".equals(tagName)) {
             // Process child elements of the map element
-            for (Element child : FreeMindXml.getChildElements(domElement)) {
+            for (var child : FreeMindXml.getChildElements(domElement)) {
                 BuildResult childResult = buildElement(child);
                 if (childResult != null && childResult.userObject instanceof NodeAdapter node) {
                     mapChild = node;
@@ -104,7 +104,7 @@ public class XMLElementAdapter {
         Object userObject = createUserObject(name);
 
         // --- Phase 2: Apply attributes (was setAttribute()) ---
-        HashMap<String, String> nodeAttributes = new HashMap<>();
+        var nodeAttributes = new HashMap<String, String>();
         NamedNodeMap attrs = domElement.getAttributes();
         for (int i = 0; i < attrs.getLength(); i++) {
             String attrName = attrs.item(i).getNodeName().toUpperCase();
@@ -113,12 +113,12 @@ public class XMLElementAdapter {
         }
 
         // --- Phase 3: Process children recursively (was addChild()) ---
-        for (Element childElement : FreeMindXml.getChildElements(domElement)) {
+        for (var childElement : FreeMindXml.getChildElements(domElement)) {
             String childName = childElement.getTagName();
 
             if (XML_NODE_XHTML_CONTENT_TAG.equals(childName)) {
                 // richcontent: serialize inner content back to string
-                BuildResult childResult = new BuildResult(childName, null);
+                var childResult = new BuildResult(childName, null);
                 String xmlText = serializeInnerContent(childElement);
                 childResult.content = xmlText;
                 // Copy attributes from the richcontent element
@@ -150,7 +150,7 @@ public class XMLElementAdapter {
             mapChild = node;
         }
 
-        BuildResult result = new BuildResult(name, userObject);
+        var result = new BuildResult(name, userObject);
         return result;
     }
 
@@ -286,7 +286,7 @@ public class XMLElementAdapter {
      * Returns the element state for use in completeElement.
      */
     private ElementState applyElementAttributes(String elementName, NamedNodeMap attrs) {
-        ElementState state = new ElementState();
+        var state = new ElementState();
         for (int i = 0; i < attrs.getLength(); i++) {
             String attrName = attrs.item(i).getNodeName().toUpperCase();
             String sValue = attrs.item(i).getNodeValue();
@@ -341,7 +341,7 @@ public class XMLElementAdapter {
         switch (name) {
             case "font": {
                 ElementState state = applyElementAttributes(name, attrs);
-                Font font = new Font(state.fontName, state.fontStyle, state.fontSize);
+                var font = new Font(state.fontName, state.fontStyle, state.fontSize);
                 if (state.fontStyleStrikethrough) {
                     Map attr = font.getAttributes();
                     attr.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
@@ -442,7 +442,7 @@ public class XMLElementAdapter {
      * Used for richcontent elements that contain XHTML.
      */
     private String serializeInnerContent(Element element) {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         org.w3c.dom.NodeList children = element.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
             org.w3c.dom.Node child = children.item(i);
@@ -524,7 +524,7 @@ public class XMLElementAdapter {
      * Used when the node type changes (e.g., to EncryptedMindMapNode).
      */
     protected void copyAttributesToNode(NodeAdapter node, HashMap<String, String> nodeAttributes) {
-        for (Map.Entry<String, String> entry : nodeAttributes.entrySet()) {
+        for (var entry : nodeAttributes.entrySet()) {
             setNodeAttribute(entry.getKey(), entry.getValue(), node);
         }
     }
@@ -534,12 +534,12 @@ public class XMLElementAdapter {
      */
     public void processUnfinishedLinks(MindMapLinkRegistry registry) {
         // add labels to the nodes:
-        for (String key : mIdToTarget.keySet()) {
+        for (var key : mIdToTarget.keySet()) {
             NodeAdapter target1 = mIdToTarget.get(key);
             registry.registerLinkTarget(target1, key);
         }
         // complete arrow links with right labels:
-        for (ArrowLinkAdapter arrowObject : mArrowLinkAdapters) {
+        for (var arrowObject : mArrowLinkAdapters) {
             if (arrowObject instanceof ArrowLinkTarget linkTarget) {
                 String oldId = linkTarget.getSourceLabel();
                 MindMapNode source = registry.getTargetForId(oldId);

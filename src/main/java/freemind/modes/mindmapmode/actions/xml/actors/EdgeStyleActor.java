@@ -60,7 +60,7 @@ public class EdgeStyleActor extends XmlActorAdapter {
 
     private EdgeStyleFormatAction createNodeStyleFormatAction(
             MindMapNode selected, String style) {
-        EdgeStyleFormatAction edgeStyleAction = new EdgeStyleFormatAction();
+        var edgeStyleAction = new EdgeStyleFormatAction();
         edgeStyleAction.setNode(getNodeID(selected));
         edgeStyleAction.setStyle(style);
         return edgeStyleAction;

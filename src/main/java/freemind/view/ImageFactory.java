@@ -31,7 +31,7 @@ public class ImageFactory {
             return createUnscaledIcon(pUrl);
         }
 
-        ScalableImageIcon icon = new ScalableImageIcon(pUrl);
+        var icon = new ScalableImageIcon(pUrl);
         icon.setScale(SwingUtils.getScalingFactor());
         return icon;
     }

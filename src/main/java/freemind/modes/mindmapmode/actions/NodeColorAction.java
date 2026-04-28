@@ -24,7 +24,7 @@ public class NodeColorAction extends MindmapAction {
         if (color == null) {
             return;
         }
-        for (MindMapNode selected : controller.getSelecteds()) {
+        for (var selected : controller.getSelecteds()) {
 
             controller.setNodeColor(selected, color);
         }

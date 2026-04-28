@@ -27,7 +27,7 @@ public class IntegerComboProperty extends ComboProperty {
             int givenVal;
             try {
                 givenVal = Integer.parseInt(pValue);
-                for (String stringValue : possibleValues) {
+                for (var stringValue : possibleValues) {
                     int val = Integer.parseInt(stringValue);
                     if (val > givenVal && lastMatchedValue != null) {
                         super.setValue(lastMatchedValue);

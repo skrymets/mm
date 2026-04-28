@@ -33,7 +33,7 @@ public class ConjunctConditions implements Condition {
     }
 
     public JComponent getListCellRendererComponent() {
-        JCondition component = new JCondition();
+        var component = new JCondition();
         component.add(new JLabel("("));
 
         String text = format(" %s ", SwingUtils.removeMnemonic(ConditionFactory.getResources().getResourceString("filter_and")));

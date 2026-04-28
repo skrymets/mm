@@ -61,7 +61,7 @@ public class FixedHTMLWriter extends HTMLWriter {
             return;
         }
         Iterator<?> keys = from.getAttributeNames().asIterator();
-        StringBuilder value = new StringBuilder();
+        var value = new StringBuilder();
         while (keys.hasNext()) {
             Object key = keys.next();
             if (key instanceof CSS.Attribute) {

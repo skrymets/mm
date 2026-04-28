@@ -17,7 +17,7 @@ public class UndoPasteActor extends XmlActorAdapter {
             MindMapNode selectedNode = getNodeFromID(undoAction.getNode());
             int amount = undoAction.getNodeAmount();
             while (amount > 0) {
-                NodeCoordinate coordinate = new NodeCoordinate(selectedNode,
+                var coordinate = new NodeCoordinate(selectedNode,
                         undoAction.isAsSibling(), undoAction.isIsLeft());
                 MindMapNode targetNode = coordinate.getNode();
                 getXmlActorFactory().getDeleteChildActor().deleteWithoutUndo(targetNode);

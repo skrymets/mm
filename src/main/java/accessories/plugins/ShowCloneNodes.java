@@ -13,10 +13,10 @@ public class ShowCloneNodes extends MindMapNodeHookAdapter {
 
     public void invoke(MindMapNode pNode) {
         super.invoke(pNode);
-        final List<MindMapNode> newSelecteds = new ArrayList<>();
+        final var newSelecteds = new ArrayList<MindMapNode>();
         final MindMapController mindMapController = getMindMapController();
         List<MindMapNode> selecteds = mindMapController.getSelecteds();
-        for (MindMapNode node : selecteds) {
+        for (var node : selecteds) {
             addClonesToList(newSelecteds, node);
             newSelecteds.remove(node);
         }

@@ -219,7 +219,7 @@ public class FileIOService {
             } else {
                 selectedFiles = new File[]{chooser.getSelectedFile()};
             }
-            for (File theFile : selectedFiles) {
+            for (var theFile : selectedFiles) {
                 try {
                     lastCurrentDir = theFile.getParentFile();
                     adapter.load(theFile);
@@ -253,7 +253,7 @@ public class FileIOService {
             }
         }
         final String lastStateMapStorage = adapter.getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapStorage);
+        var management = new LastStateStorageManagement(lastStateMapStorage);
 
         String restorable = adapter.getModel().getRestorable();
         if (restorable != null) {
@@ -272,8 +272,8 @@ public class FileIOService {
             store.setLastSelected(lastSelected);
             store.clearNodeListMemberList();
             List<MindMapNode> selecteds = adapter.getSelecteds();
-            for (MindMapNode node : selecteds) {
-                NodeListMember member = new NodeListMember();
+            for (var node : selecteds) {
+                var member = new NodeListMember();
                 member.setNode(adapter.getNodeID(node));
                 store.addNodeListMember(member);
             }
@@ -317,15 +317,15 @@ public class FileIOService {
 
     public void restoreMapsLastState(ModeController modeController, MapAdapter model) {
         String lastStateMapXml = adapter.getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
+        var management = new LastStateStorageManagement(lastStateMapXml);
         MindmapLastStateStorage store = management.getStorage(model.getRestorable());
         if (store != null) {
             adapter.getController().setZoom(store.getLastZoom());
             try {
                 MindMapNode sel = modeController.getNodeFromID(store.getLastSelected());
                 modeController.centerNode(sel);
-                List<MindMapNode> selected = new ArrayList<>();
-                for (NodeListMember member : store.getNodeListMemberList()) {
+                var selected = new ArrayList<MindMapNode>();
+                for (var member : store.getNodeListMemberList()) {
                     MindMapNode selNode = modeController.getNodeFromID(member.getNode());
                     selected.add(selNode);
                 }

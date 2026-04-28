@@ -41,8 +41,8 @@ public class MenuCategoryBase
     void afterUnmarshal(jakarta.xml.bind.Unmarshaller u, Object parent) {
         if (xmlElements != null && !xmlElements.isEmpty()) {
             baseList = new ArrayList<>();
-            for (Object obj : xmlElements) {
-                Base base = new Base();
+            for (var obj : xmlElements) {
+                var base = new Base();
                 if (obj instanceof MenuCategoryBase mcb) {
                     base.setMenuCategory(mcb);
                 } else if (obj instanceof MenuSubmenu sub) {
@@ -64,7 +64,7 @@ public class MenuCategoryBase
     boolean beforeMarshal(jakarta.xml.bind.Marshaller m) {
         if (baseList != null && !baseList.isEmpty()) {
             xmlElements = new ArrayList<>();
-            for (Base base : baseList) {
+            for (var base : baseList) {
                 if (base.ifMenuCategory()) xmlElements.add(base.getMenuCategory());
                 else if (base.ifMenuSubmenu()) xmlElements.add(base.getMenuSubmenu());
                 else if (base.ifMenuAction()) xmlElements.add(base.getMenuAction());

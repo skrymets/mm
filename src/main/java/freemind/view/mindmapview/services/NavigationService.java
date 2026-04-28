@@ -183,7 +183,7 @@ public class NavigationService {
     }
 
     public int getMainViewY(NodeView node) {
-        Point newSelectedLocation = new Point();
+        var newSelectedLocation = new Point();
         PointUtils.convertPointToAncestor(node.getMainView(), newSelectedLocation, mapView);
         return newSelectedLocation.y;
     }

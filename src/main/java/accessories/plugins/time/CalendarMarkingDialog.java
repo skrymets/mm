@@ -57,7 +57,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     private boolean mStarted = false;
 
     public static void main(String[] args) {
-        CalendarMarkingDialog dialog = new CalendarMarkingDialog(null);
+        var dialog = new CalendarMarkingDialog(null);
         String MARKINGS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><calendar_markings><calendar_marking name=\"bla\" color=\"#cc0099\" start_date=\"1443650400000\" end_date=\"1447801200000\" repeat_type=\"yearly\" repeat_each_n_occurence=\"1\" first_occurence=\"2\"/></calendar_markings>";
         CalendarMarkings markings = (CalendarMarkings) Tools.unMarshall(MARKINGS);
         dialog.setCalendarMarking(markings.getCalendarMarking(0));
@@ -65,7 +65,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
         dialog.setVisible(true);
         log.debug("Dialog result: {}", dialog.getResult());
         CalendarMarking marking = dialog.getCalendarMarking();
-        CalendarMarkings markingsZwo = new CalendarMarkings();
+        var markingsZwo = new CalendarMarkings();
         markingsZwo.addCalendarMarking(marking);
         log.debug("Markings XML: {}", Tools.marshall(markingsZwo));
     }
@@ -81,7 +81,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
                 cancelPressed();
             }
         });
-        Action cancelAction = new AbstractAction() {
+        var cancelAction = new AbstractAction() {
 
             public void actionPerformed(ActionEvent arg0) {
                 cancelPressed();
@@ -97,7 +97,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
 
     private void close() {
         if (mController != null) {
-            WindowConfigurationStorage storage = new WindowConfigurationStorage();
+            var storage = new WindowConfigurationStorage();
             mController.storeDialogPositions(this, storage,
                     WINDOW_PREFERENCE_STORAGE_PROPERTY);
         }
@@ -124,7 +124,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     private javax.swing.JPanel getJContentPane() {
         if (jContentPane == null) {
             jContentPane = new javax.swing.JPanel();
-            GroupLayout layout = new GroupLayout(jContentPane);
+            var layout = new GroupLayout(jContentPane);
             jContentPane.setLayout(layout);
             layout.setAutoCreateGaps(true);
             layout.setAutoCreateContainerGaps(true);
@@ -144,18 +144,18 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             mRepetitionTypesList.add(("weekly"));
             mRepetitionTypesList.add(("weekly_every_nth_day"));
             mRepetitionTypesList.add(("daily"));
-            List<String> items = new ArrayList<>();
-            for (String xmlName : mRepetitionTypesList) {
+            var items = new ArrayList<String>();
+            for (var xmlName : mRepetitionTypesList) {
                 items.add(getText(xmlName));
             }
             repetitionType = new JComboBox<>(items.toArray(new String[0]));
             JLabel repeatEachNOccurenceLabel = getLabel("Repeat_Each_N_Occurence");
 
             mRepeatEachNOccurenceModel = new SpinnerNumberModel(1, 1, 100, 1);
-            JSpinner repeatEachNOccurence = new JSpinner(mRepeatEachNOccurenceModel);
+            var repeatEachNOccurence = new JSpinner(mRepeatEachNOccurenceModel);
             JLabel firstOccurenceLabel = getLabel("First_Occurence");
             mFirstOccurenceModel = new SpinnerNumberModel(0, 0, 100, 1);
-            JSpinner firstOccurence = new JSpinner(mFirstOccurenceModel);
+            var firstOccurence = new JSpinner(mFirstOccurenceModel);
             JLabel startDateLabel = getLabel("Start_Date");
             startDate = new JSwitchableCalendar();
             startDate.setEnabled(true);
@@ -216,13 +216,13 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     }
 
     private JLabel getLabel(String pString) {
-        JLabel label = new JLabel(getText(pString));
+        var label = new JLabel(getText(pString));
         label.setToolTipText(getText(pString + "_description"));
         return label;
     }
 
     public CalendarMarking getCalendarMarking() {
-        CalendarMarking marking = new CalendarMarking();
+        var marking = new CalendarMarking();
         marking.setName(nameField.getText());
         marking.setColor(ColorUtils.colorToXml(markerColor.getColor()));
         marking.setStartDate(startDate.getCalendar().getTimeInMillis());
@@ -337,12 +337,12 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
             return;
         }
         CalendarMarking marking = getCalendarMarking();
-        CalendarMarkings container = new CalendarMarkings();
+        var container = new CalendarMarkings();
         container.addCalendarMarking(marking);
-        CalendarMarkingEvaluator evaluator = new CalendarMarkingEvaluator(container);
+        var evaluator = new CalendarMarkingEvaluator(container);
         Set<Calendar> nEntries = evaluator.getAtLeastTheFirstNEntries(10);
-        StringBuilder text = new StringBuilder();
-        for (Calendar calendar : nEntries) {
+        var text = new StringBuilder();
+        for (var calendar : nEntries) {
             text.append(DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime())).append("\n");
         }
         mTextArea.setText(text.toString());

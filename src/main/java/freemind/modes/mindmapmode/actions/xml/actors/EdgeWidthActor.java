@@ -39,7 +39,7 @@ public class EdgeWidthActor extends XmlActorAdapter {
 
     private EdgeWidthFormatAction createEdgeWidthFormatAction(
             MindMapNode selected, int width) {
-        EdgeWidthFormatAction edgeWidthAction = new EdgeWidthFormatAction();
+        var edgeWidthAction = new EdgeWidthFormatAction();
         edgeWidthAction.setNode(getNodeID(selected));
         edgeWidthAction.setWidth(width);
         return edgeWidthAction;

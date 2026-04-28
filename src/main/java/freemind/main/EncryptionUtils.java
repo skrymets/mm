@@ -54,7 +54,7 @@ public final class EncryptionUtils {
     public static String compress(String message) {
         byte[] input = message.getBytes(StandardCharsets.UTF_8);
         // Create the compressor with the highest level of compression
-        Deflater compressor = new Deflater();
+        var compressor = new Deflater();
         compressor.setLevel(Deflater.BEST_COMPRESSION);
 
         // Give the compressor the data to compress
@@ -62,7 +62,7 @@ public final class EncryptionUtils {
         compressor.finish();
 
         // Create an expandable byte array to hold the compressed data.
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(input.length);
+        var bos = new ByteArrayOutputStream(input.length);
 
         // Compress the data
         byte[] buf = new byte[1024];
@@ -83,11 +83,11 @@ public final class EncryptionUtils {
     public static String decompress(String compressedMessage) {
         byte[] compressedData = fromBase64(compressedMessage);
         // Create the decompressor and give it the data to compress
-        Inflater decompressor = new Inflater();
+        var decompressor = new Inflater();
         decompressor.setInput(compressedData);
 
         // Create an expandable byte array to hold the decompressed data
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(compressedData.length);
+        var bos = new ByteArrayOutputStream(compressedData.length);
 
         // Decompress the data
         byte[] buf = new byte[1024];
@@ -147,7 +147,7 @@ public final class EncryptionUtils {
             if (ecipher == null) {
                 try {
                     // Create the key
-                    KeySpec keySpec = new PBEKeySpec(passPhrase, salt,
+                    var keySpec = new PBEKeySpec(passPhrase, salt,
                             iterationCount);
                     SecretKey key = SecretKeyFactory.getInstance(mAlgorithm)
                             .generateSecret(keySpec);
@@ -155,7 +155,7 @@ public final class EncryptionUtils {
                     dcipher = Cipher.getInstance(mAlgorithm);
 
                     // Prepare the parameter to the ciphers
-                    AlgorithmParameterSpec paramSpec = new PBEParameterSpec(
+                    var paramSpec = new PBEParameterSpec(
                             salt, iterationCount);
 
                     // Create the ciphers

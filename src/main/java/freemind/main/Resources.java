@@ -137,7 +137,7 @@ public class Resources implements TextTranslator {
     }
 
     public String format(String resourceKey, Object[] messageArguments) {
-        MessageFormat formatter = new MessageFormat(getResourceString(resourceKey));
+        var formatter = new MessageFormat(getResourceString(resourceKey));
         return formatter.format(messageArguments);
     }
 
@@ -189,7 +189,7 @@ public class Resources implements TextTranslator {
             return;
         }
         Properties properties = instance.getProperties();
-        for (Object key : properties.keySet()) {
+        for (var key : properties.keySet()) {
             listener.propertyChanged((String) key, properties.getProperty((String) key), null);
         }
     }
@@ -200,7 +200,7 @@ public class Resources implements TextTranslator {
 
     public static void firePropertyChanged(String propertyName, String newValue, String oldValue) {
         if (oldValue == null || !oldValue.equals(newValue)) {
-            for (FreemindPropertyListener listener : getPropertyChangeListeners()) {
+            for (var listener : getPropertyChangeListeners()) {
                 listener.propertyChanged(propertyName, newValue, oldValue);
             }
         }

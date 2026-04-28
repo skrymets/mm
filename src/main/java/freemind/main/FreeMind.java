@@ -237,7 +237,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     private void printEnvironmentInfo() {
-        StringBuilder info = new StringBuilder();
+        var info = new StringBuilder();
         info.append("freemind_version = ");
         info.append(VERSION);
         info.append("; freemind_xml_version = ");
@@ -245,8 +245,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
         String propsLoc = "version.properties";
         URL versionUrl = FreeMind.class.getClassLoader().getResource(propsLoc);
-        try (InputStream stream = versionUrl.openStream()) {
-            Properties buildNumberPros = new Properties();
+        try (var stream = versionUrl.openStream()) {
+            var buildNumberPros = new Properties();
             buildNumberPros.load(stream);
             info.append("\nBuild: ").append(buildNumberPros.getProperty("build.number")).append("\n");
         } catch (IOException e) {
@@ -262,15 +262,15 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         log.info(info.toString());
 
         try {
-            StringBuilder b = new StringBuilder();
+            var b = new StringBuilder();
             // print all java/sun properties
             Properties properties = System.getProperties();
-            List<String> list = new ArrayList<>();
-            for (Object key : properties.keySet()) {
+            var list = new ArrayList<String>();
+            for (var key : properties.keySet()) {
                 list.add((String) key);
             }
             Collections.sort(list);
-            for (String key : list) {
+            for (var key : list) {
                 if (key.startsWith("java") || key.startsWith("sun")) {
                     b.append("Environment key ").append(key).append(" = ").append(properties.getProperty(key)).append("\n");
                 }
@@ -350,7 +350,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     }
 
     private void loadPatternsFile() {
-        try (InputStream inputStream = FreeMind.class.getClassLoader().getResourceAsStream("patterns.xml")) {
+        try (var inputStream = FreeMind.class.getClassLoader().getResourceAsStream("patterns.xml")) {
             patternsXML = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
             log.error("Couldn't load patterns.xml");
@@ -484,9 +484,9 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     public void saveProperties(boolean pIsShutdown) {
         try {
-            File propsFile = new File(getFreemindDirectory(), "user.properties");
+            var propsFile = new File(getFreemindDirectory(), "user.properties");
             Properties toBeStored = Tools.copyChangedProperties(userPreferences, defaultPreferences);
-            try (OutputStream out = new FileOutputStream(propsFile)) {
+            try (var out = new FileOutputStream(propsFile)) {
                 toBeStored.store(out, "FreeMind " + VERSION);
             }
         } catch (IOException ex) {
@@ -544,7 +544,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
                 // fix for https://sourceforge.net/p/freemind/discussion/22102/thread/cf032151/?limit=25#c631
-                URI uri = new URI(url.toString().replaceAll("^file:////", "file://"));
+                var uri = new URI(url.toString().replaceAll("^file:////", "file://"));
                 desktop.browse(uri);
             } catch (IOException | URISyntaxException e) {
                 log.error("Caught: {}", String.valueOf(e));
@@ -689,7 +689,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private void fireStartupDone() {
         startupDone = true;
-        for (StartupDoneListener listener : startupDoneListeners) {
+        for (var listener : startupDoneListeners) {
             listener.startupDone();
         }
     }
@@ -829,7 +829,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             LastStateStorageManagement management = getLastStateStorageManagement();
 
             int index = 0;
-            for (MindmapLastStateStorage store : management.getLastOpenList()) {
+            for (var store : management.getLastOpenList()) {
                 String restorable = store.getRestorableName();
                 pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME, new Object[]{restorable.replaceAll(".*/", "")});
                 try {
@@ -849,7 +849,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
             }
         }
 
-        for (String arg : args) {
+        for (var arg : args) {
             String fileArgument = arg;
             pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME, new Object[]{fileArgument.replaceAll(".*/", "")});
 
@@ -905,7 +905,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private LastStateStorageManagement getLastStateStorageManagement() {
         String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
+        var management = new LastStateStorageManagement(lastStateMapXml);
         return management;
     }
 

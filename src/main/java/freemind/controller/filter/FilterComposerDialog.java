@@ -112,7 +112,7 @@ public class FilterComposerDialog extends JDialog {
                 if (min == max) {
                     Condition oldCond = conditionList
                             .getSelectedValue();
-                    Condition newCond = new ConditionNotSatisfiedDecorator(
+                    var newCond = new ConditionNotSatisfiedDecorator(
                             oldCond);
                     DefaultComboBoxModel<Condition> model = (DefaultComboBoxModel<Condition>) conditionList.getModel();
                     model.addElement(newCond);
@@ -135,7 +135,7 @@ public class FilterComposerDialog extends JDialog {
             if (selectedValues.size() < 2)
                 return;
 
-            Condition newCond = new ConjunctConditions(selectedValues);
+            var newCond = new ConjunctConditions(selectedValues);
             DefaultComboBoxModel<Condition> model = (DefaultComboBoxModel<Condition>) conditionList.getModel();
             model.addElement(newCond);
             validate();
@@ -153,7 +153,7 @@ public class FilterComposerDialog extends JDialog {
             List<Condition> selectedValues = conditionList.getSelectedValuesList();
             if (selectedValues.size() < 2)
                 return;
-            Condition newCond = new DisjunctConditions(selectedValues);
+            var newCond = new DisjunctConditions(selectedValues);
             DefaultComboBoxModel<Condition> model = (DefaultComboBoxModel<Condition>) conditionList.getModel();
             model.addElement(newCond);
             validate();
@@ -339,7 +339,7 @@ public class FilterComposerDialog extends JDialog {
                 if (attributes.getSelectedIndex() > NODE_POSITION) {
                     final String attributeName = attributes.getSelectedItem()
                             .toString();
-                    SortedComboBoxModel attributesInMap = new SortedComboBoxModel();
+                    var attributesInMap = new SortedComboBoxModel();
                     addAttributeValuesRecursively(attributeName, mController.getMap().getRootNode(), attributesInMap);
                     nodes.setExtensionList(attributesInMap);
                     values.setModel(nodes);
@@ -440,7 +440,7 @@ public class FilterComposerDialog extends JDialog {
         conditionButtonBox.setBorder(new EmptyBorder(0, 10, 0, 10));
         getContentPane().add(conditionButtonBox, BorderLayout.EAST);
 
-        JButton btnAdd = new JButton(new AddConditionAction());
+        var btnAdd = new JButton(new AddConditionAction());
         btnAdd.setMaximumSize(maxButtonDimension);
         conditionButtonBox.add(Box.createVerticalGlue());
         conditionButtonBox.add(btnAdd);
@@ -474,7 +474,7 @@ public class FilterComposerDialog extends JDialog {
         controllerBox.setBorder(new EmptyBorder(5, 0, 5, 0));
         getContentPane().add(controllerBox, BorderLayout.SOUTH);
 
-        CloseAction closeAction = new CloseAction();
+        var closeAction = new CloseAction();
 
         btnOK = new JButton();
         SwingUtils.setLabelAndMnemonic(btnOK, mController.getResourceString("ok"));
@@ -500,14 +500,14 @@ public class FilterComposerDialog extends JDialog {
         controllerBox.add(Box.createHorizontalGlue());
 
         if (!controller.getFrame().isApplet()) {
-            ActionListener saveAction = new SaveAction();
-            JButton btnSave = new JButton();
+            var saveAction = new SaveAction();
+            var btnSave = new JButton();
             SwingUtils.setLabelAndMnemonic(btnSave, mController.getResourceString("save"));
             btnSave.addActionListener(saveAction);
             btnSave.setMaximumSize(maxButtonDimension);
 
-            ActionListener loadAction = new LoadAction();
-            JButton btnLoad = new JButton();
+            var loadAction = new LoadAction();
+            var btnLoad = new JButton();
             SwingUtils.setLabelAndMnemonic(btnLoad, mController.getResourceString("load"));
             btnLoad.addActionListener(loadAction);
             btnLoad.setMaximumSize(maxButtonDimension);
@@ -528,8 +528,8 @@ public class FilterComposerDialog extends JDialog {
 
         conditionList.addMouseListener(new ConditionListMouseListener());
 
-        final JScrollPane conditionScrollPane = new JScrollPane(conditionList);
-        JLabel conditionColumnHeader = new JLabel(mController.getResourceString("filter_conditions"));
+        final var conditionScrollPane = new JScrollPane(conditionList);
+        var conditionColumnHeader = new JLabel(mController.getResourceString("filter_conditions"));
         conditionColumnHeader.setHorizontalAlignment(JLabel.CENTER);
         conditionScrollPane.setColumnHeaderView(conditionColumnHeader);
         conditionScrollPane.setPreferredSize(new Dimension(500, 200));
@@ -542,7 +542,7 @@ public class FilterComposerDialog extends JDialog {
     private void getAttributesFromMap(MindMap map) {
         if (map != null) {
             // gather attributes in the map:
-            SortedListModel attributesInMap = new SortedComboBoxModel();
+            var attributesInMap = new SortedComboBoxModel();
             addAttributeKeysRecursively(map.getRootNode(), attributesInMap);
             filteredAttributeComboBoxModel.setExtensionList(attributesInMap);
         } else {
@@ -551,21 +551,21 @@ public class FilterComposerDialog extends JDialog {
     }
 
     private void addAttributeKeysRecursively(MindMapNode pNode, SortedListModel pAttributesInMap) {
-        for (String key : pNode.getAttributeKeyList()) {
+        for (var key : pNode.getAttributeKeyList()) {
             pAttributesInMap.add(key);
         }
-        for (MindMapNode child : pNode.getChildren()) {
+        for (var child : pNode.getChildren()) {
             addAttributeKeysRecursively(child, pAttributesInMap);
         }
     }
 
     private void addAttributeValuesRecursively(String pKey, MindMapNode pNode, SortedListModel pAttributesInMap) {
-        for (Attribute attr : pNode.getAttributes()) {
+        for (var attr : pNode.getAttributes()) {
             if (Objects.equals(attr.getName(), pKey)) {
                 pAttributesInMap.add(attr.getValue());
             }
         }
-        for (MindMapNode child : pNode.getChildren()) {
+        for (var child : pNode.getChildren()) {
             addAttributeValuesRecursively(pKey, child, pAttributesInMap);
         }
     }

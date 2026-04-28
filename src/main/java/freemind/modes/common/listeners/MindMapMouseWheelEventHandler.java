@@ -44,7 +44,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
             return; // block the scroll during edit (PN)
         }
         Set<MouseWheelEventHandler> registeredMouseWheelEventHandler = mController.getRegisteredMouseWheelEventHandler();
-        for (MouseWheelEventHandler handler : registeredMouseWheelEventHandler) {
+        for (var handler : registeredMouseWheelEventHandler) {
             boolean result = handler.handleMouseWheelEvent(e);
             if (result) {
                 // event was consumed:

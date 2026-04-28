@@ -33,18 +33,18 @@ public class PageAction extends AbstractAction {
         }
 
         // Ask about custom printing settings
-        final JDialog dialog = new JDialog((JFrame) controller.getFrame(), controller.getResourceString("printing_settings"), /* modal= */true);
-        final JCheckBox fitToPage = new JCheckBox(controller.getResourceString(RESOURCE_FIT_TO_PAGE), resources.getBoolProperty(RESOURCE_FIT_TO_PAGE));
-        final JLabel userZoomL = new JLabel(controller.getResourceString(RESOURCE_USER_ZOOM));
-        final JTextField userZoom = new JTextField(controller.getProperty(RESOURCE_USER_ZOOM), 3);
+        final var dialog = new JDialog((JFrame) controller.getFrame(), controller.getResourceString("printing_settings"), /* modal= */true);
+        final var fitToPage = new JCheckBox(controller.getResourceString(RESOURCE_FIT_TO_PAGE), resources.getBoolProperty(RESOURCE_FIT_TO_PAGE));
+        final var userZoomL = new JLabel(controller.getResourceString(RESOURCE_USER_ZOOM));
+        final var userZoom = new JTextField(controller.getProperty(RESOURCE_USER_ZOOM), 3);
         userZoom.setEditable(!fitToPage.isSelected());
-        final JButton okButton = new JButton();
+        final var okButton = new JButton();
         SwingUtils.setLabelAndMnemonic(okButton, controller.getResourceString("ok"));
 
-        JPanel panel = new JPanel();
+        var panel = new JPanel();
 
-        GridBagLayout gridbag = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
+        var gridbag = new GridBagLayout();
+        var c = new GridBagConstraints();
 
         final Integer[] eventSource = new Integer[]{0};
         okButton.addActionListener(event -> {

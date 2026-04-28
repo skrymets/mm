@@ -46,11 +46,11 @@ public class LifecycleService {
 
     public void createIconActions() {
         List<String> iconNames = MindIcon.getAllIconNames();
-        File iconDir = new File(controller.getResources().getFreemindDirectory(), "icons");
+        var iconDir = new File(controller.getResources().getFreemindDirectory(), "icons");
         if (iconDir.exists()) {
             String[] userIconArray = iconDir.list((dir, name) -> name.matches(".*\\.png"));
             if (userIconArray != null) {
-                for (String s : userIconArray) {
+                for (var s : userIconArray) {
                     String iconName = s;
                     iconName = iconName.substring(0, iconName.length() - 4);
                     if (iconName.isEmpty()) {
@@ -60,9 +60,9 @@ public class LifecycleService {
                 }
             }
         }
-        for (String iconName : iconNames) {
+        for (var iconName : iconNames) {
             MindIcon myIcon = MindIcon.factory(iconName);
-            IconAction myAction = new IconAction(controller, myIcon, controller.getActions().removeLastIconAction);
+            var myAction = new IconAction(controller, myIcon, controller.getActions().removeLastIconAction);
             controller.getActions().iconActions.add(myAction);
         }
     }
@@ -70,13 +70,13 @@ public class LifecycleService {
     public void createNodeHookActions() {
         MindMapHookFactory factory = (MindMapHookFactory) controller.getHookFactory();
         List<String> nodeHookNames = factory.getPossibleNodeHooks();
-        for (String hookName : nodeHookNames) {
-            NodeHookAction action = new NodeHookAction(hookName, controller);
+        for (var hookName : nodeHookNames) {
+            var action = new NodeHookAction(hookName, controller);
             controller.getActions().hookActions.add(action);
         }
         List<String> modeControllerHookNames = factory.getPossibleModeControllerHooks();
-        for (String hookName : modeControllerHookNames) {
-            MindMapControllerHookAction action = new MindMapControllerHookAction(hookName, controller);
+        for (var hookName : modeControllerHookNames) {
+            var action = new MindMapControllerHookAction(hookName, controller);
             controller.getActions().hookActions.add(action);
         }
     }
@@ -118,7 +118,7 @@ public class LifecycleService {
         HookFactory hookFactory = controller.getHookFactory();
         List<RegistrationContainer> pluginRegistrations = hookFactory.getRegistrations();
         log.trace("mScheduledActions are executed: {}", pluginRegistrations.size());
-        for (RegistrationContainer container : pluginRegistrations) {
+        for (var container : pluginRegistrations) {
             try {
                 Class registrationClass = container.hookRegistrationClass;
                 Constructor hookConstructor = registrationClass.getConstructor(ModeController.class, MindMap.class);
@@ -145,7 +145,7 @@ public class LifecycleService {
      * Deregisters plugins and listeners during controller shutdown.
      */
     public void shutdown() {
-        for (HookRegistration registrationInstance : registrations) {
+        for (var registrationInstance : registrations) {
             registrationInstance.deRegister();
         }
         controller.getHookFactory().deregisterAllRegistrationContainer();

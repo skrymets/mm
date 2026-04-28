@@ -71,7 +71,7 @@ class ForkMainView extends MainView {
 
     Point getLeftPoint() {
         int edgeWidth = getEdgeWidth();
-        Point in = new Point(0, getHeight() - edgeWidth / 2 - 1);
+        var in = new Point(0, getHeight() - edgeWidth / 2 - 1);
         return in;
     }
 
@@ -97,13 +97,13 @@ class ForkMainView extends MainView {
     }
 
     Point getCenterPoint() {
-        Point in = new Point(getWidth() / 2, getHeight() / 2);
+        var in = new Point(getWidth() / 2, getHeight() / 2);
         return in;
     }
 
     Point getRightPoint() {
         int edgeWidth = getEdgeWidth();
-        Point in = new Point(getWidth() - 1, getHeight() - edgeWidth / 2 - 1);
+        var in = new Point(getWidth() - 1, getHeight() - edgeWidth / 2 - 1);
         return in;
     }
 

@@ -35,7 +35,7 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
     }
 
     public EditNoteToNodeAction createEditNoteToNodeAction(MindMapNode node, String text) {
-        EditNoteToNodeAction nodeAction = new EditNoteToNodeAction();
+        var nodeAction = new EditNoteToNodeAction();
         nodeAction.setNode(getNodeID(node));
         if (text != null && (!HtmlTools.htmlToPlain(text).isEmpty() || text.contains("<img"))) {
             nodeAction.setText(text);

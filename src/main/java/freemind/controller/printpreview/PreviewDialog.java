@@ -17,13 +17,13 @@ public class PreviewDialog extends JDialog implements ActionListener {
     public PreviewDialog(String title, MapView view, PageFormat pPageFormat) {
         super(JOptionPane.getFrameForComponent(view), title, true);
         this.view = view;
-        Preview preview = new Preview(view, 1, pPageFormat);
-        JScrollPane scrollPane = new JScrollPane(preview);
+        var preview = new Preview(view, 1, pPageFormat);
+        var scrollPane = new JScrollPane(preview);
         getContentPane().add(scrollPane, "Center");
-        JToolBar toolbar = new JToolBar();
+        var toolbar = new JToolBar();
         // toolbar.setRollover(true);
         getContentPane().add(toolbar, "North");
-        JLabel pageNumber = new JLabel("- 1 -");
+        var pageNumber = new JLabel("- 1 -");
         final JButton button = getButton("Back24.gif", new BrowseAction(
                 preview, pageNumber, -1));
         toolbar.add(button);
@@ -38,9 +38,9 @@ public class PreviewDialog extends JDialog implements ActionListener {
         toolbar.add(getButton("ZoomOut24.gif", new ZoomAction(preview,
                 -DEFAULT_ZOOM_FACTOR_STEP)));
         toolbar.add(new JToolBar.Separator());
-        JPanel dialog = new JPanel();
+        var dialog = new JPanel();
         dialog.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        JButton ok = new JButton("OK");
+        var ok = new JButton("OK");
         ok.addActionListener(this);
         dialog.add(ok);
         getContentPane().add(dialog, "South");

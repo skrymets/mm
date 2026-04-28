@@ -66,7 +66,7 @@ public class BrowseController extends ViewControllerAdapter {
                 String[] barePositions = hook.getBarePosition();
                 try {
                     // GRR, this is doubled code :-(
-                    HashMap<String, String> tileSources = new HashMap<>();
+                    var tileSources = new HashMap<String, String>();
                     tileSources.put(TILE_SOURCE_MAPNIK, SHORT_MAPNIK);
                     tileSources.put(TILE_SOURCE_CYCLE_MAP, SHORT_CYCLE_MAP);
                     tileSources.put(TILE_SOURCE_TRANSPORT_MAP, SHORT_TRANSPORT_MAP);
@@ -125,7 +125,7 @@ public class BrowseController extends ViewControllerAdapter {
     }
 
     public MapAdapter newModel(ModeController newModeController) {
-        BrowseMapModel model = new BrowseMapModel(null, newModeController);
+        var model = new BrowseMapModel(null, newModeController);
         newModeController.setModel(model);
         return model;
     }
@@ -198,19 +198,19 @@ public class BrowseController extends ViewControllerAdapter {
     public JPopupMenu getPopupForModel(java.lang.Object obj) {
         if (obj instanceof BrowseArrowLinkModel link) {
             // yes, this is a link.
-            JPopupMenu arrowLinkPopup = new JPopupMenu();
+            var arrowLinkPopup = new JPopupMenu();
 
             arrowLinkPopup.add(getGotoLinkNodeAction(link.getSource()));
             arrowLinkPopup.add(getGotoLinkNodeAction(link.getTarget()));
 
             arrowLinkPopup.addSeparator();
             // add all links from target and from source:
-            HashSet<MindMapNode> nodeAlreadyVisited = new HashSet<>();
+            var nodeAlreadyVisited = new HashSet<MindMapNode>();
             nodeAlreadyVisited.add(link.getSource());
             nodeAlreadyVisited.add(link.getTarget());
             List<MindMapLink> links = getModel().getLinkRegistry().getAllLinks(link.getSource());
             links.addAll(getModel().getLinkRegistry().getAllLinks(link.getTarget()));
-            for (MindMapLink mindMapLink : links) {
+            for (var mindMapLink : links) {
                 BrowseArrowLinkModel foreign_link = (BrowseArrowLinkModel) mindMapLink;
                 if (nodeAlreadyVisited.add(foreign_link.getTarget())) {
                     arrowLinkPopup.add(getGotoLinkNodeAction(foreign_link

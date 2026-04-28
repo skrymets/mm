@@ -172,7 +172,7 @@ public class GrabKeyDialog extends JDialog {
 
         // create a panel with a BoxLayout. Can't use Box here
         // because Box doesn't have setBorder().
-        JPanel content = new JPanel(new GridLayout(0, 1, 0, 6)) {
+        var content = new JPanel(new GridLayout(0, 1, 0, 6)) {
             /**
              * Returns if this component can be traversed by pressing the Tab
              * key. This returns false.
@@ -258,7 +258,7 @@ public class GrabKeyDialog extends JDialog {
 
         try {
             Field[] fields = KeyEvent.class.getFields();
-            for (Field field : fields) {
+            for (var field : fields) {
                 String name = field.getName();
                 if (name.startsWith("VK_") && field.getInt(null) == keyCode) {
                     return name.substring(3);
@@ -295,7 +295,7 @@ public class GrabKeyDialog extends JDialog {
 
         String spacedShortcut = shortcut + " ";
 
-        for (KeyBinding kb : allBindings) {
+        for (var kb : allBindings) {
             if (!kb.isAssigned())
                 continue;
 
@@ -360,7 +360,7 @@ public class GrabKeyDialog extends JDialog {
         // {{{ processKeyEvent() method
         protected void processKeyEvent(KeyEvent _evt) {
             if ((getModifierMask() & _evt.getModifiers()) != 0) {
-                KeyEvent evt = new KeyEvent(_evt.getComponent(), _evt.getID(),
+                var evt = new KeyEvent(_evt.getComponent(), _evt.getID(),
                         _evt.getWhen(), ~getModifierMask()
                         & _evt.getModifiers(), _evt.getKeyCode(),
                         _evt.getKeyChar(), _evt.getKeyLocation());
@@ -392,7 +392,7 @@ public class GrabKeyDialog extends JDialog {
                         "==> Translated to " + key + "\n");
             }
 
-            StringBuilder keyString = new StringBuilder(/* getText() */);
+            var keyString = new StringBuilder(/* getText() */);
 
             // if(getDocument().getLength() != 0)
             // keyString.append(' ');

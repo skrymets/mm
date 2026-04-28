@@ -149,7 +149,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
                                     JOptionPane.YES_NO_OPTION);
                 }
                 if (yesorno == JOptionPane.YES_OPTION) {
-                    for (NodeView nodeView : mMindMapController.getView()
+                    for (var nodeView : mMindMapController.getView()
                             .getSelectionService().getSelecteds()) {
                         MindMapNodeModel selectedNodeModel = (MindMapNodeModel) nodeView.getModel();
                         // mindMapMapModel.setNodeColor(selectedNodeModel,targetNode.getColor());

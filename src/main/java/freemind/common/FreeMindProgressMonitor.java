@@ -21,11 +21,11 @@ public class FreeMindProgressMonitor extends JDialog {
         setTitle(getString(pTitle));
         mLabel = new JLabel("!");
         mProgressBar = new JProgressBar();
-        JButton mCancelButton = new JButton();
+        var mCancelButton = new JButton();
         SwingUtils.setLabelAndMnemonic(mCancelButton, getString(("cancel")));
         mCancelButton.addActionListener(pE -> mCanceled = true);
         setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints(0, 0,
+        var constraints = new GridBagConstraints(0, 0,
                 GridBagConstraints.REMAINDER, 1, 1.0, 1.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 5, 0, 5), 0, 0);
@@ -68,7 +68,7 @@ public class FreeMindProgressMonitor extends JDialog {
     }
 
     public void dismiss() {
-        WindowConfigurationStorage storage = new WindowConfigurationStorage();
+        var storage = new WindowConfigurationStorage();
         String marshalled = XmlBindingTools.getInstance().storeDialogPositions(
                 storage, this);
         mResources
@@ -82,9 +82,9 @@ public class FreeMindProgressMonitor extends JDialog {
      * Test method for this dialog.
      */
     public static void main(String[] args) throws InterruptedException {
-        FreeMindMainMock mock = new FreeMindMainMock();
+        var mock = new FreeMindMainMock();
         new Resources(mock);
-        FreeMindProgressMonitor progress = new FreeMindProgressMonitor("title", Resources.get());
+        var progress = new FreeMindProgressMonitor("title", Resources.get());
         progress.setVisible(true);
         for (int i = 0; i < 10; i++) {
             boolean canceled = progress.showProgress(i, 10, "inhalt {0}",

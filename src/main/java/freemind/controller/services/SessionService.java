@@ -46,7 +46,7 @@ public class SessionService {
         String currentMapRestorable = (controller.getModel() != null) ? controller.getModel().getRestorable() : null;
         controller.storeOptionSplitPanePosition();
         // collect all maps:
-        List<String> restorables = new ArrayList<>();
+        var restorables = new ArrayList<String>();
         // move to first map in the window.
         List<MapModule> mapModuleList = controller.getMapModuleManager().getMapModuleList();
         if (!mapModuleList.isEmpty()) {
@@ -55,7 +55,7 @@ public class SessionService {
         }
         while (!mapModuleList.isEmpty()) {
             if (controller.getMapModule() != null) {
-                StringBuilder restorableBuffer = new StringBuilder();
+                var restorableBuffer = new StringBuilder();
                 boolean closingNotCancelled = controller.getMapModuleManager().close(false, restorableBuffer);
                 if (!closingNotCancelled) {
                     return;
@@ -75,10 +75,10 @@ public class SessionService {
         int index = 0;
 
         String lastStateMapXml = controller.getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-        LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
+        var management = new LastStateStorageManagement(lastStateMapXml);
         management.setLastFocussedTab(-1);
         management.clearTabIndices();
-        for (String restorable : restorables) {
+        for (var restorable : restorables) {
             MindmapLastStateStorage storage = management.getStorage(restorable);
             if (storage != null) {
                 storage.setTabIndex(index);
@@ -114,7 +114,7 @@ public class SessionService {
      */
     public void setTitle(Set<MapTitleContributor> titleContributorSet, Set<MapTitleChangeListener> titleChangeListenerSet) {
         Object[] messageArguments = {controller.getMode().toLocalizedString()};
-        MessageFormat formatter = new MessageFormat(controller.getResourceString("mode_title"));
+        var formatter = new MessageFormat(controller.getResourceString("mode_title"));
 
         String title = formatter.format(messageArguments);
 
@@ -134,13 +134,13 @@ public class SessionService {
             if (file != null) {
                 title += " " + file.getAbsolutePath();
             }
-            for (MapTitleContributor contributor : titleContributorSet) {
+            for (var contributor : titleContributorSet) {
                 title = contributor.getMapTitle(title, mapModule, model);
             }
 
         }
         controller.getFrame().setTitle(title);
-        for (MapTitleChangeListener listener : titleChangeListenerSet) {
+        for (var listener : titleChangeListenerSet) {
             listener.setMapTitle(rawTitle, mapModule, model);
         }
     }

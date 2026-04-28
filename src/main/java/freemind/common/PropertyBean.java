@@ -27,8 +27,8 @@ public abstract class PropertyBean {
     }
 
     protected void firePropertyChangeEvent() {
-        PropertyChangeEvent evt = new PropertyChangeEvent(this, getLabel(), null, getValue());
-        for (PropertyChangeListener listener : mPropertyChangeListeners) {
+        var evt = new PropertyChangeEvent(this, getLabel(), null, getValue());
+        for (var listener : mPropertyChangeListeners) {
             listener.propertyChange(evt);
         }
     }

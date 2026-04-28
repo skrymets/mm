@@ -100,7 +100,7 @@ public class NodeXmlSerializerService {
         }
 
         List<MindMapLink> linkVector = registry.getAllLinksFromMe(node);
-        for (MindMapLink mapLink : linkVector) {
+        for (var mapLink : linkVector) {
             Element linkElement = mapLink.saveLink(doc);
             if (linkElement != null) {
                 element.appendChild(linkElement);
@@ -109,7 +109,7 @@ public class NodeXmlSerializerService {
 
         // virtual link targets:
         List<MindMapLink> targetVector = registry.getAllLinksIntoMe(node);
-        for (MindMapLink mindMapLink : targetVector) {
+        for (var mindMapLink : targetVector) {
             Element linkTargetElement = mindMapLink.saveTarget(doc, registry);
             if (linkTargetElement != null) {
                 element.appendChild(linkTargetElement);
@@ -199,7 +199,7 @@ public class NodeXmlSerializerService {
             element.appendChild(iconElement);
         }
 
-        for (PermanentNodeHook permHook : node.getActivatedHooks()) {
+        for (var permHook : node.getActivatedHooks()) {
             if (permHook instanceof DontSaveMarker) {
                 continue;
             }
@@ -208,7 +208,7 @@ public class NodeXmlSerializerService {
             element.appendChild(hookElement);
         }
         if (node.getAttributeTableLength() > 0) {
-            for (Attribute attribute : node.getAttributes()) {
+            for (var attribute : node.getAttributes()) {
                 Element attributeElement = doc.createElement(XmlNodeConstants.XML_NODE_ATTRIBUTE);
                 attributeElement.setAttribute("NAME", attribute.getName());
                 attributeElement.setAttribute("VALUE", attribute.getValue());
@@ -247,11 +247,11 @@ public class NodeXmlSerializerService {
 
     public MindMapNode shallowCopy() {
         try {
-            StringWriter writer = new StringWriter();
+            var writer = new StringWriter();
             Document doc = FreeMindXml.newDocument();
             this.save(writer, doc, node.getMap().getLinkRegistry(), true, false);
             String result = writer.toString();
-            HashMap<String, NodeAdapter> idToTarget = new HashMap<>();
+            var idToTarget = new HashMap<String, NodeAdapter>();
             MindMapNode copy = node.getMap().createNodeTreeFromXml(new StringReader(result), idToTarget);
             copy.setFolded(false);
             return copy;

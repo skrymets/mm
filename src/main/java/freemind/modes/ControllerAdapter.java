@@ -151,7 +151,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     public void refreshMapFrom(MindMapNode node) {
-        for (MindMapNode child : node.getChildren()) {
+        for (var child : node.getChildren()) {
             refreshMapFrom(child);
         }
         ((MapAdapter) getMap()).nodeChangedInternal(node);
@@ -320,8 +320,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      * @return returns a list of MindMapNode s.
      */
     public List<MindMapNode> getSelecteds() {
-        LinkedList<MindMapNode> selecteds = new LinkedList<>();
-        for (NodeView selected : getView().getSelectionService().getSelecteds()) {
+        var selecteds = new LinkedList<MindMapNode>();
+        for (var selected : getView().getSelectionService().getSelecteds()) {
             selecteds.add(selected.getModel());
         }
         return selecteds;
@@ -334,14 +334,14 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     public void select(MindMapNode primarySelected, List<MindMapNode> selecteds) {
         // are they visible?
-        for (MindMapNode node : selecteds) {
+        for (var node : selecteds) {
             displayNode(node);
         }
         final NodeView focussedNodeView = getNodeView(primarySelected);
         if (focussedNodeView != null) {
             getView().getSelectionService().selectAsTheOnlyOneSelected(focussedNodeView);
             getView().getScrollService().scrollNodeToVisible(focussedNodeView);
-            for (MindMapNode node : selecteds) {
+            for (var node : selecteds) {
                 NodeView nodeView = getNodeView(node);
                 if (nodeView != null) {
                     getView().getSelectionService().makeTheSelected(nodeView);
@@ -691,7 +691,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         private boolean isDragAcceptable(DropTargetDragEvent event) {
             // check if there is at least one File Type in the list
             DataFlavor[] flavors = event.getCurrentDataFlavors();
-            for (DataFlavor flavor : flavors) {
+            for (var flavor : flavors) {
                 if (flavor.isFlavorJavaFileListType()) {
                     // event.acceptDrag(DnDConstants.ACTION_COPY);
                     return true;
@@ -704,7 +704,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
         private boolean isDropAcceptable(DropTargetDropEvent event) {
             // check if there is at least one File Type in the list
             DataFlavor[] flavors = event.getCurrentDataFlavors();
-            for (DataFlavor flavor : flavors) {
+            for (var flavor : flavors) {
                 if (flavor.isFlavorJavaFileListType()) {
                     return true;
                 }
@@ -727,7 +727,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
                     dropEvent.dropComplete(false);
                     return;
                 }
-                for (File file : (List<File>) data) {
+                for (var file : (List<File>) data) {
                     load(file);
                 }
             } catch (Exception e) {
@@ -795,9 +795,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
     public String createForNodesFlavor(List<MindMapNode> selectedNodes, boolean copyInvisible)
             throws UnsupportedFlavorException, IOException {
-        StringBuilder forNodesFlavor = new StringBuilder();
+        var forNodesFlavor = new StringBuilder();
         boolean firstLoop = true;
-        for (MindMapNode tmpNode : selectedNodes) {
+        for (var tmpNode : selectedNodes) {
             if (firstLoop) {
                 firstLoop = false;
             } else {
@@ -811,9 +811,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     public List<String> createForNodeIdsFlavor(List<MindMapNode> selectedNodes, boolean copyInvisible) {
-        List<String> forNodesFlavor = new ArrayList<>();
+        var forNodesFlavor = new ArrayList<String>();
 
-        for (MindMapNode tmpNode : selectedNodes) {
+        for (var tmpNode : selectedNodes) {
             forNodesFlavor.add(getNodeID(tmpNode));
         }
         return forNodesFlavor;
@@ -835,7 +835,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     public void startupController() {
         setAllActions(true);
         if (getFrame().getView() != null) {
-            FileOpener fileOpener = new FileOpener();
+            var fileOpener = new FileOpener();
             new DropTarget(getFrame().getView(), fileOpener);
         }
         getMapMouseWheelListener().register(

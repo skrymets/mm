@@ -84,11 +84,11 @@ public class VerticalRootNodeViewLayout extends NodeViewLayoutAdapter {
                 return mainView.getRightPoint();
             }
         }
-        final Point p = new Point(destinationPoint);
+        final var p = new Point(destinationPoint);
         PointUtils.convertPointFromAncestor(view, p, mainView);
         double nWidth = mainView.getWidth() / 2f;
         double nHeight = mainView.getHeight() / 2f;
-        final Point centerPoint = new Point((int) nWidth, (int) nHeight);
+        final var centerPoint = new Point((int) nWidth, (int) nHeight);
         // assume, that destinationPoint is on the right:
         double angle = Math.atan((p.y - centerPoint.y + 0f)
                 / (p.x - centerPoint.x + 0f));
@@ -96,7 +96,7 @@ public class VerticalRootNodeViewLayout extends NodeViewLayoutAdapter {
             angle += Math.PI;
         }
         // now determine point on ellipsis corresponding to that angle:
-        final Point out = new Point(centerPoint.x
+        final var out = new Point(centerPoint.x
                 + (int) (Math.cos(angle) * nWidth), centerPoint.y
                 + (int) (Math.sin(angle) * nHeight));
         return out;

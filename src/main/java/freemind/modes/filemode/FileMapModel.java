@@ -126,7 +126,7 @@ public class FileMapModel extends MapAdapter implements ModeMap {
     @Override
     public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
         Document doc = FreeMindXml.parse(pReader);
-        XMLElementAdapter xmlAdapter = new XMLElementAdapter(modeFeedback, new ArrayList<>(), pIDToTarget);
+        var xmlAdapter = new XMLElementAdapter(modeFeedback, new ArrayList<>(), pIDToTarget);
         xmlAdapter.buildFromDom(doc.getDocumentElement());
         xmlAdapter.processUnfinishedLinks(getLinkRegistry());
         return xmlAdapter.getMapChild();

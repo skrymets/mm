@@ -145,7 +145,7 @@ public class Font
         }
 
         public static BOLD convert(String value) {
-            for (BOLD inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }
@@ -176,7 +176,7 @@ public class Font
         }
 
         public static STRIKETHROUGH convert(String value) {
-            for (STRIKETHROUGH inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }
@@ -208,7 +208,7 @@ public class Font
         }
 
         public static ITALIC convert(String value) {
-            for (ITALIC inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }

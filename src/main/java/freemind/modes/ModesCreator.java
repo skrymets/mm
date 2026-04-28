@@ -36,7 +36,7 @@ public class ModesCreator {
             modesTranslation = new HashMap<>();
             String modestring = controller.getFrame().getProperty("modes_since_0_8_0");
 
-            StringTokenizer tokens = new StringTokenizer(modestring, ",");
+            var tokens = new StringTokenizer(modestring, ",");
 
             while (tokens.hasMoreTokens()) {
                 String modename = tokens.nextToken();

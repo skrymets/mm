@@ -43,7 +43,7 @@ public class NodeStyleActor extends XmlActorAdapter {
 
     private NodeStyleFormatAction createNodeStyleFormatAction(
             MindMapNode selected, String style) {
-        NodeStyleFormatAction nodeStyleAction = new NodeStyleFormatAction();
+        var nodeStyleAction = new NodeStyleFormatAction();
         nodeStyleAction.setNode(getNodeID(selected));
         nodeStyleAction.setStyle(style);
         return nodeStyleAction;

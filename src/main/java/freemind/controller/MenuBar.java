@@ -160,11 +160,11 @@ public class MenuBar extends JMenuBar {
     }
 
     private void updateModeMenu() {
-        ButtonGroup group = new ButtonGroup();
-        ActionListener modesMenuActionListener = new ModesMenuActionListener();
-        List<String> keys = new LinkedList<>(controller.getModes());
-        for (String key : keys) {
-            JRadioButtonMenuItem item = new JRadioButtonMenuItem(controller.getResourceString("mode_" + key));
+        var group = new ButtonGroup();
+        var modesMenuActionListener = new ModesMenuActionListener();
+        var keys = new LinkedList<String>(controller.getModes());
+        for (var key : keys) {
+            var item = new JRadioButtonMenuItem(controller.getResourceString("mode_" + key));
             item.setActionCommand(key);
             JRadioButtonMenuItem newItem = (JRadioButtonMenuItem) menuHolder.addMenuItem(item, MODES_MENU + key);
             group.add(newItem);
@@ -203,10 +203,10 @@ public class MenuBar extends JMenuBar {
         if (mapModuleVector == null) {
             return;
         }
-        ButtonGroup group = new ButtonGroup();
-        for (MapModule mapModule : mapModuleVector) {
+        var group = new ButtonGroup();
+        for (var mapModule : mapModuleVector) {
             String displayName = mapModule.getDisplayName();
-            JRadioButtonMenuItem newItem = new JRadioButtonMenuItem(displayName);
+            var newItem = new JRadioButtonMenuItem(displayName);
             newItem.setSelected(false);
             group.add(newItem);
 
@@ -251,7 +251,7 @@ public class MenuBar extends JMenuBar {
         // Populates a recent files menu with accelerated first item and listeners
         for (ListIterator<String> it = lst.listIterator(); it.hasNext(); ) {
             String key = it.next();
-            JMenuItem item = new JMenuItem(key);
+            var item = new JMenuItem(key);
             if (firstElement) {
                 firstElement = false;
                 item.setAccelerator(KeyStroke.getKeyStroke(controller.getFrame().getAdjustableProperty("keystroke_open_first_in_history")));

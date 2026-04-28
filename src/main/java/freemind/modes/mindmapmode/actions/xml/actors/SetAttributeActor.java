@@ -17,7 +17,7 @@ public class SetAttributeActor extends XmlActorAdapter {
     public void act(XmlAction action) {
         if (action instanceof SetAttributeAction setAttributeAction) {
             NodeAdapter node = getNodeFromID(setAttributeAction.getNode());
-            Attribute newAttribute = new Attribute(setAttributeAction.getName(), setAttributeAction.getValue());
+            var newAttribute = new Attribute(setAttributeAction.getName(), setAttributeAction.getValue());
             int position = setAttributeAction.getPosition();
             node.checkAttributePosition(position);
             if (!node.getAttribute(position).equals(newAttribute)) {
@@ -45,7 +45,7 @@ public class SetAttributeActor extends XmlActorAdapter {
 
     public SetAttributeAction getSetAttributeAction(MindMapNode pSelected,
                                                     int pPosition, Attribute pAttribute) {
-        SetAttributeAction setAttributeAction = new SetAttributeAction();
+        var setAttributeAction = new SetAttributeAction();
         setAttributeAction.setNode(getNodeID(pSelected));
         setAttributeAction.setName(pAttribute.getName());
         setAttributeAction.setValue(pAttribute.getValue());

@@ -99,13 +99,13 @@ public class FindAction extends FreemindAction {
         mDialog = new JDialog(controller.getFrame().getJFrame(), controller.getText("find"));
         mDialog.setModal(true);
         mDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        AbstractAction cancelAction = new AbstractAction() {
+        var cancelAction = new AbstractAction() {
 
             public void actionPerformed(ActionEvent pE) {
                 close(JOptionPane.CANCEL_OPTION);
             }
         };
-        AbstractAction okAction = new AbstractAction() {
+        var okAction = new AbstractAction() {
 
             public void actionPerformed(ActionEvent pE) {
                 close(JOptionPane.OK_OPTION);
@@ -130,11 +130,11 @@ public class FindAction extends FreemindAction {
         mFindInNotesTooBox.setSelected(controller.getResources().getBoolProperty(FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
         SwingUtils.setLabelAndMnemonic(mFindInNotesTooBox, null);
         contentPane.add(mFindInNotesTooBox, new GridBagConstraints(0, 2, 3, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
-        JButton okButton = new JButton(controller.getText("ExtendedFindDialog.ok"));
+        var okButton = new JButton(controller.getText("ExtendedFindDialog.ok"));
         SwingUtils.setLabelAndMnemonic(okButton, null);
         okButton.addActionListener(okAction);
         contentPane.add(okButton, new GridBagConstraints(2, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
-        JButton cancelButton = new JButton(controller.getText("ExtendedFindDialog.cancel"));
+        var cancelButton = new JButton(controller.getText("ExtendedFindDialog.cancel"));
         SwingUtils.setLabelAndMnemonic(cancelButton, null);
         cancelButton.addActionListener(cancelAction);
         contentPane.add(cancelButton, new GridBagConstraints(3, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
@@ -179,13 +179,13 @@ public class FindAction extends FreemindAction {
 
     public boolean find(MindMapNode node, Collection<String> subterms, boolean caseSensitive) {
         findNodesUnfoldedByLastFind = new ArrayList<>();
-        LinkedList<MindMapNode> nodes = new LinkedList<>();
+        var nodes = new LinkedList<MindMapNode>();
         nodes.addFirst(node);
         findFromNode = node;
         Collection<String> finalizedSubterms;
         if (!caseSensitive) {
             finalizedSubterms = new ArrayList<>();
-            for (String subterm : subterms) {
+            for (var subterm : subterms) {
                 finalizedSubterms.add(subterm.toLowerCase());
             }
         } else {
@@ -201,7 +201,7 @@ public class FindAction extends FreemindAction {
         if (!findNodesUnfoldedByLastFind.isEmpty()) {
 
             // if (false) {
-            ListIterator<MindMapNode> i = findNodesUnfoldedByLastFind.listIterator(findNodesUnfoldedByLastFind.size());
+            var i = findNodesUnfoldedByLastFind.listIterator(findNodesUnfoldedByLastFind.size());
             while (i.hasPrevious()) {
                 MindMapNode node = i.previous();
                 try {
@@ -232,7 +232,7 @@ public class FindAction extends FreemindAction {
 
             boolean found = true;
             boolean foundInNotes = false;
-            for (String subterm : subterms) {
+            for (var subterm : subterms) {
                 if (!nodeText.contains(subterm)) {
                     // Subterm not found
                     found = false;
@@ -243,7 +243,7 @@ public class FindAction extends FreemindAction {
             if ((!found) && searchInNotesToo) {
                 /* now, search the notes. */
                 found = true;
-                for (String subterm : subterms) {
+                for (var subterm : subterms) {
                     if (!noteText.contains(subterm)) {
                         // Subterm not found
                         found = false;
@@ -285,8 +285,8 @@ public class FindAction extends FreemindAction {
     }
 
     private Collection<String> breakSearchTermIntoSubterms(String searchTerm) {
-        ArrayList<String> subterms = new ArrayList<>();
-        StringBuilder subterm = new StringBuilder();
+        var subterms = new ArrayList<String>();
+        var subterm = new StringBuilder();
         int len = searchTerm.length();
         char myChar;
 

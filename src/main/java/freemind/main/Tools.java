@@ -86,10 +86,10 @@ public class Tools {
         String baseStringRest = baseString.substring(index);
 
         // Maybe this causes problems under windows
-        StringTokenizer baseTokens = new StringTokenizer(baseStringRest, "/");
+        var baseTokens = new StringTokenizer(baseStringRest, "/");
 
         // Maybe this causes problems under windows
-        StringTokenizer targetTokens = new StringTokenizer(targetString.substring(index + 1), "/");
+        var targetTokens = new StringTokenizer(targetString.substring(index + 1), "/");
 
         String nextTargetToken = "";
 
@@ -228,10 +228,10 @@ public class Tools {
                 throw new IllegalArgumentException(xsltScript + " not found.");
             }
             inputStream = updaterUrl.openStream();
-            final Source xsltSource = new StreamSource(inputStream);
+            final var xsltSource = new StreamSource(inputStream);
             // get output:
             writer = new StringWriter();
-            final Result result = new StreamResult(writer);
+            final var result = new StreamResult(writer);
 
             String fileContents = IOUtils.toString(pReader);
             if (fileContents.length() > 10) {
@@ -241,7 +241,7 @@ public class Tools {
             if (fileContents.length() > 10) {
                 log.info("File start after UTF8 replacement: '{}'", fileContents.substring(0, 9));
             }
-            final StreamSource sr = new StreamSource(new StringReader(
+            final var sr = new StreamSource(new StringReader(
                     fileContents));
             // Dimitry: to avoid a memory leak and properly release resources
             // after the XSLT transformation
@@ -270,8 +270,8 @@ public class Tools {
                 }
 
             }
-            final TransformerRunnable transformer = new TransformerRunnable();
-            Thread transformerThread = new Thread(transformer, "XSLT");
+            final var transformer = new TransformerRunnable();
+            var transformerThread = new Thread(transformer, "XSLT");
             transformerThread.start();
             transformerThread.join();
             log.info("Updating the reader {} to the current version. Done.", pReader);
@@ -398,7 +398,7 @@ public class Tools {
         if (pText1 == null || pText2 == null) {
             return "One of the Strings is null " + pText1 + ", " + pText2;
         }
-        StringBuilder b = new StringBuilder();
+        var b = new StringBuilder();
         if (pText1.length() > pText2.length()) {
             b.append("First string is longer :").append(pText1.substring(pText2.length())).append("\n");
         }
@@ -450,8 +450,8 @@ public class Tools {
     } // }}}
 
     public static String arrayToUrls(String[] pArgs) {
-        StringBuilder b = new StringBuilder();
-        for (String fileName : pArgs) {
+        var b = new StringBuilder();
+        for (var fileName : pArgs) {
             try {
                 b.append(fileToUrl(new File(fileName)));
                 b.append('\n');
@@ -464,8 +464,8 @@ public class Tools {
 
     public static List<URL> urlStringToUrls(String pUrls) {
         String[] urls = pUrls.split("\n");
-        List<URL> ret = new ArrayList<>();
-        for (String url : urls) {
+        var ret = new ArrayList<URL>();
+        for (var url : urls) {
             try {
                 ret.add(new URL(url));
             } catch (MalformedURLException e) {
@@ -479,7 +479,7 @@ public class Tools {
                                                String pPageFormatProperty) {
         try {
             // parse string:
-            StringTokenizer tokenizer = new StringTokenizer(
+            var tokenizer = new StringTokenizer(
                     pPageFormatProperty, ";");
             if (tokenizer.countTokens() != 6) {
                 log.warn("Page format property has not the correct format:{}", pPageFormatProperty);
@@ -517,9 +517,9 @@ public class Tools {
 
             List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compoundAction);
 
-            StringBuilder buf = new StringBuilder("[");
+            var buf = new StringBuilder("[");
 
-            for (XmlAction xmlAction : xmlActions) {
+            for (var xmlAction : xmlActions) {
                 if (buf.length() > 1) {
                     buf.append(',');
                 }
@@ -558,8 +558,8 @@ public class Tools {
     }
 
     public static Properties copyChangedProperties(Properties props2, Properties defProps2) {
-        Properties toBeStored = new Properties();
-        for (Object o : props2.keySet()) {
+        var toBeStored = new Properties();
+        for (var o : props2.keySet()) {
             String key = (String) o;
             if (!Objects.equals(props2.get(key), defProps2.get(key))) {
                 toBeStored.put(key, props2.get(key));
@@ -575,7 +575,7 @@ public class Tools {
      */
     public static StringBuilder readFileStart(Reader pReader, int pMinimumLength) {
         BufferedReader in = null;
-        StringBuilder buffer = new StringBuilder();
+        var buffer = new StringBuilder();
         try {
             // get the file start into the memory:
             in = new BufferedReader(pReader);

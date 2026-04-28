@@ -86,7 +86,7 @@ public final class FreeMindXml {
      * Return all direct child Elements of the given parent, filtering out text and other non-element nodes.
      */
     public static List<Element> getChildElements(Element parent) {
-        List<Element> result = new ArrayList<>();
+        var result = new ArrayList<Element>();
         NodeList children = parent.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
@@ -195,7 +195,7 @@ public final class FreeMindXml {
      * Serialize an Element to a String.
      */
     public static String toString(Element element) {
-        StringWriter sw = new StringWriter();
+        var sw = new StringWriter();
         write(element, sw);
         return sw.toString();
     }
@@ -280,7 +280,7 @@ public final class FreeMindXml {
             writer.write('>');
             writer.write('\n');
             if (withClosingTag) {
-                for (Element child : children) {
+                for (var child : children) {
                     writeFreeMindElement(child, writer, true);
                 }
                 writer.write('<');
@@ -321,7 +321,7 @@ public final class FreeMindXml {
      * Get the direct text content of an element (only immediate text nodes, not descendant text).
      */
     private static String getDirectTextContent(Element element) {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         NodeList children = element.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);

@@ -64,7 +64,7 @@ public class PrintService {
         String pageFormatProperty = frame.getProperty(PAGE_FORMAT_PROPERTY);
         if (pageFormatProperty != null && !pageFormatProperty.isEmpty()) {
             log.info("Page format (stored): {}", pageFormatProperty);
-            final Paper storedPaper = new Paper();
+            final var storedPaper = new Paper();
             Tools.setPageFormatFromString(storedPaper, pageFormatProperty);
             pageFormat.setPaper(storedPaper);
         }

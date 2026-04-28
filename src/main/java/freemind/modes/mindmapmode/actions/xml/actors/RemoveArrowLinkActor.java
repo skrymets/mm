@@ -46,13 +46,13 @@ public class RemoveArrowLinkActor extends XmlActorAdapter {
     }
 
     public RemoveArrowLinkXmlAction createRemoveArrowLinkXmlAction(String id) {
-        RemoveArrowLinkXmlAction action = new RemoveArrowLinkXmlAction();
+        var action = new RemoveArrowLinkXmlAction();
         action.setId(id);
         return action;
     }
 
     public AddArrowLinkXmlAction createAddArrowLinkXmlAction(MindMapLink link) {
-        AddArrowLinkXmlAction action = new AddArrowLinkXmlAction();
+        var action = new AddArrowLinkXmlAction();
         action.setNode(getNodeID(link.getSource()));
         action.setDestination(getNodeID(link.getTarget()));
         action.setNewId(link.getUniqueId());

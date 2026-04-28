@@ -431,7 +431,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     }
 
     public void paintChildren(Graphics graphics) {
-        HashMap<String, NodeView> labels = new HashMap<>();
+        var labels = new HashMap<String, NodeView>();
         linkRenderingService.resetArrowLinkViews();
         linkRenderingService.collectLabels(rootView, labels);
         super.paintChildren(graphics);
@@ -486,7 +486,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     }
 
     public void autoscroll(Point cursorLocn) {
-        Rectangle r = new Rectangle((int) cursorLocn.getX() - margin,
+        var r = new Rectangle((int) cursorLocn.getX() - margin,
                 (int) cursorLocn.getY() - margin, 1 + 2 * margin,
                 1 + 2 * margin);
         scrollRectToVisible(r);

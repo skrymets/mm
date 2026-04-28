@@ -140,7 +140,7 @@ public class FileManagementService {
      * inline HTML on the selected node.
      */
     public void setImageByFileChooser() {
-        ExampleFileFilter filter = new ExampleFileFilter();
+        var filter = new ExampleFileFilter();
         filter.addExtension("jpg");
         filter.addExtension("jpeg");
         filter.addExtension("png");

@@ -102,7 +102,7 @@ public class ExportBranchAction extends MindmapAction {
             // construct new controller:
             final ModeController newModeController = mMindMapController.getMode()
                     .createModeController();
-            MindMapMapModel newMap = new MindMapMapModel(node,
+            var newMap = new MindMapMapModel(node,
                     newModeController);
             newModeController.setModel(newMap);
             try {

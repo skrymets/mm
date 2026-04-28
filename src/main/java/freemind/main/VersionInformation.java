@@ -73,7 +73,7 @@ public class VersionInformation {
     }
 
     public String toString() {
-        StringBuilder buf = new StringBuilder()
+        var buf = new StringBuilder()
                 .append(mMaj).append('.')
                 .append(mMid).append('.')
                 .append(mMin);

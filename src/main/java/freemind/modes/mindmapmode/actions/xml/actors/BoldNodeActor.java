@@ -41,7 +41,7 @@ public class BoldNodeActor extends NodeXmlActorAdapter {
     }
 
     private BoldNodeAction toggleBold(MindMapNode selected, boolean bold) {
-        BoldNodeAction boldAction = new BoldNodeAction();
+        var boldAction = new BoldNodeAction();
         boldAction.setNode(getNodeID(selected));
         boldAction.setBold(bold);
         return boldAction;

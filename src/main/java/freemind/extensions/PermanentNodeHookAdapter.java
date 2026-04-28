@@ -82,7 +82,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements Permane
     public static final String PARAMETERS = "Parameters";
 
     protected HashMap<String, String> loadNameValuePairs(Element xml) {
-        HashMap<String, String> result = new HashMap<>();
+        var result = new HashMap<String, String>();
         List<Element> children = FreeMindXml.getChildElements(xml);
         if (children.isEmpty()) {
             return result;
@@ -101,7 +101,7 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements Permane
     protected void saveNameValuePairs(HashMap<String, Object> nameValuePairs, Document doc, Element xml) {
         if (!nameValuePairs.isEmpty()) {
             Element child = doc.createElement(PARAMETERS);
-            for (String key : nameValuePairs.keySet()) {
+            for (var key : nameValuePairs.keySet()) {
                 Object value = nameValuePairs.get(key);
                 child.setAttribute(key, value.toString());
             }

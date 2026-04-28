@@ -49,7 +49,7 @@ class MindMapHTMLWriter {
 
     private static String saveHTML_escapeUnicodeAndSpecialCharacters(String text) {
         int len = text.length();
-        StringBuilder result = new StringBuilder(len);
+        var result = new StringBuilder(len);
         int intValue;
         char myChar;
         boolean previousSpace = false;
@@ -95,7 +95,7 @@ class MindMapHTMLWriter {
         fileout.write("<html>" + el + "<head>" + el);
         writeStyle();
         fileout.write(el + "</head>" + el + "<body>" + el);
-        for (MindMapNodeModel node : mindMapNodes) {
+        for (var node : mindMapNodes) {
             saveHTML(node, "1", 0, /* isRoot */true, true, /* depth */1);
         }
         fileout.write("</body>" + el);
@@ -388,7 +388,7 @@ class MindMapHTMLWriter {
             writeFoldingButtons(localParentID);
         }
 
-        for (PermanentNodeHook hook : model.getActivatedHooks()) {
+        for (var hook : model.getActivatedHooks()) {
             hook.saveHtml(fileout);
         }
 
@@ -563,7 +563,7 @@ class MindMapHTMLWriter {
     }
 
     private void writeIcons(MindMapNodeModel model) throws IOException {
-        for (NodeIcon nodeIcon : model.getIcons()) {
+        for (var nodeIcon : model.getIcons()) {
             MindIcon icon = (MindIcon) nodeIcon;
             fileout.write("<img src=\""
                     + icon.getIconFileName()

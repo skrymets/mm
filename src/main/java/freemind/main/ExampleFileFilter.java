@@ -114,7 +114,7 @@ public class ExampleFileFilter extends FileFilter {
      */
     public ExampleFileFilter(String[] filters, String description) {
         this();
-        for (String filter : filters) {
+        for (var filter : filters) {
             // add filters one by one
             addExtension(filter);
         }
@@ -185,7 +185,7 @@ public class ExampleFileFilter extends FileFilter {
                         + " (";
                 // build the description from the extension list
                 boolean first = true;
-                for (String ext : filters.keySet()) {
+                for (var ext : filters.keySet()) {
                     if (first) {
                         fullDescription += "." + ext;
                         first = false;

@@ -40,9 +40,9 @@ public class EditNodeWYSIWYG extends EditNodeBase {
             createEditorPanel();
             getContentPane().add(htmlEditorPanel, BorderLayout.CENTER);
             SwingUtils.addEscapeActionToDialog(this, new CancelAction());
-            final JButton okButton = new JButton();
-            final JButton cancelButton = new JButton();
-            final JButton splitButton = new JButton();
+            final var okButton = new JButton();
+            final var cancelButton = new JButton();
+            final var splitButton = new JButton();
 
             SwingUtils.setLabelAndMnemonic(okButton, base.getText("ok"));
             SwingUtils.setLabelAndMnemonic(cancelButton, base.getText("cancel"));
@@ -58,7 +58,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
                     "submit");
             SwingUtils.addKeyActionToDialog(this, new SubmitAction(),
                     "control ENTER", "submit");
-            JPanel buttonPane = new JPanel();
+            var buttonPane = new JPanel();
             buttonPane.add(okButton);
             buttonPane.add(cancelButton);
             buttonPane.add(splitButton);

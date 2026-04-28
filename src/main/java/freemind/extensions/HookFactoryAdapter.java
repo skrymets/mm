@@ -20,7 +20,7 @@ public abstract class HookFactoryAdapter implements HookFactory {
      */
     public PermanentNodeHook getHookInNode(MindMapNode node, String hookName) {
         // search for already instanciated hooks of this type:
-        for (PermanentNodeHook otherHook : node.getActivatedHooks()) {
+        for (var otherHook : node.getActivatedHooks()) {
             if (otherHook.getName().equals(hookName)) {
                 // there is already one instance.
                 return otherHook;

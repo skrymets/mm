@@ -103,7 +103,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
             }
         });
         addKeyListener(this);
-        Action action = new AbstractAction() {
+        var action = new AbstractAction() {
 
             public void actionPerformed(ActionEvent arg0) {
                 cancelPressed();
@@ -116,7 +116,7 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
     }
 
     private void close() {
-        WindowConfigurationStorage storage = new WindowConfigurationStorage();
+        var storage = new WindowConfigurationStorage();
         mController.storeDialogPositions(this, storage,
                 WINDOW_PREFERENCE_STORAGE_PROPERTY);
         setVisible(false);
@@ -167,9 +167,9 @@ public class ChooseFormatPopupDialog extends JDialog implements TextTranslator, 
     private Component getDemoFrame() {
         if (mDemoFrame == null) {
             mDemoNodeMapFeedback = new DemoMapFeedback();
-            final MindMapMapModel mMap = new MindMapMapModel(mDemoNodeMapFeedback);
+            final var mMap = new MindMapMapModel(mDemoNodeMapFeedback);
             mDemoNodeMapFeedback.mMap = mMap;
-            Tools.StringReaderCreator readerCreator = new Tools.StringReaderCreator(
+            var readerCreator = new Tools.StringReaderCreator(
                     mController.getText("accessories/plugins/dialogs/ChooseFormatPopupDialog.DemoNode"));
             try {
                 MindMapNode root = mMap.loadTree(readerCreator,

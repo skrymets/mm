@@ -47,7 +47,7 @@ public class CloudActor extends NodeXmlActorAdapter {
 
     private AddCloudXmlAction createAddCloudXmlAction(MindMapNode selected,
                                                       boolean enable, Color color) {
-        AddCloudXmlAction nodecloudAction = new AddCloudXmlAction();
+        var nodecloudAction = new AddCloudXmlAction();
         nodecloudAction.setNode(getNodeID(selected));
         nodecloudAction.setEnabled(enable);
         nodecloudAction.setColor(ColorUtils.colorToXml(color));
@@ -62,7 +62,7 @@ public class CloudActor extends NodeXmlActorAdapter {
                     if (node.isRoot()) {
                         return;
                     }
-                    MindMapCloudModel cloudModel = new MindMapCloudModel(node,
+                    var cloudModel = new MindMapCloudModel(node,
                             getExMapFeedback());
                     node.setCloud(cloudModel);
                     if (nodecloudAction.getColor() != null) {

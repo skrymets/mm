@@ -226,7 +226,7 @@ public class MindMapLinkRegistry {
         String id = _registerLinkTarget(target);
         List<MindMapLink> vec = getAssignedLinksVector(id);
         // already present?
-        for (MindMapLink mindMapLink : vec) {
+        for (var mindMapLink : vec) {
             if (mindMapLink == link)
                 return;
         }
@@ -283,7 +283,7 @@ public class MindMapLinkRegistry {
         String id = getState(target);
         if (id != null) {
             List<MindMapLink> vec = getAssignedLinksVector(id);
-            for (MindMapLink mindMapLink : vec) {
+            for (var mindMapLink : vec) {
                 returnValue.add(mindMapLink.getSource());
             }
         }
@@ -294,7 +294,7 @@ public class MindMapLinkRegistry {
      * @return returns all links from or to this node.
      */
     public List<MindMapLink> getAllLinks(MindMapNode node) {
-        List<MindMapLink> returnValue = new ArrayList<>();
+        var returnValue = new ArrayList<MindMapLink>();
         returnValue.addAll(getAllLinksIntoMe(node));
         returnValue.addAll(getAllLinksFromMe(node));
         // Dimitry : log is a performance killer here
@@ -306,7 +306,7 @@ public class MindMapLinkRegistry {
      * @return returns all links to this node as {@link MindMapLink} vector.
      */
     public List<MindMapLink> getAllLinksIntoMe(MindMapNode target) {
-        List<MindMapLink> returnValue = new ArrayList<>();
+        var returnValue = new ArrayList<MindMapLink>();
         String id = getState(target);
         if (id != null) {
             List<MindMapLink> vec = getAssignedLinksVector(id);
@@ -320,7 +320,7 @@ public class MindMapLinkRegistry {
      * @return returns all links from this node as {@link MindMapLink} vector.
      */
     public List<MindMapLink> getAllLinksFromMe(MindMapNode source) {
-        List<MindMapLink> returnValue = new ArrayList<>();
+        var returnValue = new ArrayList<MindMapLink>();
         Collection<MindMapLink> vec = mSourceToLinks.get(source);
         if (vec != null) {
             returnValue.addAll(vec);

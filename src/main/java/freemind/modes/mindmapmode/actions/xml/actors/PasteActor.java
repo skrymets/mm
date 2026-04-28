@@ -49,7 +49,7 @@ public class PasteActor extends XmlActorAdapter {
      * @return a new PasteNodeAction.
      */
     public PasteNodeAction getPasteNodeAction(Transferable t, NodeCoordinate coord, UndoPasteNodeAction pUndoAction) {
-        PasteNodeAction pasteAction = new PasteNodeAction();
+        var pasteAction = new PasteNodeAction();
         final String targetId = getNodeID(coord.target);
         pasteAction.setNode(targetId);
         pasteAction.setTransferableContent(getTransferableContent(t, pUndoAction));
@@ -86,7 +86,7 @@ public class PasteActor extends XmlActorAdapter {
      * @return true, if successfully executed.
      */
     public boolean paste(Transferable t, MindMapNode target, boolean asSibling, boolean isLeft) {
-        UndoPasteNodeAction undoAction = new UndoPasteNodeAction();
+        var undoAction = new UndoPasteNodeAction();
         PasteNodeAction pasteAction;
         pasteAction = getPasteNodeAction(t, new NodeCoordinate(target, asSibling, isLeft), undoAction);
         // Undo-action
@@ -150,7 +150,7 @@ public class PasteActor extends XmlActorAdapter {
         public void paste(Object TransferData, MindMapNode target, boolean asSibling, boolean isLeft, Transferable t) {
             // TODO: Does not correctly interpret asSibling.
             List<File> fileList = (List<File>) TransferData;
-            for (File file : fileList) {
+            for (var file : fileList) {
                 MindMapNode node = getExMapFeedback().newNode(file.getName(), target.getMap());
                 node.setLeft(isLeft);
                 node.setLink(Tools.fileToRelativeUrlString(file, getExMapFeedback().getMap().getFile(), getExMapFeedback().getResources()));
@@ -174,8 +174,8 @@ public class PasteActor extends XmlActorAdapter {
                     setWaitingCursor(true);
                 }
                 // and now? paste it:
-                StringBuilder mapContent = new StringBuilder(MapAdapter.MAP_INITIAL_START + FreeMind.XML_VERSION + "\"><node TEXT=\"DUMMY\">");
-                for (String textLine : textLines) {
+                var mapContent = new StringBuilder(MapAdapter.MAP_INITIAL_START + FreeMind.XML_VERSION + "\"><node TEXT=\"DUMMY\">");
+                for (var textLine : textLines) {
                     mapContent.append(textLine);
                 }
                 mapContent.append("</node></map>");
@@ -332,14 +332,14 @@ public class PasteActor extends XmlActorAdapter {
                 return;
             }
             File parentFile = mindmapFile.getParentFile();
-            StringBuilder filePrefix = new StringBuilder(mindmapFile.getName().replace(FreeMindCommon.FREEMIND_FILE_EXTENSION, "_"));
+            var filePrefix = new StringBuilder(mindmapFile.getName().replace(FreeMindCommon.FREEMIND_FILE_EXTENSION, "_"));
 			/* prefix for createTempFile must be at least three characters long.
 			 See  [bugs:#1261] Unable to paste images from clipboard */
             while (filePrefix.length() < 3) {
                 filePrefix.append("_");
             }
             File tempFile = File.createTempFile(filePrefix.toString(), ".jpeg", parentFile);
-            FileOutputStream fos = new FileOutputStream(tempFile);
+            var fos = new FileOutputStream(tempFile);
             fos.write(EncryptionUtils.fromBase64(transferData.toString()));
             fos.close();
 
@@ -374,7 +374,7 @@ public class PasteActor extends XmlActorAdapter {
          * fl.length; i++) { System.out.println(fl[i]); }
          */
         DataFlavorHandler[] dataFlavorHandlerList = getFlavorHandlers();
-        for (DataFlavorHandler handler : dataFlavorHandlerList) {
+        for (var handler : dataFlavorHandlerList) {
             DataFlavor flavor = handler.getDataFlavor();
             if (t.isDataFlavorSupported(flavor)) {
                 try {
@@ -462,8 +462,8 @@ public class PasteActor extends XmlActorAdapter {
             parent = new MindMapNodeModel(getExMapFeedback().getMap());
         }
 
-        ArrayList<MindMapNode> parentNodes = new ArrayList<>();
-        ArrayList<Integer> parentNodesDepths = new ArrayList<>();
+        var parentNodes = new ArrayList<MindMapNode>();
+        var parentNodesDepths = new ArrayList<Integer>();
 
         parentNodes.add(parent);
         parentNodesDepths.add(-1);
@@ -472,7 +472,7 @@ public class PasteActor extends XmlActorAdapter {
 
         MindMapNode pastedNode = null;
 
-        for (String textLine : textLines) {
+        for (var textLine : textLines) {
             String text = textLine;
 //			System.out.println("Text to paste: "+text);
             text = text.replaceAll("\t", "        ");
@@ -484,7 +484,7 @@ public class PasteActor extends XmlActorAdapter {
             while (depth < text.length() && text.charAt(depth) == ' ') {
                 ++depth;
             }
-            StringBuilder visibleText = new StringBuilder(text.strip());
+            var visibleText = new StringBuilder(text.strip());
 
             // If the text is a recognizable link (e.g.
             // http://www.google.com/index.html),
@@ -520,7 +520,7 @@ public class PasteActor extends XmlActorAdapter {
             // heuristic, it is probable that it can be improved to include
             // some matches or exclude some matches.
 
-            for (String linkPrefix : linkPrefixes) {
+            for (var linkPrefix : linkPrefixes) {
                 int linkStart = text.indexOf(linkPrefix);
                 if (linkStart != -1) {
                     int linkEnd = linkStart;
@@ -554,7 +554,7 @@ public class PasteActor extends XmlActorAdapter {
             }
         }
 
-        for (MindMapNode n : parentNodes) {
+        for (var n : parentNodes) {
             if (n.getParentNode() == parent) {
                 // addUndoAction(n);
             }
@@ -573,7 +573,7 @@ public class PasteActor extends XmlActorAdapter {
     private TransferableContent getTransferableContent(Transferable t, UndoPasteNodeAction pUndoAction) {
         boolean amountAlreadySet = false;
         try {
-            TransferableContent trans = new TransferableContent();
+            var trans = new TransferableContent();
             if (t.isDataFlavorSupported(MindMapNodesSelection.fileListFlavor)) {
                 /*
                  * Since the JAXB-generated interface TransferableContent
@@ -581,8 +581,8 @@ public class PasteActor extends XmlActorAdapter {
                  * get the fileList, clear it, and then set it to the new value.
                  */
                 List<File> fileList = (List<File>) t.getTransferData(MindMapNodesSelection.fileListFlavor);
-                for (File fileName : fileList) {
-                    TransferableFile transferableFile = new TransferableFile();
+                for (var fileName : fileList) {
+                    var transferableFile = new TransferableFile();
                     transferableFile.setFileName(fileName.getAbsolutePath());
                     trans.addTransferableFile(transferableFile);
                 }
@@ -643,7 +643,7 @@ public class PasteActor extends XmlActorAdapter {
                     BufferedImage image = (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);
 
                     log.info("Starting to write clipboard image {}", image);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    var baos = new ByteArrayOutputStream();
                     ImageIO.write(image, "jpg", baos);
                     String base64String = EncryptionUtils.toBase64(baos.toByteArray());
                     trans.setTransferableAsImage(base64String);
@@ -671,7 +671,7 @@ public class PasteActor extends XmlActorAdapter {
      */
     protected int determineAmountOfNewTextNodes(Transferable t) throws UnsupportedFlavorException, IOException {
         // create a new node for testing purposes.
-        MindMapNodeModel parent = new MindMapNodeModel(getExMapFeedback().getMap());
+        var parent = new MindMapNodeModel(getExMapFeedback().getMap());
         pasteStringWithoutRedisplay(t, parent, false, false);
         final int childCount = parent.getChildCount();
         return childCount;
@@ -683,16 +683,16 @@ public class PasteActor extends XmlActorAdapter {
      */
     public int determineAmountOfNewNodes(Transferable t) throws UnsupportedFlavorException, IOException {
         // create a new node for testing purposes.
-        MindMapNodeModel parent = new MindMapNodeModel(getExMapFeedback().getMap());
+        var parent = new MindMapNodeModel(getExMapFeedback().getMap());
         parent.setText("ROOT");
-        DirectHtmlFlavorHandler handler = new DirectHtmlFlavorHandler();
+        var handler = new DirectHtmlFlavorHandler();
         // creator, that only creates dummy nodes.
         handler.setNodeCreator(new NodeCreator() {
 
             @Override
             public MindMapNode createChild(MindMapNode pParent) {
                 try {
-                    MindMapNodeModel newNode = new MindMapNodeModel("", getExMapFeedback().getMap());
+                    var newNode = new MindMapNodeModel("", getExMapFeedback().getMap());
                     pParent.insert(newNode, pParent.getChildCount());
                     newNode.setParent(pParent);
                     return newNode;
@@ -719,11 +719,11 @@ public class PasteActor extends XmlActorAdapter {
     private Transferable getTransferable(TransferableContent trans) {
         // create Transferable:
         // Add file list to this selection.
-        List<File> fileList = new ArrayList<>();
-        for (TransferableFile tFile : trans.getTransferableFileList()) {
+        var fileList = new ArrayList<File>();
+        for (var tFile : trans.getTransferableFileList()) {
             fileList.add(new File(tFile.getFileName()));
         }
-        Transferable copy = new MindMapNodesSelection(trans.getTransferable(), trans.getTransferableAsImage(), trans.getTransferableAsPlainText(), trans.getTransferableAsRTF(), trans.getTransferableAsHtml(), trans.getTransferableAsDrop(), fileList, null);
+        var copy = new MindMapNodesSelection(trans.getTransferable(), trans.getTransferableAsImage(), trans.getTransferableAsPlainText(), trans.getTransferableAsRTF(), trans.getTransferableAsHtml(), trans.getTransferableAsDrop(), fileList, null);
         return copy;
     }
 
@@ -736,7 +736,7 @@ public class PasteActor extends XmlActorAdapter {
             MindMapNode child = i.next();
             processUnfinishedLinksInHooks(child);
         }
-        for (PermanentNodeHook hook : node.getHooks()) {
+        for (var hook : node.getHooks()) {
             hook.processUnfinishedLinks();
         }
     }

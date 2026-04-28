@@ -27,7 +27,7 @@ public class ZoomService {
      * @param zoomValue the new zoom value (e.g. 1.0 for 100%)
      */
     public void changeZoomValueProperty(float zoomValue) {
-        for (ZoomListener listener : zoomListenerSet) {
+        for (var listener : zoomListenerSet) {
             listener.setZoom(zoomValue);
         }
     }

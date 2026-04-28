@@ -184,7 +184,7 @@ public abstract class NodeAdapter implements MindMapNode {
      * Creates the TreePath recursively
      */
     public TreePath getPath() {
-        List<NodeAdapter> pathVector = new ArrayList<>();
+        var pathVector = new ArrayList<NodeAdapter>();
         TreePath treePath;
         this.addToPathVector(pathVector);
         treePath = new TreePath(pathVector.toArray());
@@ -427,7 +427,7 @@ public abstract class NodeAdapter implements MindMapNode {
     public ListIterator<MindMapNode> sortedChildrenUnfolded() {
         if (children == null)
             return null;
-        LinkedList<MindMapNode> sorted = new LinkedList<>(children);
+        var sorted = new LinkedList<MindMapNode>(children);
         /*
          * Using this stable sort, we assure that the left nodes came in front
          * of the right ones.
@@ -600,7 +600,7 @@ public abstract class NodeAdapter implements MindMapNode {
                                           MindMapNode addedChild) {
         // Tell any node hooks that the node is added:
         if (node instanceof MindMapNode) {
-            for (PermanentNodeHook hook : node.getActivatedHooks()) {
+            for (var hook : node.getActivatedHooks()) {
                 if (addedChild.getParentNode() == node) {
                     hook.onAddChild(addedChild);
                 }
@@ -616,7 +616,7 @@ public abstract class NodeAdapter implements MindMapNode {
      */
     private void recursiveCallRemoveChildren(MindMapNode node,
                                              MindMapNode removedChild, MindMapNode oldDad) {
-        for (PermanentNodeHook hook : node.getActivatedHooks()) {
+        for (var hook : node.getActivatedHooks()) {
             if (removedChild.getParentNode() == node) {
                 hook.onRemoveChild(removedChild);
             }

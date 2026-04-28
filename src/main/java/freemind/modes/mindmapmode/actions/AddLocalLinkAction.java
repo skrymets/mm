@@ -29,7 +29,7 @@ public class AddLocalLinkAction extends MindmapAction {
             return;
         }
         boolean first = true;
-        for (MindMapNode destination : nodesFromClipboard) {
+        for (var destination : nodesFromClipboard) {
             if (!first) {
                 log.warn("Can't link the node '{}' to more than one destination. Only the last is used.", source);
             }

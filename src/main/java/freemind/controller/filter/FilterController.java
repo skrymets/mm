@@ -149,7 +149,7 @@ public class FilterController implements MapModuleChangeObserver {
             Condition cond = filterConditionModel.getElementAt(i);
             cond.save(doc, root);
         }
-        try (Writer writer = new FileWriter(pathToFilterFile)) {
+        try (var writer = new FileWriter(pathToFilterFile)) {
             FreeMindXml.write(doc, writer);
         }
     }
@@ -158,12 +158,12 @@ public class FilterController implements MapModuleChangeObserver {
         filterConditionModel.removeAllElements();
 
         Document doc;
-        try (Reader reader = new FileReader(pathToFilterFile)) {
+        try (var reader = new FileReader(pathToFilterFile)) {
             doc = FreeMindXml.parse(reader);
         }
 
         Element root = doc.getDocumentElement();
-        for (Element condition : FreeMindXml.getChildElements(root)) {
+        for (var condition : FreeMindXml.getChildElements(root)) {
             filterConditionModel.addElement(FilterController.getConditionFactory().loadCondition(condition));
         }
     }

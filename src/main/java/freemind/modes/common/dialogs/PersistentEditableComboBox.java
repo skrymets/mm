@@ -24,7 +24,7 @@ public class PersistentEditableComboBox extends JComboBox {
         String storedUrls = mModeController.getFrame().getProperty(pStorageKey);
         if (storedUrls != null) {
             String[] array = storedUrls.split("\t");
-            for (String string : array) {
+            for (var string : array) {
                 addUrl(string, false);
             }
         }
@@ -56,7 +56,7 @@ public class PersistentEditableComboBox extends JComboBox {
         addItem(selectedItem);
         setSelectedIndex(getModel().getSize() - 1);
         if (calledFromSetText) {
-            StringBuilder resultBuffer = new StringBuilder();
+            var resultBuffer = new StringBuilder();
             for (int i = 0; i < getModel().getSize(); i++) {
                 String element = (String) getModel().getElementAt(i);
                 resultBuffer.append(element);

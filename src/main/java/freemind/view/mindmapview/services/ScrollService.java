@@ -35,7 +35,7 @@ public class ScrollService {
 
         Dimension d = getViewportSize();
         JComponent content = node.getContent();
-        Rectangle rect = new Rectangle(
+        var rect = new Rectangle(
                 content.getWidth() / 2 - d.width / 2,
                 content.getHeight() / 2 - d.height / 2,
                 d.width,
@@ -88,7 +88,7 @@ public class ScrollService {
     }
 
     public void setViewLocation(int x, int y) {
-        Point currentPoint = new Point(x, y);
+        var currentPoint = new Point(x, y);
         if (currentPoint.getX() < 0) {
             currentPoint.setLocation(0, currentPoint.getY());
         }
@@ -169,7 +169,7 @@ public class ScrollService {
     }
 
     private Point getViewPosition() {
-        Point viewPosition = new Point(0, 0);
+        var viewPosition = new Point(0, 0);
         if (mapView.getParent() instanceof JViewport mapViewport) {
             viewPosition = mapViewport.getViewPosition();
         }

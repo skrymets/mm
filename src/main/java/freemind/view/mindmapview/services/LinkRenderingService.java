@@ -34,7 +34,7 @@ public class LinkRenderingService {
         String label = mapView.getModel().getLinkRegistry().getLabel(source.getModel());
         if (label != null)
             labels.put(label, source);
-        for (NodeView target : source.getChildrenViews()) {
+        for (var target : source.getChildrenViews()) {
             collectLabels(target, labels);
         }
     }
@@ -49,10 +49,10 @@ public class LinkRenderingService {
         List<MindMapLink> vec = mapView.getModel().getLinkRegistry()
                 .getAllLinks(source.getModel());
 
-        for (MindMapLink ref : vec) {
+        for (var ref : vec) {
             if (linkAlreadyVisited.add(ref)) {
                 if (ref instanceof MindMapArrowLink arrowLinkRef) {
-                    ArrowLinkView arrowLink = new ArrowLinkView(
+                    var arrowLink = new ArrowLinkView(
                             arrowLinkRef,
                             mapView.getViewerRegistryService().getNodeView(ref.getSource()),
                             mapView.getViewerRegistryService().getNodeView(ref.getTarget()));
@@ -62,7 +62,7 @@ public class LinkRenderingService {
                 }
             }
         }
-        for (NodeView target : source.getChildrenViews()) {
+        for (var target : source.getChildrenViews()) {
             paintLinks(target, graphics, labels, linkAlreadyVisited);
         }
     }
@@ -71,7 +71,7 @@ public class LinkRenderingService {
         if (mArrowLinkViews == null)
             return null;
 
-        for (ArrowLinkView arrowView : mArrowLinkViews) {
+        for (var arrowView : mArrowLinkViews) {
             if (arrowView.detectCollision(p))
                 return arrowView.getModel();
         }

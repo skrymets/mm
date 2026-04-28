@@ -36,7 +36,7 @@ public class SetLinkActor extends XmlActorAdapter {
 
     private AddLinkXmlAction createAddLinkXmlAction(MindMapNode node,
                                                     String link) {
-        AddLinkXmlAction action = new AddLinkXmlAction();
+        var action = new AddLinkXmlAction();
         action.setNode(getNodeID(node));
         action.setDestination(link);
         return action;

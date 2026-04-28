@@ -314,7 +314,7 @@ public class KeyEventTranslator {
      * @since jEdit 4.2pre3
      */
     public static String getModifierString(InputEvent evt) {
-        StringBuilder buf = new StringBuilder();
+        var buf = new StringBuilder();
         if (evt.isControlDown())
             buf.append(getSymbolicModifierName(InputEvent.CTRL_MASK));
         if (evt.isAltDown())

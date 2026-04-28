@@ -32,7 +32,7 @@ public class SplitNode extends MindMapNodeHookAdapter {
         super.invoke(node);
         final List<MindMapNode> list = getMindMapController().getSelecteds();
 
-        for (MindMapNode next : list) {
+        for (var next : list) {
             splitNode(next);
         }
     }
@@ -74,9 +74,9 @@ public class SplitNode extends MindMapNodeHookAdapter {
     private String[] splitNode(String text) {
         if (text.startsWith("<html>")) {
             String[] parts = null;
-            HTMLEditorKit kit = new HTMLEditorKit();
-            HTMLDocument doc = new HTMLDocument();
-            StringReader buf = new StringReader(text);
+            var kit = new HTMLEditorKit();
+            var doc = new HTMLDocument();
+            var buf = new StringReader(text);
             try {
                 kit.read(buf, doc, 0);
                 Element parent = getParentElement(doc);
@@ -93,7 +93,7 @@ public class SplitNode extends MindMapNodeHookAdapter {
                     final String paragraphText = doc
                             .getText(start, end - start).strip();
                     if (!paragraphText.isEmpty()) {
-                        StringWriter out = new StringWriter();
+                        var out = new StringWriter();
                         new FixedHTMLWriter(out, doc, start, end - start)
                                 .write();
                         final String string = out.toString();

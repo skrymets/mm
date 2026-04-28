@@ -26,7 +26,7 @@ public class ApplyFormatPlugin extends MindMapNodeHookAdapter {
         List<MindMapNode> selected = getController().getSelecteds();
         Pattern nodePattern = StylePatternFactory.createPatternFromSelected(
                 focussed, selected);
-        ChooseFormatPopupDialog formatDialog = new ChooseFormatPopupDialog(
+        var formatDialog = new ChooseFormatPopupDialog(
                 getController().getFrame().getJFrame(), getMindMapController(),
                 "accessories/plugins/ApplyFormatPlugin.dialog.title",
                 nodePattern, focussed);
@@ -35,7 +35,7 @@ public class ApplyFormatPlugin extends MindMapNodeHookAdapter {
         // process result:
         if (formatDialog.getResult() == ChooseFormatPopupDialog.OK) {
             Pattern pattern = formatDialog.getPattern();
-            for (MindMapNode node : selected) {
+            for (var node : selected) {
                 getMindMapController().applyPattern(node, pattern);
             }
         }

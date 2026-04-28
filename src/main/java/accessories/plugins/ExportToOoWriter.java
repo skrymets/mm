@@ -53,7 +53,7 @@ public class ExportToOoWriter extends ExportHook {
 
     public boolean exportToOoWriter(File chosenFile) throws IOException {
         // get output:
-        StringWriter writer = new StringWriter();
+        var writer = new StringWriter();
         // get XML
         getController().getMap().getFilteredXml(writer);
         String xslts = getResourceString("files");
@@ -73,11 +73,11 @@ public class ExportToOoWriter extends ExportHook {
         }
         InputStream xsltStream = xsltUrl.openStream();
         // System.out.println("set xsl");
-        Source xsltSource = new StreamSource(xsltStream);
+        var xsltSource = new StreamSource(xsltStream);
 
         // create an instance of TransformerFactory
         try {
-            StringReader reader = new StringReader(writer.getBuffer()
+            var reader = new StringReader(writer.getBuffer()
                     .toString());
 
             // System.out.println("make transform instance");
@@ -101,15 +101,15 @@ public class ExportToOoWriter extends ExportHook {
     public boolean exportToOoWriter(File file, StringWriter writer, String xslts)
             throws IOException {
         boolean resultValue = true;
-        ZipOutputStream zipout = new ZipOutputStream(new FileOutputStream(file));
+        var zipout = new ZipOutputStream(new FileOutputStream(file));
 
-        Result result = new StreamResult(zipout);
-        StringTokenizer tokenizer = new StringTokenizer(xslts, ",");
+        var result = new StreamResult(zipout);
+        var tokenizer = new StringTokenizer(xslts, ",");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             String[] files = token.split("->");
             if (files.length == 2) {
-                ZipEntry entry = new ZipEntry(files[1]);
+                var entry = new ZipEntry(files[1]);
                 zipout.putNextEntry(entry);
                 if (files[0].endsWith(".xsl")) {
                     log.info("Transforming with xslt {} to file {}", files[0], files[1]);

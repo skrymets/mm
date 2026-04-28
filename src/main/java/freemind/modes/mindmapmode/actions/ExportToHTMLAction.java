@@ -25,7 +25,7 @@ public class ExportToHTMLAction extends MindmapAction {
             return;
         }
         try {
-            File file = new File(controller.getMindMapMapModel().getFile() + ".html");
+            var file = new File(controller.getMindMapMapModel().getFile() + ".html");
             MindMapController.saveHTML((MindMapNodeModel) controller.getMindMapMapModel().getRoot(), file);
             controller.loadURL(file.toString());
         } catch (IOException ex) {

@@ -34,8 +34,8 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
             log.info("Export map to png.\nUsage:\n java -jar lib/freemind.jar freemind.view.mindmapview.IndependentMapViewCreator <map_path>.mm <picture_path>.png");
             System.exit(0);
         }
-        FreeMindMainMock freeMindMain = new FreeMindMainMock();
-        IndependentMapViewCreator creator = new IndependentMapViewCreator();
+        var freeMindMain = new FreeMindMainMock();
+        var creator = new IndependentMapViewCreator();
         try {
             String outputFileName = args[1];
             creator.exportFileToPng(args[0], outputFileName, freeMindMain);
@@ -53,10 +53,10 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
                                         FreeMindMain pFreeMindMain) throws
             IOException {
         mMap = new MindMapMapModel(this);
-        Tools.FileReaderCreator readerCreator = new Tools.FileReaderCreator(new File(inputFileName));
+        var readerCreator = new Tools.FileReaderCreator(new File(inputFileName));
         MindMapNode node = mMap.loadTree(readerCreator, MapAdapter.sDontAskInstance);
         mMap.setRoot(node);
-        MapView mapView = new MapView(mMap, this);
+        var mapView = new MapView(mMap, this);
         parent.add(mapView, BorderLayout.CENTER);
         mapView.setBounds(parent.getBounds());
         SwingUtils.waitForEventQueue();
@@ -67,8 +67,8 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
     public void exportFileToPng(String inputFileName, String outputFileName,
                                 FreeMindMain pFreeMindMain) throws
             IOException, URISyntaxException {
-        JPanel parent = new JPanel();
-        Rectangle bounds = new Rectangle(0, 0, 400, 600);
+        var parent = new JPanel();
+        var bounds = new Rectangle(0, 0, 400, 600);
         parent.setBounds(bounds);
         MapView mapView = createMapViewForFile(inputFileName, parent,
                 pFreeMindMain);
@@ -89,7 +89,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
         Rectangle dimI = mapView.getInnerBounds();
         Rectangle dim = mapView.getBounds();
         // do print
-        BufferedImage backBuffer = new BufferedImage(dimI.width, dimI.height,
+        var backBuffer = new BufferedImage(dimI.width, dimI.height,
                 BufferedImage.TYPE_INT_ARGB);
         Graphics g = backBuffer.createGraphics();
         int newX = -dim.x - dimI.x;
@@ -102,7 +102,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
             double maxDim = Math.max(dimI.getHeight(), dimI.getWidth());
             int newWidth = (int) (dimI.getWidth() * destSize / maxDim);
             int newHeight = (int) (dimI.getHeight() * destSize / maxDim);
-            BufferedImage resized = new BufferedImage(newWidth, newHeight,
+            var resized = new BufferedImage(newWidth, newHeight,
                     backBuffer.getType());
             Graphics2D g2 = resized.createGraphics();
             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
@@ -112,7 +112,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
             g2.dispose();
             backBuffer = resized;
         }
-        FileOutputStream out1 = new FileOutputStream(outputFileName);
+        var out1 = new FileOutputStream(outputFileName);
         ImageIO.write(backBuffer, "png", out1);
         out1.close();
     }

@@ -18,7 +18,7 @@ public class PrintPreviewAction extends AbstractAction {
         if (!controller.getPrintService().acquirePrinterJobAndPageFormat()) {
             return;
         }
-        PreviewDialog previewDialog = new PreviewDialog(
+        var previewDialog = new PreviewDialog(
                 controller.getResourceString("print_preview_title"),
                 controller.getView(),
                 controller.getPrintService().getPageFormat()

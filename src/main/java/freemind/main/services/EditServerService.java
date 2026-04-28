@@ -69,8 +69,8 @@ public class EditServerService {
             int port = parseInt(lines[1]);
             int key = parseInt(lines[2]);
 
-            Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), port);
-            try (DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+            var socket = new Socket(InetAddress.getByName("127.0.0.1"), port);
+            try (var out = new DataOutputStream(socket.getOutputStream())) {
                 out.writeInt(key);
 
                 String script = Tools.arrayToUrls(pArgs);

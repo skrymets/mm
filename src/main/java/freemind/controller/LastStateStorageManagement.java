@@ -42,23 +42,23 @@ public class LastStateStorageManagement {
     }
 
     public void clearTabIndices() {
-        for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
+        for (var store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
             store.setTabIndex(-1);
         }
     }
 
     public void changeOrAdd(MindmapLastStateStorage pStore) {
         boolean found = false;
-        for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
+        for (var store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
             if (Objects.equals(pStore.getRestorableName(), store.getRestorableName())) {
                 // deep copy
                 store.setLastZoom(pStore.getLastZoom());
                 store.setLastSelected(pStore.getLastSelected());
                 store.setX(pStore.getX());
                 store.setY(pStore.getY());
-                List<NodeListMember> listCopy = new ArrayList<>(pStore.getNodeListMemberList());
+                var listCopy = new ArrayList<NodeListMember>(pStore.getNodeListMemberList());
                 store.clearNodeListMemberList();
-                for (NodeListMember member : listCopy) {
+                for (var member : listCopy) {
                     store.addNodeListMember(member);
                 }
                 found = true;
@@ -77,15 +77,15 @@ public class LastStateStorageManagement {
         // size limit
         if (mLastStatesMap.sizeMindmapLastStateStorageList() > LIST_AMOUNT_LIMIT) {
             // make map from date to object:
-            TreeMap<Long, MindmapLastStateStorage> dateToStoreMap = new TreeMap<>();
-            for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
+            var dateToStoreMap = new TreeMap<Long, MindmapLastStateStorage>();
+            for (var store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
                 dateToStoreMap.put(Long.valueOf(-store.getLastChanged()), store);
             }
             // clear list
             mLastStatesMap.clearMindmapLastStateStorageList();
             // rebuild
             int counter = 0;
-            for (Entry<Long, MindmapLastStateStorage> entry : dateToStoreMap.entrySet()) {
+            for (var entry : dateToStoreMap.entrySet()) {
                 mLastStatesMap.addMindmapLastStateStorage(entry.getValue());
                 counter++;
                 if (counter >= LIST_AMOUNT_LIMIT) {
@@ -101,7 +101,7 @@ public class LastStateStorageManagement {
     }
 
     public MindmapLastStateStorage getStorage(String pRestorableName) {
-        for (MindmapLastStateStorage store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
+        for (var store : emptyIfNull(mLastStatesMap.getMindmapLastStateStorageList())) {
             if (Objects.equals(pRestorableName, store.getRestorableName())) {
                 setLastChanged(store);
                 return store;

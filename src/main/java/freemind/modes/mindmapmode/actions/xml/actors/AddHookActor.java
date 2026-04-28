@@ -56,7 +56,7 @@ public class AddHookActor extends XmlActorAdapter {
         HookNodeAction hookNodeAction = createHookNodeAction(focussed, selectedMindMapNodes, hookName, null);
         CompoundAction.Choice hookNodeActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(hookNodeAction);
 
-        CompoundAction undoAction = new CompoundAction();
+        var undoAction = new CompoundAction();
         undoAction.addChoice(hookNodeActionChoice);
 
         HookInstantiationMethod instMethod = getInstantiationMethod(hookName);
@@ -69,9 +69,9 @@ public class AddHookActor extends XmlActorAdapter {
         }
 
         // remove the hook:
-        for (MindMapNode currentDestinationNode : destinationNodes) {
+        for (var currentDestinationNode : destinationNodes) {
             // find the hook in the current node, if present:
-            for (PermanentNodeHook hook : currentDestinationNode.getActivatedHooks()) {
+            for (var hook : currentDestinationNode.getActivatedHooks()) {
                 if (hook.getName().equals(hookName)) {
                     if (!(hook instanceof DontSaveMarker)) {
                         Document tempDoc = FreeMindXml.newDocument();
@@ -87,7 +87,7 @@ public class AddHookActor extends XmlActorAdapter {
                                 NamedNodeMap attrs = parameters.getAttributes();
                                 for (int i = 0; i < attrs.getLength(); i++) {
                                     String name = attrs.item(i).getNodeName();
-                                    NodeChildParameter nodeHookChild = new NodeChildParameter();
+                                    var nodeHookChild = new NodeChildParameter();
                                     nodeHookChild.setKey(name);
                                     nodeHookChild.setValue(parameters.getAttribute(name));
                                     hookNodeAction.addNodeChildParameter(nodeHookChild);
@@ -116,18 +116,18 @@ public class AddHookActor extends XmlActorAdapter {
 
     public HookNodeAction createHookNodeAction(MindMapNode focussed, List<MindMapNode> selectedMindMapNodes, String hookName, Properties pHookProperties) {
 
-        HookNodeAction hookNodeAction = new HookNodeAction();
+        var hookNodeAction = new HookNodeAction();
         hookNodeAction.setNode(getNodeID(focussed));
         hookNodeAction.setHookName(hookName);
         // selectedNodes list
-        for (MindMapNode node : selectedMindMapNodes) {
-            NodeListMember nodeListMember = new NodeListMember();
+        for (var node : selectedMindMapNodes) {
+            var nodeListMember = new NodeListMember();
             nodeListMember.setNode(getNodeID(node));
             hookNodeAction.addNodeListMember(nodeListMember);
         }
         if (pHookProperties != null) {
-            for (Map.Entry<Object, Object> entry : pHookProperties.entrySet()) {
-                NodeChildParameter nodeChildParameter = new NodeChildParameter();
+            for (var entry : pHookProperties.entrySet()) {
+                var nodeChildParameter = new NodeChildParameter();
                 nodeChildParameter.setKey((String) entry.getKey());
                 nodeChildParameter.setValue((String) entry.getValue());
                 hookNodeAction.addNodeChildParameter(nodeChildParameter);
@@ -139,8 +139,8 @@ public class AddHookActor extends XmlActorAdapter {
     public void act(XmlAction action) {
         if (action instanceof HookNodeAction hookNodeAction) {
             MindMapNode selected = getNodeFromID(hookNodeAction.getNode());
-            List<MindMapNode> selectedMindMapNodes = new ArrayList<>();
-            for (NodeListMember node : hookNodeAction.getNodeListMemberList()) {
+            var selectedMindMapNodes = new ArrayList<MindMapNode>();
+            for (var node : hookNodeAction.getNodeListMemberList()) {
                 selectedMindMapNodes.add(getNodeFromID(node.getNode()));
             }
             // reconstruct child-xml as DOM:
@@ -149,7 +149,7 @@ public class AddHookActor extends XmlActorAdapter {
             tempDoc.appendChild(xmlParent);
             Element child = tempDoc.createElement(PermanentNodeHookAdapter.PARAMETERS);
             xmlParent.appendChild(child);
-            for (NodeChildParameter childParameter : hookNodeAction.getNodeChildParameterList()) {
+            for (var childParameter : hookNodeAction.getNodeChildParameterList()) {
                 child.setAttribute(childParameter.getKey(), childParameter.getValue());
             }
             invoke(selected, selectedMindMapNodes, hookNodeAction.getHookName(), xmlParent);
@@ -182,9 +182,9 @@ public class AddHookActor extends XmlActorAdapter {
         // test if hook already present
         if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
             // remove the hook:
-            for (MindMapNode currentDestinationNode : destinationNodes) {
+            for (var currentDestinationNode : destinationNodes) {
                 // find the hook ini the current node, if present:
-                for (PermanentNodeHook hook : currentDestinationNode.getActivatedHooks()) {
+                for (var hook : currentDestinationNode.getActivatedHooks()) {
                     if (hook.getName().equals(hookName)) {
                         currentDestinationNode.removeHook(hook);
                         getExMapFeedback().nodeChanged(currentDestinationNode);
@@ -201,7 +201,7 @@ public class AddHookActor extends XmlActorAdapter {
             }
         } else {
             // add the hook
-            for (MindMapNode currentDestinationNode : destinationNodes) {
+            for (var currentDestinationNode : destinationNodes) {
                 NodeHook hook = getExMapFeedback().createNodeHook(hookName, currentDestinationNode);
                 log.trace("created hook {}", hookName);
                 // set parameters, if present

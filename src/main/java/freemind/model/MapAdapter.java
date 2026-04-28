@@ -79,7 +79,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                 }
             }
             if (shouldFire) {
-                for (MapSourceChangedObserver observer : mMapSourceChangedObserverSet) {
+                for (var observer : mMapSourceChangedObserverSet) {
                     log.info("File {} changed on disk as it was last modified at {}", getFile(), Instant.ofEpochMilli(lastModified));
                     try {
                         boolean changeAccepted = observer.mapSourceChanged(MapAdapter.this);
@@ -204,21 +204,21 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
         boolean left = newRoot.isLeft();
         MindMapNode node = newRoot;
         // collect parents (as we remove them from their parents...)
-        List<MindMapNode> parents = new ArrayList<>();
+        var parents = new ArrayList<MindMapNode>();
         while (node.getParentNode() != null) {
             MindMapNode parent = node.getParentNode();
             parents.add(0, node);
             node = parent;
         }
         // bind all parents to a new chain:
-        for (MindMapNode mindMapNode : parents) {
+        for (var mindMapNode : parents) {
             node = mindMapNode;
             MindMapNode parent = node.getParentNode();
             // remove parent
             node.removeFromParent();
             // special treatment for left/right
             if (node == newRoot) {
-                for (MindMapNode child : node.getChildren()) {
+                for (var child : node.getChildren()) {
                     child.setLeft(left);
                 }
                 parent.setLeft(!left);
@@ -482,7 +482,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                 versionInfoLength);
         // the resulting file is accessed by the reader:
         Reader reader = null;
-        for (String expectedStartString : EXPECTED_START_STRINGS) {
+        for (var expectedStartString : EXPECTED_START_STRINGS) {
             versionInfoLength = expectedStartString.length();
             String mapStart = "";
             if (buffer.length() >= versionInfoLength) {

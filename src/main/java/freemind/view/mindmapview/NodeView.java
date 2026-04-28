@@ -194,7 +194,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     void addDropListener(DropTargetListener dtl) {
         if (dtl == null)
             return;
-        DropTarget dropTarget = new DropTarget(getMainView(), dtl);
+        var dropTarget = new DropTarget(getMainView(), dtl);
         dropTarget.setActive(true);
     }
 
@@ -254,7 +254,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         }
 
         LinkedList<NodeView> childrenViews = getChildrenViews();
-        for (NodeView child : childrenViews) {
+        for (var child : childrenViews) {
             child.getCoordinates(inList, additionalDistanceForConvexHull, true, transX + child.getX(), transY + child.getY());
         }
     }
@@ -319,9 +319,9 @@ public class NodeView extends JComponent implements TreeModelListener {
      * This method returns the NodeViews that are children of this node.
      */
     public LinkedList<NodeView> getChildrenViews() {
-        LinkedList<NodeView> childrenViews = new LinkedList<>();
+        var childrenViews = new LinkedList<NodeView>();
         final Component[] components = getComponents();
-        for (Component component : components) {
+        for (var component : components) {
             if (!(component instanceof NodeView view)) {
                 continue;
             }
@@ -484,7 +484,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public NodeView getFirst(Component startAfter, boolean leftOnly, boolean rightOnly) {
         final Component[] components = getComponents();
-        for (Component component : components) {
+        for (var component : components) {
             if (startAfter != null) {
                 if (component == startAfter) {
                     startAfter = null;
@@ -540,8 +540,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public LinkedList<NodeView> getLeft(boolean onlyVisible) {
         LinkedList<NodeView> all = getChildrenViews();
-        LinkedList<NodeView> left = new LinkedList<>();
-        for (NodeView node : all) {
+        var left = new LinkedList<NodeView>();
+        for (var node : all) {
             if (node == null)
                 continue;
             if (node.isLeft())
@@ -552,8 +552,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public LinkedList<NodeView> getRight(boolean onlyVisible) {
         LinkedList<NodeView> all = getChildrenViews();
-        LinkedList<NodeView> right = new LinkedList<>();
-        for (NodeView node : all) {
+        var right = new LinkedList<NodeView>();
+        for (var node : all) {
             if (node == null)
                 continue;
             if (!node.isLeft())
@@ -666,7 +666,7 @@ public class NodeView extends JComponent implements TreeModelListener {
      * removed (it needs to stay in memory)
      */
     public void remove() {
-        for (NodeView nodeView : getChildrenViews()) {
+        for (var nodeView : getChildrenViews()) {
             nodeView.remove();
         }
         if (getMap().getSelectionService().isSelected(this)) {
@@ -718,7 +718,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         boolean widthMustBeRestricted = false;
         if (!isHtml) {
             String[] lines = nodeText.split("\n");
-            for (String s : lines) {
+            for (var s : lines) {
                 // Compute the width the node would spontaneously take,
                 // by preliminarily setting the text.
                 mainView.setText(s);
@@ -780,7 +780,7 @@ public class NodeView extends JComponent implements TreeModelListener {
             int startingLine = lines[0].matches("\\s*") ? 1 : 0;
             // ^ If the remaining first line is empty, do not draw it
 
-            StringBuilder text = new StringBuilder("<html><table border=1 style=\"border-color: white\">");
+            var text = new StringBuilder("<html><table border=1 style=\"border-color: white\">");
             // String[] lines = nodeText.split("\n");
             for (int line = startingLine; line < lines.length; line++) {
                 text.append("<tr><td style=\"border-color: white;\">").append(HtmlTools.toXMLEscapedText(lines[line]).replaceAll(
@@ -812,12 +812,12 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     private void updateIcons() {
         updateIconPosition();
-        MultipleImage iconImages = new MultipleImage(1.0f);
+        var iconImages = new MultipleImage(1.0f);
         boolean iconPresent = false;
         /* fc, 06.10.2003: images? */
 
         Map<String, ImageIcon> stateIcons = getModel().getStateIcons();
-        for (String key : stateIcons.keySet()) {
+        for (var key : stateIcons.keySet()) {
             iconPresent = true;
             ImageIcon myIcon = stateIcons.get(key);
             iconImages.addImage(myIcon);
@@ -837,7 +837,7 @@ public class NodeView extends JComponent implements TreeModelListener {
         }
 
         List<NodeIcon> icons = getModel().getIcons();
-        for (NodeIcon myIcon : icons) {
+        for (var myIcon : icons) {
             iconPresent = true;
             // System.out.println("print the icon " + myicon.toString());
             iconImages.addImage(((MindIcon) myIcon).getUnscaledIcon());
@@ -903,14 +903,14 @@ public class NodeView extends JComponent implements TreeModelListener {
      * Updates the tool tip of the node.
      */
     public void updateToolTip() {
-        Map<String, String> tooltips = new TreeMap<>(getModel().getToolTip());
+        var tooltips = new TreeMap<String, String>(getModel().getToolTip());
         if (tooltips.isEmpty()) {
             mainView.setToolTipText(null);
         } else {
             // html table
-            StringBuilder text = new StringBuilder("<html><table width=\""
+            var text = new StringBuilder("<html><table width=\""
                     + getMaxToolTipWidth() + "\">");
-            for (String key : tooltips.keySet()) {
+            for (var key : tooltips.keySet()) {
                 String value = tooltips.get(key);
                 // no html end inside the value:
                 value = value.replaceAll("</html>", "");
@@ -942,7 +942,7 @@ public class NodeView extends JComponent implements TreeModelListener {
     public void updateAll() {
         update();
         invalidate();
-        for (NodeView child : getChildrenViews()) {
+        for (var child : getChildrenViews()) {
             child.updateAll();
         }
     }
@@ -1089,7 +1089,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                         continue;
                     }
                 }
-                Point childPoint = new Point(0, childView.getMainView()
+                var childPoint = new Point(0, childView.getMainView()
                         .getHeight() / 2);
                 PointUtils.convertPointToAncestor(childView.getMainView(),
                         childPoint, baseComponent);
@@ -1188,7 +1188,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     public void treeStructureChanged(TreeModelEvent e) {
         getMap().getSelectionService().resetShiftSelectionOrigin();
-        for (NodeView nodeView : getChildrenViews()) {
+        for (var nodeView : getChildrenViews()) {
             nodeView.remove();
         }
         insert();
@@ -1257,7 +1257,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                 continue;
             }
             if (nodeView.isContentVisible()) {
-                Point p = new Point();
+                var p = new Point();
                 PointUtils.convertPointToAncestor(nodeView, p, this);
                 g.translate(p.x, p.y);
                 nodeView.paintCloud(g);
@@ -1294,7 +1294,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
     private void paintCloud(Graphics g) {
         if (isContentVisible() && model.getCloud() != null) {
-            CloudView cloud = new CloudView(model.getCloud(), this);
+            var cloud = new CloudView(model.getCloud(), this);
             cloud.paint(g);
         }
     }

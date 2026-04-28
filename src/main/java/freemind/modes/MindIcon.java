@@ -116,7 +116,7 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
             URL imageURL = resources.getResource(getIconFileName());
             if (imageURL == null) { // As standard icon not found, try user's
                 try {
-                    final File file = new File(resources.getFreemindDirectory(), "icons/" + getName() + ".png");
+                    final var file = new File(resources.getFreemindDirectory(), "icons/" + getName() + ".png");
                     if (file.canRead()) {
                         imageURL = Tools.fileToUrl(file);
                     }
@@ -152,9 +152,9 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
         if (mAllIconNames != null) {
             return mAllIconNames;
         }
-        List<String> mAllIconNames = new ArrayList<>();
+        var mAllIconNames = new ArrayList<String>();
         String icons = resources.getProperty(PROPERTY_STRING_ICONS_LIST);
-        StringTokenizer tokenizer = new StringTokenizer(icons, ";");
+        var tokenizer = new StringTokenizer(icons, ";");
         while (tokenizer.hasMoreTokens()) {
             mAllIconNames.add(tokenizer.nextToken());
         }
@@ -165,7 +165,7 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
         if (createdIcons.containsKey(iconName)) {
             return createdIcons.get(iconName);
         }
-        MindIcon icon = new MindIcon(iconName);
+        var icon = new MindIcon(iconName);
         createdIcons.put(iconName, icon);
         return icon;
     }
@@ -174,7 +174,7 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
         if (createdIcons.containsKey(iconName)) {
             return createdIcons.get(iconName);
         }
-        MindIcon mindIcon = new MindIcon(iconName, icon);
+        var mindIcon = new MindIcon(iconName, icon);
         getAllIconNames().add(iconName);
         createdIcons.put(iconName, mindIcon);
         return mindIcon;

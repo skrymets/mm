@@ -76,7 +76,7 @@ public class MapPrintingService {
     }
 
     public void repaintSelecteds() {
-        for (NodeView next : mapView.getSelectionService().getSelecteds()) {
+        for (var next : mapView.getSelectionService().getSelecteds()) {
             next.repaintSelected();
         }
     }

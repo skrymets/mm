@@ -77,7 +77,7 @@ public class ExportDialog extends JFrame {
         setBackground(Color.lightGray);
         this.addWindowListener(new WindowClosingAdapter(false));
         // set layout and add components
-        GridBagLayout gbl = new GridBagLayout();
+        var gbl = new GridBagLayout();
         GridBagConstraints gbc;
         getContentPane().setLayout(gbl);
 
@@ -99,7 +99,7 @@ public class ExportDialog extends JFrame {
         // Zwei Labels und zwei Textfelder
         gbc = makegbc(0, 0, 1, 1);
         gbc.fill = GridBagConstraints.NONE;
-        JLabel label = new JLabel(getResourceString("ExportDialog.3")); //$NON-NLS-1$
+        var label = new JLabel(getResourceString("ExportDialog.3")); //$NON-NLS-1$
         gbl.setConstraints(label, gbc);
         getContentPane().add(label);
         // Textfeld
@@ -113,7 +113,7 @@ public class ExportDialog extends JFrame {
 
         gbc = makegbc(0, 1, 1, 1);
         gbc.fill = GridBagConstraints.NONE;
-        JLabel labeli = new JLabel(getResourceString("ExportDialog.4")); //$NON-NLS-1$
+        var labeli = new JLabel(getResourceString("ExportDialog.4")); //$NON-NLS-1$
         gbl.setConstraints(labeli, gbc);
         getContentPane().add(labeli);
         // Textfeld
@@ -126,7 +126,7 @@ public class ExportDialog extends JFrame {
         getContentPane().add(fieldTargetFileName);
 
         // XSL-Button
-        JButton xslbutton = new JButton(getResourceString("ExportDialog.5")); //$NON-NLS-1$
+        var xslbutton = new JButton(getResourceString("ExportDialog.5")); //$NON-NLS-1$
         gbc = makegbc(2, 0, 1, 1);
         gbc.fill = GridBagConstraints.NONE;
         // gbc.anchor = GridBagConstraints.SOUTHEAST;
@@ -135,7 +135,7 @@ public class ExportDialog extends JFrame {
                 fieldXsltFileName, xslbutton, xmlFile));
         getContentPane().add(xslbutton);
         // export-Button
-        JButton exportbutton = new JButton(getResourceString("ExportDialog.6")); //$NON-NLS-1$
+        var exportbutton = new JButton(getResourceString("ExportDialog.6")); //$NON-NLS-1$
         gbc = makegbc(2, 1, 1, 1);
         gbc.fill = GridBagConstraints.NONE;
         // gbc.anchor = GridBagConstraints.SOUTHEAST;
@@ -145,7 +145,7 @@ public class ExportDialog extends JFrame {
         getContentPane().add(exportbutton);
 
         // ok-Button
-        JButton button = new JButton(getResourceString("ExportDialog.7")); //$NON-NLS-1$
+        var button = new JButton(getResourceString("ExportDialog.7")); //$NON-NLS-1$
         gbc = makegbc(2, 2, 1, 1);
         gbc.fill = GridBagConstraints.NONE;
         // gbc.anchor = GridBagConstraints.SOUTHEAST;
@@ -154,7 +154,7 @@ public class ExportDialog extends JFrame {
         getContentPane().add(button);
 
         // cancel-Button
-        JButton cbutton = new JButton(getResourceString("ExportDialog.8")); //$NON-NLS-1$
+        var cbutton = new JButton(getResourceString("ExportDialog.8")); //$NON-NLS-1$
         gbc = makegbc(1, 2, 1, 1);
         gbc.anchor = GridBagConstraints.EAST;
         gbc.fill = GridBagConstraints.NONE;
@@ -168,7 +168,7 @@ public class ExportDialog extends JFrame {
     }
 
     private GridBagConstraints makegbc(int x, int y, int width, int height) {
-        GridBagConstraints gbc = new GridBagConstraints();
+        var gbc = new GridBagConstraints();
         gbc.gridx = x;
         gbc.gridy = y;
         gbc.gridwidth = width;

@@ -26,16 +26,16 @@ public class XmlExporter {
     }
 
     public void transForm(File xmlFile, File xsltFile, File resultFile) throws FileNotFoundException {
-        Source xmlSource = new StreamSource(xmlFile);
+        var xmlSource = new StreamSource(xmlFile);
         // System.out.println("set xsl");
-        Source xsltSource = new StreamSource(xsltFile);
+        var xsltSource = new StreamSource(xsltFile);
         // System.out.println("set result");
-        FileOutputStream resultOutputStream = new FileOutputStream(resultFile);
+        var resultOutputStream = new FileOutputStream(resultFile);
 
         // create an instance of TransformerFactory
         try (resultOutputStream) {
             try {
-                Result result = new StreamResult(resultOutputStream);
+                var result = new StreamResult(resultOutputStream);
                 // System.out.println("make transform instance");
                 TransformerFactory transFact = TransformerFactory.newInstance();
 

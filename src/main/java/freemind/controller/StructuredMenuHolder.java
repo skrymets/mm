@@ -38,7 +38,7 @@ public class StructuredMenuHolder {
     public StructuredMenuHolder() {
 
         menuMap = new HashMap<>();
-        List<String> order = new ArrayList<>();
+        var order = new ArrayList<String>();
         menuMap.put(ORDER_NAME, order);
         if (sSelectedIcon == null) {
             sSelectedIcon = freemind.view.ImageFactory.getInstance().createIcon(resources.getResource(
@@ -48,13 +48,13 @@ public class StructuredMenuHolder {
     }
 
     public JMenu addMenu(JMenu item, String category) {
-        StringTokenizer tokens = new StringTokenizer(category, "/");
+        var tokens = new StringTokenizer(category, "/");
         return (JMenu) addMenu(item, tokens);
     }
 
     public JMenuItem addMenuItem(JMenuItem item, String category) {
-        StringTokenizer tokens = new StringTokenizer(category, "/");
-        StructuredMenuItemHolder holder = new StructuredMenuItemHolder();
+        var tokens = new StringTokenizer(category, "/");
+        var holder = new StructuredMenuItemHolder();
         holder.setAction(item.getAction());
         holder.setMenuItem(item);
         adjustTooltips(holder);
@@ -67,15 +67,15 @@ public class StructuredMenuHolder {
      *             a check box is used.
      */
     public JMenuItem addAction(Action item, String category) {
-        StringTokenizer tokens = new StringTokenizer(category, "/");
-        StructuredMenuItemHolder holder = new StructuredMenuItemHolder();
+        var tokens = new StringTokenizer(category, "/");
+        var holder = new StructuredMenuItemHolder();
         holder.setAction(item);
         /*
          * Dimitry, Eric and Dan requested to have the check marks with the
          * original JCheckBoxMenuItem.
          */
         if (item instanceof MenuItemSelectedListener) {
-            JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem(item);
+            var checkBox = new JCheckBoxMenuItem(item);
             holder.setMenuItem(checkBox);
         } else {
             holder.setMenuItem(new JMenuItem(item));
@@ -103,7 +103,7 @@ public class StructuredMenuHolder {
     }
 
     public void addCategory(String category) {
-        StringTokenizer tokens = new StringTokenizer(category + "/blank", "/");
+        var tokens = new StringTokenizer(category + "/blank", "/");
         // with this call, the category is created.
         getCategoryMap(tokens, menuMap);
     }
@@ -114,7 +114,7 @@ public class StructuredMenuHolder {
             sep += "/";
         }
         sep += SEPARATOR_TEXT;
-        StringTokenizer tokens = new StringTokenizer(sep, "/");
+        var tokens = new StringTokenizer(sep, "/");
         // separators can occur as doubles.
         MapTokenPair categoryPair = getCategoryMap(tokens, menuMap);
         // add an separator
@@ -164,8 +164,8 @@ public class StructuredMenuHolder {
             String nextToken = tokens.nextToken();
             if (tokens.hasMoreTokens()) {
                 if (!thisMap.containsKey(nextToken)) {
-                    Map<Object, Object> newMap = new HashMap<>();
-                    List<Object> newOrder = new ArrayList<>();
+                    var newMap = new HashMap<Object, Object>();
+                    var newOrder = new ArrayList<Object>();
                     newMap.put(ORDER_NAME, newOrder);
                     thisMap.put(nextToken, newMap);
                 }
@@ -306,7 +306,7 @@ public class StructuredMenuHolder {
                 if (mMenuCounter > 0) {
                     label += " " + mMenuCounter;
                 }
-                JMenu jMenu = new JMenu(label);
+                var jMenu = new JMenu(label);
                 mBaseMenuItem.add(jMenu);
                 myMenuItem = jMenu;
                 mItemCounter = 0;
@@ -367,7 +367,7 @@ public class StructuredMenuHolder {
         // System.out.println(thisMap);
         // iterate through maps and do the changes:
         List<String> myVector = thisMap.get(ORDER_NAME);
-        for (String category : myVector) {
+        for (var category : myVector) {
             // The "." target was handled earlier.
             if (category.equals("."))
                 continue;
@@ -390,7 +390,7 @@ public class StructuredMenuHolder {
                 if (nextMap.containsKey(".")) {
                     // add this item to the current place:
                     JMenu baseObject = (JMenu) nextMap.get(".");
-                    StructuredMenuItemHolder holder = new StructuredMenuItemHolder();
+                    var holder = new StructuredMenuItemHolder();
                     holder.setMenuItem(baseObject);
                     menuAdder.addMenuItem(holder);
                     nextItem = factory.createAdder(baseObject);
@@ -442,7 +442,7 @@ public class StructuredMenuHolder {
 
         public void menuSelected(MenuEvent arg0) {
 //			System.out.println("Selected menu items " + arg0);
-            for (StructuredMenuItemHolder holder : menuItemHolder) {
+            for (var holder : menuItemHolder) {
                 Action action = holder.getAction();
                 boolean isEnabled = false;
                 JMenuItem menuItem = holder.getMenuItem();

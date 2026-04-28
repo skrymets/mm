@@ -38,7 +38,7 @@ public class DialogService {
         final JColorChooser pane = getCommonJColorChooser();
         pane.setColor(initialColor);
 
-        ColorTracker ok = new ColorTracker(pane);
+        var ok = new ColorTracker(pane);
         JDialog dialog = JColorChooser.createDialog(component, title, true, pane, ok, null);
         dialog.addWindowListener(new Closer());
         dialog.addComponentListener(new DisposeOnClose());

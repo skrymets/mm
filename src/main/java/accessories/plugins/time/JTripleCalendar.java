@@ -37,7 +37,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
         Calendar panelDate = (Calendar) mCurrentDate.clone();
         panelDate.add(Calendar.MONTH, -pCurrentMonthPosition);
         this.setName("JTripleCalendar");
-        GridBagLayout mGridLayout = new GridBagLayout();
+        var mGridLayout = new GridBagLayout();
         setLayout(mGridLayout);
         int monthIndex = 0;
         mIgnoreChangeEvent = true;
@@ -60,10 +60,10 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
                     monthIndex++;
                 }
                 if (column < AMOUNT_OF_COLUMNS - 1) {
-                    GridBagConstraints constraints = new GridBagConstraints(2 * column + 1, 0, 1, AMOUNT_OF_ROWS,
+                    var constraints = new GridBagConstraints(2 * column + 1, 0, 1, AMOUNT_OF_ROWS,
                             0, 0, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
                             new Insets(0, 0, 0, 10), 0, 0);
-                    JSeparator sep = new JSeparator();
+                    var sep = new JSeparator();
                     sep.setPreferredSize(new Dimension(5, 2));
                     sep.setOrientation(JSeparator.VERTICAL);
                     add(sep, constraints);
@@ -76,7 +76,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
     }
 
     protected GridBagConstraints getConstraints(int row, int column) {
-        GridBagConstraints constraints = new GridBagConstraints(2 * column,
+        var constraints = new GridBagConstraints(2 * column,
                 row, 1, 1, 1, 1, GridBagConstraints.CENTER,
                 GridBagConstraints.BOTH, new Insets(0, 0, 0, 10), 50, 10);
         return constraints;
@@ -134,7 +134,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
                         // no color selection
                         selectedColor = oldDayBackgroundColor;
                     }
-                    for (JButton jButton : days) {
+                    for (var jButton : days) {
                         if (jButton != null) {
                             jButton.setFocusable(pEnabled);
                         }
@@ -162,15 +162,15 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
     }
 
     private JSwitchableCalendar createInfoPanel() {
-        JSwitchableCalendar panel = new JSwitchableCalendar();
+        var panel = new JSwitchableCalendar();
         return panel;
     }
 
     public static void main(String[] args) {
         new FreeMindMainMock();
-        final JFrame frame = new JFrame("JTripleCalendar");
+        final var frame = new JFrame("JTripleCalendar");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        final JTripleCalendar jcalendar = new JTripleCalendar(4, null);
+        final var jcalendar = new JTripleCalendar(4, null);
         frame.getContentPane().add(jcalendar);
         frame.pack();
         // focus fix after startup.
@@ -203,7 +203,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
                     // on the calendar itself, there was probably only a different day clicked
                     setCalendarInternally(calendar);
                 } else {
-                    for (JSwitchableCalendar infoPanel : mInfoPanels.keySet()) {
+                    for (var infoPanel : mInfoPanels.keySet()) {
                         if (source == infoPanel) {
                             exchangeCalendars(infoPanel, calendar);
                             break;
@@ -243,7 +243,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
                 propagateDate(gregorianCalendar);
             } else {
                 // move to a different position on the screen:
-                for (JSwitchableCalendar infoPanel : mInfoPanels.keySet()) {
+                for (var infoPanel : mInfoPanels.keySet()) {
                     if (mInfoPanels.get(infoPanel) == newIndex) {
                         exchangeCalendars(infoPanel, gregorianCalendar);
                         break;
@@ -276,7 +276,7 @@ public class JTripleCalendar extends JPanel implements PropertyChangeListener {
     }
 
     public void propagateDate(Calendar gregorianCalendar) {
-        for (JSwitchableCalendar infoPanel : mInfoPanels.keySet()) {
+        for (var infoPanel : mInfoPanels.keySet()) {
             Integer monthDistance = mInfoPanels.get(infoPanel);
             Calendar tmpCalendar = (Calendar) gregorianCalendar.clone();
             tmpCalendar.add(Calendar.MONTH, -mCurrentMonthPosition + monthDistance);

@@ -46,7 +46,7 @@ public class FlatNodeTableFilterModel extends AbstractTableModel {
     }
 
     private void updateIndexArray() {
-        ArrayList<Integer> newIndexArray = new ArrayList<>();
+        var newIndexArray = new ArrayList<Integer>();
         for (int i = 0; i < mTableModel.getRowCount(); i++) {
             NodeHolder nodeContent = (NodeHolder) mTableModel.getValueAt(i, mNodeTextColumn);
             if (mPattern.matcher(nodeContent.toString()).matches()) {

@@ -28,7 +28,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
         private JLabel mImageJLabel = null;
 
         public void progress(final int act, String messageId, Object[] pMessageParameters) {
-            MessageFormat formatter = new MessageFormat(
+            var formatter = new MessageFormat(
                     frame.getResourceString(messageId));
             final String progressString = formatter.format(pMessageParameters);
             log.trace(progressString);
@@ -101,7 +101,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
         // lamentablemente since 1.5: setAlwaysOnTop(true);
 
         final ImageIcon splashImage = imageFactory.createIcon(frame.getResource(FREEMIND_SPLASH));
-        JLabel splashImageLabel = new JLabel(splashImage) {
+        var splashImageLabel = new JLabel(splashImage) {
             private Integer mWidth = null;
             private final Font progressFont = new Font("SansSerif", Font.PLAIN, 10);
             private final Font versionTextFont = SwingUtils.isAvailableFontFamily("Century Gothic") ? new Font("Century Gothic", Font.BOLD, 14) : new Font("Arial", Font.BOLD, 12);

@@ -30,7 +30,7 @@ public class ConditionNotSatisfiedDecorator implements Condition {
     }
 
     public JComponent getListCellRendererComponent() {
-        JCondition component = new JCondition();
+        var component = new JCondition();
         final String not = SwingUtils.removeMnemonic(ConditionFactory.getResources()
                 .getResourceString("filter_not"));
         String text = not + ' ';

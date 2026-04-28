@@ -54,19 +54,19 @@ public class NewParentNode extends MindMapNodeHookAdapter {
         if (focussed.isRoot()) {
             if (selecteds.size() == 1) {
                 // only root is selected. we try to create a new root:
-                List<MindMapNode> children = new ArrayList<>(rootNode.getChildren());
+                var children = new ArrayList<MindMapNode>(rootNode.getChildren());
                 // copy only root.
                 Transferable rootContent = getMindMapController().copySingle();
                 // and paste it directly again.
                 getMindMapController().paste(rootContent, rootNode);
-                List<MindMapNode> childrenNew = new ArrayList<>(rootNode.getChildren());
+                var childrenNew = new ArrayList<MindMapNode>(rootNode.getChildren());
                 /*
                  * look for the new node as the difference between former
                  * children and new children.
                  */
                 MindMapNode rootCopy = null;
                 boolean found = false;
-                for (MindMapNode mindMapNode : childrenNew) {
+                for (var mindMapNode : childrenNew) {
                     rootCopy = mindMapNode;
                     if (!children.contains(rootCopy)) {
                         found = true;
@@ -122,7 +122,7 @@ public class NewParentNode extends MindMapNodeHookAdapter {
         // (this restriction is to simplify the action, and could
         // possibly be removed in the future, when we have undo)
         // Also make sure that none of the selected nodes are the root node
-        for (MindMapNode node : nodesToBeMoved) {
+        for (var node : nodesToBeMoved) {
             if (node.getParentNode() != selectedParent) {
                 getMindMapController().getController().errorMessage(
                         getResourceString("cannot_add_parent_diff_parents"));

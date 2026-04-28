@@ -71,9 +71,9 @@ public class ClickableImageCreator {
     }
 
     public String generateHtml() {
-        StringBuilder htmlArea = new StringBuilder();
-        for (AreaHolder holder : area) {
-            MessageFormat formatter = new MessageFormat(linkFormatter);
+        var htmlArea = new StringBuilder();
+        for (var holder : area) {
+            var formatter = new MessageFormat(linkFormatter);
             String replacement = formatter.format(new Object[]{holder.href, holder.link});
             if (replacement.isEmpty()) {
                 continue;
@@ -105,7 +105,7 @@ public class ClickableImageCreator {
         }
         final NodeView nodeView = mapView.getViewerRegistryService().getNodeView(node);
         if (nodeView != null) {
-            AreaHolder holder = new AreaHolder();
+            var holder = new AreaHolder();
             holder.title = node.getShortText();
             holder.alt = node.getShortText();
             holder.href = modeController.getNodeID(node);

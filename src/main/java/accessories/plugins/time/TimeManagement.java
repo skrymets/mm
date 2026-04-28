@@ -60,8 +60,8 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
 
         public void actionPerformed(ActionEvent actionEvent) {
             MindMapNode lastElement = null;
-            List<MindMapNode> sel = new ArrayList<>();
-            for (MindMapNode element : getMindMapController().getSelecteds()) {
+            var sel = new ArrayList<MindMapNode>();
+            for (var element : getMindMapController().getSelecteds()) {
                 element = mFactory.getNode(element);
                 DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
                 String dateAsString = df.format(getCalendarDate());
@@ -121,7 +121,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
         }
 
         public void actionPerformed(ActionEvent e) {
-            for (MindMapNode node : getMindMapController().getSelecteds()) {
+            for (var node : getMindMapController().getSelecteds()) {
                 ReminderHookBase alreadyPresentHook = TimeManagementOrganizer
                         .getHook(node);
                 if (alreadyPresentHook != null) {
@@ -165,7 +165,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
             String xml = getMindMapController().getResources().getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
             XmlBindingTools bind = XmlBindingTools.getInstance();
             CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
-            CalendarMarkingDialog dialog = new CalendarMarkingDialog(getMindMapController());
+            var dialog = new CalendarMarkingDialog(getMindMapController());
             dialog.setDates(cal);
             dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
             dialog.setVisible(true);
@@ -189,7 +189,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
             String xml = getMindMapController().getResources().getProperty(FreeMindCommon.TIME_MANAGEMENT_MARKING_XML);
             XmlBindingTools bind = XmlBindingTools.getInstance();
             CalendarMarkings result = (CalendarMarkings) bind.unMarshall(xml);
-            CalendarMarkingEvaluator ev = new CalendarMarkingEvaluator(result);
+            var ev = new CalendarMarkingEvaluator(result);
             CalendarMarking marking = ev.isMarked(cal);
             if (marking != null) {
                 for (int i = 0; i < result.sizeCalendarMarkingList(); i++) {
@@ -248,11 +248,11 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                 disposeDialog();
             }
         });
-        Action closeAction = new CloseAction();
+        var closeAction = new CloseAction();
         SwingUtils.addEscapeActionToDialog(mDialog, closeAction);
         /* Menu **/
-        StructuredMenuHolder menuHolder = new StructuredMenuHolder();
-        JMenuBar menu = new JMenuBar();
+        var menuHolder = new StructuredMenuHolder();
+        var menu = new JMenuBar();
         menuHolder.addMenu(new JMenu(getMindMapController().getText(
                 "TimeManagement.Actions")), "main/actions/.");
         addAccelerator(menuHolder.addAction(new AppendDateAction(),
@@ -293,7 +293,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
         calendar = new JTripleCalendar(lastActivePosition, lastDate);
         Container contentPane = mDialog.getContentPane();
         contentPane.setLayout(new GridBagLayout());
-        GridBagConstraints gb1 = new GridBagConstraints();
+        var gb1 = new GridBagConstraints();
         gb1.gridx = 0;
         gb1.gridwidth = 4;
         gb1.fill = GridBagConstraints.BOTH;
@@ -303,7 +303,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
         calendar.getDayChooser().addPropertyChangeListener(this);
         contentPane.add(calendar, gb1);
         {
-            GridBagConstraints gb2 = new GridBagConstraints();
+            var gb2 = new GridBagConstraints();
             gb2.gridx = 0;
             gb2.gridy = 1;
             gb2.gridwidth = 4;
@@ -331,7 +331,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
             timePanel = new JPanel();
             timePanel.setLayout(new GridBagLayout());
             {
-                GridBagConstraints gb2 = new GridBagConstraints();
+                var gb2 = new GridBagConstraints();
                 gb2.gridx = 0;
                 gb2.gridy = 0;
                 gb2.fill = GridBagConstraints.HORIZONTAL;
@@ -340,7 +340,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                         gb2);
             }
             {
-                GridBagConstraints gb2 = new GridBagConstraints();
+                var gb2 = new GridBagConstraints();
                 gb2.gridx = 1;
                 gb2.gridy = 0;
                 gb2.fill = GridBagConstraints.HORIZONTAL;
@@ -349,7 +349,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                 timePanel.add(hourField, gb2);
             }
             {
-                GridBagConstraints gb2 = new GridBagConstraints();
+                var gb2 = new GridBagConstraints();
                 gb2.gridx = 2;
                 gb2.gridy = 0;
                 gb2.fill = GridBagConstraints.HORIZONTAL;
@@ -359,7 +359,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
                                 gb2);
             }
             {
-                GridBagConstraints gb2 = new GridBagConstraints();
+                var gb2 = new GridBagConstraints();
                 gb2.gridx = 3;
                 gb2.gridy = 0;
                 gb2.fill = GridBagConstraints.HORIZONTAL;
@@ -387,13 +387,13 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
         Date date = getCalendarDate();
         // add permanent node hook to the nodes and this hook checks
         // permanently.
-        for (MindMapNode node : getMindMapController().getSelecteds()) {
+        for (var node : getMindMapController().getSelecteds()) {
             ReminderHookBase alreadyPresentHook = TimeManagementOrganizer.getHook(node);
             if (alreadyPresentHook != null) {
                 // already present:
                 Object[] messageArguments = {
                         new Date(alreadyPresentHook.getRemindUserAt()), date};
-                MessageFormat formatter = new MessageFormat(
+                var formatter = new MessageFormat(
                         getMindMapController()
                                 .getText(
                                         "plugins/TimeManagement.xml_reminderNode_onlyOneDate"));
@@ -423,7 +423,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
 
     private void addHook(MindMapNode node, long pRemindAt) {
         // add the hook:
-        Properties properties = new Properties();
+        var properties = new Properties();
         if (pRemindAt != 0L) {
             properties.put(ReminderHookBase.REMINDUSERAT,
                     Long.toString(pRemindAt));
@@ -434,7 +434,7 @@ public class TimeManagement extends MindMapHookAdapter implements PropertyChange
     }
 
     private void disposeDialog() {
-        WindowConfigurationStorage storage = new WindowConfigurationStorage();
+        var storage = new WindowConfigurationStorage();
         getMindMapController().storeDialogPositions(mDialog, storage,
                 WINDOW_PREFERENCE_STORAGE_PROPERTY);
         mDialog.setVisible(false);

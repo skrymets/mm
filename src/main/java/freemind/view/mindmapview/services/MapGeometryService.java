@@ -20,7 +20,7 @@ public class MapGeometryService {
     }
 
     public Point getNodeContentLocation(NodeView nodeView) {
-        Point contentXY = new Point(0, 0);
+        var contentXY = new Point(0, 0);
         PointUtils.convertPointToAncestor(nodeView.getContent(), contentXY, mapView);
         return contentXY;
     }
@@ -33,7 +33,7 @@ public class MapGeometryService {
     }
 
     public Point getViewPosition() {
-        Point viewPosition = new Point(0, 0);
+        var viewPosition = new Point(0, 0);
         if (mapView.getParent() instanceof JViewport mapViewport) {
             viewPosition = mapViewport.getViewPosition();
         }
@@ -44,8 +44,8 @@ public class MapGeometryService {
         final Rectangle innerBounds = mapView.getRoot().getInnerBounds();
         innerBounds.x += mapView.getRoot().getX();
         innerBounds.y += mapView.getRoot().getY();
-        final Rectangle maxBounds = new Rectangle(0, 0, mapView.getWidth(), mapView.getHeight());
-        for (ArrowLinkView arrowView : arrowLinkViews) {
+        final var maxBounds = new Rectangle(0, 0, mapView.getWidth(), mapView.getHeight());
+        for (var arrowView : arrowLinkViews) {
             final CubicCurve2D arrowLinkCurve = arrowView.arrowLinkCurve;
             if (arrowLinkCurve == null) {
                 continue;

@@ -23,15 +23,15 @@ public class PropertyAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent arg0) {
-        JDialog dialog = new JDialog(controller.getFrame().getJFrame(), true /* modal */);
+        var dialog = new JDialog(controller.getFrame().getJFrame(), true /* modal */);
         dialog.setResizable(true);
         dialog.setUndecorated(false);
-        final OptionPanel options = new OptionPanel((FreeMind) controller.getFrame(),
+        final var options = new OptionPanel((FreeMind) controller.getFrame(),
                 dialog, props -> {
-            List<String> sortedKeys = new ArrayList<>(props.stringPropertyNames());
+            var sortedKeys = new ArrayList<String>(props.stringPropertyNames());
             Collections.sort(sortedKeys);
             boolean propertiesChanged = false;
-            for (String key : sortedKeys) {
+            for (var key : sortedKeys) {
                 // save only changed keys:
                 String newProperty = props.getProperty(key);
                 propertiesChanged = propertiesChanged
@@ -58,7 +58,7 @@ public class PropertyAction extends AbstractAction {
                 options.closeWindow();
             }
         });
-        Action action = new AbstractAction() {
+        var action = new AbstractAction() {
 
             public void actionPerformed(ActionEvent arg0) {
                 options.closeWindow();

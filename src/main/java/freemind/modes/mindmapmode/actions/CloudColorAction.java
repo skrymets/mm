@@ -29,7 +29,7 @@ public class CloudColorAction extends MindmapAction implements MenuItemEnabledLi
         if (color == null) {
             return;
         }
-        for (MindMapNode selected : controller.getSelecteds()) {
+        for (var selected : controller.getSelecteds()) {
             controller.setCloudColor(selected, color);
         }
     }

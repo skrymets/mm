@@ -56,7 +56,7 @@ class BubbleMainView extends MainView {
     }
 
     Point getLeftPoint() {
-        Point in = new Point(0, getHeight() / 2);
+        var in = new Point(0, getHeight() / 2);
         return in;
     }
 

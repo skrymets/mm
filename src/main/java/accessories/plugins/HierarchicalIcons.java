@@ -42,13 +42,13 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
         // precondition: all children are contained in nodeIconSets
 
         // gather all icons of my children and of me here:
-        TreeSet<String> iconSet = new TreeSet<>();
+        var iconSet = new TreeSet<String>();
         for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
             MindMapNode child = i.next();
             addAccumulatedIconsToTreeSet(child, iconSet, nodeIconSets.get(child));
         }
         // remove my icons from the treeset:
-        for (NodeIcon icon : node.getIcons()) {
+        for (var icon : node.getIcons()) {
             iconSet.remove(icon.getName());
         }
         boolean dirty = true;
@@ -64,8 +64,8 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
         if (dirty) {
             if (!iconSet.isEmpty()) {
                 // create multiple image:
-                MultipleImage image = new MultipleImage(0.75f);
-                for (String iconName : iconSet) {
+                var image = new MultipleImage(0.75f);
+                for (var iconName : iconSet) {
                     // log.info("Adding icon "+iconName + " to node "+
                     // node.toString());
                     MindIcon icon = MindIcon.factory(iconName);
@@ -82,7 +82,7 @@ public class HierarchicalIcons extends PermanentMindMapNodeHookAdapter implement
 
     private void addAccumulatedIconsToTreeSet(MindMapNode child,
                                               TreeSet<String> iconSet, TreeSet<String> childsTreeSet) {
-        for (NodeIcon icon : child.getIcons()) {
+        for (var icon : child.getIcons()) {
             iconSet.add(icon.getName());
         }
         if (childsTreeSet == null)

@@ -61,7 +61,7 @@ public class JOptionalSplitPane extends JPanel {
                 } else {
                     remove(mBasicComponent);
                     // TODO: Make configurable.
-                    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+                    var splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
                     mBasicComponent = splitPane;
                     splitPane.setLeftComponent(mComponentHash.get(0));
                     splitPane.setRightComponent(mComponentHash.get(1));
@@ -125,9 +125,9 @@ public class JOptionalSplitPane extends JPanel {
 
     public static void main(String[] args) {
         new FreeMindMainMock();
-        final JFrame frame = new JFrame("JOptionalSplitPane");
+        final var frame = new JFrame("JOptionalSplitPane");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        final JOptionalSplitPane panel = new JOptionalSplitPane();
+        final var panel = new JOptionalSplitPane();
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new GridLayout(5, 1));
         frame.pack();

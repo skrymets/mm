@@ -111,9 +111,9 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
                             .split(ModeController.NODESEPARATOR);
                     // and now? paste it:
                     // make a 0.8.0 map out of it:
-                    StringBuilder mapContent = new StringBuilder(MapAdapter.MAP_INITIAL_START
+                    var mapContent = new StringBuilder(MapAdapter.MAP_INITIAL_START
                             + "0.8.0\"><node TEXT=\"DUMMY\">");
-                    for (String nodeContent : childs) {
+                    for (var nodeContent : childs) {
                         mapContent.append(nodeContent);
                     }
                     mapContent.append("</node></map>");
@@ -292,7 +292,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
             throws IOException {
         setStoringEncryptedContent(true);
         try {
-            StringWriter sWriter = new StringWriter();
+            var sWriter = new StringWriter();
             getMindMapMapModel().getXml(sWriter, true, this);
             String childXml = sWriter.toString();
             encryptedContent = encryptXml(childXml);
@@ -305,7 +305,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
         try {
             // Create encrypter/decrypter class
             // FIXME: Use char[] instead of toString.
-            SingleDesEncrypter encrypter = new SingleDesEncrypter(password);
+            var encrypter = new SingleDesEncrypter(password);
 
             // Encrypt
             String encrypted = encrypter.encrypt(childXml);
@@ -320,7 +320,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
      * @return null if the password is wrong.
      */
     private String decryptXml(String encryptedString, StringBuilder pwd) {
-        SingleDesEncrypter encrypter = new SingleDesEncrypter(pwd);
+        var encrypter = new SingleDesEncrypter(pwd);
 
         // // Decrypt
         String decrypted = encrypter.decrypt(encryptedString);

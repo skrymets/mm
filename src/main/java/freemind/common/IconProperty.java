@@ -39,7 +39,7 @@ public class IconProperty extends PropertyBean implements PropertyControl, Actio
     }
 
     public void setValue(String value) {
-        for (MindIcon icon : mIcons) {
+        for (var icon : mIcons) {
             if (icon.getName().equals(value)) {
                 mActualIcon = icon;
                 setIcon(mActualIcon);
@@ -62,13 +62,13 @@ public class IconProperty extends PropertyBean implements PropertyControl, Actio
     }
 
     public void actionPerformed(ActionEvent arg0) {
-        List<IconInformation> icons = new ArrayList<>();
-        List<String> descriptions = new ArrayList<>();
-        for (MindIcon icon : mIcons) {
+        var icons = new ArrayList<IconInformation>();
+        var descriptions = new ArrayList<String>();
+        for (var icon : mIcons) {
             icons.add(icon);
             descriptions.add(icon.getDescription());
         }
-        IconSelectionPopupDialog dialog = new IconSelectionPopupDialog(mFreeMindMain.getJFrame(), icons, mFreeMindMain);
+        var dialog = new IconSelectionPopupDialog(mFreeMindMain.getJFrame(), icons, mFreeMindMain);
         dialog.setLocationRelativeTo(mFreeMindMain.getJFrame());
         dialog.setModal(true);
         dialog.setVisible(true);

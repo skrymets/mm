@@ -33,7 +33,7 @@ public class ClipboardService {
      * Creates a transferable copy of the given node.
      */
     public Transferable copy(MindMapNode node, boolean saveInvisible) {
-        StringWriter stringWriter = new StringWriter();
+        var stringWriter = new StringWriter();
         try {
             Document doc = FreeMindXml.newDocument();
             node.save(stringWriter, doc, mapFeedback.getMap().getLinkRegistry(), saveInvisible, true);

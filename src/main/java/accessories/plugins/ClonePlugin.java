@@ -82,7 +82,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
 
     public void save(Document doc, Element xml) {
         super.save(doc, xml);
-        HashMap<String, Object> values = new HashMap<>();
+        var values = new HashMap<String, Object>();
         values.put(XML_STORAGE_CLONES, getCloneIdsAsString());
         values.put(XML_STORAGE_CLONE_ID, mCloneId);
         String cloneItselfValue = getCloneItselfValue();
@@ -99,8 +99,8 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
     }
 
     public String getCloneIdsAsString() {
-        StringBuilder cloneIds = new StringBuilder();
-        for (String cloneId : mCloneNodeIds) {
+        var cloneIds = new StringBuilder();
+        for (var cloneId : mCloneNodeIds) {
             cloneIds.append(cloneId);
             cloneIds.append(",");
         }
@@ -114,7 +114,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
         HashMap<String, String> values = loadNameValuePairs(child);
         String cloneIds = values.get(XML_STORAGE_CLONES);
         if (cloneIds != null) {
-            StringTokenizer st = new StringTokenizer(cloneIds, ",");
+            var st = new StringTokenizer(cloneIds, ",");
             while (st.hasMoreTokens()) {
                 String cloneId = st.nextToken();
                 mCloneNodeIds.add(cloneId);
@@ -148,7 +148,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
         HashSet<MindMapNode> cloneNodes = getCloneNodes();
         log.trace("Invoke shadow class with orig: {} and clones {}", printNodeId(originalNode), printNodeIds(cloneNodes));
         // check for error case that clones are descendant of one another.
-        for (MindMapNode cloneNode : cloneNodes) {
+        for (var cloneNode : cloneNodes) {
             if (originalNode != null && originalNode.isDescendantOf(cloneNode)) {
                 disablePlugin();
                 return;
@@ -190,8 +190,8 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
 
     public void onCreateNodeHook(MindMapNode node) {
         HashSet<MindMapNode> cloneNodes = getCloneNodes();
-        for (MindMapNode clone : cloneNodes) {
-            for (MindMapNode clone2 : cloneNodes) {
+        for (var clone : cloneNodes) {
+            for (var clone2 : cloneNodes) {
                 if (clone != clone2) {
                     checkForChainError(clone, node, clone2);
                 }
@@ -208,7 +208,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
     HashSet<MindMapNode> getCloneNodes() {
         // is list up to date?
         if (mCloneNodes != null) {
-            for (MindMapNode cloneNode : mCloneNodes) {
+            for (var cloneNode : mCloneNodes) {
                 if (cloneNode.getParentNode() == null) {
                     clearCloneCache();
                 }
@@ -241,8 +241,8 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
     }
 
     private String printNodeIds(Collection<MindMapNode> pTargets) {
-        List<String> strings = new ArrayList<>();
-        for (MindMapNode node : pTargets) {
+        var strings = new ArrayList<String>();
+        for (var node : pTargets) {
             strings.add(printNodeId(node));
         }
         return "" + strings;
@@ -274,7 +274,7 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
         if (originalNode == null) {
             return null;
         }
-        for (PermanentNodeHook hook : originalNode.getActivatedHooks()) {
+        for (var hook : originalNode.getActivatedHooks()) {
             if (hook instanceof ClonePlugin cloneHook) {
                 return cloneHook;
             }
@@ -288,14 +288,14 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements Node
             return;
         HashSet<MindMapNode> cloneNodes = getCloneNodes();
         // activate other clones, if not already activated.
-        for (MindMapNode cloneNode : cloneNodes) {
+        for (var cloneNode : cloneNodes) {
             ClonePlugin hook = getHook(cloneNode);
             if (hook == null && cloneNode != null) {
                 // add hook to clone partner:
                 List<MindMapNode> selecteds = Collections.singletonList(cloneNode);
                 // Transport the data to the plugin, as this method calls
                 // invoke.
-                Properties hookProperties = new Properties();
+                var hookProperties = new Properties();
                 hookProperties.setProperty(XML_STORAGE_CLONE_ID, mCloneId);
                 hookProperties.setProperty(XML_STORAGE_CLONES,
                         getCloneIdsAsString());

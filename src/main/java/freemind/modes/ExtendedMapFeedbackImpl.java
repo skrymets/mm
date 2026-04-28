@@ -39,7 +39,7 @@ public final class ExtendedMapFeedbackImpl extends ExtendedMapFeedbackAdapter {
 
     @Override
     public Transferable copy(MindMapNode pNode, boolean pSaveInvisible) {
-        StringWriter stringWriter = new StringWriter();
+        var stringWriter = new StringWriter();
         try {
             Document doc = FreeMindXml.newDocument();
             pNode.save(stringWriter, doc, getMap()

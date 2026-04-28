@@ -43,7 +43,7 @@ public class UnderlineActor extends NodeXmlActorAdapter {
 
     private UnderlinedNodeAction toggleUnderlined(MindMapNode selected,
                                                   boolean underlined) {
-        UnderlinedNodeAction underlinedAction = new UnderlinedNodeAction();
+        var underlinedAction = new UnderlinedNodeAction();
         underlinedAction.setNode(getNodeID(selected));
         underlinedAction.setUnderlined(underlined);
         return underlinedAction;

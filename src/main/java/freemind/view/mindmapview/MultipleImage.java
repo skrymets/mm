@@ -36,11 +36,11 @@ public class MultipleImage extends ImageIcon {
         if (w == 0 || h == 0) {
             return null;
         }
-        BufferedImage outImage = new BufferedImage(w, h,
+        var outImage = new BufferedImage(w, h,
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = outImage.createGraphics();
 
-        for (ImageIcon currentIcon : mImages) {
+        for (var currentIcon : mImages) {
             // py = /* center: */ ( myHeight -
             // (int)(currentIcon.getIconHeight()* zoomFactor)) /2;
             // int pheight = (int) (currentIcon.getIconHeight() * zoomFactor);
@@ -91,7 +91,7 @@ public class MultipleImage extends ImageIcon {
 
     public int getIconWidth() {
         int myX = 0;
-        for (ImageIcon mImage : mImages) {
+        for (var mImage : mImages) {
             myX += mImage.getIconWidth();
         }
         // System.out.println("width: "+myX);
@@ -100,7 +100,7 @@ public class MultipleImage extends ImageIcon {
 
     public int getIconHeight() {
         int myY = 0;
-        for (ImageIcon mImage : mImages) {
+        for (var mImage : mImages) {
             int otherHeight = mImage.getIconHeight();
             if (otherHeight > myY)
                 myY = otherHeight;

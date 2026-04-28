@@ -43,11 +43,11 @@ public class SortNodes extends MindMapNodeHookAdapter {
     public void invoke(MindMapNode node) {
         // we want to sort the children of the node:
         // put in all children of the node
-        List<MindMapNode> sortVector = new ArrayList<>(node.getChildren());
-        NodeTextComparator comparator = new NodeTextComparator();
+        var sortVector = new ArrayList<MindMapNode>(node.getChildren());
+        var comparator = new NodeTextComparator();
         MindMapNode last = null;
         boolean isOrdered = true;
-        for (MindMapNode listNode : sortVector) {
+        for (var listNode : sortVector) {
             if (last != null) {
                 if (comparator.compare(listNode, last) < 0) {
                     isOrdered = false;
@@ -61,7 +61,7 @@ public class SortNodes extends MindMapNodeHookAdapter {
         }
         sortVector.sort(comparator);
         // now, as it is sorted. we cut the children
-        for (MindMapNode child : sortVector) {
+        for (var child : sortVector) {
             List<MindMapNode> childList = Collections.singletonList(child);
             Transferable cut = getMindMapController().cut(childList);
             // paste directly again causes that the node is added as the last

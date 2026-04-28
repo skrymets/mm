@@ -296,7 +296,7 @@ public class NodeNoteRegistration implements HookRegistration,
         // moved to registration:
         noteViewerComponent = getNoteViewerComponent();
         // register "leave note" action:
-        Action jumpToMapAction = new JumpToMapAction();
+        var jumpToMapAction = new JumpToMapAction();
         String keystroke = controller
                 .getFrame()
                 .getAdjustableProperty(
@@ -330,7 +330,7 @@ public class NodeNoteRegistration implements HookRegistration,
     }
 
     public void showNotesPanel() {
-        SouthPanel southPanel = new SouthPanel();
+        var southPanel = new SouthPanel();
         southPanel.add(noteViewerComponent, BorderLayout.CENTER);
         noteViewerComponent.setVisible(true);
         if ("true".equals(controller.getProperty(

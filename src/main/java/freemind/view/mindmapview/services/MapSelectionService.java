@@ -52,7 +52,7 @@ public class MapSelectionService {
         mapView.getScrollService().scrollNodeToVisible(newSelected);
         newSelected.repaintSelected();
 
-        for (NodeView oldSelected : oldSelecteds) {
+        for (var oldSelected : oldSelecteds) {
             if (oldSelected != null) {
                 oldSelected.repaintSelected();
             }
@@ -98,7 +98,7 @@ public class MapSelectionService {
         } else if (!isSelected(newlySelectedNodeView) && newlySelectedNodeView.isContentVisible()) {
             toggleSelected(newlySelectedNodeView);
         }
-        for (NodeView target : newlySelectedNodeView.getChildrenViews()) {
+        for (var target : newlySelectedNodeView.getChildrenViews()) {
             selectBranch(target, true);
         }
     }
@@ -106,7 +106,7 @@ public class MapSelectionService {
     public boolean selectContinuous(NodeView newSelected) {
         NodeView oldSelected = null;
         LinkedList<NodeView> selList = getSelecteds();
-        for (NodeView selectedNode : selList) {
+        for (var selectedNode : selList) {
             if (selectedNode != newSelected && newSelected.isSiblingOf(selectedNode)) {
                 oldSelected = selectedNode;
                 break;
@@ -196,7 +196,7 @@ public class MapSelectionService {
     }
 
     public LinkedList<NodeView> getSelecteds() {
-        LinkedList<NodeView> result = new LinkedList<>();
+        var result = new LinkedList<NodeView>();
         for (int i = 0; i < selected.size(); i++) {
             result.add(getSelected(i));
         }
@@ -204,13 +204,13 @@ public class MapSelectionService {
     }
 
     public ArrayList<MindMapNode> getSelectedNodesSortedByY() {
-        final HashSet<MindMapNode> selectedNodesSet = new HashSet<>();
+        final var selectedNodesSet = new HashSet<MindMapNode>();
         for (int i = 0; i < selected.size(); i++) {
             selectedNodesSet.add(getSelected(i).getModel());
         }
-        LinkedList<Pair<Integer, MindMapNode>> pointNodePairs = new LinkedList<>();
+        var pointNodePairs = new LinkedList<Pair<Integer, MindMapNode>>();
 
-        Point point = new Point();
+        var point = new Point();
         iteration:
         for (int i = 0; i < selected.size(); i++) {
             final NodeView view = getSelected(i);
@@ -230,15 +230,15 @@ public class MapSelectionService {
             return int0.compareTo(int1);
         });
 
-        ArrayList<MindMapNode> selectedNodes = new ArrayList<>();
-        for (Pair<Integer, MindMapNode> pointNodePair : pointNodePairs) {
+        var selectedNodes = new ArrayList<MindMapNode>();
+        for (var pointNodePair : pointNodePairs) {
             selectedNodes.add(pointNodePair.second());
         }
         return selectedNodes;
     }
 
     public ArrayList<MindMapNode> getSingleSelectedNodes() {
-        ArrayList<MindMapNode> selectedNodes = new ArrayList<>(selected.size());
+        var selectedNodes = new ArrayList<MindMapNode>(selected.size());
         for (int i = selected.size() - 1; i >= 0; i--) {
             selectedNodes.add(getSelected(i).getModel().shallowCopy());
         }
@@ -265,14 +265,14 @@ public class MapSelectionService {
         }
         selectedsValid = true;
         log.trace("validateSelecteds");
-        ArrayList<NodeView> selectedNodes = new ArrayList<>();
-        for (NodeView nodeView : getSelecteds()) {
+        var selectedNodes = new ArrayList<NodeView>();
+        for (var nodeView : getSelecteds()) {
             if (nodeView != null) {
                 selectedNodes.add(nodeView);
             }
         }
         selected.clear();
-        for (NodeView oldNodeView : selectedNodes) {
+        for (var oldNodeView : selectedNodes) {
             if (oldNodeView.isContentVisible()) {
                 NodeView newNodeView = mapView.getViewerRegistryService().getNodeView(oldNodeView.getModel());
                 if (newNodeView != null) {
@@ -291,8 +291,8 @@ public class MapSelectionService {
                 removeFocusForHooks(get(0));
             }
             mySelected.clear();
-            List<NodeView> selectedCopy = new ArrayList<>(mySelected);
-            for (NodeView view : selectedCopy) {
+            var selectedCopy = new ArrayList<NodeView>(mySelected);
+            for (var view : selectedCopy) {
                 changeSelection(view, false);
             }
             log.trace("Cleared selected.");

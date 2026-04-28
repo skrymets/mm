@@ -57,8 +57,8 @@ public class HtmlTools {
         }
 
         log.trace("Enter toXhtml with {}", htmlText);
-        StringReader reader = new StringReader(htmlText);
-        StringWriter writer = new StringWriter();
+        var reader = new StringReader(htmlText);
+        var writer = new StringWriter();
         try {
             XHTMLWriter.html2xhtml(reader, writer);
             String resultXml = writer.toString();
@@ -127,11 +127,11 @@ public class HtmlTools {
      */
     public String getReplaceResult(Pattern pattern, String replacement,
                                    String text) {
-        ArrayList<IndexPair> splittedStringList = new ArrayList<>();
+        var splittedStringList = new ArrayList<IndexPair>();
 
         // remove tags and denote their positions:
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             Matcher matcher = FIND_TAGS_PATTERN.matcher(text);
             int lastMatchEnd = 0;
             while (matcher.find()) {
@@ -164,7 +164,7 @@ public class HtmlTools {
             matcher.appendTail(sb);
             // append tail only if there is a tail
             if (sb.length() != replStart) {
-                IndexPair indexPair = new IndexPair(lastMatchEnd,
+                var indexPair = new IndexPair(lastMatchEnd,
                         text.length(), replStart, sb.length(), false);
                 // System.out.println(sb.toString() + ", " + indexPair);
                 splittedStringList.add(indexPair);
@@ -184,8 +184,8 @@ public class HtmlTools {
           For each pair that is not a tag we find concurrences and replace
           them, if a pair is a tag then we just append
          */
-        StringBuilder sbResult = new StringBuilder();
-        for (IndexPair pair : splittedStringList) {
+        var sbResult = new StringBuilder();
+        for (var pair : splittedStringList) {
             if (pair.mIsTag)
                 append(sbResult, text, pair.originalStart, pair.originalEnd);
             else {
@@ -234,7 +234,7 @@ public class HtmlTools {
     }
 
     public int getMinimalOriginalPosition(int pI, ArrayList<IndexPair> pListOfIndices) {
-        for (IndexPair pair : pListOfIndices) {
+        for (var pair : pListOfIndices) {
 
             if (pI >= pair.replacedStart && pI <= pair.replacedEnd) {
                 return pair.originalStart + pI - pair.replacedStart;
@@ -274,7 +274,7 @@ public class HtmlTools {
      */
     public static String unicodeToHTMLUnicodeEntity(String text, boolean pPreserveNewlines) {
         // Heuristic reserve for expansion : factor 1.2
-        StringBuilder result = new StringBuilder((int) (text.length() * 1.2));
+        var result = new StringBuilder((int) (text.length() * 1.2));
         int intValue;
         char myChar;
         for (int i = 0; i < text.length(); ++i) {
@@ -307,8 +307,8 @@ public class HtmlTools {
      * @return the converted output.
      */
     public static String unescapeHTMLUnicodeEntity(String text) {
-        StringBuilder result = new StringBuilder(text.length());
-        StringBuilder entity = new StringBuilder();
+        var result = new StringBuilder(text.length());
+        var entity = new StringBuilder();
         boolean readingEntity = false;
         char myChar;
         char entityChar;
@@ -439,7 +439,7 @@ public class HtmlTools {
         // as
         // tab
         // width.
-        StringBuilder result = new StringBuilder(textTabsExpanded.length()); // Heuristic
+        var result = new StringBuilder(textTabsExpanded.length()); // Heuristic
         int lengthMinus1 = textTabsExpanded.length() - 1;
         result.append("<html><body><p>");
         for (int i = 0; i < textTabsExpanded.length(); ++i) {
@@ -483,7 +483,7 @@ public class HtmlTools {
         text = text.replaceAll("\t", "         "); // Use eight spaces as tab
         // width.
         int len = text.length();
-        StringBuilder result = new StringBuilder(len);
+        var result = new StringBuilder(len);
         char myChar;
         for (int i = 0; i < len; ++i) {
             myChar = text.charAt(i);
@@ -593,8 +593,8 @@ public class HtmlTools {
      * of <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">...</a>.
      */
     public static String removeInvalidXmlCharacters(String text) {
-        StringBuilder result = new StringBuilder(text.length());
-        StringBuilder entity = new StringBuilder();
+        var result = new StringBuilder(text.length());
+        var entity = new StringBuilder();
         boolean readingEntity = false;
         char myChar;
         char entityChar;
@@ -671,7 +671,7 @@ public class HtmlTools {
      *
      */
     public static String replaceSpacesToNonbreakableSpaces(String input) {
-        StringBuilder result = new StringBuilder(input.length());
+        var result = new StringBuilder(input.length());
         boolean readingSpaces = false;
         char myChar;
         for (int i = 0; i < input.length(); ++i) {

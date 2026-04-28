@@ -71,7 +71,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
             boolean isEventPointVisible = mapView.getVisibleRect().contains(
                     mapPoint);
             if (!isEventPointVisible) {
-                Rectangle r = new Rectangle(mapPoint);
+                var r = new Rectangle(mapPoint);
                 Rectangle bounds = mapView.getBounds();
                 mapView.scrollRectToVisible(r);
                 Rectangle bounds2 = mapView.getBounds();

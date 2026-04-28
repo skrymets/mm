@@ -81,7 +81,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
         }
 
         public boolean accept(File pDir, String pName) {
-            File file = new File(pDir, pName);
+            var file = new File(pDir, pName);
             return mPrincipalFilter.accept(file) && mCustomFilter.accept(file);
         }
 
@@ -196,7 +196,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
 
     public static void main(String[] args) throws IOException {
 
-        FreeMindAwtFileDialog dialog = new FreeMindAwtFileDialog();
+        var dialog = new FreeMindAwtFileDialog();
         dialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dialog.showOpenDialog(null);
         File selectedFile = dialog.getSelectedFile();
@@ -205,7 +205,7 @@ public class FreeMindAwtFileDialog extends FileDialog implements FreeMindFileDia
         dialog.showSaveDialog(null);
         selectedFile = dialog.getSelectedFile();
         log.info("Dir '{}', File: '{}', selected File: '{}'", dialog.getDirectory(), dialog.getFile(), selectedFile);
-        StreamResult streamResult = new StreamResult(new FileOutputStream(selectedFile));
+        var streamResult = new StreamResult(new FileOutputStream(selectedFile));
         streamResult.getOutputStream().write("bla".getBytes());
         streamResult.getOutputStream().close();
         log.info("File exists: {}", selectedFile.exists());

@@ -45,7 +45,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
      * @return the corresponding action.
      */
     private XmlAction getAction(MindMapNode pNode) {
-        ChangeRootNodeAction action = new ChangeRootNodeAction();
+        var action = new ChangeRootNodeAction();
         action.setNode(getMindMapController().getNodeID(pNode));
         return action;
     }
@@ -91,7 +91,7 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
                 // change the root node:
                 mMap.changeRoot(focussed);
                 // remove all viewers:
-                List<MindMapNode> nodes = new ArrayList<>();
+                var nodes = new ArrayList<MindMapNode>();
                 nodes.add(focussed);
                 MapView view = controller.getView();
                 while (!nodes.isEmpty()) {
@@ -99,8 +99,8 @@ public class ChangeRootNode extends MindMapNodeHookAdapter {
                     log.trace("Removing viewers for {}", child);
                     nodes.remove(0);
                     nodes.addAll(child.getChildren());
-                    Collection<NodeView> viewers = new ArrayList<>(view.getViewerRegistryService().getViewers(child));
-                    for (NodeView viewer : viewers) {
+                    var viewers = new ArrayList<NodeView>(view.getViewerRegistryService().getViewers(child));
+                    for (var viewer : viewers) {
                         view.getViewerRegistryService().removeViewer(child, viewer);
                     }
                 }

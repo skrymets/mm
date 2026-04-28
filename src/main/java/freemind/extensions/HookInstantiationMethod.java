@@ -30,7 +30,7 @@ public class HookInstantiationMethod {
 
     private static class RootDestinationNodesGetter implements DestinationNodesGetter {
         public Collection<MindMapNode> getDestinationNodes(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
-            List<MindMapNode> returnValue = new ArrayList<>();
+            var returnValue = new ArrayList<MindMapNode>();
             returnValue.add(controller.getMap().getRootNode());
             return returnValue;
         }
@@ -51,7 +51,7 @@ public class HookInstantiationMethod {
         }
 
         public Collection<MindMapNode> getDestinationNodes(ModeFeedback controller, MindMapNode focussed, List<MindMapNode> selecteds) {
-            List<MindMapNode> returnValue = new ArrayList<>();
+            var returnValue = new ArrayList<MindMapNode>();
             addChilds(controller.getMap().getRootNode(), returnValue);
             return returnValue;
         }
@@ -110,7 +110,7 @@ public class HookInstantiationMethod {
             false, false, new RootDestinationNodesGetter(), false);
 
     static public HashMap<String, HookInstantiationMethod> getAllInstanciationMethods() {
-        HashMap<String, HookInstantiationMethod> res = new HashMap<>();
+        var res = new HashMap<String, HookInstantiationMethod>();
         res.put("Once", Once);
         res.put("OnceForRoot", OnceForRoot);
         res.put("OnceForAllNodes", OnceForAllNodes);
@@ -125,7 +125,7 @@ public class HookInstantiationMethod {
     }
 
     public boolean isAlreadyPresent(String hookName, MindMapNode focussed) {
-        for (PermanentNodeHook hook : focussed.getActivatedHooks()) {
+        for (var hook : focussed.getActivatedHooks()) {
             if (hookName.equals(hook.getName())) {
                 return true;
             }

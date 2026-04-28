@@ -44,7 +44,7 @@ public class RemoveAttributeActor extends XmlActorAdapter {
 
     public RemoveAttributeAction getRemoveAttributeAction(MindMapNode pSelected,
                                                           int pPosition) {
-        RemoveAttributeAction removeAttributeAction = new RemoveAttributeAction();
+        var removeAttributeAction = new RemoveAttributeAction();
         removeAttributeAction.setNode(getNodeID(pSelected));
         removeAttributeAction.setPosition(pPosition);
         return removeAttributeAction;

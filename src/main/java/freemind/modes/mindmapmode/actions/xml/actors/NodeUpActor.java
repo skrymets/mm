@@ -34,8 +34,8 @@ public class NodeUpActor extends XmlActorAdapter {
             MindMapNode parent = selected.getParentNode();
             // multiple move:
             List<MindMapNode> sortedChildren = getSortedSiblings(parent);
-            TreeSet<Integer> range = new TreeSet<>(comparator);
-            for (MindMapNode node : selecteds) {
+            var range = new TreeSet<Integer>(comparator);
+            for (var node : selecteds) {
                 if (node.getParent() != parent) {
                     log.warn("Not all selected nodes (here: {}) have the same parent {}.", node.getText(), parent.getText());
                     return;
@@ -44,14 +44,14 @@ public class NodeUpActor extends XmlActorAdapter {
             }
             // test range for adjacent nodes:
             Integer last = range.iterator().next();
-            for (Integer newInt : range) {
+            for (var newInt : range) {
                 if (Math.abs(newInt.intValue() - last.intValue()) > 1) {
                     log.warn("Not adjacent nodes. Skipped. ");
                     return;
                 }
                 last = newInt;
             }
-            for (Integer position : range) {
+            for (var position : range) {
                 // from above:
                 MindMapNode node = sortedChildren.get(position.intValue());
                 moveNodeTo(node, parent, direction);
@@ -91,7 +91,7 @@ public class NodeUpActor extends XmlActorAdapter {
      * Sorts nodes by their left/right status. The left are first.
      */
     private List<MindMapNode> getSortedSiblings(MindMapNode node) {
-        List<MindMapNode> nodes = new ArrayList<>();
+        var nodes = new ArrayList<MindMapNode>();
         for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
             nodes.add(i.next());
         }
@@ -108,8 +108,8 @@ public class NodeUpActor extends XmlActorAdapter {
         if (action instanceof MoveNodesAction moveAction) {
             MindMapNode selected = getNodeFromID(moveAction
                     .getNode());
-            List<MindMapNode> selecteds = new ArrayList<>();
-            for (NodeListMember node : moveAction.getNodeListMemberList()) {
+            var selecteds = new ArrayList<MindMapNode>();
+            for (var node : moveAction.getNodeListMemberList()) {
                 selecteds.add(getNodeFromID(node.getNode()));
             }
             _moveNodes(selected, selecteds, moveAction.getDirection());
@@ -122,13 +122,13 @@ public class NodeUpActor extends XmlActorAdapter {
 
     private MoveNodesAction createMoveNodesAction(MindMapNode selected,
                                                   List<MindMapNode> selecteds, int direction) {
-        MoveNodesAction moveAction = new MoveNodesAction();
+        var moveAction = new MoveNodesAction();
         moveAction.setDirection(direction);
         moveAction.setNode(getNodeID(selected));
         // selectedNodes list
-        for (MindMapNode node : selecteds) {
+        for (var node : selecteds) {
 
-            NodeListMember nodeListMember = new NodeListMember();
+            var nodeListMember = new NodeListMember();
             nodeListMember.setNode(getNodeID(node));
             moveAction.addNodeListMember(nodeListMember);
         }

@@ -42,8 +42,8 @@ public class Plugin
     void afterUnmarshal(jakarta.xml.bind.Unmarshaller u, Object parent) {
         if (xmlElements != null && !xmlElements.isEmpty()) {
             choiceList = new ArrayList<>();
-            for (Object obj : xmlElements) {
-                Choice choice = new Choice();
+            for (var obj : xmlElements) {
+                var choice = new Choice();
                 if (obj instanceof PluginClasspath pc) {
                     choice.setPluginClasspath(pc);
                 } else if (obj instanceof PluginRegistration pr) {
@@ -61,7 +61,7 @@ public class Plugin
     boolean beforeMarshal(jakarta.xml.bind.Marshaller m) {
         if (choiceList != null && !choiceList.isEmpty()) {
             xmlElements = new ArrayList<>();
-            for (Choice c : choiceList) {
+            for (var c : choiceList) {
                 if (c.ifPluginClasspath()) xmlElements.add(c.getPluginClasspath());
                 else if (c.ifPluginRegistration()) xmlElements.add(c.getPluginRegistration());
                 else if (c.ifPluginAction()) xmlElements.add(c.getPluginAction());

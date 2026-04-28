@@ -57,7 +57,7 @@ public class NodeInformationTimerAction implements ActionListener {
         }
         double sum = 0d;
         Pattern p = Pattern.compile(MindMapController.REGEXP_FOR_NUMBERS_IN_STRINGS);
-        for (MindMapNode selectedNode : selecteds) {
+        for (var selectedNode : selecteds) {
             if (mIsInterrupted) {
                 return;
             }
@@ -76,7 +76,7 @@ public class NodeInformationTimerAction implements ActionListener {
         } else {
             MindMapNode sel = selecteds.get(0);
             long amountOfChildren = 0;
-            List<MindMapNode> allDescendants = new ArrayList<>(Collections.singletonList(sel));
+            var allDescendants = new ArrayList<MindMapNode>(Collections.singletonList(sel));
             while (!allDescendants.isEmpty()) {
                 if (mIsInterrupted) {
                     return;

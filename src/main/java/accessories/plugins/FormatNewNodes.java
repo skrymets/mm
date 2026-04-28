@@ -52,7 +52,7 @@ public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistra
 
             List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compAction);
 
-            for (XmlAction childAction : xmlActions) {
+            for (var childAction : xmlActions) {
                 detectFormatChanges(childAction);
             }
         } else if (doAction instanceof FormatNodeAction) {
@@ -71,19 +71,19 @@ public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistra
         if (pair.getDoAction() instanceof NewNodeAction newNodeAction) {
             // add to a compound the newNodeAction and the other formats we
             // have:
-            CompoundAction compound = new CompoundAction();
-            CompoundAction.Choice choice = new CompoundAction.Choice();
+            var compound = new CompoundAction();
+            var choice = new CompoundAction.Choice();
             choice.setNewNodeAction(newNodeAction);
             compound.addChoice(choice);
 
-            for (XmlAction formatAction : formatActions.values()) {
+            for (var formatAction : formatActions.values()) {
                 // deep copy:
                 NodeAction copiedFormatAction = (NodeAction) Tools.deepCopy(formatAction);
                 copiedFormatAction.setNode(newNodeAction.getNewId());
                 CompoundAction.Choice copiedFormatActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(copiedFormatAction);
                 compound.addChoice(copiedFormatActionChoice);
             }
-            ActionPair newPair = new ActionPair(compound, pair.getUndoAction());
+            var newPair = new ActionPair(compound, pair.getUndoAction());
             return newPair;
         }
         return pair;

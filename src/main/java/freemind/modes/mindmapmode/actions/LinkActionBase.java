@@ -16,7 +16,7 @@ public abstract class LinkActionBase extends MindmapAction {
         if (!super.isEnabled(pItem, pAction)) {
             return false;
         }
-        for (MindMapNode selNode : getMindMapController().getSelecteds()) {
+        for (var selNode : getMindMapController().getSelecteds()) {
             if (selNode.getLink() != null) {
                 return true;
             }

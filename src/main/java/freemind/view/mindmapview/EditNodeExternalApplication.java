@@ -42,7 +42,7 @@ public class EditNodeExternalApplication extends EditNodeBase {
                 // b. Call the editor
                 String htmlEditingCommand = getFrame().getProperty(
                         "html_editing_command");
-                String expandedHtmlEditingCommand = new MessageFormat(
+                var expandedHtmlEditingCommand = new MessageFormat(
                         htmlEditingCommand)
                         .format(new String[]{temporaryFile.toString()});
                 // System.out.println("External application:"+expandedHtmlEditingCommand);

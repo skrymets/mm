@@ -18,7 +18,7 @@ public class AddAttributeActor extends XmlActorAdapter {
     public void act(XmlAction action) {
         if (action instanceof AddAttributeAction addAttributeAction) {
             NodeAdapter node = getNodeFromID(addAttributeAction.getNode());
-            Attribute newAttribute = new Attribute(
+            var newAttribute = new Attribute(
                     addAttributeAction.getName(), addAttributeAction.getValue());
             node.addAttribute(newAttribute);
             getExMapFeedback().nodeChanged(node);
@@ -39,7 +39,7 @@ public class AddAttributeActor extends XmlActorAdapter {
 
     public AddAttributeAction getAddAttributeAction(MindMapNode pSelected,
                                                     Attribute pAttribute) {
-        AddAttributeAction addAttributeAction = new AddAttributeAction();
+        var addAttributeAction = new AddAttributeAction();
         addAttributeAction.setNode(getNodeID(pSelected));
         addAttributeAction.setName(pAttribute.getName());
         addAttributeAction.setValue(pAttribute.getValue());

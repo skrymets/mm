@@ -42,7 +42,7 @@ public class EditNodeDialog extends EditNodeBase {
             // textArea.setTabSize(4);
             // wrap around words rather than characters
 
-            final JScrollPane editorScrollPane = new JScrollPane(textArea);
+            final var editorScrollPane = new JScrollPane(textArea);
             editorScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
             int preferredHeight = getNode().getHeight();
@@ -57,13 +57,13 @@ public class EditNodeDialog extends EditNodeBase {
                     preferredHeight));
             // textArea.setPreferredSize(new Dimension(500, 160));
 
-            final JPanel panel = new JPanel();
+            final var panel = new JPanel();
 
             // String performedAction;
-            final JButton okButton = new JButton();
-            final JButton cancelButton = new JButton();
-            final JButton splitButton = new JButton();
-            final JCheckBox enterConfirms = new JCheckBox("",
+            final var okButton = new JButton();
+            final var cancelButton = new JButton();
+            final var splitButton = new JButton();
+            final var enterConfirms = new JCheckBox("",
                     binOptionIsTrue("el__enter_confirms_by_default"));
 
             SwingUtils.setLabelAndMnemonic(okButton, getText("ok"));
@@ -140,7 +140,7 @@ public class EditNodeDialog extends EditNodeBase {
 
                 private void conditionallyShowPopup(MouseEvent e) {
                     if (e.isPopupTrigger()) {
-                        JPopupMenu popupMenu = new EditPopupMenu(textArea);
+                        var popupMenu = new EditPopupMenu(textArea);
                         if (checkSpelling) {
                             popupMenu.add(SpellChecker.createCheckerMenu());
                             popupMenu.add(SpellChecker.createLanguagesMenu());
@@ -164,7 +164,7 @@ public class EditNodeDialog extends EditNodeBase {
             // panel.setPreferredSize(new Dimension(500, 160));
             // editorScrollPane.setPreferredSize(new Dimension(500, 160));
 
-            JPanel buttonPane = new JPanel();
+            var buttonPane = new JPanel();
             buttonPane.add(enterConfirms);
             buttonPane.add(okButton);
             buttonPane.add(cancelButton);
@@ -228,7 +228,7 @@ public class EditNodeDialog extends EditNodeBase {
     }
 
     public void show() {
-        final EditDialog dialog = new LongNodeDialog();
+        final var dialog = new LongNodeDialog();
         dialog.pack(); // calculate the size
 
         // set position

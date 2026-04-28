@@ -133,7 +133,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
     }
 
     private void setFontColorByItem(ColorPair pItem) {
-        for (MindMapNode node : mindMapController.getSelecteds()) {
+        for (var node : mindMapController.getSelecteds()) {
             mindMapController.setNodeColor(node, pItem.color);
         }
     }
@@ -167,7 +167,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
         add(new JToolBar.Separator());
         Icon icon = ImageFactory.getInstance().createIconWithSvgFallback(
                 mindMapController.getResources().getResource(iconPath));
-        JLabel label = new JLabel(icon);
+        var label = new JLabel(icon);
         label.setText(" ");
         add(label);
         return label;
@@ -243,7 +243,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
             }
         }
         // new color. add it to the combo box:
-        ColorPair pair = new ColorPair(pColor, "user" + userDefinedCounter,
+        var pair = new ColorPair(pColor, "user" + userDefinedCounter,
                 mindMapController.getResources().format(
                         "mindmapmode_toolbar_font_color_user_defined",
                         new Object[]{userDefinedCounter}));

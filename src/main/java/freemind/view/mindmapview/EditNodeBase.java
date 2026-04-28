@@ -85,7 +85,7 @@ public class EditNodeBase {
                     /*modal = */ true);
             getContentPane().setLayout(new BorderLayout());
             setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-            DialogWindowListener dfl = new DialogWindowListener();
+            var dfl = new DialogWindowListener();
             addWindowListener(dfl);
             this.base = base;
         }
@@ -198,7 +198,7 @@ public class EditNodeBase {
         private static final long serialVersionUID = -6667980271052571216L;
 
         public EditPopupMenu(JTextComponent textComponent) {
-            EditCopyAction editCopyAction = new EditCopyAction(textComponent);
+            var editCopyAction = new EditCopyAction(textComponent);
             String selectedText = textComponent.getSelectedText();
             if (selectedText == null || selectedText.isEmpty()) {
                 editCopyAction.setEnabled(false);
@@ -239,7 +239,7 @@ public class EditNodeBase {
             public void focusGained(FocusEvent e) {
                 e.getComponent().removeFocusListener(this);
                 currentKeyboardFocusManager.removeKeyEventDispatcher(this);
-                for (final KeyEvent ke : events) {
+                for (final var ke : events) {
                     ke.setSource(textComponent);
                     textComponent.dispatchEvent(ke);
                 }
@@ -248,7 +248,7 @@ public class EditNodeBase {
             public void focusLost(FocusEvent e) {
             }
         }
-        final KeyEventQueue keyEventDispatcher = new KeyEventQueue();
+        final var keyEventDispatcher = new KeyEventQueue();
         currentKeyboardFocusManager.addKeyEventDispatcher(keyEventDispatcher);
         textComponent.addFocusListener(keyEventDispatcher);
         if (firstKeyEvent == null) {

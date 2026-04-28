@@ -32,7 +32,7 @@ public class JoinNodesAction extends MindmapAction {
         String newContent = "";
         // Make sure the selected node do not have children
         final MapView mapView = controller.getView();
-        for (MindMapNode node : selectedNodes) {
+        for (var node : selectedNodes) {
             if (node.hasChildren()) {
                 JOptionPane.showMessageDialog(mapView,
                         controller.getText("cannot_join_nodes_with_children"),
@@ -43,7 +43,7 @@ public class JoinNodesAction extends MindmapAction {
 
         // Join
         boolean isHtml = false;
-        for (MindMapNode node : selectedNodes) {
+        for (var node : selectedNodes) {
             final String nodeContent = node.toString();
             final boolean isHtmlNode = HtmlTools.isHtmlNode(nodeContent);
             newContent = addContent(newContent, isHtml, nodeContent, isHtmlNode);

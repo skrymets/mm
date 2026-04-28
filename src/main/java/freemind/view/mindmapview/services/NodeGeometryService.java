@@ -41,7 +41,7 @@ public class NodeGeometryService {
             inList.addLast(new Point(additionalDistanceForConvexHull + x + width, -additionalDistanceForConvexHull + y));
         }
 
-        for (NodeView child : nodeView.getChildrenViews()) {
+        for (var child : nodeView.getChildrenViews()) {
             new NodeGeometryService(child).getCoordinates(inList, additionalDistanceForConvexHull, true, transX + child.getX(), transY + child.getY());
         }
     }

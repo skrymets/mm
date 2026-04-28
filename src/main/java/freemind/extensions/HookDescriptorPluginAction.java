@@ -35,7 +35,7 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
 
         List<Object> pluginActions = JIBXGeneratedUtil.listPluginActions(pluginAction);
 
-        for (Object obj : pluginActions) {
+        for (var obj : pluginActions) {
             if (obj instanceof PluginMenu menu) {
                 menuPositions.add(menu.getLocation());
             }
@@ -55,7 +55,7 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
     public HookInstantiationMethod getInstantiationMethod() {
         if (pluginAction.getInstanciation() != null) {
             HashMap<String, HookInstantiationMethod> allInstMethods = HookInstantiationMethod.getAllInstanciationMethods();
-            for (String name : allInstMethods.keySet()) {
+            for (var name : allInstMethods.keySet()) {
                 if (pluginAction.getInstanciation().xmlValue().equalsIgnoreCase(name)) {
                     return allInstMethods.get(name);
                 }

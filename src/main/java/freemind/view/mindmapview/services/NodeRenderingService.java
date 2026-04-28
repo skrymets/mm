@@ -22,7 +22,7 @@ public class NodeRenderingService {
                 continue;
             }
             if (childView.isContentVisible()) {
-                Point p = new Point();
+                var p = new Point();
                 PointUtils.convertPointToAncestor(childView, p, nodeView);
                 g.translate(p.x, p.y);
                 paintCloud(g, childView);
@@ -42,7 +42,7 @@ public class NodeRenderingService {
 
     private void paintCloud(Graphics g, NodeView view) {
         if (view.isContentVisible() && view.getModel().getCloud() != null) {
-            CloudView cloud = new CloudView(view.getModel().getCloud(), view);
+            var cloud = new CloudView(view.getModel().getCloud(), view);
             cloud.paint(g);
         }
     }

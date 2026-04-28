@@ -165,7 +165,7 @@ public class ArrowLinkView {
         // suggestion of daniel to have arrows that are not so wide open. fc,
         // 7.12.2003.
         double width = .5f;
-        Polygon p = new Polygon();
+        var p = new Polygon();
         p.addPoint(p1.x, p1.y);
         p.addPoint((int) (p1.x + dxn + width * dyn), (int) (p1.y + dyn - width
                 * dxn));
@@ -189,7 +189,7 @@ public class ArrowLinkView {
             return false;
         Rectangle2D rec = getControlPoint(p);
         // flatten the curve and test for intersection (bug fix, fc, 16.1.2004).
-        FlatteningPathIterator pi = new FlatteningPathIterator(
+        var pi = new FlatteningPathIterator(
                 arrowLinkCurve.getPathIterator(null),
                 (double) MAXIMAL_RECTANGLE_SIZE_FOR_COLLISION_DETECTION / 4, 10/*
          * =maximal

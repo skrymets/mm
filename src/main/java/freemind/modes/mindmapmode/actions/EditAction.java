@@ -110,7 +110,7 @@ public class EditAction extends MindmapAction {
             text = HtmlTools.plainToHTML(text);
         }
         if (editInternalWysiwyg) {
-            EditNodeWYSIWYG editNodeWYSIWYG = new EditNodeWYSIWYG(node, text,
+            var editNodeWYSIWYG = new EditNodeWYSIWYG(node, text,
                     firstEvent, mMindMapController,
                     new EditControl() {
                         public void cancel() {
@@ -137,7 +137,7 @@ public class EditAction extends MindmapAction {
         }
 
         if (editExternal) {
-            EditNodeExternalApplication editNodeExternalApplication = new EditNodeExternalApplication(
+            var editNodeExternalApplication = new EditNodeExternalApplication(
                     node, text, firstEvent, mMindMapController,
                     new EditControl() {
                         public void cancel() {
@@ -165,7 +165,7 @@ public class EditAction extends MindmapAction {
         }
 
         if (isLongNode || editLong) {
-            EditNodeDialog nodeEditDialog = new EditNodeDialog(node, text,
+            var nodeEditDialog = new EditNodeDialog(node, text,
                     firstEvent, mMindMapController,
                     new EditControl() {
 
@@ -192,7 +192,7 @@ public class EditAction extends MindmapAction {
             return;
         }
         // inline editing:
-        EditNodeTextField textfield = new EditNodeTextField(node, text,
+        var textfield = new EditNodeTextField(node, text,
                 firstEvent, mMindMapController, new EditControl() {
 
             public void cancel() {
@@ -200,7 +200,7 @@ public class EditAction extends MindmapAction {
                     // to the parent
                     mMindMapController.getView()
                             .getSelectionService().selectAsTheOnlyOneSelected(node);
-                    List<MindMapNode> nodeList = new ArrayList<>();
+                    var nodeList = new ArrayList<MindMapNode>();
                     nodeList.add(node.getModel());
                     mMindMapController.cut(nodeList);
                     mMindMapController.select(prevSelected);

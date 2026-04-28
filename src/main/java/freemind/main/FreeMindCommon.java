@@ -68,7 +68,7 @@ public class FreeMindCommon {
                 return null;
             }
 
-            PropertyResourceBundle bundle = new PropertyResourceBundle(in);
+            var bundle = new PropertyResourceBundle(in);
             in.close();
             return bundle;
         }
@@ -230,7 +230,7 @@ public class FreeMindCommon {
                 baseDir = classPath.substring(firstpos, lastpos);
             } else
                 baseDir = "";
-            final File basePath = new File(baseDir);
+            final var basePath = new File(baseDir);
             baseDir = basePath.getAbsolutePath();
             log.info("First basedir is: {}", baseDir);
             /*

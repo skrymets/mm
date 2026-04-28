@@ -31,7 +31,7 @@ public class NewChildActor extends XmlActorAdapter {
         }
         getExMapFeedback().insertNodeInto(newNode, parent, index);
         // call hooks:
-        for (PermanentNodeHook hook : parent.getActivatedHooks()) {
+        for (var hook : parent.getActivatedHooks()) {
             hook.onNewChild(newNode);
         }
         // done.
@@ -62,7 +62,7 @@ public class NewChildActor extends XmlActorAdapter {
     public NewNodeAction getAddNodeAction(MindMapNode parent, int index,
                                           String newId, boolean newNodeIsLeft) {
         String pos = newNodeIsLeft ? "left" : "right";
-        NewNodeAction newNodeAction = new NewNodeAction();
+        var newNodeAction = new NewNodeAction();
         newNodeAction.setNode(getNodeID(parent));
         newNodeAction.setPosition(pos);
         newNodeAction.setIndex(index);

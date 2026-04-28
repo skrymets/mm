@@ -13,7 +13,7 @@ public class FollowLinkAction extends LinkActionBase {
     }
 
     public void actionPerformed(ActionEvent e) {
-        for (MindMapNode selNode : getMindMapController().getSelecteds()) {
+        for (var selNode : getMindMapController().getSelecteds()) {
             if (selNode.getLink() != null) {
                 getMindMapController().loadURL(selNode.getLink());
             }

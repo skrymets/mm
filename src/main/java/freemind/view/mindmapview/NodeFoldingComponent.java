@@ -110,7 +110,7 @@ public class NodeFoldingComponent extends JButton {
 
         /* Is called by a button class automatically.*/
         protected void installListeners(AbstractButton b) {
-            BasicButtonListener listener = new BasicButtonListener(b) {
+            var listener = new BasicButtonListener(b) {
 
                 public void mousePressed(MouseEvent e) {
                     AbstractButton b = (AbstractButton) e.getSource();

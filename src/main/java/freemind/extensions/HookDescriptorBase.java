@@ -66,9 +66,9 @@ public class HookDescriptorBase {
     }
 
     public List<PluginClasspath> getPluginClasspath() {
-        List<PluginClasspath> returnValue = new ArrayList<>();
+        var returnValue = new ArrayList<PluginClasspath>();
         List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(pluginBase);
-        for (Object obj : pluginChoice) {
+        for (var obj : pluginChoice) {
             if (obj instanceof PluginClasspath pluginClasspath) {
                 returnValue.add(pluginClasspath);
             }
@@ -89,8 +89,8 @@ public class HookDescriptorBase {
      * This string is used to identify known classloaders as they are cached.
      */
     private String createPluginClasspathString(List<PluginClasspath> pluginClasspathList) {
-        StringBuilder result = new StringBuilder();
-        for (PluginClasspath type : pluginClasspathList) {
+        var result = new StringBuilder();
+        for (var type : pluginClasspathList) {
             result.append(type.getJar()).append(",");
         }
         return result.toString();
@@ -103,7 +103,7 @@ public class HookDescriptorBase {
         try {
             URL[] urls = new URL[pluginClasspathList.size()];
             int j = 0;
-            for (PluginClasspath classPath : pluginClasspathList) {
+            for (var classPath : pluginClasspathList) {
                 String jarString = classPath.getJar();
                 // if(jarString.startsWith(FREEMIND_BASE_DIR_STRING)){
                 // jarString = frame.getFreemindBaseDir() +
@@ -112,7 +112,7 @@ public class HookDescriptorBase {
                 // new version of classpath resolution suggested by ewl under
                 // patch [ 1154510 ] Be able to give absolute classpath entries
                 // in plugin.xml
-                File file = new File(jarString);
+                var file = new File(jarString);
                 if (!file.isAbsolute()) {
                     file = new File(getPluginDirectory(), jarString);
                 }
@@ -120,7 +120,7 @@ public class HookDescriptorBase {
                 log.info("file {} exists = {}", Tools.fileToUrl(file), file.exists());
                 urls[j++] = Tools.fileToUrl(file);
             }
-            ClassLoader loader = new URLClassLoader(urls,
+            var loader = new URLClassLoader(urls,
                     resources.getFreeMindClassLoader());
             classLoaderCache.put(key, loader);
             return loader;

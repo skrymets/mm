@@ -146,7 +146,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             }
         });
         Container contentPane = mDialog.getContentPane();
-        GridBagLayout gbl = new GridBagLayout();
+        var gbl = new GridBagLayout();
         gbl.columnWeights = new double[]{1.0f};
         gbl.rowWeights = new double[]{1.0f};
         contentPane.setLayout(gbl);
@@ -215,7 +215,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                 TableSorter.COMPARABLE_COMAPRATOR);
         // Sort by default by date.
         mSorter.setSortingStatus(DATE_COLUMN, TableSorter.ASCENDING);
-        JScrollPane pane = new JScrollPane(mTimeTable);
+        var pane = new JScrollPane(mTimeTable);
         contentPane.add(pane, new GridBagConstraints(0, 4, 1, 1, 1.0, 10.0,
                 GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,
                 0, 0, 0), 0, 0));
@@ -229,51 +229,51 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                 7, 1, 2, 1.0, 4.0, GridBagConstraints.WEST,
                 GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         // button bar
-        AbstractAction selectAction = new AbstractAction(
+        var selectAction = new AbstractAction(
                 getResourceString("plugins/TimeManagement.xml_Select")) {
             public void actionPerformed(ActionEvent arg0) {
                 selectSelectedRows();
             }
         };
-        AbstractAction exportAction = new AbstractAction(
+        var exportAction = new AbstractAction(
                 getResourceString("plugins/TimeManagement.xml_Export")) {
             public void actionPerformed(ActionEvent arg0) {
                 exportSelectedRowsAndClose();
             }
         };
-        AbstractAction replaceAllAction = new AbstractAction(
+        var replaceAllAction = new AbstractAction(
                 getResourceString("plugins/TimeManagement.xml_Replace_All")) {
             public void actionPerformed(ActionEvent arg0) {
                 replace(new ReplaceAllInfo());
             }
         };
-        AbstractAction replaceSelectedAction = new AbstractAction(
+        var replaceSelectedAction = new AbstractAction(
                 getResourceString("plugins/TimeManagement.xml_Replace_Selected")) {
             public void actionPerformed(ActionEvent arg0) {
                 replace(new ReplaceSelectedInfo());
             }
         };
-        AbstractAction gotoAction = new AbstractAction(
+        var gotoAction = new AbstractAction(
                 getResourceString("plugins/TimeManagement.xml_Goto")) {
             public void actionPerformed(ActionEvent arg0) {
                 selectSelectedRows();
                 disposeDialog();
             }
         };
-        AbstractAction disposeAction = new AbstractAction(
+        var disposeAction = new AbstractAction(
                 getResourceString("plugins/TimeManagement.xml_Cancel")) {
             public void actionPerformed(ActionEvent arg0) {
                 disposeDialog();
             }
         };
 
-        AbstractAction toggleViewFoldedNodesAction = new ToggleViewFoldedNodesAction(
+        var toggleViewFoldedNodesAction = new ToggleViewFoldedNodesAction(
                 getResourceString("plugins/TimeManagement.xml_ToggleViewFoldedNodesAction"));
 
         /* Menu **/
-        StructuredMenuHolder menuHolder = new StructuredMenuHolder();
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu(
+        var menuHolder = new StructuredMenuHolder();
+        var menuBar = new JMenuBar();
+        var menu = new JMenu(
                 getResourceString("plugins/TimeManagement.xml_menu_actions"));
         menuHolder.addMenu(menu, "main/actions/.");
         final JMenuItem selectMenuItem = addAccelerator(
@@ -297,7 +297,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         addAccelerator(
                 menuHolder.addAction(disposeAction, "main/actions/dispose"),
                 "keystroke_plugins/TimeList_dispose");
-        JMenu viewMenu = new JMenu(
+        var viewMenu = new JMenu(
                 getResourceString("plugins/TimeManagement.xml_menu_view"));
         menuHolder.addMenu(viewMenu, "main/view/.");
         addAccelerator(menuHolder.addAction(toggleViewFoldedNodesAction,
@@ -368,7 +368,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             toggleViewFoldedNodes();
         }
         int column = 0;
-        for (TimeWindowColumnSetting setting : timeStorage.getTimeWindowColumnSettingList()) {
+        for (var setting : timeStorage.getTimeWindowColumnSettingList()) {
             mTimeTable.getColumnModel().getColumn(column)
                     .setPreferredWidth(setting.getColumnWidth());
             mSorter.setSortingStatus(column, setting.getColumnSorting());
@@ -392,7 +392,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
     protected void exportSelectedRowsAndClose() {
         int[] selectedRows = mTimeTable.getSelectedRows();
-        List<MindMapNode> selectedNodes = new ArrayList<>();
+        var selectedNodes = new ArrayList<MindMapNode>();
         for (int row : selectedRows) {
             selectedNodes.add(getMindMapNode(row));
         }
@@ -400,7 +400,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         MindMapController newMindMapController = (MindMapController) getMindMapController().newMap();
         // Tools.BooleanHolder booleanHolder = new Tools.BooleanHolder();
         // booleanHolder.setValue(false);
-        for (MindMapNode node : selectedNodes) {
+        for (var node : selectedNodes) {
             MindMapNode copy = node.shallowCopy();
             if (copy != null) {
                 newMindMapController.insertNodeInto(copy, newMindMapController.getRootNode());
@@ -516,7 +516,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         if (focussedRow >= 0) {
             MindMapNode focussedNode = getMindMapNode(focussedRow);
             // getController().centerNode(focussedNode);
-            List<MindMapNode> selectedNodes = new ArrayList<>();
+            var selectedNodes = new ArrayList<MindMapNode>();
             for (int row : selectedRows) {
                 selectedNodes.add(getMindMapNode(row));
             }
@@ -539,7 +539,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
         if (mSorter != null) {
             storage = getTableConfiguration();
         }
-        DefaultTableModel model = new MindmapTableModel();
+        var model = new MindmapTableModel();
         model.addColumn(COLUMN_DATE);
         model.addColumn(COLUMN_TEXT);
         model.addColumn(COLUMN_ICONS);
@@ -604,10 +604,10 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
     }
 
     protected TimeWindowConfigurationStorage getTableConfiguration() {
-        TimeWindowConfigurationStorage storage = new TimeWindowConfigurationStorage();
+        var storage = new TimeWindowConfigurationStorage();
         storage.setViewFoldedNodes(mViewFoldedNodes);
         for (int i = 0; i < mTimeTable.getColumnCount(); i++) {
-            TimeWindowColumnSetting setting = new TimeWindowColumnSetting();
+            var setting = new TimeWindowColumnSetting();
             setting.setColumnWidth(mTimeTable.getColumnModel().getColumn(i)
                     .getWidth());
             setting.setColumnSorting(mSorter.getSortingStatus(i));
@@ -740,7 +740,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
                 EventListener[] el = super.getListeners(KeyListener.class);
                 if (e.getID() != KeyEvent.KEY_RELEASED)
                     return;
-                for (EventListener eventListener : el) {
+                for (var eventListener : el) {
                     KeyListener kl = (KeyListener) eventListener;
                     kl.keyReleased(e);
                 }
@@ -898,7 +898,7 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
             icons.addAll(node.getIcons());
             // sorting the output.
             iconNames = new ArrayList<>();
-            for (NodeIcon icon : icons) {
+            for (var icon : icons) {
                 iconNames.add(icon.getName());
             }
             Collections.sort(iconNames);
@@ -913,8 +913,8 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
          * Returns a sorted list of icon names.
          */
         public String toString() {
-            StringBuilder result = new StringBuilder();
-            for (String name : iconNames) {
+            var result = new StringBuilder();
+            for (var name : iconNames) {
                 result.append(name).append(" ");
             }
             return result.toString();
@@ -929,8 +929,8 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
 
         public void setValue(Object value) {
             if (value instanceof IconsHolder iconsHolder) {
-                MultipleImage iconImages = new MultipleImage(1.0f);
-                for (NodeIcon icon : iconsHolder.getIcons()) {
+                var iconImages = new MultipleImage(1.0f);
+                for (var icon : iconsHolder.getIcons()) {
                     iconImages.addImage(((MindIcon) icon).getIcon());
                 }
                 if (iconImages.getImageCount() > 0) {

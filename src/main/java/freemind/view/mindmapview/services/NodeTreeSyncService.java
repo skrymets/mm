@@ -86,7 +86,7 @@ public class NodeTreeSyncService {
 
     public void treeStructureChanged(TreeModelEvent e) {
         nodeView.getMap().getSelectionService().resetShiftSelectionOrigin();
-        for (NodeView child : nodeView.getChildrenViews()) {
+        for (var child : nodeView.getChildrenViews()) {
             child.remove();
         }
         nodeView.insert();

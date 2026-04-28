@@ -20,7 +20,7 @@ public class Base64Coding {
      * present in the string than the 65 special base64 chars.
      */
     public static byte[] decode64(String s) {
-        ByteArrayOutputStream bs = new ByteArrayOutputStream(
+        var bs = new ByteArrayOutputStream(
                 (s.length() / 4) * 3);
         char[] c = new char[s.length()];
         s.getChars(0, s.length(), c, 0);
@@ -81,7 +81,7 @@ public class Base64Coding {
      * Helper method for encoding an array of bytes as a Base64 String.
      */
     public static String encode64(byte[] b) {
-        StringBuilder sb = new StringBuilder((b.length / 3) * 4);
+        var sb = new StringBuilder((b.length / 3) * 4);
 
         int i = 0;
         int remaining = b.length;

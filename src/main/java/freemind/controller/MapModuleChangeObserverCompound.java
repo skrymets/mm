@@ -20,7 +20,7 @@ public class MapModuleChangeObserverCompound implements MapModuleChangeObserver 
 
     public boolean isMapModuleChangeAllowed(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
         boolean returnValue = true;
-        for (MapModuleChangeObserver observer : new ArrayList<>(listeners)) {
+        for (var observer : new ArrayList<>(listeners)) {
             returnValue = observer.isMapModuleChangeAllowed(oldMapModule, oldMode, newMapModule, newMode);
             if (!returnValue) {
                 break;
@@ -30,26 +30,26 @@ public class MapModuleChangeObserverCompound implements MapModuleChangeObserver 
     }
 
     public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
-        for (MapModuleChangeObserver observer : new ArrayList<>(listeners)) {
+        for (var observer : new ArrayList<>(listeners)) {
             observer.beforeMapModuleChange(oldMapModule, oldMode,
                     newMapModule, newMode);
         }
     }
 
     public void afterMapModuleChange(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
-        for (MapModuleChangeObserver observer : new ArrayList<>(listeners)) {
+        for (var observer : new ArrayList<>(listeners)) {
             observer.afterMapModuleChange(oldMapModule, oldMode, newMapModule, newMode);
         }
     }
 
     public void numberOfOpenMapInformation(int number, int pIndex) {
-        for (MapModuleChangeObserver observer : new ArrayList<>(listeners)) {
+        for (var observer : new ArrayList<>(listeners)) {
             observer.numberOfOpenMapInformation(number, pIndex);
         }
     }
 
     public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
-        for (MapModuleChangeObserver observer : new ArrayList<>(listeners)) {
+        for (var observer : new ArrayList<>(listeners)) {
             observer.afterMapClose(pOldMapModule, pOldMode);
         }
     }

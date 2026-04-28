@@ -46,7 +46,7 @@ public abstract class FreeMindTask extends Thread {
         mAmountOfSteps = pAmountOfSteps;
         mProgressMonitor = new FreeMindProgressMonitor(getName(), resources);
         mGlass = new JPanel(new GridLayout(0, 1));
-        JLabel padding = new JLabel();
+        var padding = new JLabel();
         mGlass.setOpaque(false);
         mGlass.add(padding);
 

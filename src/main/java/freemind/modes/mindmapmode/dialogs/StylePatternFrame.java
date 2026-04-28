@@ -200,14 +200,14 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
      * Creates all controls and adds them to the frame.
      */
     public void init() {
-        CardLayout cardLayout = new CardLayout();
-        JPanel rightStack = new JPanel(cardLayout);
+        var cardLayout = new CardLayout();
+        var rightStack = new JPanel(cardLayout);
         String form = "right:max(40dlu;p), 4dlu, 20dlu, 7dlu,right:max(40dlu;p), 4dlu, 80dlu, 7dlu";
-        FormLayout rightLayout = new FormLayout(form, "");
-        DefaultFormBuilder rightBuilder = new DefaultFormBuilder(rightLayout);
+        var rightLayout = new FormLayout(form, "");
+        var rightBuilder = new DefaultFormBuilder(rightLayout);
         rightBuilder.setDefaultDialogBorder();
         mControls = getControls();
-        for (PropertyControl control : mControls) {
+        for (var control : mControls) {
             control.layout(rightBuilder, this);
         }
         // add the last one, too
@@ -217,13 +217,13 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
     public void addListeners() {
         // add listeners:
-        for (PropertyControl control : mControls) {
+        for (var control : mControls) {
             if (control instanceof PropertyBean bean) {
                 bean.addPropertyChangeListener(this);
             }
         }
         mClearSetters.addPropertyChangeListener(pEvt -> {
-            for (ThreeCheckBoxProperty booleanProp : mPropertyChangePropagation.keySet()) {
+            for (var booleanProp : mPropertyChangePropagation.keySet()) {
                 booleanProp.setValue(mClearSetters.getValue());
             }
         });
@@ -235,7 +235,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     private List<Pattern> mPatternList;
 
     private List<PropertyControl> getControls() {
-        List<PropertyControl> controls = new ArrayList<>();
+        var controls = new ArrayList<PropertyControl>();
         controls.add(new SeparatorProperty("General"));
         mClearSetters = new ThreeCheckBoxProperty(CLEAR_ALL_SETTERS
                 + ".tooltip", CLEAR_ALL_SETTERS);
@@ -248,7 +248,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
             mSetChildPattern = new ThreeCheckBoxProperty(SET_CHILD_PATTERN
                     + ".tooltip", SET_CHILD_PATTERN);
             controls.add(mSetChildPattern);
-            List<String> childNames = new ArrayList<>();
+            var childNames = new ArrayList<String>();
             mChildPattern = new ComboProperty(CHILD_PATTERN + ".tooltip",
                     CHILD_PATTERN, childNames, childNames);
             controls.add(mChildPattern);
@@ -282,7 +282,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         mIconInformationVector = new ArrayList<>();
         MindMapController controller = mMindMapController;
         List<IconAction> iconActions = controller.getActions().iconActions;
-        for (IconAction action : iconActions) {
+        for (var action : iconActions) {
             MindIcon info = action.getMindIcon();
             mIconInformationVector.add(info);
         }
@@ -302,7 +302,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
         mSetNodeFontSize = new ThreeCheckBoxProperty(SET_NODE_FONT_SIZE
                 + ".tooltip", SET_NODE_FONT_SIZE);
         controls.add(mSetNodeFontSize);
-        List<String> sizesVector = new ArrayList<>(Arrays.asList(sizes));
+        var sizesVector = new ArrayList<String>(Arrays.asList(sizes));
         mNodeFontSize = new IntegerComboProperty(NODE_FONT_SIZE + ".tooltip", NODE_FONT_SIZE, sizes, sizesVector);
         controls.add(mNodeFontSize);
         mSetNodeFontBold = new ThreeCheckBoxProperty(SET_NODE_FONT_BOLD
@@ -383,8 +383,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     }
 
     private List<String> getPatternNames() {
-        List<String> childNames = new ArrayList<>();
-        for (Pattern pattern : mPatternList) {
+        var childNames = new ArrayList<String>();
+        for (var pattern : mPatternList) {
             childNames.add(pattern.getName());
         }
         return childNames;
@@ -439,7 +439,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
                             .getName() : null);
 
         }
-        for (ThreeCheckBoxProperty prop : mPropertyChangePropagation.keySet()) {
+        for (var prop : mPropertyChangePropagation.keySet()) {
             propertyChange(new PropertyChangeEvent(prop, prop.getLabel(), null,
                     prop.getValue()));
         }
@@ -500,7 +500,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
             return null;
         int edgeWidth = MindMapUtils.edgeWidthStringToInt(pEdgeWidth);
         HashMap<String, Integer> transformator = getEdgeWidthTransformation();
-        for (String widthString : transformator.keySet()) {
+        for (var widthString : transformator.keySet()) {
             Integer width = transformator.get(widthString);
             if (edgeWidth == width.intValue()) {
                 return widthString;
@@ -517,7 +517,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     }
 
     private HashMap<String, Integer> getEdgeWidthTransformation() {
-        HashMap<String, Integer> transformator = new HashMap<>();
+        var transformator = new HashMap<String, Integer>();
         transformator
                 .put(EDGE_WIDTHS[0], Integer.valueOf(EdgeAdapter.WIDTH_PARENT));
         transformator.put(EDGE_WIDTHS[1], Integer.valueOf(EdgeAdapter.WIDTH_THIN));
@@ -529,7 +529,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     }
 
     public Pattern getResultPattern() {
-        Pattern pattern = new Pattern();
+        var pattern = new Pattern();
         return getResultPattern(pattern);
     }
 
@@ -578,7 +578,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
     private PatternPropertyBase getPatternResult(
             PatternPropertyBase baseProperty,
             ThreeCheckBoxProperty threeCheckBoxProperty, PropertyBean property) {
-        ValueTransformator transformer = new IdentityTransformer();
+        var transformer = new IdentityTransformer();
         return getPatternResult(baseProperty, threeCheckBoxProperty, property,
                 transformer);
     }

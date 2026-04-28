@@ -27,10 +27,10 @@ public class JColorCombo extends JComboBox<ColorPair> {
 
     public JColorCombo() {
         ColorPair[] colorList = sColorList;
-        for (ColorPair colorPair : colorList) {
+        for (var colorPair : colorList) {
             addItem(colorPair);
         }
-        ComboBoxRenderer renderer = new ComboBoxRenderer();
+        var renderer = new ComboBoxRenderer();
         setRenderer(renderer);
         setMaximumRowCount(20);
     }
@@ -63,7 +63,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
             }
 
             ColorPair pair = value;
-            ImageIcon icon = new ColorIcon(pair.color);
+            var icon = new ColorIcon(pair.color);
             setIcon(icon);
             setText(pair.displayName);
 
@@ -72,8 +72,8 @@ public class JColorCombo extends JComboBox<ColorPair> {
     }
 
     public static void main(String[] s) {
-        JFrame frame = new JFrame("JColorChooser");
-        JColorCombo colorChooser = new JColorCombo();
+        var frame = new JFrame("JColorChooser");
+        var colorChooser = new JColorCombo();
 
         frame.getContentPane().add(colorChooser);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -82,7 +82,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
     }
 
     public static void initColors(Resources resources) {
-        for (ColorPair pair : sColorList) {
+        for (var pair : sColorList) {
             pair.resolveDisplayName(resources);
         }
     }

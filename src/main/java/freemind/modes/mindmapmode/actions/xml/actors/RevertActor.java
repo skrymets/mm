@@ -37,8 +37,8 @@ public class RevertActor extends XmlActorAdapter {
 
     public RevertXmlAction createRevertXmlAction(File file) throws IOException {
         String fileName = file.getAbsolutePath();
-        FileReader f = new FileReader(file);
-        StringBuilder buffer = new StringBuilder();
+        var f = new FileReader(file);
+        var buffer = new StringBuilder();
         for (int c; (c = f.read()) != -1; )
             buffer.append((char) c);
         f.close();
@@ -47,7 +47,7 @@ public class RevertActor extends XmlActorAdapter {
 
     public RevertXmlAction createRevertXmlAction(MindMap map, String fileName,
                                                  String filePrefix) throws IOException {
-        StringWriter writer = new StringWriter();
+        var writer = new StringWriter();
         map.getXml(writer);
         return createRevertXmlAction(writer.getBuffer().toString(), fileName,
                 filePrefix);
@@ -59,7 +59,7 @@ public class RevertActor extends XmlActorAdapter {
      */
     public RevertXmlAction createRevertXmlAction(String xmlPackedFile,
                                                  String fileName, String filePrefix) {
-        RevertXmlAction revertXmlAction = new RevertXmlAction();
+        var revertXmlAction = new RevertXmlAction();
         revertXmlAction.setLocalFileName(fileName);
         revertXmlAction.setMap(xmlPackedFile);
         revertXmlAction.setFilePrefix(filePrefix);
@@ -86,7 +86,7 @@ public class RevertActor extends XmlActorAdapter {
                     File tempFile = File.createTempFile(filePrefix,
                             freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION,
                             new File(getExMapFeedback().getResources().getFreemindDirectory()));
-                    FileWriter fw = new FileWriter(tempFile);
+                    var fw = new FileWriter(tempFile);
                     fw.write(xmlMap);
                     fw.close();
                     getExMapFeedback().load(tempFile);

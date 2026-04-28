@@ -49,7 +49,7 @@ public class JIBXGeneratedUtil {
 
     public static CompoundAction.Choice choiceFromXmlActions(XmlAction action) {
 
-        CompoundAction.Choice choice = new CompoundAction.Choice();
+        var choice = new CompoundAction.Choice();
         if (action instanceof CompoundAction a) {
             choice.setCompoundAction(a);
         } else if (action instanceof SelectNodeAction a) {

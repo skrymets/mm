@@ -20,7 +20,7 @@ public class RemoveAllIconsActor extends NodeXmlActorAdapter {
 
     public RemoveAllIconsXmlAction createRemoveAllIconsXmlAction(
             MindMapNode node) {
-        RemoveAllIconsXmlAction action = new RemoveAllIconsXmlAction();
+        var action = new RemoveAllIconsXmlAction();
         action.setNode(getNodeID(node));
         return action;
     }
@@ -46,8 +46,8 @@ public class RemoveAllIconsActor extends NodeXmlActorAdapter {
     }
 
     public ActionPair apply(MindMap model, MindMapNode selected) {
-        CompoundAction undoAction = new CompoundAction();
-        for (NodeIcon icon : selected.getIcons()) {
+        var undoAction = new CompoundAction();
+        for (var icon : selected.getIcons()) {
             final AddIconAction createAddIconAction = getExMapFeedback().getActorFactory().getAddIconActor().createAddIconAction(
                     selected,
                     (MindIcon) icon,

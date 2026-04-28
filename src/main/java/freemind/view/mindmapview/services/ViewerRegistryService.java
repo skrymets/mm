@@ -20,7 +20,7 @@ public class ViewerRegistryService {
         if (node == null) {
             return null;
         }
-        for (NodeView candidateView : getViewers(node)) {
+        for (var candidateView : getViewers(node)) {
             if (candidateView.getMap() == mapView) {
                 return candidateView;
             }

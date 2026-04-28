@@ -28,7 +28,7 @@ public class PermanentNodeHookSubstituteUnknown extends
 
     public void save(Document doc, Element xml) {
         super.save(doc, xml);
-        for (Element childchild : FreeMindXml.getChildElements(child)) {
+        for (var childchild : FreeMindXml.getChildElements(child)) {
             Node imported = doc.importNode(childchild, true);
             xml.appendChild(imported);
         }

@@ -86,8 +86,8 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
     public String getAsHTML(List mindMapNodes) {
         // Returns success of the operation.
         try {
-            StringWriter stringWriter = new StringWriter();
-            BufferedWriter fileout = new BufferedWriter(stringWriter);
+            var stringWriter = new StringWriter();
+            var fileout = new BufferedWriter(stringWriter);
             MindMapController.saveHTML(mindMapNodes, fileout);
             fileout.close();
 
@@ -101,10 +101,10 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
     public String getAsPlainText(List mindMapNodes) {
         // Returns success of the operation.
         try {
-            StringWriter stringWriter = new StringWriter();
-            BufferedWriter fileout = new BufferedWriter(stringWriter);
+            var stringWriter = new StringWriter();
+            var fileout = new BufferedWriter(stringWriter);
 
-            for (MindMapNodeModel mindMapNode : (Iterable<MindMapNodeModel>) mindMapNodes) {
+            for (var mindMapNode : (Iterable<MindMapNodeModel>) mindMapNodes) {
                 mindMapNode.saveTXT(fileout,/* depth= */0);
             }
 
@@ -120,7 +120,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
     public boolean saveTXT(MindMapNodeModel rootNodeOfBranch, File file) {
         // Returns success of the operation.
         try {
-            BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
+            var fileout = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(file)));
             rootNodeOfBranch.saveTXT(fileout,/* depth= */0);
             fileout.close();
@@ -135,8 +135,8 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
     public String getAsRTF(List mindMapNodes) {
         // Returns success of the operation.
         try {
-            StringWriter stringWriter = new StringWriter();
-            BufferedWriter fileout = new BufferedWriter(stringWriter);
+            var stringWriter = new StringWriter();
+            var fileout = new BufferedWriter(stringWriter);
             saveRTF(mindMapNodes, fileout);
             fileout.close();
 
@@ -152,18 +152,18 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
         try {
 
             // First collect all used colors
-            HashSet<Color> colors = new HashSet<>();
-            for (MindMapNodeModel nodeModel : mindMapNodes) {
+            var colors = new HashSet<Color>();
+            for (var nodeModel : mindMapNodes) {
                 nodeModel.collectColors(colors);
             }
 
             // Prepare table of colors containing indices to color table
-            StringBuilder colorTableString = new StringBuilder("{\\colortbl;\\red0\\green0\\blue255;");
+            var colorTableString = new StringBuilder("{\\colortbl;\\red0\\green0\\blue255;");
             // 0 - Automatic, 1 - blue for links
 
-            HashMap<Color, Integer> colorTable = new HashMap<>();
+            var colorTable = new HashMap<Color, Integer>();
             int colorPosition = 2;
-            for (Color color : colors) {
+            for (var color : colors) {
                 colorTableString.append("\\red").append(color.getRed()).append("\\green").append(color.getGreen()).append("\\blue").append(color.getBlue()).append(";");
                 colorTable.put(color, Integer.valueOf(colorPosition));
                 ++colorPosition;
@@ -176,7 +176,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
                     + "\\viewkind4\\uc1\\pard\\f0\\fs20{}");
             // ^ If \\ud is appended here, Unicode does not work in MS Word.
 
-            for (MindMapNodeModel nodeModel : mindMapNodes) {
+            for (var nodeModel : mindMapNodes) {
                 nodeModel.saveRTF(fileout,/* depth= */0, colorTable);
             }
 
@@ -219,7 +219,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
                 timerForAutomaticSaving.cancel();
             }
             // Generating output Stream
-            BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
+            var fileout = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(file)));
             getXml(fileout);
 
@@ -355,7 +355,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
 
         private void writeSemaphoreFile(File inSemaphoreFile) throws Exception {
             FileLock lock;
-            try (FileOutputStream semaphoreOutputStream = new FileOutputStream(inSemaphoreFile)) {
+            try (var semaphoreOutputStream = new FileOutputStream(inSemaphoreFile)) {
                 lock = null;
                 try {
                     lock = semaphoreOutputStream.getChannel().tryLock();
@@ -567,7 +567,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
         } catch (ReflectiveOperationException e) {
             log.error("Error occurred loading node implementor: {}", nodeClass, e);
             // the best we can do is to return the normal class:
-            NodeAdapter node = new MindMapNodeModel(pMap);
+            var node = new MindMapNodeModel(pMap);
             return node;
         }
     }
@@ -605,7 +605,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
     @Override
     public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException {
         Document doc = FreeMindXml.parse(pReader);
-        XMLElementAdapter xmlAdapter = new XMLElementAdapter(getMapFeedback(), new ArrayList<>(), pIDToTarget);
+        var xmlAdapter = new XMLElementAdapter(getMapFeedback(), new ArrayList<>(), pIDToTarget);
         xmlAdapter.buildFromDom(doc.getDocumentElement());
         xmlAdapter.processUnfinishedLinks(getLinkRegistry());
         return xmlAdapter.getMapChild();

@@ -14,7 +14,7 @@ public class ManagePatterns extends MindMapHookAdapter {
         super.startupMapHook();
         // start dialog:
         FreeMind frame = (FreeMind) getController().getFrame();
-        ManagePatternsPopupDialog formatDialog = new ManagePatternsPopupDialog(frame.getJFrame(), getMindMapController());
+        var formatDialog = new ManagePatternsPopupDialog(frame.getJFrame(), getMindMapController());
         // formatDialog.pack();
         formatDialog.setModal(true);
         formatDialog.setVisible(true);

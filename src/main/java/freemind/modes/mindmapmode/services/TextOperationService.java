@@ -62,9 +62,9 @@ public class TextOperationService {
         }
         String[] strings = new String[2];
         if (text.startsWith("<html>")) {
-            HTMLEditorKit kit = new HTMLEditorKit();
-            HTMLDocument doc = new HTMLDocument();
-            StringReader buf = new StringReader(text);
+            var kit = new HTMLEditorKit();
+            var doc = new HTMLDocument();
+            var buf = new StringReader(text);
             try {
                 kit.read(buf, doc, 0);
                 final char[] firstText = doc.getText(0, pos).toCharArray();
@@ -88,7 +88,7 @@ public class TextOperationService {
                 if (firstStart == firstLen || secondStart == secondLen) {
                     return null;
                 }
-                StringWriter out = new StringWriter();
+                var out = new StringWriter();
                 new FixedHTMLWriter(out, doc, firstStart, firstLen - firstStart).write();
                 strings[0] = out.toString();
                 out = new StringWriter();

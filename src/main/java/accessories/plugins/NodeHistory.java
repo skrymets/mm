@@ -76,7 +76,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
         private MapModule getMapModule(Controller pController) {
             MapModule mapModule = null;
             Map<String, MapModule> mapModules = pController.getMapModuleManager().getMapModules();
-            for (String mapModuleName : mapModules.keySet()) {
+            for (var mapModuleName : mapModules.keySet()) {
                 if (mapModuleName != null
                         && mapModuleName.equals(mMapModuleName)) {
                     mapModule = mapModules.get(mapModuleName);
@@ -247,9 +247,9 @@ public class NodeHistory extends MindMapNodeHookAdapter {
     }
 
     private void printVector() {
-        StringBuilder sb = new StringBuilder("\n");
+        var sb = new StringBuilder("\n");
         int i = 0;
-        for (NodeHolder holder : sNodeVector) {
+        for (var holder : sNodeVector) {
             sb.append((sCurrentPosition - 1 == i) ? "==>" : "   ").append("Node pos ").append(i).append(" is ").append(holder.getNode(getMindMapController().getController()));
             sb.append("\n");
             i++;

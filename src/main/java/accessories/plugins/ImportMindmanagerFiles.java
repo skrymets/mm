@@ -32,7 +32,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
         super.startupMapHook();
         String type = "mmap";
         Container component = getController().getFrame().getContentPane();
-        final ExportHook.ImageFilter filter = new ExportHook.ImageFilter(type, null /* No description so far */);
+        final var filter = new ExportHook.ImageFilter(type, null /* No description so far */);
         FreeMindFileDialog chooser = getController().getFileChooser(filter);
         int returnVal = chooser.showOpenDialog(component);
         if (returnVal != JFileChooser.APPROVE_OPTION) { // not ok pressed
@@ -50,7 +50,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
         // http://javaalmanac.com/egs/java.util.zip/GetZip.html
         try {
             // Open the ZIP file
-            ZipInputStream in = new ZipInputStream(new FileInputStream(file));
+            var in = new ZipInputStream(new FileInputStream(file));
 
             while (in.available() != 0) {
                 ZipEntry entry = in.getNextEntry();
@@ -75,7 +75,7 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
                                     file.getName(),
                                     freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION,
                                     file.getParentFile());
-                    FileWriter fw = new FileWriter(tempFile);
+                    var fw = new FileWriter(tempFile);
                     fw.write(xml);
                     fw.close();
                     getController().load(tempFile);
@@ -88,9 +88,9 @@ public class ImportMindmanagerFiles extends ModeControllerHookAdapter {
     }
 
     public String transForm(Source xmlSource, InputStream xsltStream) {
-        Source xsltSource = new StreamSource(xsltStream);
-        StringWriter writer = new StringWriter();
-        Result result = new StreamResult(writer);
+        var xsltSource = new StreamSource(xsltStream);
+        var writer = new StringWriter();
+        var result = new StreamResult(writer);
 
         // create an instance of TransformerFactory
         try {

@@ -64,19 +64,19 @@ public class NodeUpdateService {
     public void updateAll() {
         update();
         nodeView.invalidate();
-        for (NodeView child : nodeView.getChildrenViews()) {
+        for (var child : nodeView.getChildrenViews()) {
             child.updateAll();
         }
     }
 
     public void updateToolTip() {
-        Map<String, String> tooltips = new TreeMap<>(nodeView.getModel().getToolTip());
+        var tooltips = new TreeMap<String, String>(nodeView.getModel().getToolTip());
         if (tooltips.isEmpty()) {
             nodeView.getMainView().setToolTipText(null);
         } else {
-            StringBuilder text = new StringBuilder("<html><table width=\""
+            var text = new StringBuilder("<html><table width=\""
                     + getMaxToolTipWidth() + "\">");
-            for (String key : tooltips.keySet()) {
+            for (var key : tooltips.keySet()) {
                 String value = tooltips.get(key);
                 value = value.replaceAll("</html>", "");
                 text.append("<tr><td>");
@@ -119,7 +119,7 @@ public class NodeUpdateService {
         boolean widthMustBeRestricted = false;
         if (!isHtml) {
             String[] lines = nodeText.split("\n");
-            for (String s : lines) {
+            for (var s : lines) {
                 nodeView.getMainView().setText(s);
                 widthMustBeRestricted = nodeView.getMainView().getPreferredSize().width > mapView
                         .getZoomed(mapView.getMaxNodeWidth())
@@ -167,7 +167,7 @@ public class NodeUpdateService {
             String[] lines = nodeText.split("\n");
             lines[0] = lines[0].substring(7);
             int startingLine = lines[0].matches("\\s*") ? 1 : 0;
-            StringBuilder text = new StringBuilder("<html><table border=1 style=\"border-color: white\">");
+            var text = new StringBuilder("<html><table border=1 style=\"border-color: white\">");
             for (int line = startingLine; line < lines.length; line++) {
                 text.append("<tr><td style=\"border-color: white;\">").append(HtmlTools.toXMLEscapedText(lines[line]).replaceAll(
                         "\t", "<td style=\"border-color: white\">"));
@@ -197,11 +197,11 @@ public class NodeUpdateService {
 
     private void updateIcons() {
         updateIconPosition();
-        MultipleImage iconImages = new MultipleImage(1.0f);
+        var iconImages = new MultipleImage(1.0f);
         boolean iconPresent = false;
 
         Map<String, ImageIcon> stateIcons = nodeView.getModel().getStateIcons();
-        for (String key : stateIcons.keySet()) {
+        for (var key : stateIcons.keySet()) {
             iconPresent = true;
             ImageIcon myIcon = stateIcons.get(key);
             iconImages.addImage(myIcon);
@@ -221,7 +221,7 @@ public class NodeUpdateService {
         }
 
         List<NodeIcon> icons = nodeView.getModel().getIcons();
-        for (NodeIcon myIcon : icons) {
+        for (var myIcon : icons) {
             iconPresent = true;
             iconImages.addImage(((MindIcon) myIcon).getUnscaledIcon());
         }

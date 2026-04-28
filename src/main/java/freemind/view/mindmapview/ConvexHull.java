@@ -104,7 +104,7 @@ public class ConvexHull {
         t = points.get(0);
         points.set(0, points.get(min));
         points.set(min, t);
-        ThetaComparator comp = new ThetaComparator(points.get(0));
+        var comp = new ThetaComparator(points.get(0));
         points.sort(comp);
         // the first is the last.
         points.add(0, new Point(points.get(points.size() - 1)));
@@ -124,7 +124,7 @@ public class ConvexHull {
     }
 
     public List<Point> calculateHull(List<Point> coordinates) {
-        List<Point> q = new ArrayList<>(coordinates);
+        var q = new ArrayList<Point>(coordinates);
         return doGraham(q);
     }
 

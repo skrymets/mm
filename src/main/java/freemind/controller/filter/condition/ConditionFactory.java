@@ -210,8 +210,8 @@ public class ConditionFactory {
     }
 
     static public JComponent createCellRendererComponent(String description) {
-        JCondition component = new JCondition();
-        JLabel label = new JLabel(description);
+        var component = new JCondition();
+        var label = new JLabel(description);
         component.add(label);
         return component;
     }

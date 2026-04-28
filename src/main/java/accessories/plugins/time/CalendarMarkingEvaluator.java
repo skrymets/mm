@@ -275,7 +275,7 @@ public class CalendarMarkingEvaluator implements ICalendarMarkingEvaluator {
     }
 
     public Set<Calendar> getAtLeastTheFirstNEntries(int n) {
-        Set<Calendar> retValue = new TreeSet<>();
+        var retValue = new TreeSet<Calendar>();
         for (int i = 0; i < mCalendarMarkings.sizeCalendarMarkingList(); i++) {
             int count = 0;
             CalendarMarking marking = mCalendarMarkings.getCalendarMarking(i);

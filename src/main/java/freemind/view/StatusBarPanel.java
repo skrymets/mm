@@ -21,7 +21,7 @@ public class StatusBarPanel extends JPanel {
 
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
+        var rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         rightPanel.setOpaque(false);
         rightPanel.add(mapNameLabel);
         rightPanel.add(createSeparator());
@@ -34,7 +34,7 @@ public class StatusBarPanel extends JPanel {
     }
 
     private JSeparator createSeparator() {
-        JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
+        var sep = new JSeparator(SwingConstants.VERTICAL);
         sep.setPreferredSize(new Dimension(1, 16));
         return sep;
     }

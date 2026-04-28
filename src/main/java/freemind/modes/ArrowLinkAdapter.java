@@ -134,7 +134,7 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements MindMapArr
     }
 
     public ArrowLinkTarget createArrowLinkTarget(MindMapLinkRegistry pRegistry) {
-        ArrowLinkTarget linkTarget = new ArrowLinkTarget(source, target, mMapFeedback);
+        var linkTarget = new ArrowLinkTarget(source, target, mMapFeedback);
         linkTarget.setSourceLabel(pRegistry.getLabel(source));
         copy(linkTarget);
         return linkTarget;

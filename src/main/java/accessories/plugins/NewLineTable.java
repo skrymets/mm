@@ -39,7 +39,7 @@ public class NewLineTable extends ScalableJTable {
         if (row < super.getRowCount()) {
             super.setValueAt(aValue, row, column);
         } else {
-            AttributeHolder attribute = new AttributeHolder();
+            var attribute = new AttributeHolder();
             switch (column) {
                 case NodeAttributeTableRegistration.KEY_COLUMN:
                     attribute.mKey = (String) aValue;

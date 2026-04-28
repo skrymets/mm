@@ -91,14 +91,14 @@ public class XHTMLWriter extends FixedHTMLWriter {
     public static void html2xhtml(Reader reader, Writer writer)
             throws IOException, BadLocationException {
         // --- Create a HTML document ---
-        HTMLEditorKit kit = new HTMLEditorKit();
+        var kit = new HTMLEditorKit();
         Document doc = kit.createDefaultDocument();
 
         // --- Read the HTML source ---
         kit.read(reader, doc, doc.getLength());
 
         // --- Write the content ---
-        XHTMLWriter xhw = new XHTMLWriter(writer, (HTMLDocument) doc);
+        var xhw = new XHTMLWriter(writer, (HTMLDocument) doc);
         xhw.write();
     }
 
@@ -111,8 +111,8 @@ public class XHTMLWriter extends FixedHTMLWriter {
      */
     public static void main(String[] args) {
         try {
-            FileReader reader = new FileReader(args[0]);
-            FileWriter writer = new FileWriter(args[1]);
+            var reader = new FileReader(args[0]);
+            var writer = new FileWriter(args[1]);
             html2xhtml(reader, writer);
             writer.close();
             reader.close();

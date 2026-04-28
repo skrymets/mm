@@ -32,7 +32,7 @@ public class AddArrowLinkAction extends MindmapAction {
 
         boolean identicalError = false;
 
-        for (MindMapNode destination : nodesFromClipboard) {
+        for (var destination : nodesFromClipboard) {
             if (selected != destination) {
                 getMindMapController().addLink(selected, destination);
             } else {

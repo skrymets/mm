@@ -55,7 +55,7 @@ public class NodeLifecycleService {
     // --- Node update ---
 
     public void updateNode(MindMapNode node) {
-        for (NodeSelectionListener listener : selectionListeners) {
+        for (var listener : selectionListeners) {
             listener.onUpdateNodeHook(node);
         }
     }
@@ -64,11 +64,11 @@ public class NodeLifecycleService {
 
     public void onLostFocusNode(NodeView node) {
         try {
-            HashSet<NodeSelectionListener> copy = new HashSet<>(selectionListeners);
-            for (NodeSelectionListener listener : copy) {
+            var copy = new HashSet<NodeSelectionListener>(selectionListeners);
+            for (var listener : copy) {
                 listener.onLostFocusNode(node);
             }
-            for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
+            for (var hook : node.getModel().getActivatedHooks()) {
                 hook.onLostFocusNode(node);
             }
             if (eventBus != null) {
@@ -81,11 +81,11 @@ public class NodeLifecycleService {
 
     public void onFocusNode(NodeView node) {
         try {
-            HashSet<NodeSelectionListener> copy = new HashSet<>(selectionListeners);
-            for (NodeSelectionListener listener : copy) {
+            var copy = new HashSet<NodeSelectionListener>(selectionListeners);
+            for (var listener : copy) {
                 listener.onFocusNode(node);
             }
-            for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
+            for (var hook : node.getModel().getActivatedHooks()) {
                 hook.onFocusNode(node);
             }
             if (eventBus != null) {
@@ -98,8 +98,8 @@ public class NodeLifecycleService {
 
     public void changeSelection(NodeView pNode, boolean pIsSelected) {
         try {
-            HashSet<NodeSelectionListener> copy = new HashSet<>(selectionListeners);
-            for (NodeSelectionListener listener : copy) {
+            var copy = new HashSet<NodeSelectionListener>(selectionListeners);
+            for (var listener : copy) {
                 listener.onSelectionChange(pNode, pIsSelected);
             }
         } catch (RuntimeException e) {
@@ -110,13 +110,13 @@ public class NodeLifecycleService {
     // --- View hook events ---
 
     public void onViewCreatedHook(NodeView node) {
-        for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
+        for (var hook : node.getModel().getActivatedHooks()) {
             hook.onViewCreatedHook(node);
         }
     }
 
     public void onViewRemovedHook(NodeView node) {
-        for (PermanentNodeHook hook : node.getModel().getActivatedHooks()) {
+        for (var hook : node.getModel().getActivatedHooks()) {
             hook.onViewRemovedHook(node);
         }
     }
@@ -134,7 +134,7 @@ public class NodeLifecycleService {
             } catch (RuntimeException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
-            for (NodeView view : allSelecteds) {
+            for (var view : allSelecteds) {
                 try {
                     listener.onSelectionChange(view, true);
                 } catch (RuntimeException e) {
@@ -156,13 +156,13 @@ public class NodeLifecycleService {
     // --- Lifetime events ---
 
     public void fireNodePreDeleteEvent(MindMapNode node) {
-        for (NodeLifetimeListener listener : lifetimeListeners) {
+        for (var listener : lifetimeListeners) {
             listener.onPreDeleteNode(node);
         }
     }
 
     public void fireNodePostDeleteEvent(MindMapNode node, MindMapNode parent) {
-        for (NodeLifetimeListener listener : lifetimeListeners) {
+        for (var listener : lifetimeListeners) {
             listener.onPostDeleteNode(node, parent);
         }
     }
@@ -172,14 +172,14 @@ public class NodeLifecycleService {
             MindMapNode child = i.next();
             fireRecursiveNodeCreateEvent(child);
         }
-        for (NodeLifetimeListener listener : lifetimeListeners) {
+        for (var listener : lifetimeListeners) {
             listener.onCreateNodeHook(node);
         }
     }
 
     public void firePreSaveEvent(MindMapNode node) {
-        HashSet<NodeSelectionListener> listenerCopy = new HashSet<>(selectionListeners);
-        for (NodeSelectionListener listener : listenerCopy) {
+        var listenerCopy = new HashSet<NodeSelectionListener>(selectionListeners);
+        for (var listener : listenerCopy) {
             listener.onSaveNode(node);
         }
     }

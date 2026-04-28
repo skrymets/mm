@@ -28,7 +28,7 @@ public class CreationModificationPlugin extends PermanentMindMapNodeHookAdapter 
         if (tooltipFormat == null) {
             tooltipFormat = getResourceString("tooltip_format");
         }
-        MessageFormat formatter = new MessageFormat(tooltipFormat);
+        var formatter = new MessageFormat(tooltipFormat);
         String message = formatter.format(messageArguments);
         setToolTip(node, getName(), message);
         log.trace("{}Tooltip for {} with parent {} is {}", this, node, node.getParentNode(), message);

@@ -111,7 +111,7 @@ public class EditNodeTextField extends EditNodeBase {
         mEventSource = EDIT;
 
         // create the listener
-        final TextFieldListener textFieldListener = new TextFieldListener();
+        final var textFieldListener = new TextFieldListener();
 
         // Add listeners
         this.textFieldListener = textFieldListener;
@@ -275,7 +275,7 @@ public class EditNodeTextField extends EditNodeBase {
 
         private void conditionallyShowPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
-                JPopupMenu popupMenu = new EditPopupMenu(textfield);
+                var popupMenu = new EditPopupMenu(textfield);
                 if (checkSpelling) {
                     popupMenu.add(SpellChecker.createCheckerMenu());
                     popupMenu.add(SpellChecker.createLanguagesMenu());

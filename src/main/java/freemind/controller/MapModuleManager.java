@@ -79,8 +79,8 @@ public class MapModuleManager {
      * MapModule.getDisplayName().
      */
     public Map<String, MapModule> getMapModules() {
-        HashMap<String, MapModule> returnValue = new HashMap<>();
-        for (MapModule module : mapModules) {
+        var returnValue = new HashMap<String, MapModule>();
+        for (var module : mapModules) {
             returnValue.put(module.getDisplayName(), module);
         }
         return Collections.unmodifiableMap(returnValue);
@@ -94,15 +94,15 @@ public class MapModuleManager {
      * @return an unmodifiable set of all display names of current opened maps.
      */
     public List<String> getMapKeys() {
-        LinkedList<String> returnValue = new LinkedList<>();
-        for (MapModule module : mapModules) {
+        var returnValue = new LinkedList<String>();
+        for (var module : mapModules) {
             returnValue.add(module.getDisplayName());
         }
         return Collections.unmodifiableList(returnValue);
     }
 
     public void newMapModule(MindMap map, ModeController modeController) {
-        MapModule mapModule = new MapModule(map, new MapView(map, modeController), modeController.getMode(), modeController);
+        var mapModule = new MapModule(map, new MapView(map, modeController), modeController.getMode(), modeController);
         addToOrChangeInMapModules(mapModule.toString(), mapModule);
         setMapModule(mapModule, modeController.getMode());
         if (eventBus != null) {
@@ -113,7 +113,7 @@ public class MapModuleManager {
 
     public MapModule getModuleGivenModeController(ModeController pModeController) {
         MapModule mapModule = null;
-        for (Map.Entry<String, MapModule> mapEntry : getMapModules().entrySet()) {
+        for (var mapEntry : getMapModules().entrySet()) {
             mapModule = mapEntry.getValue();
             if (pModeController.equals(mapModule.getModeController())) {
                 break;
@@ -179,7 +179,7 @@ public class MapModuleManager {
      * @return null, if not found, the map+extension identifier otherwise.
      */
     public String checkIfFileIsAlreadyOpened(URL urlToCheck) throws MalformedURLException {
-        for (MapModule module : mapModules) {
+        for (var module : mapModules) {
             if (module.getModel() != null) {
                 final URL moduleUrl = module.getModel().getURL();
                 if (sameFile(urlToCheck, moduleUrl))
@@ -201,7 +201,7 @@ public class MapModuleManager {
 
     public boolean changeToMapModule(String mapModuleDisplayName) {
         MapModule mapModuleCandidate = null;
-        for (MapModule mapMod : mapModules) {
+        for (var mapMod : mapModules) {
             if (Objects.equals(mapModuleDisplayName, mapMod.getDisplayName())) {
                 mapModuleCandidate = mapMod;
                 break;
@@ -219,7 +219,7 @@ public class MapModuleManager {
     }
 
     public void changeToMapOfMode(Mode mode) {
-        for (MapModule mapMod : mapModules) {
+        for (var mapMod : mapModules) {
             if (mapMod.getMode() == mode) {
                 changeToMapModule(mapMod);
                 return;

@@ -57,15 +57,15 @@ public class MindMapHookFactory extends HookFactoryAdapter {
     private List<String> searchFor(Class baseClass, Class<?> mode) {
 
         actualizePlugins();
-        List<String> returnValue = new ArrayList<>();
+        var returnValue = new ArrayList<String>();
         String modeName = mode.getPackage().getName();
-        for (String label : allPlugins) {
+        for (var label : allPlugins) {
             HookDescriptorPluginAction descriptor = getHookDescriptor(label);
             try {
                 log.trace("Loading: {}", label);
                 if (baseClass.isAssignableFrom(Class.forName(descriptor.getBaseClass()))) {
                     // the plugin inherits from the baseClass, we carry on to look for the mode
-                    for (String pmode : descriptor.getModes()) {
+                    for (var pmode : descriptor.getModes()) {
                         if (pmode.equals(modeName)) {
                             returnValue.add(label);
                         }
@@ -88,7 +88,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
             allPlugins = new ArrayList<>();
             allRegistrations = new HashSet<>();
 
-            for (String xmlPluginFile : importWizard.CLASS_LIST) {
+            for (var xmlPluginFile : importWizard.CLASS_LIST) {
                 if (xmlPluginFile.matches(pluginPrefixRegEx)) {
                     // make file name:
                     // Here, this is not the File.separatorChar!!!
@@ -109,7 +109,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                     // plugin is loaded.
 
                     List<Object> pluginChoice = JIBXGeneratedUtil.listPluginChoice(plugin);
-                    for (Object obj : pluginChoice) {
+                    for (var obj : pluginChoice) {
                         if (obj instanceof PluginAction action) {
                             pluginInfo.put(action.getLabel(), new HookDescriptorPluginAction(xmlPluginFile, plugin, action));
                             allPlugins.add(action.getLabel());
@@ -138,7 +138,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
             return hook;
         } catch (Throwable e) {
             String path = "";
-            for (PluginClasspath plPath : descriptor.getPluginClasspath()) {
+            for (var plPath : descriptor.getPluginClasspath()) {
                 path += plPath.getJar() + ";";
 
                 log.error("Error occurred loading hook: {}\nClasspath: {}\nException:", descriptor.getClassName(), path, e);
@@ -222,11 +222,11 @@ public class MindMapHookFactory extends HookFactoryAdapter {
         Class<MindMapController> mode = MindMapController.class;
         actualizePlugins();
 
-        List<RegistrationContainer> returnValue = new ArrayList<>();
-        for (HookDescriptorRegistration descriptor : allRegistrations) {
+        var returnValue = new ArrayList<RegistrationContainer>();
+        for (var descriptor : allRegistrations) {
             // PluginRegistration registration = descriptor.getPluginRegistration();
             boolean modeFound = false;
-            for (PluginMode possibleMode : descriptor.getListPluginModeList()) {
+            for (var possibleMode : descriptor.getListPluginModeList()) {
                 if (mode.getPackage().getName().equals(possibleMode.getClassName())) {
                     modeFound = true;
                     break;
@@ -238,7 +238,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
                 Plugin plugin = descriptor.getPluginBase();
                 ClassLoader loader = descriptor.getPluginClassLoader();
                 Class<?> hookRegistrationClass = Class.forName(descriptor.getClassName(), true, loader);
-                RegistrationContainer container = new RegistrationContainer();
+                var container = new RegistrationContainer();
                 container.hookRegistrationClass = hookRegistrationClass;
                 container.correspondingPlugin = plugin;
                 container.isPluginBase = descriptor.getIsPluginBase();

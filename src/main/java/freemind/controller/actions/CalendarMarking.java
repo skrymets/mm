@@ -192,7 +192,7 @@ public class CalendarMarking
         }
 
         public static RepeatType convert(String value) {
-            for (RepeatType inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }

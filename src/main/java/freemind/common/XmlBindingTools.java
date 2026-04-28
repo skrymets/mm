@@ -105,7 +105,7 @@ public class XmlBindingTools {
 
     public String marshall(XmlAction action) {
         try {
-            StringWriter writer = new StringWriter();
+            var writer = new StringWriter();
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             marshaller.marshal(action, writer);

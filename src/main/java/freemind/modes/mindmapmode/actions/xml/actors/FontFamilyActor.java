@@ -34,7 +34,7 @@ public class FontFamilyActor extends XmlActorAdapter {
 
     private FontNodeAction createFontNodeAction(MindMapNode node,
                                                 String fontValue) {
-        FontNodeAction fontFamilyAction = new FontNodeAction();
+        var fontFamilyAction = new FontNodeAction();
         fontFamilyAction.setNode(getNodeID(node));
         fontFamilyAction.setFont(fontValue);
         return fontFamilyAction;

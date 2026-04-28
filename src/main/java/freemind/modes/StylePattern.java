@@ -183,11 +183,11 @@ public class StylePattern {
     }
 
     public static List loadPatterns(Reader reader) throws Exception {
-        List list = new ArrayList();
+        var list = new ArrayList();
 
         Document doc = FreeMindXml.parse(reader);
         Element root = doc.getDocumentElement();
-        for (Element childElement : FreeMindXml.getChildElements(root)) {
+        for (var childElement : FreeMindXml.getChildElements(root)) {
             list.add(new StylePattern(childElement, list));
         }
         return list;
@@ -202,7 +202,7 @@ public class StylePattern {
             setRecursive(true);
         }
 
-        for (Element child : FreeMindXml.getChildElements(pattern)) {
+        for (var child : FreeMindXml.getChildElements(pattern)) {
             // this has to be improved!
             // NODE
             if (child.getTagName().equals("node")) {
@@ -224,7 +224,7 @@ public class StylePattern {
                 }
                 setText(FreeMindXml.getStringAttribute(child, "text"));
 
-                for (Element nodeChild : FreeMindXml.getChildElements(child)) {
+                for (var nodeChild : FreeMindXml.getChildElements(child)) {
                     // FONT
                     if (nodeChild.getTagName().equals("font")) {
 
@@ -268,7 +268,7 @@ public class StylePattern {
                     // find name in list of justConstructedPatterns:
                     String searchName = FreeMindXml.getStringAttribute(child, "pattern");
                     boolean anythingFound = false;
-                    for (StylePattern patternFound : justConstructedPatterns) {
+                    for (var patternFound : justConstructedPatterns) {
                         if (patternFound.getName().equals(searchName)) {
                             setChildrenStylePattern(patternFound);
                             anythingFound = true;

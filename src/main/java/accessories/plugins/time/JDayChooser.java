@@ -348,7 +348,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
      * Initializes the locale specific names for the days of the week.
      */
     protected void init() {
-        JButton testButton = new ScalableJButton();
+        var testButton = new ScalableJButton();
         oldDayBackgroundColor = testButton.getBackground();
         selectedColor = new Color(160, 160, 160);
 
@@ -365,7 +365,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
      */
     private void drawDayNames() {
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
-        DateFormatSymbols dateFormatSymbols = new DateFormatSymbols(locale);
+        var dateFormatSymbols = new DateFormatSymbols(locale);
         dayNames = dateFormatSymbols.getShortWeekdays();
 
         int day = firstDayOfWeek;
@@ -791,7 +791,7 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     }
 
     public GregorianCalendar getTemporaryCalendar() {
-        GregorianCalendar tempCalendar = new GregorianCalendar(
+        var tempCalendar = new GregorianCalendar(
                 yearChooser.getYear(), monthChooser.getMonth(), getDay());
         return tempCalendar;
     }
@@ -820,13 +820,13 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
 
-        for (JButton jButton : days) {
+        for (var jButton : days) {
             if (jButton != null) {
                 jButton.setEnabled(enabled);
             }
         }
 
-        for (JButton week : weeks) {
+        for (var week : weeks) {
             if (week != null) {
                 week.setEnabled(enabled);
             }
@@ -1066,8 +1066,8 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
      * @param s The command line arguments
      */
     public static void main(String[] s) {
-        JFrame frame = new JFrame("JDayChooser");
-        JDayChooser dayChooser = new JDayChooser();
+        var frame = new JFrame("JDayChooser");
+        var dayChooser = new JDayChooser();
         frame.getContentPane().add(dayChooser);
         dayChooser.setWeekOfYearVisible(true);
         frame.pack();

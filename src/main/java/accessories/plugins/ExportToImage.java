@@ -47,7 +47,7 @@ public class ExportToImage extends ExportHook {
         }
         try {
             getController().getFrame().setWaitingCursor(true);
-            FileOutputStream out = new FileOutputStream(chosenFile);
+            var out = new FileOutputStream(chosenFile);
             ImageIO.write(image, type, out);
             // OutputStream out = new FileOutputStream(f);
             // JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
@@ -63,9 +63,9 @@ public class ExportToImage extends ExportHook {
     public void transForm(Source xmlSource, InputStream xsltStream,
                           File resultFile, String areaCode) throws FileNotFoundException {
         // System.out.println("set xsl");
-        Source xsltSource = new StreamSource(xsltStream);
+        var xsltSource = new StreamSource(xsltStream);
         // System.out.println("set result");
-        Result result = new StreamResult(new FileOutputStream(resultFile));
+        var result = new StreamResult(new FileOutputStream(resultFile));
 
         // create an instance of TransformerFactory
         try {

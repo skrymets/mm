@@ -102,10 +102,10 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         }
         ModeController newModeController = getMindMapController().getMode()
                 .createModeController();
-        MapAdapter newModel = new MindMapMapModel(null,
+        var newModel = new MindMapMapModel(null,
                 newModeController);
         newModeController.setModel(newModel);
-        EncryptedMindMapNode encryptedMindMapNode = new EncryptedMindMapNode(
+        var encryptedMindMapNode = new EncryptedMindMapNode(
                 getMindMapController().getText(
                         "accessories/plugins/EncryptNode.properties_select_me"),
                 newModel);
@@ -124,7 +124,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         MindMapController mindmapcontroller = getMindMapController();
         // FIXME: not multithreading safe
         mindmapcontroller.setNewNodeCreator((userObject, map) -> {
-            EncryptedMindMapNode encryptedMindMapNode = new EncryptedMindMapNode(
+            var encryptedMindMapNode = new EncryptedMindMapNode(
                     userObject, map);
             encryptedMindMapNode.setPassword(password);
             return encryptedMindMapNode;
@@ -140,7 +140,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
 
     private StringBuilder getUsersPassword() {
         // get password:
-        final EnterPasswordDialog pwdDialog = new EnterPasswordDialog(
+        final var pwdDialog = new EnterPasswordDialog(
                 (JFrame) getMindMapController().getFrame(),
                 getMindMapController(), true);
         pwdDialog.setModal(true);
@@ -181,7 +181,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
     private void doPasswordCheckAndDecryptNode(EncryptedMindMapNode encNode) {
         while (true) {
             // get password:
-            final EnterPasswordDialog pwdDialog = new EnterPasswordDialog(
+            final var pwdDialog = new EnterPasswordDialog(
                     (JFrame) getMindMapController().getFrame(),
                     getMindMapController(), false);
             pwdDialog.setModal(true);

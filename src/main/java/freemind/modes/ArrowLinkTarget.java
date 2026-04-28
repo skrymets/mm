@@ -49,7 +49,7 @@ public class ArrowLinkTarget extends ArrowLinkAdapter {
     }
 
     public ArrowLinkAdapter createArrowLinkAdapter(MindMapLinkRegistry pRegistry) {
-        ArrowLinkAdapter linkAdapter = new MindMapArrowLinkModel(source, target, mMapFeedback);
+        var linkAdapter = new MindMapArrowLinkModel(source, target, mMapFeedback);
         copy(linkAdapter);
         return linkAdapter;
     }

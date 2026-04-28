@@ -112,7 +112,7 @@ public class JYearChooser extends JSpinField {
      * @param s command line arguments
      */
     static public void main(String[] s) {
-        JFrame frame = new JFrame("JYearChooser");
+        var frame = new JFrame("JYearChooser");
         frame.getContentPane().add(new JYearChooser());
         frame.pack();
         frame.setVisible(true);

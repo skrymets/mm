@@ -33,7 +33,7 @@ public class RemoveNote extends MindMapNodeHookAdapter {
             return;
         }
 
-        for (MindMapNode node : getMindMapController().getSelecteds()) {
+        for (var node : getMindMapController().getSelecteds()) {
             if (node.getNoteText() != null) {
                 removeNote(node);
             }
@@ -62,7 +62,7 @@ public class RemoveNote extends MindMapNodeHookAdapter {
             }
 
             boolean foundNote = false;
-            for (MindMapNode node : controller.getSelecteds()) {
+            for (var node : controller.getSelecteds()) {
                 if (node.getNoteText() != null) {
                     foundNote = true;
                     break;

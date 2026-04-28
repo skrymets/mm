@@ -85,9 +85,9 @@ public class NodeGeneralAction extends AbstractXmlAction {
         } else {
             // xml action:
             // Do-action
-            CompoundAction doAction = new CompoundAction();
+            var doAction = new CompoundAction();
             // Undo-action
-            CompoundAction undo = new CompoundAction();
+            var undo = new CompoundAction();
             // sort selectedNodes list by depth, in order to guarantee that
             // sons are deleted first:
             for (freemind.model.MindMapNode mindMapNode : modeController.getSelecteds()) {

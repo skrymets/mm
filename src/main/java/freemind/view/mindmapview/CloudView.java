@@ -50,20 +50,20 @@ public class CloudView {
             distanceBetweenPoints = 100 * getZoom(); /* flat */
         double distanceToConvexHull = getDistanceToConvexHull();
         /* get coordinates */
-        LinkedList<Point> coordinates = new LinkedList<>();
-        ConvexHull hull = new ConvexHull();
+        var coordinates = new LinkedList<Point>();
+        var hull = new ConvexHull();
         source.getCoordinates(coordinates);
         // source.getCoordinates(coordinates, (getIterativeLevel()==0)?(int)(5*
         // getZoom()):0 /* = additionalDistanceForConvexHull */);
         List<Point> res = hull.calculateHull(coordinates);
-        Polygon p = new Polygon();
-        for (Point pt : res) {
+        var p = new Polygon();
+        for (var pt : res) {
             p.addPoint(pt.x, pt.y);
         }
         g.fillPolygon(p);
         g.drawPolygon(p);
         /* ok, now the arcs: */
-        Point lastPoint = new Point(res.get(0));
+        var lastPoint = new Point(res.get(0));
         double x0, y0;
         x0 = lastPoint.x;
         y0 = lastPoint.y;
@@ -73,7 +73,7 @@ public class CloudView {
         x2 = x0;
         y2 = y0;
         for (int i = res.size() - 1; i >= 0; --i) {
-            Point nextPoint = new Point(res.get(i));
+            var nextPoint = new Point(res.get(i));
             double x1, y1, x3, y3, dx, dy, dxn, dyn;
             x1 = nextPoint.x;
             y1 = nextPoint.y;
@@ -132,7 +132,7 @@ public class CloudView {
         y2 = y0 + .5f * dy + distanceToConvexHull * dxn;
         // System.out.println("Line from " + x0+ ", " +y0+ ", " +x2+ ", " +y2+
         // ", " +x1+ ", " +y1+".");
-        Shape shape = new QuadCurve2D.Double(x0, y0, x2, y2, x1, y1);
+        var shape = new QuadCurve2D.Double(x0, y0, x2, y2, x1, y1);
         g.fill(shape);
         gstroke.draw(shape);
     }

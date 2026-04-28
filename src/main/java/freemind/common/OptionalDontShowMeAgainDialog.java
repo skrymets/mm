@@ -104,13 +104,13 @@ public class OptionalDontShowMeAgainDialog {
         mDialog.setModal(true);
         mDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-        AbstractAction cancelAction = new AbstractAction() {
+        var cancelAction = new AbstractAction() {
 
             public void actionPerformed(ActionEvent pE) {
                 close(JOptionPane.CANCEL_OPTION);
             }
         };
-        AbstractAction okAction = new AbstractAction() {
+        var okAction = new AbstractAction() {
 
             public void actionPerformed(ActionEvent pE) {
                 close(JOptionPane.OK_OPTION);
@@ -139,11 +139,11 @@ public class OptionalDontShowMeAgainDialog {
         mDontShowAgainBox = new JCheckBox(mTextTranslator.getText(boxString));
         SwingUtils.setLabelAndMnemonic(mDontShowAgainBox, null);
         mDialog.getContentPane().add(mDontShowAgainBox, new GridBagConstraints(0, 2, 3, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
-        JButton okButton = new JButton(mTextTranslator.getText("OptionalDontShowMeAgainDialog.ok"));
+        var okButton = new JButton(mTextTranslator.getText("OptionalDontShowMeAgainDialog.ok"));
         SwingUtils.setLabelAndMnemonic(okButton, null);
         okButton.addActionListener(okAction);
         mDialog.getContentPane().add(okButton, new GridBagConstraints(2, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
-        JButton cancelButton = new JButton(mTextTranslator.getText("OptionalDontShowMeAgainDialog.cancel"));
+        var cancelButton = new JButton(mTextTranslator.getText("OptionalDontShowMeAgainDialog.cancel"));
         SwingUtils.setLabelAndMnemonic(cancelButton, null);
         cancelButton.addActionListener(cancelAction);
         mDialog.getContentPane().add(cancelButton, new GridBagConstraints(3, 3, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));

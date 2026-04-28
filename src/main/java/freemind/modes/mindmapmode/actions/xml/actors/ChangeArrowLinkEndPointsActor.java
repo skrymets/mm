@@ -46,7 +46,7 @@ public class ChangeArrowLinkEndPointsActor extends XmlActorAdapter {
 
     private ArrowLinkPointXmlAction createArrowLinkPointXmlAction(
             MindMapArrowLink arrowLink, Point startPoint, Point endPoint) {
-        ArrowLinkPointXmlAction action = new ArrowLinkPointXmlAction();
+        var action = new ArrowLinkPointXmlAction();
         action.setStartPoint(PointUtils.PointToXml(startPoint));
         action.setEndPoint(PointUtils.PointToXml(endPoint));
         action.setId(arrowLink.getUniqueId());

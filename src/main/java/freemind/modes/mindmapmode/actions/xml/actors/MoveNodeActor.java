@@ -47,7 +47,7 @@ public class MoveNodeActor extends NodeXmlActorAdapter {
 
     private MoveNodeXmlAction moveNode(MindMapNode selected, int parentVGap,
                                        int hGap, int shiftY) {
-        MoveNodeXmlAction moveNodeAction = new MoveNodeXmlAction();
+        var moveNodeAction = new MoveNodeXmlAction();
         moveNodeAction.setNode(getNodeID(selected));
         moveNodeAction.setHGap(hGap);
         moveNodeAction.setVGap(parentVGap);

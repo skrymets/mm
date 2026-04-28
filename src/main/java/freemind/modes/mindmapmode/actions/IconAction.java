@@ -50,19 +50,19 @@ public class IconAction extends MindmapAction implements IconInformation {
     }
 
     private void addLastIcon() {
-        for (MindMapNode selected : modeController.getSelecteds()) {
+        for (var selected : modeController.getSelecteds()) {
             getAddIconActor().addIcon(selected, icon);
         }
     }
 
     private void removeIcon(boolean removeFirst) {
-        for (MindMapNode selected : modeController.getSelecteds()) {
+        for (var selected : modeController.getSelecteds()) {
             getAddIconActor().removeIcon(selected, icon, removeFirst);
         }
     }
 
     private void removeAllIcons() {
-        for (MindMapNode selected : modeController.getSelecteds()) {
+        for (var selected : modeController.getSelecteds()) {
             if (!selected.getIcons().isEmpty()) {
                 modeController.removeAllIcons(selected);
             }

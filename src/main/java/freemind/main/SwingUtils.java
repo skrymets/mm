@@ -41,7 +41,7 @@ public final class SwingUtils {
     }
 
     public static boolean isAvailableFontFamily(String name) {
-        for (String s : getAvailableFonts()) {
+        for (var s : getAvailableFonts()) {
             if (s.equals(name)) {
                 return true;
             }
@@ -240,7 +240,7 @@ public final class SwingUtils {
     }
 
     public static void scaleAllFonts(float pScale) {
-        for (Object next : UIManager.getLookAndFeelDefaults().keySet()) {
+        for (var next : UIManager.getLookAndFeelDefaults().keySet()) {
             if (next instanceof String key) {
                 if (key.endsWith(".font")) {
                     Font font = UIManager.getFont(key);
@@ -334,7 +334,7 @@ public final class SwingUtils {
     public static void logTransferable(Transferable t) {
         log.debug("BEGIN OF Transferable: {}", t);
         DataFlavor[] dataFlavors = t.getTransferDataFlavors();
-        for (DataFlavor dataFlavor : dataFlavors) {
+        for (var dataFlavor : dataFlavors) {
             log.debug("  Flavor: {}", dataFlavor);
             log.debug("    Supported: {}", t.isDataFlavorSupported(dataFlavor));
             try {

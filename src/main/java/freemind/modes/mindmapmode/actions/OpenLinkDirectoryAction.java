@@ -16,7 +16,7 @@ public class OpenLinkDirectoryAction extends LinkActionBase {
 
     public void actionPerformed(ActionEvent event) {
         String link = "";
-        for (MindMapNode selNode : getMindMapController().getSelecteds()) {
+        for (var selNode : getMindMapController().getSelecteds()) {
             link = selNode.getLink();
             if (link != null) {
                 // as link is an URL, '/' is the only correct one.

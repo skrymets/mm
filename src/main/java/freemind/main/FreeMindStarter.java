@@ -121,9 +121,9 @@ public class FreeMindStarter {
 
     private static Properties loadUsersPreferences(Properties defaultPreferences) {
 
-        Properties userPreferences = new Properties(defaultPreferences);
+        var userPreferences = new Properties(defaultPreferences);
         if (isReadable(FREEMIND_DEFAULT_USER_PREFERENCES_FILE)) {
-            try (InputStream in = new FileInputStream(FREEMIND_DEFAULT_USER_PREFERENCES_FILE.toFile())) {
+            try (var in = new FileInputStream(FREEMIND_DEFAULT_USER_PREFERENCES_FILE.toFile())) {
                 userPreferences.load(in);
             } catch (Exception ex) {
                 log.error("Error while loading default properties.", ex);
@@ -134,8 +134,8 @@ public class FreeMindStarter {
     }
 
     public static Properties loadDefaultPreferences() throws IOException {
-        try (InputStream stream = FreeMindStarter.class.getClassLoader().getResourceAsStream(DEFAULT_PREFERENCES_RESOURCE)) {
-            Properties defaultProperties = new Properties();
+        try (var stream = FreeMindStarter.class.getClassLoader().getResourceAsStream(DEFAULT_PREFERENCES_RESOURCE)) {
+            var defaultProperties = new Properties();
             defaultProperties.load(stream);
             return defaultProperties;
         } catch (IOException e) {

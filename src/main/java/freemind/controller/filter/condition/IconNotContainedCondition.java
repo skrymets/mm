@@ -40,14 +40,14 @@ public class IconNotContainedCondition implements Condition {
 
     private static boolean isStateIconContained(MindMapNode node, String iconName) {
         Set<String> stateIcons = node.getStateIcons().keySet();
-        for (String nextIcon : stateIcons) {
+        for (var nextIcon : stateIcons) {
             if (iconName.equals(nextIcon)) return true;
         }
         return false;
     }
 
     public JComponent getListCellRendererComponent() {
-        JCondition component = new JCondition();
+        var component = new JCondition();
         String text = ConditionFactory.getResources().getResourceString("filter_icon")
                 + ' '
                 + ConditionFactory.getResources().getResourceString("filter_not_contains")

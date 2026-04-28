@@ -36,7 +36,7 @@ public class TimeManagementOrganizer implements HookRegistration,
             String hookName = nodeHookAction.getHookName();
             if (hookName.equals("plugins/time/RemoveReminderHook.java")) {
                 boolean visible = false;
-                for (MindMapNode node : controller.getSelecteds()) {
+                for (var node : controller.getSelecteds()) {
                     if (TimeManagementOrganizer.getHook(node) != null) {
                         visible = true;
                     }
@@ -48,7 +48,7 @@ public class TimeManagementOrganizer implements HookRegistration,
     }
 
     public static ReminderHookBase getHook(MindMapNode node) {
-        for (PermanentNodeHook element : node.getActivatedHooks()) {
+        for (var element : node.getActivatedHooks()) {
             if (element instanceof ReminderHookBase reminderHook) {
                 return reminderHook;
             }

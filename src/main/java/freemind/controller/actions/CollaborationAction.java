@@ -147,7 +147,7 @@ public class CollaborationAction extends XmlAction
         }
 
         public static Cmd convert(String value) {
-            for (Cmd inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }

@@ -24,7 +24,7 @@ public class NamedObject {
     }
 
     static public NamedObject literal(String literal) {
-        NamedObject result = new NamedObject();
+        var result = new NamedObject();
         result.object = literal;
         result.name = literal;
         return result;

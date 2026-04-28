@@ -18,7 +18,7 @@ public class CompoundActor extends XmlActorAdapter {
         CompoundAction compound = (CompoundAction) action;
         List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compound);
 
-        for (XmlAction xmlAction : xmlActions) {
+        for (var xmlAction : xmlActions) {
             ActorXml actor = getExMapFeedback().getActionRegistry().getActor(xmlAction);
             actor.act(xmlAction);
         }

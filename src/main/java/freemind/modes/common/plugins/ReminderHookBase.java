@@ -60,7 +60,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
 
     public void save(Document doc, Element xml) {
         super.save(doc, xml);
-        HashMap<String, Object> nameValuePairs = new HashMap<>();
+        var nameValuePairs = new HashMap<String, Object>();
         nameValuePairs.put(REMINDUSERAT, remindUserAt);
         saveNameValuePairs(nameValuePairs, doc, xml);
     }
@@ -83,7 +83,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
             scheduleTimer();
             Date date = Date.from(Instant.ofEpochMilli(remindUserAt));
             Object[] messageArguments = {date};
-            MessageFormat formatter = new MessageFormat(
+            var formatter = new MessageFormat(
                     getResourceString("plugins/TimeManagement.xml_reminderNode_tooltip"));
             String message = formatter.format(messageArguments);
             setToolTip(node, getName(), message);

@@ -19,7 +19,7 @@ public class CutActor extends XmlActorAdapter {
     }
 
     public CutNodeAction getCutNodeAction(MindMapNode node) {
-        CutNodeAction cutAction = new CutNodeAction();
+        var cutAction = new CutNodeAction();
         cutAction.setNode(getNodeID(node));
         return cutAction;
     }
@@ -28,12 +28,12 @@ public class CutActor extends XmlActorAdapter {
         getExMapFeedback().sortNodesByDepth(nodeList);
         Transferable totalCopy = getExMapFeedback().copy(nodeList, true);
         // Do-action
-        CompoundAction doAction = new CompoundAction();
+        var doAction = new CompoundAction();
         // Undo-action
-        CompoundAction undo = new CompoundAction();
+        var undo = new CompoundAction();
         // sort selectedNodes list by depth, in order to guarantee that sons are
         // deleted first:
-        for (MindMapNode node : nodeList) {
+        for (var node : nodeList) {
             if (node.getParentNode() == null) {
                 continue;
             }
@@ -42,7 +42,7 @@ public class CutActor extends XmlActorAdapter {
             CompoundAction.Choice doActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(cutNodeAction);
             doAction.addChoice(doActionChoice);
 
-            NodeCoordinate coord = new NodeCoordinate(node, node.isLeft());
+            var coord = new NodeCoordinate(node, node.isLeft());
             Transferable copy = getExMapFeedback().copy(node, true);
             XmlAction pasteNodeAction = getXmlActorFactory().getPasteActor()
                     .getPasteNodeAction(copy, coord, null);

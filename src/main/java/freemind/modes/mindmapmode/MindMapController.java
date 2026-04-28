@@ -146,7 +146,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
         log.info("mindmap_menus");
         // load menus:
-        try (InputStream in = this.getFrame().getResource("mindmap_menus.xml").openStream()) {
+        try (var in = this.getFrame().getResource("mindmap_menus.xml").openStream()) {
             mMenuStructure = updateMenusFromXml(in);
         } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
@@ -287,7 +287,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public MapAdapter newModel(ModeController modeController) {
-        MindMapMapModel model = new MindMapMapModel(modeController);
+        var model = new MindMapMapModel(modeController);
         modeController.setModel(model);
         return model;
     }
@@ -456,7 +456,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     public JPopupMenu getPopupForModel(java.lang.Object obj) {
         if (obj instanceof MindMapArrowLinkModel link) {
             // yes, this is a link.
-            JPopupMenu arrowLinkPopup = new JPopupMenu();
+            var arrowLinkPopup = new JPopupMenu();
             // block the screen while showing popup.
             arrowLinkPopup.addPopupMenuListener(this.popupListenerSingleton);
             actions.removeArrowLinkAction.setArrowLink(link);
@@ -464,10 +464,10 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             arrowLinkPopup.add(new ColorArrowLinkAction(this, link));
             arrowLinkPopup.addSeparator();
             /* The arrow state as radio buttons: */
-            JRadioButtonMenuItem itemnn = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "none", "images/arrow-mode-none.png", link, false, false));
-            JRadioButtonMenuItem itemnt = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "forward", "images/arrow-mode-forward.png", link, false, true));
-            JRadioButtonMenuItem itemtn = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "backward", "images/arrow-mode-backward.png", link, true, false));
-            JRadioButtonMenuItem itemtt = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "both", "images/arrow-mode-both.png", link, true, true));
+            var itemnn = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "none", "images/arrow-mode-none.png", link, false, false));
+            var itemnt = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "forward", "images/arrow-mode-forward.png", link, false, true));
+            var itemtn = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "backward", "images/arrow-mode-backward.png", link, true, false));
+            var itemtt = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "both", "images/arrow-mode-both.png", link, true, true));
             itemnn.setText(null);
             itemnt.setText(null);
             itemtn.setText(null);
@@ -496,7 +496,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
             NodeAlreadyVisited.add(link.getTarget());
             List<MindMapLink> links = getMindMapMapModel().getLinkRegistry().getAllLinks(link.getSource());
             links.addAll(getMindMapMapModel().getLinkRegistry().getAllLinks(link.getTarget()));
-            for (MindMapLink mindMapLink : links) {
+            for (var mindMapLink : links) {
                 MindMapArrowLinkModel foreign_link = (MindMapArrowLinkModel) mindMapLink;
                 if (NodeAlreadyVisited.add(foreign_link.getTarget())) {
                     arrowLinkPopup.add(new GotoLinkNodeAction(this, foreign_link.getTarget()));
@@ -541,7 +541,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.setLinkByFileChooser.setEnabled(enabled);
         actions.setImageByFileChooser.setEnabled(enabled);
         actions.followLink.setEnabled(enabled);
-        for (IconAction iconAction : actions.iconActions) {
+        for (var iconAction : actions.iconActions) {
             iconAction.setEnabled(enabled);
         }
         actions.save.setEnabled(enabled);
@@ -553,7 +553,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.importLinkedBranch.setEnabled(enabled);
         actions.importLinkedBranchWithoutRoot.setEnabled(enabled);
         // hooks:
-        for (HookAction hookAction : actions.hookActions) {
+        for (var hookAction : actions.hookActions) {
             ((Action) hookAction).setEnabled(enabled);
         }
         actions.cut.setEnabled(enabled);
@@ -595,15 +595,15 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         actions.removeNodeBackgroundColor.setEnabled(enabled);
         actions.moveNodeAction.setEnabled(enabled);
         actions.revertAction.setEnabled(enabled);
-        for (EdgeWidthAction edgeWidth : actions.edgeWidths) {
+        for (var edgeWidth : actions.edgeWidths) {
             edgeWidth.setEnabled(enabled);
         }
         actions.fork.setEnabled(enabled);
         actions.bubble.setEnabled(enabled);
-        for (EdgeStyleAction edgeStyle : actions.edgeStyles) {
+        for (var edgeStyle : actions.edgeStyles) {
             edgeStyle.setEnabled(enabled);
         }
-        for (ApplyPatternAction pattern : actions.patterns) {
+        for (var pattern : actions.patterns) {
             pattern.setEnabled(enabled);
         }
         actions.useRichFormatting.setEnabled(enabled);
@@ -665,7 +665,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public void applyPattern(MindMapNode node, String patternName) {
-        for (ApplyPatternAction patternAction : actions.patterns) {
+        for (var patternAction : actions.patterns) {
             if (patternAction.getPattern().getName().equals(patternName)) {
                 StylePatternFactory.applyPattern(node, patternAction.getPattern(), getPatternsList(), getPlugins(), this);
                 break;
@@ -857,13 +857,13 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     static public void saveHTML(MindMapNodeModel rootNodeOfBranch, File file) throws IOException {
-        BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.get());
+        var fileout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+        var htmlWriter = new MindMapHTMLWriter(fileout, Resources.get());
         htmlWriter.saveHTML(rootNodeOfBranch);
     }
 
     static public void saveHTML(List<MindMapNodeModel> mindMapNodes, Writer fileout) throws IOException {
-        MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout, Resources.get());
+        var htmlWriter = new MindMapHTMLWriter(fileout, Resources.get());
         htmlWriter.saveHTML(mindMapNodes);
     }
 
@@ -878,7 +878,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     private void recursiveCallUpdateHooks(MindMapNode node, MindMapNode changedNode) {
         // Tell any node hooks that the node is changed:
         if (node instanceof MindMapNode) {
-            for (PermanentNodeHook hook : node.getActivatedHooks()) {
+            for (var hook : node.getActivatedHooks()) {
                 if ((!isUndoAction()) || hook instanceof UndoEventReceiver) {
                     if (node == changedNode) {
                         hook.onUpdateNodeHook();
@@ -998,7 +998,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
     public boolean mapSourceChanged(MindMap pMap) throws Exception {
         // ask the user, if he wants to reload the map.
-        MapSourceChangeDialog runnable = new MapSourceChangeDialog(this);
+        var runnable = new MapSourceChangeDialog(this);
         SwingUtils.invokeAndWait(runnable);
         return runnable.getReturnValue();
     }

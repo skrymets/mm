@@ -40,7 +40,7 @@ class StdFormatter extends SimpleFormatter {
                 && !STDOUT.getName().equals(record.getLoggerName())) {
             return super.format(record);
         }
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.append(lineSeparator);
         String message = formatMessage(record);
         sb.append(record.getLevel().getLocalizedName());

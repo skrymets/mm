@@ -32,7 +32,7 @@ public class AddArrowLinkActor extends XmlActorAdapter {
                 // call registry to give new label
                 getLinkRegistry().registerLinkTarget(target);
             }
-            MindMapArrowLinkModel linkModel = new MindMapArrowLinkModel(source,
+            var linkModel = new MindMapArrowLinkModel(source,
                     target, getExMapFeedback());
             linkModel.setDestinationLabel(getLinkRegistry().getLabel(target));
             // give label:
@@ -80,7 +80,7 @@ public class AddArrowLinkActor extends XmlActorAdapter {
 
     public AddArrowLinkXmlAction createAddArrowLinkXmlAction(
             MindMapNode source, MindMapNode target, String proposedID) {
-        AddArrowLinkXmlAction action = new AddArrowLinkXmlAction();
+        var action = new AddArrowLinkXmlAction();
         action.setNode(getNodeID(source));
         action.setDestination(getNodeID(target));
         action.setNewId(proposedID);

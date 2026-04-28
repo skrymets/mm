@@ -41,7 +41,7 @@ public class ItalicNodeActor extends NodeXmlActorAdapter {
     }
 
     private ItalicNodeAction toggleItalic(MindMapNode selected, boolean italic) {
-        ItalicNodeAction italicAction = new ItalicNodeAction();
+        var italicAction = new ItalicNodeAction();
         italicAction.setNode(getNodeID(selected));
         italicAction.setItalic(italic);
         return italicAction;

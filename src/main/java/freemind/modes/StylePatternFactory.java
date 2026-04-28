@@ -40,7 +40,7 @@ public class StylePatternFactory {
         Patterns patterns = (Patterns) XmlBindingTools.getInstance().unMarshall(patternsXML);
 
         // translate standard strings:
-        for (Pattern pattern : patterns.getPatternList()) {
+        for (var pattern : patterns.getPatternList()) {
             String originalName = pattern.getName();
             String name = originalName;
             if (name == null) {
@@ -56,7 +56,7 @@ public class StylePatternFactory {
                 // store original name to be able to translate back
                 pattern.setOriginalName(originalName);
                 // look, whether the string occurs in other situations:
-                for (Pattern otherPattern : patterns.getPatternList()) {
+                for (var otherPattern : patterns.getPatternList()) {
                     PatternChild child = otherPattern.getPatternChild();
                     if (child != null) {
                         if (Objects.equals(originalName, child.getValue())) {
@@ -77,9 +77,9 @@ public class StylePatternFactory {
      */
     public static void savePatterns(Writer writer, List<Pattern> listOfPatterns)
             throws Exception {
-        Patterns patterns = new Patterns();
-        HashMap<String, Pattern> nameToPattern = new HashMap<>();
-        for (Pattern pattern : listOfPatterns) {
+        var patterns = new Patterns();
+        var nameToPattern = new HashMap<String, Pattern>();
+        for (var pattern : listOfPatterns) {
             patterns.addPattern(pattern);
             if (pattern.getOriginalName() != null) {
                 nameToPattern.put(pattern.getName(), pattern);
@@ -87,7 +87,7 @@ public class StylePatternFactory {
                 pattern.setOriginalName(null);
             }
         }
-        for (Pattern pattern : patterns.getPatternList()) {
+        for (var pattern : patterns.getPatternList()) {
             PatternChild patternChild = pattern.getPatternChild();
             if (patternChild != null
                     && nameToPattern.containsKey(patternChild.getValue())) {
@@ -103,61 +103,61 @@ public class StylePatternFactory {
     }
 
     public static Pattern createPatternFromNode(MindMapNode node) {
-        Pattern pattern = new Pattern();
+        var pattern = new Pattern();
 
         if (node.getColor() != null) {
-            PatternNodeColor subPattern = new PatternNodeColor();
+            var subPattern = new PatternNodeColor();
             subPattern.setValue(ColorUtils.colorToXml(node.getColor()));
             pattern.setPatternNodeColor(subPattern);
         }
         if (node.getBackgroundColor() != null) {
-            PatternNodeBackgroundColor subPattern = new PatternNodeBackgroundColor();
+            var subPattern = new PatternNodeBackgroundColor();
             subPattern.setValue(ColorUtils.colorToXml(node.getBackgroundColor()));
             pattern.setPatternNodeBackgroundColor(subPattern);
         }
         if (node.getStyle() != null) {
-            PatternNodeStyle subPattern = new PatternNodeStyle();
+            var subPattern = new PatternNodeStyle();
             subPattern.setValue(node.getStyle());
             pattern.setPatternNodeStyle(subPattern);
         }
 
-        PatternNodeFontBold nodeFontBold = new PatternNodeFontBold();
+        var nodeFontBold = new PatternNodeFontBold();
         nodeFontBold.setValue(node.isBold() ? TRUE_VALUE : FALSE_VALUE);
         pattern.setPatternNodeFontBold(nodeFontBold);
-        PatternNodeFontStrikethrough nodeFontStrikethrough = new PatternNodeFontStrikethrough();
+        var nodeFontStrikethrough = new PatternNodeFontStrikethrough();
         nodeFontStrikethrough.setValue(node.isStrikethrough() ? TRUE_VALUE : FALSE_VALUE);
         pattern.setPatternNodeFontStrikethrough(nodeFontStrikethrough);
-        PatternNodeFontItalic nodeFontItalic = new PatternNodeFontItalic();
+        var nodeFontItalic = new PatternNodeFontItalic();
         nodeFontItalic.setValue(node.isItalic() ? TRUE_VALUE : FALSE_VALUE);
         pattern.setPatternNodeFontItalic(nodeFontItalic);
         if (node.getFontSize() != null) {
-            PatternNodeFontSize nodeFontSize = new PatternNodeFontSize();
+            var nodeFontSize = new PatternNodeFontSize();
             nodeFontSize.setValue(node.getFontSize());
             pattern.setPatternNodeFontSize(nodeFontSize);
         }
         if (node.getFontFamilyName() != null) {
-            PatternNodeFontName subPattern = new PatternNodeFontName();
+            var subPattern = new PatternNodeFontName();
             subPattern.setValue(node.getFontFamilyName());
             pattern.setPatternNodeFontName(subPattern);
         }
 
         if (node.getIcons().size() == 1) {
-            PatternIcon iconPattern = new PatternIcon();
+            var iconPattern = new PatternIcon();
             iconPattern.setValue(node.getIcons().get(0).getName());
             pattern.setPatternIcon(iconPattern);
         }
         if (node.getEdge().getColor() != null) {
-            PatternEdgeColor subPattern = new PatternEdgeColor();
+            var subPattern = new PatternEdgeColor();
             subPattern.setValue(ColorUtils.colorToXml(node.getEdge().getColor()));
             pattern.setPatternEdgeColor(subPattern);
         }
         if (node.getEdge().getStyle() != null) {
-            PatternEdgeStyle subPattern = new PatternEdgeStyle();
+            var subPattern = new PatternEdgeStyle();
             subPattern.setValue(node.getEdge().getStyle());
             pattern.setPatternEdgeStyle(subPattern);
         }
         if (node.getEdge().getWidth() != EdgeAdapter.DEFAULT_WIDTH) {
-            PatternEdgeWidth subPattern = new PatternEdgeWidth();
+            var subPattern = new PatternEdgeWidth();
             subPattern.setValue("" + node.getEdge().getWidth());
             pattern.setPatternEdgeWidth(subPattern);
         }
@@ -261,7 +261,7 @@ public class StylePatternFactory {
      * set to 'don't touch'.
      */
     public static Pattern intersectPattern(Pattern p1, Pattern p2) {
-        Pattern result = new Pattern();
+        var result = new Pattern();
         result.setPatternEdgeColor((PatternEdgeColor) processPatternProperties(
                 p1.getPatternEdgeColor(), p2.getPatternEdgeColor(),
                 new PatternEdgeColor()));
@@ -318,7 +318,7 @@ public class StylePatternFactory {
     public static Pattern createPatternFromSelected(MindMapNode focussed,
                                                     List<MindMapNode> selected) {
         Pattern nodePattern = createPatternFromNode(focussed);
-        for (MindMapNode node : selected) {
+        for (var node : selected) {
             Pattern tempNodePattern = createPatternFromNode(node);
             nodePattern = intersectPattern(nodePattern, tempNodePattern);
         }
@@ -329,7 +329,7 @@ public class StylePatternFactory {
      * @return a pattern that removes all properties of a node to its defaults.
      */
     public static Pattern getRemoveAllPattern() {
-        Pattern result = new Pattern();
+        var result = new Pattern();
         result.setPatternEdgeColor(new PatternEdgeColor());
         result.setPatternEdgeStyle(new PatternEdgeStyle());
         result.setPatternEdgeWidth(new PatternEdgeWidth());
@@ -377,7 +377,7 @@ public class StylePatternFactory {
                 // check if icon is already present:
                 List<NodeIcon> icons = node.getIcons();
                 boolean found = false;
-                for (NodeIcon icon : icons) {
+                for (var icon : icons) {
                     if (icon.getName() != null
                             && icon.getName().equals(iconName)) {
                         found = true;
@@ -440,7 +440,7 @@ public class StylePatternFactory {
                 && pattern.getPatternChild().getValue() != null) {
             // find children among all patterns:
             String searchedPatternName = pattern.getPatternChild().getValue();
-            for (Pattern otherPattern : pPatternList) {
+            for (var otherPattern : pPatternList) {
                 if (otherPattern.getName().equals(searchedPatternName)) {
                     for (ListIterator<MindMapNode> j = node.childrenUnfolded(); j.hasNext(); ) {
                         NodeAdapter child = (NodeAdapter) j.next();
@@ -450,7 +450,7 @@ public class StylePatternFactory {
                 }
             }
         }
-        for (MindMapControllerPlugin plugin : pPlugins) {
+        for (var plugin : pPlugins) {
             if (plugin instanceof ExternalPatternAction externalAction) {
                 externalAction.act(node, pattern);
             }

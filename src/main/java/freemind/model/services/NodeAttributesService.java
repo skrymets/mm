@@ -25,8 +25,8 @@ public class NodeAttributesService {
         if (attributeVector == null) {
             return Collections.emptyList();
         }
-        List<String> returnValue = new ArrayList<>();
-        for (Attribute attr : attributeVector) {
+        var returnValue = new ArrayList<String>();
+        for (var attr : attributeVector) {
             returnValue.add(attr.getName());
         }
         return returnValue;
@@ -55,7 +55,7 @@ public class NodeAttributesService {
         if (attributeVector == null) {
             return null;
         }
-        for (Attribute attr : attributeVector) {
+        for (var attr : attributeVector) {
             if (Objects.equals(attr.getName(), key)) {
                 return attr.getValue();
             }
@@ -68,7 +68,7 @@ public class NodeAttributesService {
             return -1;
         }
         int index = 0;
-        for (Attribute attr : attributeVector) {
+        for (var attr : attributeVector) {
             if (Objects.equals(attr.getName(), key)) {
                 return index;
             }

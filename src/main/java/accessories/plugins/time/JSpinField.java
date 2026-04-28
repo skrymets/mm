@@ -91,7 +91,7 @@ public class JSpinField extends JPanel implements ChangeListener,
     }
 
     public void adjustWidthToMaximumValue() {
-        JTextField testTextField = new JTextField(Integer.toString(max));
+        var testTextField = new JTextField(Integer.toString(max));
         int width = testTextField.getPreferredSize().width;
         int height = testTextField.getPreferredSize().height;
         textField.setPreferredSize(new Dimension(width, height));
@@ -288,7 +288,7 @@ public class JSpinField extends JPanel implements ChangeListener,
      * @param s The command line arguments
      */
     public static void main(String[] s) {
-        JFrame frame = new JFrame("JSpinField");
+        var frame = new JFrame("JSpinField");
         frame.getContentPane().add(new JSpinField());
         frame.pack();
         frame.setVisible(true);

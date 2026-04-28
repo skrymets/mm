@@ -53,7 +53,7 @@ public class NodeViewFactory {
         }
 
         public Dimension preferredLayoutSize(Container parent) {
-            final Dimension prefSize = new Dimension(0, 0);
+            final var prefSize = new Dimension(0, 0);
             final int componentCount = parent.getComponentCount();
 
             for (int i = 0; i < componentCount; i++) {
@@ -134,10 +134,10 @@ public class NodeViewFactory {
      * Factory method which creates the right NodeView for the model.
      */
     public NodeView newNodeView(MindMapNode model, int position, MapView map, Container parent) {
-        NodeView newView = new NodeView(model, position, map, parent);
+        var newView = new NodeView(model, position, map, parent);
 
         if (model.isRoot()) {
-            final MainView mainView = new RootMainView();
+            final var mainView = new RootMainView();
             newView.setMainView(mainView);
             newView.setLayout(VerticalRootNodeViewLayout.getInstance());
 

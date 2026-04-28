@@ -712,7 +712,7 @@ public class Node
         }
 
         public static FOLDED convert(String value) {
-            for (FOLDED inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }
@@ -744,7 +744,7 @@ public class Node
         }
 
         public static POSITION convert(String value) {
-            for (POSITION inst : values()) {
+            for (var inst : values()) {
                 if (inst.xmlValue().equals(value)) {
                     return inst;
                 }

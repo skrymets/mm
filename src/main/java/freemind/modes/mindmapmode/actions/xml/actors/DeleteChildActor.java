@@ -95,7 +95,7 @@ public class DeleteChildActor extends XmlActorAdapter {
         String newId = getNodeID(selectedNode);
 
         Transferable copy = getExMapFeedback().copy(selectedNode, true);
-        NodeCoordinate coord = new NodeCoordinate(selectedNode,
+        var coord = new NodeCoordinate(selectedNode,
                 selectedNode.isLeft());
         // Undo-action
         PasteNodeAction pasteNodeAction = null;
@@ -109,7 +109,7 @@ public class DeleteChildActor extends XmlActorAdapter {
     }
 
     public DeleteNodeAction getDeleteNodeAction(String newId) {
-        DeleteNodeAction deleteAction = new DeleteNodeAction();
+        var deleteAction = new DeleteNodeAction();
         deleteAction.setNode(newId);
         return deleteAction;
     }

@@ -46,12 +46,12 @@ public class MenuConfigService {
         processMenuCategory(holder, objects, "");
 
         MindMapHookFactory hookFactory = (MindMapHookFactory) controller.getHookFactory();
-        for (HookAction action : controller.getHookActions()) {
+        for (var action : controller.getHookActions()) {
             AbstractAction hookAction = (AbstractAction) action;
             String hookName = ((HookAction) hookAction).getHookName();
             hookFactory.decorateAction(hookName, hookAction);
             List<String> hookMenuPositions = hookFactory.getHookMenuPositions(hookName);
-            for (String pos : hookMenuPositions) {
+            for (var pos : hookMenuPositions) {
                 holder.addMenuItem(hookFactory.getMenuItem(hookName, hookAction), pos);
             }
         }
@@ -105,7 +105,7 @@ public class MenuConfigService {
      */
     public void processMenuCategory(StructuredMenuHolder holder, List<Object> list, String category) {
         ButtonGroup buttonGroup = null;
-        for (Object obj : list) {
+        for (var obj : list) {
             Object unwrapped = unwrapBaseObject(obj);
 
             if (unwrapped instanceof MenuCategoryBase cat) {

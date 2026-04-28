@@ -85,13 +85,13 @@ public final class MindMapUtils {
      *         clipboard. An empty list otherwise.
      */
     public static List<MindMapNode> getMindMapNodesFromClipboard(MindMapController pMindMapController) {
-        List<MindMapNode> mindMapNodes = new ArrayList<>();
+        var mindMapNodes = new ArrayList<MindMapNode>();
         Transferable clipboardContents = pMindMapController.getClipboardContents();
         if (clipboardContents != null) {
             try {
                 @SuppressWarnings("unchecked")
                 List<String> transferData = (List<String>) clipboardContents.getTransferData(MindMapNodesSelection.copyNodeIdsFlavor);
-                for (String nodeId : transferData) {
+                for (var nodeId : transferData) {
                     MindMapNode node = pMindMapController.getNodeFromID(nodeId);
                     mindMapNodes.add(node);
                 }
@@ -123,7 +123,7 @@ public final class MindMapUtils {
      */
     public static int iconLastIndex(MindMapNode node, String iconName) {
         List<NodeIcon> icons = node.getIcons();
-        ListIterator<NodeIcon> i = icons.listIterator(icons.size());
+        var i = icons.listIterator(icons.size());
         while (i.hasPrevious()) {
             NodeIcon nextIcon = i.previous();
             if (iconName.equals(nextIcon.getName())) {
@@ -151,7 +151,7 @@ public final class MindMapUtils {
      * {@code "mode:filename"}.
      */
     public static String getFileNameFromRestorable(String restoreable) {
-        StringTokenizer token = new StringTokenizer(restoreable, ":");
+        var token = new StringTokenizer(restoreable, ":");
         String fileName;
         if (token.hasMoreTokens()) {
             token.nextToken();
@@ -168,7 +168,7 @@ public final class MindMapUtils {
      * {@code "mode:filename"}.
      */
     public static String getModeFromRestorable(String restoreable) {
-        StringTokenizer token = new StringTokenizer(restoreable, ":");
+        var token = new StringTokenizer(restoreable, ":");
         String mode;
         if (token.hasMoreTokens()) {
             mode = token.nextToken();
@@ -211,7 +211,7 @@ public final class MindMapUtils {
     public static Object getField(Object[] pObjects, String pField)
             throws IllegalArgumentException, SecurityException,
             IllegalAccessException, NoSuchFieldException {
-        for (Object object : pObjects) {
+        for (var object : pObjects) {
             for (int j = 0; j < object.getClass().getFields().length; j++) {
                 Field f = object.getClass().getFields()[j];
                 if (Objects.equals(pField, f.getName())) {

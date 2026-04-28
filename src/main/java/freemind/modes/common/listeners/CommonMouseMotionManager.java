@@ -24,7 +24,7 @@ public class CommonMouseMotionManager implements MapMouseMotionReceiver {
     }
 
     public void mouseDragged(MouseEvent e) {
-        Rectangle r = new Rectangle(e.getX(), e.getY(), 1, 1);
+        var r = new Rectangle(e.getX(), e.getY(), 1, 1);
         MapView mapView = (MapView) e.getComponent();
         boolean isEventPointVisible = mapView.getVisibleRect().contains(r);
         if (!isEventPointVisible) {

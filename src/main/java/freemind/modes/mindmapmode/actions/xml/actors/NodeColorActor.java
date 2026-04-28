@@ -27,7 +27,7 @@ public class NodeColorActor extends XmlActorAdapter {
 
     public NodeColorFormatAction createNodeColorFormatAction(MindMapNode node,
                                                              Color color) {
-        NodeColorFormatAction nodeAction = new NodeColorFormatAction();
+        var nodeAction = new NodeColorFormatAction();
         nodeAction.setNode(getNodeID(node));
         nodeAction.setColor(ColorUtils.colorToXml(color));
         return nodeAction;

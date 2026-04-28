@@ -112,7 +112,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
                     controller.removeAttribute(pNode, 0);
                 }
                 // write it from new.
-                for (AttributeHolder holder : mAttributeTableModel.mData) {
+                for (var holder : mAttributeTableModel.mData) {
                     // add at end
                     controller.addAttribute(pNode, new Attribute(holder.mKey, holder.mValue));
                 }
@@ -130,7 +130,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
             if (mCurrentNode.getAttributeTableLength() == mAttributeTableModel.mData.size()) {
                 int index = 0;
                 equal = true;
-                for (AttributeHolder holder : mAttributeTableModel.mData) {
+                for (var holder : mAttributeTableModel.mData) {
                     Attribute attribute = mCurrentNode.getAttribute(index);
                     if (Objects.equals(holder.mKey, attribute.getName()) && Objects.equals(holder.mValue, attribute.getValue())) {
                         // ok
@@ -186,7 +186,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         }
 
         public void addAttributeHolder(Attribute pAttribute, boolean pMakeMapDirty) {
-            AttributeHolder holder = new AttributeHolder();
+            var holder = new AttributeHolder();
             holder.mKey = pAttribute.getName();
             holder.mValue = pAttribute.getValue();
             addAttributeHolder(holder, pMakeMapDirty);
@@ -321,9 +321,9 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         mAttributeTableModel = new AttributeTableModel(controller);
         mAttributeTable.setModel(mAttributeTableModel);
         // makes map dirty on changes:
-        JTextField tableTextField = new JTextField();
+        var tableTextField = new JTextField();
         tableTextField.getDocument().addDocumentListener(this);
-        DefaultCellEditor cellEditor = new DefaultCellEditor(tableTextField);
+        var cellEditor = new DefaultCellEditor(tableTextField);
         RowSorter<TableModel> sorter =
                 new TableRowSorter<>(mAttributeTableModel);
         String marshalled = controller.getProperty(ATTRIBUTE_TABLE_PROPERTIES);
@@ -331,7 +331,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
                 .getInstance().unMarshall(marshalled);
         var keys = new ArrayList<SortKey>();
         if (props != null) {
-            for (TableColumnOrder setting : emptyIfNull(props.getTableColumnOrderList())) {
+            for (var setting : emptyIfNull(props.getTableColumnOrderList())) {
                 keys.add(new SortKey(setting.getColumnIndex(), SortOrder
                         .valueOf(setting.getColumnSorting())));
             }
@@ -351,7 +351,7 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         controller.registerNodeSelectionListener(mAttributeManager, false);
         controller.registerNodeLifetimeListener(mAttributeManager, true);
         mPopupMenu = new JPopupMenu();
-        JMenuItem menuItem = new JMenuItem(controller.getText(DELETE_ROW_TEXT_ID));
+        var menuItem = new JMenuItem(controller.getText(DELETE_ROW_TEXT_ID));
         mPopupMenu.add(menuItem);
         menuItem.addActionListener(e -> {
             Component c = (Component) e.getSource();
@@ -389,9 +389,9 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
 
     public void deRegister() {
         // store sortings:
-        AttributeTableProperties props = new AttributeTableProperties();
-        for (SortKey key : mAttributeTable.getRowSorter().getSortKeys()) {
-            TableColumnOrder order = new TableColumnOrder();
+        var props = new AttributeTableProperties();
+        for (var key : mAttributeTable.getRowSorter().getSortKeys()) {
+            var order = new TableColumnOrder();
             order.setColumnIndex(key.getColumn());
             order.setColumnSorting(key.getSortOrder().name());
             props.addTableColumnOrder(order);

@@ -11,12 +11,12 @@ public class SearchService {
     public record SearchResult(MindMapNode node, String matchLocation, String matchedText) {}
 
     public List<SearchResult> searchNodes(List<MindMapNode> rootNodes, String query, boolean useRegex) {
-        List<SearchResult> results = new ArrayList<>();
+        var results = new ArrayList<SearchResult>();
         Pattern pattern = useRegex
                 ? Pattern.compile(query, Pattern.CASE_INSENSITIVE)
                 : Pattern.compile(Pattern.quote(query), Pattern.CASE_INSENSITIVE);
 
-        for (MindMapNode root : rootNodes) {
+        for (var root : rootNodes) {
             searchRecursive(root, pattern, results);
         }
         return results;
@@ -33,7 +33,7 @@ public class SearchService {
             results.add(new SearchResult(node, "note", noteText));
         }
 
-        for (String key : node.getAttributeKeyList()) {
+        for (var key : node.getAttributeKeyList()) {
             String value = node.getAttribute(key);
             if (value != null && pattern.matcher(value).find()) {
                 results.add(new SearchResult(node, "attribute:" + key, value));

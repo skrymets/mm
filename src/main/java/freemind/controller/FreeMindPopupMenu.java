@@ -16,7 +16,7 @@ public class FreeMindPopupMenu extends JPopupMenu implements StructuredMenuHolde
     protected void firePopupMenuWillBecomeVisible() {
         super.firePopupMenuWillBecomeVisible();
         log.trace("Popup firePopupMenuWillBecomeVisible called.");
-        for (MenuListener listener : listeners) {
+        for (var listener : listeners) {
             listener.menuSelected(null);
         }
     }
@@ -31,14 +31,14 @@ public class FreeMindPopupMenu extends JPopupMenu implements StructuredMenuHolde
 
     protected void firePopupMenuCanceled() {
         super.firePopupMenuCanceled();
-        for (MenuListener listener : listeners) {
+        for (var listener : listeners) {
             listener.menuCanceled(null);
         }
     }
 
     protected void firePopupMenuWillBecomeInvisible() {
         super.firePopupMenuWillBecomeInvisible();
-        for (MenuListener listener : listeners) {
+        for (var listener : listeners) {
             listener.menuDeselected(null);
         }
     }

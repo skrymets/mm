@@ -153,7 +153,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
         public void actionPerformed(ActionEvent arg0) {
             // construct pattern:
             Pattern pat = getPatternFromString();
-            ChooseFormatPopupDialog formatDialog = new ChooseFormatPopupDialog(
+            var formatDialog = new ChooseFormatPopupDialog(
                     mindMapController.getFrame().getJFrame(),
                     mindMapController,
                     "accessories/plugins/AutomaticLayout.properties_StyleDialogTitle",
@@ -221,9 +221,9 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
             Patterns resultPatterns = getPatternsFromString();
             mDefaultListModel.clear();
             int j = 1;
-            StylePropertyTranslator stylePropertyTranslator = new StylePropertyTranslator(
+            var stylePropertyTranslator = new StylePropertyTranslator(
                     mindMapController);
-            for (Pattern pattern : resultPatterns.getPatternList()) {
+            for (var pattern : resultPatterns.getPatternList()) {
                 mDefaultListModel.addElement(mTranslator.getText("level" + j)
                         + ": "
                         + StylePatternFactory.toString(pattern, stylePropertyTranslator));
@@ -261,7 +261,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
                 return;
             final Pattern choice = pat.getPattern(source
                     .getSelectedIndex());
-            final ChooseFormatPopupDialog formatDialog = new ChooseFormatPopupDialog(
+            final var formatDialog = new ChooseFormatPopupDialog(
                     mindMapController.getFrame().getJFrame(),
                     mindMapController,
                     "accessories/plugins/AutomaticLayout.properties_StyleDialogTitle",
@@ -300,7 +300,7 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
         }
 
         public List<PropertyControl> getControls(TextTranslator pTextTranslator) {
-            List<PropertyControl> controls = new ArrayList<>();
+            var controls = new ArrayList<PropertyControl>();
             controls.add(new OptionPanel.NewTabProperty(
                     "accessories/plugins/AutomaticLayout.properties_PatternTabName"));
             controls.add(new SeparatorProperty(

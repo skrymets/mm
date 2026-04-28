@@ -36,7 +36,7 @@ public class FileController extends ViewControllerAdapter {
     }
 
     public MapAdapter newModel(ModeController modeController) {
-        FileMapModel model = new FileMapModel(getFrame(), modeController);
+        var model = new FileMapModel(getFrame(), modeController);
         modeController.setModel(model);
         return model;
     }
@@ -61,7 +61,7 @@ public class FileController extends ViewControllerAdapter {
 
         public void actionPerformed(ActionEvent e) {
             if (getSelected() != null) {
-                MindMap map = new FileMapModel(
+                var map = new FileMapModel(
                         ((FileNodeModel) getSelected()).getFile(), getFrame(),
                         /*
                          * DON'T COPY THIS, AS THIS IS A BAD HACK! The
@@ -82,9 +82,9 @@ public class FileController extends ViewControllerAdapter {
             String inputValue = JOptionPane.showInputDialog(getController()
                     .getView().getSelectionService().getSelected(), getText("open"), "");
             if (inputValue != null) {
-                File newCenter = new File(inputValue);
+                var newCenter = new File(inputValue);
                 if (newCenter.exists()) { // and is a folder
-                    MindMap map = new FileMapModel(newCenter, getFrame(),
+                    var map = new FileMapModel(newCenter, getFrame(),
                             /*
                              * DON'T COPY THIS, AS THIS IS A BAD HACK! The Constructor
                              * needs a new instance of a modecontroller.

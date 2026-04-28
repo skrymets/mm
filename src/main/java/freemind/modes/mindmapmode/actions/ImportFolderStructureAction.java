@@ -60,7 +60,7 @@ public class ImportFolderStructureAction extends MindmapAction {
             File[] list = folder.listFiles();
             if (list != null) {
                 // Go recursively to subfolders
-                for (File value : list) {
+                for (var value : list) {
                     if (value.isDirectory()) {
                         // Insert a new node
                         MindMapNode node = addNode(target, value.getName(),
@@ -69,7 +69,7 @@ public class ImportFolderStructureAction extends MindmapAction {
                     }
                 }
                 // For each file: add it
-                for (File file : list) {
+                for (var file : list) {
                     if (!file.isDirectory()) {
                         addNode(target, file.getName(),
                                 Tools.fileToUrl(file).toString());

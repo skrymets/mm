@@ -32,7 +32,7 @@ public class ToggleFoldedActor extends XmlActorAdapter {
 
     private CompoundAction createFoldAction(ListIterator<MindMapNode> iterator,
                                             boolean fold, boolean undo) {
-        CompoundAction comp = new CompoundAction();
+        var comp = new CompoundAction();
         // sort selectedNodes list by depth, in order to guarantee that sons
         // are deleted first:
         for (ListIterator<MindMapNode> it = iterator; it.hasNext(); ) {

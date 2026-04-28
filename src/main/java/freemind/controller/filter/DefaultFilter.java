@@ -61,7 +61,7 @@ public class DefaultFilter implements Filter {
             return;
         }
 
-        ListIterator<NodeView> iterator = selectedNodes.listIterator(lastSelectedIndex);
+        var iterator = selectedNodes.listIterator(lastSelectedIndex);
         while (iterator.hasPrevious()) {
             NodeView previous = iterator.previous();
             if (!previous.getModel().isVisible()) {

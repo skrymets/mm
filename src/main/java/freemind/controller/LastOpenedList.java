@@ -70,7 +70,7 @@ public class LastOpenedList {
      */
     public String save() {
         String str = "";
-        for (String entry : mlastOpenedList) {
+        for (var entry : mlastOpenedList) {
             str = str.concat(entry + ";");
         }
         return str;
@@ -79,7 +79,7 @@ public class LastOpenedList {
     void load(String data) {
         // Take care that there are no ";" in restorable names!
         if (data != null) {
-            StringTokenizer token = new StringTokenizer(data, ";");
+            var token = new StringTokenizer(data, ";");
             while (token.hasMoreTokens())
                 mlastOpenedList.add(token.nextToken());
         }

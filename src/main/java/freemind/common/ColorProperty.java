@@ -53,7 +53,7 @@ public class ColorProperty extends PropertyBean implements PropertyControl, Acti
         // add "reset to standard" popup:
 
         // Create and add a menu item
-        JMenuItem item = new JMenuItem(mTranslator.getText("ColorProperty.ResetColor"));
+        var item = new JMenuItem(mTranslator.getText("ColorProperty.ResetColor"));
         item.addActionListener(e -> setValue(defaultColor));
         menu.add(item);
 

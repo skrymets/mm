@@ -110,7 +110,7 @@ public class UndoAction extends AbstractXmlAction {
             action.addChoice(dcDoChoice);
             remedia.getChoiceList().add(0, dcUndoChoice);
         } else {
-            ActionPair storagePair = new ActionPair(dcDo, dcUndo);
+            var storagePair = new ActionPair(dcDo, dcUndo);
             actionPairList.add(0, storagePair);
             // and cut vector, if bigger than given size:
             int maxEntries = 100;
@@ -142,7 +142,7 @@ public class UndoAction extends AbstractXmlAction {
     public void print() {
         log.info("Undo list:");
         int j = 0;
-        for (ActionPair pair : actionPairList) {
+        for (var pair : actionPairList) {
             log.info("line {} = {}", j++, Tools.printXmlAction(pair.getDoAction()));
         }
     }

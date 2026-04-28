@@ -60,7 +60,7 @@ public class ActionRegistry {
             } else {
                 /* Insert before FinalActionFilters */
                 int index = 0;
-                for (ActionFilter filter : registeredFilters) {
+                for (var filter : registeredFilters) {
                     if (filter instanceof FinalActionFilter) {
                         break;
                     }
@@ -76,13 +76,13 @@ public class ActionRegistry {
     }
 
     private void startTransaction(String name) {
-        for (ActionHandler handler : registeredHandler) {
+        for (var handler : registeredHandler) {
             handler.startTransaction(name);
         }
     }
 
     private void endTransaction(String name) {
-        for (ActionHandler handler : registeredHandler) {
+        for (var handler : registeredHandler) {
             handler.endTransaction(name);
         }
     }
@@ -115,12 +115,12 @@ public class ActionRegistry {
 
         ActionPair filteredPair = pair;
         // first filter:
-        for (ActionFilter filter : registeredFilters) {
+        for (var filter : registeredFilters) {
             filteredPair = filter.filterAction(filteredPair);
         }
 
         Object[] aArray = registeredHandler.toArray();
-        for (Object o : aArray) {
+        for (var o : aArray) {
             ActionHandler handler = (ActionHandler) o;
             try {
                 handler.executeAction(filteredPair.getDoAction());
@@ -142,7 +142,7 @@ public class ActionRegistry {
     }
 
     public ActorXml getActor(XmlAction action) {
-        for (Class<?> actorClass : registeredActors.keySet()) {
+        for (var actorClass : registeredActors.keySet()) {
             if (actorClass.isInstance(action)) {
                 return registeredActors.get(actorClass);
             }

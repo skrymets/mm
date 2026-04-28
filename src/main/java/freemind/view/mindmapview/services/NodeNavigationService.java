@@ -76,7 +76,7 @@ public class NodeNavigationService {
         if (sibling == nodeView) {
             return nodeView;
         }
-        NodeView nextSibling = new NodeNavigationService(sibling).getNextVisibleSibling();
+        var nextSibling = new NodeNavigationService(sibling).getNextVisibleSibling();
         while (nextSibling != sibling
                 && sibling.getParentView() == nextSibling.getParentView()) {
             if (nextSibling.getInPointInMap().y >= y0) {
@@ -97,7 +97,7 @@ public class NodeNavigationService {
         if (sibling == nodeView) {
             return nodeView;
         }
-        NodeView previousSibling = new NodeNavigationService(sibling).getPreviousVisibleSibling();
+        var previousSibling = new NodeNavigationService(sibling).getPreviousVisibleSibling();
         while (previousSibling != sibling
                 && sibling.getParentView() == previousSibling.getParentView()) {
             if (previousSibling.getInPointInMap().y <= y0) {
@@ -115,7 +115,7 @@ public class NodeNavigationService {
             if (preferredChild.isContentVisible()) {
                 return preferredChild;
             } else {
-                NodeView newSelected = new NodeNavigationService(preferredChild)
+                var newSelected = new NodeNavigationService(preferredChild)
                         .getPreferredVisibleChild(left);
                 if (newSelected != null) {
                     return newSelected;
@@ -147,7 +147,7 @@ public class NodeNavigationService {
                         continue;
                     }
                 }
-                Point childPoint = new Point(0, childView.getMainView()
+                var childPoint = new Point(0, childView.getMainView()
                         .getHeight() / 2);
                 PointUtils.convertPointToAncestor(childView.getMainView(),
                         childPoint, baseComponent);

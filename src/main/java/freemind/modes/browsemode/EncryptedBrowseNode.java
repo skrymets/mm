@@ -54,14 +54,14 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
             return;
         }
         // get password:
-        final EnterPasswordDialog pwdDialog = new EnterPasswordDialog(null,
+        final var pwdDialog = new EnterPasswordDialog(null,
                 mModeFeedback::getResourceString, false);
         pwdDialog.setModal(true);
         pwdDialog.setVisible(true);
         if (pwdDialog.getResult() == EnterPasswordDialog.CANCEL) {
             return;
         }
-        SingleDesEncrypter encrypter = new SingleDesEncrypter(
+        var encrypter = new SingleDesEncrypter(
                 pwdDialog.getPassword());
         // Decrypt
         String decrypted = encrypter.decrypt(encryptedContent);
