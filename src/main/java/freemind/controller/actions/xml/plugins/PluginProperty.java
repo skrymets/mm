@@ -1,13 +1,13 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.plugins;
 
 /**
  * Schema fragment(s) for this class:
  * <pre>
- * &lt;xs:element xmlns:xs="http://www.w3.org/2001/XMLSchema" name="plugin_string">
+ * &lt;xs:element xmlns:xs="http://www.w3.org/2001/XMLSchema" name="plugin_property">
  *   &lt;xs:complexType>
- *     &lt;xs:attribute type="xs:string" use="required" name="key"/>
- *     &lt;xs:attribute type="xs:string" use="required" name="value"/>
+ *     &lt;xs:attribute type="xs:string" use="required" name="name"/>
+ *     &lt;xs:attribute type="xs:string" use="optional" name="value"/>
  *   &lt;/xs:complexType>
  * &lt;/xs:element>
  * </pre>
@@ -15,28 +15,28 @@ package freemind.controller.actions;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "plugin_string")
-public class PluginString
+@XmlRootElement(name = "plugin_property")
+public class PluginProperty
 {
-    @XmlAttribute(name = "key")
-    private String key;
+    @XmlAttribute(name = "name")
+    private String name;
     @XmlAttribute(name = "value")
     private String value;
 
     /**
-     * Get the 'key' attribute value.
+     * Get the 'name' attribute value.
      *
      * @return value
      */
-    public String getKey() {
-        return key;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Set the 'key' attribute value.
+     * Set the 'name' attribute value.
      */
-    public void setKey(String key) {
-        this.key = key;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**

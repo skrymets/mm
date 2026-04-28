@@ -1,6 +1,7 @@
 package freemind.extensions;
 
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.plugins.*;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import lombok.Getter;
 

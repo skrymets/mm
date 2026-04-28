@@ -2,6 +2,7 @@ package freemind.modes.mindmapmode.hooks;
 
 import freemind.common.XmlBindingTools;
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.plugins.*;
 import freemind.extensions.*;
 import freemind.extensions.MindMapHook.PluginBaseClassSearcher;
 import freemind.frok.patches.JIBXGeneratedUtil;

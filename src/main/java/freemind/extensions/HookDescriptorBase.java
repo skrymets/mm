@@ -1,7 +1,7 @@
 package freemind.extensions;
 
-import freemind.controller.actions.Plugin;
-import freemind.controller.actions.PluginClasspath;
+import freemind.controller.actions.xml.plugins.Plugin;
+import freemind.controller.actions.xml.plugins.PluginClasspath;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
 import freemind.main.Tools;

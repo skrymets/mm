@@ -1,8 +1,8 @@
 package freemind.extensions;
 
-import freemind.controller.actions.Plugin;
-import freemind.controller.actions.PluginMode;
-import freemind.controller.actions.PluginRegistration;
+import freemind.controller.actions.xml.plugins.Plugin;
+import freemind.controller.actions.xml.plugins.PluginMode;
+import freemind.controller.actions.xml.plugins.PluginRegistration;
 
 import java.util.List;
 

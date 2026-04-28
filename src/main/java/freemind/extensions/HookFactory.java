@@ -1,6 +1,6 @@
 package freemind.extensions;
 
-import freemind.controller.actions.Plugin;
+import freemind.controller.actions.xml.plugins.Plugin;
 import freemind.model.MindMapNode;
 
 import java.util.Collection;

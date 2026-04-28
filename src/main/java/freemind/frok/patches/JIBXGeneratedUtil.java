@@ -1,6 +1,7 @@
 package freemind.frok.patches;
 
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.plugins.*;
 
 import java.util.List;
 import java.util.Objects;
