@@ -3,6 +3,7 @@ package freemind.modes;
 import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.patterns.*;
 import freemind.main.Resources;
 import freemind.main.MindMapUtils;
 import freemind.main.ColorUtils;

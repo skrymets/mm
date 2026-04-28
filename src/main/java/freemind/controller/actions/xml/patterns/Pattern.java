@@ -1,5 +1,7 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.patterns;
+
+import freemind.controller.actions.XmlAction;
 
 /**
  * Schema fragment(s) for this class:

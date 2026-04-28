@@ -1,6 +1,7 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.patterns;
 
+import freemind.controller.actions.XmlAction;
 import java.util.ArrayList;
 import java.util.List;
 

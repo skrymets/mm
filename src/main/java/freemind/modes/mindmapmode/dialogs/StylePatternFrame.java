@@ -4,6 +4,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 import freemind.common.*;
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.patterns.*;
 import freemind.main.FreeMind;
 import freemind.main.MindMapUtils;
 import freemind.model.EdgeAdapter;

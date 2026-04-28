@@ -15,8 +15,8 @@ import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
-import freemind.controller.actions.Pattern;
-import freemind.controller.actions.PatternIcon;
+import freemind.controller.actions.xml.patterns.Pattern;
+import freemind.controller.actions.xml.patterns.PatternIcon;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

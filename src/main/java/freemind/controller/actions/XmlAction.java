@@ -4,6 +4,8 @@ package freemind.controller.actions;
 import freemind.controller.actions.xml.clipboard.TransferableContent;
 import freemind.controller.actions.xml.clipboard.TransferableFile;
 import freemind.controller.actions.xml.collaboration.*;
+import freemind.controller.actions.xml.patterns.Pattern;
+import freemind.controller.actions.xml.patterns.Patterns;
 import freemind.controller.actions.xml.storage.*;
 import jakarta.xml.bind.annotation.*;
 

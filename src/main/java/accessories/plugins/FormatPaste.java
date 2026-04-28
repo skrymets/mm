@@ -1,6 +1,6 @@
 package accessories.plugins;
 
-import freemind.controller.actions.Pattern;
+import freemind.controller.actions.xml.patterns.Pattern;
 import freemind.model.MindMapNode;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;

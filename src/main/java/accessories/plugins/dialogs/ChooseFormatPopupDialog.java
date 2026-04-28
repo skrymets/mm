@@ -2,7 +2,7 @@ package accessories.plugins.dialogs;
 
 import freemind.common.TextTranslator;
 import java.util.Collections;
-import freemind.controller.actions.Pattern;
+import freemind.controller.actions.xml.patterns.Pattern;
 import freemind.controller.actions.xml.storage.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;

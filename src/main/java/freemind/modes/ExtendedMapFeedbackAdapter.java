@@ -1,6 +1,6 @@
 package freemind.modes;
 
-import freemind.controller.actions.Pattern;
+import freemind.controller.actions.xml.patterns.Pattern;
 import freemind.extensions.HookFactory;
 import freemind.model.MindMap;
 import freemind.model.MindMapLink;
