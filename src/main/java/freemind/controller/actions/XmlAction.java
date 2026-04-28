@@ -1,6 +1,8 @@
 
 package freemind.controller.actions;
 
+import freemind.controller.actions.xml.clipboard.TransferableContent;
+import freemind.controller.actions.xml.clipboard.TransferableFile;
 import jakarta.xml.bind.annotation.*;
 
 /**

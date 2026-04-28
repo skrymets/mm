@@ -1,6 +1,8 @@
 
 package freemind.controller.actions;
 
+import freemind.controller.actions.xml.clipboard.TransferableContent;
+
 /**
  * Schema fragment(s) for this class:
  * <pre>

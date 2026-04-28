@@ -2,6 +2,8 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.clipboard.TransferableContent;
+import freemind.controller.actions.xml.clipboard.TransferableFile;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.*;
 import freemind.main.HtmlTools.NodeCreator;
