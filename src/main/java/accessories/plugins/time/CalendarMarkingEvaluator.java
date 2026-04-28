@@ -1,7 +1,7 @@
 package accessories.plugins.time;
 
-import freemind.controller.actions.CalendarMarking;
-import freemind.controller.actions.CalendarMarkings;
+import freemind.controller.actions.xml.calendar.CalendarMarking;
+import freemind.controller.actions.xml.calendar.CalendarMarkings;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.DateFormat;

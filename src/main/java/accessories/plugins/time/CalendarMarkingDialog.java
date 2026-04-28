@@ -1,8 +1,8 @@
 package accessories.plugins.time;
 
 import accessories.plugins.time.JTripleCalendar.JSwitchableCalendar;
-import freemind.controller.actions.CalendarMarking;
-import freemind.controller.actions.CalendarMarkings;
+import freemind.controller.actions.xml.calendar.CalendarMarking;
+import freemind.controller.actions.xml.calendar.CalendarMarkings;
 import freemind.controller.actions.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;

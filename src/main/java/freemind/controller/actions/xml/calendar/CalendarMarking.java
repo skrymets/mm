@@ -1,5 +1,5 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.calendar;
 
 /**
  * Schema fragment(s) for this class:
