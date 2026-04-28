@@ -36,55 +36,16 @@ class MindMapHTMLWriter {
     }
 
     private static String convertSpecialChar(char c) {
-        String cvt;
-
-        // try {
-        // // Create the encoder and decoder for ISO-8859-1
-        // Charset ansi = Charset.forName("windows-1252");
-        // CharsetDecoder decoder = ansi.newDecoder();
-        //
-        // Charset utf8 = Charset.forName("UTF-8");
-        // CharsetEncoder encoder = utf8.newEncoder();
-        //
-        // // The new ByteBuffer is ready to be read.
-        // ByteBuffer bb = ByteBuffer.allocate(2);
-        // bb.putChar(c);
-        // CharBuffer cb = decoder.decode(bb);
-        //
-        // cvt = cvt + cb.toString();
-        // } catch (Exception e) {
-        // //cvt = "CHAR ENC FAILED " + e.getMessage();
-        // cvt = cvt + "&#" + Character.toString(c) + ";";
-        // }
-
-        switch ((int) c) {
-            case 0xe4:
-                cvt = "&auml;";
-                break;
-            case 0xf6:
-                cvt = "&ouml;";
-                break;
-            case 0xfc:
-                cvt = "&uuml;";
-                break;
-            case 0xc4:
-                cvt = "&Auml;";
-                break;
-            case 0xd6:
-                cvt = "&Ouml;";
-                break;
-            case 0xdc:
-                cvt = "&Uuml;";
-                break;
-            case 0xdf:
-                cvt = "&szlig;";
-                break;
-            default:
-                cvt = "&#" + (int) c + ";";
-                break;
-        }
-
-        return cvt;
+        return switch ((int) c) {
+            case 0xe4 -> "&auml;";
+            case 0xf6 -> "&ouml;";
+            case 0xfc -> "&uuml;";
+            case 0xc4 -> "&Auml;";
+            case 0xd6 -> "&Ouml;";
+            case 0xdc -> "&Uuml;";
+            case 0xdf -> "&szlig;";
+            default -> "&#" + (int) c + ";";
+        };
     }
 
     private static String saveHTML_escapeUnicodeAndSpecialCharacters(String text) {

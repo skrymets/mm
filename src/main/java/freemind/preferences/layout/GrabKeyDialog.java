@@ -36,21 +36,12 @@ public class GrabKeyDialog extends JDialog {
 
     // {{{ toString() method
     public static String toString(KeyEvent evt) {
-        String id;
-        switch (evt.getID()) {
-            case KeyEvent.KEY_PRESSED:
-                id = "KEY_PRESSED";
-                break;
-            case KeyEvent.KEY_RELEASED:
-                id = "KEY_RELEASED";
-                break;
-            case KeyEvent.KEY_TYPED:
-                id = "KEY_TYPED";
-                break;
-            default:
-                id = "unknown type";
-                break;
-        }
+        String id = switch (evt.getID()) {
+            case KeyEvent.KEY_PRESSED -> "KEY_PRESSED";
+            case KeyEvent.KEY_RELEASED -> "KEY_RELEASED";
+            case KeyEvent.KEY_TYPED -> "KEY_TYPED";
+            default -> "unknown type";
+        };
 
         return id + ",keyCode=0x" + Integer.toString(evt.getKeyCode(), 16)
                 + ",keyChar=0x" + Integer.toString(evt.getKeyChar(), 16)

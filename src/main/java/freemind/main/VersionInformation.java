@@ -77,20 +77,15 @@ public class VersionInformation {
                 .append(mMaj).append('.')
                 .append(mMid).append('.')
                 .append(mMin);
-        switch (mType) {
-            case ALPHA:
-                buf.append(' ').append("Alpha");
-                break;
-            case BETA:
-                buf.append(' ').append("Beta");
-                break;
-            case RC:
-                buf.append(' ').append("RC");
-                break;
-            case RELEASE:
-                break;
-            case OTHER:
-                buf.append(' ').append(rawInfo[3]);
+        String suffix = switch (mType) {
+            case ALPHA -> "Alpha";
+            case BETA -> "Beta";
+            case RC -> "RC";
+            case RELEASE -> "";
+            case OTHER -> rawInfo[3];
+        };
+        if (!suffix.isEmpty()) {
+            buf.append(' ').append(suffix);
         }
 
         if (mType != Type.RELEASE) {

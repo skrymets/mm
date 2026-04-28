@@ -412,20 +412,13 @@ public class TimeList extends MindMapHookAdapter implements MapModuleChangeObser
     private static final class MindmapTableModel extends DefaultTableModel {
         @Override
         public Class<?> getColumnClass(int arg0) {
-            switch (arg0) {
-                case DATE_COLUMN:
-                case NODE_CREATED_COLUMN:
-                case NODE_MODIFIED_COLUMN:
-                    return Date.class;
-                case NODE_TEXT_COLUMN:
-                    return NodeHolder.class;
-                case NODE_ICON_COLUMN:
-                    return IconsHolder.class;
-                case NODE_NOTES_COLUMN:
-                    return NotesHolder.class;
-                default:
-                    return Object.class;
-            }
+            return switch (arg0) {
+                case DATE_COLUMN, NODE_CREATED_COLUMN, NODE_MODIFIED_COLUMN -> Date.class;
+                case NODE_TEXT_COLUMN -> NodeHolder.class;
+                case NODE_ICON_COLUMN -> IconsHolder.class;
+                case NODE_NOTES_COLUMN -> NotesHolder.class;
+                default -> Object.class;
+            };
         }
     }
 

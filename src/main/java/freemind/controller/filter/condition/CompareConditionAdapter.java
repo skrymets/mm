@@ -46,23 +46,12 @@ abstract class CompareConditionAdapter extends NodeCondition {
 
     public String createDescription(String attribute, int comparationResult,
                                     boolean succeed) {
-        NamedObject simpleCondition;
-        switch (comparationResult) {
-            case -1:
-                simpleCondition = succeed ? ConditionFactory.FILTER_LT
-                        : ConditionFactory.FILTER_GE;
-                break;
-            case 0:
-                simpleCondition = succeed ? ConditionFactory.FILTER_IS_EQUAL_TO
-                        : ConditionFactory.FILTER_IS_NOT_EQUAL_TO;
-                break;
-            case 1:
-                simpleCondition = succeed ? ConditionFactory.FILTER_GT
-                        : ConditionFactory.FILTER_LE;
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+        NamedObject simpleCondition = switch (comparationResult) {
+            case -1 -> succeed ? ConditionFactory.FILTER_LT : ConditionFactory.FILTER_GE;
+            case 0 -> succeed ? ConditionFactory.FILTER_IS_EQUAL_TO : ConditionFactory.FILTER_IS_NOT_EQUAL_TO;
+            case 1 -> succeed ? ConditionFactory.FILTER_GT : ConditionFactory.FILTER_LE;
+            default -> throw new IllegalArgumentException();
+        };
         return ConditionFactory.createDescription(attribute, simpleCondition.getName(),
                 conditionValue, ignoreCase);
     }

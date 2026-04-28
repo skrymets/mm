@@ -94,17 +94,12 @@ public class NodeViewFactory {
     public EdgeView getEdge(NodeView newView) {
         final int edgeStyle = newView.getModel().getEdge().getStyleAsInt();
 
-        switch (edgeStyle) {
-            case EdgeAdapter.INT_EDGESTYLE_BEZIER:
-                return getBezierEdgeView();
-            case EdgeAdapter.INT_EDGESTYLE_SHARP_LINEAR:
-                return getSharpLinearEdgeView();
-            case EdgeAdapter.INT_EDGESTYLE_SHARP_BEZIER:
-                return getSharpBezierEdgeView();
-            case EdgeAdapter.INT_EDGESTYLE_LINEAR:
-            default:
-                return getLinearEdgeView();
-        }
+        return switch (edgeStyle) {
+            case EdgeAdapter.INT_EDGESTYLE_BEZIER -> getBezierEdgeView();
+            case EdgeAdapter.INT_EDGESTYLE_SHARP_LINEAR -> getSharpLinearEdgeView();
+            case EdgeAdapter.INT_EDGESTYLE_SHARP_BEZIER -> getSharpBezierEdgeView();
+            default -> getLinearEdgeView();
+        };
     }
 
     private EdgeView getSharpBezierEdgeView() {

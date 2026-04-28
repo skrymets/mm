@@ -78,15 +78,12 @@ public class ThreeCheckBoxProperty extends PropertyBean implements PropertyContr
     }
 
     public String getValue() {
-        switch (state) {
-            case TRUE_VALUE_INT:
-                return mTrueValue;
-            case FALSE_VALUE_INT:
-                return mFalseValue;
-            case DON_T_TOUCH_VALUE_INT:
-                return mDontTouchValue;
-        }
-        return null;
+        return switch (state) {
+            case TRUE_VALUE_INT -> mTrueValue;
+            case FALSE_VALUE_INT -> mFalseValue;
+            case DON_T_TOUCH_VALUE_INT -> mDontTouchValue;
+            default -> null;
+        };
     }
 
     public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {

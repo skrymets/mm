@@ -159,29 +159,14 @@ public class XMLElementAdapter {
      * Equivalent to the old setName() method.
      */
     private Object createUserObject(String name) {
-        switch (name) {
-            case XML_NODE:
-                return getMap().createNodeAdapter(getMap(), null);
-            case "edge":
-                return getMap().createEdgeAdapter(null);
-            case "cloud":
-                return modeMap().createCloudAdapter(null);
-            case "arrowlink":
-                return modeMap().createArrowLinkAdapter(null, null);
-            case "linktarget":
-                return modeMap().createArrowLinkTarget(null, null);
-            case "font":
-            case "icon":
-            case XML_NODE_REGISTERED_ATTRIBUTE_VALUE:
-            case XML_NODE_REGISTERED_ATTRIBUTE_NAME:
-            case XML_NODE_ATTRIBUTE_REGISTRY:
-            case "map":
-            case XML_NODE_ATTRIBUTE_LAYOUT:
-            case XML_NODE_ATTRIBUTE:
-                return null;
-            default:
-                return null;
-        }
+        return switch (name) {
+            case XML_NODE -> getMap().createNodeAdapter(getMap(), null);
+            case "edge" -> getMap().createEdgeAdapter(null);
+            case "cloud" -> modeMap().createCloudAdapter(null);
+            case "arrowlink" -> modeMap().createArrowLinkAdapter(null, null);
+            case "linktarget" -> modeMap().createArrowLinkTarget(null, null);
+            default -> null;
+        };
     }
 
     /**

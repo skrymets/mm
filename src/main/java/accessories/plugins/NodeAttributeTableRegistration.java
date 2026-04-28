@@ -209,13 +209,10 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
         }
 
         public Class getColumnClass(int arg0) {
-            switch (arg0) {
-                case KEY_COLUMN:
-                case VALUE_COLUMN:
-                    return String.class;
-                default:
-                    return Object.class;
-            }
+            return switch (arg0) {
+                case KEY_COLUMN, VALUE_COLUMN -> String.class;
+                default -> Object.class;
+            };
         }
 
         public AttributeHolder getAttributeHolder(int pIndex) {
@@ -236,13 +233,11 @@ public class NodeAttributeTableRegistration implements HookRegistration, MenuIte
 
         public Object getValueAt(int pRowIndex, int pColumnIndex) {
             final AttributeHolder attr = getAttributeHolder(pRowIndex);
-            switch (pColumnIndex) {
-                case KEY_COLUMN:
-                    return attr.mKey;
-                case VALUE_COLUMN:
-                    return attr.mValue;
-            }
-            return null;
+            return switch (pColumnIndex) {
+                case KEY_COLUMN -> attr.mKey;
+                case VALUE_COLUMN -> attr.mValue;
+                default -> null;
+            };
         }
 
         @Override
