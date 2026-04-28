@@ -3,7 +3,7 @@ package freemind.controller;
 import freemind.controller.actions.xml.storage.MindmapLastStateMapStorage;
 import freemind.controller.actions.xml.storage.MindmapLastStateStorage;
 import freemind.controller.actions.xml.document.NodeListMember;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.main.Tools;
 import lombok.extern.slf4j.Slf4j;
 

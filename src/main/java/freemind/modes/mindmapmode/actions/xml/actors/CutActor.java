@@ -1,8 +1,8 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.CompoundAction;
-import freemind.controller.actions.CutNodeAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.CompoundAction;
+import freemind.controller.actions.xml.operations.CutNodeAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;

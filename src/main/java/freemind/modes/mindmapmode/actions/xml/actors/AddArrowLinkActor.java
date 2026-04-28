@@ -1,8 +1,8 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.AddArrowLinkXmlAction;
-import freemind.controller.actions.RemoveArrowLinkXmlAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.AddArrowLinkXmlAction;
+import freemind.controller.actions.xml.operations.RemoveArrowLinkXmlAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.main.PointUtils;
 import freemind.main.ColorUtils;
 import freemind.model.MindMapNode;

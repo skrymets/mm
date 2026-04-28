@@ -3,7 +3,7 @@ package freemind.modes.mindmapmode.services;
 import freemind.common.XmlBindingTools;
 import freemind.controller.MenuBar;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.Base;
+import freemind.controller.actions.xml.operations.Base;
 import freemind.controller.actions.xml.menus.MenuActionBase;
 import freemind.controller.actions.xml.menus.MenuCategoryBase;
 import freemind.controller.actions.xml.menus.MenuCheckedAction;

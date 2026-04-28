@@ -1,7 +1,7 @@
 
 package freemind.controller.actions.xml.menus;
 
-import freemind.controller.actions.Base;
+import freemind.controller.actions.xml.operations.Base;
 import java.util.ArrayList;
 import java.util.List;
 

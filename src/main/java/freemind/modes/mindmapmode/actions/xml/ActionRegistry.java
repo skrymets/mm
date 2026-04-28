@@ -1,6 +1,6 @@
 package freemind.modes.mindmapmode.actions.xml;
 
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
 import lombok.extern.slf4j.Slf4j;

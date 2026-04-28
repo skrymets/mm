@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.EditNoteToNodeAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.EditNoteToNodeAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;

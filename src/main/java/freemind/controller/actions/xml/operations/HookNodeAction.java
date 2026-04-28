@@ -1,0 +1,145 @@
+
+package freemind.controller.actions.xml.operations;
+
+import freemind.controller.actions.xml.document.NodeChildParameter;
+import freemind.controller.actions.xml.document.NodeListMember;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Schema fragment(s) for this class:
+ * <pre>
+ * &lt;xs:element xmlns:xs="http://www.w3.org/2001/XMLSchema" name="hook_node_action">
+ *   &lt;xs:complexType>
+ *     &lt;xs:complexContent>
+ *       &lt;xs:extension base="node_action">
+ *         &lt;xs:sequence>
+ *           &lt;xs:element ref="node_list_member" minOccurs="1" maxOccurs="unbounded"/>
+ *           &lt;xs:element ref="node_child_parameter" minOccurs="0" maxOccurs="unbounded"/>
+ *         &lt;/xs:sequence>
+ *         &lt;xs:attribute type="xs:string" use="required" name="hook_name"/>
+ *       &lt;/xs:extension>
+ *     &lt;/xs:complexContent>
+ *   &lt;/xs:complexType>
+ * &lt;/xs:element>
+ * </pre>
+ */
+import jakarta.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "hook_node_action")
+public class HookNodeAction extends NodeAction
+{
+    private List<NodeListMember> nodeListMemberList = new ArrayList<>();
+    private List<NodeChildParameter> nodeChildParameterList = new ArrayList<>();
+    @XmlAttribute(name = "hook_name")
+    private String hookName;
+
+    /**
+     * Get the list of 'node_list_member' element items.
+     *
+     * @return list
+     */
+    public List<NodeListMember> getNodeListMemberList() {
+        return nodeListMemberList;
+    }
+
+    /**
+     * Set the list of 'node_list_member' element items.
+     */
+    public void setNodeListMemberList(List<NodeListMember> list) {
+        nodeListMemberList = list;
+    }
+
+    /**
+     * Get the number of 'node_list_member' element items.
+     * @return count
+     */
+    public int sizeNodeListMemberList() {
+        return nodeListMemberList.size();
+    }
+
+    /**
+     * Add a 'node_list_member' element item.
+     */
+    public void addNodeListMember(NodeListMember item) {
+        nodeListMemberList.add(item);
+    }
+
+    /**
+     * Get 'node_list_member' element item by position.
+     * @return item
+     */
+    public NodeListMember getNodeListMember(int index) {
+        return nodeListMemberList.get(index);
+    }
+
+    /**
+     * Remove all 'node_list_member' element items.
+     */
+    public void clearNodeListMemberList() {
+        nodeListMemberList.clear();
+    }
+
+    /**
+     * Get the list of 'node_child_parameter' element items.
+     *
+     * @return list
+     */
+    public List<NodeChildParameter> getNodeChildParameterList() {
+        return nodeChildParameterList;
+    }
+
+    /**
+     * Set the list of 'node_child_parameter' element items.
+     */
+    public void setNodeChildParameterList(List<NodeChildParameter> list) {
+        nodeChildParameterList = list;
+    }
+
+    /**
+     * Get the number of 'node_child_parameter' element items.
+     * @return count
+     */
+    public int sizeNodeChildParameterList() {
+        return nodeChildParameterList.size();
+    }
+
+    /**
+     * Add a 'node_child_parameter' element item.
+     */
+    public void addNodeChildParameter(NodeChildParameter item) {
+        nodeChildParameterList.add(item);
+    }
+
+    /**
+     * Get 'node_child_parameter' element item by position.
+     * @return item
+     */
+    public NodeChildParameter getNodeChildParameter(int index) {
+        return nodeChildParameterList.get(index);
+    }
+
+    /**
+     * Remove all 'node_child_parameter' element items.
+     */
+    public void clearNodeChildParameterList() {
+        nodeChildParameterList.clear();
+    }
+
+    /**
+     * Get the 'hook_name' attribute value.
+     *
+     * @return value
+     */
+    public String getHookName() {
+        return hookName;
+    }
+
+    /**
+     * Set the 'hook_name' attribute value.
+     */
+    public void setHookName(String hookName) {
+        this.hookName = hookName;
+    }
+}

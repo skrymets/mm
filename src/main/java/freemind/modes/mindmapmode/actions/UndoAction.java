@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.CompoundAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.CompoundAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;

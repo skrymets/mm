@@ -2,6 +2,7 @@ package accessories.plugins;
 
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.operations.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;

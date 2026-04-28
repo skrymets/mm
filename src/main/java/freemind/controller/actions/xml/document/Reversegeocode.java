@@ -20,8 +20,8 @@ package freemind.controller.actions.xml.document;
  * &lt;/xs:element>
  * </pre>
  */
-import freemind.controller.actions.ResultBase;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.ResultBase;
+import freemind.controller.actions.xml.operations.XmlAction;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)

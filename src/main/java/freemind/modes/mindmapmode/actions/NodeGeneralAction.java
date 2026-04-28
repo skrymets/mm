@@ -6,7 +6,7 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.CompoundAction;
+import freemind.controller.actions.xml.operations.CompoundAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;

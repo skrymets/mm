@@ -1,6 +1,6 @@
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.AddIconAction;
+import freemind.controller.actions.xml.operations.AddIconAction;
 import freemind.main.Tools;
 import freemind.model.MindMapNode;
 import freemind.modes.IconInformation;

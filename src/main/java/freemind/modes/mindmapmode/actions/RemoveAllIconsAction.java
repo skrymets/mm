@@ -1,6 +1,6 @@
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.RemoveAllIconsXmlAction;
+import freemind.controller.actions.xml.operations.RemoveAllIconsXmlAction;
 import freemind.main.Tools;
 import freemind.modes.IconInformation;
 import freemind.modes.mindmapmode.MindMapController;

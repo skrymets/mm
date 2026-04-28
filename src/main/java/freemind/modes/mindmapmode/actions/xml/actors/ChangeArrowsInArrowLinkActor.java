@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.ArrowLinkArrowXmlAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.ArrowLinkArrowXmlAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.model.MindMapLink;
 import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.ExtendedMapFeedback;

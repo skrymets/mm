@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.StrikethroughNodeAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.StrikethroughNodeAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;

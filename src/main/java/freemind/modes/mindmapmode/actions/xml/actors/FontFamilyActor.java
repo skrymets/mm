@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.FontNodeAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.FontNodeAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
 import freemind.modes.ExtendedMapFeedback;

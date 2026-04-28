@@ -3,6 +3,7 @@ package freemind.common;
 import freemind.controller.Controller;
 import freemind.controller.actions.*;
 import freemind.controller.actions.xml.menus.*;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.controller.actions.xml.plugins.*;
 import freemind.controller.actions.xml.storage.*;
 import freemind.main.Resources;

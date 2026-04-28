@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.NodeBackgroundColorFormatAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.NodeBackgroundColorFormatAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.main.ColorUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;

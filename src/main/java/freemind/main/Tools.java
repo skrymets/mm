@@ -2,8 +2,8 @@ package freemind.main;
 
 import freemind.common.UnicodeReader;
 import freemind.common.XmlBindingTools;
-import freemind.controller.actions.CompoundAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.CompoundAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

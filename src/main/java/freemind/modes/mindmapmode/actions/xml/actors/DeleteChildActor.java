@@ -1,8 +1,8 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.DeleteNodeAction;
-import freemind.controller.actions.PasteNodeAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.DeleteNodeAction;
+import freemind.controller.actions.xml.operations.PasteNodeAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.extensions.PermanentNodeHook;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;

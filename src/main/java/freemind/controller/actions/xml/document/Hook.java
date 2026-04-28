@@ -15,7 +15,7 @@ package freemind.controller.actions.xml.document;
  * &lt;/xs:element>
  * </pre>
  */
-import freemind.controller.actions.Parameters;
+import freemind.controller.actions.xml.operations.Parameters;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)

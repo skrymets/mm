@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import freemind.controller.actions.NodeStyleFormatAction;
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.NodeStyleFormatAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;

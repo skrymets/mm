@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.actions.*;
 import freemind.controller.actions.xml.document.*;
+import freemind.controller.actions.xml.operations.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;

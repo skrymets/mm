@@ -1,7 +1,7 @@
 
 package freemind.controller.actions.xml.document;
 
-import freemind.controller.actions.XmlAction;
+import freemind.controller.actions.xml.operations.XmlAction;
 import java.util.ArrayList;
 import java.util.List;
 

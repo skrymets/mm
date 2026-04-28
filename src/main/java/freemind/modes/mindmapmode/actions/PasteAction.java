@@ -1,6 +1,6 @@
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.PasteNodeAction;
+import freemind.controller.actions.xml.operations.PasteNodeAction;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.extern.slf4j.Slf4j;

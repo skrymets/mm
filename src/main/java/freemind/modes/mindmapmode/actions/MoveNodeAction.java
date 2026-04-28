@@ -1,6 +1,6 @@
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.MoveNodeXmlAction;
+import freemind.controller.actions.xml.operations.MoveNodeXmlAction;
 import freemind.modes.mindmapmode.MindMapController;
 
 @SuppressWarnings("serial")
