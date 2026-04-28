@@ -1,6 +1,8 @@
 
 package freemind.controller.actions;
 
+import freemind.controller.actions.xml.menus.*;
+
 /**
  * Schema fragment(s) for this class:
  * <pre>

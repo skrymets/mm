@@ -1,5 +1,5 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.menus;
 
 import java.util.ArrayList;
 import java.util.List;

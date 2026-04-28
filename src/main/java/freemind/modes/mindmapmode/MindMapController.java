@@ -5,6 +5,7 @@ import freemind.main.SwingUtils;
 import freemind.common.XmlBindingTools;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.menus.*;
 import freemind.extensions.*;
 import freemind.main.*;
 import freemind.model.*;
