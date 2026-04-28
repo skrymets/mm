@@ -4,7 +4,7 @@ import freemind.controller.Controller;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MapTitleChangeListener;
 import freemind.controller.MapTitleContributor;
-import freemind.controller.actions.MindmapLastStateStorage;
+import freemind.controller.actions.xml.storage.MindmapLastStateStorage;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
 import freemind.model.MindMap;

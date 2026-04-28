@@ -1,5 +1,5 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.storage;
 
 import java.util.ArrayList;
 import java.util.List;

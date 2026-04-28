@@ -1,6 +1,8 @@
 
-package freemind.controller.actions;
+package freemind.controller.actions.xml.storage;
 
+import freemind.controller.actions.XmlAction;
+import jakarta.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,6 @@ import java.util.List;
  * &lt;/xs:element>
  * </pre>
  */
-import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "mindmap_last_state_map_storage")

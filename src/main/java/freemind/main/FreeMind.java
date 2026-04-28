@@ -6,7 +6,7 @@ import freemind.controller.StructuredMenuHolder;
 import freemind.controller.color.JColorCombo;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
-import freemind.controller.actions.MindmapLastStateStorage;
+import freemind.controller.actions.xml.storage.MindmapLastStateStorage;
 import freemind.events.FreeMindEventBus;
 import freemind.main.services.EditServerService;
 import freemind.main.services.WindowService;

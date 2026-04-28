@@ -4,6 +4,7 @@ import freemind.controller.Controller;
 import freemind.controller.actions.*;
 import freemind.controller.actions.xml.menus.*;
 import freemind.controller.actions.xml.plugins.*;
+import freemind.controller.actions.xml.storage.*;
 import freemind.main.Resources;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;

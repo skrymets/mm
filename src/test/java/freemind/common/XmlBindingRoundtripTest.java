@@ -1,6 +1,7 @@
 package freemind.common;
 
 import freemind.controller.actions.*;
+import freemind.controller.actions.xml.storage.*;
 import freemind.main.Tools;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;

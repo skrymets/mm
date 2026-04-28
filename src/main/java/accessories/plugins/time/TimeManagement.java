@@ -5,7 +5,7 @@ import freemind.controller.MapModuleChangeObserver;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.xml.calendar.CalendarMarking;
 import freemind.controller.actions.xml.calendar.CalendarMarkings;
-import freemind.controller.actions.WindowConfigurationStorage;
+import freemind.controller.actions.xml.storage.WindowConfigurationStorage;
 import freemind.main.FreeMindCommon;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;

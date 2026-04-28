@@ -3,7 +3,7 @@ package accessories.plugins.dialogs;
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 import freemind.common.TextTranslator;
 import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.ManageStyleEditorWindowConfigurationStorage;
+import freemind.controller.actions.xml.storage.ManageStyleEditorWindowConfigurationStorage;
 import freemind.controller.actions.Pattern;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;

@@ -1,7 +1,7 @@
 package freemind.controller;
 
-import freemind.controller.actions.MindmapLastStateMapStorage;
-import freemind.controller.actions.MindmapLastStateStorage;
+import freemind.controller.actions.xml.storage.MindmapLastStateMapStorage;
+import freemind.controller.actions.xml.storage.MindmapLastStateStorage;
 import freemind.controller.actions.NodeListMember;
 import freemind.controller.actions.XmlAction;
 import freemind.main.Tools;

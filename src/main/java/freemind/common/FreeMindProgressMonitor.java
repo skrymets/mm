@@ -1,6 +1,6 @@
 package freemind.common;
 
-import freemind.controller.actions.WindowConfigurationStorage;
+import freemind.controller.actions.xml.storage.WindowConfigurationStorage;
 import freemind.frok.patches.FreeMindMainMock;
 import freemind.main.Resources;
 import freemind.main.SwingUtils;

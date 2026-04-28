@@ -3,7 +3,7 @@ package accessories.plugins.dialogs;
 import freemind.common.TextTranslator;
 import java.util.Collections;
 import freemind.controller.actions.Pattern;
-import freemind.controller.actions.WindowConfigurationStorage;
+import freemind.controller.actions.xml.storage.WindowConfigurationStorage;
 import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MapAdapter;
