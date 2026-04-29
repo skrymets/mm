@@ -257,14 +257,14 @@ class ToolsTest {
         @Test
         void xmlToInstant_validTimestamp() {
             long timestamp = 1000000000000L;
-            Instant result = Tools.xmlToInstant(String.valueOf(timestamp));
+            Instant result = DateTimeTools.xmlToInstant(String.valueOf(timestamp));
             assertEquals(timestamp, result.toEpochMilli());
         }
 
         @Test
         void xmlToInstant_invalidString_returnsCurrentInstant() {
             Instant before = Instant.now();
-            Instant result = Tools.xmlToInstant("not-a-number");
+            Instant result = DateTimeTools.xmlToInstant("not-a-number");
             Instant after = Instant.now();
             assertTrue(result.toEpochMilli() >= before.toEpochMilli());
             assertTrue(result.toEpochMilli() <= after.toEpochMilli());
@@ -273,13 +273,13 @@ class ToolsTest {
         @Test
         void dateToString_basic() {
             Instant instant = Instant.ofEpochMilli(1000000000000L);
-            assertEquals("1000000000000", Tools.dateToString(instant));
+            assertEquals("1000000000000", DateTimeTools.dateToString(instant));
         }
 
         @Test
         void dateRoundtrip() {
             Instant original = Instant.ofEpochMilli(1234567890123L);
-            Instant roundtripped = Tools.xmlToInstant(Tools.dateToString(original));
+            Instant roundtripped = DateTimeTools.xmlToInstant(DateTimeTools.dateToString(original));
             assertEquals(original.toEpochMilli(), roundtripped.toEpochMilli());
         }
     }

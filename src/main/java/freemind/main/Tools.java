@@ -26,7 +26,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributes;
-import java.time.Instant;
 import java.util.*;
 import java.util.List;
 
@@ -192,21 +191,6 @@ public class Tools {
             result = result.replaceAll("\\$3", s3);
         }
         return result;
-    }
-
-    /**
-     * Extracts a long from xml. Only useful for dates.
-     */
-    public static Instant xmlToInstant(String xmlString) {
-        try {
-            return Instant.ofEpochMilli(Long.parseLong(xmlString));
-        } catch (NumberFormatException e) {
-            return Instant.now();
-        }
-    }
-
-    public static String dateToString(Instant instant) {
-        return Long.toString(instant.toEpochMilli());
     }
 
     /**

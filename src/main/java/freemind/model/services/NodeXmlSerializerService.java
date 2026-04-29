@@ -3,11 +3,11 @@ package freemind.model.services;
 import freemind.extensions.DontSaveMarker;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.ColorUtils;
+import freemind.main.DateTimeTools;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindXml;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.model.MindMapLink;
 import freemind.model.MindMapLinkRegistry;
 import freemind.model.MindMapNode;
@@ -167,9 +167,9 @@ public class NodeXmlSerializerService {
         // history information
         if (node.getHistoryInformation() != null) {
             element.setAttribute(XmlNodeConstants.XML_NODE_HISTORY_CREATED_AT,
-                    Tools.dateToString(node.getHistoryInformation().getCreatedAt()));
+                    DateTimeTools.dateToString(node.getHistoryInformation().getCreatedAt()));
             element.setAttribute(XmlNodeConstants.XML_NODE_HISTORY_LAST_MODIFIED_AT,
-                    Tools.dateToString(node.getHistoryInformation().getLastModifiedAt()));
+                    DateTimeTools.dateToString(node.getHistoryInformation().getLastModifiedAt()));
         }
         // font
         Font font = node.getFont();
