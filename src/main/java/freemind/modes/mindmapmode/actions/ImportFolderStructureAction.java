@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.main.FreeMindMain;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.mindmapmode.MindMapController;
@@ -64,7 +64,7 @@ public class ImportFolderStructureAction extends MindmapAction {
                     if (value.isDirectory()) {
                         // Insert a new node
                         MindMapNode node = addNode(target, value.getName(),
-                                Tools.fileToUrl(value).toString());
+                                UrlTools.fileToUrl(value).toString());
                         importFolderStructure(value, node, false);
                     }
                 }
@@ -72,7 +72,7 @@ public class ImportFolderStructureAction extends MindmapAction {
                 for (var file : list) {
                     if (!file.isDirectory()) {
                         addNode(target, file.getName(),
-                                Tools.fileToUrl(file).toString());
+                                UrlTools.fileToUrl(file).toString());
                     }
                 }
             }

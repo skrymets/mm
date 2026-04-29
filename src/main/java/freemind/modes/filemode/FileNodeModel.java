@@ -1,6 +1,6 @@
 package freemind.modes.filemode;
 
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
@@ -137,7 +137,7 @@ public class FileNodeModel extends NodeAdapter {
 
     public String getLink() {
         try {
-            return Tools.fileToUrl(file).toString();
+            return UrlTools.fileToUrl(file).toString();
         } catch (MalformedURLException e) {
             log.error(e.getLocalizedMessage(), e);
         }

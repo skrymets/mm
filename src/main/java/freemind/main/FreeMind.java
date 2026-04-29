@@ -941,7 +941,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     private boolean processLoadEventFromStartupPhase(String propertyKey) {
         String filename = getProperty(propertyKey);
         try {
-            controller.getModeController().load(Tools.fileToUrl(new File(filename)));
+            controller.getModeController().load(UrlTools.fileToUrl(new File(filename)));
             // remove temporary property because we do not want to store in a
             // file and survive restart
             getProperties().remove(propertyKey);

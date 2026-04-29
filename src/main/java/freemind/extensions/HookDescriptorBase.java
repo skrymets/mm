@@ -4,7 +4,7 @@ import freemind.controller.actions.xml.plugins.Plugin;
 import freemind.controller.actions.xml.plugins.PluginClasspath;
 import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -117,8 +117,8 @@ public class HookDescriptorBase {
                     file = new File(getPluginDirectory(), jarString);
                 }
                 // end new version by ewl.
-                log.info("file {} exists = {}", Tools.fileToUrl(file), file.exists());
-                urls[j++] = Tools.fileToUrl(file);
+                log.info("file {} exists = {}", UrlTools.fileToUrl(file), file.exists());
+                urls[j++] = UrlTools.fileToUrl(file);
             }
             var loader = new URLClassLoader(urls,
                     resources.getFreeMindClassLoader());

@@ -1,7 +1,7 @@
 package freemind.modes;
 
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.NodeIcon;
 import freemind.view.ImageFactory;
 import freemind.view.ScalableImageIcon;
@@ -118,7 +118,7 @@ public class MindIcon implements NodeIcon, Comparable<MindIcon>, IconInformation
                 try {
                     final var file = new File(resources.getFreemindDirectory(), "icons/" + getName() + ".png");
                     if (file.canRead()) {
-                        imageURL = Tools.fileToUrl(file);
+                        imageURL = UrlTools.fileToUrl(file);
                     }
                 } catch (Exception ignored) {
                 }

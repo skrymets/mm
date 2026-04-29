@@ -6,6 +6,7 @@ import freemind.main.FreeMind;
 import freemind.modes.FreeMindFileDialog;
 import freemind.main.MessageTools;
 import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.MapAdapter;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
@@ -38,7 +39,7 @@ public class FileManagementService {
      */
     public void loadInternally(URL url, MapAdapter model) throws URISyntaxException, IOException {
         log.info("Loading file: {}", url.toString());
-        File file = Tools.urlToFile(url);
+        File file = UrlTools.urlToFile(url);
         if (!file.exists()) {
             throw new FileNotFoundException(MessageTools.expandPlaceholders(
                     controller.getText("file_not_found"), file.getPath()));
@@ -121,7 +122,7 @@ public class FileManagementService {
         int returnVal = chooser.showOpenDialog(controller.getFrame().getContentPane());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             input = chooser.getSelectedFile();
-            relative = Tools.fileToRelativeUrlString(input, controller.getMap().getFile(), controller.getResources());
+            relative = UrlTools.fileToRelativeUrlString(input, controller.getMap().getFile(), controller.getResources());
         }
         return relative;
     }

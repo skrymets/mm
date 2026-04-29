@@ -2,7 +2,7 @@ package freemind.model.services;
 
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.NodeAdapter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,10 +51,10 @@ public class NodeTooltipService {
             }
             if (addIt) {
                 try {
-                    File mmFile = Tools.urlToFile(new URL(node.getMap().getURL(), link));
+                    File mmFile = UrlTools.urlToFile(new URL(node.getMap().getURL(), link));
                     String thumbnailFileName = Resources.get().createThumbnailFileName(mmFile);
                     if (new File(thumbnailFileName).exists()) {
-                        URL thumbUrl = Tools.fileToUrl(new File(thumbnailFileName));
+                        URL thumbUrl = UrlTools.fileToUrl(new File(thumbnailFileName));
                         String imgHtml = "<img src=\"" + thumbUrl + "\" " + linkHtmlPart + "/>";
                         log.info("Adding new tooltip: {}", imgHtml);
                         result.put(TOOLTIP_PREVIEW_KEY, imgHtml);

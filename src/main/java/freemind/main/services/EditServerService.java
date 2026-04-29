@@ -4,7 +4,7 @@ import freemind.main.EditServer;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.DataOutputStream;
@@ -73,7 +73,7 @@ public class EditServerService {
             try (var out = new DataOutputStream(socket.getOutputStream())) {
                 out.writeInt(key);
 
-                String script = Tools.arrayToUrls(pArgs);
+                String script = UrlTools.arrayToUrls(pArgs);
                 out.writeUTF(script);
 
                 log.info("Waiting for server");

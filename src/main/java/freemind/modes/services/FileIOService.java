@@ -50,7 +50,7 @@ public class FileIOService {
             log.info("Trying to open {}", relative);
             URL absolute = null;
             if (new File(relative).isAbsolute()) {
-                absolute = Tools.fileToUrl(new File(relative));
+                absolute = UrlTools.fileToUrl(new File(relative));
             } else if (relative.startsWith("#")) {
                 // inner map link
                 log.trace("found relative link to {}", relative);
@@ -71,7 +71,7 @@ public class FileIOService {
             URL originalURL = absolute;
             String ref = absolute.getRef();
             if (ref != null) {
-                absolute = Tools.getURLWithoutReference(absolute);
+                absolute = UrlTools.getURLWithoutReference(absolute);
             }
             String extension = FilenameUtils.getExtension(absolute.toString()).toLowerCase();
             if ((extension != null)

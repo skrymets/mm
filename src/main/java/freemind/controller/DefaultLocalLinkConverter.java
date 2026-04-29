@@ -1,7 +1,7 @@
 package freemind.controller;
 
 import freemind.main.FreeMindMain;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -16,6 +16,6 @@ public class DefaultLocalLinkConverter implements Controller.LocalLinkConverter 
 
     public URL convertLocalLink(String map) throws MalformedURLException {
         String applicationPath = frame.getFreemindBaseDir();
-        return Tools.fileToUrl(new File(applicationPath + map.substring(1)));
+        return UrlTools.fileToUrl(new File(applicationPath + map.substring(1)));
     }
 }

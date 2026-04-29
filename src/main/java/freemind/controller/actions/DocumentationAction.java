@@ -2,7 +2,7 @@ package freemind.controller.actions;
 
 import freemind.controller.Controller;
 import freemind.main.MessageTools;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.modes.browsemode.BrowseMode;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +29,7 @@ public class DocumentationAction extends AbstractAction {
             map = MessageTools.removeTranslateComment(map);
             final URL endUrl = map != null && map.startsWith(".")
                     ? Controller.localDocumentationLinkConverter.convertLocalLink(map)
-                    : Tools.fileToUrl(new File(map));
+                    : UrlTools.fileToUrl(new File(map));
             // invokeLater is necessary, as the mode changing removes
             // all
             // menus (inclusive this action!).

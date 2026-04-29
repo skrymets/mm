@@ -5,7 +5,7 @@ import freemind.events.FreeMindEventBus;
 import freemind.events.NodeModifiedEvent;
 import freemind.main.FreeMindMain;
 import freemind.main.SwingUtils;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -289,7 +289,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
      */
     public ModeFeedback load(File file) {
         try {
-            return load(Tools.fileToUrl(file));
+            return load(UrlTools.fileToUrl(file));
         } catch (URISyntaxException | IOException e) {
             log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);

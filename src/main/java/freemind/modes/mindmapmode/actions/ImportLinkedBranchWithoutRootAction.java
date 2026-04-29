@@ -1,6 +1,6 @@
 package freemind.modes.mindmapmode.actions;
 
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapNodeModel;
@@ -29,13 +29,13 @@ public class ImportLinkedBranchWithoutRootAction extends MindmapAction {
         URL absolute;
         try {
             String relative = selected.getLink();
-            absolute = new URL(Tools.fileToUrl(controller.getMap().getFile()), relative);
+            absolute = new URL(UrlTools.fileToUrl(controller.getMap().getFile()), relative);
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(controller.getView(), "Couldn't create valid URL.");
             return;
         }
         try {
-            MindMapNode node = controller.loadTree(Tools.urlToFile(absolute));
+            MindMapNode node = controller.loadTree(UrlTools.urlToFile(absolute));
             for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
                 MindMapNodeModel importNode = (MindMapNodeModel) i.next();
                 controller.paste(importNode, selected);

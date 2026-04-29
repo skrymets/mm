@@ -9,7 +9,7 @@ package accessories.plugins;
 import accessories.plugins.util.html.ClickableImageCreator;
 import accessories.plugins.util.xslt.ExportDialog;
 import freemind.extensions.ExportHook;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.MindIcon;
@@ -90,7 +90,7 @@ public class ExportWithXSLT extends ExportHook {
                 } else {
                     if (Objects.equals(getResourceString("load_file"), "true")) {
                         getController().getFrame().openDocument(
-                                Tools.fileToUrl(saveFile));
+                                UrlTools.fileToUrl(saveFile));
                     }
                 }
             } catch (Exception e) {
@@ -286,7 +286,7 @@ public class ExportWithXSLT extends ExportHook {
             Transformer trans = transFact.newTransformer(xsltSource);
             // set parameter:
             // relative directory <filename>_files
-            trans.setParameter("destination_dir", Tools.fileToRelativeUrlString(new File(resultFile.getAbsolutePath()
+            trans.setParameter("destination_dir", UrlTools.fileToRelativeUrlString(new File(resultFile.getAbsolutePath()
                     + "_files/"), resultFile, getController().getResources()) + "/");
             trans.setParameter("area_code", areaCode);
             trans.setParameter("folding_type", getController().getFrame()

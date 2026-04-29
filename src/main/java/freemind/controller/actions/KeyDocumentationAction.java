@@ -2,7 +2,7 @@ package freemind.controller.actions;
 
 import freemind.controller.Controller;
 import freemind.main.MessageTools;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -25,7 +25,7 @@ public class KeyDocumentationAction extends AbstractAction {
         // POSTFIX_TRANSLATE_ME is appended:
         urlText = MessageTools.removeTranslateComment(urlText);
         try {
-            URL url = urlText != null && urlText.startsWith(".") ? Controller.localDocumentationLinkConverter.convertLocalLink(urlText) : Tools.fileToUrl(new File(urlText));
+            URL url = urlText != null && urlText.startsWith(".") ? Controller.localDocumentationLinkConverter.convertLocalLink(urlText) : UrlTools.fileToUrl(new File(urlText));
             log.info("Opening key docs under {}", url);
             controller.getFrame().openDocument(url);
         } catch (Exception e) {

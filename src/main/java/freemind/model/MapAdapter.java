@@ -234,7 +234,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
      * Return URL of the map (whether as local file or a web location)
      */
     public URL getURL() throws MalformedURLException {
-        return getFile() != null ? Tools.fileToUrl(getFile()) : null;
+        return getFile() != null ? UrlTools.fileToUrl(getFile()) : null;
     }
 
     protected String getText(String textId) {

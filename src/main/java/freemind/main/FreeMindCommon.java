@@ -195,7 +195,7 @@ public class FreeMindCommon {
     public ClassLoader getFreeMindClassLoader() {
         ClassLoader classLoader = this.getClass().getClassLoader();
         try {
-            return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(getFreemindBaseDir()))}, classLoader);
+            return new URLClassLoader(new URL[]{UrlTools.fileToUrl(new File(getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
             log.error(e.getLocalizedMessage(), e);
             return classLoader;

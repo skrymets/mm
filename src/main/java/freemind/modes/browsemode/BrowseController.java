@@ -4,7 +4,7 @@ import freemind.controller.MenuBar;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.StructuredMenuHolder;
 import freemind.extensions.HookFactory;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import freemind.model.*;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
@@ -300,7 +300,7 @@ public class BrowseController extends ViewControllerAdapter {
         try {
             ModeController newModeController = (ModeController) super.load(pFile);
             // decorator pattern.
-            ((BrowseToolBar) newModeController.getModeToolBar()).setURLField(Tools
+            ((BrowseToolBar) newModeController.getModeToolBar()).setURLField(UrlTools
                     .fileToUrl(pFile).toString());
             return newModeController;
         } catch (IOException e) {

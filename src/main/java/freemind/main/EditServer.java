@@ -178,7 +178,7 @@ public class EditServer extends Thread {
 
             SwingUtilities.invokeLater(() -> {
                 try {
-                    List<URL> urls = Tools.urlStringToUrls(script);
+                    List<URL> urls = UrlTools.urlStringToUrls(script);
                     for (var urli : urls) {
                         mFrame.getController().getModeController()
                                 .load(urli);

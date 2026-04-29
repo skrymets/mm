@@ -2,7 +2,7 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.main.MindMapUtils;
 import freemind.main.MessageTools;
-import freemind.main.Tools;
+import freemind.main.UrlTools;
 import org.apache.commons.io.FilenameUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.FreeMindFileDialog;
@@ -65,7 +65,7 @@ public class ExportBranchAction extends MindmapAction {
                                 + freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION);
             }
             try {
-                Tools.fileToUrl(chosenFile);
+                UrlTools.fileToUrl(chosenFile);
             } catch (MalformedURLException ex) {
                 JOptionPane.showMessageDialog(mMindMapController.getView(),
                         "couldn't create valid URL!");
@@ -91,7 +91,7 @@ public class ExportBranchAction extends MindmapAction {
              */
             MindMapNodeModel parent = (MindMapNodeModel) node.getParentNode();
             // set a link from the new root to the old map
-            String linkToNewMapString = Tools.fileToRelativeUrlString(
+            String linkToNewMapString = UrlTools.fileToRelativeUrlString(
                     mMindMapController.getModel().getFile(), chosenFile, mMindMapController.getResources());
             mMindMapController.setLink(node, linkToNewMapString);
             int nodePosition = parent.getChildPosition(node);
@@ -124,7 +124,7 @@ public class ExportBranchAction extends MindmapAction {
             // TODO: Keep formatting of node.
             mMindMapController.setNodeText(newNode, node.getText());
 
-            final String linkString = Tools.fileToRelativeUrlString(chosenFile, mMindMapController.getModel().getFile(), mMindMapController.getResources());
+            final String linkString = UrlTools.fileToRelativeUrlString(chosenFile, mMindMapController.getModel().getFile(), mMindMapController.getResources());
             mMindMapController.setLink(newNode, linkString);
             mMindMapController.newMap(newMap, newModeController);
             // old map should not be saved automatically!!

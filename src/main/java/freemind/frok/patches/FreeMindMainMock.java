@@ -160,7 +160,7 @@ public class FreeMindMainMock implements FreeMindMain {
     public ClassLoader getFreeMindClassLoader() {
         ClassLoader classLoader = this.getClass().getClassLoader();
         try {
-            return new URLClassLoader(new URL[]{Tools.fileToUrl(new File(
+            return new URLClassLoader(new URL[]{UrlTools.fileToUrl(new File(
                     getFreemindBaseDir()))}, classLoader);
         } catch (MalformedURLException e) {
             log.error(e.getLocalizedMessage(), e);
