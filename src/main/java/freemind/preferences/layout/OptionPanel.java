@@ -10,7 +10,7 @@ import freemind.controller.actions.xml.storage.OptionPanelWindowConfigurationSto
 import freemind.controller.actions.xml.storage.WindowConfigurationStorage;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
-import freemind.main.Tools;
+import freemind.main.MessageTools;
 import freemind.model.MindMapNode;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
@@ -376,7 +376,7 @@ public class OptionPanel implements TextTranslator {
                         "tr", "uk_UA", "vi", "zh_TW", "zh_CN"},
                 pKey -> {
                     // decorator, that removes "TranslateMe" comments.
-                    return Tools.removeTranslateComment(OptionPanel.this
+                    return MessageTools.removeTranslateComment(OptionPanel.this
                             .getText(pKey));
                 })); // automatic
 

@@ -2,7 +2,7 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.main.FreeMind;
-import freemind.main.Tools;
+import freemind.main.MessageTools;
 import freemind.modes.mindmapmode.MindMapController;
 
 import javax.swing.*;
@@ -30,7 +30,7 @@ public class MapSourceChangeDialog implements Runnable {
         ).show().getResult();
         if (showResult != JOptionPane.OK_OPTION) {
             controller.getFrame().setStatusText(
-                    Tools.expandPlaceholders(controller.getText("file_not_reloaded"),
+                    MessageTools.expandPlaceholders(controller.getText("file_not_reloaded"),
                             controller.getMap().getFile().toString()));
             mReturnValue = false;
             return;

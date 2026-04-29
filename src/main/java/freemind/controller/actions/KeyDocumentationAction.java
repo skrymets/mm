@@ -1,6 +1,7 @@
 package freemind.controller.actions;
 
 import freemind.controller.Controller;
+import freemind.main.MessageTools;
 import freemind.main.Tools;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +23,7 @@ public class KeyDocumentationAction extends AbstractAction {
         String urlText = controller.getFrame().getResourceString("pdfKeyDocLocation");
         // if the current language does not provide its own translation,
         // POSTFIX_TRANSLATE_ME is appended:
-        urlText = Tools.removeTranslateComment(urlText);
+        urlText = MessageTools.removeTranslateComment(urlText);
         try {
             URL url = urlText != null && urlText.startsWith(".") ? Controller.localDocumentationLinkConverter.convertLocalLink(urlText) : Tools.fileToUrl(new File(urlText));
             log.info("Opening key docs under {}", url);

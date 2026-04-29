@@ -9,7 +9,7 @@ import freemind.extensions.HookRegistration;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import freemind.main.MessageTools;
 import freemind.main.SwingUtils;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
@@ -90,7 +90,7 @@ public class NodeNoteRegistration implements HookRegistration,
                 // now test, if different:
                 String documentText = normalizeString(getDocumentText());
                 String noteText = normalizeString(mNode.getNoteText());
-                log.trace("Old doc =\n'{}', Current document: \n'{}'. Comparison: '{}'.", noteText, documentText, Tools.compareText(noteText, documentText));
+                log.trace("Old doc =\n'{}', Current document: \n'{}'. Comparison: '{}'.", noteText, documentText, MessageTools.compareText(noteText, documentText));
                 if (!Objects.equals(noteText, documentText)) {
                     log.trace("Making map dirty.");
                     // make map dirty in order to enable automatic save on note

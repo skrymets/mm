@@ -60,7 +60,7 @@ public class FileIOService {
                 } catch (RuntimeException e) {
                     log.error(e.getLocalizedMessage(), e);
                     adapter.getFrame().setStatusText(
-                            Tools.expandPlaceholders(adapter.getText("link_not_found"),
+                            MessageTools.expandPlaceholders(adapter.getText("link_not_found"),
                                     target));
                 }
                 return;
@@ -96,7 +96,7 @@ public class FileIOService {
                     } catch (RuntimeException e) {
                         log.error(e.getLocalizedMessage(), e);
                         adapter.getFrame().setStatusText(
-                                Tools.expandPlaceholders(
+                                MessageTools.expandPlaceholders(
                                         adapter.getText("link_not_found"), ref));
                     }
                 }
@@ -141,7 +141,7 @@ public class FileIOService {
             }
         } catch (FileNotFoundException e) {
             log.error(e.getLocalizedMessage(), e);
-            String message = Tools.expandPlaceholders(adapter.getText("save_failed"),
+            String message = MessageTools.expandPlaceholders(adapter.getText("save_failed"),
                     file.getName());
             adapter.getController().errorMessage(message);
         } catch (IOException e) {
@@ -192,14 +192,14 @@ public class FileIOService {
             String lockingUser = adapter.getModel().tryToLock(f);
             if (lockingUser != null) {
                 adapter.getFrame().getController().informationMessage(
-                        Tools.expandPlaceholders(
+                        MessageTools.expandPlaceholders(
                                 adapter.getText("map_locked_by_save_as"), f.getName(),
                                 lockingUser));
                 return false;
             }
         } catch (Exception e) {
             adapter.getFrame().getController().informationMessage(
-                    Tools.expandPlaceholders(
+                    MessageTools.expandPlaceholders(
                             adapter.getText("locking_failed_by_save_as"), f.getName()));
             return false;
         }

@@ -183,22 +183,22 @@ class ToolsTest {
 
         @Test
         void singlePlaceholder() {
-            assertEquals("Hello Dolly.", Tools.expandPlaceholders("Hello $1.", "Dolly"));
+            assertEquals("Hello Dolly.", MessageTools.expandPlaceholders("Hello $1.", "Dolly"));
         }
 
         @Test
         void twoPlaceholders() {
-            assertEquals("Hello World!", Tools.expandPlaceholders("Hello $1$2", "World", "!"));
+            assertEquals("Hello World!", MessageTools.expandPlaceholders("Hello $1$2", "World", "!"));
         }
 
         @Test
         void threePlaceholders() {
-            assertEquals("a-b-c", Tools.expandPlaceholders("$1-$2-$3", "a", "b", "c"));
+            assertEquals("a-b-c", MessageTools.expandPlaceholders("$1-$2-$3", "a", "b", "c"));
         }
 
         @Test
         void nullPlaceholder_notReplaced() {
-            assertEquals("Hello $1.", Tools.expandPlaceholders("Hello $1.", (String) null));
+            assertEquals("Hello $1.", MessageTools.expandPlaceholders("Hello $1.", (String) null));
         }
     }
 

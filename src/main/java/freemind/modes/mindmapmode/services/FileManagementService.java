@@ -4,6 +4,7 @@ import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.main.ExampleFileFilter;
 import freemind.main.FreeMind;
 import freemind.modes.FreeMindFileDialog;
+import freemind.main.MessageTools;
 import freemind.main.Tools;
 import freemind.model.MapAdapter;
 import freemind.model.MindMapNode;
@@ -39,7 +40,7 @@ public class FileManagementService {
         log.info("Loading file: {}", url.toString());
         File file = Tools.urlToFile(url);
         if (!file.exists()) {
-            throw new FileNotFoundException(Tools.expandPlaceholders(
+            throw new FileNotFoundException(MessageTools.expandPlaceholders(
                     controller.getText("file_not_found"), file.getPath()));
         }
         if (!file.canWrite()) {
@@ -49,7 +50,7 @@ public class FileManagementService {
                 String lockingUser = model.tryToLock(file);
                 if (lockingUser != null) {
                     controller.getFrame().getController().informationMessage(
-                            Tools.expandPlaceholders(controller.getText("map_locked_by_open"),
+                            MessageTools.expandPlaceholders(controller.getText("map_locked_by_open"),
                                     file.getName(), lockingUser));
                     model.setReadOnly(true);
                 } else {
@@ -58,7 +59,7 @@ public class FileManagementService {
             } catch (Exception e) {
                 log.error(e.getLocalizedMessage(), e);
                 controller.getFrame().getController().informationMessage(
-                        Tools.expandPlaceholders(controller.getText("locking_failed_by_open"),
+                        MessageTools.expandPlaceholders(controller.getText("locking_failed_by_open"),
                                 file.getName()));
                 model.setReadOnly(true);
             }

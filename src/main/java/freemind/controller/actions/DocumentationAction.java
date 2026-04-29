@@ -1,6 +1,7 @@
 package freemind.controller.actions;
 
 import freemind.controller.Controller;
+import freemind.main.MessageTools;
 import freemind.main.Tools;
 import freemind.modes.browsemode.BrowseMode;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class DocumentationAction extends AbstractAction {
             String map = controller.getFrame().getResourceString("browsemode_initial_map");
             // if the current language does not provide its own translation,
             // POSTFIX_TRANSLATE_ME is appended:
-            map = Tools.removeTranslateComment(map);
+            map = MessageTools.removeTranslateComment(map);
             final URL endUrl = map != null && map.startsWith(".")
                     ? Controller.localDocumentationLinkConverter.convertLocalLink(map)
                     : Tools.fileToUrl(new File(map));

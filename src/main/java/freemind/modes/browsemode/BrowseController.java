@@ -249,7 +249,7 @@ public class BrowseController extends ViewControllerAdapter {
     // return;
     // } catch (Exception e) {
     // // bad luck.
-    // getFrame().out(Tools.expandPlaceholders(getText("link_not_found"),
+    // getFrame().out(MessageTools.expandPlaceholders(getText("link_not_found"),
     // target));
     // return;
     // }

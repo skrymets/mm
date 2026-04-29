@@ -278,7 +278,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
         String lockingUserOfOldLock = lockManager.popLockingUserOfOldLock();
         if (lockingUserOfOldLock != null) {
             getMapFeedback().out(
-                    Tools.expandPlaceholders(
+                    MessageTools.expandPlaceholders(
                             getText("locking_old_lock_removed"),
                             file.getName(), lockingUserOfOldLock));
         }

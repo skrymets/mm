@@ -1,6 +1,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.main.MindMapUtils;
+import freemind.main.MessageTools;
 import freemind.main.Tools;
 import org.apache.commons.io.FilenameUtils;
 import freemind.model.MindMapNode;
@@ -112,7 +113,7 @@ public class ExportBranchAction extends MindmapAction {
                 // roll back:
                 mMindMapController.insertNodeInto(node, parent);
 
-                String message = Tools.expandPlaceholders(mMindMapController.getText("save_failed"),
+                String message = MessageTools.expandPlaceholders(mMindMapController.getText("save_failed"),
                         chosenFile.getName());
                 mMindMapController.getController().errorMessage(message);
                 return;

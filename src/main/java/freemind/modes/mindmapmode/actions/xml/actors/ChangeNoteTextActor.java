@@ -3,7 +3,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 import freemind.controller.actions.xml.operations.EditNoteToNodeAction;
 import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.main.HtmlTools;
-import freemind.main.Tools;
+import freemind.main.MessageTools;
 import freemind.model.MindMapNode;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -52,7 +52,7 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
             return;
         }
         log.trace("Old Note Text:'{}, new:'{}'.", oldNoteText, text);
-        log.trace(Tools.compareText(oldNoteText, text));
+        log.trace(MessageTools.compareText(oldNoteText, text));
         EditNoteToNodeAction doAction = createEditNoteToNodeAction(node, text);
         EditNoteToNodeAction undoAction = createEditNoteToNodeAction(node,
                 oldNoteText);
