@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.actions.xml.operations.RemoveIconXmlAction;
-import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.modes.IconInformation;
 import freemind.modes.mindmapmode.MindMapController;
 
@@ -31,7 +31,7 @@ public class RemoveIconAction extends NodeGeneralAction implements
     }
 
     public KeyStroke getKeyStroke() {
-        return Tools.getKeyStroke(getMindMapController().getFrame()
+        return SwingUtils.getKeyStroke(getMindMapController().getFrame()
                 .getAdjustableProperty(getKeystrokeResourceName()));
     }
 

@@ -2,7 +2,6 @@ package freemind.main;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.swing.*;
 import java.awt.print.Paper;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -18,18 +17,6 @@ public class Tools {
      */
     public static boolean isPreferenceTrue(String option) {
         return Objects.equals(option, "true");
-    }
-
-    public static KeyStroke getKeyStroke(final String keyStrokeDescription) {
-        if (keyStrokeDescription == null) {
-            return null;
-        }
-        final KeyStroke keyStroke = KeyStroke
-                .getKeyStroke(keyStrokeDescription);
-        if (keyStroke != null) {
-            return keyStroke;
-        }
-        return KeyStroke.getKeyStroke("typed " + keyStrokeDescription);
     }
 
     public static void setPageFormatFromString(Paper pPaper,

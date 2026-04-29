@@ -331,6 +331,18 @@ public final class SwingUtils {
         map.remove(keyStrokeF8);
     }
 
+    public static KeyStroke getKeyStroke(final String keyStrokeDescription) {
+        if (keyStrokeDescription == null) {
+            return null;
+        }
+        final KeyStroke keyStroke = KeyStroke
+                .getKeyStroke(keyStrokeDescription);
+        if (keyStroke != null) {
+            return keyStroke;
+        }
+        return KeyStroke.getKeyStroke("typed " + keyStrokeDescription);
+    }
+
     public static void logTransferable(Transferable t) {
         log.debug("BEGIN OF Transferable: {}", t);
         DataFlavor[] dataFlavors = t.getTransferDataFlavors();

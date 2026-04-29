@@ -1,7 +1,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.actions.xml.operations.AddIconAction;
-import freemind.main.Tools;
+import freemind.main.SwingUtils;
 import freemind.model.MindMapNode;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
@@ -90,7 +90,7 @@ public class IconAction extends MindmapAction implements IconInformation {
         final String keystrokeResourceName = icon.getKeystrokeResourceName();
         final String keyStrokeDescription = getMindMapController().getFrame()
                 .getAdjustableProperty(keystrokeResourceName);
-        return Tools.getKeyStroke(keyStrokeDescription);
+        return SwingUtils.getKeyStroke(keyStrokeDescription);
     }
 
     public String getDescription() {
