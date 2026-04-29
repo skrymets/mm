@@ -2,10 +2,10 @@ package freemind.modes.mindmapmode.services;
 
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.main.ExampleFileFilter;
+import freemind.main.FileTools;
 import freemind.main.FreeMind;
 import freemind.modes.FreeMindFileDialog;
 import freemind.main.MessageTools;
-import freemind.main.Tools;
 import freemind.main.UrlTools;
 import freemind.model.MapAdapter;
 import freemind.model.MindMapNode;
@@ -80,14 +80,14 @@ public class FileManagementService {
      * Loads a mind map tree from the given file.
      */
     public MindMapNode loadTree(final File pFile) throws IOException {
-        return loadTree(new Tools.FileReaderCreator(pFile));
+        return loadTree(new FileTools.FileReaderCreator(pFile));
     }
 
     /**
      * Loads a mind map tree using the given reader creator, prompting for version
      * conversion if needed.
      */
-    public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator) throws IOException {
+    public MindMapNode loadTree(FileTools.ReaderCreator pReaderCreator) throws IOException {
         return controller.getMap().loadTree(pReaderCreator, () -> {
             int showResult = new OptionalDontShowMeAgainDialog(
                     controller.getFrame().getJFrame(),

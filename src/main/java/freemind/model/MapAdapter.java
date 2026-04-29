@@ -473,12 +473,12 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
     }
 
     @Override
-    public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator,
+    public MindMapNode loadTree(FileTools.ReaderCreator pReaderCreator,
                                 AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws IOException {
         int versionInfoLength;
         versionInfoLength = EXPECTED_START_STRINGS[0].length();
         // reading the start of the file:
-        StringBuilder buffer = Tools.readFileStart(pReaderCreator.createReader(),
+        StringBuilder buffer = FileTools.readFileStart(pReaderCreator.createReader(),
                 versionInfoLength);
         // the resulting file is accessed by the reader:
         Reader reader = null;
@@ -490,7 +490,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
             }
             if (mapStart.startsWith(expectedStartString)) {
                 // actual version:
-                reader = Tools.getActualReader(pReaderCreator.createReader());
+                reader = FileTools.getActualReader(pReaderCreator.createReader());
                 break;
             }
         }
@@ -501,7 +501,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
                     throw new IllegalArgumentException("We should not open the reader " + pReaderCreator);
                 }
             }
-            reader = Tools.getUpdateReader(pReaderCreator.createReader(), FREEMIND_VERSION_UPDATER_XSLT, Resources.get());
+            reader = FileTools.getUpdateReader(pReaderCreator.createReader(), FREEMIND_VERSION_UPDATER_XSLT, Resources.get());
         }
         try {
             HashMap<String, NodeAdapter> IDToTarget = new HashMap<>();

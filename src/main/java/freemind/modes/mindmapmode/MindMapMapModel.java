@@ -374,7 +374,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
                 semaphoreOutputStream.write("\n".getBytes(StandardCharsets.UTF_8));
                 semaphoreOutputStream.write(String.valueOf(System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
             }
-            Tools.setHidden(inSemaphoreFile, true, /* synchro= */false); // Exception
+            FileTools.setHidden(inSemaphoreFile, true, /* synchro= */false); // Exception
             // free
             if (lock != null)
                 lock.release();
@@ -441,7 +441,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
                 return;
             }
             try {
-                Tools.setHidden(lockedSemaphoreFile, false, /* synchro= */true); // Exception
+                FileTools.setHidden(lockedSemaphoreFile, false, /* synchro= */true); // Exception
                 // free
                 // ^ We unhide the file before overwriting because JavaRE1.4.2
                 // does

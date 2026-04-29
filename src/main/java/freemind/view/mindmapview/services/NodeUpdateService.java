@@ -1,8 +1,8 @@
 package freemind.view.mindmapview.services;
 
+import freemind.main.FileTools;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.model.NodeIcon;
 import freemind.modes.MindIcon;
 import freemind.view.mindmapview.*;
@@ -233,7 +233,7 @@ public class NodeUpdateService {
                 iconPath = "images/LinkLocal.png";
             } else if (link.startsWith("mailto:")) {
                 iconPath = "images/Mail.png";
-            } else if (Tools.executableByExtension(link)) {
+            } else if (FileTools.executableByExtension(link)) {
                 iconPath = "images/Executable.png";
             }
             ImageIcon icon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(resources.getResource(iconPath));

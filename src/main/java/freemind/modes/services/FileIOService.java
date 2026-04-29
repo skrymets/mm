@@ -133,11 +133,11 @@ public class FileIOService {
                 File baseFileName = adapter.getModel().getFile();
                 String fileName = adapter.getResources()
                         .createThumbnailFileName(baseFileName);
-                Tools.makeFileHidden(new File(fileName), false);
+                FileTools.makeFileHidden(new File(fileName), false);
                 IndependentMapViewCreator.printToFile(adapter.getView(), fileName,
                         true,
                         adapter.getIntProperty(FreeMindCommon.THUMBNAIL_SIZE, 800));
-                Tools.makeFileHidden(new File(fileName), true);
+                FileTools.makeFileHidden(new File(fileName), true);
             }
         } catch (FileNotFoundException e) {
             log.error(e.getLocalizedMessage(), e);

@@ -3,8 +3,8 @@ package freemind.view.mindmapview;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHookSubstituteUnknown;
 import freemind.frok.patches.FreeMindMainMock;
+import freemind.main.FileTools;
 import freemind.main.FreeMindMain;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
 import freemind.model.MapAdapter;
 import freemind.model.MindMap;
@@ -53,7 +53,7 @@ public class IndependentMapViewCreator extends MapFeedbackAdapter {
                                         FreeMindMain pFreeMindMain) throws
             IOException {
         mMap = new MindMapMapModel(this);
-        var readerCreator = new Tools.FileReaderCreator(new File(inputFileName));
+        var readerCreator = new FileTools.FileReaderCreator(new File(inputFileName));
         MindMapNode node = mMap.loadTree(readerCreator, MapAdapter.sDontAskInstance);
         mMap.setRoot(node);
         var mapView = new MapView(mMap, this);

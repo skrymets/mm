@@ -266,7 +266,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         return fileManagementService.loadTree(pFile);
     }
 
-    public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator) throws IOException {
+    public MindMapNode loadTree(FileTools.ReaderCreator pReaderCreator) throws IOException {
         return fileManagementService.loadTree(pReaderCreator);
     }
 

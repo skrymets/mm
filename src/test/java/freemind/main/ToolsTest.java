@@ -168,13 +168,13 @@ class ToolsTest {
         @ParameterizedTest
         @ValueSource(strings = {"file.exe", "script.bat", "file.com", "macro.vbs", "shortcut.lnk"})
         void executable(String file) {
-            assertTrue(Tools.executableByExtension(file));
+            assertTrue(FileTools.executableByExtension(file));
         }
 
         @ParameterizedTest
         @ValueSource(strings = {"file.txt", "image.png", "document.mm", "script.sh"})
         void notExecutable(String file) {
-            assertFalse(Tools.executableByExtension(file));
+            assertFalse(FileTools.executableByExtension(file));
         }
     }
 

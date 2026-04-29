@@ -59,7 +59,7 @@ public class EditServer extends Thread {
             // your way. Nasty.)
             if (SystemUtils.IS_OS_UNIX) {
                 new File(portFile).createNewFile();
-                Tools.setPermissions(portFile, 0600);
+                FileTools.setPermissions(portFile, 0600);
             }
 
             // Bind to any port on localhost; accept 2 simultaneous

@@ -850,7 +850,7 @@ public class NodeView extends JComponent implements TreeModelListener {
                 iconPath = "images/LinkLocal.png";
             } else if (link.startsWith("mailto:")) {
                 iconPath = "images/Mail.png";
-            } else if (Tools.executableByExtension(link)) {
+            } else if (FileTools.executableByExtension(link)) {
                 iconPath = "images/Executable.png";
             }
             ImageIcon icon = freemind.view.ImageFactory.getInstance().createUnscaledIcon(getResources().getResource(iconPath));

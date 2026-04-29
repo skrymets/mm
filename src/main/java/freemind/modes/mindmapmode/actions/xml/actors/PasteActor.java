@@ -184,7 +184,7 @@ public class PasteActor extends XmlActorAdapter {
                 mapContent.append("</node></map>");
                 // log.info("Pasting " + mapContent);
                 try {
-                    MindMapNode node = getExMapFeedback().getMap().loadTree(new Tools.StringReaderCreator(mapContent.toString()), MapAdapter.sDontAskInstance);
+                    MindMapNode node = getExMapFeedback().getMap().loadTree(new FileTools.StringReaderCreator(mapContent.toString()), MapAdapter.sDontAskInstance);
                     for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext(); ) {
                         MindMapNodeModel importNode = (MindMapNodeModel) i.next();
                         insertNodeInto(importNode, target, asSibling, isLeft, true);

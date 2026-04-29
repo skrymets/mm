@@ -1,6 +1,6 @@
 package freemind.model;
 
-import freemind.main.Tools;
+import freemind.main.FileTools;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.io.File;
@@ -148,7 +148,7 @@ public interface MindMap extends TreeModel {
 
     EdgeAdapter createEdgeAdapter(NodeAdapter node);
 
-    MindMapNode loadTree(Tools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws IOException;
+    MindMapNode loadTree(FileTools.ReaderCreator pReaderCreator, AskUserBeforeUpdateCallback pAskUserBeforeUpdateCallback) throws IOException;
 
     MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, NodeAdapter> pIDToTarget) throws IOException;
 
