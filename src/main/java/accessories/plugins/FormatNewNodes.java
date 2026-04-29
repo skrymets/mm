@@ -4,7 +4,7 @@ import freemind.controller.actions.*;
 import freemind.controller.actions.xml.operations.*;
 import freemind.extensions.HookRegistration;
 import freemind.frok.patches.JIBXGeneratedUtil;
-import freemind.main.Tools;
+import freemind.main.XmlMarshallingTools;
 import freemind.model.MindMap;
 import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
@@ -79,7 +79,7 @@ public class FormatNewNodes implements ActionHandler, ActionFilter, HookRegistra
 
             for (var formatAction : formatActions.values()) {
                 // deep copy:
-                NodeAction copiedFormatAction = (NodeAction) Tools.deepCopy(formatAction);
+                NodeAction copiedFormatAction = (NodeAction) XmlMarshallingTools.deepCopy(formatAction);
                 copiedFormatAction.setNode(newNodeAction.getNewId());
                 CompoundAction.Choice copiedFormatActionChoice = JIBXGeneratedUtil.choiceFromXmlActions(copiedFormatAction);
                 compound.addChoice(copiedFormatActionChoice);

@@ -3,7 +3,7 @@ package freemind.common;
 import freemind.controller.actions.*;
 import freemind.controller.actions.xml.operations.*;
 import freemind.controller.actions.xml.storage.*;
-import freemind.main.Tools;
+import freemind.main.XmlMarshallingTools;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,11 +29,11 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_12345");
             action.setBold(true);
 
-            String xml = Tools.marshall(action);
+            String xml = XmlMarshallingTools.marshall(action);
             assertNotNull(xml);
             assertTrue(xml.contains("bold"));
 
-            XmlAction deserialized = Tools.unMarshall(xml);
+            XmlAction deserialized = XmlMarshallingTools.unMarshall(xml);
             assertInstanceOf(BoldNodeAction.class, deserialized);
 
             BoldNodeAction result = (BoldNodeAction) deserialized;
@@ -47,7 +47,7 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_99");
             action.setBold(false);
 
-            BoldNodeAction result = (BoldNodeAction) Tools.unMarshall(Tools.marshall(action));
+            BoldNodeAction result = (BoldNodeAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(action));
             assertFalse(result.isBold());
             assertEquals("ID_99", result.getNode());
         }
@@ -58,7 +58,7 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_456");
             action.setItalic(true);
 
-            ItalicNodeAction result = (ItalicNodeAction) Tools.unMarshall(Tools.marshall(action));
+            ItalicNodeAction result = (ItalicNodeAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(action));
             assertEquals("ID_456", result.getNode());
             assertTrue(result.isItalic());
         }
@@ -70,7 +70,7 @@ class XmlBindingRoundtripTest {
             action.setIconName("button_ok");
             action.setIconPosition(0);
 
-            AddIconAction result = (AddIconAction) Tools.unMarshall(Tools.marshall(action));
+            AddIconAction result = (AddIconAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(action));
             assertEquals("ID_789", result.getNode());
             assertEquals("button_ok", result.getIconName());
             assertEquals(0, result.getIconPosition());
@@ -82,7 +82,7 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_100");
             action.setText("Hello World");
 
-            EditNodeAction result = (EditNodeAction) Tools.unMarshall(Tools.marshall(action));
+            EditNodeAction result = (EditNodeAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(action));
             assertEquals("ID_100", result.getNode());
             assertEquals("Hello World", result.getText());
         }
@@ -93,7 +93,7 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_101");
             action.setText("Text with <xml> & \"special\" 'chars'");
 
-            EditNodeAction result = (EditNodeAction) Tools.unMarshall(Tools.marshall(action));
+            EditNodeAction result = (EditNodeAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(action));
             assertEquals("Text with <xml> & \"special\" 'chars'", result.getText());
         }
 
@@ -103,7 +103,7 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_102");
             action.setText("Привет мир 你好世界");
 
-            EditNodeAction result = (EditNodeAction) Tools.unMarshall(Tools.marshall(action));
+            EditNodeAction result = (EditNodeAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(action));
             assertEquals("Привет мир 你好世界", result.getText());
         }
     }
@@ -116,7 +116,7 @@ class XmlBindingRoundtripTest {
             CompoundAction action = new CompoundAction();
             action.setNode("ID_500");
 
-            CompoundAction result = (CompoundAction) Tools.unMarshall(Tools.marshall(action));
+            CompoundAction result = (CompoundAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(action));
             assertEquals("ID_500", result.getNode());
             // JiBX sets choiceList to null for empty lists (not an empty list)
             assertTrue(result.getChoiceList() == null || result.getChoiceList().isEmpty());
@@ -135,10 +135,10 @@ class XmlBindingRoundtripTest {
             choice.setBoldNodeAction(bold);
             compound.addChoice(choice);
 
-            String xml = Tools.marshall(compound);
+            String xml = XmlMarshallingTools.marshall(compound);
             assertNotNull(xml);
 
-            CompoundAction result = (CompoundAction) Tools.unMarshall(xml);
+            CompoundAction result = (CompoundAction) XmlMarshallingTools.unMarshall(xml);
             assertEquals("ID_600", result.getNode());
             assertEquals(1, result.sizeChoiceList());
 
@@ -167,7 +167,7 @@ class XmlBindingRoundtripTest {
             choice2.setItalicNodeAction(italic);
             compound.addChoice(choice2);
 
-            CompoundAction result = (CompoundAction) Tools.unMarshall(Tools.marshall(compound));
+            CompoundAction result = (CompoundAction) XmlMarshallingTools.unMarshall(XmlMarshallingTools.marshall(compound));
             assertEquals(2, result.sizeChoiceList());
             assertNotNull(result.getChoice(0).getBoldNodeAction());
             assertNotNull(result.getChoice(1).getItalicNodeAction());
@@ -183,7 +183,7 @@ class XmlBindingRoundtripTest {
             original.setNode("ID_COPY");
             original.setBold(true);
 
-            XmlAction copy = Tools.deepCopy(original);
+            XmlAction copy = XmlMarshallingTools.deepCopy(original);
             assertInstanceOf(BoldNodeAction.class, copy);
             assertNotSame(original, copy);
 
@@ -202,7 +202,7 @@ class XmlBindingRoundtripTest {
             original.setNode("ID_TEXT");
             original.setText("Some content");
 
-            EditNodeAction copy = (EditNodeAction) Tools.deepCopy(original);
+            EditNodeAction copy = (EditNodeAction) XmlMarshallingTools.deepCopy(original);
             assertEquals("Some content", copy.getText());
 
             original.setText("Modified");
@@ -244,7 +244,7 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_123");
             action.setBold(true);
 
-            String xml = Tools.marshall(action);
+            String xml = XmlMarshallingTools.marshall(action);
             assertTrue(xml.contains("<?xml"), "Should have XML declaration");
             assertTrue(xml.contains("bold_node_action"), "Should have element name");
             assertTrue(xml.contains("ID_123"), "Should contain node ID");
@@ -256,9 +256,9 @@ class XmlBindingRoundtripTest {
             action.setNode("ID_WF");
             action.setText("test");
 
-            String xml = Tools.marshall(action);
+            String xml = XmlMarshallingTools.marshall(action);
             // If unmarshalling succeeds, the XML is well-formed
-            assertNotNull(Tools.unMarshall(xml));
+            assertNotNull(XmlMarshallingTools.unMarshall(xml));
         }
     }
 }

@@ -11,7 +11,7 @@ import freemind.frok.patches.JIBXGeneratedUtil;
 import freemind.main.FreeMind;
 import freemind.main.MindMapUtils;
 import freemind.main.MindMapUtils.MindMapNodePair;
-import freemind.main.Tools;
+import freemind.main.XmlMarshallingTools;
 import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.model.NodeAdapter;
@@ -342,7 +342,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
                                           MindMapUtils.MindMapNodePair correspondingNodePair,
                                           CompoundAction compound) {
             // deep copy:
-            NodeAction copiedNodeAction = (NodeAction) Tools
+            NodeAction copiedNodeAction = (NodeAction) XmlMarshallingTools
                     .deepCopy(nodeAction);
             // special cases:
             if (copiedNodeAction instanceof MoveNodesAction moveAction) {

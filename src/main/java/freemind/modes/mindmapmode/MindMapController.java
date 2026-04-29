@@ -921,11 +921,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     }
 
     public String marshall(XmlAction action) {
-        return Tools.marshall(action);
+        return XmlMarshallingTools.marshall(action);
     }
 
     public XmlAction unMarshall(String inputString) {
-        return Tools.unMarshall(inputString);
+        return XmlMarshallingTools.unMarshall(inputString);
     }
 
     public void storeDialogPositions(JDialog dialog, WindowConfigurationStorage pStorage, String window_preference_storage_property) {

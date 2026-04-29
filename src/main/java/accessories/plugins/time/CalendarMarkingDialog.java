@@ -4,9 +4,9 @@ import accessories.plugins.time.JTripleCalendar.JSwitchableCalendar;
 import freemind.controller.actions.xml.calendar.CalendarMarking;
 import freemind.controller.actions.xml.calendar.CalendarMarkings;
 import freemind.controller.actions.xml.storage.WindowConfigurationStorage;
-import freemind.main.Tools;
-import freemind.main.SwingUtils;
 import freemind.main.ColorUtils;
+import freemind.main.SwingUtils;
+import freemind.main.XmlMarshallingTools;
 import freemind.modes.mindmapmode.MindMapController;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +59,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
     public static void main(String[] args) {
         var dialog = new CalendarMarkingDialog(null);
         String MARKINGS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><calendar_markings><calendar_marking name=\"bla\" color=\"#cc0099\" start_date=\"1443650400000\" end_date=\"1447801200000\" repeat_type=\"yearly\" repeat_each_n_occurence=\"1\" first_occurence=\"2\"/></calendar_markings>";
-        CalendarMarkings markings = (CalendarMarkings) Tools.unMarshall(MARKINGS);
+        CalendarMarkings markings = (CalendarMarkings) XmlMarshallingTools.unMarshall(MARKINGS);
         dialog.setCalendarMarking(markings.getCalendarMarking(0));
         dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
         dialog.setVisible(true);
@@ -67,7 +67,7 @@ public class CalendarMarkingDialog extends JDialog implements ActionListener, Ch
         CalendarMarking marking = dialog.getCalendarMarking();
         var markingsZwo = new CalendarMarkings();
         markingsZwo.addCalendarMarking(marking);
-        log.debug("Markings XML: {}", Tools.marshall(markingsZwo));
+        log.debug("Markings XML: {}", XmlMarshallingTools.marshall(markingsZwo));
     }
 
     public CalendarMarkingDialog(MindMapController pController) {

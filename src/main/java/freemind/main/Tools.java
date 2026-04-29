@@ -1,10 +1,6 @@
 package freemind.main;
 
 import freemind.common.UnicodeReader;
-import freemind.common.XmlBindingTools;
-import freemind.controller.actions.xml.operations.CompoundAction;
-import freemind.controller.actions.xml.operations.XmlAction;
-import freemind.frok.patches.JIBXGeneratedUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -27,7 +23,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributes;
 import java.util.*;
-import java.util.List;
 
 import static java.lang.String.format;
 
@@ -106,7 +101,7 @@ public class Tools {
             if (fileContents.length() > 10) {
                 log.info("File start before UTF8 replacement: '{}'", fileContents.substring(0, 9));
             }
-            fileContents = replaceUtf8AndIllegalXmlChars(fileContents);
+            fileContents = XmlMarshallingTools.replaceUtf8AndIllegalXmlChars(fileContents);
             if (fileContents.length() > 10) {
                 log.info("File start after UTF8 replacement: '{}'", fileContents.substring(0, 9));
             }
@@ -159,17 +154,13 @@ public class Tools {
         }
         if (successful) {
             String content = writer.getBuffer().toString();
-            String replacedContent = Tools
+            String replacedContent = XmlMarshallingTools
                     .replaceUtf8AndIllegalXmlChars(content);
             return new StringReader(replacedContent);
         } else {
             return new StringReader("<map><node TEXT='"
                     + HtmlTools.toXMLEscapedText(errorMessage) + "'/></map>");
         }
-    }
-
-    public static String replaceUtf8AndIllegalXmlChars(String fileContents) {
-        return HtmlTools.removeInvalidXmlCharacters(fileContents);
     }
 
     /**
@@ -234,14 +225,6 @@ public class Tools {
         return KeyStroke.getKeyStroke("typed " + keyStrokeDescription);
     }
 
-    public static String marshall(XmlAction action) {
-        return XmlBindingTools.getInstance().marshall(action);
-    }
-
-    public static XmlAction unMarshall(String inputString) {
-        return XmlBindingTools.getInstance().unMarshall(inputString);
-    }
-
     // {{{ setPermissions() method
 
     /**
@@ -299,33 +282,6 @@ public class Tools {
                 + pPaper.getImageableX() + ";" + pPaper.getImageableY() + ";"
                 + pPaper.getImageableWidth() + ";"
                 + pPaper.getImageableHeight();
-    }
-
-    public static String printXmlAction(XmlAction pAction) {
-        final String classString = pAction.getClass().getName().replaceAll(".*\\.", "");
-
-        if (pAction instanceof CompoundAction compoundAction) {
-
-            List<XmlAction> xmlActions = JIBXGeneratedUtil.listXmlActions(compoundAction);
-
-            var buf = new StringBuilder("[");
-
-            for (var xmlAction : xmlActions) {
-                if (buf.length() > 1) {
-                    buf.append(',');
-                }
-                XmlAction subAction = xmlAction;
-                buf.append(printXmlAction(subAction));
-            }
-            buf.append(']');
-
-            return classString + " " + buf;
-        }
-        return classString;
-    }
-
-    public static XmlAction deepCopy(XmlAction action) {
-        return unMarshall(marshall(action));
     }
 
     public static String getFreeMindBasePath() {

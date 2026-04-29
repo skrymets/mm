@@ -63,7 +63,7 @@ public class PasteActor extends XmlActorAdapter {
             pUndoAction.setAsSibling(coord.asSibling);
             pUndoAction.setIsLeft(coord.isLeft);
             if (log.isTraceEnabled()) {
-                String s = Tools.marshall(pUndoAction);
+                String s = XmlMarshallingTools.marshall(pUndoAction);
                 log.trace("Undo action: {}", s);
             }
         }

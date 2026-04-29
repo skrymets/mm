@@ -5,8 +5,8 @@ import freemind.common.TextTranslator;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.xml.storage.ManageStyleEditorWindowConfigurationStorage;
 import freemind.controller.actions.xml.patterns.Pattern;
-import freemind.main.Tools;
 import freemind.main.SwingUtils;
+import freemind.main.XmlMarshallingTools;
 import freemind.model.MindMapNode;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.MindMapController;
@@ -326,7 +326,7 @@ public class ManagePatternsPopupDialog extends JDialog implements TextTranslator
         setLastSelectedPattern(null);
         Pattern oldPattern = mPatternListModel.get(selectedIndex);
         // deep copy:
-        Pattern newPattern = (Pattern) Tools.deepCopy(oldPattern);
+        Pattern newPattern = (Pattern) XmlMarshallingTools.deepCopy(oldPattern);
         newPattern.setName(searchForNameForNewPattern());
         mPatternListModel.add(selectedIndex, newPattern);
         mList.setSelectedIndex(selectedIndex);

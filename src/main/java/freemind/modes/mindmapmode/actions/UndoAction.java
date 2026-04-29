@@ -3,7 +3,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.controller.actions.xml.operations.CompoundAction;
 import freemind.controller.actions.xml.operations.XmlAction;
 import freemind.frok.patches.JIBXGeneratedUtil;
-import freemind.main.Tools;
+import freemind.main.XmlMarshallingTools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
@@ -61,8 +61,8 @@ public class UndoAction extends AbstractXmlAction {
     }
 
     protected void undoDoAction(ActionPair pair) {
-        log.info("Undo, doing: {}", Tools.printXmlAction(pair.getUndoAction()));
-        log.info("Redo, would: {}", Tools.printXmlAction(pair.getDoAction()));
+        log.info("Undo, doing: {}", XmlMarshallingTools.printXmlAction(pair.getUndoAction()));
+        log.info("Redo, would: {}", XmlMarshallingTools.printXmlAction(pair.getDoAction()));
         isUndoAction = true;
         this.controller.doTransaction("Undo", new ActionPair(pair.getUndoAction(), pair.getDoAction()));
         isUndoAction = false;
@@ -78,9 +78,9 @@ public class UndoAction extends AbstractXmlAction {
 
     public void add(ActionPair pair) {
 
-        XmlAction dcDo = Tools.deepCopy(pair.getDoAction());
+        XmlAction dcDo = XmlMarshallingTools.deepCopy(pair.getDoAction());
         CompoundAction.Choice dcDoChoice = JIBXGeneratedUtil.choiceFromXmlActions(dcDo);
-        XmlAction dcUndo = Tools.deepCopy(pair.getUndoAction());
+        XmlAction dcUndo = XmlMarshallingTools.deepCopy(pair.getUndoAction());
         CompoundAction.Choice dcUndoChoice = JIBXGeneratedUtil.choiceFromXmlActions(dcUndo);
 
         long currentTime = System.currentTimeMillis();
@@ -143,7 +143,7 @@ public class UndoAction extends AbstractXmlAction {
         log.info("Undo list:");
         int j = 0;
         for (var pair : actionPairList) {
-            log.info("line {} = {}", j++, Tools.printXmlAction(pair.getDoAction()));
+            log.info("line {} = {}", j++, XmlMarshallingTools.printXmlAction(pair.getDoAction()));
         }
     }
 }

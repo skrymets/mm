@@ -4,7 +4,7 @@ import freemind.controller.actions.xml.storage.MindmapLastStateMapStorage;
 import freemind.controller.actions.xml.storage.MindmapLastStateStorage;
 import freemind.controller.actions.xml.document.NodeListMember;
 import freemind.controller.actions.xml.operations.XmlAction;
-import freemind.main.Tools;
+import freemind.main.XmlMarshallingTools;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class LastStateStorageManagement {
 
     public LastStateStorageManagement(String pXml) {
         try {
-            XmlAction action = Tools.unMarshall(pXml);
+            XmlAction action = XmlMarshallingTools.unMarshall(pXml);
             if (action instanceof MindmapLastStateMapStorage storage) {
                 mLastStatesMap = storage;
             }
@@ -38,7 +38,7 @@ public class LastStateStorageManagement {
     }
 
     public String getXml() {
-        return Tools.marshall(mLastStatesMap);
+        return XmlMarshallingTools.marshall(mLastStatesMap);
     }
 
     public void clearTabIndices() {
