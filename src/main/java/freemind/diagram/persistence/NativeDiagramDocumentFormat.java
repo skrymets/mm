@@ -33,9 +33,14 @@ import jakarta.xml.bind.Unmarshaller;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.sax.SAXSource;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
@@ -83,7 +88,8 @@ public final class NativeDiagramDocumentFormat {
         var stylePalette = stylePaletteFromXml(envelope.styles);
         var resources = resourcesFromXml(envelope.resources);
         var documentId = new DocumentId(UUID.fromString(envelope.metadata.documentId));
-        var ctx = new PayloadReadContext(documentId, stylePalette, resources,
+        var metadata = metadataFromXml(envelope.metadata);
+        var ctx = new PayloadReadContext(documentId, metadata, stylePalette, resources,
             envelope.diagram.payload.root);
         return readPayload(plugin, envelope.diagram.payloadVersion, ctx);
     }
@@ -206,7 +212,7 @@ public final class NativeDiagramDocumentFormat {
             ResourceEntry entry = e.externalUri != null
                 ? ResourceEntry.external(e.mimeType, URI.create(e.externalUri))
                 : ResourceEntry.embedded(e.mimeType,
-                    Base64.getDecoder().decode(e.embeddedBase64 == null ? "" : e.embeddedBase64.trim()));
+                    Base64.getMimeDecoder().decode(e.embeddedBase64 == null ? "" : e.embeddedBase64));
             table = table.withEntry(new ResourceId(e.id), entry);
         }
         return table;
@@ -214,9 +220,17 @@ public final class NativeDiagramDocumentFormat {
 
     private EnvelopeXml unmarshalEnvelope(InputStream in) {
         try {
+            var spf = SAXParserFactory.newInstance();
+            spf.setNamespaceAware(true);
+            spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            var xmlReader = spf.newSAXParser().getXMLReader();
+            var source = new SAXSource(xmlReader, new InputSource(in));
             Unmarshaller u = envelopeContext.createUnmarshaller();
-            return (EnvelopeXml) u.unmarshal(in);
-        } catch (JAXBException e) {
+            return (EnvelopeXml) u.unmarshal(source);
+        } catch (JAXBException | SAXException | ParserConfigurationException e) {
             throw new IllegalStateException("Failed to unmarshal envelope", e);
         }
     }
@@ -236,6 +250,13 @@ public final class NativeDiagramDocumentFormat {
         try {
             var f = DocumentBuilderFactory.newInstance();
             f.setNamespaceAware(true);
+            f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            f.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            f.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            f.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            f.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            f.setXIncludeAware(false);
+            f.setExpandEntityReferences(false);
             return f.newDocumentBuilder().newDocument();
         } catch (ParserConfigurationException e) {
             throw new IllegalStateException("Failed to create W3C Document builder", e);

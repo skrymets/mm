@@ -23,6 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,6 +85,25 @@ class NativeDiagramDocumentFormatTest {
             () -> format.read(new ByteArrayInputStream(xml.getBytes())));
     }
 
+    @Test
+    void metadataRoundTripsThroughEnvelope() {
+        var registry = new InMemoryDiagramPluginRegistry();
+        registry.register(new StubPlugin());
+        var format = new NativeDiagramDocumentFormat(registry, "test-app/0.0.1");
+
+        var metadata = DiagramMetadata.empty(Instant.parse("2026-05-01T00:00:00Z"))
+            .withTitle("Hello")
+            .withAuthor("Alice");
+        var diagram = new StubDiagram(DocumentId.newRandom(), metadata, StylePalette.empty());
+
+        var bytes = new ByteArrayOutputStream();
+        format.write(diagram, bytes);
+        var read = (StubDiagram) format.read(new ByteArrayInputStream(bytes.toByteArray()));
+
+        assertEquals(Optional.of("Hello"), read.metadata().title());
+        assertEquals(Optional.of("Alice"), read.metadata().author());
+    }
+
     private record StubPlugin() implements DiagramPlugin<StubDiagram> {
         @Override public DiagramTypeId typeId()                           { return new DiagramTypeId("stub"); }
         @Override public DiagramModelFactory<StubDiagram> modelFactory()  { return null; }
@@ -100,8 +120,7 @@ class NativeDiagramDocumentFormatTest {
                 @Override public int currentPayloadVersion()                            { return 1; }
                 @Override public Set<Integer> supportedPayloadVersions()                { return Set.of(1); }
                 @Override public StubDiagram readPayload(int v, PayloadReadContext c)   {
-                    return new StubDiagram(c.documentId(),
-                        DiagramMetadata.empty(Instant.EPOCH), c.stylePalette());
+                    return new StubDiagram(c.documentId(), c.metadata(), c.stylePalette());
                 }
                 @Override public void writePayload(StubDiagram d, PayloadWriteContext c) {
                     c.setPayloadRoot(c.createElement("stub-payload"));
