@@ -12,16 +12,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,7 +25,7 @@ import static java.lang.String.format;
 @Slf4j
 public final class FileTools {
 
-    public static final Set<String> executableExtensions = new HashSet<>(5);
+    protected static final Set<String> executableExtensions = new HashSet<>(5);
 
     static {
         executableExtensions.add("exe");
@@ -52,8 +43,8 @@ public final class FileTools {
     }
 
     public static void setHidden(File file, boolean hidden, boolean synchronously) {
-        // According to Web articles, UNIX systems do not have attribute hidden
-        // in general, rather, they consider files starting with . as hidden.
+        // According to Web articles, UNIX systems do not have an attribute hidden
+        // in general; rather, they consider files starting with . as hidden.
         if (SystemUtils.IS_OS_WINDOWS) {
             try {
                 Runtime.getRuntime().exec(format("attrib %sH \"%s\"", hidden ? "+" : "-", file.getAbsolutePath()));
@@ -63,11 +54,12 @@ public final class FileTools {
                 }
                 int timeOut = 10;
                 while (file.isHidden() != hidden && timeOut > 0) {
-                    Thread.sleep(10/* miliseconds */);
+                    Thread.sleep(10);
                     timeOut--;
                 }
             } catch (IOException | InterruptedException e) {
                 log.error(e.getLocalizedMessage(), e);
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -95,21 +87,21 @@ public final class FileTools {
      */
     public static void setPermissions(String path, int permissions) {
 
-        if (permissions != 0) {
-            if (SystemUtils.IS_OS_UNIX) {
-                String[] cmdarray = {"chmod",
-                        Integer.toString(permissions, 8), path};
-
-                try {
-                    Process process = Runtime.getRuntime().exec(cmdarray);
-                    process.getInputStream().close();
-                    process.getOutputStream().close();
-                    process.getErrorStream().close();
-                } catch (Throwable ignored) {
-                }
-            }
+        if (permissions == 0 || !SystemUtils.IS_OS_UNIX) {
+            return;
         }
-    } // }}}
+
+        String[] cmdarray = {"chmod", Integer.toString(permissions, 8), path};
+
+        try {
+            Process process = Runtime.getRuntime().exec(cmdarray);
+            process.getInputStream().close();
+            process.getOutputStream().close();
+            process.getErrorStream().close();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
 
     public static Reader getReaderFromFile(File pInputFile) throws FileNotFoundException {
         return new FileReader(pInputFile);
@@ -126,24 +118,19 @@ public final class FileTools {
      * Creates a reader that pipes the input file through a XSLT-Script that
      * updates the version to the current.
      */
-    public static Reader getUpdateReader(Reader pReader, String xsltScript, Resources resources) throws IOException {
-        StringWriter writer = null;
-        InputStream inputStream = null;
+    public static Reader getUpdateReader(Reader pReader, String xsltScript, Resources resources) {
+        // try to convert map with xslt:
+        URL updaterUrl = resources.getResource(xsltScript);
+        if (updaterUrl == null) {
+            throw new IllegalArgumentException(xsltScript + " not found.");
+        }
 
         log.info("Updating the reader {} to the current version.", pReader);
         boolean successful = false;
         String errorMessage = null;
-        try {
-            // try to convert map with xslt:
-            URL updaterUrl = null;
-            updaterUrl = resources.getResource(xsltScript);
-            if (updaterUrl == null) {
-                throw new IllegalArgumentException(xsltScript + " not found.");
-            }
-            inputStream = updaterUrl.openStream();
+
+        try (InputStream inputStream = updaterUrl.openStream(); StringWriter writer = new StringWriter()) {
             final var xsltSource = new StreamSource(inputStream);
-            // get output:
-            writer = new StringWriter();
             final var result = new StreamResult(writer);
 
             String fileContents = IOUtils.toString(pReader);
@@ -154,12 +141,9 @@ public final class FileTools {
             if (fileContents.length() > 10) {
                 log.info("File start after UTF8 replacement: '{}'", fileContents.substring(0, 9));
             }
-            final var sr = new StreamSource(new StringReader(
-                    fileContents));
-            // Dimitry: to avoid a memory leak and properly release resources
-            // after the XSLT transformation
-            // everything should run in own thread. Only after the thread dies
-            // the resources are released.
+            final var sr = new StreamSource(new StringReader(fileContents));
+            // Dimitry: to avoid a memory leak and properly release resources after the XSLT transformation everything
+            // should run in own thread. Only after the thread dies // the resources are released.
             @Getter
             class TransformerRunnable implements Runnable {
 
@@ -168,8 +152,7 @@ public final class FileTools {
 
                 public void run() {
                     // create an instance of TransformerFactory
-                    TransformerFactory transFact = TransformerFactory
-                            .newInstance();
+                    TransformerFactory transFact = TransformerFactory.newInstance();
                     log.info("TransformerFactory class: {}", transFact.getClass());
                     Transformer trans;
                     try {
@@ -190,25 +173,16 @@ public final class FileTools {
             log.info("Updating the reader {} to the current version. Done.", pReader);
             successful = transformer.isSuccessful();
             errorMessage = transformer.getErrorMessage();
+            if (successful) {
+                String content = writer.getBuffer().toString();
+                String replacedContent = XmlMarshallingTools.replaceUtf8AndIllegalXmlChars(content);
+                return new StringReader(replacedContent);
+            } else {
+                return new StringReader("<map><node TEXT='" + HtmlTools.toXMLEscapedText(errorMessage) + "'/></map>");
+            }
         } catch (Exception e) {
-            log.error(e.getLocalizedMessage(), e);
-            errorMessage = e.getLocalizedMessage();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            if (writer != null) {
-                writer.close();
-            }
-        }
-        if (successful) {
-            String content = writer.getBuffer().toString();
-            String replacedContent = XmlMarshallingTools
-                    .replaceUtf8AndIllegalXmlChars(content);
-            return new StringReader(replacedContent);
-        } else {
-            return new StringReader("<map><node TEXT='"
-                    + HtmlTools.toXMLEscapedText(errorMessage) + "'/></map>");
+            log.error(e.getMessage(), e);
+            return new StringReader("<map><node TEXT='" + HtmlTools.toXMLEscapedText(errorMessage) + "'/></map>");
         }
     }
 

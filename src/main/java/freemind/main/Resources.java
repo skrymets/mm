@@ -5,16 +5,14 @@
 package freemind.main;
 
 import freemind.common.NamedObject;
-import org.apache.commons.lang3.SystemUtils;
 import freemind.common.TextTranslator;
-
 import freemind.modes.FreeMindAwtFileDialog;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.FreeMindJFileDialog;
-import lombok.extern.slf4j.Slf4j;
-
-import jakarta.inject.Inject;
 import freemind.preferences.FreemindPropertyListener;
+import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SystemUtils;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
@@ -106,7 +104,7 @@ public class Resources implements TextTranslator {
         return main.getResources();
     }
 
-    public HashMap<String, String> getCountryMap() {
+    public Map<String, String> getCountryMap() {
         if (countryMap == null) {
             String[] countryMapArray = new String[]{
                     "de", "DE",

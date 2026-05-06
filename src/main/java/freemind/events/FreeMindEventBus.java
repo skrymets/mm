@@ -10,10 +10,10 @@ public class FreeMindEventBus {
     private final EventBus eventBus;
 
     public FreeMindEventBus() {
-        this.eventBus = new EventBus((exception, context) -> {
-            log.error("Event bus error in subscriber {}: {}",
-                    context.getSubscriberMethod(), exception.getMessage(), exception);
-        });
+        this.eventBus = new EventBus((
+                exception, context) -> log.error("Event bus error in subscriber {}: {}",
+                context.getSubscriberMethod(), exception.getMessage(), exception)
+        );
     }
 
     public void register(Object subscriber) {
