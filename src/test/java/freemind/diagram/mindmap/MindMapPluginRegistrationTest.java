@@ -33,9 +33,11 @@ class MindMapPluginRegistrationTest {
     }
 
     @Test
-    void externalFormatsListIsEmptyInPlan1() {
+    void externalFormatsContainsFreemindMmFormat() {
         var plugin = new MindMapPlugin();
-        // Task 21 populates this. For Plan 1 step Task 19, list is empty.
-        assertTrue(plugin.externalFormats().isEmpty());
+        // Task 21 wired FreemindMmImportFormat into MindMapPlugin.
+        assertEquals(1, plugin.externalFormats().size());
+        var fmt = plugin.externalFormats().get(0);
+        assertInstanceOf(freemind.diagram.mindmap.legacy.FreemindMmImportFormat.class, fmt);
     }
 }

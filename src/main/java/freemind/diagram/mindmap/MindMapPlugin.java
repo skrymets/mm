@@ -6,6 +6,7 @@ import freemind.diagram.persistence.external.ExternalDiagramFormat;
 import freemind.diagram.plugin.DiagramControllerFactory;
 import freemind.diagram.plugin.DiagramLifecycleHooks;
 import freemind.diagram.plugin.DiagramModelFactory;
+import freemind.diagram.mindmap.legacy.FreemindMmImportFormat;
 import freemind.diagram.plugin.DiagramPlugin;
 import freemind.diagram.ui.DiagramUiContributions;
 
@@ -21,8 +22,7 @@ public final class MindMapPlugin implements DiagramPlugin<MindMapDiagram> {
     private final List<ExternalDiagramFormat<MindMapDiagram>> externalFormats;
 
     public MindMapPlugin() {
-        // populated by Task 21 once FreemindMmImportFormat exists
-        this.externalFormats = List.of();
+        this.externalFormats = List.of(new FreemindMmImportFormat());
     }
 
     @Override public DiagramTypeId typeId()                                          { return MindMapDiagramImpl.TYPE_ID; }
