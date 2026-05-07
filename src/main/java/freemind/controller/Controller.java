@@ -41,7 +41,10 @@ import freemind.model.MindMap;
 import freemind.model.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
-import freemind.modes.ModesCreator;
+import freemind.diagram.mindmap.MindMapPlugin;
+import freemind.diagram.plugin.DiagramPlugin;
+import freemind.diagram.plugin.DiagramPluginRegistry;
+import freemind.modes.mindmapmode.MindMapMode;
 import freemind.preferences.layout.OptionPanel;
 import freemind.view.ImageFactory;
 import freemind.view.MapModule;
@@ -113,7 +116,8 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     @Getter
     private MapMouseWheelListener mapMouseWheelListener;
 
-    private final ModesCreator modesCreator = new ModesCreator(this);
+    private final DiagramPluginRegistry diagramPluginRegistry;
+    private final Map<String, Mode> modes;
 
     @Getter
     private PrintService printService;
@@ -166,9 +170,31 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
 
     private final Resources resources;
 
-    public Controller(FreeMindMain frame, Resources resources) {
+    public Controller(FreeMindMain frame, Resources resources,
+                      DiagramPluginRegistry diagramPluginRegistry) {
         this.frame = frame;
         this.resources = resources;
+        this.diagramPluginRegistry = diagramPluginRegistry;
+        this.modes = buildModes(diagramPluginRegistry);
+    }
+
+    private static Map<String, Mode> buildModes(DiagramPluginRegistry registry) {
+        Map<String, Mode> result = new LinkedHashMap<>();
+        for (DiagramPlugin<?> plugin : registry.all()) {
+            // 2a is single-plugin: only MindMapPlugin is registered, only
+            // MindMapMode is the adapter shape. When plugin #2 lands, this
+            // loop will need a per-plugin adapter selection.
+            if (plugin instanceof MindMapPlugin mmp) {
+                result.put(MindMapMode.MODENAME, new MindMapMode(mmp));
+            } else {
+                throw new IllegalStateException(
+                        "no Mode adapter for plugin typeId=" + plugin.typeId().value());
+            }
+        }
+        if (result.isEmpty()) {
+            throw new IllegalStateException("no diagram plugins registered");
+        }
+        return Collections.unmodifiableMap(result);
     }
 
     public void init() {
@@ -346,7 +372,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
     }
 
     Set<String> getModes() {
-        return modesCreator.getAllModes();
+        return modes.keySet();
     }
 
     public Mode getMode() {
@@ -513,7 +539,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
         }
 
         // Check if the modeName is available and create ModeController.
-        Mode newMode = modesCreator.getMode(modeName);
+        Mode newMode = modes.get(modeName);
         if (newMode == null) {
             errorMessage(getResourceString("mode_na") + ": " + modeName);
             return false;
