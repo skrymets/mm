@@ -42,7 +42,6 @@ import freemind.model.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.ModesCreator;
-import freemind.modes.browsemode.BrowseMode;
 import freemind.preferences.layout.OptionPanel;
 import freemind.view.ImageFactory;
 import freemind.view.MapModule;

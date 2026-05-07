@@ -3,7 +3,6 @@ package freemind.controller.actions;
 import freemind.controller.Controller;
 import freemind.main.MessageTools;
 import freemind.main.UrlTools;
-import freemind.modes.browsemode.BrowseMode;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -30,12 +29,8 @@ public class DocumentationAction extends AbstractAction {
             final URL endUrl = map != null && map.startsWith(".")
                     ? Controller.localDocumentationLinkConverter.convertLocalLink(map)
                     : UrlTools.fileToUrl(new File(map));
-            // invokeLater is necessary, as the mode changing removes
-            // all
-            // menus (inclusive this action!).
             SwingUtilities.invokeLater(() -> {
                 try {
-                    controller.createNewMode(BrowseMode.MODENAME);
                     controller.getModeController().load(endUrl);
                 } catch (Exception e) {
                     log.error(e.getLocalizedMessage(), e);
