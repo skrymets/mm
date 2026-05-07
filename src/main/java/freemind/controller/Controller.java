@@ -545,6 +545,16 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
             return false;
         }
 
+        // Lazy init mirrors the original ModesCreator.getMode() semantics:
+        // mode.init() must run AFTER Controller has finished its own init, since
+        // it constructs MindMapController which reaches into Controller's state.
+        // newMode.getController() is non-null after the first init.
+        if (newMode.getController() == null) {
+            log.info("Initializing mode {}", modeName);
+            newMode.init(this);
+            log.info("Done: Initializing mode {}", modeName);
+        }
+
         // change the map module to get changed toolbars etc.:
         getMapModuleManager().setMapModule(null, newMode);
 
