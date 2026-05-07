@@ -62,6 +62,20 @@ public final class SwingTreeAdapter<N extends DiagramNode> implements TreeModel 
     @Override public void addTreeModelListener(TreeModelListener l)    { listenerList.add(TreeModelListener.class, l); }
     @Override public void removeTreeModelListener(TreeModelListener l) { listenerList.remove(TreeModelListener.class, l); }
 
+    /**
+     * Unregisters all node listeners and clears registered Swing
+     * {@link TreeModelListener}s. Call when the adapter is replaced or
+     * the diagram is closed; failure to call this leaves the adapter
+     * (and its registered Swing components) reachable through the
+     * diagram's nodes, preventing GC.
+     */
+    public void dispose() {
+        diagram.allNodes().forEach(n -> n.removeListener(nodeListener));
+        for (var l : listenerList.getListeners(TreeModelListener.class)) {
+            listenerList.remove(TreeModelListener.class, l);
+        }
+    }
+
     private void onNodeChanged(DiagramNodeChangeEvent event) {
         var path = pathTo(cast(event.node()));
         var ev = new TreeModelEvent(this, path);

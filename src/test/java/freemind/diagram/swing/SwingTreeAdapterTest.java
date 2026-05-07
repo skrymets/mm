@@ -79,6 +79,27 @@ class SwingTreeAdapterTest {
             () -> adapter.valueForPathChanged(null, "x"));
     }
 
+    @Test
+    void disposeUnregistersNodeListenersAndClearsTreeModelListeners() {
+        var d = sampleTree();
+        var adapter = new SwingTreeAdapter<>(d);
+        var events = new CopyOnWriteArrayList<TreeModelEvent>();
+        adapter.addTreeModelListener(new TreeModelListener() {
+            @Override public void treeNodesChanged(TreeModelEvent e)   { events.add(e); }
+            @Override public void treeNodesInserted(TreeModelEvent e)  { /* unused */ }
+            @Override public void treeNodesRemoved(TreeModelEvent e)   { /* unused */ }
+            @Override public void treeStructureChanged(TreeModelEvent e) { /* unused */ }
+        });
+
+        adapter.dispose();
+
+        // After dispose, mutating a node fires no TreeModelEvent on the registered listener.
+        var a = d.getChildren(d.rootNode()).get(0);
+        ((TestNode) a).fireChange(DiagramNodeChangeEvent.ChangeKind.CONTENT);
+
+        assertEquals(0, events.size());
+    }
+
     // --- in-memory test fixture: tiny TreeDiagram with mutable nodes ---
 
     private static TreeDiagram<TestNode> sampleTree() {
