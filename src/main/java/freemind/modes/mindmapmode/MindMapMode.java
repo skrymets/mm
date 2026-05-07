@@ -1,6 +1,8 @@
 package freemind.modes.mindmapmode;
 
 import freemind.controller.Controller;
+import freemind.diagram.mindmap.MindMapDiagram;
+import freemind.diagram.plugin.DiagramPlugin;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import lombok.Getter;
@@ -12,12 +14,33 @@ import java.io.IOException;
 @Slf4j
 public class MindMapMode extends Mode {
 
+    public static final String MODENAME = "MindMap";
+
     @Getter
     private Controller controller;
     private MindMapController mindMapController;
     private boolean isRunning = false;
 
+    /**
+     * Held for identity (typeId, future contributions). Plan 2a does not
+     * invoke {@code plugin.controllerFactory()}; that's Plan 2b's seam.
+     * May be {@code null} when constructed via the legacy no-arg path —
+     * the no-arg constructor disappears in Task 8.
+     */
+    private final DiagramPlugin<MindMapDiagram> plugin;
+
+    /**
+     * @deprecated transitional. Used by {@code ModesCreator} via
+     * {@code Class.forName().newInstance()} until Task 6 retires that path.
+     * Removed in Task 8.
+     */
+    @Deprecated
     public MindMapMode() {
+        this.plugin = null;
+    }
+
+    public MindMapMode(DiagramPlugin<MindMapDiagram> plugin) {
+        this.plugin = plugin;
     }
 
     public void init(Controller controller) {
@@ -30,7 +53,7 @@ public class MindMapMode extends Mode {
     }
 
     public String toString() {
-        return "MindMap";
+        return MODENAME;
     }
 
     /**
