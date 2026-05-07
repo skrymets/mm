@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -50,6 +51,7 @@ public final class FreemindMmConverter {
      * @throws IllegalStateException if essential structure is missing (e.g., no root node)
      */
     public MindMapDiagram convert(freemind.controller.actions.xml.document.Map legacyMap) {
+        Objects.requireNonNull(legacyMap, "legacyMap");
         var legacyRoot = legacyMap.getNode();
         if (legacyRoot == null) {
             throw new IllegalStateException("Legacy map has no root node");

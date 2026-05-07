@@ -74,9 +74,12 @@ class FreemindMmConverterTest {
         dbf.setNamespaceAware(true);
         var builder = dbf.newDocumentBuilder();
         var doc = builder.newDocument();
-        // Create a body element wrapping the text
+        // Create a body element with real child elements (not escaped text)
         Element body = doc.createElement("body");
-        body.setTextContent(htmlFragment);
+        body.appendChild(doc.createTextNode("Hello "));
+        Element b = doc.createElement("b");
+        b.setTextContent("world");
+        body.appendChild(b);
 
         var html = new Html();
         html.addAny(body);
@@ -127,7 +130,10 @@ class FreemindMmConverterTest {
 
         var content = diagram.rootNode().content();
         assertEquals(ContentFormat.HTML, content.format());
-        assertTrue(content.text().contains("Hello"), "HTML content should contain 'Hello'");
+        var rendered = content.text();
+        assertTrue(rendered.contains("Hello"), "Expected text 'Hello' in: " + rendered);
+        assertTrue(rendered.contains("<b>world</b>"),
+                "Expected <b>world</b> markup preserved in: " + rendered);
     }
 
     @Test
