@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -54,9 +55,25 @@ public final class FreemindMmImportFormat implements ExternalDiagramFormat<MindM
         try (var in = Files.newInputStream(file)) {
             var dbf = DocumentBuilderFactory.newInstance();
             dbf.setNamespaceAware(false);
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            dbf.setXIncludeAware(false);
+            dbf.setExpandEntityReferences(false);
             var doc = dbf.newDocumentBuilder().parse(in);
-            var mapElement = doc.getDocumentElement(); // <map>
-            var legacyMap = parseMap(mapElement);
+            var docElement = doc.getDocumentElement();
+            if (docElement == null) {
+                throw new IllegalStateException(
+                    "File is not a valid .mm document (no root element): " + file);
+            }
+            if (!"map".equals(docElement.getTagName())) {
+                throw new IllegalStateException(
+                    "File is not a .mm document (root element is <" + docElement.getTagName()
+                    + ">, expected <map>): " + file);
+            }
+            var legacyMap = parseMap(docElement);
             return converter.convert(legacyMap);
         } catch (IOException e) {
             throw new IllegalStateException("Failed to read .mm file: " + file, e);
