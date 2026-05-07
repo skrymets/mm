@@ -4,6 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 
+import freemind.diagram.mindmap.MindMapPlugin;
+import freemind.diagram.plugin.DiagramPluginRegistry;
+import freemind.diagram.plugin.InMemoryDiagramPluginRegistry;
 import freemind.events.FreeMindEventBus;
 import jakarta.inject.Singleton;
 import java.util.Properties;
@@ -47,5 +50,13 @@ public class FreeMindModule extends AbstractModule {
     Resources provideResources(FreeMindMain frame) {
         // Constructor sets the static resourcesInstance field for backward compatibility
         return new Resources(frame);
+    }
+
+    @Provides
+    @Singleton
+    DiagramPluginRegistry provideDiagramPluginRegistry() {
+        var registry = new InMemoryDiagramPluginRegistry();
+        registry.register(new MindMapPlugin());
+        return registry;
     }
 }
