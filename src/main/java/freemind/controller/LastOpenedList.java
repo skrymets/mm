@@ -1,6 +1,6 @@
 package freemind.controller;
 
-import freemind.main.MindMapUtils;
+import freemind.modes.mindmapmode.MindMapMode;
 import freemind.view.MapModule;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,8 +10,8 @@ import java.util.*;
 
 /**
  * This class manages a list of the maps that were opened last. It aims to
- * provide persistence for the last recent maps. Maps should be shown in the
- * format:"mode\:key",ie."Mindmap\:/home/joerg/freemind.mm"
+ * provide persistence for the last recent maps. Each entry is the absolute
+ * file path of the map (e.g. {@code /home/joerg/freemind.mm}).
  */
 @Slf4j
 public class LastOpenedList {
@@ -92,10 +92,11 @@ public class LastOpenedList {
                 .tryToChangeToMapModule(
                         mRestorableToMapName.get(restoreable));
         if ((restoreable != null) && !(changedToMapModule)) {
-            String mode = MindMapUtils.getModeFromRestorable(restoreable);
-            String fileName = MindMapUtils.getFileNameFromRestorable(restoreable);
-            if (mController.createNewMode(mode)) {
-                mController.getMode().restore(fileName);
+            // createNewMode is kept for its load-bearing side-effect:
+            // initialising Controller.mMode on first boot. Mode argument
+            // is hardcoded since 2a leaves only one registered mode.
+            if (mController.createNewMode(MindMapMode.MODENAME)) {
+                mController.getMode().restore(restoreable);
                 return true;
             }
         }

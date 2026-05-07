@@ -362,27 +362,6 @@ class ToolsTest {
     }
 
     @Nested
-    class RestorableStringParsing {
-
-        @Test
-        void getFileNameFromRestorable() {
-            String result = MindMapUtils.getFileNameFromRestorable("MindMap:C:/path/to/file.mm");
-            assertEquals("C:/path/to/file.mm", result);
-        }
-
-        @Test
-        void getModeFromRestorable() {
-            String result = MindMapUtils.getModeFromRestorable("MindMap:C:/path/to/file.mm");
-            assertEquals("MindMap", result);
-        }
-
-        @Test
-        void getModeFromRestorable_noToken() {
-            assertNull(MindMapUtils.getModeFromRestorable(""));
-        }
-    }
-
-    @Nested
     class RemoveMnemonic {
 
         @Test

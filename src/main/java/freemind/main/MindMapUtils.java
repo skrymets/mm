@@ -147,38 +147,6 @@ public final class MindMapUtils {
     }
 
     /**
-     * Extracts the file name from a restorable string of the form
-     * {@code "mode:filename"}.
-     */
-    public static String getFileNameFromRestorable(String restoreable) {
-        var token = new StringTokenizer(restoreable, ":");
-        String fileName;
-        if (token.hasMoreTokens()) {
-            token.nextToken();
-            // fix for windows (??, fc, 25.11.2005).
-            fileName = token.nextToken("").substring(1);
-        } else {
-            fileName = null;
-        }
-        return fileName;
-    }
-
-    /**
-     * Extracts the mode name from a restorable string of the form
-     * {@code "mode:filename"}.
-     */
-    public static String getModeFromRestorable(String restoreable) {
-        var token = new StringTokenizer(restoreable, ":");
-        String mode;
-        if (token.hasMoreTokens()) {
-            mode = token.nextToken();
-        } else {
-            mode = null;
-        }
-        return mode;
-    }
-
-    /**
      * Generates a unique ID. If the proposed ID is already in the map (or
      * {@code null}), a random one with the given prefix is generated.
      */

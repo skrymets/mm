@@ -22,8 +22,6 @@ import java.util.List;
 @Slf4j
 public class MindMapMapModel extends MapAdapter implements ModeMap {
 
-    public static final String RESTORE_MODE_MIND_MAP = "MindMap:";
-
     final LockManager lockManager;
     @Getter
     private final MindMapLinkRegistry linkRegistry;
@@ -58,8 +56,7 @@ public class MindMapMapModel extends MapAdapter implements ModeMap {
     //
 
     public String getRestorable() {
-        return getFile() == null ? null : RESTORE_MODE_MIND_MAP
-                + getFile().getAbsolutePath();
+        return getFile() == null ? null : getFile().getAbsolutePath();
     }
 
     public void changeNode(MindMapNode node, String newText) {
