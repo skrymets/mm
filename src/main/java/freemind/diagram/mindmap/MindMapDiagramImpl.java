@@ -106,6 +106,10 @@ public final class MindMapDiagramImpl implements MindMapDiagram {
     public void addChild(MindMapNode parent, MindMapNodeImpl child) {
         Objects.requireNonNull(parent, "parent");
         Objects.requireNonNull(child, "child");
+        if (parent != root && !parents.containsKey(parent)) {
+            throw new IllegalArgumentException(
+                "Parent is not attached: " + parent.nodeId().value());
+        }
         if (parents.containsKey(child)) {
             throw new IllegalArgumentException(
                 "Node " + child.nodeId().value() + " is already attached");

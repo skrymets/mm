@@ -55,6 +55,15 @@ class MindMapDiagramImplTest {
     }
 
     @Test
+    void addChildRejectsForeignParent() {
+        var root = node("root");
+        var d = MindMapDiagramImpl.createEmpty(root);
+        var foreign = node("foreign"); // never attached
+        var child = node("child");
+        assertThrows(IllegalArgumentException.class, () -> d.addChild(foreign, child));
+    }
+
+    @Test
     void removeNodeDetachesSubtreeAndPurgesLinks() {
         var root = node("root");
         var a = node("a");
