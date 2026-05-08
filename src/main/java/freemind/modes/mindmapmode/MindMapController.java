@@ -3,12 +3,14 @@ package freemind.modes.mindmapmode;
 import freemind.main.SwingUtils;
 
 import freemind.common.XmlBindingTools;
+import freemind.controller.Controller;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.*;
 import freemind.controller.actions.xml.menus.*;
 import freemind.controller.actions.xml.operations.*;
 import freemind.controller.actions.xml.patterns.*;
 import freemind.controller.actions.xml.storage.*;
+import freemind.diagram.mindmap.MindMapDiagram;
 import freemind.extensions.*;
 import freemind.main.*;
 import freemind.model.*;
@@ -61,6 +63,15 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     private final HashSet<MouseWheelEventHandler> mRegisteredMouseWheelEventHandler = new HashSet<>();
 
     private final ActionRegistry actionFactory;
+
+    /**
+     * Plan 2b-modeless: held for the {@link freemind.diagram.plugin.DiagramController}
+     * contract. Currently unread by controller logic — the legacy
+     * {@code MindMapMapModel} is still the operative model. A future
+     * model-bridge plan will consume this.
+     */
+    private final MindMapDiagram diagram;
+
     // Mode mode;
     private MindMapPopupMenu popupmenu;
     // private JToolBar toolbar;
@@ -85,10 +96,37 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
     private SelectionService selectionService;
     @lombok.Getter private TextOperationService textOperationService;
 
+    /**
+     * @deprecated Plan 2b transitional. Used by the legacy
+     * {@link MindMapMode#createModeController()} path; removed in Plan 2b
+     * commit 9 once the plugin factory is the only construction path.
+     */
+    @Deprecated
     public MindMapController(Mode mode) {
         super(mode);
+        this.diagram = null;
         filefilter = new MindMapFilter(getResources());
         nodeHookFactory = new MindMapHookFactory(getResources());
+        // create action factory:
+        actionFactory = new ActionRegistry();
+        // create node information timer and actions. They don't fire, until called to do so.
+        mNodeInformationTimerAction = new NodeInformationTimerAction(this);
+        mNodeInformationTimer = new Timer(100, mNodeInformationTimerAction);
+        mNodeInformationTimer.setRepeats(false);
+
+        init();
+    }
+
+    /**
+     * Plan 2b-modeless primary constructor. Constructed via
+     * {@link freemind.diagram.mindmap.MindMapControllerFactory#createFor}.
+     * {@code Mode} is bound after construction via {@link ControllerAdapter#bindMode(Mode)}.
+     */
+    public MindMapController(MindMapDiagram diagram, Controller controller, Resources resources) {
+        super(controller, resources);
+        this.diagram = diagram;
+        filefilter = new MindMapFilter(resources);
+        nodeHookFactory = new MindMapHookFactory(resources);
         // create action factory:
         actionFactory = new ActionRegistry();
         // create node information timer and actions. They don't fire, until called to do so.
