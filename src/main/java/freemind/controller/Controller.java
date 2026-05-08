@@ -49,6 +49,7 @@ import freemind.preferences.layout.OptionPanel;
 import freemind.view.ImageFactory;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import com.google.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -170,6 +171,7 @@ public class Controller implements MapModuleChangeObserver, FilterContext {
 
     private final Resources resources;
 
+    @Inject
     public Controller(FreeMindMain frame, Resources resources,
                       DiagramPluginRegistry diagramPluginRegistry) {
         this.frame = frame;

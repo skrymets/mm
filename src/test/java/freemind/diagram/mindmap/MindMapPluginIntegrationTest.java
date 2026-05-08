@@ -39,7 +39,7 @@ class MindMapPluginIntegrationTest {
     @BeforeEach
     void setUp() {
         registry = new InMemoryDiagramPluginRegistry();
-        plugin = new MindMapPlugin();
+        plugin = new MindMapPlugin(new MindMapModelFactory(), new MindMapControllerFactory());
         registry.register(plugin);
         format = new NativeDiagramDocumentFormat(registry, "test-app/1.0.0");
     }

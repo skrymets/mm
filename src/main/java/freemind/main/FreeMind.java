@@ -7,7 +7,6 @@ import freemind.controller.color.JColorCombo;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
 import freemind.controller.actions.xml.storage.MindmapLastStateStorage;
-import freemind.diagram.plugin.DiagramPluginRegistry;
 import freemind.events.FreeMindEventBus;
 import freemind.main.services.EditServerService;
 import freemind.main.services.WindowService;
@@ -20,6 +19,7 @@ import freemind.view.MapModule;
 import freemind.view.StatusBarPanel;
 import freemind.view.mindmapview.MapView;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.name.Named;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -218,7 +218,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
     private final FreeMindEventBus eventBus;
 
-    private final DiagramPluginRegistry diagramPluginRegistry;
+    private final Provider<Controller> controllerProvider;
 
     private Resources resources;
 
@@ -226,13 +226,13 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
     public FreeMind(@Named("default") Properties defaultPreferences,
                     @Named("user") Properties userPreferences,
                     FreeMindEventBus eventBus,
-                    DiagramPluginRegistry diagramPluginRegistry) {
+                    Provider<Controller> controllerProvider) {
         super("FreeMind");
         // Focus searcher - SecurityManager is deprecated in Java 17+ and removed in Java 18+
         this.defaultPreferences = defaultPreferences;
         this.userPreferences = userPreferences;
         this.eventBus = eventBus;
-        this.diagramPluginRegistry = diagramPluginRegistry;
+        this.controllerProvider = controllerProvider;
 
         printEnvironmentInfo();
 
@@ -307,7 +307,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
         StructuredMenuHolder.init(resources);
         ImageFactory.init(resources);
 
-        controller = new Controller(this, resources, diagramPluginRegistry);
+        controller = controllerProvider.get();
         controller.init();
         controller.getMapModuleManager().setEventBus(eventBus);
 

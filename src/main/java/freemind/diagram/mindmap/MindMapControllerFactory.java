@@ -1,9 +1,15 @@
 package freemind.diagram.mindmap;
 
+import com.google.inject.Inject;
 import freemind.diagram.plugin.DiagramController;
 import freemind.diagram.plugin.DiagramControllerFactory;
 
 public final class MindMapControllerFactory implements DiagramControllerFactory<MindMapDiagram> {
+
+    @Inject
+    public MindMapControllerFactory() {
+    }
+
     @Override
     public DiagramController<MindMapDiagram> createFor(MindMapDiagram diagram) {
         return new DiagramController<>() {
