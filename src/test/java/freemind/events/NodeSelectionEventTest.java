@@ -1,6 +1,8 @@
 package freemind.events;
 
+import freemind.controller.Controller;
 import freemind.extensions.PermanentNodeHook;
+import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.Mode;
@@ -29,6 +31,10 @@ class NodeSelectionEventTest {
     void setUp() {
         eventBus = mock(FreeMindEventBus.class);
         Mode mockMode = mock(Mode.class);
+        Controller mockController = mock(Controller.class);
+        Resources mockResources = mock(Resources.class);
+        when(mockController.getResources()).thenReturn(mockResources);
+        when(mockMode.getController()).thenReturn(mockController);
         controllerAdapter = mock(ControllerAdapter.class, withSettings()
                 .useConstructor(mockMode)
                 .defaultAnswer(CALLS_REAL_METHODS));

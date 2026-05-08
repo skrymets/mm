@@ -4,6 +4,7 @@ import freemind.controller.*;
 import freemind.events.FreeMindEventBus;
 import freemind.events.NodeModifiedEvent;
 import freemind.main.FreeMindMain;
+import freemind.main.Resources;
 import freemind.main.SwingUtils;
 import freemind.main.UrlTools;
 import freemind.model.MapAdapter;
@@ -55,6 +56,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     @Getter
     private Mode mode;
 
+    private final Controller controller;
+
+    @Getter
+    private final Resources resources;
+
     @Getter
     private final Color selectionColor = new Color(200, 220, 200);
     /**
@@ -71,10 +77,28 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     private FreeMindEventBus eventBus;
 
     /**
-     * Instantiation order: first me and then the model.
+     * Plan 2b transitional. Used by the legacy
+     * {@link freemind.modes.mindmapmode.MindMapController#MindMapController(Mode)}
+     * constructor. To be removed in Plan 2b commit 9 once the plugin
+     * factory is the only construction path.
+     *
+     * @deprecated transitional. Removed in Plan 2b commit 9.
      */
+    @Deprecated
     public ControllerAdapter(Mode mode) {
-        this.setMode(mode);
+        this.controller = mode.getController();
+        this.resources = mode.getController().getResources();
+        this.bindMode(mode);
+    }
+
+    /**
+     * Plan 2b-modeless primary constructor. Host services flow in via
+     * Guice through the plugin factory. {@code Mode} is bound after
+     * construction via {@link #bindMode(Mode)}.
+     */
+    public ControllerAdapter(Controller controller, Resources resources) {
+        this.controller = controller;
+        this.resources = resources;
     }
 
     public void setEventBus(FreeMindEventBus eventBus) {
@@ -559,7 +583,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     // Convenience methods
     //
 
-    protected void setMode(Mode mode) {
+    /**
+     * Plan 2b-modeless: visibility-bumped to {@code public} so that
+     * {@code MindMapMode.createModeController()} can call this after
+     * the controller is constructed via the plugin factory.
+     */
+    public void bindMode(Mode mode) {
         this.mode = mode;
     }
 
@@ -581,7 +610,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     }
 
     public Controller getController() {
-        return getMode().getController();
+        return controller;
     }
 
     public FreeMindMain getFrame() {
