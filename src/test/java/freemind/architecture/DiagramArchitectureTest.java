@@ -26,6 +26,9 @@ class DiagramArchitectureTest {
 
     @Test
     void diagramCorePackagesMustNotImportSwingOrAwt() {
+        // L1 (Plan 2b-modeless): freemind.diagram.mindmap is the named
+        // integration unit and may transitively import Swing via
+        // MindMapController. Other diagram packages stay strict.
         noClasses()
             .that().resideInAnyPackage(
                 "freemind.diagram",
@@ -34,8 +37,7 @@ class DiagramArchitectureTest {
                 "freemind.diagram.plugin..",
                 "freemind.diagram.persistence..",
                 "freemind.diagram.ui..",
-                "freemind.diagram.style..",
-                "freemind.diagram.mindmap..")
+                "freemind.diagram.style..")
             .should().dependOnClassesThat()
                 .resideInAnyPackage("javax.swing..", "java.awt..")
             .check(classes);
