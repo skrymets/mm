@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 @Slf4j
 public class MindMapMode extends Mode {
@@ -22,8 +23,9 @@ public class MindMapMode extends Mode {
     private boolean isRunning = false;
 
     /**
-     * Held for identity (typeId, future contributions). Plan 2a does not
-     * invoke {@code plugin.controllerFactory()}; that's Plan 2b's seam.
+     * Held for identity (typeId, future contributions) and controller
+     * creation — {@code createModeController()} now routes through
+     * {@code plugin.controllerFactory()} (Plan 2b seam activated).
      */
     private final DiagramPlugin<MindMapDiagram> plugin;
 
@@ -37,7 +39,13 @@ public class MindMapMode extends Mode {
     }
 
     public ModeController createModeController() {
-        return new MindMapController(this);
+        var diagram = plugin.modelFactory().createNew();
+        var rawCtrl = plugin.controllerFactory().createFor(diagram);
+        Objects.requireNonNull(rawCtrl,
+            "MindMapPlugin.controllerFactory().createFor returned null");
+        var ctrl = (MindMapController) rawCtrl;
+        ctrl.bindMode(this);
+        return ctrl;
     }
 
     public String toString() {

@@ -311,6 +311,29 @@ public class MindMapController extends ControllerAdapter
         return fileManagementService.loadTree(pReaderCreator);
     }
 
+    /**
+     * Plan 2b-modeless: replaces the legacy
+     * {@code getMode().createModeController()} pattern used by external
+     * callers like {@code EncryptNode.newEncryptedMap()} and
+     * {@code ExportBranchAction.actionPerformed()} when they need a fresh
+     * controller for a child/export map.
+     *
+     * Delegates back to {@link MindMapMode#createModeController()} which
+     * goes through the plugin factory.
+     *
+     * @return a new {@code MindMapController} for a child map.
+     * @throws IllegalStateException if no Mode is currently bound
+     *         (post-{@link ControllerAdapter#bindMode} this is unreachable).
+     */
+    public MindMapController newControllerForChildMap() {
+        var mode = getMode();
+        if (mode == null) {
+            throw new IllegalStateException(
+                "MindMapController has no Mode bound; bindMode(Mode) must run before newControllerForChildMap()");
+        }
+        return (MindMapController) mode.createModeController();
+    }
+
     public void loadPatterns(String patternsXML) throws Exception {
         lifecycleService.loadPatterns(patternsXML);
     }
