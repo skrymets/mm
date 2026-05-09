@@ -101,8 +101,7 @@ public class ExportBranchAction extends MindmapAction {
             // unfold node
             node.setFolded(false);
             // construct new controller:
-            final ModeController newModeController = mMindMapController.getMode()
-                    .createModeController();
+            final ModeController newModeController = mMindMapController.newControllerForChildMap();
             var newMap = new MindMapMapModel(node,
                     newModeController);
             newModeController.setModel(newMap);

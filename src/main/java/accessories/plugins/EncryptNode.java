@@ -100,8 +100,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
         if (password == null) {
             return;
         }
-        ModeController newModeController = getMindMapController().getMode()
-                .createModeController();
+        ModeController newModeController = getMindMapController().newControllerForChildMap();
         var newModel = new MindMapMapModel(null,
                 newModeController);
         newModeController.setModel(newModel);
