@@ -10,13 +10,17 @@ import freemind.diagram.StylePalette;
 import freemind.diagram.StyleRef;
 import freemind.diagram.StyleReferences;
 import freemind.diagram.capabilities.AuxiliaryLink;
+import com.google.inject.Provider;
+import freemind.controller.Controller;
 import freemind.diagram.mindmap.legacy.FreemindMmImportFormat;
 import freemind.diagram.persistence.NativeDiagramDocumentFormat;
 import freemind.diagram.persistence.external.ImportContext;
 import freemind.diagram.plugin.InMemoryDiagramPluginRegistry;
 import freemind.diagram.style.ColorEntry;
+import freemind.main.Resources;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -39,7 +43,10 @@ class MindMapPluginIntegrationTest {
     @BeforeEach
     void setUp() {
         registry = new InMemoryDiagramPluginRegistry();
-        plugin = new MindMapPlugin(new MindMapModelFactory(), new MindMapControllerFactory());
+        @SuppressWarnings("unchecked")
+        Provider<Controller> cp = Mockito.mock(Provider.class);
+        Resources res = Mockito.mock(Resources.class);
+        plugin = new MindMapPlugin(new MindMapModelFactory(), new MindMapControllerFactory(cp, res));
         registry.register(plugin);
         format = new NativeDiagramDocumentFormat(registry, "test-app/1.0.0");
     }

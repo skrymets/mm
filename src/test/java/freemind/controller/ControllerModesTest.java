@@ -1,5 +1,6 @@
 package freemind.controller;
 
+import com.google.inject.Provider;
 import freemind.diagram.mindmap.MindMapControllerFactory;
 import freemind.diagram.mindmap.MindMapModelFactory;
 import freemind.diagram.mindmap.MindMapPlugin;
@@ -20,7 +21,10 @@ class ControllerModesTest {
     @Test
     void controllerExposesMindMapModeAfterRegistryBoot() {
         DiagramPluginRegistry registry = new InMemoryDiagramPluginRegistry();
-        registry.register(new MindMapPlugin(new MindMapModelFactory(), new MindMapControllerFactory()));
+        @SuppressWarnings("unchecked")
+        Provider<Controller> cp = Mockito.mock(Provider.class);
+        Resources factoryResources = Mockito.mock(Resources.class);
+        registry.register(new MindMapPlugin(new MindMapModelFactory(), new MindMapControllerFactory(cp, factoryResources)));
 
         FreeMindMain frame = Mockito.mock(FreeMindMain.class);
         Resources resources = Mockito.mock(Resources.class);

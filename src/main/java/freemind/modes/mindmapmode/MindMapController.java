@@ -11,6 +11,7 @@ import freemind.controller.actions.xml.operations.*;
 import freemind.controller.actions.xml.patterns.*;
 import freemind.controller.actions.xml.storage.*;
 import freemind.diagram.mindmap.MindMapDiagram;
+import freemind.diagram.plugin.DiagramController;
 import freemind.extensions.*;
 import freemind.main.*;
 import freemind.model.*;
@@ -52,7 +53,9 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 @Slf4j
-public class MindMapController extends ControllerAdapter implements ExtendedMapFeedback, MapSourceChangedObserver {
+public class MindMapController extends ControllerAdapter
+        implements ExtendedMapFeedback, MapSourceChangedObserver,
+                   DiagramController<MindMapDiagram> {
 
     public static final String REGEXP_FOR_NUMBERS_IN_STRINGS = "([+\\-]?\\d*[.,]?\\d+)\\b";
 
@@ -326,6 +329,33 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
         super.shutdownController();
         lifecycleService.shutdown();
         getToolBar().shutdown();
+    }
+
+    /**
+     * {@link DiagramController} contract: returns the diagram this controller
+     * was constructed with. Currently held but unread by controller logic;
+     * a future model-bridge plan will consume this.
+     *
+     * @return the {@code MindMapDiagram}
+     * @throws NullPointerException if this controller was constructed via the legacy
+     *         {@link #MindMapController(freemind.modes.Mode)} path (transitional — removed in Plan 2b commit 9)
+     */
+    @Override
+    public MindMapDiagram diagram() {
+        return Objects.requireNonNull(diagram,
+            "diagram() called on legacy-constructed MindMapController; only the (MindMapDiagram, Controller, Resources) constructor populates it");
+    }
+
+    /**
+     * {@link DiagramController} contract: tears down per-document state.
+     * Plan 2b-modeless: not yet called by the host (Plan 2c will wire the
+     * call site when {@code MapModule} carries the {@code DiagramController<?>}
+     * reference). The implementation is currently a no-op; future work
+     * will route to {@code shutdownController()} or equivalent teardown.
+     */
+    @Override
+    public void dispose() {
+        log.warn("MindMapController.dispose() invoked before Plan 2c wiring; no teardown performed");
     }
 
     public MapAdapter newModel(ModeController modeController) {
