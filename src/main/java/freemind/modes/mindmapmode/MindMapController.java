@@ -100,27 +100,6 @@ public class MindMapController extends ControllerAdapter
     @lombok.Getter private TextOperationService textOperationService;
 
     /**
-     * @deprecated Plan 2b transitional. Used by the legacy
-     * {@link MindMapMode#createModeController()} path; removed in Plan 2b
-     * commit 9 once the plugin factory is the only construction path.
-     */
-    @Deprecated
-    public MindMapController(Mode mode) {
-        super(mode);
-        this.diagram = null;
-        filefilter = new MindMapFilter(getResources());
-        nodeHookFactory = new MindMapHookFactory(getResources());
-        // create action factory:
-        actionFactory = new ActionRegistry();
-        // create node information timer and actions. They don't fire, until called to do so.
-        mNodeInformationTimerAction = new NodeInformationTimerAction(this);
-        mNodeInformationTimer = new Timer(100, mNodeInformationTimerAction);
-        mNodeInformationTimer.setRepeats(false);
-
-        init();
-    }
-
-    /**
      * Plan 2b-modeless primary constructor. Constructed via
      * {@link freemind.diagram.mindmap.MindMapControllerFactory#createFor}.
      * {@code Mode} is bound after construction via {@link ControllerAdapter#bindMode(Mode)}.
@@ -360,13 +339,10 @@ public class MindMapController extends ControllerAdapter
      * a future model-bridge plan will consume this.
      *
      * @return the {@code MindMapDiagram}
-     * @throws NullPointerException if this controller was constructed via the legacy
-     *         {@link #MindMapController(freemind.modes.Mode)} path (transitional — removed in Plan 2b commit 9)
      */
     @Override
     public MindMapDiagram diagram() {
-        return Objects.requireNonNull(diagram,
-            "diagram() called on legacy-constructed MindMapController; only the (MindMapDiagram, Controller, Resources) constructor populates it");
+        return diagram;
     }
 
     /**

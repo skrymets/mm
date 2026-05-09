@@ -1,7 +1,9 @@
 package freemind.modes.viewmodes;
 
+import freemind.controller.Controller;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHookSubstituteUnknown;
+import freemind.main.Resources;
 import freemind.model.MindMapNode;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.Mode;
@@ -27,7 +29,8 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
     public FindNextAction findNext = null;
 
     public ViewControllerAdapter(Mode mode) {
-        super(mode);
+        super(mode.getController(), mode.getController().getResources());
+        bindMode(mode);
         toggleFolded = new CommonToggleFoldedAction(this);
         toggleChildrenFolded = new CommonToggleChildrenFoldedAction(this);
         find = new FindAction(this);

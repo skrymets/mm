@@ -77,21 +77,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
     private FreeMindEventBus eventBus;
 
     /**
-     * Plan 2b transitional. Used by the legacy
-     * {@link freemind.modes.mindmapmode.MindMapController#MindMapController(Mode)}
-     * constructor. To be removed in Plan 2b commit 9 once the plugin
-     * factory is the only construction path.
-     *
-     * @deprecated transitional. Removed in Plan 2b commit 9.
-     */
-    @Deprecated
-    public ControllerAdapter(Mode mode) {
-        this.controller = mode.getController();
-        this.resources = mode.getController().getResources();
-        this.bindMode(mode);
-    }
-
-    /**
      * Plan 2b-modeless primary constructor. Host services flow in via
      * Guice through the plugin factory. {@code Mode} is bound after
      * construction via {@link #bindMode(Mode)}.
